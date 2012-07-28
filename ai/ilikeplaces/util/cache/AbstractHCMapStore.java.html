@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.cache.AbstractHCMapStore (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AbstractHCMapStore.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.cache;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> com.hazelcast.core.MapStore;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> javax.persistence.EntityManager;
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.persistence.EntityManagerFactory;
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.persistence.Persistence;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.util.Collection;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.HashMap;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * Created by IntelliJ IDEA.
+<A NAME="15"></A> * User: ravindranathakila
+<A NAME="16"></A> * Date: 7/22/12
+<A NAME="17"></A> * Time: 2:53 PM
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Abstract">abstract</FONT> <FONT ID="Class">class</FONT> AbstractHCMapStore&lt;T&gt; <FONT ID="Implements">implements</FONT> MapStore&lt;Object, Object&gt; {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> AbstractHCMapStore() {
+<A NAME="22"></A>        System.out.println(<FONT ID="StringLiteral">"Starting Hazelcast MapStore implementation:"</FONT> + <FONT ID="This">this</FONT>.getClass().getSimpleName());
+<A NAME="23"></A>    }
+<A NAME="24"></A>
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> store(Object key, Object value, Class type) {
+<A NAME="27"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="28"></A>            System.out.println(<FONT ID="StringLiteral">"Attempting to store data:"</FONT> + value);
+<A NAME="29"></A>
+<A NAME="30"></A>            EntityManagerFactory emf = Persistence.createEntityManagerFactory(<FONT ID="StringLiteral">"adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN"</FONT>);
+<A NAME="31"></A>            System.out.println(<FONT ID="StringLiteral">"Obtained EntityManagerFactory."</FONT>);
+<A NAME="32"></A>
+<A NAME="33"></A>            EntityManager em = emf.createEntityManager();
+<A NAME="34"></A>            System.out.println(<FONT ID="StringLiteral">"Obtained EntityManager."</FONT>);
+<A NAME="35"></A>
+<A NAME="36"></A>            em.getTransaction().begin();
+<A NAME="37"></A>            System.out.println(<FONT ID="StringLiteral">"Began Transaction."</FONT>);
+<A NAME="38"></A>
+<A NAME="39"></A>            <FONT ID="Final">final</FONT> Object existingValue = em.find(type, key);
+<A NAME="40"></A>
+<A NAME="41"></A>            <FONT ID="If">if</FONT> (existingValue == <FONT ID="Null">null</FONT>) {
+<A NAME="42"></A>                em.persist(value);
+<A NAME="43"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="44"></A>                em.merge(value);
+<A NAME="45"></A>            }
+<A NAME="46"></A>
+<A NAME="47"></A>            System.out.println(<FONT ID="StringLiteral">"Persisted data."</FONT>);
+<A NAME="48"></A>
+<A NAME="49"></A>            em.getTransaction().commit();
+<A NAME="50"></A>            System.out.println(<FONT ID="StringLiteral">"Committed Transaction"</FONT>);
+<A NAME="51"></A>
+<A NAME="52"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="53"></A>            t.printStackTrace(System.err);
+<A NAME="54"></A>        }
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    @Override
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> storeAll(Map&lt;Object, Object&gt; keyValueMap) {
+<A NAME="59"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="60"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Object key : keyValueMap.keySet()) {
+<A NAME="61"></A>                store(key, keyValueMap.get(key));
+<A NAME="62"></A>            }
+<A NAME="63"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="64"></A>            t.printStackTrace(System.err);
+<A NAME="65"></A>        }
+<A NAME="66"></A>    }
+<A NAME="67"></A>
+<A NAME="68"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> delete(Object key, Class type) {
+<A NAME="69"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="70"></A>            System.out.println(<FONT ID="StringLiteral">"Attempting to delete data:"</FONT> + key);
+<A NAME="71"></A>            EntityManagerFactory emf = Persistence.createEntityManagerFactory(<FONT ID="StringLiteral">"adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN"</FONT>);
+<A NAME="72"></A>            System.out.println(<FONT ID="StringLiteral">"Obtained EntityManagerFactory."</FONT>);
+<A NAME="73"></A>            EntityManager em = emf.createEntityManager();
+<A NAME="74"></A>            System.out.println(<FONT ID="StringLiteral">"Obtained EntityManager."</FONT>);
+<A NAME="75"></A>            em.getTransaction().begin();
+<A NAME="76"></A>            System.out.println(<FONT ID="StringLiteral">"Began Transaction."</FONT>);
+<A NAME="77"></A>
+<A NAME="78"></A>
+<A NAME="79"></A>            System.out.println(<FONT ID="StringLiteral">"key.getClass()"</FONT>);
+<A NAME="80"></A>            System.out.println(type);
+<A NAME="81"></A>
+<A NAME="82"></A>            em.remove(em.find(type, key));
+<A NAME="83"></A>
+<A NAME="84"></A>
+<A NAME="85"></A>            System.out.println(<FONT ID="StringLiteral">"Removed data."</FONT>);
+<A NAME="86"></A>            em.getTransaction().commit();
+<A NAME="87"></A>            System.out.println(<FONT ID="StringLiteral">"Committed Transaction."</FONT>);
+<A NAME="88"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="89"></A>            t.printStackTrace(System.err);
+<A NAME="90"></A>        }
+<A NAME="91"></A>    }
+<A NAME="92"></A>
+<A NAME="93"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> deleteAll(Collection&lt;Object&gt; keys) {
+<A NAME="94"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="95"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Object string : keys) {
+<A NAME="96"></A>                delete(string);
+<A NAME="97"></A>            }
+<A NAME="98"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="99"></A>            t.printStackTrace(System.err);
+<A NAME="100"></A>        }
+<A NAME="101"></A>
+<A NAME="102"></A>    }
+<A NAME="103"></A>
+<A NAME="104"></A>    <FONT ID="Public">public</FONT> Object load(Object key, Class type) {
+<A NAME="105"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="106"></A>            System.out.println(<FONT ID="StringLiteral">"Attempting to load data:"</FONT> + key);
+<A NAME="107"></A>            EntityManagerFactory emf = Persistence.createEntityManagerFactory(<FONT ID="StringLiteral">"adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN"</FONT>);
+<A NAME="108"></A>            System.out.println(<FONT ID="StringLiteral">"Obtained EntityManagerFactory."</FONT>);
+<A NAME="109"></A>            EntityManager em = emf.createEntityManager();
+<A NAME="110"></A>            System.out.println(<FONT ID="StringLiteral">"Obtained EntityManager."</FONT>);
+<A NAME="111"></A>            em.getTransaction().begin();
+<A NAME="112"></A>            System.out.println(<FONT ID="StringLiteral">"Began Transaction."</FONT>);
+<A NAME="113"></A>
+<A NAME="114"></A>            System.out.println(<FONT ID="StringLiteral">"key.getClass()"</FONT>);
+<A NAME="115"></A>            System.out.println(key.getClass());
+<A NAME="116"></A>
+<A NAME="117"></A>            <FONT ID="Final">final</FONT> Object returnVal = em.find(type, key);
+<A NAME="118"></A>
+<A NAME="119"></A>            System.out.println(<FONT ID="StringLiteral">"Loaded data."</FONT>);
+<A NAME="120"></A>            em.getTransaction().commit();
+<A NAME="121"></A>            System.out.println(<FONT ID="StringLiteral">"Committed Transaction."</FONT>);
+<A NAME="122"></A>            <FONT ID="Return">return</FONT> returnVal;
+<A NAME="123"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="124"></A>            t.printStackTrace(System.err);
+<A NAME="125"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(t);
+<A NAME="126"></A>        }
+<A NAME="127"></A>    }
+<A NAME="128"></A>
+<A NAME="129"></A>    @Override
+<A NAME="130"></A>    <FONT ID="Public">public</FONT> Map&lt;Object, Object&gt; loadAll(Collection&lt;Object&gt; keys) {
+<A NAME="131"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="132"></A>            <FONT ID="Final">final</FONT> Map&lt;Object, Object&gt; returnVal = <FONT ID="New">new</FONT> HashMap&lt;Object, Object&gt;(keys.size());
+<A NAME="133"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Object string : keys) {
+<A NAME="134"></A>                returnVal.put(string, load(string));
+<A NAME="135"></A>            }
+<A NAME="136"></A>            <FONT ID="Return">return</FONT> returnVal;
+<A NAME="137"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="138"></A>            t.printStackTrace(System.err);
+<A NAME="139"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(t);
+<A NAME="140"></A>        }
+<A NAME="141"></A>    }
+<A NAME="142"></A>
+<A NAME="143"></A>    @Override
+<A NAME="144"></A>    <FONT ID="Public">public</FONT> Set&lt;Object&gt; loadAllKeys() {
+<A NAME="145"></A>        <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="146"></A>    }
+<A NAME="147"></A>}
+<A NAME="148"></A></pre>
+</BODY>
+</HTML>

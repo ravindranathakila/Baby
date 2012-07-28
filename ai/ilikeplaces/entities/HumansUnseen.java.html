@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.HumansUnseen (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumansUnseen.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.UNIDIRECTIONAL;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * Created by IntelliJ IDEA.
+<A NAME="15"></A> * User: Ravindranath Akila
+<A NAME="16"></A> * Date: 10/12/11
+<A NAME="17"></A> * Time: 7:47 PM
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A>@WARNING(<FONT ID="StringLiteral">"THIS ENTITY IS NOT GUARANTEED TO 'BE' EVEN THOUGH A HUMAN IS SIGNED UP. SO CREATE IT IF NOT PRESENT!"</FONT>)
+<A NAME="20"></A>@Entity
+<A NAME="21"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="22"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumansUnseen <FONT ID="Implements">implements</FONT> Serializable {
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> String humanId;
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; unseenWalls;
+<A NAME="25"></A>
+<A NAME="26"></A>    @Id
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> String getHumanId() {
+<A NAME="28"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="29"></A>    }
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumanId(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="32"></A>        <FONT ID="This">this</FONT>.humanId = humanId;
+<A NAME="33"></A>    }
+<A NAME="34"></A>
+<A NAME="35"></A>    @Transient
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansUnseen.java.html">HumansUnseen</A> setHumanIdR(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="37"></A>        <FONT ID="This">this</FONT>.humanId = humanId;
+<A NAME="38"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="39"></A>    }
+<A NAME="40"></A>
+<A NAME="41"></A>    @UNIDIRECTIONAL
+<A NAME="42"></A>    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; getUnseenWalls() {
+<A NAME="44"></A>        <FONT ID="Return">return</FONT> unseenWalls;
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setUnseenWalls(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; unseenWalls) {
+<A NAME="48"></A>        <FONT ID="This">this</FONT>.unseenWalls = unseenWalls;
+<A NAME="49"></A>    }
+<A NAME="50"></A>}
+<A NAME="51"></A></pre>
+</BODY>
+</HTML>

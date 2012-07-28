@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.cache.SmartCache4 (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SmartCache4.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.cache;
+<A NAME="2"></A>
+<A NAME="3"></A>
+<A NAME="4"></A><FONT ID="Import">import</FONT> com.hazelcast.client.ClientConfig;
+<A NAME="5"></A><FONT ID="Import">import</FONT> com.hazelcast.client.HazelcastClient;
+<A NAME="6"></A><FONT ID="Import">import</FONT> com.hazelcast.core.Hazelcast;
+<A NAME="7"></A><FONT ID="Import">import</FONT> com.hazelcast.core.HazelcastInstance;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> * This implementation goes with Hazelcast.
+<A NAME="13"></A> * We don't actually need this intermediary.
+<A NAME="14"></A> * However, to isolate the caching mechanism, let's have this in place.
+<A NAME="15"></A> * For example, this makes it possible for us to change to EHCache later if we'd like.
+<A NAME="16"></A> * &lt;p/&gt;
+<A NAME="17"></A> * We use EHCache for L2 caching in OpenJPA.
+<A NAME="18"></A> * Hazelcast seems to be the easy and wise way to go with for distributed fast storage and retrieval.
+<A NAME="19"></A> * &lt;p/&gt;
+<A NAME="20"></A> * Created by IntelliJ IDEA.
+<A NAME="21"></A> * User: Ravindranath Akila
+<A NAME="22"></A> * Date: 5/5/12
+<A NAME="23"></A> * Time: 12:10 PM
+<A NAME="24"></A> */</FONT>
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SmartCache4&lt;K, V, R&gt; {
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> IllegalAccessError ILLEGAL_ACCESS_ERROR = <FONT ID="New">new</FONT> IllegalAccessError(<FONT ID="StringLiteral">"RECOVERY MECHANISM NOT SPECIFIED!"</FONT>);
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ATTEMPT_TO_RECOVER_VALUE_FOR_KEY_FAILED_THE_KEY_IN_CONCERN = <FONT ID="StringLiteral">"ATTEMPT TO RECOVER VALUE FOR KEY FAILED. THE KEY IN CONCERN:"</FONT>;
+<A NAME="29"></A>
+<A NAME="30"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> Map&lt;K, V&gt; MAP;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> RecoverWith&lt;K, V, R&gt; recoverWith = <FONT ID="Null">null</FONT>;
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> SmartCache4() {
+<A NAME="35"></A>        INITIALIZE_HAZELCAST:
+<A NAME="36"></A>        {
+<A NAME="37"></A>            ClientConfig clientConfig = <FONT ID="New">new</FONT> ClientConfig();
+<A NAME="38"></A>            clientConfig.getGroupConfig().setName(<FONT ID="StringLiteral">"dev"</FONT>).setPassword(<FONT ID="StringLiteral">"dev-pass"</FONT>);
+<A NAME="39"></A>            clientConfig.addAddress(<FONT ID="StringLiteral">"127.0.0.1:5701"</FONT>);
+<A NAME="40"></A>
+<A NAME="41"></A>            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+<A NAME="42"></A>            MAP = Hazelcast.getMap(<FONT ID="StringLiteral">"SmartCache"</FONT>);
+<A NAME="43"></A>        }
+<A NAME="44"></A>    }
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Public">public</FONT> SmartCache4(<FONT ID="Final">final</FONT> RecoverWith&lt;K, V, R&gt; recoverWith) {
+<A NAME="47"></A>        INITIALIZE_HAZELCAST:
+<A NAME="48"></A>        {
+<A NAME="49"></A>            ClientConfig clientConfig = <FONT ID="New">new</FONT> ClientConfig();
+<A NAME="50"></A>            clientConfig.getGroupConfig().setName(<FONT ID="StringLiteral">"dev"</FONT>).setPassword(<FONT ID="StringLiteral">"dev-pass"</FONT>);
+<A NAME="51"></A>            clientConfig.addAddress(<FONT ID="StringLiteral">"127.0.0.1:5701"</FONT>);
+<A NAME="52"></A>
+<A NAME="53"></A>            HazelcastInstance client = HazelcastClient.newHazelcastClient(clientConfig);
+<A NAME="54"></A>            MAP = Hazelcast.getMap(<FONT ID="StringLiteral">"SmartCache"</FONT>);
+<A NAME="55"></A>        }
+<A NAME="56"></A>
+<A NAME="57"></A>        <FONT ID="This">this</FONT>.recoverWith = recoverWith;
+<A NAME="58"></A>    }
+<A NAME="59"></A>
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> V get(<FONT ID="Final">final</FONT> K key, <FONT ID="Final">final</FONT> R runtimeArgument) {
+<A NAME="61"></A>        <FONT ID="If">if</FONT> (recoverWith == <FONT ID="Null">null</FONT>) {
+<A NAME="62"></A>            <FONT ID="Throw">throw</FONT> ILLEGAL_ACCESS_ERROR;
+<A NAME="63"></A>        }
+<A NAME="64"></A>        V returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="65"></A>
+<A NAME="66"></A>        <FONT ID="If">if</FONT> (MAP.containsKey(key) &amp;&amp; returnVal != <FONT ID="Null">null</FONT>) {
+<A NAME="67"></A>            returnVal = MAP.get(key);
+<A NAME="68"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="69"></A>            <FONT ID="Final">final</FONT> V recoverWithValue = recoverWith.getValue(key, runtimeArgument);
+<A NAME="70"></A>            <FONT ID="If">if</FONT> (recoverWithValue != <FONT ID="Null">null</FONT>) {
+<A NAME="71"></A>                MAP.put(key, recoverWithValue);
+<A NAME="72"></A>                returnVal = MAP.get(key);
+<A NAME="73"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="74"></A>                returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="75"></A>            }
+<A NAME="76"></A>        }
+<A NAME="77"></A>
+<A NAME="78"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="79"></A>    }
+<A NAME="80"></A>
+<A NAME="81"></A>    <FONT ID="Public">public</FONT> V get(<FONT ID="Final">final</FONT> K key, <FONT ID="Final">final</FONT> RecoverWith&lt;K, V, R&gt; recoverWith) {
+<A NAME="82"></A>        V returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="83"></A>        <FONT ID="If">if</FONT> (MAP.containsKey(key) &amp;&amp; returnVal != <FONT ID="Null">null</FONT>) {
+<A NAME="84"></A>            returnVal = MAP.get(key);
+<A NAME="85"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="86"></A>            <FONT ID="Final">final</FONT> V recoverWithValue = recoverWith.getValue(key, <FONT ID="Null">null</FONT>);
+<A NAME="87"></A>            <FONT ID="If">if</FONT> (recoverWithValue != <FONT ID="Null">null</FONT>) {
+<A NAME="88"></A>                MAP.put(key, recoverWithValue);
+<A NAME="89"></A>                returnVal = MAP.get(key);
+<A NAME="90"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="91"></A>                returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="92"></A>            }
+<A NAME="93"></A>        }
+<A NAME="94"></A>
+<A NAME="95"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="96"></A>    }
+<A NAME="97"></A>
+<A NAME="98"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> invalidate(<FONT ID="Final">final</FONT> K key) {
+<A NAME="99"></A>        MAP.remove(key);
+<A NAME="100"></A>    }
+<A NAME="101"></A>
+<A NAME="102"></A>    <FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> RecoverWith&lt;K, V, R&gt; {
+<A NAME="103"></A>        <FONT ID="Public">public</FONT> V getValue(<FONT ID="Final">final</FONT> K k, <FONT ID="Final">final</FONT> R runtimeArgument);
+<A NAME="104"></A>    }
+<A NAME="105"></A>}
+<A NAME="106"></A>
+<A NAME="107"></A></pre>
+</BODY>
+</HTML>

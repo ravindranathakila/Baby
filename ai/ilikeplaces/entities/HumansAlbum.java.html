@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.HumansAlbum (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumansAlbum.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * This entity is NOT related to a humans public location bookings.
+<A NAME="11"></A> * This comment was placed here to avoid logic confusion.
+<A NAME="12"></A> * &lt;p/&gt;
+<A NAME="13"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="14"></A> * Date: Dec 6, 2009
+<A NAME="15"></A> * Time: 6:11:09 PM
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>
+<A NAME="18"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="19"></A>@Entity
+<A NAME="20"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="21"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumansAlbum <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanPkJoinFace.java.html">HumanPkJoinFace</A>, Serializable {
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> String humanId;
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> human;
+<A NAME="26"></A>
+<A NAME="27"></A>
+<A NAME="28"></A>    @Id
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> String getHumanId() {
+<A NAME="30"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="31"></A>    }
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumanId(<FONT ID="Final">final</FONT> String humanId__) {
+<A NAME="34"></A>        <FONT ID="This">this</FONT>.humanId = humanId__;
+<A NAME="35"></A>    }
+<A NAME="36"></A>
+<A NAME="37"></A>    @OneToOne(cascade = CascadeType.REFRESH)
+<A NAME="38"></A>    @PrimaryKeyJoinColumn
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> getHuman() {
+<A NAME="40"></A>        <FONT ID="Return">return</FONT> human;
+<A NAME="41"></A>    }
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHuman(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> human) {
+<A NAME="44"></A>        <FONT ID="This">this</FONT>.human = human;
+<A NAME="45"></A>    }
+<A NAME="46"></A>}</pre>
+</BODY>
+</HTML>

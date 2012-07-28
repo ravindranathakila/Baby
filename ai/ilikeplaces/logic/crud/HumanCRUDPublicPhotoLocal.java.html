@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDPublicPhotoLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDPublicPhotoLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">ai.ilikeplaces.entities.PublicPhoto</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.ejb.Remote;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> *
+<A NAME="13"></A> * @author Ravindranath Akila
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="17"></A></FONT>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="18"></A>@Remote
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> HumanCRUDPublicPhotoLocal {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String NAME = <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A>.<FONT ID="Class">class</FONT>.getSimpleName();
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; cPublicPhoto(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId, <FONT ID="Final">final</FONT> String fileName, <FONT ID="Final">final</FONT> String publicPhotoName, <FONT ID="Final">final</FONT> String publicPhotoDescription, <FONT ID="Final">final</FONT> String publicPhotoURLPath, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> retries);
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt;&gt; rPublicPhoto(<FONT ID="Final">final</FONT> String humanId);
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> uPublicPhotoDescription(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId, <FONT ID="Final">final</FONT> String publicPhotoDescription);
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> dPublicPhoto(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId);
+<A NAME="30"></A>}
+<A NAME="31"></A></pre>
+</BODY>
+</HTML>

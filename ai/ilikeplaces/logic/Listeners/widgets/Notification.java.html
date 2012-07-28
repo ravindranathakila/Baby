@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.Notification (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Notification.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">ai.ilikeplaces.util.AbstractWidgetListener</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> * Created by IntelliJ IDEA.
+<A NAME="12"></A> * User: Ravindranath Akila
+<A NAME="13"></A> * Date: 10/13/11
+<A NAME="14"></A> * Time: 9:18 PM
+<A NAME="15"></A> */</FONT>
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Notification <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">AbstractWidgetListener</A>&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/NotificationCriteria.java.html">NotificationCriteria</A>&gt;{
+<A NAME="17"></A>
+<A NAME="18"></A>    <FONT ID="Public">public</FONT> Notification(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/NotificationCriteria.java.html">NotificationCriteria</A> notificationCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="19"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.Notification, notificationCriteria, appendToElement__);
+<A NAME="20"></A>    }
+<A NAME="21"></A>
+<A NAME="22"></A>    @Override
+<A NAME="23"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/NotificationCriteria.java.html">NotificationCriteria</A> notificationCriteria) {
+<A NAME="24"></A>        $$(Controller.Page.notification_simple).setTextContent(notificationCriteria.notificationText);
+<A NAME="25"></A>    }
+<A NAME="26"></A>
+<A NAME="27"></A>    @Override
+<A NAME="28"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="29"></A>    }
+<A NAME="30"></A>}
+<A NAME="31"></A></pre>
+</BODY>
+</HTML>

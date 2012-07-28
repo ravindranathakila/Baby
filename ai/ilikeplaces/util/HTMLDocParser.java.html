@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.HTMLDocParser (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HTMLDocParser.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> org.cyberneko.html.parsers.DOMParser;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.w3c.dom.Document;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.w3c.dom.Node;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.xml.sax.SAXException;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.xml.transform.OutputKeys;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.xml.transform.Transformer;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.xml.transform.TransformerException;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.xml.transform.TransformerFactory;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.xml.transform.dom.DOMSource;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.xml.transform.stream.StreamResult;
+<A NAME="15"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.io.StringWriter;
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="FormalComment">/**
+<A NAME="19"></A> * Created by IntelliJ IDEA.
+<A NAME="20"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="21"></A> * Date: Jul 10, 2010
+<A NAME="22"></A> * Time: 1:21:24 PM
+<A NAME="23"></A> */</FONT>
+<A NAME="24"></A>
+<A NAME="25"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="26"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HTMLDocParser {
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> HTMLDocParser() {
+<A NAME="29"></A>        <FONT ID="Throw">throw</FONT> ExceptionCache.STATIC_USAGE_ONLY_EXCEPTION;
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="FormalComment">/**
+<A NAME="33"></A>     * Please note that file paths should  contain only backslashes. Slashes can be mistaken to protocol definition by
+<A NAME="34"></A>     * the Parser. so use c:\ and not c:/
+<A NAME="35"></A>     *
+<A NAME="36"></A>     * @param filePath
+<A NAME="37"></A>     * @return
+<A NAME="38"></A>     * @throws IOException
+<A NAME="39"></A>     * @throws SAXException
+<A NAME="40"></A>     */</FONT>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> Document getDocument(<FONT ID="Final">final</FONT> String filePath) <FONT ID="Throws">throws</FONT> IOException, SAXException {
+<A NAME="42"></A>        <FONT ID="Final">final</FONT> DOMParser domParser = <FONT ID="New">new</FONT> DOMParser();
+<A NAME="43"></A>        domParser.parse(filePath);
+<A NAME="44"></A>        <FONT ID="Return">return</FONT> domParser.getDocument();
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String convertNodeToHtml(<FONT ID="Final">final</FONT> Node node) <FONT ID="Throws">throws</FONT> TransformerException {
+<A NAME="48"></A>        Transformer t = TransformerFactory.newInstance().newTransformer();
+<A NAME="49"></A>        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, <FONT ID="StringLiteral">"yes"</FONT>);
+<A NAME="50"></A>        StringWriter sw = <FONT ID="New">new</FONT> StringWriter();
+<A NAME="51"></A>        t.transform(<FONT ID="New">new</FONT> DOMSource(node), <FONT ID="New">new</FONT> StreamResult(sw));
+<A NAME="52"></A>        <FONT ID="Return">return</FONT> sw.toString();
+<A NAME="53"></A>    }
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> print(<FONT ID="Final">final</FONT> Node node, <FONT ID="Final">final</FONT> String indent) {
+<A NAME="56"></A>        System.out.println(indent + node.getClass().getName());
+<A NAME="57"></A>        Node child = node.getFirstChild();
+<A NAME="58"></A>        <FONT ID="While">while</FONT> (child != <FONT ID="Null">null</FONT>) {
+<A NAME="59"></A>            print(child, indent + <FONT ID="StringLiteral">" "</FONT>);
+<A NAME="60"></A>            child = child.getNextSibling();
+<A NAME="61"></A>        }
+<A NAME="62"></A>    }
+<A NAME="63"></A>}
+<A NAME="64"></A></pre>
+</BODY>
+</HTML>

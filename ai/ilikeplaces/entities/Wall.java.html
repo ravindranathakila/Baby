@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.Wall (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Wall.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.jpa.*;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> * Created by IntelliJ IDEA.
+<A NAME="13"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="14"></A> * Date: Jan 25, 2010
+<A NAME="15"></A> * Time: 1:01:22 PM
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>
+<A NAME="18"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="19"></A>@Entity
+<A NAME="20"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="21"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Wall <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/Clearance.java.html">Clearance</A>, Refreshable&lt;<A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;, Serializable {
+<A NAME="22"></A>    <FONT ID="Public">public</FONT> Long wallId = <FONT ID="Null">null</FONT>;
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String wallIdCOL = <FONT ID="StringLiteral">"wallId"</FONT>;
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> Long clearance = <FONT ID="IntegerLiteral">0L</FONT>;
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> String wallContent = <FONT ID="Null">null</FONT>;
+<A NAME="26"></A>
+<A NAME="27"></A>    @RefreshId(<FONT ID="StringLiteral">"wallMsgs"</FONT>)
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt; wallMsgs = <FONT ID="Null">null</FONT>;
+<A NAME="29"></A>
+<A NAME="30"></A>    @RefreshId(<FONT ID="StringLiteral">"wallMutes"</FONT>)
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Mute.java.html">Mute</A>&gt; wallMutes = <FONT ID="Null">null</FONT>;
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> Integer wallType = <FONT ID="Null">null</FONT>;
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> String wallMetadata = <FONT ID="Null">null</FONT>;
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> wallTypeMISC = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="36"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> wallTypeHuman = <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="37"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> wallTypePrivateEvent = <FONT ID="IntegerLiteral">2</FONT>;
+<A NAME="38"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> wallTypeTribe = <FONT ID="IntegerLiteral">3</FONT>;
+<A NAME="39"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> wallTypePrivatePhoto = <FONT ID="IntegerLiteral">4</FONT>;
+<A NAME="40"></A>
+<A NAME="41"></A>
+<A NAME="42"></A><FONT ID="SingleLineComment">//    final static public int WALL_LENGTH = 10240;
+<A NAME="43"></A></FONT>
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> Refresh&lt;<A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; REFRESH = <FONT ID="New">new</FONT> Refresh&lt;<A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;();
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum WallMetadataKey {
+<A NAME="47"></A>        HUMAN,
+<A NAME="48"></A>        PRIVATE_PHOTO,
+<A NAME="49"></A>        PRIVATE_EVENT,
+<A NAME="50"></A>        TRIBE,
+<A NAME="51"></A>    }
+<A NAME="52"></A>
+<A NAME="53"></A>
+<A NAME="54"></A>    @Id
+<A NAME="55"></A>    @GeneratedValue(strategy = GenerationType.AUTO)
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> Long getWallId() {
+<A NAME="57"></A>        <FONT ID="Return">return</FONT> wallId;
+<A NAME="58"></A>    }
+<A NAME="59"></A>
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setWallId(Long wallId) {
+<A NAME="61"></A>        <FONT ID="This">this</FONT>.wallId = wallId;
+<A NAME="62"></A>    }
+<A NAME="63"></A>
+<A NAME="64"></A><FONT ID="SingleLineComment">//    @Column(length = WALL_LENGTH)
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//    public String getWallContent() {
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//        return wallContent;
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="68"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//    public void setWallContent(String wallContent) {
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//        this.wallContent = wallContent;
+<A NAME="71"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="72"></A></FONT>
+<A NAME="73"></A>    @Transient
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> setWallRContent(String wallContent) {
+<A NAME="75"></A>        <FONT ID="This">this</FONT>.wallContent = wallContent;
+<A NAME="76"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="77"></A>    }
+<A NAME="78"></A>
+<A NAME="79"></A>    @DOCUMENTATION(
+<A NAME="80"></A>            NOTE = @NOTE(<FONT ID="StringLiteral">"Wall msgs are fetched lazy because sometimes private event is required to be loaded fast, and fetches wall, thereby wall msgs."</FONT>)
+<A NAME="81"></A>    )
+<A NAME="82"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Find out how to limit resultset to say, last 20, in order to limit the results fetched"</FONT>)
+<A NAME="83"></A>    @UNIDIRECTIONAL
+<A NAME="84"></A>    @TODO(task = <FONT ID="StringLiteral">"Move DESC ASC TO SOME STATIC CLASS FOR REUSE"</FONT>)
+<A NAME="85"></A>    @OrderBy(Msg.msgIdCOL + <FONT ID="StringLiteral">" DESC"</FONT>)
+<A NAME="86"></A>    @OneToMany(
+<A NAME="87"></A>            cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
+<A NAME="88"></A>            fetch = FetchType.LAZY)
+<A NAME="89"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt; getWallMsgs() {
+<A NAME="90"></A>        <FONT ID="Return">return</FONT> wallMsgs;
+<A NAME="91"></A>    }
+<A NAME="92"></A>
+<A NAME="93"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setWallMsgs(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt; wallMsgs) {
+<A NAME="94"></A>        <FONT ID="This">this</FONT>.wallMsgs = wallMsgs;
+<A NAME="95"></A>    }
+<A NAME="96"></A>
+<A NAME="97"></A>    @UNIDIRECTIONAL
+<A NAME="98"></A>    @OneToMany(
+<A NAME="99"></A>            cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
+<A NAME="100"></A>            fetch = FetchType.LAZY)
+<A NAME="101"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Mute.java.html">Mute</A>&gt; getWallMutes() {
+<A NAME="102"></A>        <FONT ID="Return">return</FONT> wallMutes;
+<A NAME="103"></A>    }
+<A NAME="104"></A>
+<A NAME="105"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setWallMutes(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Mute.java.html">Mute</A>&gt; wallMutes) {
+<A NAME="106"></A>        <FONT ID="This">this</FONT>.wallMutes = wallMutes;
+<A NAME="107"></A>    }
+<A NAME="108"></A>
+<A NAME="109"></A>    @Override
+<A NAME="110"></A>    <FONT ID="Public">public</FONT> Long getClearance() {
+<A NAME="111"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.clearance;
+<A NAME="112"></A>    }
+<A NAME="113"></A>
+<A NAME="114"></A>    <FONT ID="Public">public</FONT> Integer getWallType() {
+<A NAME="115"></A>        <FONT ID="Return">return</FONT> wallType;
+<A NAME="116"></A>    }
+<A NAME="117"></A>
+<A NAME="118"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setWallType(<FONT ID="Final">final</FONT> Integer wallType) {
+<A NAME="119"></A>        <FONT ID="This">this</FONT>.wallType = wallType;
+<A NAME="120"></A>    }
+<A NAME="121"></A>
+<A NAME="122"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> setWallTypeR(<FONT ID="Final">final</FONT> Integer wallType) {
+<A NAME="123"></A>        <FONT ID="This">this</FONT>.wallType = wallType;
+<A NAME="124"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="125"></A>    }
+<A NAME="126"></A>
+<A NAME="127"></A>    <FONT ID="Public">public</FONT> String getWallMetadata() {
+<A NAME="128"></A>        <FONT ID="Return">return</FONT> wallMetadata;
+<A NAME="129"></A>    }
+<A NAME="130"></A>
+<A NAME="131"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setWallMetadata(<FONT ID="Final">final</FONT> String wallMetadata) {
+<A NAME="132"></A>        <FONT ID="This">this</FONT>.wallMetadata = wallMetadata;
+<A NAME="133"></A>    }
+<A NAME="134"></A>
+<A NAME="135"></A>    @Override
+<A NAME="136"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setClearance(<FONT ID="Final">final</FONT> Long clearance) {
+<A NAME="137"></A>        <FONT ID="This">this</FONT>.clearance = clearance;
+<A NAME="138"></A>    }
+<A NAME="139"></A>
+<A NAME="140"></A>    @Override
+<A NAME="141"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> refresh(<FONT ID="Final">final</FONT> RefreshSpec refreshSpec) <FONT ID="Throws">throws</FONT> RefreshException {
+<A NAME="142"></A>        REFRESH.refresh(<FONT ID="This">this</FONT>, refreshSpec);
+<A NAME="143"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="144"></A>    }
+<A NAME="145"></A>
+<A NAME="146"></A>
+<A NAME="147"></A>    @Override
+<A NAME="148"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(Object o) {
+<A NAME="149"></A>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT> == o) <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="150"></A>        <FONT ID="If">if</FONT> (o == <FONT ID="Null">null</FONT> || getClass() != o.getClass()) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="151"></A>
+<A NAME="152"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> wall = (<A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>) o;
+<A NAME="153"></A>
+<A NAME="154"></A>        <FONT ID="If">if</FONT> (wallId != <FONT ID="Null">null</FONT> ? !wallId.equals(wall.wallId) : wall.wallId != <FONT ID="Null">null</FONT>) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="155"></A>
+<A NAME="156"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="157"></A>    }
+<A NAME="158"></A>
+<A NAME="159"></A>    @Override
+<A NAME="160"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> hashCode() {
+<A NAME="161"></A>        <FONT ID="Return">return</FONT> wallId != <FONT ID="Null">null</FONT> ? wallId.hashCode() : <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="162"></A>    }
+<A NAME="163"></A>
+<A NAME="164"></A>    @Override
+<A NAME="165"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="166"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"Wall{"</FONT> +
+<A NAME="167"></A>                <FONT ID="StringLiteral">"wallId="</FONT> + wallId +
+<A NAME="168"></A>                <FONT ID="StringLiteral">", clearance="</FONT> + clearance +
+<A NAME="169"></A>                <FONT ID="StringLiteral">", wallType="</FONT> + wallType +
+<A NAME="170"></A>                <FONT ID="StringLiteral">", wallMetadata='"</FONT> + wallMetadata + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="171"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="172"></A>    }
+<A NAME="173"></A>    
+<A NAME="174"></A>    @Transient
+<A NAME="175"></A>    <FONT ID="Public">public</FONT> String metadataValueFor(<FONT ID="Final">final</FONT> WallMetadataKey keyEnum){
+<A NAME="176"></A>        <FONT ID="Final">final</FONT> String key = keyEnum.toString();
+<A NAME="177"></A>        <FONT ID="Final">final</FONT> String wallMetadata = <FONT ID="This">this</FONT>.getWallMetadata();
+<A NAME="178"></A>        <FONT ID="Final">final</FONT> String returnVal;
+<A NAME="179"></A>        <FONT ID="If">if</FONT> (wallMetadata == <FONT ID="Null">null</FONT> || wallMetadata.isEmpty()) {
+<A NAME="180"></A>            returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="181"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="182"></A>            <FONT ID="Final">final</FONT> String[] pairs = wallMetadata.split(<FONT ID="StringLiteral">","</FONT>);
+<A NAME="183"></A>            String value = <FONT ID="Null">null</FONT>;
+<A NAME="184"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> String pairString : pairs) {
+<A NAME="185"></A>                <FONT ID="Final">final</FONT> String[] pair = pairString.split(<FONT ID="StringLiteral">"="</FONT>);
+<A NAME="186"></A>                <FONT ID="If">if</FONT> (key.equals(pair[<FONT ID="IntegerLiteral">0</FONT>])) {
+<A NAME="187"></A>                    value = pair[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="188"></A>                }
+<A NAME="189"></A>            }
+<A NAME="190"></A>            returnVal = value;
+<A NAME="191"></A>        }
+<A NAME="192"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="193"></A>    }
+<A NAME="194"></A>
+<A NAME="195"></A>}</pre>
+</BODY>
+</HTML>

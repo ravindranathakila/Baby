@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.NSHuman (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">NSHuman.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> com.hazelcast.client.ClientConfig;
+<A NAME="6"></A><FONT ID="Import">import</FONT> com.hazelcast.client.HazelcastClient;
+<A NAME="7"></A><FONT ID="Import">import</FONT> com.hazelcast.core.HazelcastInstance;
+<A NAME="8"></A><FONT ID="Import">import</FONT> com.hazelcast.core.IMap;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.lang.reflect.InvocationTargetException;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.lang.reflect.Method;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.net.InetSocketAddress;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * Created by IntelliJ IDEA.
+<A NAME="17"></A> * User: ravindranathakila
+<A NAME="18"></A> * Date: 7/5/12
+<A NAME="19"></A> * Time: 8:24 PM
+<A NAME="20"></A> */</FONT>
+<A NAME="21"></A>@WARNING(<FONT ID="StringLiteral">"EXCEPTIONS IN CALLBACK METHODS MIGHT NOT GET LOGGED UNLESS EXPLICITLY CAUGHT WITHIN AND LOGGED."</FONT>)
+<A NAME="22"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> NSHuman <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/NSEntityLifecycleCallbacks.java.html">NSEntityLifecycleCallbacks</A>&lt;Object&gt; {
+<A NAME="23"></A>    <FONT ID="Final">final</FONT> Boolean DEBUG_ENABLED = Loggers.DEBUG.isDebugEnabled();
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="FormalComment">/**
+<A NAME="26"></A>     * Lazily initialized
+<A NAME="27"></A>     */</FONT>
+<A NAME="28"></A>    @WARNING(<FONT ID="StringLiteral">"Lazily initialized upon entity lifecycle callbacks"</FONT>)
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> HazelcastClient hazelcastClient;
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> NSHuman() {
+<A NAME="32"></A>        <FONT ID="SingleLineComment">//Better not do anything here since this is also called during build time enhancement
+<A NAME="33"></A></FONT>    }
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> HazelcastClient getHCClient() {
+<A NAME="36"></A>        <FONT ID="If">if</FONT> (hazelcastClient == <FONT ID="Null">null</FONT>) {
+<A NAME="37"></A>            ClientConfig clientConfig = <FONT ID="New">new</FONT> ClientConfig();
+<A NAME="38"></A>
+<A NAME="39"></A>            clientConfig.getGroupConfig().setName(<FONT ID="StringLiteral">"dev"</FONT>).setPassword(<FONT ID="StringLiteral">"dev-pass"</FONT>);
+<A NAME="40"></A>            clientConfig.addAddress(<FONT ID="StringLiteral">"127.0.0.1:5701"</FONT>);
+<A NAME="41"></A>
+<A NAME="42"></A>            <FONT ID="If">if</FONT> (DEBUG_ENABLED) {
+<A NAME="43"></A>                Loggers.debug(<FONT ID="StringLiteral">"THESE ARE THE HAZELCAST ADDRESSES FYR:"</FONT>);
+<A NAME="44"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> InetSocketAddress inetSocketAddress : clientConfig.getAddressList()) {
+<A NAME="45"></A>                    Loggers.debug(<FONT ID="StringLiteral">"Host "</FONT> + inetSocketAddress.getHostName() + <FONT ID="StringLiteral">" on Port "</FONT> + inetSocketAddress.getPort());
+<A NAME="46"></A>                }
+<A NAME="47"></A>            }
+<A NAME="48"></A>
+<A NAME="49"></A>            hazelcastClient = HazelcastClient.newHazelcastClient(clientConfig);
+<A NAME="50"></A>
+<A NAME="51"></A>            <FONT ID="If">if</FONT> (DEBUG_ENABLED) {
+<A NAME="52"></A>                Loggers.debug(<FONT ID="StringLiteral">"THESE ARE THE HAZELCAST CLIENT(ME) DETAILS FYR:"</FONT>);
+<A NAME="53"></A>                Loggers.debug(<FONT ID="StringLiteral">"clientConfig.getGroupConfig().getName():"</FONT>);
+<A NAME="54"></A>                Loggers.debug(clientConfig.getGroupConfig().getName());
+<A NAME="55"></A>                Loggers.debug(<FONT ID="StringLiteral">"clientConfig.getGroupConfig().toString():"</FONT>);
+<A NAME="56"></A>                Loggers.debug(clientConfig.getGroupConfig().toString());
+<A NAME="57"></A>            }
+<A NAME="58"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="59"></A>            <FONT ID="If">if</FONT> (!hazelcastClient.isActive()) {
+<A NAME="60"></A>                Loggers.info(Loggers.CODE_HC + <FONT ID="StringLiteral">"Hazelcast client is shutdown. Restarting..."</FONT>);
+<A NAME="61"></A>                hazelcastClient.restart();
+<A NAME="62"></A>                Loggers.info(Loggers.CODE_HC + <FONT ID="StringLiteral">"Hazelcast client start state after attempted restart:"</FONT> + hazelcastClient.isActive());
+<A NAME="63"></A>            }
+<A NAME="64"></A>        }
+<A NAME="65"></A>
+<A NAME="66"></A>        <FONT ID="Return">return</FONT> hazelcastClient;
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>    @Override
+<A NAME="70"></A>    @PrePersist
+<A NAME="71"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> create(<FONT ID="Final">final</FONT> Object entity) {
+<A NAME="72"></A>
+<A NAME="73"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="74"></A>            Object id = getId(entity);
+<A NAME="75"></A>
+<A NAME="76"></A>            IMap&lt;Object, Object&gt; hcMap = getHCMap(entity);
+<A NAME="77"></A>
+<A NAME="78"></A>            hcMap.lock(id);
+<A NAME="79"></A>            hcMap.put(id, entity);
+<A NAME="80"></A>            hcMap.unlock(id);
+<A NAME="81"></A>
+<A NAME="82"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="83"></A>            Loggers.error(<FONT ID="StringLiteral">"HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST"</FONT>, t);
+<A NAME="84"></A>        }
+<A NAME="85"></A>    }
+<A NAME="86"></A>
+<A NAME="87"></A>    @Override
+<A NAME="88"></A>    @PostLoad
+<A NAME="89"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> read(<FONT ID="Final">final</FONT> Object entity) {
+<A NAME="90"></A>
+<A NAME="91"></A>
+<A NAME="92"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="93"></A>            <FONT ID="SingleLineComment">//final Human nsHuman = getHCMap(entity).get(object.getHumanId());
+<A NAME="94"></A></FONT>            <FONT ID="SingleLineComment">//compare and update here
+<A NAME="95"></A></FONT>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="96"></A>            Loggers.error(<FONT ID="StringLiteral">"HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST"</FONT>, t);
+<A NAME="97"></A>        }
+<A NAME="98"></A>    }
+<A NAME="99"></A>
+<A NAME="100"></A>    @Override
+<A NAME="101"></A>    @PostUpdate
+<A NAME="102"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> update(<FONT ID="Final">final</FONT> Object entity) {
+<A NAME="103"></A>
+<A NAME="104"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="105"></A>
+<A NAME="106"></A>            Object key = getId(entity);
+<A NAME="107"></A>
+<A NAME="108"></A>            IMap&lt;Object, Object&gt; hcMap = getHCMap(entity);
+<A NAME="109"></A>
+<A NAME="110"></A>            hcMap.lock(key);
+<A NAME="111"></A>            hcMap.put(key, entity);
+<A NAME="112"></A>            hcMap.unlock(key);
+<A NAME="113"></A>
+<A NAME="114"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="115"></A>            Loggers.error(<FONT ID="StringLiteral">"HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST"</FONT>, t);
+<A NAME="116"></A>        }
+<A NAME="117"></A>    }
+<A NAME="118"></A>
+<A NAME="119"></A>    @Override
+<A NAME="120"></A>    @PostRemove
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> remove(<FONT ID="Final">final</FONT> Object entity) {
+<A NAME="122"></A>
+<A NAME="123"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="124"></A>            Object key = getId(entity);
+<A NAME="125"></A>
+<A NAME="126"></A>            IMap&lt;Object, Object&gt; hcMap = getHCMap(entity);
+<A NAME="127"></A>
+<A NAME="128"></A>            hcMap.lock(key);
+<A NAME="129"></A>            hcMap.remove(key);
+<A NAME="130"></A>            hcMap.unlock(key);
+<A NAME="131"></A>
+<A NAME="132"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="133"></A>            Loggers.error(<FONT ID="StringLiteral">"HAZELCAST: ERROR PERSISTING DATA VIA HAZELCAST"</FONT>, t);
+<A NAME="134"></A>        }
+<A NAME="135"></A>    }
+<A NAME="136"></A>
+<A NAME="137"></A>
+<A NAME="138"></A>    <FONT ID="Private">private</FONT> Object getId(Object entity) <FONT ID="Throws">throws</FONT> IllegalAccessException, InvocationTargetException {
+<A NAME="139"></A>        Object key = <FONT ID="Null">null</FONT>;
+<A NAME="140"></A>
+<A NAME="141"></A>        <FONT ID="Final">final</FONT> Method[] methods = entity.getClass().getMethods();
+<A NAME="142"></A>
+<A NAME="143"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Method method : methods) {
+<A NAME="144"></A>            <FONT ID="Final">final</FONT> Id annotation = method.getAnnotation(Id.<FONT ID="Class">class</FONT>);
+<A NAME="145"></A>            <FONT ID="If">if</FONT> (annotation != <FONT ID="Null">null</FONT>) {
+<A NAME="146"></A>                key = method.invoke(entity);
+<A NAME="147"></A>            }
+<A NAME="148"></A>        }
+<A NAME="149"></A>
+<A NAME="150"></A>        <FONT ID="If">if</FONT> (DEBUG_ENABLED) {
+<A NAME="151"></A>            Loggers.debug(Loggers.CODE_HC + <FONT ID="StringLiteral">"Entity's @Id:"</FONT> + key);
+<A NAME="152"></A>        }
+<A NAME="153"></A>
+<A NAME="154"></A>        <FONT ID="Return">return</FONT> key;
+<A NAME="155"></A>    }
+<A NAME="156"></A>
+<A NAME="157"></A>    <FONT ID="Private">private</FONT> IMap&lt;Object, Object&gt; getHCMap(<FONT ID="Final">final</FONT> Object entity) {
+<A NAME="158"></A>        <FONT ID="Final">final</FONT> String mapName = entity.getClass().getName();
+<A NAME="159"></A>        <FONT ID="If">if</FONT> (DEBUG_ENABLED) {
+<A NAME="160"></A>            Loggers.debug(Loggers.CODE_HC + <FONT ID="StringLiteral">"Attempting to fetch map named from:"</FONT> + mapName);
+<A NAME="161"></A>        }
+<A NAME="162"></A>        <FONT ID="Return">return</FONT> getHCClient().getMap(mapName);
+<A NAME="163"></A>    }
+<A NAME="164"></A>}
+<A NAME="165"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMoment (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TeachMoment.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets.teach;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/Bate.java.html">ai.ilikeplaces.logic.Listeners.widgets.Bate</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/PrivateLocationCreate.java.html">ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">ai.ilikeplaces.logic.validators.unit.Password</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/ServletActivate.java.html">ai.ilikeplaces.servlets.ServletActivate</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/ServletLogin.java.html">ai.ilikeplaces.servlets.ServletLogin</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="22"></A><FONT ID="Import">import</FONT> java.io.UnsupportedEncodingException;
+<A NAME="23"></A><FONT ID="Import">import</FONT> java.net.URLEncoder;
+<A NAME="24"></A>
+<A NAME="25"></A><FONT ID="FormalComment">/**
+<A NAME="26"></A> * Created by IntelliJ IDEA.
+<A NAME="27"></A> * User: Ravindranath Akila
+<A NAME="28"></A> * Date: 11/27/11
+<A NAME="29"></A> * Time: 8:07 AM
+<A NAME="30"></A> */</FONT>
+<A NAME="31"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TeachMoment <FONT ID="Extends">extends</FONT> AbstractWidgetListener&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMomentCriteria.java.html">TeachMomentCriteria</A>&gt; {
+<A NAME="32"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="33"></A></FONT>
+<A NAME="34"></A>
+<A NAME="35"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS STATIC --------------------------
+<A NAME="36"></A></FONT>
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PASSWORD_DETAILS = <FONT ID="StringLiteral">"_passwordDetails"</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PASSWORD_ADVICE = <FONT ID="StringLiteral">"_passwordAdvice"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String URL = <FONT ID="StringLiteral">"_url"</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> String woehint;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> String placeName;
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> String placeDetails;
+<A NAME="44"></A>
+<A NAME="45"></A><FONT ID="SingleLineComment">// -------------------------- ENUMERATIONS --------------------------
+<A NAME="46"></A></FONT>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum TeachMomentIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="48"></A>        teach_moment_widget,
+<A NAME="49"></A>        teach_moment_noti,
+<A NAME="50"></A>        teach_moment_signed_in,
+<A NAME="51"></A>        teach_moment_signed_out,
+<A NAME="52"></A>        teach_moment_signup_section,
+<A NAME="53"></A>        teach_moment_signup_input,
+<A NAME="54"></A>        teach_moment_signup_click,
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="58"></A></FONT>
+<A NAME="59"></A>    <FONT ID="FormalComment">/**
+<A NAME="60"></A>     * @param request__
+<A NAME="61"></A>     * @param teachMomentCriteria
+<A NAME="62"></A>     * @param appendToElement__
+<A NAME="63"></A>     */</FONT>
+<A NAME="64"></A>    <FONT ID="Public">public</FONT> TeachMoment(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMomentCriteria.java.html">TeachMomentCriteria</A> teachMomentCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="65"></A>
+<A NAME="66"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.TeachMoment, teachMomentCriteria, appendToElement__);
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A><FONT ID="SingleLineComment">// ------------------------ OVERRIDING METHODS ------------------------
+<A NAME="70"></A></FONT>
+<A NAME="71"></A>    <FONT ID="FormalComment">/**
+<A NAME="72"></A>     * Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, Object, org.w3c.dom.Element)}
+<A NAME="73"></A>     * GENERIC constructor.
+<A NAME="74"></A>     *
+<A NAME="75"></A>     * @param teachMomentCriteria
+<A NAME="76"></A>     */</FONT>
+<A NAME="77"></A>    @Override
+<A NAME="78"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMomentCriteria.java.html">TeachMomentCriteria</A> teachMomentCriteria) {
+<A NAME="79"></A>
+<A NAME="80"></A>        <FONT ID="Super">super</FONT>.registerUserNotifier($$(TeachMomentIds.teach_moment_noti));
+<A NAME="81"></A>
+<A NAME="82"></A>        ShowHideWidgetAreaBasedOnLoggedInState:
+<A NAME="83"></A>        {
+<A NAME="84"></A>            <FONT ID="If">if</FONT> (teachMomentCriteria.getHumanId() == <FONT ID="Null">null</FONT>) {
+<A NAME="85"></A>                $$displayBlock($$(TeachMomentIds.teach_moment_signed_out));
+<A NAME="86"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="87"></A>                $$displayBlock($$(TeachMomentIds.teach_moment_signed_in));
+<A NAME="88"></A>            }
+<A NAME="89"></A>        }
+<A NAME="90"></A>
+<A NAME="91"></A>        GetUrlParametersIfPresent:
+<A NAME="92"></A>        {
+<A NAME="93"></A>            woehint = TeachMoment.<FONT ID="This">this</FONT>.$$(request, PrivateLocationCreate.WOEHINT);
+<A NAME="94"></A>            placeName = TeachMoment.<FONT ID="This">this</FONT>.$$(request, PrivateLocationCreate.PLACENAME);
+<A NAME="95"></A>            placeDetails = TeachMoment.<FONT ID="This">this</FONT>.$$(request, PrivateLocationCreate.PLACEDETAILS);
+<A NAME="96"></A>        }
+<A NAME="97"></A>    }
+<A NAME="98"></A>
+<A NAME="99"></A>    <FONT ID="FormalComment">/**
+<A NAME="100"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="101"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="102"></A>     * automatically called by the constructor
+<A NAME="103"></A>     *
+<A NAME="104"></A>     * @param itsNatHTMLDocument_
+<A NAME="105"></A>     * @param hTMLDocument_
+<A NAME="106"></A>     */</FONT>
+<A NAME="107"></A>    @Override
+<A NAME="108"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="109"></A>
+<A NAME="110"></A>        <FONT ID="Super">super</FONT>.registerForInputText($$(TeachMomentIds.teach_moment_signup_input),
+<A NAME="111"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMomentCriteria.java.html">TeachMomentCriteria</A>&gt;(criteria) {
+<A NAME="112"></A>                    <FONT ID="FormalComment">/**
+<A NAME="113"></A>                     * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="114"></A>                     *
+<A NAME="115"></A>                     * @param evt fired from client
+<A NAME="116"></A>                     */</FONT>
+<A NAME="117"></A>                    @Override
+<A NAME="118"></A>                    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="119"></A>
+<A NAME="120"></A>                        criteria.getSignupCriteria().setEmail(<FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(getTargetInputText(evt)));
+<A NAME="121"></A>                    }
+<A NAME="122"></A>                }
+<A NAME="123"></A>        );
+<A NAME="124"></A>
+<A NAME="125"></A>        <FONT ID="Super">super</FONT>.registerForClick($$(TeachMomentIds.teach_moment_signup_click),
+<A NAME="126"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMomentCriteria.java.html">TeachMomentCriteria</A>&gt;(criteria) {
+<A NAME="127"></A>                    <FONT ID="FormalComment">/**
+<A NAME="128"></A>                     * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="129"></A>                     *
+<A NAME="130"></A>                     * @param evt fired from client
+<A NAME="131"></A>                     */</FONT>
+<A NAME="132"></A>                    @Override
+<A NAME="133"></A>                    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="134"></A>
+<A NAME="135"></A>                        <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> myemail = criteria.getSignupCriteria().getEmail();
+<A NAME="136"></A>
+<A NAME="137"></A>                        <FONT ID="If">if</FONT> (myemail.valid()) {
+<A NAME="138"></A>                            <FONT ID="If">if</FONT> (!DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
+<A NAME="139"></A>                                <FONT ID="Final">final</FONT> String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+<A NAME="140"></A>
+<A NAME="141"></A>                                <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; humanCreateReturn = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(
+<A NAME="142"></A>                                        <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>().setObjAsValid(myemail.getObj()),
+<A NAME="143"></A>                                        <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A>(randomPassword),
+<A NAME="144"></A>                                        myemail);
+<A NAME="145"></A>
+<A NAME="146"></A>                                <FONT ID="If">if</FONT> (humanCreateReturn.valid() &amp;&amp; humanCreateReturn.returnValue()) {
+<A NAME="147"></A>                                    UserIntroduction.createIntroData(<FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(myemail.getObj()));
+<A NAME="148"></A>
+<A NAME="149"></A>                                    <FONT ID="Final">final</FONT> Parameter parameter;
+<A NAME="150"></A>                                    <FONT ID="If">if</FONT> (woehint != <FONT ID="Null">null</FONT> &amp;&amp; placeName != <FONT ID="Null">null</FONT> &amp;&amp; placeDetails != <FONT ID="Null">null</FONT>) {
+<A NAME="151"></A>                                        parameter = <FONT ID="New">new</FONT> Parameter(<FONT ID="StringLiteral">"http://www.ilikeplaces.com/page/_org?category=143"</FONT>)
+<A NAME="152"></A>                                                .append(PrivateLocationCreate.WOEHINT,
+<A NAME="153"></A>                                                        woehint)
+<A NAME="154"></A>                                                .append(PrivateLocationCreate.PLACENAME,
+<A NAME="155"></A>                                                        placeName)
+<A NAME="156"></A>                                                .append(PrivateLocationCreate.PLACEDETAILS,
+<A NAME="157"></A>                                                        placeDetails);
+<A NAME="158"></A>                                    } <FONT ID="Else">else</FONT> {
+<A NAME="159"></A>                                        parameter = <FONT ID="New">new</FONT> Parameter(<FONT ID="StringLiteral">"http://www.ilikeplaces.com/page/_org?category=143"</FONT>);
+<A NAME="160"></A>                                    }
+<A NAME="161"></A>
+<A NAME="162"></A>                                    <FONT ID="Final">final</FONT> String activationURL;
+<A NAME="163"></A>                                    <FONT ID="Try">try</FONT> {
+<A NAME="164"></A>                                        activationURL = <FONT ID="New">new</FONT> Parameter(<FONT ID="StringLiteral">"http://www.ilikeplaces.com/"</FONT> + <FONT ID="StringLiteral">"activate"</FONT>)
+<A NAME="165"></A>                                                .append(ServletLogin.Username, myemail.getObj(), <FONT ID="True">true</FONT>)
+<A NAME="166"></A>                                                .append(ServletLogin.Password,
+<A NAME="167"></A>                                                        DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(<FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(myemail.getObj()))
+<A NAME="168"></A>                                                                .returnValue()
+<A NAME="169"></A>                                                                .getHumanAuthenticationHash())
+<A NAME="170"></A>                                                .append(ServletActivate.NEXT, URLEncoder.encode(parameter.toURL(), <FONT ID="StringLiteral">"UTF8"</FONT>))
+<A NAME="171"></A>                                                        .get();
+<A NAME="172"></A>                                    } <FONT ID="Catch">catch</FONT> (UnsupportedEncodingException e) {
+<A NAME="173"></A>                                        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="174"></A>                                    }
+<A NAME="175"></A>
+<A NAME="176"></A>
+<A NAME="177"></A>                                    String htmlBody = Bate.getHTMLStringForOfflineFriendInvite(<FONT ID="StringLiteral">"I Like Places"</FONT>, myemail.getObj());
+<A NAME="178"></A>
+<A NAME="179"></A>                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+<A NAME="180"></A>                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, <FONT ID="StringLiteral">"Your temporary password is "</FONT> + randomPassword);
+<A NAME="181"></A>                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, <FONT ID="StringLiteral">"Make sure you change it."</FONT>);
+<A NAME="182"></A>
+<A NAME="183"></A>                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+<A NAME="184"></A>                                            myemail.getObj(),
+<A NAME="185"></A>                                            <FONT ID="StringLiteral">"I Like Places prides you with an Exclusive Invite!"</FONT>,
+<A NAME="186"></A>                                            htmlBody);
+<A NAME="187"></A>
+<A NAME="188"></A>                                    $$displayNone($$(TeachMomentIds.teach_moment_signup_section));
+<A NAME="189"></A>
+<A NAME="190"></A>                                    TeachMoment.<FONT ID="This">this</FONT>.notifyUser(<FONT ID="StringLiteral">"Great! Check your email now!"</FONT>);
+<A NAME="191"></A>
+<A NAME="192"></A>                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+<A NAME="193"></A>                                } <FONT ID="Else">else</FONT> {
+<A NAME="194"></A>                                    TeachMoment.<FONT ID="This">this</FONT>.notifyUser(<FONT ID="StringLiteral">"Email INVALID!"</FONT>);
+<A NAME="195"></A>                                }
+<A NAME="196"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="197"></A>                                TeachMoment.<FONT ID="This">this</FONT>.notifyUser(<FONT ID="StringLiteral">"This email is TAKEN!:("</FONT>);
+<A NAME="198"></A>                            }
+<A NAME="199"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="200"></A>                            TeachMoment.<FONT ID="This">this</FONT>.notifyUser(<FONT ID="StringLiteral">"Email seems to be wrong :-("</FONT>);
+<A NAME="201"></A>                        }
+<A NAME="202"></A>                    }
+<A NAME="203"></A>                }
+<A NAME="204"></A>        );
+<A NAME="205"></A>    }
+<A NAME="206"></A>
+<A NAME="207"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String getCurrentUrl(<FONT ID="Final">final</FONT> HttpServletRequest req) {
+<A NAME="208"></A>        <FONT ID="Final">final</FONT> String contextPath = req.getContextPath();   <FONT ID="SingleLineComment">// /mywebapp
+<A NAME="209"></A></FONT>        <FONT ID="Final">final</FONT> String servletPath = req.getServletPath();   <FONT ID="SingleLineComment">// /servlet/MyServlet
+<A NAME="210"></A></FONT>        <FONT ID="Final">final</FONT> String pathInfo = req.getPathInfo();         <FONT ID="SingleLineComment">// /a/b;c=123
+<A NAME="211"></A></FONT>        <FONT ID="Final">final</FONT> String queryString = req.getQueryString();          <FONT ID="SingleLineComment">// d=789
+<A NAME="212"></A></FONT>
+<A NAME="213"></A>        <FONT ID="SingleLineComment">// Reconstruct original requesting URL
+<A NAME="214"></A></FONT>        String url = contextPath + servletPath;
+<A NAME="215"></A>        <FONT ID="If">if</FONT> (pathInfo != <FONT ID="Null">null</FONT>) {
+<A NAME="216"></A>            url += pathInfo;
+<A NAME="217"></A>        }
+<A NAME="218"></A>        <FONT ID="If">if</FONT> (queryString != <FONT ID="Null">null</FONT>) {
+<A NAME="219"></A>            url += <FONT ID="StringLiteral">"?"</FONT> + queryString;
+<A NAME="220"></A>        }
+<A NAME="221"></A>        <FONT ID="Return">return</FONT> url;
+<A NAME="222"></A>    }
+<A NAME="223"></A>}
+<A NAME="224"></A></pre>
+</BODY>
+</HTML>

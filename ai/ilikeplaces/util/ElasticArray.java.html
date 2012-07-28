@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.ElasticArray (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ElasticArray.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> java.util.Arrays;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * Please let us know if you have a faster/memorable :P implementation.
+<A NAME="9"></A> *
+<A NAME="10"></A> * I doubt if this approach is consistent, but over time, there are no complains :)
+<A NAME="11"></A> * &lt;p/&gt;
+<A NAME="12"></A> * Created by IntelliJ IDEA.
+<A NAME="13"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="14"></A> * Date: Oct 10, 2010
+<A NAME="15"></A> * Time: 7:45:55 PM
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under Apache License Version 2.0"</FONT>)
+<A NAME="18"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ElasticArray&lt;T&gt; {
+<A NAME="19"></A>    <FONT ID="Public">public</FONT> T[] array;
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> ElasticArray(<FONT ID="Final">final</FONT> T[] array) {
+<A NAME="22"></A>        <FONT ID="This">this</FONT>.array = array;
+<A NAME="23"></A>    }
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> T[] getArray() {
+<A NAME="26"></A>        <FONT ID="Return">return</FONT> array;
+<A NAME="27"></A>    }
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/ElasticArray.java.html">ElasticArray</A>&lt;T&gt; setArray(<FONT ID="Final">final</FONT> T[] array) {
+<A NAME="30"></A>        <FONT ID="This">this</FONT>.array = array;
+<A NAME="31"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="32"></A>    }
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="FormalComment">/**
+<A NAME="35"></A>     * Not synchronized! Please use a synchronized block if you do concurrent operations, or use public void addEntriesInSync(final T entryToBeAdded)
+<A NAME="36"></A>     *
+<A NAME="37"></A>     * @param entryToBeAdded Entry To Be Added
+<A NAME="38"></A>     */</FONT>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntries(<FONT ID="Final">final</FONT> T entryToBeAdded) {
+<A NAME="40"></A>        array = Arrays.copyOf(array, array.length + <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="41"></A>        array[array.length - <FONT ID="IntegerLiteral">1</FONT>] = entryToBeAdded;
+<A NAME="42"></A>    }
+<A NAME="43"></A>
+<A NAME="44"></A>    <FONT ID="FormalComment">/**
+<A NAME="45"></A>     * @param entryToBeAdded Entry To Be Added
+<A NAME="46"></A>     */</FONT>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntriesInSync(<FONT ID="Final">final</FONT> T entryToBeAdded) {
+<A NAME="48"></A>        <FONT ID="Synchronized">synchronized</FONT> (<FONT ID="This">this</FONT>) {
+<A NAME="49"></A>            array = Arrays.copyOf(array, array.length + <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="50"></A>            array[array.length - <FONT ID="IntegerLiteral">1</FONT>] = entryToBeAdded;
+<A NAME="51"></A>        }
+<A NAME="52"></A>    }
+<A NAME="53"></A>}
+<A NAME="54"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.LongMsg (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">LongMsg.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * Okay, we need to
+<A NAME="11"></A> *
+<A NAME="12"></A> * 1. Remember that entries to this entity will be foreign keys. That is, so that anybody can use this entity.
+<A NAME="13"></A> *
+<A NAME="14"></A> * 2. This entity should be super efficient since it will be used everywhere.
+<A NAME="15"></A> *
+<A NAME="16"></A> * Created by IntelliJ IDEA.
+<A NAME="17"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="18"></A> * Date: Jan 25, 2010
+<A NAME="19"></A> * Time: 1:01:22 PM
+<A NAME="20"></A> */</FONT>
+<A NAME="21"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="22"></A>@Entity
+<A NAME="23"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="24"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> LongMsg <FONT ID="Implements">implements</FONT> Serializable{
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> Long longMsgId;
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String longMsgIdCOL = <FONT ID="StringLiteral">"longMsgId"</FONT>;
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> Integer longMsgType;<FONT ID="SingleLineComment">//Wall, Personal
+<A NAME="30"></A></FONT>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> String longMsgContent;
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> String longMsgMetadata;<FONT ID="SingleLineComment">//Anybody can store relavant metadata here
+<A NAME="34"></A></FONT>
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> longMsgTypeHUMAN = <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="37"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> longMsgTypeMISC = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="38"></A>
+<A NAME="39"></A>    @Id
+<A NAME="40"></A>    @GeneratedValue(strategy = GenerationType.AUTO)
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> Long getLongMsgId() {
+<A NAME="42"></A>        <FONT ID="Return">return</FONT> longMsgId;
+<A NAME="43"></A>    }
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLongMsgId(<FONT ID="Final">final</FONT> Long longMsgId) {
+<A NAME="46"></A>        <FONT ID="This">this</FONT>.longMsgId = longMsgId;
+<A NAME="47"></A>    }
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/LongMsg.java.html">LongMsg</A> setLongMsgIdR(<FONT ID="Final">final</FONT> Long longMsgId) {
+<A NAME="49"></A>        <FONT ID="This">this</FONT>.longMsgId = longMsgId;
+<A NAME="50"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="51"></A>
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> Integer getLongMsgType() {
+<A NAME="55"></A>        <FONT ID="Return">return</FONT> longMsgType;
+<A NAME="56"></A>    }
+<A NAME="57"></A>
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLongMsgType(<FONT ID="Final">final</FONT> Integer longMsgType) {
+<A NAME="59"></A>        <FONT ID="This">this</FONT>.longMsgType = longMsgType;
+<A NAME="60"></A>    }
+<A NAME="61"></A>
+<A NAME="62"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/LongMsg.java.html">LongMsg</A> setLongMsgTypeR(<FONT ID="Final">final</FONT> Integer longMsgType) {
+<A NAME="63"></A>        <FONT ID="This">this</FONT>.longMsgType = longMsgType;
+<A NAME="64"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="65"></A>    }
+<A NAME="66"></A>
+<A NAME="67"></A>    @Column(length = <FONT ID="IntegerLiteral">10240</FONT>)
+<A NAME="68"></A>    @Lob
+<A NAME="69"></A>    <FONT ID="Public">public</FONT> String getLongMsgContent() {
+<A NAME="70"></A>        <FONT ID="Return">return</FONT> longMsgContent;
+<A NAME="71"></A>    }
+<A NAME="72"></A>
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLongMsgContent(<FONT ID="Final">final</FONT> String longMsgContent) {
+<A NAME="74"></A>        <FONT ID="This">this</FONT>.longMsgContent = longMsgContent;
+<A NAME="75"></A>    }
+<A NAME="76"></A>
+<A NAME="77"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/LongMsg.java.html">LongMsg</A> setLongMsgContentR(<FONT ID="Final">final</FONT> String longMsgContent) {
+<A NAME="78"></A>        <FONT ID="This">this</FONT>.longMsgContent = longMsgContent;
+<A NAME="79"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> String getLongMsgMetadata() {
+<A NAME="83"></A>        <FONT ID="Return">return</FONT> longMsgMetadata;
+<A NAME="84"></A>    }
+<A NAME="85"></A>
+<A NAME="86"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLongMsgMetadata(<FONT ID="Final">final</FONT> String longMsgMetadata) {
+<A NAME="87"></A>        <FONT ID="This">this</FONT>.longMsgMetadata = longMsgMetadata;
+<A NAME="88"></A>    }
+<A NAME="89"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/LongMsg.java.html">LongMsg</A> setLongMsgMetadataR(<FONT ID="Final">final</FONT> String longMsgMetadata) {
+<A NAME="90"></A>        <FONT ID="This">this</FONT>.longMsgMetadata = longMsgMetadata;
+<A NAME="91"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="92"></A>
+<A NAME="93"></A>    }
+<A NAME="94"></A>
+<A NAME="95"></A>    @Override
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="97"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"LongMsg{"</FONT> +
+<A NAME="98"></A>                <FONT ID="StringLiteral">"longMsgId="</FONT> + longMsgId +
+<A NAME="99"></A>                <FONT ID="StringLiteral">", longMsgType="</FONT> + longMsgType +
+<A NAME="100"></A>                <FONT ID="StringLiteral">", longMsgContent='"</FONT> + longMsgContent + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="101"></A>                <FONT ID="StringLiteral">", longMsgMetadata='"</FONT> + longMsgMetadata + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="102"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="103"></A>    }
+<A NAME="104"></A>}</pre>
+</BODY>
+</HTML>

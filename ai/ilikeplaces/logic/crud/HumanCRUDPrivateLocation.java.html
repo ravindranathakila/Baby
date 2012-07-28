@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDPrivateLocation (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDPrivateLocation.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">ai.ilikeplaces.entities.HumansFriend</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CPrivateLocationLocal.java.html">ai.ilikeplaces.logic.crud.unit.CPrivateLocationLocal</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/DPrivateLocationLocal.java.html">ai.ilikeplaces.logic.crud.unit.DPrivateLocationLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/RPrivateLocationLocal.java.html">ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/UPrivateLocationLocal.java.html">ai.ilikeplaces.logic.crud.unit.UPrivateLocationLocal</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">ai.ilikeplaces.logic.validators.unit.GeoCoord</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VDouble.java.html">ai.ilikeplaces.logic.validators.unit.VDouble</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">ai.ilikeplaces.logic.validators.unit.VLong</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="15"></A><FONT ID="Import">import</FONT> com.google.gdata.data.geo.impl.W3CPoint;
+<A NAME="16"></A>
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="22"></A>
+<A NAME="23"></A><FONT ID="FormalComment">/**
+<A NAME="24"></A> * Created by IntelliJ IDEA.
+<A NAME="25"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="26"></A> * Date: Jan 13, 2010
+<A NAME="27"></A> * Time: 11:58:04 PM
+<A NAME="28"></A> */</FONT>
+<A NAME="29"></A>
+<A NAME="30"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="31"></A>@Stateless
+<A NAME="32"></A>@Interceptors({ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>, RuntimeExceptionWrapper.<FONT ID="Class">class</FONT>})
+<A NAME="33"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanCRUDPrivateLocation <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A> {
+<A NAME="34"></A>
+<A NAME="35"></A>    @EJB
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CPrivateLocationLocal.java.html">CPrivateLocationLocal</A> cPrivateLocationLocal;
+<A NAME="37"></A>
+<A NAME="38"></A>    @EJB
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/RPrivateLocationLocal.java.html">RPrivateLocationLocal</A> rPrivateLocationLocal;
+<A NAME="40"></A>
+<A NAME="41"></A>    @EJB
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/UPrivateLocationLocal.java.html">UPrivateLocationLocal</A> uPrivateLocationLocal;
+<A NAME="43"></A>
+<A NAME="44"></A>    @EJB
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/DPrivateLocationLocal.java.html">DPrivateLocationLocal</A> dPrivateLocationLocal;
+<A NAME="46"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_PRIVATE_LOCATION_SUCCESSFUL = <FONT ID="StringLiteral">"Read private location Successful!"</FONT>;
+<A NAME="47"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_PRIVATE_LOCATION_FAILED = <FONT ID="StringLiteral">"Read private location FAILED!"</FONT>;
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_OWNERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL = <FONT ID="StringLiteral">"Check ownership of private location Successful!"</FONT>;
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_OWNERSHIP_OF_PRIVATE_LOCATION_FAILED = <FONT ID="StringLiteral">"Check ownership of private location FAILED!"</FONT>;
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL = <FONT ID="StringLiteral">"Check viewership of private location Successful!"</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_FAILED = <FONT ID="StringLiteral">"Check viewership of private location FAILED!"</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETE_PRIVATE_LOCATION_SUCCESSFUL = <FONT ID="StringLiteral">"Delete private location Successful!"</FONT>;
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETE_PRIVATE_LOCATION_FAILED = <FONT ID="StringLiteral">"Delete private location FAILED!"</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SAVE_PRIVATE_LOCATION_SUCCESSFUL = <FONT ID="StringLiteral">"Save private location Successful!"</FONT>;
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SAVE_PRIVATE_LOCATION_FAILED = <FONT ID="StringLiteral">"Save private location FAILED!"</FONT>;
+<A NAME="56"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_PRIVATE_LOCATION_SUCCESSFUL = <FONT ID="StringLiteral">"Update private location Successful!"</FONT>;
+<A NAME="57"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_PRIVATE_LOCATION_FAILED = <FONT ID="StringLiteral">"Update private location FAILED!"</FONT>;
+<A NAME="58"></A>
+<A NAME="59"></A>
+<A NAME="60"></A><FONT ID="SingleLineComment">//    @Deprecated
+<A NAME="61"></A></FONT><FONT ID="SingleLineComment">//    @Override
+<A NAME="62"></A></FONT><FONT ID="SingleLineComment">//    public Return&lt;PrivateLocation&gt; cPrivateLocation(final RefObj&lt;String&gt; humanId, final String privateLocationName, final String privateLocationInfo) {
+<A NAME="63"></A></FONT><FONT ID="SingleLineComment">//        Return&lt;PrivateLocation&gt; r;
+<A NAME="64"></A></FONT><FONT ID="SingleLineComment">//        try {
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//            r = new ReturnImpl&lt;PrivateLocation&gt;(cPrivateLocationLocal.doNTxCPrivateLocation(humanId.getObjectAsValid(), privateLocationName, privateLocationInfo), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//        } catch (final AbstractEjbApplicationException t) {
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//            r = new ReturnImpl&lt;PrivateLocation&gt;(t, UPDATE_PRIVATE_LOCATION_FAILED, true);
+<A NAME="68"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//        return r;
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="71"></A></FONT>
+<A NAME="72"></A>    @Override
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; cPrivateLocation(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; privateLocationName, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; privateLocationInfo, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VDouble.java.html">VDouble</A> latitude, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VDouble.java.html">VDouble</A> longitude) {
+<A NAME="74"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r;
+<A NAME="75"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="76"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(cPrivateLocationLocal.doNTxCPrivateLocation(
+<A NAME="77"></A>                    humanId.getObjectAsValid(),
+<A NAME="78"></A>                    privateLocationName.getObjectAsValid(),
+<A NAME="79"></A>                    privateLocationInfo.getObjectAsValid(),
+<A NAME="80"></A>                    latitude.getObjectAsValid(),
+<A NAME="81"></A>                    longitude.getObjectAsValid()
+<A NAME="82"></A>            ), SAVE_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="83"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="84"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(t, UPDATE_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="85"></A>        }
+<A NAME="86"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="87"></A>    }
+<A NAME="88"></A>
+<A NAME="89"></A>
+<A NAME="90"></A>    @Override
+<A NAME="91"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; uPrivateLocationAddOwner(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner) {
+<A NAME="92"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r;
+<A NAME="93"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="94"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(uPrivateLocationLocal.doUPrivateLocationAddOwner(humanId__.getObjectAsValid(), privateLocationId__, owner), UPDATE_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="95"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="96"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(t, UPDATE_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="97"></A>        }
+<A NAME="98"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="99"></A>    }
+<A NAME="100"></A>
+<A NAME="101"></A>    @Override
+<A NAME="102"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; uPrivateLocationRemoveOwner(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner) {
+<A NAME="103"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r;
+<A NAME="104"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="105"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(uPrivateLocationLocal.doUPrivateLocationRemoveOwner(humanId__.getObjectAsValid(), privateLocationId__, owner), UPDATE_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="106"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="107"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(t, UPDATE_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="108"></A>        }
+<A NAME="109"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="110"></A>    }
+<A NAME="111"></A>
+<A NAME="112"></A>    @Override
+<A NAME="113"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; uPrivateLocationAddVisitor(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner) {
+<A NAME="114"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r;
+<A NAME="115"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="116"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(uPrivateLocationLocal.doUPrivateLocationAddViewer(humanId__.getObjectAsValid(), privateLocationId__, owner), UPDATE_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="117"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="118"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(t, UPDATE_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="119"></A>        }
+<A NAME="120"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="121"></A>    }
+<A NAME="122"></A>
+<A NAME="123"></A>    @Override
+<A NAME="124"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; uPrivateLocationRemoveVisitor(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner) {
+<A NAME="125"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r;
+<A NAME="126"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="127"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(uPrivateLocationLocal.doUPrivateLocationRemoveViewer(humanId__.getObjectAsValid(), privateLocationId__, owner), UPDATE_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="128"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="129"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(t, UPDATE_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="130"></A>        }
+<A NAME="131"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="132"></A>    }
+<A NAME="133"></A>
+<A NAME="134"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="135"></A>    @Override
+<A NAME="136"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; dirtyRPrivateLocationAsAny(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId) {
+<A NAME="137"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r;
+<A NAME="138"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="139"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(rPrivateLocationLocal.doRPrivateLocationAsAny(humanId.getObjectAsValid(), privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="140"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="141"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(t, READ_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="142"></A>        }
+<A NAME="143"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="144"></A>
+<A NAME="145"></A>    }
+<A NAME="146"></A>
+<A NAME="147"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="148"></A>    @Override
+<A NAME="149"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; dirtyRPrivateLocationAsOwner(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId) {
+<A NAME="150"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r;
+<A NAME="151"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="152"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(rPrivateLocationLocal.doRPrivateLocationAsOwner(humanId.getObjectAsValid(), privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="153"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="154"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(t, READ_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="155"></A>        }
+<A NAME="156"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="157"></A>
+<A NAME="158"></A>    }
+<A NAME="159"></A>
+<A NAME="160"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="161"></A>    @Override
+<A NAME="162"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; dirtyRPrivateLocationAsViewer(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId) {
+<A NAME="163"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r;
+<A NAME="164"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="165"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(rPrivateLocationLocal.doRPrivateLocationAsViewer(humanId.getObjectAsValid(), privateLocationId), READ_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="166"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="167"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;(t, READ_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="168"></A>        }
+<A NAME="169"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="170"></A>
+<A NAME="171"></A>    }
+<A NAME="172"></A>
+<A NAME="173"></A>    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="174"></A>    @Override
+<A NAME="175"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; dirtyRPrivateLocationIsOwner(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A> privateLocationId) {
+<A NAME="176"></A>        Return&lt;Boolean&gt; r;
+<A NAME="177"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="178"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(rPrivateLocationLocal.doRPrivateLocationIsOwner(humanId.getObjectAsValid(), privateLocationId), CHECK_OWNERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="179"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="180"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, CHECK_OWNERSHIP_OF_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="181"></A>        }
+<A NAME="182"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="183"></A>    }
+<A NAME="184"></A>
+<A NAME="185"></A>    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="186"></A>    @Override
+<A NAME="187"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; dirtyRPrivateLocationIsViewer(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A> privateLocationId) {
+<A NAME="188"></A>        Return&lt;Boolean&gt; r;
+<A NAME="189"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="190"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(rPrivateLocationLocal.doRPrivateLocationIsViewer(humanId.getObjectAsValid(), privateLocationId), CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="191"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="192"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="193"></A>        }
+<A NAME="194"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="195"></A>    }
+<A NAME="196"></A>
+<A NAME="197"></A>    @Override
+<A NAME="198"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; dPrivateLocation(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId) {
+<A NAME="199"></A>        Return&lt;Boolean&gt; r;
+<A NAME="200"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="201"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(dPrivateLocationLocal.doNTxDPrivateLocation(humanId.getObjectAsValid(), privateLocationId), DELETE_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="202"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="203"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, CHECK_VIEWERSHIP_OF_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="204"></A>        }
+<A NAME="205"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="206"></A>    }
+<A NAME="207"></A>}
+<A NAME="208"></A></pre>
+</BODY>
+</HTML>

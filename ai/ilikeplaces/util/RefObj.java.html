@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.RefObj (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">RefObj.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="4"></A><FONT ID="Import">import</FONT> net.sf.oval.ConstraintViolation;
+<A NAME="5"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="6"></A><FONT ID="Import">import</FONT> net.sf.oval.exception.ConstraintsViolatedException;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * This Class is a helper class to store user input values.
+<A NAME="14"></A> * While the class also facilitates to the validation framework,
+<A NAME="15"></A> * it also copies every reference to its own, enforcing security
+<A NAME="16"></A> * but at the compromise of a new reference created.
+<A NAME="17"></A> * &lt;p/&gt;
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * Created by IntelliJ IDEA.
+<A NAME="20"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="21"></A> * Date: Jan 21, 2010
+<A NAME="22"></A> * Time: 6:03:22 PM
+<A NAME="23"></A> */</FONT>
+<A NAME="24"></A><FONT ID="Public">public</FONT> <FONT ID="Abstract">abstract</FONT> <FONT ID="Class">class</FONT> RefObj&lt;T&gt; <FONT ID="Implements">implements</FONT> Serializable{
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Protected">protected</FONT> T obj = <FONT ID="Null">null</FONT>;
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> List&lt;ConstraintViolation&gt; constraintViolations = <FONT ID="Null">null</FONT>;
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CODE = <FONT ID="StringLiteral">"[code:"</FONT>;
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CLOSE_SQUARE_BRACKET = <FONT ID="StringLiteral">"]"</FONT>;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> T getObj();
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="FormalComment">/**
+<A NAME="35"></A>     * Use this method to return this same object after validation.
+<A NAME="36"></A>     * &lt;p/&gt;
+<A NAME="37"></A>     * &lt;p/&gt;
+<A NAME="38"></A>     * If you are using a derived class, override this method with body and signature with return type DerivedClass
+<A NAME="39"></A>     * &lt;p/&gt;
+<A NAME="40"></A>     * &lt;b&gt;return (DerivedClass) super.getSelfAsValid(validator)&lt;/b&gt;
+<A NAME="41"></A>     *
+<A NAME="42"></A>     * @param validator
+<A NAME="43"></A>     * @return valid object
+<A NAME="44"></A>     */</FONT>
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;T&gt; getSelfAsValid(<FONT ID="Final">final</FONT> Validator... validator) {
+<A NAME="46"></A>        <FONT ID="Final">final</FONT> Validator v = validator.length == <FONT ID="IntegerLiteral">0</FONT> ? <FONT ID="New">new</FONT> Validator() : validator[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="47"></A>        constraintViolations = v.validate(<FONT ID="This">this</FONT>);
+<A NAME="48"></A>        <FONT ID="If">if</FONT> (constraintViolations.size() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="49"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(constraintViolations);
+<A NAME="50"></A>        }
+<A NAME="51"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="FormalComment">/**
+<A NAME="55"></A>     * Use this method to obtain an object that is expected to be valid.
+<A NAME="56"></A>     *
+<A NAME="57"></A>     * @return valid object
+<A NAME="58"></A>     * @throws ConstraintsViolatedException if found validation errors
+<A NAME="59"></A>     * @throws IllegalAccessError           if called without validating
+<A NAME="60"></A>     */</FONT>
+<A NAME="61"></A>    <FONT ID="Public">public</FONT> T getObjectAsValid() {
+<A NAME="62"></A>        <FONT ID="If">if</FONT> (constraintViolations != <FONT ID="Null">null</FONT>) {
+<A NAME="63"></A>            <FONT ID="If">if</FONT> (constraintViolations.size() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="64"></A>                <FONT ID="Return">return</FONT> getObj();
+<A NAME="65"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="66"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(constraintViolations);
+<A NAME="67"></A>            }
+<A NAME="68"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="69"></A>            <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="70"></A>                <FONT ID="Return">return</FONT> getObj();
+<A NAME="71"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="72"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(constraintViolations);
+<A NAME="73"></A>            }
+<A NAME="74"></A>        }
+<A NAME="75"></A>    }
+<A NAME="76"></A>
+<A NAME="77"></A>    <FONT ID="FormalComment">/**
+<A NAME="78"></A>     * Sets the value for this object.
+<A NAME="79"></A>     * Each time this methods is called, validations should/will be reset
+<A NAME="80"></A>     *
+<A NAME="81"></A>     * @param valueToBeSetToObj
+<A NAME="82"></A>     */</FONT>
+<A NAME="83"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setObj(<FONT ID="Final">final</FONT> T valueToBeSetToObj) {
+<A NAME="84"></A>        constraintViolations = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//So that validation is consistent
+<A NAME="85"></A></FONT>        <FONT ID="This">this</FONT>.obj = valueToBeSetToObj;
+<A NAME="86"></A>    }
+<A NAME="87"></A>
+<A NAME="88"></A>    @NOTE(note = <FONT ID="StringLiteral">"This approach is specially used when internally creating objects that should be valid as opposed to a web user."</FONT> +
+<A NAME="89"></A>            <FONT ID="StringLiteral">"This approach will prevent the code from setting null values and other violated states."</FONT>)
+<A NAME="90"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;T&gt; setObjAsValid(<FONT ID="Final">final</FONT> T obj) {
+<A NAME="91"></A>        constraintViolations = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//So that validation is consistent
+<A NAME="92"></A></FONT>        <FONT ID="This">this</FONT>.obj = obj;
+<A NAME="93"></A>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="94"></A>            <FONT ID="This">this</FONT>.obj = <FONT ID="Null">null</FONT>;
+<A NAME="95"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(<FONT ID="This">this</FONT>.getViolations());
+<A NAME="96"></A>        }
+<A NAME="97"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="98"></A>    }
+<A NAME="99"></A>
+<A NAME="100"></A>    <FONT ID="FormalComment">/**
+<A NAME="101"></A>     * To be used as direct output to client
+<A NAME="102"></A>     *
+<A NAME="103"></A>     * @param e
+<A NAME="104"></A>     * @return
+<A NAME="105"></A>     */</FONT>
+<A NAME="106"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String validationMessages(<FONT ID="Final">final</FONT> List&lt;ConstraintViolation&gt; e) {
+<A NAME="107"></A>        String returnVal = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="108"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> ConstraintViolation v : e) {
+<A NAME="109"></A>            returnVal += v.getMessage()
+<A NAME="110"></A>                    <FONT ID="SingleLineComment">//+ (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : "")
+<A NAME="111"></A></FONT>                    + <FONT ID="StringLiteral">"\n"</FONT>;
+<A NAME="112"></A>        }
+<A NAME="113"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="114"></A>    }
+<A NAME="115"></A>
+<A NAME="116"></A>    <FONT ID="FormalComment">/**
+<A NAME="117"></A>     * To be used with i18n where messages are values to properties files (localization bundles)
+<A NAME="118"></A>     *
+<A NAME="119"></A>     * @param e
+<A NAME="120"></A>     * @return
+<A NAME="121"></A>     */</FONT>
+<A NAME="122"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> List&lt;String&gt; validationMessagesAsList(<FONT ID="Final">final</FONT> List&lt;ConstraintViolation&gt; e) {
+<A NAME="123"></A>        <FONT ID="Final">final</FONT> List&lt;String&gt; returnVal = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();
+<A NAME="124"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> ConstraintViolation v : e) {
+<A NAME="125"></A>            returnVal.add(v.getMessage());
+<A NAME="126"></A>            <FONT ID="SingleLineComment">//+ (v.getErrorCode() != null ? CODE + v.getErrorCode() + CLOSE_SQUARE_BRACKET : ""));
+<A NAME="127"></A></FONT>        }
+<A NAME="128"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="129"></A>    }
+<A NAME="130"></A>
+<A NAME="131"></A>    <FONT ID="FormalComment">/**
+<A NAME="132"></A>     * validator is useful if you are using profiling or if you need to avoid lots of validator instances
+<A NAME="133"></A>     * being created
+<A NAME="134"></A>     *
+<A NAME="135"></A>     * @param validator
+<A NAME="136"></A>     * @return 0 if no errors or number of errors
+<A NAME="137"></A>     */</FONT>
+<A NAME="138"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> validate(<FONT ID="Final">final</FONT> Validator... validator) {
+<A NAME="139"></A>        <FONT ID="Final">final</FONT> Validator v = validator.length == <FONT ID="IntegerLiteral">0</FONT> ? <FONT ID="New">new</FONT> Validator() : validator[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="140"></A>        constraintViolations = v.validate(<FONT ID="This">this</FONT>);
+<A NAME="141"></A>        <FONT ID="Return">return</FONT> constraintViolations.size();
+<A NAME="142"></A>    }
+<A NAME="143"></A>
+<A NAME="144"></A>    <FONT ID="FormalComment">/**
+<A NAME="145"></A>     * validator is useful if you are using profiling or if you need to avoid lots of validator instances
+<A NAME="146"></A>     * being created
+<A NAME="147"></A>     *
+<A NAME="148"></A>     * @param validator
+<A NAME="149"></A>     * @return true if valid or false if one or more errors are found
+<A NAME="150"></A>     */</FONT>
+<A NAME="151"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> valid(<FONT ID="Final">final</FONT> Validator... validator) {
+<A NAME="152"></A>        <FONT ID="Final">final</FONT> Validator v = validator.length == <FONT ID="IntegerLiteral">0</FONT> ? <FONT ID="New">new</FONT> Validator() : validator[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="153"></A>        constraintViolations = v.validate(<FONT ID="This">this</FONT>);
+<A NAME="154"></A>        <FONT ID="Return">return</FONT> constraintViolations.size() == <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="155"></A>    }
+<A NAME="156"></A>
+<A NAME="157"></A>    <FONT ID="FormalComment">/**
+<A NAME="158"></A>     * validator is useful if you are using profiling or if you need to avoid lots of validator instances
+<A NAME="159"></A>     * being created
+<A NAME="160"></A>     *
+<A NAME="161"></A>     * @param validator
+<A NAME="162"></A>     * @return true if invalid or true if one or more errors are found
+<A NAME="163"></A>     */</FONT>
+<A NAME="164"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> invalid(<FONT ID="Final">final</FONT> Validator... validator) {
+<A NAME="165"></A>        <FONT ID="Return">return</FONT> !valid(validator);
+<A NAME="166"></A>    }
+<A NAME="167"></A>
+<A NAME="168"></A>    <FONT ID="FormalComment">/**
+<A NAME="169"></A>     * validator is useful if you are using profiling or if you need to avoid lots of validator instances
+<A NAME="170"></A>     * being created
+<A NAME="171"></A>     *
+<A NAME="172"></A>     * @param validator
+<A NAME="173"></A>     * @return 0 if no errors or number of errors
+<A NAME="174"></A>     */</FONT>
+<A NAME="175"></A>    <FONT ID="Public">public</FONT> T validateThrow(<FONT ID="Final">final</FONT> Validator... validator) {
+<A NAME="176"></A>        <FONT ID="Final">final</FONT> Validator v = validator.length == <FONT ID="IntegerLiteral">0</FONT> ? <FONT ID="New">new</FONT> Validator() : validator[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="177"></A>        constraintViolations = v.validate(<FONT ID="This">this</FONT>);
+<A NAME="178"></A>        <FONT ID="If">if</FONT> (constraintViolations.size() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="179"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(constraintViolations);
+<A NAME="180"></A>        }
+<A NAME="181"></A>        <FONT ID="Return">return</FONT> obj;
+<A NAME="182"></A>    }
+<A NAME="183"></A>
+<A NAME="184"></A>    <FONT ID="FormalComment">/**
+<A NAME="185"></A>     * validator is useful if you are using profiling or if you need to avoid lots of validator instances
+<A NAME="186"></A>     * being created
+<A NAME="187"></A>     *
+<A NAME="188"></A>     * @param validator
+<A NAME="189"></A>     * @return 0 if no errors or number of errors
+<A NAME="190"></A>     */</FONT>
+<A NAME="191"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;T&gt; validateThrowAndGetThis(<FONT ID="Final">final</FONT> Validator... validator) {
+<A NAME="192"></A>        <FONT ID="Final">final</FONT> Validator v = validator.length == <FONT ID="IntegerLiteral">0</FONT> ? <FONT ID="New">new</FONT> Validator() : validator[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="193"></A>        constraintViolations = v.validate(<FONT ID="This">this</FONT>);
+<A NAME="194"></A>        <FONT ID="If">if</FONT> (constraintViolations.size() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="195"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(constraintViolations);
+<A NAME="196"></A>        }
+<A NAME="197"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="198"></A>    }
+<A NAME="199"></A>
+<A NAME="200"></A>    <FONT ID="Public">public</FONT> List&lt;ConstraintViolation&gt; getViolations() {
+<A NAME="201"></A>        <FONT ID="If">if</FONT> (constraintViolations == <FONT ID="Null">null</FONT>) {
+<A NAME="202"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(<FONT ID="StringLiteral">"SORRY! YOU HAVE NOT CALLED THE validate METHOD YET."</FONT>);
+<A NAME="203"></A>        }
+<A NAME="204"></A>        <FONT ID="Return">return</FONT> constraintViolations;
+<A NAME="205"></A>    }
+<A NAME="206"></A>
+<A NAME="207"></A>    <FONT ID="FormalComment">/**
+<A NAME="208"></A>     * There would be no pupose in calling this method if validate returns 0
+<A NAME="209"></A>     *
+<A NAME="210"></A>     * @return
+<A NAME="211"></A>     */</FONT>
+<A NAME="212"></A>    <FONT ID="Public">public</FONT> List&lt;String&gt; getViolationAsList() {
+<A NAME="213"></A>        <FONT ID="If">if</FONT> (constraintViolations == <FONT ID="Null">null</FONT>) {
+<A NAME="214"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(<FONT ID="StringLiteral">"SORRY! YOU HAVE NOT CALLED THE validate METHOD YET."</FONT>);
+<A NAME="215"></A>        }
+<A NAME="216"></A>
+<A NAME="217"></A>        <FONT ID="Return">return</FONT> validationMessagesAsList(constraintViolations);
+<A NAME="218"></A>    }
+<A NAME="219"></A>
+<A NAME="220"></A>    <FONT ID="FormalComment">/**
+<A NAME="221"></A>     * There would be no pupose in calling this method if validate returns 0
+<A NAME="222"></A>     *
+<A NAME="223"></A>     * @return
+<A NAME="224"></A>     */</FONT>
+<A NAME="225"></A>    <FONT ID="Public">public</FONT> String getViolationAsString() {
+<A NAME="226"></A>        <FONT ID="If">if</FONT> (constraintViolations == <FONT ID="Null">null</FONT>) {
+<A NAME="227"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(<FONT ID="StringLiteral">"SORRY! YOU HAVE NOT CALLED THE validate METHOD YET."</FONT>);
+<A NAME="228"></A>        }
+<A NAME="229"></A>
+<A NAME="230"></A>        <FONT ID="Return">return</FONT> validationMessages(constraintViolations);
+<A NAME="231"></A>    }
+<A NAME="232"></A>
+<A NAME="233"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> isNull() {
+<A NAME="234"></A>        <FONT ID="Return">return</FONT> obj == <FONT ID="Null">null</FONT>;
+<A NAME="235"></A>    }
+<A NAME="236"></A>
+<A NAME="237"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> notNull() {
+<A NAME="238"></A>        <FONT ID="Return">return</FONT> obj != <FONT ID="Null">null</FONT>;
+<A NAME="239"></A>    }
+<A NAME="240"></A>
+<A NAME="241"></A>    @Override
+<A NAME="242"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="243"></A>        <FONT ID="Return">return</FONT> obj != <FONT ID="Null">null</FONT> ? obj.toString() : <FONT ID="StringLiteral">"null"</FONT>;
+<A NAME="244"></A>    }
+<A NAME="245"></A>
+<A NAME="246"></A>    @Override
+<A NAME="247"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(Object o) {
+<A NAME="248"></A>        <FONT ID="Throw">throw</FONT> ExceptionCache.NO_EQUALS_METHOD_EXCEPTION;
+<A NAME="249"></A>    }
+<A NAME="250"></A>
+<A NAME="251"></A>    @Override
+<A NAME="252"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> hashCode() {
+<A NAME="253"></A>        <FONT ID="Return">return</FONT> obj.hashCode();
+<A NAME="254"></A>    }
+<A NAME="255"></A>}
+<A NAME="256"></A></pre>
+</BODY>
+</HTML>

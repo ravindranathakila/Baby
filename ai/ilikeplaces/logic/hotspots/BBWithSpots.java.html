@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.hotspots.BBWithSpots (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">BBWithSpots.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.hotspots;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">ai.ilikeplaces.logic.validators.unit.BoundingBox</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">ai.ilikeplaces.util.Pair</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> com.google.gdata.data.geo.impl.W3CPoint;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.HashMap;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * Created by IntelliJ IDEA.
+<A NAME="14"></A> * User: Ravindranath Akila
+<A NAME="15"></A> * Date: Oct 10, 2010
+<A NAME="16"></A> * Time: 9:14:23 PM
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A>
+<A NAME="19"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="20"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> BBWithSpots <FONT ID="Extends">extends</FONT> <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A>, <A HREF="../../../../ai/ilikeplaces/logic/hotspots/RawspotElasticArray.java.html">RawspotElasticArray</A>&gt; {
+<A NAME="21"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SPACE = <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="22"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DOUBLESPACE = <FONT ID="StringLiteral">"  "</FONT>;
+<A NAME="23"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EMPTY = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="FormalComment">/**
+<A NAME="26"></A>     * This is hard, but lets give it a try. First lets go for, requirements, then a small algorithm
+<A NAME="27"></A>     * &lt;p/&gt;
+<A NAME="28"></A>     * Requirements:
+<A NAME="29"></A>     * &lt;p/&gt;
+<A NAME="30"></A>     * Use less memory.
+<A NAME="31"></A>     * Compatibility with names like "titi kaka".
+<A NAME="32"></A>     * Support for multiple common names.
+<A NAME="33"></A>     * &lt;p/&gt;
+<A NAME="34"></A>     * Approaches:
+<A NAME="35"></A>     * &lt;p/&gt;
+<A NAME="36"></A>     * To grab names as "titi kaka", a substring(character sequence) based algorithm should be used.
+<A NAME="37"></A>     * Try to use exclusion. Note that to exclude, 3 items should be present
+<A NAME="38"></A>     * &lt;p/&gt;
+<A NAME="39"></A>     * &lt;p/&gt;
+<A NAME="40"></A>     * define Strings&lt;br/&gt;&lt;br/&gt;
+<A NAME="41"></A>     * &lt;p/&gt;
+<A NAME="42"></A>     * "a is dumb"(A)                                                                                              &lt;br/&gt;
+<A NAME="43"></A>     * "b is a hotel"(B)                                                                                           &lt;br/&gt;
+<A NAME="44"></A>     * "hotel california"(C)                                                                                       &lt;br/&gt;
+<A NAME="45"></A>     * "this is hotel california, usa"(D)                                                                          &lt;br/&gt;
+<A NAME="46"></A>     * "this is not a hotel"(E)                                                                                    &lt;br/&gt;
+<A NAME="47"></A>     * &lt;br/&gt;
+<A NAME="48"></A>     * Triplet trip = {A,B,C}                                                                                      &lt;br/&gt;
+<A NAME="49"></A>     * Get 2 out of trip which have most matches                                                                   &lt;br/&gt;
+<A NAME="50"></A>     * &lt;br/&gt;
+<A NAME="51"></A>     * &lt;br/&gt;
+<A NAME="52"></A>     * &lt;br/&gt;
+<A NAME="53"></A>     * &lt;br/&gt;
+<A NAME="54"></A>     * &lt;br/&gt;
+<A NAME="55"></A>     * &lt;br/&gt;
+<A NAME="56"></A>     *
+<A NAME="57"></A>     * @return common name of this area
+<A NAME="58"></A>     */</FONT>
+<A NAME="59"></A>    @TODO(tasks = {<FONT ID="StringLiteral">"Use random fetching for large datasets"</FONT>, <FONT ID="StringLiteral">"Greedy fetching of nearby locations"</FONT>})
+<A NAME="60"></A>    <FONT ID="Final">final</FONT> String modeName() {
+<A NAME="61"></A>
+<A NAME="62"></A>        <FONT ID="If">if</FONT>(getValue().array.length &lt; <FONT ID="IntegerLiteral">2</FONT>){
+<A NAME="63"></A>            <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"Unpopular"</FONT>;
+<A NAME="64"></A>        }
+<A NAME="65"></A>
+<A NAME="66"></A>
+<A NAME="67"></A>        <FONT ID="Final">final</FONT> Map&lt;Integer, <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt;&gt; index = <FONT ID="New">new</FONT> HashMap&lt;Integer, <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt;&gt;();
+<A NAME="68"></A>
+<A NAME="69"></A>        <FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="70"></A>        <FONT ID="While">while</FONT> (i &lt; getValue().array.length) {
+<A NAME="71"></A>            <FONT ID="Final">final</FONT> String name = getValue().array[i].getCommonName().trim().replace(DOUBLESPACE, SPACE<FONT ID="MultiLineComment">/*Very important as this will introduce bugs if missing*/</FONT>).toLowerCase().replaceAll(<FONT ID="StringLiteral">"[^\\s0-9a-zA-Z]"</FONT>, EMPTY);<FONT ID="SingleLineComment">//remove all alpha numeric characters except spaces
+<A NAME="72"></A></FONT>            index.put(i, <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt;(name, <FONT ID="IntegerLiteral">0</FONT>));
+<A NAME="73"></A>            i++;
+<A NAME="74"></A>        }<FONT ID="SingleLineComment">//if performance becomes a big issue, move this inside the next loop
+<A NAME="75"></A></FONT>
+<A NAME="76"></A>        <FONT ID="Int">int</FONT> j = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="77"></A>        <FONT ID="While">while</FONT> (j &lt; getValue().array.length) {
+<A NAME="78"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt; fancy = index.get(j);
+<A NAME="79"></A>            <FONT ID="Int">int</FONT> k = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="80"></A>            <FONT ID="While">while</FONT> (k &lt; getValue().array.length) {
+<A NAME="81"></A>                <FONT ID="If">if</FONT> (j != k) {<FONT ID="SingleLineComment">//lets avoid fancy and copy cat being the same person ;)
+<A NAME="82"></A></FONT>                    <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt; cat = index.get(k);
+<A NAME="83"></A>                    <FONT ID="Int">int</FONT> rank = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="84"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> String fancyWord : fancy.getKey().split(SPACE)) {
+<A NAME="85"></A>                        rank = cat.getKey().contains(fancyWord) ? rank + <FONT ID="IntegerLiteral">1</FONT> : rank;<FONT ID="SingleLineComment">//increase ranking
+<A NAME="86"></A></FONT>                    }
+<A NAME="87"></A>                    fancy.setValue(fancy.getValue() + rank);<FONT ID="SingleLineComment">//increment her rank
+<A NAME="88"></A></FONT>                }
+<A NAME="89"></A>                k++;
+<A NAME="90"></A>            }
+<A NAME="91"></A>            j++;
+<A NAME="92"></A>        }
+<A NAME="93"></A>
+<A NAME="94"></A>
+<A NAME="95"></A>        <FONT ID="Int">int</FONT> m = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="96"></A>
+<A NAME="97"></A>        <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt; promoted = <FONT ID="Null">null</FONT>;
+<A NAME="98"></A>        <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt; assistant = <FONT ID="Null">null</FONT>;
+<A NAME="99"></A>        <A HREF="../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt; current = <FONT ID="Null">null</FONT>;
+<A NAME="100"></A>        <FONT ID="While">while</FONT> (m &lt; getValue().array.length) {
+<A NAME="101"></A>
+<A NAME="102"></A>            current = index.get(m);
+<A NAME="103"></A>
+<A NAME="104"></A>
+<A NAME="105"></A><FONT ID="SingleLineComment">//            System.out.println("m:" + m);
+<A NAME="106"></A></FONT><FONT ID="SingleLineComment">//            System.out.println("Pre promoted:" + promoted);
+<A NAME="107"></A></FONT><FONT ID="SingleLineComment">//            System.out.println("Post assistant:" + assistant);
+<A NAME="108"></A></FONT><FONT ID="SingleLineComment">//            System.out.println("Pre current:" + current);
+<A NAME="109"></A></FONT>
+<A NAME="110"></A>            <FONT ID="If">if</FONT> (promoted == <FONT ID="Null">null</FONT>) {
+<A NAME="111"></A>                promoted = current;
+<A NAME="112"></A>            }
+<A NAME="113"></A>
+<A NAME="114"></A>
+<A NAME="115"></A>            <FONT ID="If">if</FONT> (current.getValue() &gt; promoted.getValue()) {
+<A NAME="116"></A>                assistant = promoted;
+<A NAME="117"></A>                promoted = current;
+<A NAME="118"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="119"></A>                <FONT ID="If">if</FONT> (assistant == <FONT ID="Null">null</FONT>) {
+<A NAME="120"></A>                    assistant = current;
+<A NAME="121"></A>                } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (current.getValue() &gt; assistant.getValue()) {
+<A NAME="122"></A>                    assistant = current;
+<A NAME="123"></A>                }
+<A NAME="124"></A>            }
+<A NAME="125"></A>            m++;
+<A NAME="126"></A>        }
+<A NAME="127"></A>
+<A NAME="128"></A>        <FONT ID="Final">final</FONT> String[] alphabetCaseModeString = (promoted == <FONT ID="Null">null</FONT> ? EMPTY :
+<A NAME="129"></A>                (promoted.getValue() &gt; assistant.getValue()
+<A NAME="130"></A>                        ? promoted.getKey()<FONT ID="SingleLineComment">//if ranks are not equal
+<A NAME="131"></A></FONT>                        : (promoted.getKey().length() &lt; assistant.getKey().length()
+<A NAME="132"></A>                        ? promoted.getKey()<FONT ID="SingleLineComment">//if ranks are equal and promoted has shorter name
+<A NAME="133"></A></FONT>                        : assistant.getKey()))).split(SPACE);<FONT ID="SingleLineComment">//if ranks are equal assistant and has shorter name
+<A NAME="134"></A></FONT>
+<A NAME="135"></A>
+<A NAME="136"></A>        String returnedString = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="137"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i1 = <FONT ID="IntegerLiteral">0</FONT>, allLowerCaseModeStringLength = alphabetCaseModeString.length; i1 &lt; allLowerCaseModeStringLength; i1++) {
+<A NAME="138"></A>            <FONT ID="Final">final</FONT> String lowerCaseWord = alphabetCaseModeString[i1];
+<A NAME="139"></A>            <FONT ID="If">if</FONT> (!lowerCaseWord.isEmpty()) {
+<A NAME="140"></A>                returnedString += SPACE + (lowerCaseWord.charAt(<FONT ID="IntegerLiteral">0</FONT>) + EMPTY).toUpperCase() + lowerCaseWord.substring(<FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="141"></A>            }
+<A NAME="142"></A>        }
+<A NAME="143"></A>        returnedString = returnedString.isEmpty() ? EMPTY : returnedString.substring(<FONT ID="IntegerLiteral">1</FONT>);<FONT ID="SingleLineComment">//Removing the preceding blank space added by loop
+<A NAME="144"></A></FONT>
+<A NAME="145"></A>        <FONT ID="Return">return</FONT> returnedString;
+<A NAME="146"></A>    }
+<A NAME="147"></A>
+<A NAME="148"></A>    <FONT ID="Final">final</FONT> W3CPoint spotAverage() {
+<A NAME="149"></A>        <FONT ID="Double">double</FONT> latTotal = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="150"></A>        <FONT ID="Double">double</FONT> lngTotal = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="151"></A>        <FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="152"></A>        <FONT ID="While">while</FONT> (i &lt; getValue().array.length) {
+<A NAME="153"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A> rawspot = getValue().array[i];
+<A NAME="154"></A>
+<A NAME="155"></A>            latTotal += rawspot.getCoordinates().getLatitude();
+<A NAME="156"></A>            lngTotal += rawspot.getCoordinates().getLongitude();
+<A NAME="157"></A>            i++;
+<A NAME="158"></A>        }
+<A NAME="159"></A>
+<A NAME="160"></A>        <FONT ID="Return">return</FONT> i == <FONT ID="IntegerLiteral">0</FONT> || latTotal == <FONT ID="IntegerLiteral">0</FONT> || lngTotal == <FONT ID="IntegerLiteral">0</FONT> ? <FONT ID="Null">null</FONT> : <FONT ID="New">new</FONT> W3CPoint(latTotal / i, lngTotal / i);
+<A NAME="161"></A>    }
+<A NAME="162"></A>}
+<A NAME="163"></A></pre>
+</BODY>
+</HTML>

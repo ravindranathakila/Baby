@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.Album (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Album.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.BIDIRECTIONAL;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.jpa.*;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * Created by IntelliJ IDEA.
+<A NAME="17"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="18"></A> * Date: Jan 25, 2010
+<A NAME="19"></A> * Time: 1:01:22 PM
+<A NAME="20"></A> */</FONT>
+<A NAME="21"></A>
+<A NAME="22"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="23"></A>@Entity
+<A NAME="24"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Album <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/RefreshData.java.html">RefreshData</A>&lt;<A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt;, Refreshable&lt;<A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt;, Serializable {
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> Long albumId;
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> String albumName;
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> String albumDescription;
+<A NAME="32"></A>
+<A NAME="33"></A>
+<A NAME="34"></A>    @RefreshId(<FONT ID="StringLiteral">"albumPhotos"</FONT>)
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt; albumPhotos;
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansAlbum.java.html">HumansAlbum</A>&gt; albumOwners;
+<A NAME="38"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String albumOwnersCOL = <FONT ID="StringLiteral">"albumOwners"</FONT>;
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansAlbum.java.html">HumansAlbum</A>&gt; albumVisitors;
+<A NAME="41"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String albumVisitorsCOL = <FONT ID="StringLiteral">"albumVisitors"</FONT>;
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> albumPrivateEvent;
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> Refresh&lt;<A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; REFRESH = <FONT ID="New">new</FONT> Refresh&lt;<A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt;();
+<A NAME="46"></A>
+<A NAME="47"></A>    @Id
+<A NAME="48"></A>    @GeneratedValue(strategy = GenerationType.AUTO)
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> Long getAlbumId() {
+<A NAME="50"></A>        <FONT ID="Return">return</FONT> albumId;
+<A NAME="51"></A>    }
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setAlbumId(<FONT ID="Final">final</FONT> Long albumId) {
+<A NAME="54"></A>        <FONT ID="This">this</FONT>.albumId = albumId;
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    @Transient
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A> setAlbumIdR(<FONT ID="Final">final</FONT> Long albumId) {
+<A NAME="59"></A>        setAlbumId(albumId);
+<A NAME="60"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="61"></A>    }
+<A NAME="62"></A>
+<A NAME="63"></A>    @Column(length = <FONT ID="IntegerLiteral">1023</FONT>)
+<A NAME="64"></A>    <FONT ID="Public">public</FONT> String getAlbumDescription() {
+<A NAME="65"></A>        <FONT ID="Return">return</FONT> albumDescription;
+<A NAME="66"></A>    }
+<A NAME="67"></A>
+<A NAME="68"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setAlbumDescription(<FONT ID="Final">final</FONT> String albumDescription) {
+<A NAME="69"></A>        <FONT ID="This">this</FONT>.albumDescription = albumDescription;
+<A NAME="70"></A>    }
+<A NAME="71"></A>
+<A NAME="72"></A>    @Transient
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A> setAlbumDescriptionR(<FONT ID="Final">final</FONT> String albumDescription) {
+<A NAME="74"></A>        <FONT ID="This">this</FONT>.albumDescription = albumDescription;
+<A NAME="75"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="76"></A>    }
+<A NAME="77"></A>
+<A NAME="78"></A>    @Column(length = <FONT ID="IntegerLiteral">255</FONT>)
+<A NAME="79"></A>    <FONT ID="Public">public</FONT> String getAlbumName() {
+<A NAME="80"></A>        <FONT ID="Return">return</FONT> albumName;
+<A NAME="81"></A>    }
+<A NAME="82"></A>
+<A NAME="83"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setAlbumName(<FONT ID="Final">final</FONT> String albumName) {
+<A NAME="84"></A>        <FONT ID="This">this</FONT>.albumName = albumName;
+<A NAME="85"></A>    }
+<A NAME="86"></A>
+<A NAME="87"></A>    @Transient
+<A NAME="88"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A> setAlbumNameR(<FONT ID="Final">final</FONT> String albumName) {
+<A NAME="89"></A>        <FONT ID="This">this</FONT>.albumName = albumName;
+<A NAME="90"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="91"></A>    }
+<A NAME="92"></A>
+<A NAME="93"></A>
+<A NAME="94"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+<A NAME="95"></A>    @OneToOne(mappedBy = PrivateEvent.privateEventAlbumCOL, fetch = FetchType.EAGER)
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> getAlbumPrivateEvent() {
+<A NAME="97"></A>        <FONT ID="Return">return</FONT> albumPrivateEvent;
+<A NAME="98"></A>    }
+<A NAME="99"></A>
+<A NAME="100"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setAlbumPrivateEvent(<A HREF="../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> albumPrivateEvent) {
+<A NAME="101"></A>        <FONT ID="This">this</FONT>.albumPrivateEvent = albumPrivateEvent;
+<A NAME="102"></A>    }
+<A NAME="103"></A>
+<A NAME="104"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+<A NAME="105"></A>    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+<A NAME="106"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansAlbum.java.html">HumansAlbum</A>&gt; getAlbumOwners() {
+<A NAME="107"></A>        <FONT ID="Return">return</FONT> albumOwners;
+<A NAME="108"></A>    }
+<A NAME="109"></A>
+<A NAME="110"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setAlbumOwners(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansAlbum.java.html">HumansAlbum</A>&gt; albumOwners) {
+<A NAME="111"></A>        <FONT ID="This">this</FONT>.albumOwners = albumOwners;
+<A NAME="112"></A>    }
+<A NAME="113"></A>
+<A NAME="114"></A>    @WARNING(warning = <FONT ID="StringLiteral">"Not owner because when a photo is deleted, the albums will automatically reflect it."</FONT> +
+<A NAME="115"></A>            <FONT ID="StringLiteral">"The other way round is not feasible because a user will own photos, not albums."</FONT>)
+<A NAME="116"></A>    @NOTE(note = <FONT ID="StringLiteral">"ManyToMany because photos can be moved to a different album when deleting events."</FONT>)
+<A NAME="117"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+<A NAME="118"></A>    @ManyToMany(mappedBy = PrivatePhoto.albumsCol, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+<A NAME="119"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt; getAlbumPhotos() {
+<A NAME="120"></A>        <FONT ID="Return">return</FONT> albumPhotos;
+<A NAME="121"></A>    }
+<A NAME="122"></A>
+<A NAME="123"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setAlbumPhotos(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt; albumPhotos) {
+<A NAME="124"></A>        <FONT ID="This">this</FONT>.albumPhotos = albumPhotos;
+<A NAME="125"></A>    }
+<A NAME="126"></A>
+<A NAME="127"></A>
+<A NAME="128"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+<A NAME="129"></A>    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+<A NAME="130"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansAlbum.java.html">HumansAlbum</A>&gt; getAlbumVisitors() {
+<A NAME="131"></A>        <FONT ID="Return">return</FONT> albumVisitors;
+<A NAME="132"></A>    }
+<A NAME="133"></A>
+<A NAME="134"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setAlbumVisitors(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansAlbum.java.html">HumansAlbum</A>&gt; albumVisitors) {
+<A NAME="135"></A>        <FONT ID="This">this</FONT>.albumVisitors = albumVisitors;
+<A NAME="136"></A>    }
+<A NAME="137"></A>
+<A NAME="138"></A>    <FONT ID="FormalComment">/**
+<A NAME="139"></A>     * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
+<A NAME="140"></A>     *
+<A NAME="141"></A>     * @throws ai.ilikeplaces.exception.DBFetchDataException
+<A NAME="142"></A>     *
+<A NAME="143"></A>     */</FONT>
+<A NAME="144"></A>    @Override
+<A NAME="145"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A> refresh() <FONT ID="Throws">throws</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="146"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="147"></A>            <FONT ID="This">this</FONT>.getAlbumPhotos().size();
+<A NAME="148"></A>            <FONT ID="This">this</FONT>.getAlbumOwners().size();
+<A NAME="149"></A>            <FONT ID="This">this</FONT>.getAlbumVisitors().size();
+<A NAME="150"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">Exception</A> e) {
+<A NAME="151"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>(e);
+<A NAME="152"></A>        }
+<A NAME="153"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="154"></A>    }
+<A NAME="155"></A>
+<A NAME="156"></A>    @Override
+<A NAME="157"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A> refresh(<FONT ID="Final">final</FONT> RefreshSpec refreshSpec) <FONT ID="Throws">throws</FONT> RefreshException {
+<A NAME="158"></A>        REFRESH.refresh(<FONT ID="This">this</FONT>, refreshSpec);
+<A NAME="159"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="160"></A>    }
+<A NAME="161"></A>}
+<A NAME="162"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.jpa.Find (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Find.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.jpa;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="FormalComment">/**
+<A NAME="4"></A> * Use with JPA entityManager.find
+<A NAME="5"></A> * Use only for that :-)
+<A NAME="6"></A> * &lt;p/&gt;
+<A NAME="7"></A> * Created by IntelliJ IDEA.
+<A NAME="8"></A> * User: ravindranathakila
+<A NAME="9"></A> * Date: 7/22/12
+<A NAME="10"></A> * Time: 11:15 AM
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Find&lt;Class, ID&gt; {
+<A NAME="13"></A>
+<A NAME="14"></A>    <FONT ID="FormalComment">/**
+<A NAME="15"></A>     * DO NOT, DO NOT MAKE THIS A NON-CONSTANT AS DURING RUNTIME IT MIGHT TRIGGER MILLIONS OF EXCEPTION OBJECTS!
+<A NAME="16"></A>     */</FONT>
+<A NAME="17"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> NullPointerException NULL_POINTER_EXCEPTION = <FONT ID="New">new</FONT> NullPointerException(
+<A NAME="18"></A>            <FONT ID="StringLiteral">"PARAMETERS TO "</FONT> + <A HREF="../../../../ai/ilikeplaces/util/jpa/Find.java.html">Find</A>.<FONT ID="Class">class</FONT>.getName() + <FONT ID="StringLiteral">" CAN NEVER BE NULL. "</FONT> +
+<A NAME="19"></A>                    <FONT ID="StringLiteral">"THIS IS A GENERAL ERROR AND WILL NOT TRACE FULLY DOWN TO THE INITIATING LINE OF CODE."</FONT>);
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="FormalComment">/**
+<A NAME="22"></A>     * THIS IS INVARIABLY THE ENTITY Class
+<A NAME="23"></A>     */</FONT>
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> Class type;
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="FormalComment">/**
+<A NAME="27"></A>     * THIS IS INVARIABLY THE ENTITY'S PRIMARY KEY, AND PREFERABLY A BASIC TYPE
+<A NAME="28"></A>     */</FONT>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> ID id;
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> Find(Class type, ID id) {
+<A NAME="32"></A>        <FONT ID="If">if</FONT> (type != <FONT ID="Null">null</FONT> &amp;&amp; id != <FONT ID="Null">null</FONT>) {
+<A NAME="33"></A>            <FONT ID="Throw">throw</FONT> NULL_POINTER_EXCEPTION;
+<A NAME="34"></A>        }
+<A NAME="35"></A>
+<A NAME="36"></A>        <FONT ID="This">this</FONT>.type = type;
+<A NAME="37"></A>        <FONT ID="This">this</FONT>.id = id;
+<A NAME="38"></A>    }
+<A NAME="39"></A>
+<A NAME="40"></A>    @Override
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(Object o) {
+<A NAME="42"></A>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT> == o) <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="43"></A>        <FONT ID="If">if</FONT> (o == <FONT ID="Null">null</FONT> || getClass() != o.getClass()) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="44"></A>
+<A NAME="45"></A>        <A HREF="../../../../ai/ilikeplaces/util/jpa/Find.java.html">Find</A> find = (<A HREF="../../../../ai/ilikeplaces/util/jpa/Find.java.html">Find</A>) o;
+<A NAME="46"></A>
+<A NAME="47"></A>        <FONT ID="If">if</FONT> (!id.equals(find.id)) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="48"></A>        <FONT ID="If">if</FONT> (!type.equals(find.type)) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="49"></A>
+<A NAME="50"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="51"></A>    }
+<A NAME="52"></A>
+<A NAME="53"></A>    @Override
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> hashCode() {
+<A NAME="55"></A>        <FONT ID="Int">int</FONT> result = type.hashCode();
+<A NAME="56"></A>        result = <FONT ID="IntegerLiteral">31</FONT> * result + id.hashCode();
+<A NAME="57"></A>        <FONT ID="Return">return</FONT> result;
+<A NAME="58"></A>    }
+<A NAME="59"></A>}
+<A NAME="60"></A></pre>
+</BODY>
+</HTML>

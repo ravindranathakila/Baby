@@ -1,0 +1,958 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.apache.Entities (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Entities.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="MultiLineComment">/*
+<A NAME="2"></A> * Licensed to the Apache Software Foundation (ASF) under one or more
+<A NAME="3"></A> * contributor license agreements.  See the NOTICE file distributed with
+<A NAME="4"></A> * this work for additional information regarding copyright ownership.
+<A NAME="5"></A> * The ASF licenses this file to You under the Apache License, Version 2.0
+<A NAME="6"></A> * (the "License"); you may not use this file except in compliance with
+<A NAME="7"></A> * the License.  You may obtain a copy of the License at
+<A NAME="8"></A> *
+<A NAME="9"></A> *      http://www.apache.org/licenses/LICENSE-2.0
+<A NAME="10"></A> *
+<A NAME="11"></A> * Unless required by applicable law or agreed to in writing, software
+<A NAME="12"></A> * distributed under the License is distributed on an "AS IS" BASIS,
+<A NAME="13"></A> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<A NAME="14"></A> * See the License for the specific language governing permissions and
+<A NAME="15"></A> * limitations under the License.
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.apache;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.io.Writer;
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.util.HashMap;
+<A NAME="22"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="23"></A><FONT ID="Import">import</FONT> java.util.TreeMap;
+<A NAME="24"></A>
+<A NAME="25"></A><FONT ID="FormalComment">/**
+<A NAME="26"></A> * &lt;p&gt;Provides HTML and XML entity utilities.&lt;/p&gt;
+<A NAME="27"></A> *
+<A NAME="28"></A> * @see &lt;a href="http://hotwired.lycos.com/webmonkey/reference/special_characters/"&gt;ISO Entities&lt;/a&gt;
+<A NAME="29"></A> * @see &lt;a href="http://www.w3.org/TR/REC-html32#latin1"&gt;HTML 3.2 Character Entities for ISO Latin-1&lt;/a&gt;
+<A NAME="30"></A> * @see &lt;a href="http://www.w3.org/TR/REC-html40/sgml/entities.html"&gt;HTML 4.0 Character entity references&lt;/a&gt;
+<A NAME="31"></A> * @see &lt;a href="http://www.w3.org/TR/html401/charset.html#h-5.3"&gt;HTML 4.01 Character References&lt;/a&gt;
+<A NAME="32"></A> * @see &lt;a href="http://www.w3.org/TR/html401/charset.html#code-position"&gt;HTML 4.01 Code positions&lt;/a&gt;
+<A NAME="33"></A> *
+<A NAME="34"></A> * @author &lt;a href="mailto:alex@purpletech.com"&gt;Alexander Day Chaffee&lt;/a&gt;
+<A NAME="35"></A> * @author &lt;a href="mailto:ggregory@seagullsw.com"&gt;Gary Gregory&lt;/a&gt;
+<A NAME="36"></A> * @since 2.0
+<A NAME="37"></A> * @version $Id: Entities.java,v 1.2 2010-09-11 14:15:20 vergy Exp $
+<A NAME="38"></A> */</FONT>
+<A NAME="39"></A><FONT ID="Class">class</FONT> Entities {
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String[][] BASIC_ARRAY = {
+<A NAME="42"></A>        {<FONT ID="StringLiteral">"quot"</FONT>, <FONT ID="StringLiteral">"34"</FONT>}, <FONT ID="SingleLineComment">// " - double-quote
+<A NAME="43"></A></FONT>        {<FONT ID="StringLiteral">"amp"</FONT>, <FONT ID="StringLiteral">"38"</FONT>}, <FONT ID="SingleLineComment">// &amp; - ampersand
+<A NAME="44"></A></FONT>        {<FONT ID="StringLiteral">"lt"</FONT>, <FONT ID="StringLiteral">"60"</FONT>}, <FONT ID="SingleLineComment">// &lt; - less-than
+<A NAME="45"></A></FONT>        {<FONT ID="StringLiteral">"gt"</FONT>, <FONT ID="StringLiteral">"62"</FONT>}, <FONT ID="SingleLineComment">// &gt; - greater-than
+<A NAME="46"></A></FONT>    };
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String[][] APOS_ARRAY = {
+<A NAME="49"></A>        {<FONT ID="StringLiteral">"apos"</FONT>, <FONT ID="StringLiteral">"39"</FONT>}, <FONT ID="SingleLineComment">// XML apostrophe
+<A NAME="50"></A></FONT>    };
+<A NAME="51"></A>
+<A NAME="52"></A>    <FONT ID="SingleLineComment">// package scoped for testing
+<A NAME="53"></A></FONT>    <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String[][] ISO8859_1_ARRAY = {
+<A NAME="54"></A>        {<FONT ID="StringLiteral">"nbsp"</FONT>, <FONT ID="StringLiteral">"160"</FONT>}, <FONT ID="SingleLineComment">// non-breaking space
+<A NAME="55"></A></FONT>        {<FONT ID="StringLiteral">"iexcl"</FONT>, <FONT ID="StringLiteral">"161"</FONT>}, <FONT ID="SingleLineComment">//inverted exclamation mark
+<A NAME="56"></A></FONT>        {<FONT ID="StringLiteral">"cent"</FONT>, <FONT ID="StringLiteral">"162"</FONT>}, <FONT ID="SingleLineComment">//cent sign
+<A NAME="57"></A></FONT>        {<FONT ID="StringLiteral">"pound"</FONT>, <FONT ID="StringLiteral">"163"</FONT>}, <FONT ID="SingleLineComment">//pound sign
+<A NAME="58"></A></FONT>        {<FONT ID="StringLiteral">"curren"</FONT>, <FONT ID="StringLiteral">"164"</FONT>}, <FONT ID="SingleLineComment">//currency sign
+<A NAME="59"></A></FONT>        {<FONT ID="StringLiteral">"yen"</FONT>, <FONT ID="StringLiteral">"165"</FONT>}, <FONT ID="SingleLineComment">//yen sign = yuan sign
+<A NAME="60"></A></FONT>        {<FONT ID="StringLiteral">"brvbar"</FONT>, <FONT ID="StringLiteral">"166"</FONT>}, <FONT ID="SingleLineComment">//broken bar = broken vertical bar
+<A NAME="61"></A></FONT>        {<FONT ID="StringLiteral">"sect"</FONT>, <FONT ID="StringLiteral">"167"</FONT>}, <FONT ID="SingleLineComment">//section sign
+<A NAME="62"></A></FONT>        {<FONT ID="StringLiteral">"uml"</FONT>, <FONT ID="StringLiteral">"168"</FONT>}, <FONT ID="SingleLineComment">//diaeresis = spacing diaeresis
+<A NAME="63"></A></FONT>        {<FONT ID="StringLiteral">"copy"</FONT>, <FONT ID="StringLiteral">"169"</FONT>}, <FONT ID="SingleLineComment">// � - copyright sign
+<A NAME="64"></A></FONT>        {<FONT ID="StringLiteral">"ordf"</FONT>, <FONT ID="StringLiteral">"170"</FONT>}, <FONT ID="SingleLineComment">//feminine ordinal indicator
+<A NAME="65"></A></FONT>        {<FONT ID="StringLiteral">"laquo"</FONT>, <FONT ID="StringLiteral">"171"</FONT>}, <FONT ID="SingleLineComment">//left-pointing double angle quotation mark = left pointing guillemet
+<A NAME="66"></A></FONT>        {<FONT ID="StringLiteral">"not"</FONT>, <FONT ID="StringLiteral">"172"</FONT>}, <FONT ID="SingleLineComment">//not sign
+<A NAME="67"></A></FONT>        {<FONT ID="StringLiteral">"shy"</FONT>, <FONT ID="StringLiteral">"173"</FONT>}, <FONT ID="SingleLineComment">//soft hyphen = discretionary hyphen
+<A NAME="68"></A></FONT>        {<FONT ID="StringLiteral">"reg"</FONT>, <FONT ID="StringLiteral">"174"</FONT>}, <FONT ID="SingleLineComment">// � - registered trademark sign
+<A NAME="69"></A></FONT>        {<FONT ID="StringLiteral">"macr"</FONT>, <FONT ID="StringLiteral">"175"</FONT>}, <FONT ID="SingleLineComment">//macron = spacing macron = overline = APL overbar
+<A NAME="70"></A></FONT>        {<FONT ID="StringLiteral">"deg"</FONT>, <FONT ID="StringLiteral">"176"</FONT>}, <FONT ID="SingleLineComment">//degree sign
+<A NAME="71"></A></FONT>        {<FONT ID="StringLiteral">"plusmn"</FONT>, <FONT ID="StringLiteral">"177"</FONT>}, <FONT ID="SingleLineComment">//plus-minus sign = plus-or-minus sign
+<A NAME="72"></A></FONT>        {<FONT ID="StringLiteral">"sup2"</FONT>, <FONT ID="StringLiteral">"178"</FONT>}, <FONT ID="SingleLineComment">//superscript two = superscript digit two = squared
+<A NAME="73"></A></FONT>        {<FONT ID="StringLiteral">"sup3"</FONT>, <FONT ID="StringLiteral">"179"</FONT>}, <FONT ID="SingleLineComment">//superscript three = superscript digit three = cubed
+<A NAME="74"></A></FONT>        {<FONT ID="StringLiteral">"acute"</FONT>, <FONT ID="StringLiteral">"180"</FONT>}, <FONT ID="SingleLineComment">//acute accent = spacing acute
+<A NAME="75"></A></FONT>        {<FONT ID="StringLiteral">"micro"</FONT>, <FONT ID="StringLiteral">"181"</FONT>}, <FONT ID="SingleLineComment">//micro sign
+<A NAME="76"></A></FONT>        {<FONT ID="StringLiteral">"para"</FONT>, <FONT ID="StringLiteral">"182"</FONT>}, <FONT ID="SingleLineComment">//pilcrow sign = paragraph sign
+<A NAME="77"></A></FONT>        {<FONT ID="StringLiteral">"middot"</FONT>, <FONT ID="StringLiteral">"183"</FONT>}, <FONT ID="SingleLineComment">//middle dot = Georgian comma = Greek middle dot
+<A NAME="78"></A></FONT>        {<FONT ID="StringLiteral">"cedil"</FONT>, <FONT ID="StringLiteral">"184"</FONT>}, <FONT ID="SingleLineComment">//cedilla = spacing cedilla
+<A NAME="79"></A></FONT>        {<FONT ID="StringLiteral">"sup1"</FONT>, <FONT ID="StringLiteral">"185"</FONT>}, <FONT ID="SingleLineComment">//superscript one = superscript digit one
+<A NAME="80"></A></FONT>        {<FONT ID="StringLiteral">"ordm"</FONT>, <FONT ID="StringLiteral">"186"</FONT>}, <FONT ID="SingleLineComment">//masculine ordinal indicator
+<A NAME="81"></A></FONT>        {<FONT ID="StringLiteral">"raquo"</FONT>, <FONT ID="StringLiteral">"187"</FONT>}, <FONT ID="SingleLineComment">//right-pointing double angle quotation mark = right pointing guillemet
+<A NAME="82"></A></FONT>        {<FONT ID="StringLiteral">"frac14"</FONT>, <FONT ID="StringLiteral">"188"</FONT>}, <FONT ID="SingleLineComment">//vulgar fraction one quarter = fraction one quarter
+<A NAME="83"></A></FONT>        {<FONT ID="StringLiteral">"frac12"</FONT>, <FONT ID="StringLiteral">"189"</FONT>}, <FONT ID="SingleLineComment">//vulgar fraction one half = fraction one half
+<A NAME="84"></A></FONT>        {<FONT ID="StringLiteral">"frac34"</FONT>, <FONT ID="StringLiteral">"190"</FONT>}, <FONT ID="SingleLineComment">//vulgar fraction three quarters = fraction three quarters
+<A NAME="85"></A></FONT>        {<FONT ID="StringLiteral">"iquest"</FONT>, <FONT ID="StringLiteral">"191"</FONT>}, <FONT ID="SingleLineComment">//inverted question mark = turned question mark
+<A NAME="86"></A></FONT>        {<FONT ID="StringLiteral">"Agrave"</FONT>, <FONT ID="StringLiteral">"192"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase A, grave accent
+<A NAME="87"></A></FONT>        {<FONT ID="StringLiteral">"Aacute"</FONT>, <FONT ID="StringLiteral">"193"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase A, acute accent
+<A NAME="88"></A></FONT>        {<FONT ID="StringLiteral">"Acirc"</FONT>, <FONT ID="StringLiteral">"194"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase A, circumflex accent
+<A NAME="89"></A></FONT>        {<FONT ID="StringLiteral">"Atilde"</FONT>, <FONT ID="StringLiteral">"195"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase A, tilde
+<A NAME="90"></A></FONT>        {<FONT ID="StringLiteral">"Auml"</FONT>, <FONT ID="StringLiteral">"196"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase A, umlaut
+<A NAME="91"></A></FONT>        {<FONT ID="StringLiteral">"Aring"</FONT>, <FONT ID="StringLiteral">"197"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase A, ring
+<A NAME="92"></A></FONT>        {<FONT ID="StringLiteral">"AElig"</FONT>, <FONT ID="StringLiteral">"198"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase AE
+<A NAME="93"></A></FONT>        {<FONT ID="StringLiteral">"Ccedil"</FONT>, <FONT ID="StringLiteral">"199"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase C, cedilla
+<A NAME="94"></A></FONT>        {<FONT ID="StringLiteral">"Egrave"</FONT>, <FONT ID="StringLiteral">"200"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase E, grave accent
+<A NAME="95"></A></FONT>        {<FONT ID="StringLiteral">"Eacute"</FONT>, <FONT ID="StringLiteral">"201"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase E, acute accent
+<A NAME="96"></A></FONT>        {<FONT ID="StringLiteral">"Ecirc"</FONT>, <FONT ID="StringLiteral">"202"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase E, circumflex accent
+<A NAME="97"></A></FONT>        {<FONT ID="StringLiteral">"Euml"</FONT>, <FONT ID="StringLiteral">"203"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase E, umlaut
+<A NAME="98"></A></FONT>        {<FONT ID="StringLiteral">"Igrave"</FONT>, <FONT ID="StringLiteral">"204"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase I, grave accent
+<A NAME="99"></A></FONT>        {<FONT ID="StringLiteral">"Iacute"</FONT>, <FONT ID="StringLiteral">"205"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase I, acute accent
+<A NAME="100"></A></FONT>        {<FONT ID="StringLiteral">"Icirc"</FONT>, <FONT ID="StringLiteral">"206"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase I, circumflex accent
+<A NAME="101"></A></FONT>        {<FONT ID="StringLiteral">"Iuml"</FONT>, <FONT ID="StringLiteral">"207"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase I, umlaut
+<A NAME="102"></A></FONT>        {<FONT ID="StringLiteral">"ETH"</FONT>, <FONT ID="StringLiteral">"208"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase Eth, Icelandic
+<A NAME="103"></A></FONT>        {<FONT ID="StringLiteral">"Ntilde"</FONT>, <FONT ID="StringLiteral">"209"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase N, tilde
+<A NAME="104"></A></FONT>        {<FONT ID="StringLiteral">"Ograve"</FONT>, <FONT ID="StringLiteral">"210"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase O, grave accent
+<A NAME="105"></A></FONT>        {<FONT ID="StringLiteral">"Oacute"</FONT>, <FONT ID="StringLiteral">"211"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase O, acute accent
+<A NAME="106"></A></FONT>        {<FONT ID="StringLiteral">"Ocirc"</FONT>, <FONT ID="StringLiteral">"212"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase O, circumflex accent
+<A NAME="107"></A></FONT>        {<FONT ID="StringLiteral">"Otilde"</FONT>, <FONT ID="StringLiteral">"213"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase O, tilde
+<A NAME="108"></A></FONT>        {<FONT ID="StringLiteral">"Ouml"</FONT>, <FONT ID="StringLiteral">"214"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase O, umlaut
+<A NAME="109"></A></FONT>        {<FONT ID="StringLiteral">"times"</FONT>, <FONT ID="StringLiteral">"215"</FONT>}, <FONT ID="SingleLineComment">//multiplication sign
+<A NAME="110"></A></FONT>        {<FONT ID="StringLiteral">"Oslash"</FONT>, <FONT ID="StringLiteral">"216"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase O, slash
+<A NAME="111"></A></FONT>        {<FONT ID="StringLiteral">"Ugrave"</FONT>, <FONT ID="StringLiteral">"217"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase U, grave accent
+<A NAME="112"></A></FONT>        {<FONT ID="StringLiteral">"Uacute"</FONT>, <FONT ID="StringLiteral">"218"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase U, acute accent
+<A NAME="113"></A></FONT>        {<FONT ID="StringLiteral">"Ucirc"</FONT>, <FONT ID="StringLiteral">"219"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase U, circumflex accent
+<A NAME="114"></A></FONT>        {<FONT ID="StringLiteral">"Uuml"</FONT>, <FONT ID="StringLiteral">"220"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase U, umlaut
+<A NAME="115"></A></FONT>        {<FONT ID="StringLiteral">"Yacute"</FONT>, <FONT ID="StringLiteral">"221"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase Y, acute accent
+<A NAME="116"></A></FONT>        {<FONT ID="StringLiteral">"THORN"</FONT>, <FONT ID="StringLiteral">"222"</FONT>}, <FONT ID="SingleLineComment">// � - uppercase THORN, Icelandic
+<A NAME="117"></A></FONT>        {<FONT ID="StringLiteral">"szlig"</FONT>, <FONT ID="StringLiteral">"223"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase sharps, German
+<A NAME="118"></A></FONT>        {<FONT ID="StringLiteral">"agrave"</FONT>, <FONT ID="StringLiteral">"224"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase a, grave accent
+<A NAME="119"></A></FONT>        {<FONT ID="StringLiteral">"aacute"</FONT>, <FONT ID="StringLiteral">"225"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase a, acute accent
+<A NAME="120"></A></FONT>        {<FONT ID="StringLiteral">"acirc"</FONT>, <FONT ID="StringLiteral">"226"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase a, circumflex accent
+<A NAME="121"></A></FONT>        {<FONT ID="StringLiteral">"atilde"</FONT>, <FONT ID="StringLiteral">"227"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase a, tilde
+<A NAME="122"></A></FONT>        {<FONT ID="StringLiteral">"auml"</FONT>, <FONT ID="StringLiteral">"228"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase a, umlaut
+<A NAME="123"></A></FONT>        {<FONT ID="StringLiteral">"aring"</FONT>, <FONT ID="StringLiteral">"229"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase a, ring
+<A NAME="124"></A></FONT>        {<FONT ID="StringLiteral">"aelig"</FONT>, <FONT ID="StringLiteral">"230"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase ae
+<A NAME="125"></A></FONT>        {<FONT ID="StringLiteral">"ccedil"</FONT>, <FONT ID="StringLiteral">"231"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase c, cedilla
+<A NAME="126"></A></FONT>        {<FONT ID="StringLiteral">"egrave"</FONT>, <FONT ID="StringLiteral">"232"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase e, grave accent
+<A NAME="127"></A></FONT>        {<FONT ID="StringLiteral">"eacute"</FONT>, <FONT ID="StringLiteral">"233"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase e, acute accent
+<A NAME="128"></A></FONT>        {<FONT ID="StringLiteral">"ecirc"</FONT>, <FONT ID="StringLiteral">"234"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase e, circumflex accent
+<A NAME="129"></A></FONT>        {<FONT ID="StringLiteral">"euml"</FONT>, <FONT ID="StringLiteral">"235"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase e, umlaut
+<A NAME="130"></A></FONT>        {<FONT ID="StringLiteral">"igrave"</FONT>, <FONT ID="StringLiteral">"236"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase i, grave accent
+<A NAME="131"></A></FONT>        {<FONT ID="StringLiteral">"iacute"</FONT>, <FONT ID="StringLiteral">"237"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase i, acute accent
+<A NAME="132"></A></FONT>        {<FONT ID="StringLiteral">"icirc"</FONT>, <FONT ID="StringLiteral">"238"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase i, circumflex accent
+<A NAME="133"></A></FONT>        {<FONT ID="StringLiteral">"iuml"</FONT>, <FONT ID="StringLiteral">"239"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase i, umlaut
+<A NAME="134"></A></FONT>        {<FONT ID="StringLiteral">"eth"</FONT>, <FONT ID="StringLiteral">"240"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase eth, Icelandic
+<A NAME="135"></A></FONT>        {<FONT ID="StringLiteral">"ntilde"</FONT>, <FONT ID="StringLiteral">"241"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase n, tilde
+<A NAME="136"></A></FONT>        {<FONT ID="StringLiteral">"ograve"</FONT>, <FONT ID="StringLiteral">"242"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase o, grave accent
+<A NAME="137"></A></FONT>        {<FONT ID="StringLiteral">"oacute"</FONT>, <FONT ID="StringLiteral">"243"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase o, acute accent
+<A NAME="138"></A></FONT>        {<FONT ID="StringLiteral">"ocirc"</FONT>, <FONT ID="StringLiteral">"244"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase o, circumflex accent
+<A NAME="139"></A></FONT>        {<FONT ID="StringLiteral">"otilde"</FONT>, <FONT ID="StringLiteral">"245"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase o, tilde
+<A NAME="140"></A></FONT>        {<FONT ID="StringLiteral">"ouml"</FONT>, <FONT ID="StringLiteral">"246"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase o, umlaut
+<A NAME="141"></A></FONT>        {<FONT ID="StringLiteral">"divide"</FONT>, <FONT ID="StringLiteral">"247"</FONT>}, <FONT ID="SingleLineComment">// division sign
+<A NAME="142"></A></FONT>        {<FONT ID="StringLiteral">"oslash"</FONT>, <FONT ID="StringLiteral">"248"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase o, slash
+<A NAME="143"></A></FONT>        {<FONT ID="StringLiteral">"ugrave"</FONT>, <FONT ID="StringLiteral">"249"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase u, grave accent
+<A NAME="144"></A></FONT>        {<FONT ID="StringLiteral">"uacute"</FONT>, <FONT ID="StringLiteral">"250"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase u, acute accent
+<A NAME="145"></A></FONT>        {<FONT ID="StringLiteral">"ucirc"</FONT>, <FONT ID="StringLiteral">"251"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase u, circumflex accent
+<A NAME="146"></A></FONT>        {<FONT ID="StringLiteral">"uuml"</FONT>, <FONT ID="StringLiteral">"252"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase u, umlaut
+<A NAME="147"></A></FONT>        {<FONT ID="StringLiteral">"yacute"</FONT>, <FONT ID="StringLiteral">"253"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase y, acute accent
+<A NAME="148"></A></FONT>        {<FONT ID="StringLiteral">"thorn"</FONT>, <FONT ID="StringLiteral">"254"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase thorn, Icelandic
+<A NAME="149"></A></FONT>        {<FONT ID="StringLiteral">"yuml"</FONT>, <FONT ID="StringLiteral">"255"</FONT>}, <FONT ID="SingleLineComment">// � - lowercase y, umlaut
+<A NAME="150"></A></FONT>    };
+<A NAME="151"></A>
+<A NAME="152"></A>    <FONT ID="SingleLineComment">// http://www.w3.org/TR/REC-html40/sgml/entities.html
+<A NAME="153"></A></FONT>    <FONT ID="SingleLineComment">// package scoped for testing
+<A NAME="154"></A></FONT>    <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String[][] HTML40_ARRAY = {
+<A NAME="155"></A><FONT ID="SingleLineComment">// &lt;!-- Latin Extended-B --&gt;
+<A NAME="156"></A></FONT>        {<FONT ID="StringLiteral">"fnof"</FONT>, <FONT ID="StringLiteral">"402"</FONT>}, <FONT ID="SingleLineComment">//latin small f with hook = function= florin, U+0192 ISOtech --&gt;
+<A NAME="157"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- Greek --&gt;
+<A NAME="158"></A></FONT>        {<FONT ID="StringLiteral">"Alpha"</FONT>, <FONT ID="StringLiteral">"913"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter alpha, U+0391 --&gt;
+<A NAME="159"></A></FONT>        {<FONT ID="StringLiteral">"Beta"</FONT>, <FONT ID="StringLiteral">"914"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter beta, U+0392 --&gt;
+<A NAME="160"></A></FONT>        {<FONT ID="StringLiteral">"Gamma"</FONT>, <FONT ID="StringLiteral">"915"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter gamma,U+0393 ISOgrk3 --&gt;
+<A NAME="161"></A></FONT>        {<FONT ID="StringLiteral">"Delta"</FONT>, <FONT ID="StringLiteral">"916"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter delta,U+0394 ISOgrk3 --&gt;
+<A NAME="162"></A></FONT>        {<FONT ID="StringLiteral">"Epsilon"</FONT>, <FONT ID="StringLiteral">"917"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter epsilon, U+0395 --&gt;
+<A NAME="163"></A></FONT>        {<FONT ID="StringLiteral">"Zeta"</FONT>, <FONT ID="StringLiteral">"918"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter zeta, U+0396 --&gt;
+<A NAME="164"></A></FONT>        {<FONT ID="StringLiteral">"Eta"</FONT>, <FONT ID="StringLiteral">"919"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter eta, U+0397 --&gt;
+<A NAME="165"></A></FONT>        {<FONT ID="StringLiteral">"Theta"</FONT>, <FONT ID="StringLiteral">"920"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter theta,U+0398 ISOgrk3 --&gt;
+<A NAME="166"></A></FONT>        {<FONT ID="StringLiteral">"Iota"</FONT>, <FONT ID="StringLiteral">"921"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter iota, U+0399 --&gt;
+<A NAME="167"></A></FONT>        {<FONT ID="StringLiteral">"Kappa"</FONT>, <FONT ID="StringLiteral">"922"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter kappa, U+039A --&gt;
+<A NAME="168"></A></FONT>        {<FONT ID="StringLiteral">"Lambda"</FONT>, <FONT ID="StringLiteral">"923"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter lambda,U+039B ISOgrk3 --&gt;
+<A NAME="169"></A></FONT>        {<FONT ID="StringLiteral">"Mu"</FONT>, <FONT ID="StringLiteral">"924"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter mu, U+039C --&gt;
+<A NAME="170"></A></FONT>        {<FONT ID="StringLiteral">"Nu"</FONT>, <FONT ID="StringLiteral">"925"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter nu, U+039D --&gt;
+<A NAME="171"></A></FONT>        {<FONT ID="StringLiteral">"Xi"</FONT>, <FONT ID="StringLiteral">"926"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter xi, U+039E ISOgrk3 --&gt;
+<A NAME="172"></A></FONT>        {<FONT ID="StringLiteral">"Omicron"</FONT>, <FONT ID="StringLiteral">"927"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter omicron, U+039F --&gt;
+<A NAME="173"></A></FONT>        {<FONT ID="StringLiteral">"Pi"</FONT>, <FONT ID="StringLiteral">"928"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter pi, U+03A0 ISOgrk3 --&gt;
+<A NAME="174"></A></FONT>        {<FONT ID="StringLiteral">"Rho"</FONT>, <FONT ID="StringLiteral">"929"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter rho, U+03A1 --&gt;
+<A NAME="175"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- there is no Sigmaf, and no U+03A2 character either --&gt;
+<A NAME="176"></A></FONT>        {<FONT ID="StringLiteral">"Sigma"</FONT>, <FONT ID="StringLiteral">"931"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter sigma,U+03A3 ISOgrk3 --&gt;
+<A NAME="177"></A></FONT>        {<FONT ID="StringLiteral">"Tau"</FONT>, <FONT ID="StringLiteral">"932"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter tau, U+03A4 --&gt;
+<A NAME="178"></A></FONT>        {<FONT ID="StringLiteral">"Upsilon"</FONT>, <FONT ID="StringLiteral">"933"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter upsilon,U+03A5 ISOgrk3 --&gt;
+<A NAME="179"></A></FONT>        {<FONT ID="StringLiteral">"Phi"</FONT>, <FONT ID="StringLiteral">"934"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter phi,U+03A6 ISOgrk3 --&gt;
+<A NAME="180"></A></FONT>        {<FONT ID="StringLiteral">"Chi"</FONT>, <FONT ID="StringLiteral">"935"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter chi, U+03A7 --&gt;
+<A NAME="181"></A></FONT>        {<FONT ID="StringLiteral">"Psi"</FONT>, <FONT ID="StringLiteral">"936"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter psi,U+03A8 ISOgrk3 --&gt;
+<A NAME="182"></A></FONT>        {<FONT ID="StringLiteral">"Omega"</FONT>, <FONT ID="StringLiteral">"937"</FONT>}, <FONT ID="SingleLineComment">//greek capital letter omega,U+03A9 ISOgrk3 --&gt;
+<A NAME="183"></A></FONT>        {<FONT ID="StringLiteral">"alpha"</FONT>, <FONT ID="StringLiteral">"945"</FONT>}, <FONT ID="SingleLineComment">//greek small letter alpha,U+03B1 ISOgrk3 --&gt;
+<A NAME="184"></A></FONT>        {<FONT ID="StringLiteral">"beta"</FONT>, <FONT ID="StringLiteral">"946"</FONT>}, <FONT ID="SingleLineComment">//greek small letter beta, U+03B2 ISOgrk3 --&gt;
+<A NAME="185"></A></FONT>        {<FONT ID="StringLiteral">"gamma"</FONT>, <FONT ID="StringLiteral">"947"</FONT>}, <FONT ID="SingleLineComment">//greek small letter gamma,U+03B3 ISOgrk3 --&gt;
+<A NAME="186"></A></FONT>        {<FONT ID="StringLiteral">"delta"</FONT>, <FONT ID="StringLiteral">"948"</FONT>}, <FONT ID="SingleLineComment">//greek small letter delta,U+03B4 ISOgrk3 --&gt;
+<A NAME="187"></A></FONT>        {<FONT ID="StringLiteral">"epsilon"</FONT>, <FONT ID="StringLiteral">"949"</FONT>}, <FONT ID="SingleLineComment">//greek small letter epsilon,U+03B5 ISOgrk3 --&gt;
+<A NAME="188"></A></FONT>        {<FONT ID="StringLiteral">"zeta"</FONT>, <FONT ID="StringLiteral">"950"</FONT>}, <FONT ID="SingleLineComment">//greek small letter zeta, U+03B6 ISOgrk3 --&gt;
+<A NAME="189"></A></FONT>        {<FONT ID="StringLiteral">"eta"</FONT>, <FONT ID="StringLiteral">"951"</FONT>}, <FONT ID="SingleLineComment">//greek small letter eta, U+03B7 ISOgrk3 --&gt;
+<A NAME="190"></A></FONT>        {<FONT ID="StringLiteral">"theta"</FONT>, <FONT ID="StringLiteral">"952"</FONT>}, <FONT ID="SingleLineComment">//greek small letter theta,U+03B8 ISOgrk3 --&gt;
+<A NAME="191"></A></FONT>        {<FONT ID="StringLiteral">"iota"</FONT>, <FONT ID="StringLiteral">"953"</FONT>}, <FONT ID="SingleLineComment">//greek small letter iota, U+03B9 ISOgrk3 --&gt;
+<A NAME="192"></A></FONT>        {<FONT ID="StringLiteral">"kappa"</FONT>, <FONT ID="StringLiteral">"954"</FONT>}, <FONT ID="SingleLineComment">//greek small letter kappa,U+03BA ISOgrk3 --&gt;
+<A NAME="193"></A></FONT>        {<FONT ID="StringLiteral">"lambda"</FONT>, <FONT ID="StringLiteral">"955"</FONT>}, <FONT ID="SingleLineComment">//greek small letter lambda,U+03BB ISOgrk3 --&gt;
+<A NAME="194"></A></FONT>        {<FONT ID="StringLiteral">"mu"</FONT>, <FONT ID="StringLiteral">"956"</FONT>}, <FONT ID="SingleLineComment">//greek small letter mu, U+03BC ISOgrk3 --&gt;
+<A NAME="195"></A></FONT>        {<FONT ID="StringLiteral">"nu"</FONT>, <FONT ID="StringLiteral">"957"</FONT>}, <FONT ID="SingleLineComment">//greek small letter nu, U+03BD ISOgrk3 --&gt;
+<A NAME="196"></A></FONT>        {<FONT ID="StringLiteral">"xi"</FONT>, <FONT ID="StringLiteral">"958"</FONT>}, <FONT ID="SingleLineComment">//greek small letter xi, U+03BE ISOgrk3 --&gt;
+<A NAME="197"></A></FONT>        {<FONT ID="StringLiteral">"omicron"</FONT>, <FONT ID="StringLiteral">"959"</FONT>}, <FONT ID="SingleLineComment">//greek small letter omicron, U+03BF NEW --&gt;
+<A NAME="198"></A></FONT>        {<FONT ID="StringLiteral">"pi"</FONT>, <FONT ID="StringLiteral">"960"</FONT>}, <FONT ID="SingleLineComment">//greek small letter pi, U+03C0 ISOgrk3 --&gt;
+<A NAME="199"></A></FONT>        {<FONT ID="StringLiteral">"rho"</FONT>, <FONT ID="StringLiteral">"961"</FONT>}, <FONT ID="SingleLineComment">//greek small letter rho, U+03C1 ISOgrk3 --&gt;
+<A NAME="200"></A></FONT>        {<FONT ID="StringLiteral">"sigmaf"</FONT>, <FONT ID="StringLiteral">"962"</FONT>}, <FONT ID="SingleLineComment">//greek small letter final sigma,U+03C2 ISOgrk3 --&gt;
+<A NAME="201"></A></FONT>        {<FONT ID="StringLiteral">"sigma"</FONT>, <FONT ID="StringLiteral">"963"</FONT>}, <FONT ID="SingleLineComment">//greek small letter sigma,U+03C3 ISOgrk3 --&gt;
+<A NAME="202"></A></FONT>        {<FONT ID="StringLiteral">"tau"</FONT>, <FONT ID="StringLiteral">"964"</FONT>}, <FONT ID="SingleLineComment">//greek small letter tau, U+03C4 ISOgrk3 --&gt;
+<A NAME="203"></A></FONT>        {<FONT ID="StringLiteral">"upsilon"</FONT>, <FONT ID="StringLiteral">"965"</FONT>}, <FONT ID="SingleLineComment">//greek small letter upsilon,U+03C5 ISOgrk3 --&gt;
+<A NAME="204"></A></FONT>        {<FONT ID="StringLiteral">"phi"</FONT>, <FONT ID="StringLiteral">"966"</FONT>}, <FONT ID="SingleLineComment">//greek small letter phi, U+03C6 ISOgrk3 --&gt;
+<A NAME="205"></A></FONT>        {<FONT ID="StringLiteral">"chi"</FONT>, <FONT ID="StringLiteral">"967"</FONT>}, <FONT ID="SingleLineComment">//greek small letter chi, U+03C7 ISOgrk3 --&gt;
+<A NAME="206"></A></FONT>        {<FONT ID="StringLiteral">"psi"</FONT>, <FONT ID="StringLiteral">"968"</FONT>}, <FONT ID="SingleLineComment">//greek small letter psi, U+03C8 ISOgrk3 --&gt;
+<A NAME="207"></A></FONT>        {<FONT ID="StringLiteral">"omega"</FONT>, <FONT ID="StringLiteral">"969"</FONT>}, <FONT ID="SingleLineComment">//greek small letter omega,U+03C9 ISOgrk3 --&gt;
+<A NAME="208"></A></FONT>        {<FONT ID="StringLiteral">"thetasym"</FONT>, <FONT ID="StringLiteral">"977"</FONT>}, <FONT ID="SingleLineComment">//greek small letter theta symbol,U+03D1 NEW --&gt;
+<A NAME="209"></A></FONT>        {<FONT ID="StringLiteral">"upsih"</FONT>, <FONT ID="StringLiteral">"978"</FONT>}, <FONT ID="SingleLineComment">//greek upsilon with hook symbol,U+03D2 NEW --&gt;
+<A NAME="210"></A></FONT>        {<FONT ID="StringLiteral">"piv"</FONT>, <FONT ID="StringLiteral">"982"</FONT>}, <FONT ID="SingleLineComment">//greek pi symbol, U+03D6 ISOgrk3 --&gt;
+<A NAME="211"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- General Punctuation --&gt;
+<A NAME="212"></A></FONT>        {<FONT ID="StringLiteral">"bull"</FONT>, <FONT ID="StringLiteral">"8226"</FONT>}, <FONT ID="SingleLineComment">//bullet = black small circle,U+2022 ISOpub  --&gt;
+<A NAME="213"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- bullet is NOT the same as bullet operator, U+2219 --&gt;
+<A NAME="214"></A></FONT>        {<FONT ID="StringLiteral">"hellip"</FONT>, <FONT ID="StringLiteral">"8230"</FONT>}, <FONT ID="SingleLineComment">//horizontal ellipsis = three dot leader,U+2026 ISOpub  --&gt;
+<A NAME="215"></A></FONT>        {<FONT ID="StringLiteral">"prime"</FONT>, <FONT ID="StringLiteral">"8242"</FONT>}, <FONT ID="SingleLineComment">//prime = minutes = feet, U+2032 ISOtech --&gt;
+<A NAME="216"></A></FONT>        {<FONT ID="StringLiteral">"Prime"</FONT>, <FONT ID="StringLiteral">"8243"</FONT>}, <FONT ID="SingleLineComment">//double prime = seconds = inches,U+2033 ISOtech --&gt;
+<A NAME="217"></A></FONT>        {<FONT ID="StringLiteral">"oline"</FONT>, <FONT ID="StringLiteral">"8254"</FONT>}, <FONT ID="SingleLineComment">//overline = spacing overscore,U+203E NEW --&gt;
+<A NAME="218"></A></FONT>        {<FONT ID="StringLiteral">"frasl"</FONT>, <FONT ID="StringLiteral">"8260"</FONT>}, <FONT ID="SingleLineComment">//fraction slash, U+2044 NEW --&gt;
+<A NAME="219"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- Letterlike Symbols --&gt;
+<A NAME="220"></A></FONT>        {<FONT ID="StringLiteral">"weierp"</FONT>, <FONT ID="StringLiteral">"8472"</FONT>}, <FONT ID="SingleLineComment">//script capital P = power set= Weierstrass p, U+2118 ISOamso --&gt;
+<A NAME="221"></A></FONT>        {<FONT ID="StringLiteral">"image"</FONT>, <FONT ID="StringLiteral">"8465"</FONT>}, <FONT ID="SingleLineComment">//blackletter capital I = imaginary part,U+2111 ISOamso --&gt;
+<A NAME="222"></A></FONT>        {<FONT ID="StringLiteral">"real"</FONT>, <FONT ID="StringLiteral">"8476"</FONT>}, <FONT ID="SingleLineComment">//blackletter capital R = real part symbol,U+211C ISOamso --&gt;
+<A NAME="223"></A></FONT>        {<FONT ID="StringLiteral">"trade"</FONT>, <FONT ID="StringLiteral">"8482"</FONT>}, <FONT ID="SingleLineComment">//trade mark sign, U+2122 ISOnum --&gt;
+<A NAME="224"></A></FONT>        {<FONT ID="StringLiteral">"alefsym"</FONT>, <FONT ID="StringLiteral">"8501"</FONT>}, <FONT ID="SingleLineComment">//alef symbol = first transfinite cardinal,U+2135 NEW --&gt;
+<A NAME="225"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- alef symbol is NOT the same as hebrew letter alef,U+05D0 although the
+<A NAME="226"></A></FONT><FONT ID="SingleLineComment">//      same glyph could be used to depict both characters --&gt;
+<A NAME="227"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- Arrows --&gt;
+<A NAME="228"></A></FONT>        {<FONT ID="StringLiteral">"larr"</FONT>, <FONT ID="StringLiteral">"8592"</FONT>}, <FONT ID="SingleLineComment">//leftwards arrow, U+2190 ISOnum --&gt;
+<A NAME="229"></A></FONT>        {<FONT ID="StringLiteral">"uarr"</FONT>, <FONT ID="StringLiteral">"8593"</FONT>}, <FONT ID="SingleLineComment">//upwards arrow, U+2191 ISOnum--&gt;
+<A NAME="230"></A></FONT>        {<FONT ID="StringLiteral">"rarr"</FONT>, <FONT ID="StringLiteral">"8594"</FONT>}, <FONT ID="SingleLineComment">//rightwards arrow, U+2192 ISOnum --&gt;
+<A NAME="231"></A></FONT>        {<FONT ID="StringLiteral">"darr"</FONT>, <FONT ID="StringLiteral">"8595"</FONT>}, <FONT ID="SingleLineComment">//downwards arrow, U+2193 ISOnum --&gt;
+<A NAME="232"></A></FONT>        {<FONT ID="StringLiteral">"harr"</FONT>, <FONT ID="StringLiteral">"8596"</FONT>}, <FONT ID="SingleLineComment">//left right arrow, U+2194 ISOamsa --&gt;
+<A NAME="233"></A></FONT>        {<FONT ID="StringLiteral">"crarr"</FONT>, <FONT ID="StringLiteral">"8629"</FONT>}, <FONT ID="SingleLineComment">//downwards arrow with corner leftwards= carriage return, U+21B5 NEW --&gt;
+<A NAME="234"></A></FONT>        {<FONT ID="StringLiteral">"lArr"</FONT>, <FONT ID="StringLiteral">"8656"</FONT>}, <FONT ID="SingleLineComment">//leftwards double arrow, U+21D0 ISOtech --&gt;
+<A NAME="235"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- ISO 10646 does not say that lArr is the same as the 'is implied by'
+<A NAME="236"></A></FONT><FONT ID="SingleLineComment">//      arrow but also does not have any other character for that function.
+<A NAME="237"></A></FONT><FONT ID="SingleLineComment">//      So ? lArr canbe used for 'is implied by' as ISOtech suggests --&gt;
+<A NAME="238"></A></FONT>        {<FONT ID="StringLiteral">"uArr"</FONT>, <FONT ID="StringLiteral">"8657"</FONT>}, <FONT ID="SingleLineComment">//upwards double arrow, U+21D1 ISOamsa --&gt;
+<A NAME="239"></A></FONT>        {<FONT ID="StringLiteral">"rArr"</FONT>, <FONT ID="StringLiteral">"8658"</FONT>}, <FONT ID="SingleLineComment">//rightwards double arrow,U+21D2 ISOtech --&gt;
+<A NAME="240"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- ISO 10646 does not say this is the 'implies' character but does not
+<A NAME="241"></A></FONT><FONT ID="SingleLineComment">//      have another character with this function so ?rArr can be used for
+<A NAME="242"></A></FONT><FONT ID="SingleLineComment">//      'implies' as ISOtech suggests --&gt;
+<A NAME="243"></A></FONT>        {<FONT ID="StringLiteral">"dArr"</FONT>, <FONT ID="StringLiteral">"8659"</FONT>}, <FONT ID="SingleLineComment">//downwards double arrow, U+21D3 ISOamsa --&gt;
+<A NAME="244"></A></FONT>        {<FONT ID="StringLiteral">"hArr"</FONT>, <FONT ID="StringLiteral">"8660"</FONT>}, <FONT ID="SingleLineComment">//left right double arrow,U+21D4 ISOamsa --&gt;
+<A NAME="245"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- Mathematical Operators --&gt;
+<A NAME="246"></A></FONT>        {<FONT ID="StringLiteral">"forall"</FONT>, <FONT ID="StringLiteral">"8704"</FONT>}, <FONT ID="SingleLineComment">//for all, U+2200 ISOtech --&gt;
+<A NAME="247"></A></FONT>        {<FONT ID="StringLiteral">"part"</FONT>, <FONT ID="StringLiteral">"8706"</FONT>}, <FONT ID="SingleLineComment">//partial differential, U+2202 ISOtech  --&gt;
+<A NAME="248"></A></FONT>        {<FONT ID="StringLiteral">"exist"</FONT>, <FONT ID="StringLiteral">"8707"</FONT>}, <FONT ID="SingleLineComment">//there exists, U+2203 ISOtech --&gt;
+<A NAME="249"></A></FONT>        {<FONT ID="StringLiteral">"empty"</FONT>, <FONT ID="StringLiteral">"8709"</FONT>}, <FONT ID="SingleLineComment">//empty set = null set = diameter,U+2205 ISOamso --&gt;
+<A NAME="250"></A></FONT>        {<FONT ID="StringLiteral">"nabla"</FONT>, <FONT ID="StringLiteral">"8711"</FONT>}, <FONT ID="SingleLineComment">//nabla = backward difference,U+2207 ISOtech --&gt;
+<A NAME="251"></A></FONT>        {<FONT ID="StringLiteral">"isin"</FONT>, <FONT ID="StringLiteral">"8712"</FONT>}, <FONT ID="SingleLineComment">//element of, U+2208 ISOtech --&gt;
+<A NAME="252"></A></FONT>        {<FONT ID="StringLiteral">"notin"</FONT>, <FONT ID="StringLiteral">"8713"</FONT>}, <FONT ID="SingleLineComment">//not an element of, U+2209 ISOtech --&gt;
+<A NAME="253"></A></FONT>        {<FONT ID="StringLiteral">"ni"</FONT>, <FONT ID="StringLiteral">"8715"</FONT>}, <FONT ID="SingleLineComment">//contains as member, U+220B ISOtech --&gt;
+<A NAME="254"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- should there be a more memorable name than 'ni'? --&gt;
+<A NAME="255"></A></FONT>        {<FONT ID="StringLiteral">"prod"</FONT>, <FONT ID="StringLiteral">"8719"</FONT>}, <FONT ID="SingleLineComment">//n-ary product = product sign,U+220F ISOamsb --&gt;
+<A NAME="256"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- prod is NOT the same character as U+03A0 'greek capital letter pi'
+<A NAME="257"></A></FONT><FONT ID="SingleLineComment">//      though the same glyph might be used for both --&gt;
+<A NAME="258"></A></FONT>        {<FONT ID="StringLiteral">"sum"</FONT>, <FONT ID="StringLiteral">"8721"</FONT>}, <FONT ID="SingleLineComment">//n-ary summation, U+2211 ISOamsb --&gt;
+<A NAME="259"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- sum is NOT the same character as U+03A3 'greek capital letter sigma'
+<A NAME="260"></A></FONT><FONT ID="SingleLineComment">//      though the same glyph might be used for both --&gt;
+<A NAME="261"></A></FONT>        {<FONT ID="StringLiteral">"minus"</FONT>, <FONT ID="StringLiteral">"8722"</FONT>}, <FONT ID="SingleLineComment">//minus sign, U+2212 ISOtech --&gt;
+<A NAME="262"></A></FONT>        {<FONT ID="StringLiteral">"lowast"</FONT>, <FONT ID="StringLiteral">"8727"</FONT>}, <FONT ID="SingleLineComment">//asterisk operator, U+2217 ISOtech --&gt;
+<A NAME="263"></A></FONT>        {<FONT ID="StringLiteral">"radic"</FONT>, <FONT ID="StringLiteral">"8730"</FONT>}, <FONT ID="SingleLineComment">//square root = radical sign,U+221A ISOtech --&gt;
+<A NAME="264"></A></FONT>        {<FONT ID="StringLiteral">"prop"</FONT>, <FONT ID="StringLiteral">"8733"</FONT>}, <FONT ID="SingleLineComment">//proportional to, U+221D ISOtech --&gt;
+<A NAME="265"></A></FONT>        {<FONT ID="StringLiteral">"infin"</FONT>, <FONT ID="StringLiteral">"8734"</FONT>}, <FONT ID="SingleLineComment">//infinity, U+221E ISOtech --&gt;
+<A NAME="266"></A></FONT>        {<FONT ID="StringLiteral">"ang"</FONT>, <FONT ID="StringLiteral">"8736"</FONT>}, <FONT ID="SingleLineComment">//angle, U+2220 ISOamso --&gt;
+<A NAME="267"></A></FONT>        {<FONT ID="StringLiteral">"and"</FONT>, <FONT ID="StringLiteral">"8743"</FONT>}, <FONT ID="SingleLineComment">//logical and = wedge, U+2227 ISOtech --&gt;
+<A NAME="268"></A></FONT>        {<FONT ID="StringLiteral">"or"</FONT>, <FONT ID="StringLiteral">"8744"</FONT>}, <FONT ID="SingleLineComment">//logical or = vee, U+2228 ISOtech --&gt;
+<A NAME="269"></A></FONT>        {<FONT ID="StringLiteral">"cap"</FONT>, <FONT ID="StringLiteral">"8745"</FONT>}, <FONT ID="SingleLineComment">//intersection = cap, U+2229 ISOtech --&gt;
+<A NAME="270"></A></FONT>        {<FONT ID="StringLiteral">"cup"</FONT>, <FONT ID="StringLiteral">"8746"</FONT>}, <FONT ID="SingleLineComment">//union = cup, U+222A ISOtech --&gt;
+<A NAME="271"></A></FONT>        {<FONT ID="StringLiteral">"int"</FONT>, <FONT ID="StringLiteral">"8747"</FONT>}, <FONT ID="SingleLineComment">//integral, U+222B ISOtech --&gt;
+<A NAME="272"></A></FONT>        {<FONT ID="StringLiteral">"there4"</FONT>, <FONT ID="StringLiteral">"8756"</FONT>}, <FONT ID="SingleLineComment">//therefore, U+2234 ISOtech --&gt;
+<A NAME="273"></A></FONT>        {<FONT ID="StringLiteral">"sim"</FONT>, <FONT ID="StringLiteral">"8764"</FONT>}, <FONT ID="SingleLineComment">//tilde operator = varies with = similar to,U+223C ISOtech --&gt;
+<A NAME="274"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- tilde operator is NOT the same character as the tilde, U+007E,although
+<A NAME="275"></A></FONT><FONT ID="SingleLineComment">//      the same glyph might be used to represent both  --&gt;
+<A NAME="276"></A></FONT>        {<FONT ID="StringLiteral">"cong"</FONT>, <FONT ID="StringLiteral">"8773"</FONT>}, <FONT ID="SingleLineComment">//approximately equal to, U+2245 ISOtech --&gt;
+<A NAME="277"></A></FONT>        {<FONT ID="StringLiteral">"asymp"</FONT>, <FONT ID="StringLiteral">"8776"</FONT>}, <FONT ID="SingleLineComment">//almost equal to = asymptotic to,U+2248 ISOamsr --&gt;
+<A NAME="278"></A></FONT>        {<FONT ID="StringLiteral">"ne"</FONT>, <FONT ID="StringLiteral">"8800"</FONT>}, <FONT ID="SingleLineComment">//not equal to, U+2260 ISOtech --&gt;
+<A NAME="279"></A></FONT>        {<FONT ID="StringLiteral">"equiv"</FONT>, <FONT ID="StringLiteral">"8801"</FONT>}, <FONT ID="SingleLineComment">//identical to, U+2261 ISOtech --&gt;
+<A NAME="280"></A></FONT>        {<FONT ID="StringLiteral">"le"</FONT>, <FONT ID="StringLiteral">"8804"</FONT>}, <FONT ID="SingleLineComment">//less-than or equal to, U+2264 ISOtech --&gt;
+<A NAME="281"></A></FONT>        {<FONT ID="StringLiteral">"ge"</FONT>, <FONT ID="StringLiteral">"8805"</FONT>}, <FONT ID="SingleLineComment">//greater-than or equal to,U+2265 ISOtech --&gt;
+<A NAME="282"></A></FONT>        {<FONT ID="StringLiteral">"sub"</FONT>, <FONT ID="StringLiteral">"8834"</FONT>}, <FONT ID="SingleLineComment">//subset of, U+2282 ISOtech --&gt;
+<A NAME="283"></A></FONT>        {<FONT ID="StringLiteral">"sup"</FONT>, <FONT ID="StringLiteral">"8835"</FONT>}, <FONT ID="SingleLineComment">//superset of, U+2283 ISOtech --&gt;
+<A NAME="284"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- note that nsup, 'not a superset of, U+2283' is not covered by the
+<A NAME="285"></A></FONT><FONT ID="SingleLineComment">//      Symbol font encoding and is not included. Should it be, for symmetry?
+<A NAME="286"></A></FONT><FONT ID="SingleLineComment">//      It is in ISOamsn  --&gt; &lt;!ENTITY nsub", "8836"},
+<A NAME="287"></A></FONT><FONT ID="SingleLineComment">//      not a subset of, U+2284 ISOamsn --&gt;
+<A NAME="288"></A></FONT>        {<FONT ID="StringLiteral">"sube"</FONT>, <FONT ID="StringLiteral">"8838"</FONT>}, <FONT ID="SingleLineComment">//subset of or equal to, U+2286 ISOtech --&gt;
+<A NAME="289"></A></FONT>        {<FONT ID="StringLiteral">"supe"</FONT>, <FONT ID="StringLiteral">"8839"</FONT>}, <FONT ID="SingleLineComment">//superset of or equal to,U+2287 ISOtech --&gt;
+<A NAME="290"></A></FONT>        {<FONT ID="StringLiteral">"oplus"</FONT>, <FONT ID="StringLiteral">"8853"</FONT>}, <FONT ID="SingleLineComment">//circled plus = direct sum,U+2295 ISOamsb --&gt;
+<A NAME="291"></A></FONT>        {<FONT ID="StringLiteral">"otimes"</FONT>, <FONT ID="StringLiteral">"8855"</FONT>}, <FONT ID="SingleLineComment">//circled times = vector product,U+2297 ISOamsb --&gt;
+<A NAME="292"></A></FONT>        {<FONT ID="StringLiteral">"perp"</FONT>, <FONT ID="StringLiteral">"8869"</FONT>}, <FONT ID="SingleLineComment">//up tack = orthogonal to = perpendicular,U+22A5 ISOtech --&gt;
+<A NAME="293"></A></FONT>        {<FONT ID="StringLiteral">"sdot"</FONT>, <FONT ID="StringLiteral">"8901"</FONT>}, <FONT ID="SingleLineComment">//dot operator, U+22C5 ISOamsb --&gt;
+<A NAME="294"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- dot operator is NOT the same character as U+00B7 middle dot --&gt;
+<A NAME="295"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- Miscellaneous Technical --&gt;
+<A NAME="296"></A></FONT>        {<FONT ID="StringLiteral">"lceil"</FONT>, <FONT ID="StringLiteral">"8968"</FONT>}, <FONT ID="SingleLineComment">//left ceiling = apl upstile,U+2308 ISOamsc  --&gt;
+<A NAME="297"></A></FONT>        {<FONT ID="StringLiteral">"rceil"</FONT>, <FONT ID="StringLiteral">"8969"</FONT>}, <FONT ID="SingleLineComment">//right ceiling, U+2309 ISOamsc  --&gt;
+<A NAME="298"></A></FONT>        {<FONT ID="StringLiteral">"lfloor"</FONT>, <FONT ID="StringLiteral">"8970"</FONT>}, <FONT ID="SingleLineComment">//left floor = apl downstile,U+230A ISOamsc  --&gt;
+<A NAME="299"></A></FONT>        {<FONT ID="StringLiteral">"rfloor"</FONT>, <FONT ID="StringLiteral">"8971"</FONT>}, <FONT ID="SingleLineComment">//right floor, U+230B ISOamsc  --&gt;
+<A NAME="300"></A></FONT>        {<FONT ID="StringLiteral">"lang"</FONT>, <FONT ID="StringLiteral">"9001"</FONT>}, <FONT ID="SingleLineComment">//left-pointing angle bracket = bra,U+2329 ISOtech --&gt;
+<A NAME="301"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- lang is NOT the same character as U+003C 'less than' or U+2039 'single left-pointing angle quotation mark' --&gt;
+<A NAME="302"></A></FONT>        {<FONT ID="StringLiteral">"rang"</FONT>, <FONT ID="StringLiteral">"9002"</FONT>}, <FONT ID="SingleLineComment">//right-pointing angle bracket = ket,U+232A ISOtech --&gt;
+<A NAME="303"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- rang is NOT the same character as U+003E 'greater than' or U+203A
+<A NAME="304"></A></FONT><FONT ID="SingleLineComment">//      'single right-pointing angle quotation mark' --&gt;
+<A NAME="305"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- Geometric Shapes --&gt;
+<A NAME="306"></A></FONT>        {<FONT ID="StringLiteral">"loz"</FONT>, <FONT ID="StringLiteral">"9674"</FONT>}, <FONT ID="SingleLineComment">//lozenge, U+25CA ISOpub --&gt;
+<A NAME="307"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- Miscellaneous Symbols --&gt;
+<A NAME="308"></A></FONT>        {<FONT ID="StringLiteral">"spades"</FONT>, <FONT ID="StringLiteral">"9824"</FONT>}, <FONT ID="SingleLineComment">//black spade suit, U+2660 ISOpub --&gt;
+<A NAME="309"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- black here seems to mean filled as opposed to hollow --&gt;
+<A NAME="310"></A></FONT>        {<FONT ID="StringLiteral">"clubs"</FONT>, <FONT ID="StringLiteral">"9827"</FONT>}, <FONT ID="SingleLineComment">//black club suit = shamrock,U+2663 ISOpub --&gt;
+<A NAME="311"></A></FONT>        {<FONT ID="StringLiteral">"hearts"</FONT>, <FONT ID="StringLiteral">"9829"</FONT>}, <FONT ID="SingleLineComment">//black heart suit = valentine,U+2665 ISOpub --&gt;
+<A NAME="312"></A></FONT>        {<FONT ID="StringLiteral">"diams"</FONT>, <FONT ID="StringLiteral">"9830"</FONT>}, <FONT ID="SingleLineComment">//black diamond suit, U+2666 ISOpub --&gt;
+<A NAME="313"></A></FONT>
+<A NAME="314"></A><FONT ID="SingleLineComment">// &lt;!-- Latin Extended-A --&gt;
+<A NAME="315"></A></FONT>        {<FONT ID="StringLiteral">"OElig"</FONT>, <FONT ID="StringLiteral">"338"</FONT>}, <FONT ID="SingleLineComment">//  -- latin capital ligature OE,U+0152 ISOlat2 --&gt;
+<A NAME="316"></A></FONT>        {<FONT ID="StringLiteral">"oelig"</FONT>, <FONT ID="StringLiteral">"339"</FONT>}, <FONT ID="SingleLineComment">//  -- latin small ligature oe, U+0153 ISOlat2 --&gt;
+<A NAME="317"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- ligature is a misnomer, this is a separate character in some languages --&gt;
+<A NAME="318"></A></FONT>        {<FONT ID="StringLiteral">"Scaron"</FONT>, <FONT ID="StringLiteral">"352"</FONT>}, <FONT ID="SingleLineComment">//  -- latin capital letter S with caron,U+0160 ISOlat2 --&gt;
+<A NAME="319"></A></FONT>        {<FONT ID="StringLiteral">"scaron"</FONT>, <FONT ID="StringLiteral">"353"</FONT>}, <FONT ID="SingleLineComment">//  -- latin small letter s with caron,U+0161 ISOlat2 --&gt;
+<A NAME="320"></A></FONT>        {<FONT ID="StringLiteral">"Yuml"</FONT>, <FONT ID="StringLiteral">"376"</FONT>}, <FONT ID="SingleLineComment">//  -- latin capital letter Y with diaeresis,U+0178 ISOlat2 --&gt;
+<A NAME="321"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- Spacing Modifier Letters --&gt;
+<A NAME="322"></A></FONT>        {<FONT ID="StringLiteral">"circ"</FONT>, <FONT ID="StringLiteral">"710"</FONT>}, <FONT ID="SingleLineComment">//  -- modifier letter circumflex accent,U+02C6 ISOpub --&gt;
+<A NAME="323"></A></FONT>        {<FONT ID="StringLiteral">"tilde"</FONT>, <FONT ID="StringLiteral">"732"</FONT>}, <FONT ID="SingleLineComment">//small tilde, U+02DC ISOdia --&gt;
+<A NAME="324"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- General Punctuation --&gt;
+<A NAME="325"></A></FONT>        {<FONT ID="StringLiteral">"ensp"</FONT>, <FONT ID="StringLiteral">"8194"</FONT>}, <FONT ID="SingleLineComment">//en space, U+2002 ISOpub --&gt;
+<A NAME="326"></A></FONT>        {<FONT ID="StringLiteral">"emsp"</FONT>, <FONT ID="StringLiteral">"8195"</FONT>}, <FONT ID="SingleLineComment">//em space, U+2003 ISOpub --&gt;
+<A NAME="327"></A></FONT>        {<FONT ID="StringLiteral">"thinsp"</FONT>, <FONT ID="StringLiteral">"8201"</FONT>}, <FONT ID="SingleLineComment">//thin space, U+2009 ISOpub --&gt;
+<A NAME="328"></A></FONT>        {<FONT ID="StringLiteral">"zwnj"</FONT>, <FONT ID="StringLiteral">"8204"</FONT>}, <FONT ID="SingleLineComment">//zero width non-joiner,U+200C NEW RFC 2070 --&gt;
+<A NAME="329"></A></FONT>        {<FONT ID="StringLiteral">"zwj"</FONT>, <FONT ID="StringLiteral">"8205"</FONT>}, <FONT ID="SingleLineComment">//zero width joiner, U+200D NEW RFC 2070 --&gt;
+<A NAME="330"></A></FONT>        {<FONT ID="StringLiteral">"lrm"</FONT>, <FONT ID="StringLiteral">"8206"</FONT>}, <FONT ID="SingleLineComment">//left-to-right mark, U+200E NEW RFC 2070 --&gt;
+<A NAME="331"></A></FONT>        {<FONT ID="StringLiteral">"rlm"</FONT>, <FONT ID="StringLiteral">"8207"</FONT>}, <FONT ID="SingleLineComment">//right-to-left mark, U+200F NEW RFC 2070 --&gt;
+<A NAME="332"></A></FONT>        {<FONT ID="StringLiteral">"ndash"</FONT>, <FONT ID="StringLiteral">"8211"</FONT>}, <FONT ID="SingleLineComment">//en dash, U+2013 ISOpub --&gt;
+<A NAME="333"></A></FONT>        {<FONT ID="StringLiteral">"mdash"</FONT>, <FONT ID="StringLiteral">"8212"</FONT>}, <FONT ID="SingleLineComment">//em dash, U+2014 ISOpub --&gt;
+<A NAME="334"></A></FONT>        {<FONT ID="StringLiteral">"lsquo"</FONT>, <FONT ID="StringLiteral">"8216"</FONT>}, <FONT ID="SingleLineComment">//left single quotation mark,U+2018 ISOnum --&gt;
+<A NAME="335"></A></FONT>        {<FONT ID="StringLiteral">"rsquo"</FONT>, <FONT ID="StringLiteral">"8217"</FONT>}, <FONT ID="SingleLineComment">//right single quotation mark,U+2019 ISOnum --&gt;
+<A NAME="336"></A></FONT>        {<FONT ID="StringLiteral">"sbquo"</FONT>, <FONT ID="StringLiteral">"8218"</FONT>}, <FONT ID="SingleLineComment">//single low-9 quotation mark, U+201A NEW --&gt;
+<A NAME="337"></A></FONT>        {<FONT ID="StringLiteral">"ldquo"</FONT>, <FONT ID="StringLiteral">"8220"</FONT>}, <FONT ID="SingleLineComment">//left double quotation mark,U+201C ISOnum --&gt;
+<A NAME="338"></A></FONT>        {<FONT ID="StringLiteral">"rdquo"</FONT>, <FONT ID="StringLiteral">"8221"</FONT>}, <FONT ID="SingleLineComment">//right double quotation mark,U+201D ISOnum --&gt;
+<A NAME="339"></A></FONT>        {<FONT ID="StringLiteral">"bdquo"</FONT>, <FONT ID="StringLiteral">"8222"</FONT>}, <FONT ID="SingleLineComment">//double low-9 quotation mark, U+201E NEW --&gt;
+<A NAME="340"></A></FONT>        {<FONT ID="StringLiteral">"dagger"</FONT>, <FONT ID="StringLiteral">"8224"</FONT>}, <FONT ID="SingleLineComment">//dagger, U+2020 ISOpub --&gt;
+<A NAME="341"></A></FONT>        {<FONT ID="StringLiteral">"Dagger"</FONT>, <FONT ID="StringLiteral">"8225"</FONT>}, <FONT ID="SingleLineComment">//double dagger, U+2021 ISOpub --&gt;
+<A NAME="342"></A></FONT>        {<FONT ID="StringLiteral">"permil"</FONT>, <FONT ID="StringLiteral">"8240"</FONT>}, <FONT ID="SingleLineComment">//per mille sign, U+2030 ISOtech --&gt;
+<A NAME="343"></A></FONT>        {<FONT ID="StringLiteral">"lsaquo"</FONT>, <FONT ID="StringLiteral">"8249"</FONT>}, <FONT ID="SingleLineComment">//single left-pointing angle quotation mark,U+2039 ISO proposed --&gt;
+<A NAME="344"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- lsaquo is proposed but not yet ISO standardized --&gt;
+<A NAME="345"></A></FONT>        {<FONT ID="StringLiteral">"rsaquo"</FONT>, <FONT ID="StringLiteral">"8250"</FONT>}, <FONT ID="SingleLineComment">//single right-pointing angle quotation mark,U+203A ISO proposed --&gt;
+<A NAME="346"></A></FONT><FONT ID="SingleLineComment">// &lt;!-- rsaquo is proposed but not yet ISO standardized --&gt;
+<A NAME="347"></A></FONT>        {<FONT ID="StringLiteral">"euro"</FONT>, <FONT ID="StringLiteral">"8364"</FONT>}, <FONT ID="SingleLineComment">//  -- euro sign, U+20AC NEW --&gt;
+<A NAME="348"></A></FONT>    };
+<A NAME="349"></A>
+<A NAME="350"></A>    <FONT ID="FormalComment">/**
+<A NAME="351"></A>     * &lt;p&gt;The set of entities supported by standard XML.&lt;/p&gt;
+<A NAME="352"></A>     */</FONT>
+<A NAME="353"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/apache/Entities.java.html">Entities</A> XML;
+<A NAME="354"></A>
+<A NAME="355"></A>    <FONT ID="FormalComment">/**
+<A NAME="356"></A>     * &lt;p&gt;The set of entities supported by HTML 3.2.&lt;/p&gt;
+<A NAME="357"></A>     */</FONT>
+<A NAME="358"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/apache/Entities.java.html">Entities</A> HTML32;
+<A NAME="359"></A>
+<A NAME="360"></A>    <FONT ID="FormalComment">/**
+<A NAME="361"></A>     * &lt;p&gt;The set of entities supported by HTML 4.0.&lt;/p&gt;
+<A NAME="362"></A>     */</FONT>
+<A NAME="363"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/apache/Entities.java.html">Entities</A> HTML40;
+<A NAME="364"></A>
+<A NAME="365"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="366"></A>        XML = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/apache/Entities.java.html">Entities</A>();
+<A NAME="367"></A>        XML.addEntities(BASIC_ARRAY);
+<A NAME="368"></A>        XML.addEntities(APOS_ARRAY);
+<A NAME="369"></A>    }
+<A NAME="370"></A>
+<A NAME="371"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="372"></A>        HTML32 = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/apache/Entities.java.html">Entities</A>();
+<A NAME="373"></A>        HTML32.addEntities(BASIC_ARRAY);
+<A NAME="374"></A>        HTML32.addEntities(ISO8859_1_ARRAY);
+<A NAME="375"></A>    }
+<A NAME="376"></A>
+<A NAME="377"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="378"></A>        HTML40 = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/apache/Entities.java.html">Entities</A>();
+<A NAME="379"></A>        fillWithHtml40Entities(HTML40);
+<A NAME="380"></A>    }
+<A NAME="381"></A>
+<A NAME="382"></A>    <FONT ID="FormalComment">/**
+<A NAME="383"></A>     * &lt;p&gt;Fills the specified entities instance with HTML 40 entities.&lt;/p&gt;
+<A NAME="384"></A>     *
+<A NAME="385"></A>     * @param entities the instance to be filled.
+<A NAME="386"></A>     */</FONT>
+<A NAME="387"></A>    <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> fillWithHtml40Entities(<A HREF="../../../../ai/ilikeplaces/util/apache/Entities.java.html">Entities</A> entities) {
+<A NAME="388"></A>        entities.addEntities(BASIC_ARRAY);
+<A NAME="389"></A>        entities.addEntities(ISO8859_1_ARRAY);
+<A NAME="390"></A>        entities.addEntities(HTML40_ARRAY);
+<A NAME="391"></A>    }
+<A NAME="392"></A>
+<A NAME="393"></A>    <FONT ID="Static">static</FONT> <FONT ID="Interface">interface</FONT> EntityMap {
+<A NAME="394"></A>        <FONT ID="FormalComment">/**
+<A NAME="395"></A>         * &lt;p&gt;Add an entry to this entity map.&lt;/p&gt;
+<A NAME="396"></A>         *
+<A NAME="397"></A>         * @param name the entity name
+<A NAME="398"></A>         * @param value the entity value
+<A NAME="399"></A>         */</FONT>
+<A NAME="400"></A>        <FONT ID="Void">void</FONT> add(String name, <FONT ID="Int">int</FONT> value);
+<A NAME="401"></A>
+<A NAME="402"></A>        <FONT ID="FormalComment">/**
+<A NAME="403"></A>         * &lt;p&gt;Returns the name of the entity identified by the specified value.&lt;/p&gt;
+<A NAME="404"></A>         *
+<A NAME="405"></A>         * @param value the value to locate
+<A NAME="406"></A>         * @return entity name associated with the specified value
+<A NAME="407"></A>         */</FONT>
+<A NAME="408"></A>        String name(<FONT ID="Int">int</FONT> value);
+<A NAME="409"></A>
+<A NAME="410"></A>        <FONT ID="FormalComment">/**
+<A NAME="411"></A>         * &lt;p&gt;Returns the value of the entity identified by the specified name.&lt;/p&gt;
+<A NAME="412"></A>         *
+<A NAME="413"></A>         * @param name the name to locate
+<A NAME="414"></A>         * @return entity value associated with the specified name
+<A NAME="415"></A>         */</FONT>
+<A NAME="416"></A>        <FONT ID="Int">int</FONT> value(String name);
+<A NAME="417"></A>    }
+<A NAME="418"></A>
+<A NAME="419"></A>    <FONT ID="Static">static</FONT> <FONT ID="Class">class</FONT> PrimitiveEntityMap <FONT ID="Implements">implements</FONT> EntityMap {
+<A NAME="420"></A>        <FONT ID="Private">private</FONT> Map mapNameToValue = <FONT ID="New">new</FONT> HashMap();
+<A NAME="421"></A>        <FONT ID="Private">private</FONT> HashMap&lt;Integer,Object&gt; mapValueToName = <FONT ID="New">new</FONT> HashMap&lt;Integer,Object&gt;();
+<A NAME="422"></A>
+<A NAME="423"></A>        <FONT ID="FormalComment">/**
+<A NAME="424"></A>         * {@inheritDoc}
+<A NAME="425"></A>         */</FONT>
+<A NAME="426"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> add(String name, <FONT ID="Int">int</FONT> value) {
+<A NAME="427"></A>            mapNameToValue.put(name, <FONT ID="New">new</FONT> Integer(value));
+<A NAME="428"></A>            mapValueToName.put(value, name);
+<A NAME="429"></A>        }
+<A NAME="430"></A>
+<A NAME="431"></A>        <FONT ID="FormalComment">/**
+<A NAME="432"></A>         * {@inheritDoc}
+<A NAME="433"></A>         */</FONT>
+<A NAME="434"></A>        <FONT ID="Public">public</FONT> String name(<FONT ID="Int">int</FONT> value) {
+<A NAME="435"></A>            <FONT ID="Return">return</FONT> (String) mapValueToName.get(value);
+<A NAME="436"></A>        }
+<A NAME="437"></A>
+<A NAME="438"></A>        <FONT ID="FormalComment">/**
+<A NAME="439"></A>         * {@inheritDoc}
+<A NAME="440"></A>         */</FONT>
+<A NAME="441"></A>        <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> value(String name) {
+<A NAME="442"></A>            Object value = mapNameToValue.get(name);
+<A NAME="443"></A>            <FONT ID="If">if</FONT> (value == <FONT ID="Null">null</FONT>) {
+<A NAME="444"></A>                <FONT ID="Return">return</FONT> -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="445"></A>            }
+<A NAME="446"></A>            <FONT ID="Return">return</FONT> ((Integer) value).intValue();
+<A NAME="447"></A>        }
+<A NAME="448"></A>    }
+<A NAME="449"></A>
+<A NAME="450"></A>
+<A NAME="451"></A>    <FONT ID="Static">static</FONT> <FONT ID="Abstract">abstract</FONT> <FONT ID="Class">class</FONT> MapIntMap <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/util/apache/Entities.java.html">Entities.EntityMap</A> {
+<A NAME="452"></A>        <FONT ID="Protected">protected</FONT> Map mapNameToValue;
+<A NAME="453"></A>        <FONT ID="Protected">protected</FONT> Map mapValueToName;
+<A NAME="454"></A>
+<A NAME="455"></A>        <FONT ID="FormalComment">/**
+<A NAME="456"></A>         * {@inheritDoc}
+<A NAME="457"></A>         */</FONT>
+<A NAME="458"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> add(String name, <FONT ID="Int">int</FONT> value) {
+<A NAME="459"></A>            mapNameToValue.put(name, <FONT ID="New">new</FONT> Integer(value));
+<A NAME="460"></A>            mapValueToName.put(<FONT ID="New">new</FONT> Integer(value), name);
+<A NAME="461"></A>        }
+<A NAME="462"></A>
+<A NAME="463"></A>        <FONT ID="FormalComment">/**
+<A NAME="464"></A>         * {@inheritDoc}
+<A NAME="465"></A>         */</FONT>
+<A NAME="466"></A>        <FONT ID="Public">public</FONT> String name(<FONT ID="Int">int</FONT> value) {
+<A NAME="467"></A>            <FONT ID="Return">return</FONT> (String) mapValueToName.get(<FONT ID="New">new</FONT> Integer(value));
+<A NAME="468"></A>        }
+<A NAME="469"></A>
+<A NAME="470"></A>        <FONT ID="FormalComment">/**
+<A NAME="471"></A>         * {@inheritDoc}
+<A NAME="472"></A>         */</FONT>
+<A NAME="473"></A>        <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> value(String name) {
+<A NAME="474"></A>            Object value = mapNameToValue.get(name);
+<A NAME="475"></A>            <FONT ID="If">if</FONT> (value == <FONT ID="Null">null</FONT>) {
+<A NAME="476"></A>                <FONT ID="Return">return</FONT> -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="477"></A>            }
+<A NAME="478"></A>            <FONT ID="Return">return</FONT> ((Integer) value).intValue();
+<A NAME="479"></A>        }
+<A NAME="480"></A>    }
+<A NAME="481"></A>
+<A NAME="482"></A>    <FONT ID="Static">static</FONT> <FONT ID="Class">class</FONT> HashEntityMap <FONT ID="Extends">extends</FONT> MapIntMap {
+<A NAME="483"></A>        <FONT ID="FormalComment">/**
+<A NAME="484"></A>         * Constructs a new instance of &lt;code&gt;HashEntityMap&lt;/code&gt;.
+<A NAME="485"></A>         */</FONT>
+<A NAME="486"></A>        <FONT ID="Public">public</FONT> HashEntityMap() {
+<A NAME="487"></A>            mapNameToValue = <FONT ID="New">new</FONT> HashMap();
+<A NAME="488"></A>            mapValueToName = <FONT ID="New">new</FONT> HashMap();
+<A NAME="489"></A>        }
+<A NAME="490"></A>    }
+<A NAME="491"></A>
+<A NAME="492"></A>    <FONT ID="Static">static</FONT> <FONT ID="Class">class</FONT> TreeEntityMap <FONT ID="Extends">extends</FONT> MapIntMap {
+<A NAME="493"></A>      <FONT ID="FormalComment">/**
+<A NAME="494"></A>       * Constructs a new instance of &lt;code&gt;TreeEntityMap&lt;/code&gt;.
+<A NAME="495"></A>       */</FONT>
+<A NAME="496"></A>        <FONT ID="Public">public</FONT> TreeEntityMap() {
+<A NAME="497"></A>            mapNameToValue = <FONT ID="New">new</FONT> TreeMap();
+<A NAME="498"></A>            mapValueToName = <FONT ID="New">new</FONT> TreeMap();
+<A NAME="499"></A>        }
+<A NAME="500"></A>    }
+<A NAME="501"></A>
+<A NAME="502"></A>    <FONT ID="Static">static</FONT> <FONT ID="Class">class</FONT> LookupEntityMap <FONT ID="Extends">extends</FONT> PrimitiveEntityMap {
+<A NAME="503"></A>        <FONT ID="Private">private</FONT> String[] lookupTable;
+<A NAME="504"></A>        <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> LOOKUP_TABLE_SIZE = <FONT ID="IntegerLiteral">256</FONT>;
+<A NAME="505"></A>
+<A NAME="506"></A>        <FONT ID="FormalComment">/**
+<A NAME="507"></A>         * {@inheritDoc}
+<A NAME="508"></A>         */</FONT>
+<A NAME="509"></A>        <FONT ID="Public">public</FONT> String name(<FONT ID="Int">int</FONT> value) {
+<A NAME="510"></A>            <FONT ID="If">if</FONT> (value &lt; LOOKUP_TABLE_SIZE) {
+<A NAME="511"></A>                <FONT ID="Return">return</FONT> lookupTable()[value];
+<A NAME="512"></A>            }
+<A NAME="513"></A>            <FONT ID="Return">return</FONT> <FONT ID="Super">super</FONT>.name(value);
+<A NAME="514"></A>        }
+<A NAME="515"></A>
+<A NAME="516"></A>        <FONT ID="FormalComment">/**
+<A NAME="517"></A>         * &lt;p&gt;Returns the lookup table for this entity map. The lookup table is created if it has not been
+<A NAME="518"></A>         * previously.&lt;/p&gt;
+<A NAME="519"></A>         *
+<A NAME="520"></A>         * @return the lookup table
+<A NAME="521"></A>         */</FONT>
+<A NAME="522"></A>        <FONT ID="Private">private</FONT> String[] lookupTable() {
+<A NAME="523"></A>            <FONT ID="If">if</FONT> (lookupTable == <FONT ID="Null">null</FONT>) {
+<A NAME="524"></A>                createLookupTable();
+<A NAME="525"></A>            }
+<A NAME="526"></A>            <FONT ID="Return">return</FONT> lookupTable;
+<A NAME="527"></A>        }
+<A NAME="528"></A>
+<A NAME="529"></A>        <FONT ID="FormalComment">/**
+<A NAME="530"></A>         * &lt;p&gt;Creates an entity lookup table of LOOKUP_TABLE_SIZE elements, initialized with entity names.&lt;/p&gt;
+<A NAME="531"></A>         */</FONT>
+<A NAME="532"></A>        <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createLookupTable() {
+<A NAME="533"></A>            lookupTable = <FONT ID="New">new</FONT> String[LOOKUP_TABLE_SIZE];
+<A NAME="534"></A>            <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; LOOKUP_TABLE_SIZE; ++i) {
+<A NAME="535"></A>                lookupTable[i] = <FONT ID="Super">super</FONT>.name(i);
+<A NAME="536"></A>            }
+<A NAME="537"></A>        }
+<A NAME="538"></A>    }
+<A NAME="539"></A>
+<A NAME="540"></A>    <FONT ID="Static">static</FONT> <FONT ID="Class">class</FONT> ArrayEntityMap <FONT ID="Implements">implements</FONT> EntityMap {
+<A NAME="541"></A>        <FONT ID="Protected">protected</FONT> <FONT ID="Int">int</FONT> growBy = <FONT ID="IntegerLiteral">100</FONT>;
+<A NAME="542"></A>        <FONT ID="Protected">protected</FONT> <FONT ID="Int">int</FONT> size = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="543"></A>        <FONT ID="Protected">protected</FONT> String[] names;
+<A NAME="544"></A>        <FONT ID="Protected">protected</FONT> <FONT ID="Int">int</FONT>[] values;
+<A NAME="545"></A>
+<A NAME="546"></A>        <FONT ID="FormalComment">/**
+<A NAME="547"></A>         * Constructs a new instance of &lt;code&gt;ArrayEntityMap&lt;/code&gt;.
+<A NAME="548"></A>         */</FONT>
+<A NAME="549"></A>        <FONT ID="Public">public</FONT> ArrayEntityMap() {
+<A NAME="550"></A>            names = <FONT ID="New">new</FONT> String[growBy];
+<A NAME="551"></A>            values = <FONT ID="New">new</FONT> <FONT ID="Int">int</FONT>[growBy];
+<A NAME="552"></A>        }
+<A NAME="553"></A>
+<A NAME="554"></A>        <FONT ID="FormalComment">/**
+<A NAME="555"></A>         * Constructs a new instance of &lt;code&gt;ArrayEntityMap&lt;/code&gt;
+<A NAME="556"></A>         * specifying the size by which the array should grow.
+<A NAME="557"></A>         *
+<A NAME="558"></A>         * @param growBy array will be initialized to and will grow by this amount
+<A NAME="559"></A>         */</FONT>
+<A NAME="560"></A>        <FONT ID="Public">public</FONT> ArrayEntityMap(<FONT ID="Int">int</FONT> growBy) {
+<A NAME="561"></A>            <FONT ID="This">this</FONT>.growBy = growBy;
+<A NAME="562"></A>            names = <FONT ID="New">new</FONT> String[growBy];
+<A NAME="563"></A>            values = <FONT ID="New">new</FONT> <FONT ID="Int">int</FONT>[growBy];
+<A NAME="564"></A>        }
+<A NAME="565"></A>
+<A NAME="566"></A>        <FONT ID="FormalComment">/**
+<A NAME="567"></A>         * {@inheritDoc}
+<A NAME="568"></A>         */</FONT>
+<A NAME="569"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> add(String name, <FONT ID="Int">int</FONT> value) {
+<A NAME="570"></A>            ensureCapacity(size + <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="571"></A>            names[size] = name;
+<A NAME="572"></A>            values[size] = value;
+<A NAME="573"></A>            size++;
+<A NAME="574"></A>        }
+<A NAME="575"></A>
+<A NAME="576"></A>        <FONT ID="FormalComment">/**
+<A NAME="577"></A>         * Verifies the capacity of the entity array, adjusting the size if necessary.
+<A NAME="578"></A>         *
+<A NAME="579"></A>         * @param capacity size the array should be
+<A NAME="580"></A>         */</FONT>
+<A NAME="581"></A>        <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> ensureCapacity(<FONT ID="Int">int</FONT> capacity) {
+<A NAME="582"></A>            <FONT ID="If">if</FONT> (capacity &gt; names.length) {
+<A NAME="583"></A>                <FONT ID="Int">int</FONT> newSize = Math.max(capacity, size + growBy);
+<A NAME="584"></A>                String[] newNames = <FONT ID="New">new</FONT> String[newSize];
+<A NAME="585"></A>                System.arraycopy(names, <FONT ID="IntegerLiteral">0</FONT>, newNames, <FONT ID="IntegerLiteral">0</FONT>, size);
+<A NAME="586"></A>                names = newNames;
+<A NAME="587"></A>                <FONT ID="Int">int</FONT>[] newValues = <FONT ID="New">new</FONT> <FONT ID="Int">int</FONT>[newSize];
+<A NAME="588"></A>                System.arraycopy(values, <FONT ID="IntegerLiteral">0</FONT>, newValues, <FONT ID="IntegerLiteral">0</FONT>, size);
+<A NAME="589"></A>                values = newValues;
+<A NAME="590"></A>            }
+<A NAME="591"></A>        }
+<A NAME="592"></A>
+<A NAME="593"></A>        <FONT ID="FormalComment">/**
+<A NAME="594"></A>         * {@inheritDoc}
+<A NAME="595"></A>         */</FONT>
+<A NAME="596"></A>        <FONT ID="Public">public</FONT> String name(<FONT ID="Int">int</FONT> value) {
+<A NAME="597"></A>            <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; size; ++i) {
+<A NAME="598"></A>                <FONT ID="If">if</FONT> (values[i] == value) {
+<A NAME="599"></A>                    <FONT ID="Return">return</FONT> names[i];
+<A NAME="600"></A>                }
+<A NAME="601"></A>            }
+<A NAME="602"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="603"></A>        }
+<A NAME="604"></A>
+<A NAME="605"></A>        <FONT ID="FormalComment">/**
+<A NAME="606"></A>         * {@inheritDoc}
+<A NAME="607"></A>         */</FONT>
+<A NAME="608"></A>        <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> value(String name) {
+<A NAME="609"></A>            <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; size; ++i) {
+<A NAME="610"></A>                <FONT ID="If">if</FONT> (names[i].equals(name)) {
+<A NAME="611"></A>                    <FONT ID="Return">return</FONT> values[i];
+<A NAME="612"></A>                }
+<A NAME="613"></A>            }
+<A NAME="614"></A>            <FONT ID="Return">return</FONT> -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="615"></A>        }
+<A NAME="616"></A>    }
+<A NAME="617"></A>
+<A NAME="618"></A>    <FONT ID="Static">static</FONT> <FONT ID="Class">class</FONT> BinaryEntityMap <FONT ID="Extends">extends</FONT> ArrayEntityMap {
+<A NAME="619"></A>
+<A NAME="620"></A>        <FONT ID="FormalComment">/**
+<A NAME="621"></A>         * Constructs a new instance of &lt;code&gt;BinaryEntityMap&lt;/code&gt;.
+<A NAME="622"></A>         */</FONT>
+<A NAME="623"></A>        <FONT ID="Public">public</FONT> BinaryEntityMap() {
+<A NAME="624"></A>          <FONT ID="Super">super</FONT>();
+<A NAME="625"></A>        }
+<A NAME="626"></A>
+<A NAME="627"></A>        <FONT ID="FormalComment">/**
+<A NAME="628"></A>         * Constructs a new instance of &lt;code&gt;ArrayEntityMap&lt;/code&gt;
+<A NAME="629"></A>         * specifying the size by which the underlying array should grow.
+<A NAME="630"></A>         *
+<A NAME="631"></A>         * @param growBy array will be initialized to and will grow by this amount
+<A NAME="632"></A>         */</FONT>
+<A NAME="633"></A>        <FONT ID="Public">public</FONT> BinaryEntityMap(<FONT ID="Int">int</FONT> growBy) {
+<A NAME="634"></A>            <FONT ID="Super">super</FONT>(growBy);
+<A NAME="635"></A>        }
+<A NAME="636"></A>
+<A NAME="637"></A>        <FONT ID="FormalComment">/**
+<A NAME="638"></A>         * Performs a binary search of the entity array for the specified key.
+<A NAME="639"></A>         * This method is based on code in {@link java.util.Arrays}.
+<A NAME="640"></A>         *
+<A NAME="641"></A>         * @param key the key to be found
+<A NAME="642"></A>         * @return the index of the entity array matching the specified key
+<A NAME="643"></A>         */</FONT>
+<A NAME="644"></A>        <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> binarySearch(<FONT ID="Int">int</FONT> key) {
+<A NAME="645"></A>            <FONT ID="Int">int</FONT> low = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="646"></A>            <FONT ID="Int">int</FONT> high = size - <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="647"></A>
+<A NAME="648"></A>            <FONT ID="While">while</FONT> (low &lt;= high) {
+<A NAME="649"></A>                <FONT ID="Int">int</FONT> mid = (low + high) &gt;&gt; <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="650"></A>                <FONT ID="Int">int</FONT> midVal = values[mid];
+<A NAME="651"></A>
+<A NAME="652"></A>                <FONT ID="If">if</FONT> (midVal &lt; key) {
+<A NAME="653"></A>                    low = mid + <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="654"></A>                } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (midVal &gt; key) {
+<A NAME="655"></A>                    high = mid - <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="656"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="657"></A>                    <FONT ID="Return">return</FONT> mid; <FONT ID="SingleLineComment">// key found
+<A NAME="658"></A></FONT>                }
+<A NAME="659"></A>            }
+<A NAME="660"></A>            <FONT ID="Return">return</FONT> -(low + <FONT ID="IntegerLiteral">1</FONT>);  <FONT ID="SingleLineComment">// key not found.
+<A NAME="661"></A></FONT>        }
+<A NAME="662"></A>
+<A NAME="663"></A>        <FONT ID="FormalComment">/**
+<A NAME="664"></A>         * {@inheritDoc}
+<A NAME="665"></A>         */</FONT>
+<A NAME="666"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> add(String name, <FONT ID="Int">int</FONT> value) {
+<A NAME="667"></A>            ensureCapacity(size + <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="668"></A>            <FONT ID="Int">int</FONT> insertAt = binarySearch(value);
+<A NAME="669"></A>            <FONT ID="If">if</FONT> (insertAt &gt; <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="670"></A>                <FONT ID="Return">return</FONT>;    <FONT ID="SingleLineComment">// note: this means you can't insert the same value twice
+<A NAME="671"></A></FONT>            }
+<A NAME="672"></A>            insertAt = -(insertAt + <FONT ID="IntegerLiteral">1</FONT>);  <FONT ID="SingleLineComment">// binarySearch returns it negative and off-by-one
+<A NAME="673"></A></FONT>            System.arraycopy(values, insertAt, values, insertAt + <FONT ID="IntegerLiteral">1</FONT>, size - insertAt);
+<A NAME="674"></A>            values[insertAt] = value;
+<A NAME="675"></A>            System.arraycopy(names, insertAt, names, insertAt + <FONT ID="IntegerLiteral">1</FONT>, size - insertAt);
+<A NAME="676"></A>            names[insertAt] = name;
+<A NAME="677"></A>            size++;
+<A NAME="678"></A>        }
+<A NAME="679"></A>
+<A NAME="680"></A>        <FONT ID="FormalComment">/**
+<A NAME="681"></A>         * {@inheritDoc}
+<A NAME="682"></A>         */</FONT>
+<A NAME="683"></A>        <FONT ID="Public">public</FONT> String name(<FONT ID="Int">int</FONT> value) {
+<A NAME="684"></A>            <FONT ID="Int">int</FONT> index = binarySearch(value);
+<A NAME="685"></A>            <FONT ID="If">if</FONT> (index &lt; <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="686"></A>                <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="687"></A>            }
+<A NAME="688"></A>            <FONT ID="Return">return</FONT> names[index];
+<A NAME="689"></A>        }
+<A NAME="690"></A>    }
+<A NAME="691"></A>
+<A NAME="692"></A>    <FONT ID="SingleLineComment">// package scoped for testing
+<A NAME="693"></A></FONT>    EntityMap map = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/apache/Entities.java.html">Entities.LookupEntityMap</A>();
+<A NAME="694"></A>
+<A NAME="695"></A>    <FONT ID="FormalComment">/**
+<A NAME="696"></A>     * &lt;p&gt;Adds entities to this entity.&lt;/p&gt;
+<A NAME="697"></A>     *
+<A NAME="698"></A>     * @param entityArray array of entities to be added
+<A NAME="699"></A>     */</FONT>
+<A NAME="700"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntities(String[][] entityArray) {
+<A NAME="701"></A>        <FONT ID="For">for</FONT> (String[] anEntityArray : entityArray) {
+<A NAME="702"></A>            addEntity(anEntityArray[<FONT ID="IntegerLiteral">0</FONT>], Integer.parseInt(anEntityArray[<FONT ID="IntegerLiteral">1</FONT>]));
+<A NAME="703"></A>        }
+<A NAME="704"></A>    }
+<A NAME="705"></A>
+<A NAME="706"></A>    <FONT ID="FormalComment">/**
+<A NAME="707"></A>     * &lt;p&gt;Add an entity to this entity.&lt;/p&gt;
+<A NAME="708"></A>     *
+<A NAME="709"></A>     * @param name name of the entity
+<A NAME="710"></A>     * @param value vale of the entity
+<A NAME="711"></A>     */</FONT>
+<A NAME="712"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntity(String name, <FONT ID="Int">int</FONT> value) {
+<A NAME="713"></A>        map.add(name, value);
+<A NAME="714"></A>    }
+<A NAME="715"></A>
+<A NAME="716"></A>    <FONT ID="FormalComment">/**
+<A NAME="717"></A>     * &lt;p&gt;Returns the name of the entity identified by the specified value.&lt;/p&gt;
+<A NAME="718"></A>     *
+<A NAME="719"></A>     * @param value the value to locate
+<A NAME="720"></A>     * @return entity name associated with the specified value
+<A NAME="721"></A>     */</FONT>
+<A NAME="722"></A>    <FONT ID="Public">public</FONT> String entityName(<FONT ID="Int">int</FONT> value) {
+<A NAME="723"></A>        <FONT ID="Return">return</FONT> map.name(value);
+<A NAME="724"></A>    }
+<A NAME="725"></A>
+<A NAME="726"></A>    <FONT ID="FormalComment">/**
+<A NAME="727"></A>     * &lt;p&gt;Returns the value of the entity identified by the specified name.&lt;/p&gt;
+<A NAME="728"></A>     *
+<A NAME="729"></A>     * @param name the name to locate
+<A NAME="730"></A>     * @return entity value associated with the specified name
+<A NAME="731"></A>     */</FONT>
+<A NAME="732"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> entityValue(String name) {
+<A NAME="733"></A>        <FONT ID="Return">return</FONT> map.value(name);
+<A NAME="734"></A>    }
+<A NAME="735"></A>
+<A NAME="736"></A>    <FONT ID="FormalComment">/**
+<A NAME="737"></A>     * &lt;p&gt;Escapes the characters in a &lt;code&gt;String&lt;/code&gt;.&lt;/p&gt;
+<A NAME="738"></A>     *
+<A NAME="739"></A>     * &lt;p&gt;For example, if you have called addEntity(&amp;quot;foo&amp;quot;, 0xA1),
+<A NAME="740"></A>     * escape(&amp;quot;¡&amp;quot;) will return &amp;quot;&amp;amp;foo;&amp;quot;&lt;/p&gt;
+<A NAME="741"></A>     *
+<A NAME="742"></A>     * @param str The &lt;code&gt;String&lt;/code&gt; to escape.
+<A NAME="743"></A>     * @return A new escaped &lt;code&gt;String&lt;/code&gt;.
+<A NAME="744"></A>     */</FONT>
+<A NAME="745"></A>    <FONT ID="Public">public</FONT> String escape(String str) {
+<A NAME="746"></A>        <FONT ID="SingleLineComment">//todo: rewrite to use a Writer
+<A NAME="747"></A></FONT>        StringBuffer buf = <FONT ID="New">new</FONT> StringBuffer(str.length() * <FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="748"></A>        <FONT ID="Int">int</FONT> i;
+<A NAME="749"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; str.length(); ++i) {
+<A NAME="750"></A>            <FONT ID="Char">char</FONT> ch = str.charAt(i);
+<A NAME="751"></A>            String entityName = <FONT ID="This">this</FONT>.entityName(ch);
+<A NAME="752"></A>            <FONT ID="If">if</FONT> (entityName == <FONT ID="Null">null</FONT>) {
+<A NAME="753"></A>                <FONT ID="If">if</FONT> (ch &gt; <FONT ID="IntegerLiteral">0x7F</FONT>) {
+<A NAME="754"></A>                    <FONT ID="Int">int</FONT> intValue = ch;
+<A NAME="755"></A>                    buf.append(<FONT ID="StringLiteral">"&amp;#"</FONT>);
+<A NAME="756"></A>                    buf.append(intValue);
+<A NAME="757"></A>                    buf.append(<FONT ID="CharacerLiteral">';'</FONT>);
+<A NAME="758"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="759"></A>                    buf.append(ch);
+<A NAME="760"></A>                }
+<A NAME="761"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="762"></A>                buf.append(<FONT ID="CharacerLiteral">'&amp;'</FONT>);
+<A NAME="763"></A>                buf.append(entityName);
+<A NAME="764"></A>                buf.append(<FONT ID="CharacerLiteral">';'</FONT>);
+<A NAME="765"></A>            }
+<A NAME="766"></A>        }
+<A NAME="767"></A>        <FONT ID="Return">return</FONT> buf.toString();
+<A NAME="768"></A>    }
+<A NAME="769"></A>
+<A NAME="770"></A>    <FONT ID="FormalComment">/**
+<A NAME="771"></A>     * &lt;p&gt;Escapes the characters in the &lt;code&gt;String&lt;/code&gt; passed and writes the result
+<A NAME="772"></A>     * to the &lt;code&gt;Writer&lt;/code&gt; passed. &lt;/p&gt;
+<A NAME="773"></A>     *
+<A NAME="774"></A>     * @param writer The &lt;code&gt;Writer&lt;/code&gt; to write the results of the escaping to.
+<A NAME="775"></A>     *                            Assumed to be a non-null value.
+<A NAME="776"></A>     * @param str The &lt;code&gt;String&lt;/code&gt; to escape. Assumed to be a non-null value.
+<A NAME="777"></A>     * @throws IOException when &lt;code&gt;Writer&lt;/code&gt; passed throws the exception from
+<A NAME="778"></A>     *                                       calls to the {@link Writer#write(int)} methods.
+<A NAME="779"></A>     *
+<A NAME="780"></A>     * @see #escape(String)
+<A NAME="781"></A>     * @see Writer
+<A NAME="782"></A>     */</FONT>
+<A NAME="783"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> escape(Writer writer, String str) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="784"></A>        <FONT ID="Int">int</FONT> len = str.length();
+<A NAME="785"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; len; i++) {
+<A NAME="786"></A>            <FONT ID="Char">char</FONT> c = str.charAt(i);
+<A NAME="787"></A>            String entityName = <FONT ID="This">this</FONT>.entityName(c);
+<A NAME="788"></A>            <FONT ID="If">if</FONT> (entityName == <FONT ID="Null">null</FONT>) {
+<A NAME="789"></A>                <FONT ID="If">if</FONT> (c &gt; <FONT ID="IntegerLiteral">0x7F</FONT>) {
+<A NAME="790"></A>                    writer.write(<FONT ID="StringLiteral">"&amp;#"</FONT>);
+<A NAME="791"></A>                    writer.write(Integer.toString(c, <FONT ID="IntegerLiteral">10</FONT>));
+<A NAME="792"></A>                    writer.write(<FONT ID="CharacerLiteral">';'</FONT>);
+<A NAME="793"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="794"></A>                    writer.write(c);
+<A NAME="795"></A>                }
+<A NAME="796"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="797"></A>                writer.write(<FONT ID="CharacerLiteral">'&amp;'</FONT>);
+<A NAME="798"></A>                writer.write(entityName);
+<A NAME="799"></A>                writer.write(<FONT ID="CharacerLiteral">';'</FONT>);
+<A NAME="800"></A>            }
+<A NAME="801"></A>        }
+<A NAME="802"></A>    }
+<A NAME="803"></A>
+<A NAME="804"></A>    <FONT ID="FormalComment">/**
+<A NAME="805"></A>     * &lt;p&gt;Unescapes the entities in a &lt;code&gt;String&lt;/code&gt;.&lt;/p&gt;
+<A NAME="806"></A>     *
+<A NAME="807"></A>     * &lt;p&gt;For example, if you have called addEntity(&amp;quot;foo&amp;quot;, 0xA1),
+<A NAME="808"></A>     * unescape(&amp;quot;&amp;amp;foo;&amp;quot;) will return &amp;quot;¡&amp;quot;&lt;/p&gt;
+<A NAME="809"></A>     *
+<A NAME="810"></A>     * @param str The &lt;code&gt;String&lt;/code&gt; to escape.
+<A NAME="811"></A>     * @return A new escaped &lt;code&gt;String&lt;/code&gt;.
+<A NAME="812"></A>     */</FONT>
+<A NAME="813"></A>    <FONT ID="Public">public</FONT> String unescape(String str) {
+<A NAME="814"></A>        StringBuffer buf = <FONT ID="New">new</FONT> StringBuffer(str.length());
+<A NAME="815"></A>        <FONT ID="Int">int</FONT> i;
+<A NAME="816"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; str.length(); ++i) {
+<A NAME="817"></A>            <FONT ID="Char">char</FONT> ch = str.charAt(i);
+<A NAME="818"></A>            <FONT ID="If">if</FONT> (ch == <FONT ID="CharacerLiteral">'&amp;'</FONT>) {
+<A NAME="819"></A>                <FONT ID="Int">int</FONT> semi = str.indexOf(<FONT ID="CharacerLiteral">';'</FONT>, i + <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="820"></A>                <FONT ID="If">if</FONT> (semi == -<FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="821"></A>                    buf.append(ch);
+<A NAME="822"></A>                    <FONT ID="Continue">continue</FONT>;
+<A NAME="823"></A>                }
+<A NAME="824"></A>                <FONT ID="Int">int</FONT> amph = str.indexOf(<FONT ID="CharacerLiteral">'&amp;'</FONT>, i + <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="825"></A>                <FONT ID="If">if</FONT>( amph != -<FONT ID="IntegerLiteral">1</FONT> &amp;&amp; amph &lt; semi ) {
+<A NAME="826"></A>                    <FONT ID="SingleLineComment">// Then the text looks like &amp;...&amp;...;
+<A NAME="827"></A></FONT>                    buf.append(ch);
+<A NAME="828"></A>                    <FONT ID="Continue">continue</FONT>;
+<A NAME="829"></A>                }
+<A NAME="830"></A>                String entityName = str.substring(i + <FONT ID="IntegerLiteral">1</FONT>, semi);
+<A NAME="831"></A>                <FONT ID="Int">int</FONT> entityValue;
+<A NAME="832"></A>                <FONT ID="If">if</FONT> (entityName.length() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="833"></A>                    entityValue = -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="834"></A>                } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (entityName.charAt(<FONT ID="IntegerLiteral">0</FONT>) == <FONT ID="CharacerLiteral">'#'</FONT>) {
+<A NAME="835"></A>                    <FONT ID="If">if</FONT> (entityName.length() == <FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="836"></A>                        entityValue = -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="837"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="838"></A>                        <FONT ID="Char">char</FONT> charAt1 = entityName.charAt(<FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="839"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="840"></A>                            <FONT ID="If">if</FONT> (charAt1 == <FONT ID="CharacerLiteral">'x'</FONT> || charAt1==<FONT ID="CharacerLiteral">'X'</FONT>) {
+<A NAME="841"></A>                                entityValue = Integer.valueOf(entityName.substring(<FONT ID="IntegerLiteral">2</FONT>), <FONT ID="IntegerLiteral">16</FONT>).intValue();
+<A NAME="842"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="843"></A>                                entityValue = Integer.parseInt(entityName.substring(<FONT ID="IntegerLiteral">1</FONT>));
+<A NAME="844"></A>                            }
+<A NAME="845"></A>                        } <FONT ID="Catch">catch</FONT> (NumberFormatException ex) {
+<A NAME="846"></A>                            entityValue = -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="847"></A>                        }
+<A NAME="848"></A>                    }
+<A NAME="849"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="850"></A>                    entityValue = <FONT ID="This">this</FONT>.entityValue(entityName);
+<A NAME="851"></A>                }
+<A NAME="852"></A>                <FONT ID="If">if</FONT> (entityValue == -<FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="853"></A>                    buf.append(<FONT ID="CharacerLiteral">'&amp;'</FONT>);
+<A NAME="854"></A>                    buf.append(entityName);
+<A NAME="855"></A>                    buf.append(<FONT ID="CharacerLiteral">';'</FONT>);
+<A NAME="856"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="857"></A>                    buf.append((<FONT ID="Char">char</FONT>) (entityValue));
+<A NAME="858"></A>                }
+<A NAME="859"></A>                i = semi;
+<A NAME="860"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="861"></A>                buf.append(ch);
+<A NAME="862"></A>            }
+<A NAME="863"></A>        }
+<A NAME="864"></A>        <FONT ID="Return">return</FONT> buf.toString();
+<A NAME="865"></A>    }
+<A NAME="866"></A>
+<A NAME="867"></A>    <FONT ID="FormalComment">/**
+<A NAME="868"></A>     * &lt;p&gt;Unescapes the escaped entities in the &lt;code&gt;String&lt;/code&gt; passed and
+<A NAME="869"></A>     * writes the result to the &lt;code&gt;Writer&lt;/code&gt; passed.&lt;/p&gt;
+<A NAME="870"></A>     *
+<A NAME="871"></A>     * @param writer The &lt;code&gt;Writer&lt;/code&gt; to write the results to; assumed to be non-null.
+<A NAME="872"></A>     * @param string The &lt;code&gt;String&lt;/code&gt; to write the results to; assumed to be non-null.
+<A NAME="873"></A>     * @throws IOException when &lt;code&gt;Writer&lt;/code&gt; passed throws the exception from
+<A NAME="874"></A>     *                                       calls to the {@link Writer#write(int)} methods.
+<A NAME="875"></A>     *
+<A NAME="876"></A>     * @see #escape(String)
+<A NAME="877"></A>     * @see Writer
+<A NAME="878"></A>     */</FONT>
+<A NAME="879"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> unescape(Writer writer, String string) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="880"></A>        <FONT ID="Int">int</FONT> len = string.length();
+<A NAME="881"></A>        <FONT ID="If">if</FONT> (len == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="882"></A>            <FONT ID="Return">return</FONT>;
+<A NAME="883"></A>        }
+<A NAME="884"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; len; i++) {
+<A NAME="885"></A>            <FONT ID="Char">char</FONT> c = string.charAt(i);
+<A NAME="886"></A>            <FONT ID="If">if</FONT> (c == <FONT ID="CharacerLiteral">'&amp;'</FONT>) {
+<A NAME="887"></A>                <FONT ID="Int">int</FONT> nextIdx = i+<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="888"></A>                <FONT ID="Int">int</FONT> semiColonIdx = string.indexOf(<FONT ID="CharacerLiteral">';'</FONT>, nextIdx);
+<A NAME="889"></A>                <FONT ID="If">if</FONT> (semiColonIdx == -<FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="890"></A>                    writer.write(c);
+<A NAME="891"></A>                    <FONT ID="Continue">continue</FONT>;
+<A NAME="892"></A>                }
+<A NAME="893"></A>                <FONT ID="Int">int</FONT> amphersandIdx = string.indexOf(<FONT ID="CharacerLiteral">'&amp;'</FONT>, i + <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="894"></A>                <FONT ID="If">if</FONT>( amphersandIdx != -<FONT ID="IntegerLiteral">1</FONT> &amp;&amp; amphersandIdx &lt; semiColonIdx ) {
+<A NAME="895"></A>                    <FONT ID="SingleLineComment">// Then the text looks like &amp;...&amp;...;
+<A NAME="896"></A></FONT>                    writer.write(c);
+<A NAME="897"></A>                    <FONT ID="Continue">continue</FONT>;
+<A NAME="898"></A>                }
+<A NAME="899"></A>                String entityContent = string.substring(nextIdx, semiColonIdx);
+<A NAME="900"></A>                <FONT ID="Int">int</FONT> entityValue = -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="901"></A>                <FONT ID="Int">int</FONT> entityContentLen = entityContent.length();
+<A NAME="902"></A>                <FONT ID="If">if</FONT> (entityContentLen &gt; <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="903"></A>                    <FONT ID="If">if</FONT> (entityContent.charAt(<FONT ID="IntegerLiteral">0</FONT>) == <FONT ID="CharacerLiteral">'#'</FONT>) { <FONT ID="SingleLineComment">//escaped value content is an integer (decimal or hexidecimal)
+<A NAME="904"></A></FONT>                        <FONT ID="If">if</FONT> (entityContentLen &gt; <FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="905"></A>                            <FONT ID="Char">char</FONT> isHexChar = entityContent.charAt(<FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="906"></A>                            <FONT ID="Try">try</FONT> {
+<A NAME="907"></A>                                <FONT ID="Switch">switch</FONT> (isHexChar) {
+<A NAME="908"></A>                                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'X'</FONT> :
+<A NAME="909"></A>                                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'x'</FONT> : {
+<A NAME="910"></A>                                        entityValue = Integer.parseInt(entityContent.substring(<FONT ID="IntegerLiteral">2</FONT>), <FONT ID="IntegerLiteral">16</FONT>);
+<A NAME="911"></A>                                    }
+<A NAME="912"></A>                                    <FONT ID="Default">default</FONT> : {
+<A NAME="913"></A>                                        entityValue = Integer.parseInt(entityContent.substring(<FONT ID="IntegerLiteral">1</FONT>), <FONT ID="IntegerLiteral">10</FONT>);
+<A NAME="914"></A>                                    }
+<A NAME="915"></A>                                }
+<A NAME="916"></A>                            } <FONT ID="Catch">catch</FONT> (NumberFormatException e) {
+<A NAME="917"></A>                                <FONT ID="SingleLineComment">// ignore the escaped value content
+<A NAME="918"></A></FONT>                            }
+<A NAME="919"></A>                        }
+<A NAME="920"></A>                    } <FONT ID="Else">else</FONT> { <FONT ID="SingleLineComment">//escaped value content is an entity name
+<A NAME="921"></A></FONT>                        entityValue = <FONT ID="This">this</FONT>.entityValue(entityContent);
+<A NAME="922"></A>                    }
+<A NAME="923"></A>                }
+<A NAME="924"></A>
+<A NAME="925"></A>                <FONT ID="If">if</FONT> (entityValue == -<FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="926"></A>                    writer.write(<FONT ID="CharacerLiteral">'&amp;'</FONT>);
+<A NAME="927"></A>                    writer.write(entityContent);
+<A NAME="928"></A>                    writer.write(<FONT ID="CharacerLiteral">';'</FONT>);
+<A NAME="929"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="930"></A>                    writer.write(entityValue);
+<A NAME="931"></A>                }
+<A NAME="932"></A>                i = semiColonIdx; <FONT ID="SingleLineComment">//move index up to the semi-colon
+<A NAME="933"></A></FONT>            } <FONT ID="Else">else</FONT> {
+<A NAME="934"></A>                writer.write(c);
+<A NAME="935"></A>            }
+<A NAME="936"></A>        }
+<A NAME="937"></A>    }
+<A NAME="938"></A>
+<A NAME="939"></A>}</pre>
+</BODY>
+</HTML>

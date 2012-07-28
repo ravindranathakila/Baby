@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.UPublicPhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">UPublicPhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">ai.ilikeplaces.entities.PublicPhoto</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="FormalComment">/**
+<A NAME="17"></A> * @author Ravindranath Akila
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="21"></A></FONT>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="22"></A>@Stateless
+<A NAME="23"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> UPublicPhoto <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/UPublicPhotoLocal.java.html">UPublicPhotoLocal</A> {
+<A NAME="24"></A>
+<A NAME="25"></A>    @EJB
+<A NAME="26"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>&gt; crudServiceHuman_;
+<A NAME="27"></A>    @EJB
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; crudServiceLocation_;
+<A NAME="29"></A>    @EJB
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; crudServicePublicPhoto_;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> UPublicPhoto() {
+<A NAME="33"></A>    }
+<A NAME="34"></A>
+<A NAME="35"></A>    @Override
+<A NAME="36"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doNTxUPublicPhotoDescriptionLocal(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId, <FONT ID="Final">final</FONT> String publicPhotoDescription) {
+<A NAME="38"></A>        crudServicePublicPhoto_.find(<A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>.<FONT ID="Class">class</FONT>, publicPhotoId).setPublicPhotoDescription(publicPhotoDescription);
+<A NAME="39"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>    @Override
+<A NAME="43"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="44"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doUPublicPhotoDescriptionLocal(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId, <FONT ID="Final">final</FONT> String publicPhotoDescription) {
+<A NAME="45"></A>        crudServicePublicPhoto_.find(<A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>.<FONT ID="Class">class</FONT>, publicPhotoId).setPublicPhotoDescription(publicPhotoDescription);
+<A NAME="46"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="47"></A>    }
+<A NAME="48"></A>
+<A NAME="49"></A>    @Override
+<A NAME="50"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doDirtyUPublicPhotoDescriptionLocal(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId, <FONT ID="Final">final</FONT> String publicPhotoDescription) {
+<A NAME="52"></A>        crudServicePublicPhoto_.find(<A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>.<FONT ID="Class">class</FONT>, publicPhotoId).setPublicPhotoDescription(publicPhotoDescription);
+<A NAME="53"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="54"></A>    }
+<A NAME="55"></A>
+<A NAME="56"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/UPublicPhoto.java.html">UPublicPhoto</A>.<FONT ID="Class">class</FONT>);
+<A NAME="57"></A>}
+<A NAME="58"></A></pre>
+</BODY>
+</HTML>

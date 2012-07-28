@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.AIEventListener (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AIEventListener.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="4"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * Created by IntelliJ IDEA.
+<A NAME="9"></A> * User: Ravindranath Akila
+<A NAME="10"></A> * Date: 10/29/11
+<A NAME="11"></A> * Time: 8:43 AM
+<A NAME="12"></A> */</FONT>
+<A NAME="13"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> AIEventListener&lt;T&gt; <FONT ID="Implements">implements</FONT> EventListener {
+<A NAME="14"></A>
+<A NAME="15"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> DEBUG_ENABLED = Loggers.DEBUG.isDebugEnabled();
+<A NAME="16"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EVENT_TYPE = <FONT ID="StringLiteral">"Event Type: "</FONT>;
+<A NAME="17"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EVENT_TARGET = <FONT ID="StringLiteral">"Event Target: "</FONT>;
+<A NAME="18"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COMMA_SEP_1 = <FONT ID="StringLiteral">", "</FONT>;
+<A NAME="19"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> T criteria;
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Protected">protected</FONT> AIEventListener(<FONT ID="Final">final</FONT> T criteria) {
+<A NAME="22"></A>        <FONT ID="This">this</FONT>.criteria = criteria;
+<A NAME="23"></A>    }
+<A NAME="24"></A>
+<A NAME="25"></A>    @Override
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt) {
+<A NAME="27"></A>        onFire(log(evt));
+<A NAME="28"></A>    }
+<A NAME="29"></A>
+<A NAME="30"></A>    <FONT ID="FormalComment">/**
+<A NAME="31"></A>     * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="32"></A>     *
+<A NAME="33"></A>     * @param evt fired from client
+<A NAME="34"></A>     */</FONT>
+<A NAME="35"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(<FONT ID="Final">final</FONT> Event evt) {
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="FormalComment">/**
+<A NAME="39"></A>     * @param event sent for logging if debug enabled
+<A NAME="40"></A>     * @return event sent
+<A NAME="41"></A>     */</FONT>
+<A NAME="42"></A>    <FONT ID="Protected">protected</FONT> Event log(<FONT ID="Final">final</FONT> Event event) {
+<A NAME="43"></A>        <FONT ID="If">if</FONT> (DEBUG_ENABLED) {
+<A NAME="44"></A>            <FONT ID="If">if</FONT> (event != <FONT ID="Null">null</FONT>) {
+<A NAME="45"></A>                Loggers.DEBUG.debug(EVENT_TYPE + event.getType() + COMMA_SEP_1 + EVENT_TARGET + ((Element) event.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()));
+<A NAME="46"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="47"></A>                Loggers.DEBUG.debug(EVENT_TYPE + <FONT ID="Null">null</FONT> + COMMA_SEP_1 + EVENT_TARGET + <FONT ID="Null">null</FONT>);
+<A NAME="48"></A>            }
+<A NAME="49"></A>        }
+<A NAME="50"></A>        <FONT ID="Return">return</FONT> event;
+<A NAME="51"></A>    }
+<A NAME="52"></A>
+<A NAME="53"></A>}
+<A NAME="54"></A></pre>
+</BODY>
+</HTML>

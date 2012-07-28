@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.templates.TemplateGeneric (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TemplateGeneric.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.templates;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/LogNull.java.html">ai.ilikeplaces.util.LogNull</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.itsnat.core.tmpl.TemplateSource;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.io.FileInputStream;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.io.FileNotFoundException;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.io.InputStream;
+<A NAME="14"></A>
+<A NAME="15"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TemplateGeneric <FONT ID="Implements">implements</FONT> TemplateSource {
+<A NAME="17"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="18"></A></FONT>
+<A NAME="19"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PAGE_NAME_PARAMETER_KEY = <FONT ID="StringLiteral">"name"</FONT>;
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HTML_DOT_EXTENSION = <FONT ID="StringLiteral">".html"</FONT>;
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ROOT = <FONT ID="StringLiteral">"/"</FONT>;
+<A NAME="22"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PREVENT_INTRUTION_TO_OTHER_TEMPLATES_FOLDER = <FONT ID="StringLiteral">"public"</FONT> + ROOT;
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> mustReload;
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SORRY_NO_SUCH_RESOURCE = <FONT ID="StringLiteral">"SORRY! NO SUCH RESOURCE."</FONT>;
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SORRY_GIVEN_RESOURCE_IS_NOT_VALID = <FONT ID="StringLiteral">"SORRY! GIVEN RESOURCE IS NOT VALID!"</FONT>;
+<A NAME="27"></A>
+<A NAME="28"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="29"></A></FONT>
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> TemplateGeneric(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> mustReload) {
+<A NAME="31"></A>        <FONT ID="This">this</FONT>.mustReload = mustReload;
+<A NAME="32"></A>    }
+<A NAME="33"></A>
+<A NAME="34"></A><FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="35"></A></FONT>
+<A NAME="36"></A>
+<A NAME="37"></A><FONT ID="SingleLineComment">// --------------------- Interface TemplateSource ---------------------
+<A NAME="38"></A></FONT>
+<A NAME="39"></A>    @Override
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> isMustReload(<FONT ID="Final">final</FONT> ItsNatServletRequest itsNatServletRequest, <FONT ID="Final">final</FONT> ItsNatServletResponse response) {
+<A NAME="41"></A>        <FONT ID="Return">return</FONT> mustReload;
+<A NAME="42"></A>    }
+<A NAME="43"></A>
+<A NAME="44"></A>    @Override
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> InputStream getInputStream(<FONT ID="Final">final</FONT> ItsNatServletRequest itsNatServletRequest, <FONT ID="Final">final</FONT> ItsNatServletResponse response) {
+<A NAME="46"></A>
+<A NAME="47"></A>        <FONT ID="Final">final</FONT> String realPath__ = itsNatServletRequest.getItsNatServlet().getItsNatServletContext().getServletContext().getRealPath(ROOT);
+<A NAME="48"></A>
+<A NAME="49"></A>        <FONT ID="MultiLineComment">/* Security measure to prevent access to ai.ilikeplaces. folders */</FONT>
+<A NAME="50"></A>        <FONT ID="Final">final</FONT> String pathPrefix__ = realPath__ + Controller.WEB_INF_PAGES + PREVENT_INTRUTION_TO_OTHER_TEMPLATES_FOLDER;
+<A NAME="51"></A>
+<A NAME="52"></A>        <FONT ID="Final">final</FONT> String pageName = itsNatServletRequest.getServletRequest().getParameter(PAGE_NAME_PARAMETER_KEY);
+<A NAME="53"></A>
+<A NAME="54"></A>        InputStream requestedResource = <FONT ID="Null">null</FONT>;
+<A NAME="55"></A>
+<A NAME="56"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="57"></A>            requestedResource = <FONT ID="New">new</FONT> FileInputStream(pathPrefix__ + pageName + HTML_DOT_EXTENSION);
+<A NAME="58"></A>        } <FONT ID="Catch">catch</FONT> (FileNotFoundException e) {
+<A NAME="59"></A>            Loggers.EXCEPTION.error(SORRY_NO_SUCH_RESOURCE, e);
+<A NAME="60"></A>        }
+<A NAME="61"></A>
+<A NAME="62"></A>        <FONT ID="Return">return</FONT> (InputStream) LogNull.logThrow(requestedResource, SORRY_GIVEN_RESOURCE_IS_NOT_VALID);
+<A NAME="63"></A>    }
+<A NAME="64"></A>
+<A NAME="65"></A><FONT ID="SingleLineComment">// ------------------------ CANONICAL METHODS ------------------------
+<A NAME="66"></A></FONT>
+<A NAME="67"></A>
+<A NAME="68"></A><FONT ID="SingleLineComment">// -------------------------- STATIC METHODS --------------------------
+<A NAME="69"></A></FONT>}</pre>
+</BODY>
+</HTML>

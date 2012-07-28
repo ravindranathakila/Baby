@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.validators.unit.VLong (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">VLong.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.validators.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Obj.java.html">ai.ilikeplaces.util.Obj</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="6"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.IsInvariant;
+<A NAME="7"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.Length;
+<A NAME="8"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotNull;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> * Does not allow nulls to be valid
+<A NAME="12"></A> * &lt;p/&gt;
+<A NAME="13"></A> * Created by IntelliJ IDEA.
+<A NAME="14"></A> * User: Ravindranath Akila
+<A NAME="15"></A> * Date: 10/27/11
+<A NAME="16"></A> * Time: 7:10 PM
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> VLong <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Obj.java.html">Obj</A>&lt;Long&gt; {
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> VLong(<FONT ID="Final">final</FONT> Long aLong) {
+<A NAME="21"></A>        <FONT ID="Super">super</FONT>(aLong);
+<A NAME="22"></A>    }
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> VLong() {
+<A NAME="25"></A>    }
+<A NAME="26"></A>
+<A NAME="27"></A>    @Override
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> getSelfAsValid(<FONT ID="Final">final</FONT> Validator... validator) {
+<A NAME="29"></A>        <FONT ID="Return">return</FONT> (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>) <FONT ID="Super">super</FONT>.getSelfAsValid(validator);
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A>    @Override
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> setObjAsValid(<FONT ID="Final">final</FONT> Long obj) {
+<A NAME="34"></A>        <FONT ID="Return">return</FONT> (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>) <FONT ID="Super">super</FONT>.setObjAsValid(obj);
+<A NAME="35"></A>    }
+<A NAME="36"></A>
+<A NAME="37"></A>    @IsInvariant
+<A NAME="38"></A>    @NotNull
+<A NAME="39"></A>    @Override
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> Long getObj() {
+<A NAME="41"></A>        <FONT ID="Return">return</FONT> obj;
+<A NAME="42"></A>    }
+<A NAME="43"></A>}
+<A NAME="44"></A></pre>
+</BODY>
+</HTML>

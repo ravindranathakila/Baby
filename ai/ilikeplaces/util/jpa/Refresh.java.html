@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.jpa.Refresh (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Refresh.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.jpa;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="4"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.lang.annotation.Annotation;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.lang.reflect.Field;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.lang.reflect.Method;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.util.Collection;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * Created by IntelliJ IDEA.
+<A NAME="14"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="15"></A> * Date: 2/6/11
+<A NAME="16"></A> * Time: 9:30 PM
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Refresh&lt;T&gt; <FONT ID="Implements">implements</FONT> Serializable{
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> Logger LOGGER = LoggerFactory.getLogger(<A HREF="../../../../ai/ilikeplaces/util/jpa/Refresh.java.html">ai.ilikeplaces.util.jpa.Refresh</A>.<FONT ID="Class">class</FONT>.getClass().getCanonicalName());
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_WHILE_REFRESHING_COLLECTION = <FONT ID="StringLiteral">"ERROR WHILE REFRESHING LAZY FIELD"</FONT>;
+<A NAME="23"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COUNLDN_T_FIND_IN_THE_BEAN = <FONT ID="StringLiteral">"COULDN'T FIND IN THE BEAN: "</FONT>;
+<A NAME="24"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String THE_JAVA_UTIL_COLLECTION_FIELD_NAMED = <FONT ID="StringLiteral">" THE FIELD NAMED: "</FONT>;
+<A NAME="25"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GIVEN_FIELD_VALUE_IS_NULL = <FONT ID="StringLiteral">"GIVEN FIELDS VALUE IS NULL. FIELD IDENTIFIER:"</FONT>;
+<A NAME="26"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GIVEN_FIELD_IS_NOT_OF_TYPE_JAVA_UTIL_COLLECTION = <FONT ID="StringLiteral">"GIVEN FIELD IS NOT OF TYPE type java.util.Collection!"</FONT>;
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RECEIVED_BEAN = <FONT ID="StringLiteral">"Received bean:{}"</FONT>;
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RECEIVED_SPEC = <FONT ID="StringLiteral">"Received spec:{}"</FONT>;
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MULTIPLE_FIELDS_HAVE_THE_SAME_FIELD_NAME_ANNOTATION_VALUE = <FONT ID="StringLiteral">"MULTIPLE FIELDS HAVE THE SAME @RefreshId ANNOTATION VALUE:"</FONT>;
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GET = <FONT ID="StringLiteral">"get"</FONT>;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> T refresh(<FONT ID="Final">final</FONT> T bean, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> {
+<A NAME="33"></A>        LOGGER.trace(RECEIVED_BEAN, bean);
+<A NAME="34"></A>        LOGGER.trace(RECEIVED_SPEC, refreshSpec);
+<A NAME="35"></A>
+<A NAME="36"></A>        <FONT ID="Final">final</FONT> Field[] fields = bean.getClass().getFields();
+<A NAME="37"></A>
+<A NAME="38"></A>        Annotation Annotation;<FONT ID="SingleLineComment">//To be reused
+<A NAME="39"></A></FONT>        <FONT ID="Boolean">boolean</FONT> found = <FONT ID="False">false</FONT>;<FONT ID="SingleLineComment">//To be reused
+<A NAME="40"></A></FONT>        Object finallyFetchedObject;<FONT ID="SingleLineComment">//To be reused
+<A NAME="41"></A></FONT>        Method getter;<FONT ID="SingleLineComment">//To be reused
+<A NAME="42"></A></FONT>
+<A NAME="43"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> String spec : refreshSpec.fields) {
+<A NAME="44"></A>            found = <FONT ID="False">false</FONT>;
+<A NAME="45"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Field field : fields) {
+<A NAME="46"></A>                Annotation = field.getAnnotation(<A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshId.java.html">RefreshId</A>.<FONT ID="Class">class</FONT>);
+<A NAME="47"></A>                <FONT ID="If">if</FONT> (Annotation != <FONT ID="Null">null</FONT>) {
+<A NAME="48"></A>                    <FONT ID="If">if</FONT> (((<A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshId.java.html">RefreshId</A>) Annotation).value().equals(spec)) {
+<A NAME="49"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="50"></A>                            getter = bean.getClass().getMethod(GET + ((Character) spec.charAt(<FONT ID="IntegerLiteral">0</FONT>)).toString().toUpperCase() + spec.substring(<FONT ID="IntegerLiteral">1</FONT>, spec.length()));
+<A NAME="51"></A>                            <FONT ID="SingleLineComment">//finallyFetchedObject = field.get(bean);
+<A NAME="52"></A></FONT>                            finallyFetchedObject = getter.invoke(bean);
+<A NAME="53"></A>                            <FONT ID="If">if</FONT> (finallyFetchedObject == <FONT ID="Null">null</FONT>) {
+<A NAME="54"></A>                                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A>(GIVEN_FIELD_VALUE_IS_NULL + spec);
+<A NAME="55"></A>                            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (!(finallyFetchedObject <FONT ID="InstanceOf">instanceof</FONT> Collection)) {
+<A NAME="56"></A>                                finallyFetchedObject.equals(finallyFetchedObject);<FONT ID="SingleLineComment">//This, within this persistence context, will refresh this lazily initialized field
+<A NAME="57"></A></FONT>                                <FONT ID="SingleLineComment">//throw new RefreshException(GIVEN_FIELD_IS_NOT_OF_TYPE_JAVA_UTIL_COLLECTION);
+<A NAME="58"></A></FONT>                                found = <FONT ID="True">true</FONT>;
+<A NAME="59"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="60"></A>                                ((Collection) finallyFetchedObject).size();<FONT ID="SingleLineComment">//This, within this persistence context, will refresh this lazily initialized Collection
+<A NAME="61"></A></FONT>                                <FONT ID="If">if</FONT> (found) {
+<A NAME="62"></A>                                    <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A>(MULTIPLE_FIELDS_HAVE_THE_SAME_FIELD_NAME_ANNOTATION_VALUE + spec);
+<A NAME="63"></A>                                } <FONT ID="Else">else</FONT> {
+<A NAME="64"></A>                                    found = <FONT ID="True">true</FONT>;
+<A NAME="65"></A>                                }
+<A NAME="66"></A>                            }
+<A NAME="67"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception e) {
+<A NAME="68"></A>                            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A>(ERROR_WHILE_REFRESHING_COLLECTION, e);
+<A NAME="69"></A>
+<A NAME="70"></A>                        }
+<A NAME="71"></A>                    }
+<A NAME="72"></A>                }
+<A NAME="73"></A>            }
+<A NAME="74"></A>            <FONT ID="If">if</FONT> (!found) {
+<A NAME="75"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A>(COUNLDN_T_FIND_IN_THE_BEAN + bean.getClass().getCanonicalName() + THE_JAVA_UTIL_COLLECTION_FIELD_NAMED + spec);
+<A NAME="76"></A>            }
+<A NAME="77"></A>        }
+<A NAME="78"></A>        <FONT ID="Return">return</FONT> bean;
+<A NAME="79"></A>    }
+<A NAME="80"></A>}
+<A NAME="81"></A></pre>
+</BODY>
+</HTML>

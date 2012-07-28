@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.filters.ProfileRedirect (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ProfileRedirect.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets.filters;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/ListenerI.java.html">ai.ilikeplaces.logic.Listeners.ListenerI</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.servlet.*;
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * Okay this class if for the profiles. However, still we do not support "very" short urls.
+<A NAME="14"></A> * Instead, we support www.ilikeplaces/i/username kind of urls here. Looks better huh? :D
+<A NAME="15"></A> * &lt;p/&gt;
+<A NAME="16"></A> * &lt;p/&gt;
+<A NAME="17"></A> * Hey this filter I say again, is to support www.ilikeplaces.com/i/ urls. No other filter should mess with this url too.
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * &lt;p/&gt;
+<A NAME="20"></A> * Well, nevertheless, when a request comes in the above format, we redirect it to the
+<A NAME="21"></A> * ItsNat servlet, (current url format is /page/_i?up=userurl and maybe /page/_i_userurl.
+<A NAME="22"></A> * We send a redirect there.
+<A NAME="23"></A> * &lt;p/&gt;
+<A NAME="24"></A> * &lt;p/&gt;
+<A NAME="25"></A> * Let's try to make it fast and simple.
+<A NAME="26"></A> * &lt;p/&gt;
+<A NAME="27"></A> * &lt;p/&gt;
+<A NAME="28"></A> * Created by IntelliJ IDEA.
+<A NAME="29"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="30"></A> * Date: Jun 10, 2010
+<A NAME="31"></A> * Time: 3:27:18 PM
+<A NAME="32"></A> *
+<A NAME="33"></A> */</FONT>
+<A NAME="34"></A>
+<A NAME="35"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ProfileRedirect <FONT ID="Implements">implements</FONT> Filter {
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SLASH = <FONT ID="StringLiteral">"/"</FONT>;
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PAGE_FORMAT = <FONT ID="StringLiteral">"/page/_i?"</FONT> + ListenerI.USER_PROFILE + <FONT ID="StringLiteral">"="</FONT>;
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_URL = <FONT ID="StringLiteral">"/i/"</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String REDIRECTING_USER_TO = <FONT ID="StringLiteral">"Redirecting User To:"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String REQUESTED_PATH = <FONT ID="StringLiteral">"Requested Path:"</FONT>;
+<A NAME="41"></A>
+<A NAME="42"></A>    @Override
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> FilterConfig filterConfig) <FONT ID="Throws">throws</FONT> ServletException {
+<A NAME="44"></A>        <FONT ID="SingleLineComment">//So far nothing to put here
+<A NAME="45"></A></FONT>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    @Override
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doFilter(<FONT ID="Final">final</FONT> ServletRequest request, <FONT ID="Final">final</FONT> ServletResponse servletResponse, <FONT ID="Final">final</FONT> FilterChain filterChain) <FONT ID="Throws">throws</FONT> IOException, ServletException {
+<A NAME="49"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl = SmartLogger.start(Loggers.LEVEL.DEBUG, <FONT ID="StringLiteral">"Processing Profile Redirect"</FONT>, <FONT ID="IntegerLiteral">100</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="50"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="51"></A>
+<A NAME="52"></A>            <FONT ID="Final">final</FONT> String unformattedurl = ((HttpServletRequest) request).getRequestURL().toString();
+<A NAME="53"></A>            sl.appendToLogMSG(REQUESTED_PATH + unformattedurl);
+<A NAME="54"></A>
+<A NAME="55"></A>            <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> index = unformattedurl.lastIndexOf(SLASH);
+<A NAME="56"></A>
+<A NAME="57"></A>            <FONT ID="Final">final</FONT> String url = unformattedurl.substring(index + <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="58"></A>
+<A NAME="59"></A>            <FONT ID="SingleLineComment">//final String userURL = url.substring(3);// that is, "/i/username" becomes "username"
+<A NAME="60"></A></FONT>
+<A NAME="61"></A>            sl.appendToLogMSG(REDIRECTING_USER_TO + url);
+<A NAME="62"></A>
+<A NAME="63"></A>            <FONT ID="FormalComment">/**
+<A NAME="64"></A>             * Check if moving the DB.getHumanCRUDHumanLocal to a class variable during init is sensible. The only concern is
+<A NAME="65"></A>             * does the container destroy the bean without warning?
+<A NAME="66"></A>             */</FONT>
+<A NAME="67"></A>            ((HttpServletResponse) servletResponse).sendRedirect(PROFILE_PAGE_FORMAT + url);
+<A NAME="68"></A>            sl.complete(Loggers.DONE);
+<A NAME="69"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable e) {
+<A NAME="70"></A>            sl.multiComplete(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">Loggers.LEVEL</A>[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.ERROR}, Loggers.FAILED);
+<A NAME="71"></A>        }
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    @Override
+<A NAME="75"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> destroy() {
+<A NAME="76"></A>        <FONT ID="SingleLineComment">//So far nothing to put here
+<A NAME="77"></A></FONT>    }
+<A NAME="78"></A>}
+<A NAME="79"></A></pre>
+</BODY>
+</HTML>

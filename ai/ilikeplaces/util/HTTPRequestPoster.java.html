@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.HTTPRequestPoster (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HTTPRequestPoster.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> java.io.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> java.net.HttpURLConnection;
+<A NAME="5"></A><FONT ID="Import">import</FONT> java.net.ProtocolException;
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.net.URL;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.net.URLConnection;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * Copied off
+<A NAME="11"></A> * http://www.aviransplace.com/2008/01/08/make-http-post-or-get-request-from-java/?blogthis=msn
+<A NAME="12"></A> */</FONT>
+<A NAME="13"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HTTPRequestPoster {
+<A NAME="14"></A>
+<A NAME="15"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(String args[]) {
+<A NAME="16"></A>        System.out.println(sendGetRequest(<FONT ID="StringLiteral">"http://disqus.com/api/get_forum_api_key/?user_api_key=IcChJgsHPtgVQIXP44cuA2BwJIEtvmamJJnmrvrN9L8Nfjy2dMGRgtE3YK28n4BU&amp;api_version=1.1&amp;forum_id=375663"</FONT>, <FONT ID="StringLiteral">""</FONT>));
+<A NAME="17"></A>        System.out.println(sendGetRequest(<FONT ID="StringLiteral">"http://disqus.com/api/get_thread_by_url/?forum_api_key=0bY9W6lCnbhufNyCFbO58FrlAD72ixWeF0GTiXSwXwPYQIWJ0xudVi9FHNZCOAS0&amp;url=http://www.ilikeplaces.com/page/Antananarivo_of_Madagascar?WOEID=2346150"</FONT>, <FONT ID="StringLiteral">""</FONT>));
+<A NAME="18"></A>        System.out.println(sendGetRequest(<FONT ID="StringLiteral">"http://disqus.com/api/get_thread_posts/?thread_id=109673804&amp;forum_api_key=0bY9W6lCnbhufNyCFbO58FrlAD72ixWeF0GTiXSwXwPYQIWJ0xudVi9FHNZCOAS0&amp;exclude='killed'"</FONT>, <FONT ID="StringLiteral">""</FONT>));
+<A NAME="19"></A>
+<A NAME="20"></A>    }
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="FormalComment">/**
+<A NAME="23"></A>     * Sends an HTTP GET request to a url
+<A NAME="24"></A>     *
+<A NAME="25"></A>     * @param endpoint          - The URL of the server. (Example: " http://www.yahoo.com/search")
+<A NAME="26"></A>     * @param requestParameters - all the request parameters (Example: "param1=val1&amp;param2=val2"). Note: This method will add the question mark (?) to the request - DO NOT add it yourself
+<A NAME="27"></A>     * @return - The response from the end point
+<A NAME="28"></A>     */</FONT>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String sendGetRequest(String endpoint, String requestParameters) {
+<A NAME="30"></A>        String result = <FONT ID="Null">null</FONT>;
+<A NAME="31"></A>        <FONT ID="If">if</FONT> (endpoint.startsWith(<FONT ID="StringLiteral">"http://"</FONT>)) {
+<A NAME="32"></A><FONT ID="SingleLineComment">// Send a GET request to the servlet
+<A NAME="33"></A></FONT>            <FONT ID="Try">try</FONT> {
+<A NAME="34"></A><FONT ID="SingleLineComment">// Construct data
+<A NAME="35"></A></FONT>                StringBuffer data = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="36"></A><FONT ID="SingleLineComment">// Send data
+<A NAME="37"></A></FONT>                String urlStr = endpoint;
+<A NAME="38"></A>                <FONT ID="If">if</FONT> (requestParameters != <FONT ID="Null">null</FONT> &amp;&amp; requestParameters.length() &gt; <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="39"></A>                    urlStr += <FONT ID="StringLiteral">"?"</FONT> + requestParameters;
+<A NAME="40"></A>                }
+<A NAME="41"></A>                URL url = <FONT ID="New">new</FONT> URL(urlStr);
+<A NAME="42"></A>                URLConnection conn = url.openConnection();
+<A NAME="43"></A><FONT ID="SingleLineComment">// Get the response
+<A NAME="44"></A></FONT>                BufferedReader rd = <FONT ID="New">new</FONT> BufferedReader(<FONT ID="New">new</FONT> InputStreamReader(conn.getInputStream()));
+<A NAME="45"></A>                StringBuffer sb = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="46"></A>                String line;
+<A NAME="47"></A>                <FONT ID="While">while</FONT> ((line = rd.readLine()) != <FONT ID="Null">null</FONT>) {
+<A NAME="48"></A>                    sb.append(line);
+<A NAME="49"></A>                }
+<A NAME="50"></A>                rd.close();
+<A NAME="51"></A>                result = sb.toString();
+<A NAME="52"></A>            } <FONT ID="Catch">catch</FONT> (Exception e) {
+<A NAME="53"></A>                e.printStackTrace();
+<A NAME="54"></A>            }
+<A NAME="55"></A>        }
+<A NAME="56"></A>        <FONT ID="Return">return</FONT> result;
+<A NAME="57"></A>    }
+<A NAME="58"></A>
+<A NAME="59"></A>    <FONT ID="FormalComment">/**
+<A NAME="60"></A>     * Reads data from the data reader and posts it to a server via POST request.
+<A NAME="61"></A>     * data - The data you want to send
+<A NAME="62"></A>     * endpoint - The server's address
+<A NAME="63"></A>     * output - writes the server's response to output
+<A NAME="64"></A>     *
+<A NAME="65"></A>     * @throws Exception
+<A NAME="66"></A>     */</FONT>
+<A NAME="67"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> postData(Reader data, URL endpoint, Writer output) <FONT ID="Throws">throws</FONT> Exception {
+<A NAME="68"></A>        HttpURLConnection urlc = <FONT ID="Null">null</FONT>;
+<A NAME="69"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="70"></A>            urlc = (HttpURLConnection) endpoint.openConnection();
+<A NAME="71"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="72"></A>                urlc.setRequestMethod(<FONT ID="StringLiteral">"POST"</FONT>);
+<A NAME="73"></A>            } <FONT ID="Catch">catch</FONT> (ProtocolException e) {
+<A NAME="74"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> Exception(<FONT ID="StringLiteral">"Shouldn't happen: HttpURLConnection doesn't support POST??"</FONT>, e);
+<A NAME="75"></A>            }
+<A NAME="76"></A>            urlc.setDoOutput(<FONT ID="True">true</FONT>);
+<A NAME="77"></A>            urlc.setDoInput(<FONT ID="True">true</FONT>);
+<A NAME="78"></A>            urlc.setUseCaches(<FONT ID="False">false</FONT>);
+<A NAME="79"></A>            urlc.setAllowUserInteraction(<FONT ID="False">false</FONT>);
+<A NAME="80"></A>            urlc.setRequestProperty(<FONT ID="StringLiteral">"Content-type"</FONT>, <FONT ID="StringLiteral">"text/xml; charset="</FONT> + <FONT ID="StringLiteral">"UTF-8"</FONT>);
+<A NAME="81"></A>            OutputStream out = urlc.getOutputStream();
+<A NAME="82"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="83"></A>                Writer writer = <FONT ID="New">new</FONT> OutputStreamWriter(out, <FONT ID="StringLiteral">"UTF-8"</FONT>);
+<A NAME="84"></A>                pipe(data, writer);
+<A NAME="85"></A>                writer.close();
+<A NAME="86"></A>            } <FONT ID="Catch">catch</FONT> (IOException e) {
+<A NAME="87"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> Exception(<FONT ID="StringLiteral">"IOException while posting data"</FONT>, e);
+<A NAME="88"></A>            } <FONT ID="Finally">finally</FONT> {
+<A NAME="89"></A>                <FONT ID="If">if</FONT> (out != <FONT ID="Null">null</FONT>)
+<A NAME="90"></A>                    out.close();
+<A NAME="91"></A>            }
+<A NAME="92"></A>            InputStream in = urlc.getInputStream();
+<A NAME="93"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="94"></A>                Reader reader = <FONT ID="New">new</FONT> InputStreamReader(in);
+<A NAME="95"></A>                pipe(reader, output);
+<A NAME="96"></A>                reader.close();
+<A NAME="97"></A>            } <FONT ID="Catch">catch</FONT> (IOException e) {
+<A NAME="98"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> Exception(<FONT ID="StringLiteral">"IOException while reading response"</FONT>, e);
+<A NAME="99"></A>            } <FONT ID="Finally">finally</FONT> {
+<A NAME="100"></A>                <FONT ID="If">if</FONT> (in != <FONT ID="Null">null</FONT>)
+<A NAME="101"></A>                    in.close();
+<A NAME="102"></A>            }
+<A NAME="103"></A>        } <FONT ID="Catch">catch</FONT> (IOException e) {
+<A NAME="104"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> Exception(<FONT ID="StringLiteral">"Connection error (is server running at "</FONT> + endpoint + <FONT ID="StringLiteral">" ?): "</FONT> + e);
+<A NAME="105"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="106"></A>            <FONT ID="If">if</FONT> (urlc != <FONT ID="Null">null</FONT>)
+<A NAME="107"></A>                urlc.disconnect();
+<A NAME="108"></A>        }
+<A NAME="109"></A>    }
+<A NAME="110"></A>
+<A NAME="111"></A>    <FONT ID="FormalComment">/**
+<A NAME="112"></A>     * Pipes everything from the reader to the writer via a buffer
+<A NAME="113"></A>     */</FONT>
+<A NAME="114"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> pipe(Reader reader, Writer writer) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="115"></A>        <FONT ID="Char">char</FONT>[] buf = <FONT ID="New">new</FONT> <FONT ID="Char">char</FONT>[<FONT ID="IntegerLiteral">1024</FONT>];
+<A NAME="116"></A>        <FONT ID="Int">int</FONT> read = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="117"></A>        <FONT ID="While">while</FONT> ((read = reader.read(buf)) &gt;= <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="118"></A>            writer.write(buf, <FONT ID="IntegerLiteral">0</FONT>, read);
+<A NAME="119"></A>        }
+<A NAME="120"></A>        writer.flush();
+<A NAME="121"></A>    }
+<A NAME="122"></A>}</pre>
+</BODY>
+</HTML>

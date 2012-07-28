@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Event (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Event.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets.schema.thing;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">ai.ilikeplaces.util.AbstractWidgetListener</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> * Created by IntelliJ IDEA.
+<A NAME="12"></A> * User: ravindranathakila
+<A NAME="13"></A> * Date: 6/3/12
+<A NAME="14"></A> * Time: 12:05 PM
+<A NAME="15"></A> */</FONT>
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Event <FONT ID="Extends">extends</FONT> <A HREF="../../../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">AbstractWidgetListener</A>&lt;<A HREF="../../../../../../../ai/ilikeplaces/logic/Listeners/widgets/schema/thing/EventCriteria.java.html">EventCriteria</A>&gt; {
+<A NAME="17"></A>
+<A NAME="18"></A>    <FONT ID="Public">public</FONT> enum EventIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="19"></A>
+<A NAME="20"></A>    }
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="FormalComment">/**
+<A NAME="23"></A>     * @param request__
+<A NAME="24"></A>     * @param page__
+<A NAME="25"></A>     * @param t
+<A NAME="26"></A>     * @param appendToElement__
+<A NAME="27"></A>     */</FONT>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> Event(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../../../ai/ilikeplaces/servlets/Controller.java.html">Controller.Page</A> page__, <FONT ID="Final">final</FONT> <A HREF="../../../../../../../ai/ilikeplaces/logic/Listeners/widgets/schema/thing/EventCriteria.java.html">EventCriteria</A> eventCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="29"></A>        <FONT ID="Super">super</FONT>(request__, page__, eventCriteria, appendToElement__);
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="FormalComment">/**
+<A NAME="33"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="34"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="35"></A>     * automatically called by the constructor
+<A NAME="36"></A>     *
+<A NAME="37"></A>     * @param itsNatHTMLDocument_
+<A NAME="38"></A>     * @param hTMLDocument_
+<A NAME="39"></A>     */</FONT>
+<A NAME="40"></A>    @Override
+<A NAME="41"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="42"></A>        <FONT ID="SingleLineComment">//To change body of implemented methods use File | Settings | File Templates.
+<A NAME="43"></A></FONT>    }
+<A NAME="44"></A>}
+<A NAME="45"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.filters.FilterRecaptcha (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">FilterRecaptcha.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets.filters;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> javax.servlet.*;
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * What we are trying to do here is intercept a request on the Controller and validate if recaptcha is true.
+<A NAME="11"></A> *
+<A NAME="12"></A> * We will check if a "spam" variable is there in the call.
+<A NAME="13"></A> *
+<A NAME="14"></A> * If present, then we will see if it is recaptch valid. If valid, then we will let the request pass through.
+<A NAME="15"></A> *
+<A NAME="16"></A> * If not
+<A NAME="17"></A> *
+<A NAME="18"></A> *
+<A NAME="19"></A> * Created by IntelliJ IDEA.
+<A NAME="20"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="21"></A> * Date: May 29, 2010
+<A NAME="22"></A> * Time: 3:12:56 PM
+<A NAME="23"></A> */</FONT>
+<A NAME="24"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> FilterRecaptcha <FONT ID="Implements">implements</FONT> Filter {
+<A NAME="26"></A>
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init(FilterConfig filterConfig) <FONT ID="Throws">throws</FONT> ServletException {
+<A NAME="29"></A>    }
+<A NAME="30"></A>
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="FormalComment">/**
+<A NAME="33"></A>     *
+<A NAME="34"></A>     * @param request
+<A NAME="35"></A>     * @param response
+<A NAME="36"></A>     * @param chain
+<A NAME="37"></A>     * @throws java.io.IOException
+<A NAME="38"></A>     * @throws javax.servlet.ServletException
+<A NAME="39"></A>     */</FONT>
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doFilter(<FONT ID="Final">final</FONT> ServletRequest request, <FONT ID="Final">final</FONT> ServletResponse response, <FONT ID="Final">final</FONT> FilterChain chain) <FONT ID="Throws">throws</FONT> IOException, ServletException {
+<A NAME="41"></A>        <FONT ID="Final">final</FONT> HttpServletResponse servletResponse = (HttpServletResponse) response;
+<A NAME="42"></A>    }
+<A NAME="43"></A>
+<A NAME="44"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> destroy() {
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>}</pre>
+</BODY>
+</HTML>

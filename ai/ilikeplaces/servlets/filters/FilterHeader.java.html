@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.filters.FilterHeader (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">FilterHeader.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets.filters;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.servlet.*;
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.text.DateFormat;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.text.SimpleDateFormat;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.util.*;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * Created by IntelliJ IDEA.
+<A NAME="16"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="17"></A> * Date: May 29, 2010
+<A NAME="18"></A> * Time: 3:12:56 PM
+<A NAME="19"></A> */</FONT>
+<A NAME="20"></A>
+<A NAME="21"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="22"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> FilterHeader <FONT ID="Implements">implements</FONT> Filter {
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Private">private</FONT> FilterConfig filterConfig;
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Private">private</FONT> Map&lt;String, String&gt; headersMap;
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String BUILD_NUMBER;
+<A NAME="29"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String[] RECINC_ARRAY;
+<A NAME="30"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> YEAR;
+<A NAME="31"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> MONTH;
+<A NAME="32"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> DATE;
+<A NAME="33"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> HOUR;
+<A NAME="34"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> MINUTE;
+<A NAME="35"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> SECOND;
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CACHE_CONTROL = <FONT ID="StringLiteral">"Cache-Control"</FONT>;
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PUBLIC_MAX_AGE = <FONT ID="StringLiteral">"PUBLIC, max-age="</FONT>;
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MUST_REVALIDATE = <FONT ID="StringLiteral">", must-revalidate"</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LAST_MODIFIED = <FONT ID="StringLiteral">"Last-Modified"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EXPIRES = <FONT ID="StringLiteral">"Expires"</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ETAG = <FONT ID="StringLiteral">"ETag"</FONT>;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EEE_DD_MMM_YYYY_HH_MM_SS_Z = <FONT ID="StringLiteral">"EEE, dd MMM yyyy HH:mm:ss z"</FONT>;
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GMT = <FONT ID="StringLiteral">"GMT"</FONT>;
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> GregorianCalendar CAL = <FONT ID="New">new</FONT> GregorianCalendar();
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> Date DEPLOYED;
+<A NAME="46"></A>
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="49"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="50"></A>            BUILD_NUMBER = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"bn"</FONT>);
+<A NAME="51"></A>            Loggers.DEBUG.debug(BUILD_NUMBER.split(<FONT ID="StringLiteral">"-"</FONT>)[<FONT ID="IntegerLiteral">1</FONT>]);
+<A NAME="52"></A>            RECINC_ARRAY = BUILD_NUMBER.split(<FONT ID="StringLiteral">"-"</FONT>)[<FONT ID="IntegerLiteral">1</FONT>].replace(<FONT ID="StringLiteral">"."</FONT>, <FONT ID="StringLiteral">"-"</FONT>).split(<FONT ID="StringLiteral">"-"</FONT>);  <FONT ID="SingleLineComment">//replaced to avoid regex behavior
+<A NAME="53"></A></FONT>            Loggers.DEBUG.debug(Arrays.toString(BUILD_NUMBER.split(<FONT ID="StringLiteral">"-"</FONT>)[<FONT ID="IntegerLiteral">1</FONT>].replace(<FONT ID="StringLiteral">"."</FONT>, <FONT ID="StringLiteral">"-"</FONT>).split(<FONT ID="StringLiteral">"-"</FONT>)));
+<A NAME="54"></A>            YEAR = Integer.parseInt(RECINC_ARRAY[<FONT ID="IntegerLiteral">2</FONT>]);
+<A NAME="55"></A>            MONTH = Integer.parseInt(RECINC_ARRAY[<FONT ID="IntegerLiteral">3</FONT>]) - <FONT ID="IntegerLiteral">1</FONT>;<FONT ID="SingleLineComment">//Did that take time to fix :D
+<A NAME="56"></A></FONT>            DATE = Integer.parseInt(RECINC_ARRAY[<FONT ID="IntegerLiteral">4</FONT>]);
+<A NAME="57"></A>            HOUR = Integer.parseInt(RECINC_ARRAY[<FONT ID="IntegerLiteral">5</FONT>]);
+<A NAME="58"></A>            MINUTE = Integer.parseInt(RECINC_ARRAY[<FONT ID="IntegerLiteral">6</FONT>]);
+<A NAME="59"></A>            SECOND = Integer.parseInt(RECINC_ARRAY[<FONT ID="IntegerLiteral">7</FONT>]);
+<A NAME="60"></A>
+<A NAME="61"></A>            CAL.set(YEAR, MONTH, DATE, HOUR, MINUTE, SECOND);<FONT ID="SingleLineComment">//Deployed time
+<A NAME="62"></A></FONT>            CAL.setTimeZone(TimeZone.getTimeZone(GMT));
+<A NAME="63"></A>            DEPLOYED = <FONT ID="New">new</FONT> Date(CAL.getTimeInMillis());
+<A NAME="64"></A>
+<A NAME="65"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="66"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, t);
+<A NAME="67"></A>        }
+<A NAME="68"></A>    }
+<A NAME="69"></A>
+<A NAME="70"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init(FilterConfig filterConfig) <FONT ID="Throws">throws</FONT> ServletException {
+<A NAME="71"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="72"></A>            <FONT ID="This">this</FONT>.filterConfig = filterConfig;
+<A NAME="73"></A>
+<A NAME="74"></A>            <FONT ID="SingleLineComment">// Init the header list :
+<A NAME="75"></A></FONT>            <FONT ID="This">this</FONT>.headersMap = <FONT ID="New">new</FONT> LinkedHashMap&lt;String, String&gt;();
+<A NAME="76"></A>
+<A NAME="77"></A>            String headerParam = filterConfig.getInitParameter(<FONT ID="StringLiteral">"header"</FONT>);
+<A NAME="78"></A>            <FONT ID="If">if</FONT> (headerParam == <FONT ID="Null">null</FONT>) {
+<A NAME="79"></A>                Loggers.DEBUG.error(<FONT ID="StringLiteral">"No headers were found in the web.xml (init-param) for the HeaderFilter !"</FONT>);
+<A NAME="80"></A>                <FONT ID="SingleLineComment">//return;
+<A NAME="81"></A></FONT>            } <FONT ID="Else">else</FONT> {
+<A NAME="82"></A>                <FONT ID="If">if</FONT> (headerParam.contains(<FONT ID="StringLiteral">"|"</FONT>)) {
+<A NAME="83"></A>                    String[] headers = headerParam.split(<FONT ID="StringLiteral">"|"</FONT>);
+<A NAME="84"></A>                    <FONT ID="For">for</FONT> (String header : headers) {
+<A NAME="85"></A>                        parseHeader(header);
+<A NAME="86"></A>                    }
+<A NAME="87"></A>
+<A NAME="88"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="89"></A>                    parseHeader(headerParam);
+<A NAME="90"></A>                }
+<A NAME="91"></A>            }
+<A NAME="92"></A>
+<A NAME="93"></A>            <FONT ID="SingleLineComment">// Log configured headers .
+<A NAME="94"></A></FONT>            Loggers.DEBUG.debug(<FONT ID="StringLiteral">"The following headers were registered in the HeaderFilter :"</FONT>);
+<A NAME="95"></A>            Set&lt;Map.Entry&lt;String, String&gt;&gt; headers = headersMap.entrySet();
+<A NAME="96"></A>            <FONT ID="For">for</FONT> (Map.Entry&lt;String, String&gt; item : headers) {
+<A NAME="97"></A>                Loggers.DEBUG.debug(item.getKey() + <FONT ID="CharacerLiteral">':'</FONT> + item.getValue());
+<A NAME="98"></A>            }
+<A NAME="99"></A>            Loggers.INFO.info(<FONT ID="StringLiteral">"BUILD NUMBER:"</FONT> + BUILD_NUMBER);
+<A NAME="100"></A>            Loggers.DEBUG.debug(<FONT ID="StringLiteral">"REINC ARRAY:"</FONT> + Arrays.toString(RECINC_ARRAY));
+<A NAME="101"></A>            Loggers.INFO.info(<FONT ID="StringLiteral">"BUILD DATE:"</FONT> + YEAR + <FONT ID="StringLiteral">" "</FONT> + (MONTH + <FONT ID="IntegerLiteral">1</FONT>) + <FONT ID="StringLiteral">" "</FONT> + DATE + <FONT ID="StringLiteral">" "</FONT> + HOUR + <FONT ID="StringLiteral">" "</FONT> + MINUTE + <FONT ID="StringLiteral">" "</FONT> + SECOND + <FONT ID="StringLiteral">" "</FONT>);
+<A NAME="102"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="103"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, t);
+<A NAME="104"></A>        }
+<A NAME="105"></A>    }
+<A NAME="106"></A>
+<A NAME="107"></A>
+<A NAME="108"></A>    <FONT ID="FormalComment">/**
+<A NAME="109"></A>     * We expect the client to detect the last modified date. Apart from that, two weaks of caching would be ok for now.
+<A NAME="110"></A>     * 
+<A NAME="111"></A>     * @param request
+<A NAME="112"></A>     * @param response
+<A NAME="113"></A>     * @param chain
+<A NAME="114"></A>     * @throws IOException
+<A NAME="115"></A>     * @throws ServletException
+<A NAME="116"></A>     */</FONT>
+<A NAME="117"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doFilter(<FONT ID="Final">final</FONT> ServletRequest request, <FONT ID="Final">final</FONT> ServletResponse response, <FONT ID="Final">final</FONT> FilterChain chain) <FONT ID="Throws">throws</FONT> IOException, ServletException {
+<A NAME="118"></A>        <FONT ID="Final">final</FONT> HttpServletResponse servletResponse = (HttpServletResponse) response;
+<A NAME="119"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="120"></A>            <FONT ID="If">if</FONT> (headersMap != <FONT ID="Null">null</FONT>) {
+<A NAME="121"></A>                <FONT ID="SingleLineComment">// Add the header to the response
+<A NAME="122"></A></FONT>                Set&lt;Map.Entry&lt;String, String&gt;&gt; headers = headersMap.entrySet();
+<A NAME="123"></A>                <FONT ID="For">for</FONT> (Map.Entry&lt;String, String&gt; header : headers) {
+<A NAME="124"></A>                    servletResponse.setHeader(header.getKey(), header.getValue());
+<A NAME="125"></A>                }
+<A NAME="126"></A>            }
+<A NAME="127"></A>            setCacheExpireDate(servletResponse, <FONT ID="IntegerLiteral">2</FONT> * <FONT ID="IntegerLiteral">24</FONT> * <FONT ID="IntegerLiteral">60</FONT> * <FONT ID="IntegerLiteral">60</FONT>);
+<A NAME="128"></A>            setEtag(servletResponse);
+<A NAME="129"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="130"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, t);
+<A NAME="131"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="132"></A>            chain.doFilter(request, servletResponse);
+<A NAME="133"></A>        }
+<A NAME="134"></A>    }
+<A NAME="135"></A>
+<A NAME="136"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> destroy() {
+<A NAME="137"></A>        <FONT ID="This">this</FONT>.filterConfig = <FONT ID="Null">null</FONT>;
+<A NAME="138"></A>        <FONT ID="This">this</FONT>.headersMap = <FONT ID="Null">null</FONT>;
+<A NAME="139"></A>    }
+<A NAME="140"></A>
+<A NAME="141"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> parseHeader(<FONT ID="Final">final</FONT> String header) {
+<A NAME="142"></A>        String headerName = header.substring(<FONT ID="IntegerLiteral">0</FONT>, header.indexOf(<FONT ID="StringLiteral">":"</FONT>));
+<A NAME="143"></A>        <FONT ID="If">if</FONT> (!headersMap.containsKey(headerName)) {
+<A NAME="144"></A>            headersMap.put(headerName, header.substring(header.indexOf(<FONT ID="StringLiteral">":"</FONT>) + <FONT ID="IntegerLiteral">1</FONT>));
+<A NAME="145"></A>        }
+<A NAME="146"></A>    }
+<A NAME="147"></A>
+<A NAME="148"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setCacheExpireDate(<FONT ID="Final">final</FONT> HttpServletResponse response, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> seconds) {
+<A NAME="149"></A>        <FONT ID="If">if</FONT> (response != <FONT ID="Null">null</FONT>) {
+<A NAME="150"></A>
+<A NAME="151"></A>            response.setHeader(CACHE_CONTROL, PUBLIC_MAX_AGE + (seconds) + MUST_REVALIDATE);
+<A NAME="152"></A>
+<A NAME="153"></A>            response.setHeader(LAST_MODIFIED, htmlExpiresDateFormat().format(DEPLOYED));
+<A NAME="154"></A>
+<A NAME="155"></A>            <FONT ID="Final">final</FONT> Date expires = <FONT ID="New">new</FONT> Date(System.currentTimeMillis() + seconds * <FONT ID="IntegerLiteral">1000</FONT>);
+<A NAME="156"></A>            response.setHeader(EXPIRES, htmlExpiresDateFormat().format(expires.getTime()));
+<A NAME="157"></A>
+<A NAME="158"></A>        }
+<A NAME="159"></A>    }
+<A NAME="160"></A>
+<A NAME="161"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setEtag(HttpServletResponse response) {
+<A NAME="162"></A>        <FONT ID="If">if</FONT> (response != <FONT ID="Null">null</FONT>) {
+<A NAME="163"></A>            response.setHeader(ETAG, BUILD_NUMBER);
+<A NAME="164"></A>        }
+<A NAME="165"></A>    }
+<A NAME="166"></A>
+<A NAME="167"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> DateFormat htmlExpiresDateFormat() {
+<A NAME="168"></A>        DateFormat httpDateFormat = <FONT ID="New">new</FONT> SimpleDateFormat(EEE_DD_MMM_YYYY_HH_MM_SS_Z, Locale.US);
+<A NAME="169"></A>        httpDateFormat.setTimeZone(TimeZone.getTimeZone(GMT));
+<A NAME="170"></A>        <FONT ID="Return">return</FONT> httpDateFormat;
+<A NAME="171"></A>    }
+<A NAME="172"></A>
+<A NAME="173"></A>}  </pre>
+</BODY>
+</HTML>

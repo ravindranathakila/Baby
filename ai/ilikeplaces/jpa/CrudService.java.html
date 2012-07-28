@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.jpa.CrudService (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CrudService.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.jpa;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBDishonourException.java.html">ai.ilikeplaces.exception.DBDishonourException</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBException.java.html">ai.ilikeplaces.exception.DBException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBHazelcastRuntimeException.java.html">ai.ilikeplaces.exception.DBHazelcastRuntimeException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> com.hazelcast.client.ClientConfig;
+<A NAME="11"></A><FONT ID="Import">import</FONT> com.hazelcast.client.HazelcastClient;
+<A NAME="12"></A><FONT ID="Import">import</FONT> com.hazelcast.core.IMap;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="18"></A><FONT ID="Import">import</FONT> java.lang.reflect.Field;
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.lang.reflect.InvocationTargetException;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.lang.reflect.Method;
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.net.InetSocketAddress;
+<A NAME="22"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="23"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="24"></A><FONT ID="Import">import</FONT> java.util.Map.Entry;
+<A NAME="25"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="26"></A>
+<A NAME="27"></A><FONT ID="FormalComment">/**
+<A NAME="28"></A> * @param &lt;T&gt;
+<A NAME="29"></A> * @author Ravindranath Akila
+<A NAME="30"></A> */</FONT>
+<A NAME="31"></A>
+<A NAME="32"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="33"></A>@Stateless
+<A NAME="34"></A>@CONVENTION(convention = <FONT ID="StringLiteral">"Caller assumes this class methods are of tx scope supports, "</FONT> +
+<A NAME="35"></A>        <FONT ID="StringLiteral">"but create and updates here are of scope mandatory which will ensure caller does no mistake."</FONT>)
+<A NAME="36"></A>@OK
+<A NAME="37"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> CrudService&lt;T&gt; <FONT ID="Extends">extends</FONT> <A HREF="../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;T&gt; {
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="FormalComment">/**
+<A NAME="40"></A>     * Please not that this is a field of Stateless session bean
+<A NAME="41"></A>     */</FONT>
+<A NAME="42"></A>    @NOTE(note = <FONT ID="StringLiteral">"find out how the manager handles concurrent requests. same cache or different? if different, come on, this a class variable!"</FONT> +
+<A NAME="43"></A>            <FONT ID="StringLiteral">"resolved! check out the hibernate site article on this. apparently, container does this. amazing!"</FONT>)
+<A NAME="44"></A>    @PersistenceContext(unitName = <FONT ID="StringLiteral">"adimpression_ilikeplaces_war_1.6-SNAPSHOTPU"</FONT>, type = PersistenceContextType.TRANSACTION)
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> EntityManager entityManager;
+<A NAME="46"></A>
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="FormalComment">/**
+<A NAME="49"></A>     * Lazily initialized
+<A NAME="50"></A>     */</FONT>
+<A NAME="51"></A>    @WARNING(<FONT ID="StringLiteral">"Lazily initialized upon entity lifecycle callbacks"</FONT>)
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> HazelcastClient hazelcastClient;
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> HazelcastClient getHCClient() {
+<A NAME="55"></A>        <FONT ID="If">if</FONT> (hazelcastClient == <FONT ID="Null">null</FONT>) {
+<A NAME="56"></A>            ClientConfig clientConfig = <FONT ID="New">new</FONT> ClientConfig();
+<A NAME="57"></A>
+<A NAME="58"></A>            clientConfig.getGroupConfig().setName(<FONT ID="StringLiteral">"dev"</FONT>).setPassword(<FONT ID="StringLiteral">"dev-pass"</FONT>);
+<A NAME="59"></A>            clientConfig.addAddress(<FONT ID="StringLiteral">"127.0.0.1:5701"</FONT>);
+<A NAME="60"></A>
+<A NAME="61"></A>            <FONT ID="If">if</FONT> (DEBUG_ENABLED) {
+<A NAME="62"></A>                Loggers.debug(<FONT ID="StringLiteral">"THESE ARE THE HAZELCAST ADDRESSES FYR:"</FONT>);
+<A NAME="63"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> InetSocketAddress inetSocketAddress : clientConfig.getAddressList()) {
+<A NAME="64"></A>                    Loggers.debug(<FONT ID="StringLiteral">"Host "</FONT> + inetSocketAddress.getHostName() + <FONT ID="StringLiteral">" on Port "</FONT> + inetSocketAddress.getPort());
+<A NAME="65"></A>                }
+<A NAME="66"></A>            }
+<A NAME="67"></A>
+<A NAME="68"></A>            hazelcastClient = HazelcastClient.newHazelcastClient(clientConfig);
+<A NAME="69"></A>
+<A NAME="70"></A>            <FONT ID="If">if</FONT> (DEBUG_ENABLED) {
+<A NAME="71"></A>                Loggers.debug(<FONT ID="StringLiteral">"THESE ARE THE HAZELCAST CLIENT(ME) DETAILS FYR:"</FONT>);
+<A NAME="72"></A>                Loggers.debug(<FONT ID="StringLiteral">"clientConfig.getGroupConfig().getName():"</FONT>);
+<A NAME="73"></A>                Loggers.debug(clientConfig.getGroupConfig().getName());
+<A NAME="74"></A>                Loggers.debug(<FONT ID="StringLiteral">"clientConfig.getGroupConfig().toString():"</FONT>);
+<A NAME="75"></A>                Loggers.debug(clientConfig.getGroupConfig().toString());
+<A NAME="76"></A>            }
+<A NAME="77"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="78"></A>            <FONT ID="If">if</FONT> (!hazelcastClient.isActive()) {
+<A NAME="79"></A>                Loggers.info(Loggers.CODE_HC + <FONT ID="StringLiteral">"Hazelcast client is shutdown. Restarting..."</FONT>);
+<A NAME="80"></A>                hazelcastClient.restart();
+<A NAME="81"></A>                Loggers.info(Loggers.CODE_HC + <FONT ID="StringLiteral">"Hazelcast client start state after attempted restart:"</FONT> + hazelcastClient.isActive());
+<A NAME="82"></A>            }
+<A NAME="83"></A>        }
+<A NAME="84"></A>
+<A NAME="85"></A>        <FONT ID="Return">return</FONT> hazelcastClient;
+<A NAME="86"></A>    }
+<A NAME="87"></A>
+<A NAME="88"></A>
+<A NAME="89"></A>    <FONT ID="Private">private</FONT> Object getId(Object entity) <FONT ID="Throws">throws</FONT> IllegalAccessException, InvocationTargetException {
+<A NAME="90"></A>        Object key = <FONT ID="Null">null</FONT>;
+<A NAME="91"></A>
+<A NAME="92"></A>        <FONT ID="Final">final</FONT> Method[] methods = entity.getClass().getMethods();
+<A NAME="93"></A>
+<A NAME="94"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Method method : methods) {
+<A NAME="95"></A>            <FONT ID="Final">final</FONT> Id annotation = method.getAnnotation(Id.<FONT ID="Class">class</FONT>);
+<A NAME="96"></A>            <FONT ID="If">if</FONT> (annotation != <FONT ID="Null">null</FONT>) {
+<A NAME="97"></A>                key = method.invoke(entity);
+<A NAME="98"></A>            }
+<A NAME="99"></A>        }
+<A NAME="100"></A>
+<A NAME="101"></A>        <FONT ID="If">if</FONT> (DEBUG_ENABLED) {
+<A NAME="102"></A>            Loggers.debug(Loggers.CODE_HC + <FONT ID="StringLiteral">"Entity's @Id:"</FONT> + key);
+<A NAME="103"></A>        }
+<A NAME="104"></A>
+<A NAME="105"></A>        <FONT ID="Return">return</FONT> key;
+<A NAME="106"></A>    }
+<A NAME="107"></A>
+<A NAME="108"></A>    <FONT ID="Private">private</FONT> IMap&lt;Object, Object&gt; getHCMap(<FONT ID="Final">final</FONT> Object entity) {
+<A NAME="109"></A>        <FONT ID="Final">final</FONT> String mapName = entity.getClass().getName();
+<A NAME="110"></A>        <FONT ID="If">if</FONT> (DEBUG_ENABLED) {
+<A NAME="111"></A>            Loggers.debug(Loggers.CODE_HC + <FONT ID="StringLiteral">"Attempting to fetch map named from:"</FONT> + mapName);
+<A NAME="112"></A>        }
+<A NAME="113"></A>        <FONT ID="Return">return</FONT> getHCClient().getMap(mapName);
+<A NAME="114"></A>    }
+<A NAME="115"></A>
+<A NAME="116"></A>    <FONT ID="FormalComment">/**
+<A NAME="117"></A>     * @param t
+<A NAME="118"></A>     * @return
+<A NAME="119"></A>     */</FONT>
+<A NAME="120"></A>    @TransactionAttribute(TransactionAttributeType.MANDATORY)
+<A NAME="121"></A>    @Override
+<A NAME="122"></A>    <FONT ID="Public">public</FONT> T create(<FONT ID="Final">final</FONT> T t) {
+<A NAME="123"></A>        entityManager.persist(t);
+<A NAME="124"></A>        entityManager.flush();
+<A NAME="125"></A>        entityManager.refresh(t);
+<A NAME="126"></A>
+<A NAME="127"></A>        {
+<A NAME="128"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="129"></A>                Object id = getId(t);
+<A NAME="130"></A>
+<A NAME="131"></A>                IMap&lt;Object, Object&gt; hcMap = getHCMap(t);
+<A NAME="132"></A>
+<A NAME="133"></A>                hcMap.lock(id);
+<A NAME="134"></A>                hcMap.put(id, t);
+<A NAME="135"></A>                hcMap.unlock(id);
+<A NAME="136"></A>
+<A NAME="137"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable throwable) {
+<A NAME="138"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBHazelcastRuntimeException.java.html">DBHazelcastRuntimeException</A>(Loggers.CODE_HC + <FONT ID="StringLiteral">"ERROR NEGOTIATING DATA VIA HAZELCAST"</FONT>, throwable);
+<A NAME="139"></A>            }
+<A NAME="140"></A>        }
+<A NAME="141"></A>        <FONT ID="Return">return</FONT> t;
+<A NAME="142"></A>    }
+<A NAME="143"></A>
+<A NAME="144"></A>    <FONT ID="FormalComment">/**
+<A NAME="145"></A>     * @param type
+<A NAME="146"></A>     * @param id
+<A NAME="147"></A>     * @return
+<A NAME="148"></A>     */</FONT>
+<A NAME="149"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="150"></A>    @Override
+<A NAME="151"></A>    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+<A NAME="152"></A>    <FONT ID="Public">public</FONT> T find(<FONT ID="Final">final</FONT> Class type, <FONT ID="Final">final</FONT> Object id) {
+<A NAME="153"></A>        <FONT ID="Return">return</FONT> (T) entityManager.find(type, id);
+<A NAME="154"></A>    }
+<A NAME="155"></A>
+<A NAME="156"></A>    <FONT ID="FormalComment">/**
+<A NAME="157"></A>     * @param type
+<A NAME="158"></A>     * @param id
+<A NAME="159"></A>     * @return
+<A NAME="160"></A>     */</FONT>
+<A NAME="161"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="162"></A>    @Override
+<A NAME="163"></A>    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+<A NAME="164"></A>    <FONT ID="Public">public</FONT> T getReference(<FONT ID="Final">final</FONT> Class type, <FONT ID="Final">final</FONT> Object id) {
+<A NAME="165"></A>        <FONT ID="Return">return</FONT> (T) entityManager.getReference(type, id);
+<A NAME="166"></A>    }
+<A NAME="167"></A>
+<A NAME="168"></A>    <FONT ID="FormalComment">/**
+<A NAME="169"></A>     * @param typeOfEntity
+<A NAME="170"></A>     * @param idByWhichToLookup
+<A NAME="171"></A>     * @return
+<A NAME="172"></A>     */</FONT>
+<A NAME="173"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="174"></A>    @Override
+<A NAME="175"></A>    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+<A NAME="176"></A>    <FONT ID="Public">public</FONT> T findBadly(Class typeOfEntity, Object idByWhichToLookup) {
+<A NAME="177"></A>        <FONT ID="Final">final</FONT> Object object = entityManager.find(typeOfEntity, idByWhichToLookup);
+<A NAME="178"></A>        <FONT ID="If">if</FONT> (object != <FONT ID="Null">null</FONT>) {
+<A NAME="179"></A>            <FONT ID="Return">return</FONT> (T) object;
+<A NAME="180"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="181"></A>            <FONT ID="Throw">throw</FONT> DBDishonourException.QUERYING_AFFIRMATIVELY_A_NON_EXISTING_ENTITY;
+<A NAME="182"></A>        }
+<A NAME="183"></A>    }
+<A NAME="184"></A>
+<A NAME="185"></A>    <FONT ID="FormalComment">/**
+<A NAME="186"></A>     * @param type
+<A NAME="187"></A>     * @param id
+<A NAME="188"></A>     */</FONT>
+<A NAME="189"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="190"></A>    @Override
+<A NAME="191"></A>    @TransactionAttribute(TransactionAttributeType.MANDATORY)
+<A NAME="192"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> delete(<FONT ID="Final">final</FONT> Class type, <FONT ID="Final">final</FONT> Object id) {
+<A NAME="193"></A>        entityManager.remove(<FONT ID="This">this</FONT>.entityManager.getReference(type, id));
+<A NAME="194"></A>
+<A NAME="195"></A>        {
+<A NAME="196"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="197"></A>                Object key = getId(id);
+<A NAME="198"></A>
+<A NAME="199"></A>                IMap&lt;Object, Object&gt; hcMap = getHCMap(id);
+<A NAME="200"></A>
+<A NAME="201"></A>                hcMap.lock(key);
+<A NAME="202"></A>                hcMap.remove(key);
+<A NAME="203"></A>                hcMap.unlock(key);
+<A NAME="204"></A>
+<A NAME="205"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="206"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBHazelcastRuntimeException.java.html">DBHazelcastRuntimeException</A>(Loggers.CODE_HC + <FONT ID="StringLiteral">"ERROR NEGOTIATING DATA VIA HAZELCAST"</FONT>, t);
+<A NAME="207"></A>            }
+<A NAME="208"></A>        }
+<A NAME="209"></A>    }
+<A NAME="210"></A>
+<A NAME="211"></A>    <FONT ID="FormalComment">/**
+<A NAME="212"></A>     * @param t
+<A NAME="213"></A>     * @return
+<A NAME="214"></A>     */</FONT>
+<A NAME="215"></A>    @Override
+<A NAME="216"></A>    @TransactionAttribute(TransactionAttributeType.MANDATORY)
+<A NAME="217"></A>    <FONT ID="Public">public</FONT> T update(<FONT ID="Final">final</FONT> T t) {
+<A NAME="218"></A>        <FONT ID="Final">final</FONT> T mmanaged = entityManager.merge(t);
+<A NAME="219"></A>
+<A NAME="220"></A>        {
+<A NAME="221"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="222"></A>
+<A NAME="223"></A>                Object key = getId(t);
+<A NAME="224"></A>
+<A NAME="225"></A>                IMap&lt;Object, Object&gt; hcMap = getHCMap(t);
+<A NAME="226"></A>
+<A NAME="227"></A>                hcMap.lock(key);
+<A NAME="228"></A>                hcMap.put(key, t);
+<A NAME="229"></A>                hcMap.unlock(key);
+<A NAME="230"></A>
+<A NAME="231"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable throwable) {
+<A NAME="232"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBHazelcastRuntimeException.java.html">DBHazelcastRuntimeException</A>(Loggers.CODE_HC + <FONT ID="StringLiteral">"ERROR NEGOTIATING DATA VIA HAZELCAST"</FONT>, throwable);
+<A NAME="233"></A>
+<A NAME="234"></A>            }
+<A NAME="235"></A>        }
+<A NAME="236"></A>
+<A NAME="237"></A>        <FONT ID="Return">return</FONT> mmanaged;
+<A NAME="238"></A>    }
+<A NAME="239"></A>
+<A NAME="240"></A>    <FONT ID="FormalComment">/**
+<A NAME="241"></A>     * @param namedQueryName
+<A NAME="242"></A>     * @return
+<A NAME="243"></A>     */</FONT>
+<A NAME="244"></A>    @Override
+<A NAME="245"></A>    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+<A NAME="246"></A>    <FONT ID="Public">public</FONT> List findWithNamedQuery(<FONT ID="Final">final</FONT> String namedQueryName) {
+<A NAME="247"></A>        <FONT ID="Return">return</FONT> entityManager.createNamedQuery(namedQueryName).getResultList();
+<A NAME="248"></A>    }
+<A NAME="249"></A>
+<A NAME="250"></A>    <FONT ID="FormalComment">/**
+<A NAME="251"></A>     * @param namedQueryName
+<A NAME="252"></A>     * @param parameters
+<A NAME="253"></A>     * @return
+<A NAME="254"></A>     */</FONT>
+<A NAME="255"></A>    @Override
+<A NAME="256"></A>    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+<A NAME="257"></A>    <FONT ID="Public">public</FONT> List findWithNamedQuery(<FONT ID="Final">final</FONT> String namedQueryName, <FONT ID="Final">final</FONT> Map parameters) {
+<A NAME="258"></A>        <FONT ID="Return">return</FONT> findWithNamedQuery(namedQueryName, parameters, <FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="259"></A>    }
+<A NAME="260"></A>
+<A NAME="261"></A>    <FONT ID="FormalComment">/**
+<A NAME="262"></A>     * @param queryName
+<A NAME="263"></A>     * @param resultLimit
+<A NAME="264"></A>     * @return
+<A NAME="265"></A>     */</FONT>
+<A NAME="266"></A>    @Override
+<A NAME="267"></A>    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+<A NAME="268"></A>    <FONT ID="Public">public</FONT> List findWithNamedQuery(<FONT ID="Final">final</FONT> String queryName, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> resultLimit) {
+<A NAME="269"></A>        <FONT ID="Return">return</FONT> entityManager.createNamedQuery(queryName).
+<A NAME="270"></A>                setMaxResults(resultLimit).
+<A NAME="271"></A>                getResultList();
+<A NAME="272"></A>    }
+<A NAME="273"></A>
+<A NAME="274"></A>    <FONT ID="FormalComment">/**
+<A NAME="275"></A>     * @param sql
+<A NAME="276"></A>     * @param type
+<A NAME="277"></A>     * @return
+<A NAME="278"></A>     */</FONT>
+<A NAME="279"></A>    @Override
+<A NAME="280"></A>    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+<A NAME="281"></A>    <FONT ID="Public">public</FONT> List findByNativeQuery(<FONT ID="Final">final</FONT> String sql, <FONT ID="Final">final</FONT> Class type) {
+<A NAME="282"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.entityManager.createNativeQuery(sql, type).getResultList();
+<A NAME="283"></A>    }
+<A NAME="284"></A>
+<A NAME="285"></A>    <FONT ID="FormalComment">/**
+<A NAME="286"></A>     * @param namedQueryName
+<A NAME="287"></A>     * @param parameters
+<A NAME="288"></A>     * @param resultLimit
+<A NAME="289"></A>     * @return
+<A NAME="290"></A>     */</FONT>
+<A NAME="291"></A>    @Override
+<A NAME="292"></A>    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+<A NAME="293"></A>    <FONT ID="Public">public</FONT> List findWithNamedQuery(<FONT ID="Final">final</FONT> String namedQueryName, <FONT ID="Final">final</FONT> Map parameters, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> resultLimit) {
+<A NAME="294"></A>        @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="295"></A>        <FONT ID="Final">final</FONT> Set&lt;Entry&gt; rawParameters = parameters.entrySet();
+<A NAME="296"></A>        <FONT ID="Final">final</FONT> Query query = entityManager.createNamedQuery(namedQueryName);
+<A NAME="297"></A>        <FONT ID="If">if</FONT> (resultLimit &gt; <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="298"></A>            query.setMaxResults(resultLimit);
+<A NAME="299"></A>        }
+<A NAME="300"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Entry entry : rawParameters) {
+<A NAME="301"></A>            query.setParameter((String) entry.getKey(), entry.getValue());
+<A NAME="302"></A>        }
+<A NAME="303"></A>        <FONT ID="Return">return</FONT> query.getResultList();
+<A NAME="304"></A>    }
+<A NAME="305"></A>
+<A NAME="306"></A>    <FONT ID="FormalComment">/**
+<A NAME="307"></A>     * @return toString_
+<A NAME="308"></A>     */</FONT>
+<A NAME="309"></A>    @Override
+<A NAME="310"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="311"></A>        String toString_ = getClass().getName();
+<A NAME="312"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="313"></A>            <FONT ID="Final">final</FONT> Field[] fields = {getClass().getDeclaredField(<FONT ID="StringLiteral">"entityManager"</FONT>)};
+<A NAME="314"></A>
+<A NAME="315"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Field field : fields) {
+<A NAME="316"></A>                <FONT ID="Try">try</FONT> {
+<A NAME="317"></A>                    toString_ += <FONT ID="StringLiteral">"\n{"</FONT> + field.getName() + <FONT ID="StringLiteral">","</FONT> + field.get(<FONT ID="This">this</FONT>) + <FONT ID="StringLiteral">"}"</FONT>;
+<A NAME="318"></A>                } <FONT ID="Catch">catch</FONT> (IllegalArgumentException ex) {
+<A NAME="319"></A>                    INFO.info(<FONT ID="Null">null</FONT>, ex);
+<A NAME="320"></A>                } <FONT ID="Catch">catch</FONT> (IllegalAccessException ex) {
+<A NAME="321"></A>                    INFO.info(<FONT ID="Null">null</FONT>, ex);
+<A NAME="322"></A>                }
+<A NAME="323"></A>            }
+<A NAME="324"></A>        } <FONT ID="Catch">catch</FONT> (NoSuchFieldException ex) {
+<A NAME="325"></A>            INFO.info(<FONT ID="Null">null</FONT>, ex);
+<A NAME="326"></A>        } <FONT ID="Catch">catch</FONT> (SecurityException ex) {
+<A NAME="327"></A>            INFO.info(<FONT ID="Null">null</FONT>, ex);
+<A NAME="328"></A>        }
+<A NAME="329"></A>
+<A NAME="330"></A>        <FONT ID="Return">return</FONT> toString_;
+<A NAME="331"></A>    }
+<A NAME="332"></A>
+<A NAME="333"></A>    <FONT ID="FormalComment">/**
+<A NAME="334"></A>     * @param showChangeLog__
+<A NAME="335"></A>     * @return changeLog
+<A NAME="336"></A>     */</FONT>
+<A NAME="337"></A>    <FONT ID="Public">public</FONT> String toString(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> showChangeLog__) {
+<A NAME="338"></A>        String changeLog = toString() + <FONT ID="StringLiteral">"\n"</FONT>;
+<A NAME="339"></A>        changeLog += <FONT ID="StringLiteral">"20090915 Added Javadoc\n"</FONT>;
+<A NAME="340"></A>        <FONT ID="Return">return</FONT> showChangeLog__ ? changeLog : toString();
+<A NAME="341"></A>    }
+<A NAME="342"></A>}
+<A NAME="343"></A>
+<A NAME="344"></A></pre>
+</BODY>
+</HTML>

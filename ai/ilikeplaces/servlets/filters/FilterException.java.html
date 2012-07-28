@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.filters.FilterException (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">FilterException.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets.filters;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUser.java.html">ai.ilikeplaces.logic.role.HumanUser</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">ai.ilikeplaces.util.SessionBoundBadRefWrapper</A>;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.ejb.NoSuchEJBException;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.servlet.*;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.text.DateFormat;
+<A NAME="18"></A><FONT ID="Import">import</FONT> java.text.SimpleDateFormat;
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.util.*;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="FormalComment">/**
+<A NAME="22"></A> * Created by IntelliJ IDEA.
+<A NAME="23"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="24"></A> * Date: May 29, 2010
+<A NAME="25"></A> * Time: 3:12:56 PM
+<A NAME="26"></A> */</FONT>
+<A NAME="27"></A>
+<A NAME="28"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="29"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> FilterException <FONT ID="Implements">implements</FONT> Filter {
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Private">private</FONT> FilterConfig filterConfig;
+<A NAME="32"></A>
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init(FilterConfig filterConfig) <FONT ID="Throws">throws</FONT> ServletException {
+<A NAME="35"></A>        <FONT ID="This">this</FONT>.filterConfig = filterConfig;
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="FormalComment">/**
+<A NAME="40"></A>     * We expect the client to detect the last modified date. Apart from that, two weaks of caching would be ok for now.
+<A NAME="41"></A>     *
+<A NAME="42"></A>     * @param request
+<A NAME="43"></A>     * @param response
+<A NAME="44"></A>     * @param chain
+<A NAME="45"></A>     * @throws java.io.IOException
+<A NAME="46"></A>     * @throws javax.servlet.ServletException
+<A NAME="47"></A>     */</FONT>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doFilter(<FONT ID="Final">final</FONT> ServletRequest request, <FONT ID="Final">final</FONT> ServletResponse response, <FONT ID="Final">final</FONT> FilterChain chain) <FONT ID="Throws">throws</FONT> IOException, ServletException {
+<A NAME="49"></A>        <FONT ID="Final">final</FONT> HttpServletResponse servletResponse = (HttpServletResponse) response;
+<A NAME="50"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="51"></A>            chain.doFilter(request, servletResponse);
+<A NAME="52"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NoSuchEJBException t) {
+<A NAME="53"></A>            <FONT ID="Final">final</FONT> HttpSession session = ((HttpServletRequest) request).getSession(<FONT ID="False">false</FONT>);
+<A NAME="54"></A>            <FONT ID="If">if</FONT> (session != <FONT ID="Null">null</FONT>) {
+<A NAME="55"></A>                <FONT ID="SingleLineComment">//The following step is quite close to a risky zone where we are now assigning the user based simply on his session's email and no password. However, email would not be present had he not given the password before
+<A NAME="56"></A></FONT>                session.setAttribute(HumanUserLocal.NAME, (<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">SessionBoundBadRefWrapper</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;(HumanUser.getHumanUserLocal(<FONT ID="True">true</FONT>), session)));
+<A NAME="57"></A>                servletResponse.sendRedirect(Controller.Page.home.getURL());
+<A NAME="58"></A>            }
+<A NAME="59"></A>        }
+<A NAME="60"></A>    }
+<A NAME="61"></A>
+<A NAME="62"></A>    @Override
+<A NAME="63"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> destroy() {
+<A NAME="64"></A>        <FONT ID="SingleLineComment">//Nothing interesting to do here :-(
+<A NAME="65"></A></FONT>    }
+<A NAME="66"></A>
+<A NAME="67"></A>
+<A NAME="68"></A>}</pre>
+</BODY>
+</HTML>

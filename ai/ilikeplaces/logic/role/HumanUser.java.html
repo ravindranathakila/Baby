@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.role.HumanUser (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanUser.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.role;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">ai.ilikeplaces.logic.crud.DBLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">ai.ilikeplaces.util.cache.SmartCache</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.annotation.PostConstruct;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.annotation.PreDestroy;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.PostActivate;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.ejb.PrePassivate;
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.ejb.Remove;
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.ejb.Stateful;
+<A NAME="22"></A><FONT ID="Import">import</FONT> javax.naming.Context;
+<A NAME="23"></A><FONT ID="Import">import</FONT> javax.naming.InitialContext;
+<A NAME="24"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="25"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSessionBindingEvent;
+<A NAME="26"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="27"></A><FONT ID="Import">import</FONT> java.util.*;
+<A NAME="28"></A>
+<A NAME="29"></A><FONT ID="FormalComment">/**
+<A NAME="30"></A> * @author Ravindranath Akila
+<A NAME="31"></A> */</FONT>
+<A NAME="32"></A>
+<A NAME="33"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="34"></A>@Stateful
+<A NAME="35"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanUser <FONT ID="Extends">extends</FONT> AbstractSFBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>, ManageObservers, Serializable {
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> IllegalStateException ILLEGAL_STATE_EXCEPTION = <FONT ID="New">new</FONT> IllegalStateException(<FONT ID="StringLiteral">"SORRY! THE CODE REFLECTING THIS CALL SHOULD ONLY WORK IF THE USER IS LOGGED IN, BUT ACTUALLY IS NOT."</FONT>);
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> String humanUserId_ = <FONT ID="Null">null</FONT>;
+<A NAME="39"></A>    @FIXME(issue = <FONT ID="StringLiteral">"transient"</FONT>,
+<A NAME="40"></A>            issues = {<FONT ID="StringLiteral">"is marking this transient consistent?"</FONT>,
+<A NAME="41"></A>                    <FONT ID="StringLiteral">"Will this field make the session variable huge? There could be millions of users!"</FONT>})
+<A NAME="42"></A>    @WARNING(warning = <FONT ID="StringLiteral">"DO NOT MAKE TRANSIENT AS PASSIVATION MAKES THE VALUE OF THIS NULL."</FONT>)
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> DelegatedObservable delegatedObservable;
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="FormalComment">/**
+<A NAME="46"></A>     * DO NOT USE CACHE DIRECTLY. IT MIGHT BE JUST OUT OF DE-SERIALIZATION AND BE NULL. Use {@link #getCache()} TO DO THIS.
+<A NAME="47"></A>     * DO NOT REMOVE transient SINCE THIS IS A CACHE, AND WILL GET VERY BULKY.
+<A NAME="48"></A>     */</FONT>
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Transient">transient</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">SmartCache</A>&lt;String, Object&gt; cache;
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> Map&lt;String, Object&gt; store = <FONT ID="New">new</FONT> HashMap&lt;String, Object&gt;(<FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="52"></A>
+<A NAME="53"></A>
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Properties P_ = <FONT ID="New">new</FONT> Properties();
+<A NAME="56"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Context Context_ = <FONT ID="Null">null</FONT>;
+<A NAME="57"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> OK_ = <FONT ID="False">false</FONT>;
+<A NAME="58"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> ResourceBundle exceptionMsgs = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.ExceptionMsgs"</FONT>);
+<A NAME="59"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> ResourceBundle config = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.Config"</FONT>);
+<A NAME="60"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String ICF = config.getString(<FONT ID="StringLiteral">"oejb.LICF"</FONT>);
+<A NAME="61"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">DB</A>.<FONT ID="Class">class</FONT>);
+<A NAME="62"></A>
+<A NAME="63"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NAMING_EXCEPTION = <FONT ID="StringLiteral">"SORRY! I ENCOUNTERED AN NAMING EXCEPTION WHILE DOING A CONTEXT OPERATION."</FONT>;
+<A NAME="64"></A>
+<A NAME="65"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="66"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="67"></A>            P_.put(Context.INITIAL_CONTEXT_FACTORY, ICF);
+<A NAME="68"></A>            Context_ = <FONT ID="New">new</FONT> InitialContext(P_);
+<A NAME="69"></A>            OK_ = <FONT ID="True">true</FONT>;
+<A NAME="70"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="71"></A>            OK_ = <FONT ID="False">false</FONT>;
+<A NAME="72"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="73"></A>        }
+<A NAME="74"></A>    }
+<A NAME="75"></A>
+<A NAME="76"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> isOK() {
+<A NAME="77"></A>        <FONT ID="If">if</FONT> (!OK_) {
+<A NAME="78"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(exceptionMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.static_initialization_failure"</FONT>));
+<A NAME="79"></A>        }
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>
+<A NAME="83"></A>    @Override
+<A NAME="84"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> getHumanUserLocal() {
+<A NAME="85"></A>        isOK();
+<A NAME="86"></A>        <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="87"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="88"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>) Context_.lookup(HumanUserLocal.NAME);
+<A NAME="89"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="90"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="91"></A>        }
+<A NAME="92"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>) LogNull.logThrow();
+<A NAME="93"></A>
+<A NAME="94"></A>    }
+<A NAME="95"></A>
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> getHumanUserLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="97"></A>        <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="98"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="99"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>) Context_.lookup(HumanUser.NAME)).getHumanUserLocal();
+<A NAME="100"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="101"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="102"></A>        }
+<A NAME="103"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>) LogNull.logThrow();
+<A NAME="104"></A>
+<A NAME="105"></A>    }
+<A NAME="106"></A>
+<A NAME="107"></A>    <FONT ID="FormalComment">/**
+<A NAME="108"></A>     * Get the HumanId of the Logged in user, or throw exception.
+<A NAME="109"></A>     * This is a call by prevention where the calls will be made to this method after one
+<A NAME="110"></A>     * validation that the user is logged in. This is the safe approach to code that assumes logged in.
+<A NAME="111"></A>     * When code gets bulky, at times calls to just getUserName might trigger null if not used in this form.
+<A NAME="112"></A>     * With this approach, we expect to throw an exception immediately instead of late discovery.
+<A NAME="113"></A>     *
+<A NAME="114"></A>     * @param sessionBoundBadRefWrapper
+<A NAME="115"></A>     * @return The HumanUserLocal of the Logged in user or throws a RuntimeException if not alive or null
+<A NAME="116"></A>     */</FONT>
+<A NAME="117"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> getHumanUserAsValid(<FONT ID="Final">final</FONT> SessionBoundBadRefWrapper&lt;<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt; sessionBoundBadRefWrapper) {
+<A NAME="118"></A>        <FONT ID="If">if</FONT> (sessionBoundBadRefWrapper == <FONT ID="Null">null</FONT>) {
+<A NAME="119"></A>            <FONT ID="Throw">throw</FONT> ILLEGAL_STATE_EXCEPTION;
+<A NAME="120"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (!sessionBoundBadRefWrapper.isAlive()) {<FONT ID="SingleLineComment">//(Defensive)This is checked in the constructor of this class
+<A NAME="121"></A></FONT>            <FONT ID="Throw">throw</FONT> ILLEGAL_STATE_EXCEPTION;
+<A NAME="122"></A>        }
+<A NAME="123"></A>        <FONT ID="Return">return</FONT> sessionBoundBadRefWrapper.getBoundInstance();
+<A NAME="124"></A>    }
+<A NAME="125"></A>
+<A NAME="126"></A>    <FONT ID="FormalComment">/**
+<A NAME="127"></A>     * @return
+<A NAME="128"></A>     */</FONT>
+<A NAME="129"></A>    @Override
+<A NAME="130"></A>    <FONT ID="Public">public</FONT> String getHumanUserId() {
+<A NAME="131"></A>        <FONT ID="Return">return</FONT> humanUserId_;
+<A NAME="132"></A>    }
+<A NAME="133"></A>
+<A NAME="134"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> getHumanId() {
+<A NAME="135"></A>        <FONT ID="Return">return</FONT> (<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>().setObjAsValid(getHumanUserId());
+<A NAME="136"></A>    }
+<A NAME="137"></A>
+<A NAME="138"></A>    <FONT ID="FormalComment">/**
+<A NAME="139"></A>     * @param humanUserId__
+<A NAME="140"></A>     * @throws IllegalStateException
+<A NAME="141"></A>     */</FONT>
+<A NAME="142"></A>    @Override
+<A NAME="143"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> setHumanUserId(<FONT ID="Final">final</FONT> String humanUserId__) <FONT ID="Throws">throws</FONT> IllegalStateException {
+<A NAME="144"></A>        <FONT ID="If">if</FONT> (humanUserId_ == <FONT ID="Null">null</FONT>) {
+<A NAME="145"></A>            humanUserId_ = humanUserId__;
+<A NAME="146"></A>            INFO.debug(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.logic.role.HumanUser.0001"</FONT>), humanUserId__);
+<A NAME="147"></A>            Loggers.USER.info(humanUserId_ + <FONT ID="StringLiteral">" logged in"</FONT>);
+<A NAME="148"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="149"></A>            remove();
+<A NAME="150"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(
+<A NAME="151"></A>                    <FONT ID="StringLiteral">"SORRY! YOU ATTEMPT TO RE-ASSIGN USER ID WHICH IS NOT ALLOWED. PLEASE MAKE THE USER SIGN OUT AND SIGN IN INSTEAD!"</FONT> +
+<A NAME="152"></A>                            <FONT ID="StringLiteral">"\n EXISTING ID:"</FONT> + humanUserId_ +
+<A NAME="153"></A>                            <FONT ID="StringLiteral">"\n ID YOU ASKED ME TO ASSIGN:"</FONT> + humanUserId__ +
+<A NAME="154"></A>                            <FONT ID="StringLiteral">"\n ALSO, AS A PRECAUTION, I AM REMOVING THIS STATEFUL SESSION BEAN!"</FONT>);
+<A NAME="155"></A>        }
+<A NAME="156"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="157"></A>    }
+<A NAME="158"></A>
+<A NAME="159"></A>    <FONT ID="FormalComment">/**
+<A NAME="160"></A>     *
+<A NAME="161"></A>     */</FONT>
+<A NAME="162"></A>    @PostConstruct
+<A NAME="163"></A>    @Override
+<A NAME="164"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> postConstruct() {
+<A NAME="165"></A>        delegatedObservable = <FONT ID="New">new</FONT> DelegatedObservable();
+<A NAME="166"></A>    }
+<A NAME="167"></A>
+<A NAME="168"></A>    <FONT ID="FormalComment">/**
+<A NAME="169"></A>     *
+<A NAME="170"></A>     */</FONT>
+<A NAME="171"></A>    @Remove
+<A NAME="172"></A>    @Override
+<A NAME="173"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> remove() {
+<A NAME="174"></A>        Loggers.USER.info(humanUserId_ + <FONT ID="StringLiteral">" logged out"</FONT>);
+<A NAME="175"></A>        INFO.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"javax.ejb.Remove"</FONT>));
+<A NAME="176"></A>    }
+<A NAME="177"></A>
+<A NAME="178"></A>    <FONT ID="FormalComment">/**
+<A NAME="179"></A>     *
+<A NAME="180"></A>     */</FONT>
+<A NAME="181"></A>    @OK(details = <FONT ID="StringLiteral">"Properly being called by container according to logs as of 20100323"</FONT>)
+<A NAME="182"></A>    @PrePassivate
+<A NAME="183"></A>    @Override
+<A NAME="184"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> prePassivate() {
+<A NAME="185"></A>        Loggers.USER.info(humanUserId_ + <FONT ID="StringLiteral">" disked out"</FONT>);
+<A NAME="186"></A>        Loggers.DEBUG.debug(humanUserId_ + <FONT ID="StringLiteral">" disked out"</FONT>);
+<A NAME="187"></A>    }
+<A NAME="188"></A>
+<A NAME="189"></A>    <FONT ID="FormalComment">/**
+<A NAME="190"></A>     *
+<A NAME="191"></A>     */</FONT>
+<A NAME="192"></A>    @PostActivate
+<A NAME="193"></A>    @Override
+<A NAME="194"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> postActivate() {
+<A NAME="195"></A>        Loggers.USER.info(humanUserId_ + <FONT ID="StringLiteral">" disked in"</FONT>);
+<A NAME="196"></A>        Loggers.DEBUG.debug(humanUserId_ + <FONT ID="StringLiteral">" disked in"</FONT>);
+<A NAME="197"></A>    }
+<A NAME="198"></A>
+<A NAME="199"></A>    @PreDestroy
+<A NAME="200"></A>    @Override
+<A NAME="201"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> preDestroy() {
+<A NAME="202"></A>        <FONT ID="Final">final</FONT> SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, humanUserId_ + <FONT ID="StringLiteral">" is destroyed. Notifying observers:"</FONT>, <FONT ID="IntegerLiteral">60000</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="203"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="204"></A>            Loggers.USER.info(humanUserId_ + <FONT ID="StringLiteral">" is destroyed"</FONT>);
+<A NAME="205"></A>            Loggers.DEBUG.debug(humanUserId_ + <FONT ID="StringLiteral">" is destroyed"</FONT>);
+<A NAME="206"></A>            delegatedObservable.setChanged();
+<A NAME="207"></A>            delegatedObservable.notifyObservers(<FONT ID="True">true</FONT>);
+<A NAME="208"></A>            sl.multiComplete(<FONT ID="New">new</FONT> Loggers.LEVEL[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.USER}, Loggers.DONE);
+<A NAME="209"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="210"></A>            sl.multiComplete(<FONT ID="New">new</FONT> Loggers.LEVEL[]{Loggers.LEVEL.ERROR, Loggers.LEVEL.USER}, t);
+<A NAME="211"></A>        }
+<A NAME="212"></A>    }
+<A NAME="213"></A>
+<A NAME="214"></A>    <FONT ID="FormalComment">/**
+<A NAME="215"></A>     * @param event
+<A NAME="216"></A>     */</FONT>
+<A NAME="217"></A>    @OK(details = <FONT ID="StringLiteral">"According to logs, this is being called upon binding as of 20100323"</FONT>)
+<A NAME="218"></A>    @Override
+<A NAME="219"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> valueBound(<FONT ID="Final">final</FONT> HttpSessionBindingEvent event) {
+<A NAME="220"></A>        Loggers.DEBUG.debug((RBGet.logMsgs.getString(<FONT ID="StringLiteral">"javax.servlet.http.HttpSessionBindingEvent.valuBound"</FONT>)));
+<A NAME="221"></A>    }
+<A NAME="222"></A>
+<A NAME="223"></A>    <FONT ID="FormalComment">/**
+<A NAME="224"></A>     * @param event
+<A NAME="225"></A>     */</FONT>
+<A NAME="226"></A>    @OK(details = <FONT ID="StringLiteral">"According to logs, this is being called upon unbinding as of 20100323"</FONT>)
+<A NAME="227"></A>    @Override
+<A NAME="228"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> valueUnbound(<FONT ID="Final">final</FONT> HttpSessionBindingEvent event) {
+<A NAME="229"></A>        Loggers.DEBUG.debug(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"javax.servlet.http.HttpSessionBindingEvent.valueUnbound"</FONT>));
+<A NAME="230"></A>        remove();
+<A NAME="231"></A>    }
+<A NAME="232"></A>
+<A NAME="233"></A>    <FONT ID="FormalComment">/**
+<A NAME="234"></A>     * @param o
+<A NAME="235"></A>     */</FONT>
+<A NAME="236"></A>    @Override
+<A NAME="237"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addObserver(Observer o) {
+<A NAME="238"></A>        delegatedObservable.addObserver(o);
+<A NAME="239"></A>    }
+<A NAME="240"></A>
+<A NAME="241"></A>    <FONT ID="FormalComment">/**
+<A NAME="242"></A>     * @param o
+<A NAME="243"></A>     */</FONT>
+<A NAME="244"></A>    @Override
+<A NAME="245"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> deleteObserver(Observer o) {
+<A NAME="246"></A>        delegatedObservable.deleteObserver(o);
+<A NAME="247"></A>    }
+<A NAME="248"></A>
+<A NAME="249"></A>    <FONT ID="FormalComment">/**
+<A NAME="250"></A>     * DO NOT USE CACHE DIRECTLY. IT MIGHT BE JUST OUT OF DE-SERIALIZATION AND BE NULL;
+<A NAME="251"></A>     *
+<A NAME="252"></A>     * @return
+<A NAME="253"></A>     */</FONT>
+<A NAME="254"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">SmartCache</A>&lt;String, Object&gt; getCache() {
+<A NAME="255"></A>        <FONT ID="Return">return</FONT> cache == <FONT ID="Null">null</FONT> ? cache = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">SmartCache</A>&lt;String, Object&gt;() : cache;
+<A NAME="256"></A>    }
+<A NAME="257"></A>
+<A NAME="258"></A>    <FONT ID="FormalComment">/**
+<A NAME="259"></A>     * This is Approach One To Cache: Key is an unknown constant
+<A NAME="260"></A>     * &lt;p/&gt;
+<A NAME="261"></A>     * Approach Two To Cache: {@link #cacheAndUpdateWith(ai.ilikeplaces.logic.role.HumanUserLocal.CACHE_KEY, Object)}
+<A NAME="262"></A>     *
+<A NAME="263"></A>     * @param key
+<A NAME="264"></A>     * @param recoverWith
+<A NAME="265"></A>     * @return the cached or recovered value
+<A NAME="266"></A>     * @see {@link #cacheAndUpdateWith(ai.ilikeplaces.logic.role.HumanUserLocal.CACHE_KEY, Object)}
+<A NAME="267"></A>     */</FONT>
+<A NAME="268"></A>    <FONT ID="Public">public</FONT> Object cache(<FONT ID="Final">final</FONT> String key, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">SmartCache.RecoverWith</A>&lt;String, Object&gt; recoverWith) {
+<A NAME="269"></A>        <FONT ID="Return">return</FONT> getCache().get(<FONT ID="New">new</FONT> String(key), recoverWith);<FONT ID="SingleLineComment">//DO NOT REMOVE NEW STRING, WILL NOT ALLOW GC AS A WEAK REFERENCE IF SO
+<A NAME="270"></A></FONT>    }
+<A NAME="271"></A>
+<A NAME="272"></A>
+<A NAME="273"></A>    <FONT ID="FormalComment">/**
+<A NAME="274"></A>     * This is Approach Two To Cache: Key is a known constant
+<A NAME="275"></A>     * &lt;p/&gt;
+<A NAME="276"></A>     * Approach One To Cache: {@link #cache(String, ai.ilikeplaces.util.cache.SmartCache.RecoverWith)}
+<A NAME="277"></A>     * &lt;p/&gt;
+<A NAME="278"></A>     * Updates the cache(if value is not null) and returns the old value.
+<A NAME="279"></A>     * Returns value if value is null
+<A NAME="280"></A>     *
+<A NAME="281"></A>     * @param key
+<A NAME="282"></A>     * @param valueToUpdateWith
+<A NAME="283"></A>     * @return old value
+<A NAME="284"></A>     *         &lt;p/&gt;
+<A NAME="285"></A>     * @see {@link #cache(String, ai.ilikeplaces.util.cache.SmartCache.RecoverWith)}
+<A NAME="286"></A>     */</FONT>
+<A NAME="287"></A>    <FONT ID="Public">public</FONT> Object cacheAndUpdateWith(<FONT ID="Final">final</FONT> CACHE_KEY key, <FONT ID="Final">final</FONT> Object valueToUpdateWith) {
+<A NAME="288"></A>        <FONT ID="Return">return</FONT> valueToUpdateWith == <FONT ID="Null">null</FONT> ? getCache().MAP.get(key.name()) : getCache().MAP.put(<FONT ID="New">new</FONT> String(key.name()), valueToUpdateWith);
+<A NAME="289"></A>    }
+<A NAME="290"></A>
+<A NAME="291"></A>    <FONT ID="FormalComment">/**
+<A NAME="292"></A>     * Updates the cache(if value is not null) and returns the old value.
+<A NAME="293"></A>     * Returns value if value is null
+<A NAME="294"></A>     *
+<A NAME="295"></A>     * @param key
+<A NAME="296"></A>     * @param valueToUpdateWith
+<A NAME="297"></A>     * @return old value
+<A NAME="298"></A>     *         &lt;p/&gt;
+<A NAME="299"></A>     * @see {@link #cache(String, ai.ilikeplaces.util.cache.SmartCache.RecoverWith)}
+<A NAME="300"></A>     */</FONT>
+<A NAME="301"></A>    <FONT ID="Public">public</FONT> Object storeAndUpdateWith(<FONT ID="Final">final</FONT> STORE_KEY key, <FONT ID="Final">final</FONT> Object valueToUpdateWith) {
+<A NAME="302"></A>        <FONT ID="Return">return</FONT> valueToUpdateWith == <FONT ID="Null">null</FONT> ? store.get(key.name()) : store.put(key.name(), valueToUpdateWith);
+<A NAME="303"></A>    }
+<A NAME="304"></A>}
+<A NAME="305"></A></pre>
+</BODY>
+</HTML>

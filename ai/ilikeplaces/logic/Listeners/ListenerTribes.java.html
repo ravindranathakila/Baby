@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerTribes (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerTribes.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">ai.ilikeplaces.entities.Tribe</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.Listeners.widgets.*;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachTribe.java.html">ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribe</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachTribeCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribeCriteria</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">ai.ilikeplaces.logic.validators.unit.VLong</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.util.HashSet;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="21"></A>
+<A NAME="22"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers.USER_EXCEPTION</A>;
+<A NAME="23"></A>
+<A NAME="24"></A><FONT ID="FormalComment">/**
+<A NAME="25"></A> * Created by IntelliJ IDEA.
+<A NAME="26"></A> * User: Ravindranath Akila
+<A NAME="27"></A> * Date: 10/26/11
+<A NAME="28"></A> * Time: 8:40 PM
+<A NAME="29"></A> */</FONT>
+<A NAME="30"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerTribes <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="31"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COMMA = <FONT ID="StringLiteral">","</FONT>;
+<A NAME="32"></A>    <FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="33"></A></FONT>
+<A NAME="34"></A>
+<A NAME="35"></A><FONT ID="SingleLineComment">// --------------------- Interface ItsNatServletRequestListener ---------------------
+<A NAME="36"></A></FONT>
+<A NAME="37"></A>    @Override
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> ItsNatServletResponse response__) {
+<A NAME="39"></A>
+<A NAME="40"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/AbstractSkeletonListener.java.html">AbstractSkeletonListener</A>(request__, response__) {
+<A NAME="41"></A>            @Override
+<A NAME="42"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(ItsNatHTMLDocument itsNatHTMLDocument__, HTMLDocument hTMLDocument__, ItsNatDocument itsNatDocument__, Object... initArgs) {
+<A NAME="43"></A>
+<A NAME="44"></A>                layoutNeededForAllPages:
+<A NAME="45"></A>                {
+<A NAME="46"></A>                    setLoginWidget:
+<A NAME="47"></A>                    {
+<A NAME="48"></A>                        setLoginWidget(request__, SignInOnCriteria.SignInOnDisplayComponent.TRIBES);
+<A NAME="49"></A>                    }
+<A NAME="50"></A>
+<A NAME="51"></A>                    setTitle:
+<A NAME="52"></A>                    {
+<A NAME="53"></A>                        <FONT ID="SingleLineComment">//set below
+<A NAME="54"></A></FONT>                    }
+<A NAME="55"></A>                    setProfileDataLink:
+<A NAME="56"></A>                    {
+<A NAME="57"></A>                        setProfileDataLink();
+<A NAME="58"></A>                    }
+<A NAME="59"></A>                    sideBarFriends:
+<A NAME="60"></A>                    {
+<A NAME="61"></A>                        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TRIBES);
+<A NAME="62"></A>                    }
+<A NAME="63"></A>                    signinupActionNotice:
+<A NAME="64"></A>                    {
+<A NAME="65"></A>                        <FONT ID="SingleLineComment">//We do nothing now
+<A NAME="66"></A></FONT>                    }
+<A NAME="67"></A>                    SetNotifications:
+<A NAME="68"></A>                    {
+<A NAME="69"></A>                        setNotifications();
+<A NAME="70"></A>                    }
+<A NAME="71"></A>                }
+<A NAME="72"></A>
+<A NAME="73"></A>                <FONT ID="If">if</FONT> (getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="74"></A>
+<A NAME="75"></A>
+<A NAME="76"></A>                    <FONT ID="MultiLineComment">/*Be fault tolerant with the user. Just parse category here. Later parse other values when needed*/</FONT>
+<A NAME="77"></A>                    <FONT ID="Int">int</FONT> mode = -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="78"></A>                    <FONT ID="Try">try</FONT> {
+<A NAME="79"></A>                        <FONT ID="Final">final</FONT> String modeString = request__.getServletRequest().getParameter(Controller.Page.DocTribesMode);
+<A NAME="80"></A>                        mode = modeString != <FONT ID="Null">null</FONT> ? Integer.parseInt(modeString) : Controller.Page.DocTribesModeCreate;
+<A NAME="81"></A>                    } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NumberFormatException nfe_) {
+<A NAME="82"></A>                        USER_EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, nfe_);
+<A NAME="83"></A>                    }
+<A NAME="84"></A>                    <FONT ID="Switch">switch</FONT> (mode) {
+<A NAME="85"></A>                        <FONT ID="Case">case</FONT> Controller.Page.DocTribesModeCreate: {
+<A NAME="86"></A>                            showTribeCreateWidget(request__, getUsernameAsValid(), $(Controller.Page.Skeleton_center_skeleton));
+<A NAME="87"></A>                            <FONT ID="Break">break</FONT>;
+<A NAME="88"></A>                        }
+<A NAME="89"></A>
+<A NAME="90"></A>
+<A NAME="91"></A>                        <FONT ID="Case">case</FONT> Controller.Page.DocTribesModeView: {
+<A NAME="92"></A>
+<A NAME="93"></A>                            <FONT ID="Try">try</FONT> {
+<A NAME="94"></A>                                <FONT ID="Final">final</FONT> String whichString = request__.getServletRequest().getParameter(Controller.Page.DocTribesWhich);
+<A NAME="95"></A>                                <FONT ID="If">if</FONT> (whichString != <FONT ID="Null">null</FONT>) {
+<A NAME="96"></A>                                    <FONT ID="Final">final</FONT> String[] whichStringArr = whichString.split(COMMA);
+<A NAME="97"></A>                                    <FONT ID="Final">final</FONT> Set&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>&gt; which = <FONT ID="New">new</FONT> HashSet&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>&gt;(whichStringArr.length);
+<A NAME="98"></A>
+<A NAME="99"></A>                                    <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>, whichStringArrLength = whichStringArr.length; i &lt; whichStringArrLength; i++) {
+<A NAME="100"></A>                                        <FONT ID="Try">try</FONT> {
+<A NAME="101"></A>                                            which.add(Long.parseLong(whichStringArr[i].trim()));
+<A NAME="102"></A>                                        } <FONT ID="Catch">catch</FONT> (NumberFormatException e) {
+<A NAME="103"></A>                                            <FONT ID="SingleLineComment">//Ignore this pathetic situation and add 0 which will never match with a tribe
+<A NAME="104"></A></FONT>                                            which.add(<FONT ID="IntegerLiteral">0L</FONT>);
+<A NAME="105"></A>                                        }
+<A NAME="106"></A>                                        <FONT ID="Break">break</FONT>;<FONT ID="SingleLineComment">//Avoiding this feature for autoplay to work
+<A NAME="107"></A></FONT>                                    }
+<A NAME="108"></A>
+<A NAME="109"></A>                                    <FONT ID="Final">final</FONT> Set&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; humansTribes;
+<A NAME="110"></A>
+<A NAME="111"></A>                                    FirstWeGetThisPersonsTribes_ThisIsImportant:
+<A NAME="112"></A>                                    {
+<A NAME="113"></A>                                        humansTribes = DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).getHumansTribesAsSet(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid()));
+<A NAME="114"></A>                                    }
+<A NAME="115"></A>
+<A NAME="116"></A>                                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> tribe : humansTribes) {
+<A NAME="117"></A>                                        <FONT ID="If">if</FONT> (which.contains(tribe.getTribeId())) {
+<A NAME="118"></A>                                            <FONT ID="New">new</FONT> TribeWidget(
+<A NAME="119"></A>                                                    request__,
+<A NAME="120"></A>                                                    <FONT ID="New">new</FONT> TribeWidgetCriteria()
+<A NAME="121"></A>                                                            .setHumanId(geHumanIdAsValid())
+<A NAME="122"></A>                                                            .setTribeId(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>().setObjAsValid(tribe.getTribeId())),
+<A NAME="123"></A>                                                    $(Controller.Page.Skeleton_center_skeleton));
+<A NAME="124"></A>                                        }
+<A NAME="125"></A>                                    }
+<A NAME="126"></A>
+<A NAME="127"></A>                                } <FONT ID="Else">else</FONT> {
+<A NAME="128"></A>                                    <FONT ID="SingleLineComment">//We show the tribe create widget
+<A NAME="129"></A></FONT>                                    showTribeCreateWidget(request__, getUsernameAsValid(), $(Controller.Page.Skeleton_center_skeleton));
+<A NAME="130"></A>                                }
+<A NAME="131"></A>
+<A NAME="132"></A>                            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NumberFormatException nfe_) {
+<A NAME="133"></A>                                USER_EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, nfe_);
+<A NAME="134"></A>                            }
+<A NAME="135"></A>
+<A NAME="136"></A>
+<A NAME="137"></A>                            <FONT ID="Break">break</FONT>;
+<A NAME="138"></A>                        }
+<A NAME="139"></A>
+<A NAME="140"></A>                        <FONT ID="Default">default</FONT>: {
+<A NAME="141"></A>                            showTribeCreateWidget(request__, getUsernameAsValid(), $(Controller.Page.Skeleton_center_skeleton));
+<A NAME="142"></A>                            <FONT ID="Break">break</FONT>;
+<A NAME="143"></A>                        }
+<A NAME="144"></A>                    }
+<A NAME="145"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="146"></A>                    <FONT ID="SingleLineComment">//WE COULD STILL GIVE A TRIBE CREATION WIDGET WITH USERS EMAIL AND FRIENDS EMAILS. ONCE USER SIGNS UP, THE TRIBE CAN BE CREATED.
+<A NAME="147"></A></FONT>
+<A NAME="148"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachTribe.java.html">TeachTribe</A>(request__, <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachTribeCriteria.java.html">TeachTribeCriteria</A>(<FONT ID="Null">null</FONT>), $(Controller.Page.Skeleton_center_skeleton));
+<A NAME="149"></A>                }
+<A NAME="150"></A>            }
+<A NAME="151"></A>        };
+<A NAME="152"></A>    }
+<A NAME="153"></A>
+<A NAME="154"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> showTribeCreateWidget(ItsNatServletRequest request__, <FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Element appendToElement) {
+<A NAME="155"></A>        <FONT ID="New">new</FONT> TribeCreateWidget(
+<A NAME="156"></A>                request__,
+<A NAME="157"></A>                <FONT ID="New">new</FONT> TribeCreateWidgetCriteria(
+<A NAME="158"></A>                        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humanId)),
+<A NAME="159"></A>                appendToElement);
+<A NAME="160"></A>    }
+<A NAME="161"></A>}
+<A NAME="162"></A></pre>
+</BODY>
+</HTML>

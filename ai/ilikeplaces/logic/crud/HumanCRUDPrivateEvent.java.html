@@ -1,0 +1,504 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDPrivateEvent (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDPrivateEvent.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationRuntimeException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.crud.unit.*;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="18"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="FormalComment">/**
+<A NAME="21"></A> * Created by IntelliJ IDEA.
+<A NAME="22"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="23"></A> * Date: Jan 13, 2010
+<A NAME="24"></A> * Time: 11:58:04 PM
+<A NAME="25"></A> */</FONT>
+<A NAME="26"></A>
+<A NAME="27"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="28"></A>@Stateless
+<A NAME="29"></A>@Interceptors({ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>, RuntimeExceptionWrapper.<FONT ID="Class">class</FONT>})
+<A NAME="30"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanCRUDPrivateEvent <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A> {
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COMMA = <FONT ID="StringLiteral">","</FONT>;
+<A NAME="33"></A>    @EJB
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> CPrivateEventLocal cPrivateEventLocal_;
+<A NAME="35"></A>
+<A NAME="36"></A>    @EJB
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> RPrivateEventLocal rPrivateEventLocal_;
+<A NAME="38"></A>
+<A NAME="39"></A>    @EJB
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> UPrivateEventLocal uPrivateEventLocal_;
+<A NAME="41"></A>
+<A NAME="42"></A>    @EJB
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> CRUDWallLocal crudWallLocal_;
+<A NAME="44"></A>
+<A NAME="45"></A>    @EJB
+<A NAME="46"></A>    <FONT ID="Private">private</FONT> CRUDAlbumLocal crudAlbumLocal_;
+<A NAME="47"></A>
+<A NAME="48"></A>    @EJB
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> DPrivateEventLocal dPrivateEventLocal_;
+<A NAME="50"></A>
+<A NAME="51"></A>    @EJB
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> RPrivateLocationLocal rPrivateLocationLocal_;
+<A NAME="53"></A>
+<A NAME="54"></A>    @EJB
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> UPrivateLocationLocal uPrivateLocationLocal_;
+<A NAME="56"></A>
+<A NAME="57"></A>
+<A NAME="58"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL = <FONT ID="StringLiteral">"Check ownership of private event Successful!"</FONT>;
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_OWNERSHIP_OF_PRIVATE_EVENT_FAILED = <FONT ID="StringLiteral">"Check ownership of private event FAILED!"</FONT>;
+<A NAME="60"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL = <FONT ID="StringLiteral">"Check viewership of private event Successful!"</FONT>;
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_FAILED = <FONT ID="StringLiteral">"Check viewership of private event FAILED!"</FONT>;
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_PHOTO_TO_ALBUM_SUCCESSFUL = <FONT ID="StringLiteral">"Add photo to album Successful!"</FONT>;
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_PHOTO_TO_ALBUM_FAILED = <FONT ID="StringLiteral">"Add photo to album FAILED!"</FONT>;
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETE_PRIVATE_EVENT_FAILED = <FONT ID="StringLiteral">"Delete private event FAILED!"</FONT>;
+<A NAME="65"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETE_PRIVATE_EVENT_SUCCESSFUL = <FONT ID="StringLiteral">"Delete private event Successful!"</FONT>;
+<A NAME="66"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String VIEW_PRIVATE_EVENT_FAILED = <FONT ID="StringLiteral">"View private event FAILED!"</FONT>;
+<A NAME="67"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String VIEW_PRIVATE_EVENT_SUCCESSFUL = <FONT ID="StringLiteral">"View private event Successful!"</FONT>;
+<A NAME="68"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_FAILED = <FONT ID="StringLiteral">"Read wall FAILED!"</FONT>;
+<A NAME="69"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_PRIVATE_EVENT_FAILED = <FONT ID="StringLiteral">"Update private event FAILED!"</FONT>;
+<A NAME="70"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_PRIVATE_EVENT_SUCCESSFUL = <FONT ID="StringLiteral">"Update private event Successful!"</FONT>;
+<A NAME="71"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_ALBUM_SUCCESSFUL = <FONT ID="StringLiteral">"Read album Successful!"</FONT>;
+<A NAME="72"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_ALBUM_FAILED = <FONT ID="StringLiteral">"Read album FAILED!"</FONT>;
+<A NAME="73"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String VIEWER_OWNERSHIP_STATUS = <FONT ID="StringLiteral">"Viewer/Ownership status:"</FONT>;
+<A NAME="74"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADDING_USER_AS_VIEWER_TO_PRIVATE_LOCATION_OF_THIS_EVENT_AS_HE_ISN_T_ANYBODY_OF_IT = <FONT ID="StringLiteral">"Adding user as viewer to private location of this event as he isn't anybody of it."</FONT>;
+<A NAME="75"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SAVE_PRIVATE_EVENT_FAILED = <FONT ID="StringLiteral">"Save private event FAILED!"</FONT>;
+<A NAME="76"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Read wall Successful!"</FONT>;
+<A NAME="77"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FETCH_BOUNDED_EVENTS_SUCCESSFUL = <FONT ID="StringLiteral">"Fetch bounded events Successful!"</FONT>;
+<A NAME="78"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FETCH_BOUNDED_EVENTS_FAILED = <FONT ID="StringLiteral">"Fetch bounded events FAILED!"</FONT>;
+<A NAME="79"></A>
+<A NAME="80"></A>
+<A NAME="81"></A>    @Override
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; cPrivateEvent(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId, <FONT ID="Final">final</FONT> String privateEventName, <FONT ID="Final">final</FONT> String privateEventInfo, <FONT ID="Final">final</FONT> String startDate, <FONT ID="Final">final</FONT> String endDate) {
+<A NAME="83"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="84"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="85"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(cPrivateEventLocal_.doNTxCPrivateEvent(humanId, privateLocationId, privateEventName, privateEventInfo, startDate, endDate), <FONT ID="StringLiteral">"Save private event Successful!"</FONT>);
+<A NAME="86"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="87"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, SAVE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="88"></A>        }
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="90"></A>
+<A NAME="91"></A>    }
+<A NAME="92"></A>
+<A NAME="93"></A>
+<A NAME="94"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="95"></A>    @Override
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventAddOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend owner) {
+<A NAME="97"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="98"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="99"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventAddOwner(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="100"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="101"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="102"></A>        }
+<A NAME="103"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="104"></A>    }
+<A NAME="105"></A>
+<A NAME="106"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="107"></A>    @Override
+<A NAME="108"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventAddOwnerWithPrivateLocationCheck(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> owner__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__) {
+<A NAME="109"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="110"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="111"></A>            <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isAnybody = rPrivateLocationLocal_.doRPrivateLocationIsViewerOrOwner(friend__.getHumanId(), privateLocationId__);<FONT ID="SingleLineComment">//Will happen within this transaction
+<A NAME="112"></A></FONT>            Loggers.DEBUG.debug(VIEWER_OWNERSHIP_STATUS + isAnybody);
+<A NAME="113"></A>            <FONT ID="If">if</FONT> (!isAnybody) {
+<A NAME="114"></A>                Loggers.DEBUG.debug(ADDING_USER_AS_VIEWER_TO_PRIVATE_LOCATION_OF_THIS_EVENT_AS_HE_ISN_T_ANYBODY_OF_IT);
+<A NAME="115"></A>                uPrivateLocationLocal_.doUPrivateLocationAddViewer(owner__.getObj(), privateLocationId__, friend__.getHumanId());
+<A NAME="116"></A>            }
+<A NAME="117"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventAddOwner(owner__.getObj(), privateEventId__, friend__), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="118"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="119"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="120"></A>        }
+<A NAME="121"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="122"></A>    }
+<A NAME="123"></A>
+<A NAME="124"></A>    @Override
+<A NAME="125"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventRemoveOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend owner) {
+<A NAME="126"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="127"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="128"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventRemoveOwner(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="129"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="130"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="131"></A>        }
+<A NAME="132"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="133"></A>    }
+<A NAME="134"></A>
+<A NAME="135"></A>    @Override
+<A NAME="136"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventAddVisitor(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend owner) {
+<A NAME="137"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="138"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="139"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventAddViewer(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="140"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="141"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="142"></A>        }
+<A NAME="143"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="144"></A>    }
+<A NAME="145"></A>
+<A NAME="146"></A>    @Override
+<A NAME="147"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventAddVisitorWithPrivateLocationCheck(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> owner__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__) {
+<A NAME="148"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="149"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="150"></A>            <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isAnybody = rPrivateLocationLocal_.doRPrivateLocationIsViewerOrOwner(friend__.getHumanId(), privateLocationId__);<FONT ID="SingleLineComment">//Will happen within this transaction
+<A NAME="151"></A></FONT>            Loggers.DEBUG.debug(VIEWER_OWNERSHIP_STATUS + isAnybody);
+<A NAME="152"></A>            <FONT ID="If">if</FONT> (!isAnybody) {
+<A NAME="153"></A>                Loggers.DEBUG.debug(ADDING_USER_AS_VIEWER_TO_PRIVATE_LOCATION_OF_THIS_EVENT_AS_HE_ISN_T_ANYBODY_OF_IT);
+<A NAME="154"></A>                uPrivateLocationLocal_.doUPrivateLocationAddViewer(owner__.getObj(), privateLocationId__, friend__.getHumanId());
+<A NAME="155"></A>            }
+<A NAME="156"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventAddViewer(owner__.getObj(), privateEventId__, friend__), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="157"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="158"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="159"></A>        }
+<A NAME="160"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="161"></A>    }
+<A NAME="162"></A>
+<A NAME="163"></A>    @Override
+<A NAME="164"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventRemoveVisitor(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend owner) {
+<A NAME="165"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="166"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="167"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventRemoveViewer(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="168"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="169"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="170"></A>        }
+<A NAME="171"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="172"></A>    }
+<A NAME="173"></A>
+<A NAME="174"></A>    @Override
+<A NAME="175"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventAddInvite(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend owner) {
+<A NAME="176"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="177"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="178"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventAddInvite(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="179"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="180"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="181"></A>        }
+<A NAME="182"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="183"></A>    }
+<A NAME="184"></A>
+<A NAME="185"></A>    @Override
+<A NAME="186"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventAddInviteWithPrivateLocationCheck(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> owner__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__) {
+<A NAME="187"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="188"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="189"></A>            <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isAnybody = rPrivateLocationLocal_.doRPrivateLocationIsViewerOrOwner(friend__.getHumanId(), privateLocationId__);<FONT ID="SingleLineComment">//Will happen within this transaction
+<A NAME="190"></A></FONT>            Loggers.DEBUG.debug(VIEWER_OWNERSHIP_STATUS + isAnybody);
+<A NAME="191"></A>            <FONT ID="If">if</FONT> (!isAnybody) {
+<A NAME="192"></A>                Loggers.DEBUG.debug(ADDING_USER_AS_VIEWER_TO_PRIVATE_LOCATION_OF_THIS_EVENT_AS_HE_ISN_T_ANYBODY_OF_IT);
+<A NAME="193"></A>                uPrivateLocationLocal_.doUPrivateLocationAddViewer(owner__.getObj(), privateLocationId__, friend__.getHumanId());
+<A NAME="194"></A>            }
+<A NAME="195"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventAddInvite(owner__.getObj(), privateEventId__, friend__), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="196"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="197"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="198"></A>        }
+<A NAME="199"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="200"></A>    }
+<A NAME="201"></A>
+<A NAME="202"></A>    @Override
+<A NAME="203"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventRemoveInvite(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend owner) {
+<A NAME="204"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="205"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="206"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventRemoveInvite(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="207"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="208"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="209"></A>        }
+<A NAME="210"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="211"></A>    }
+<A NAME="212"></A>
+<A NAME="213"></A>    @Override
+<A NAME="214"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventAddReject(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend owner) {
+<A NAME="215"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="216"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="217"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventAddReject(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="218"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="219"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="220"></A>        }
+<A NAME="221"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="222"></A>    }
+<A NAME="223"></A>
+<A NAME="224"></A>    @Override
+<A NAME="225"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; uPrivateEventRemoveReject(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> HumansFriend owner) {
+<A NAME="226"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="227"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="228"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(uPrivateEventLocal_.doUPrivateEventRemoveReject(friend__.getObj(), privateEventId__, owner), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="229"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="230"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="231"></A>        }
+<A NAME="232"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="233"></A>    }
+<A NAME="234"></A><FONT ID="SingleLineComment">//
+<A NAME="235"></A></FONT><FONT ID="SingleLineComment">//    public Return&lt;Wall&gt; uPrivateEventAddToWall(HumanId operator__, long privateEventId__, String contentToBeAppended) {
+<A NAME="236"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="237"></A></FONT><FONT ID="SingleLineComment">//        Return&lt;Wall&gt; r;
+<A NAME="238"></A></FONT><FONT ID="SingleLineComment">//        try {
+<A NAME="239"></A></FONT><FONT ID="SingleLineComment">//            r = new ReturnImpl&lt;Wall&gt;(crudWallLocal_
+<A NAME="240"></A></FONT><FONT ID="SingleLineComment">//                    .doNTxUAppendToWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId(),
+<A NAME="241"></A></FONT><FONT ID="SingleLineComment">//                            contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="242"></A></FONT><FONT ID="SingleLineComment">//        } catch (final AbstractEjbApplicationException t) {
+<A NAME="243"></A></FONT><FONT ID="SingleLineComment">//            r = new ReturnImpl&lt;Wall&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+<A NAME="244"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="245"></A></FONT><FONT ID="SingleLineComment">//        return r;
+<A NAME="246"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="247"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="248"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="249"></A></FONT>
+<A NAME="250"></A>    @Override
+<A NAME="251"></A>    <FONT ID="Public">public</FONT> Return&lt;Wall&gt; addEntryToWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> msgOwner__, <FONT ID="Final">final</FONT> Obj wallReference__, <FONT ID="Final">final</FONT> String contentToBeAppended) {
+<A NAME="252"></A>
+<A NAME="253"></A>        Return&lt;Wall&gt; r;
+<A NAME="254"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="255"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Wall&gt;(crudWallLocal_
+<A NAME="256"></A>                    .doUAddEntry(dirtyRPrivateEventAsAny(whosWall__.getObj(), (Long) wallReference__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
+<A NAME="257"></A>                            msgOwner__.getObj(),
+<A NAME="258"></A>                            contentToBeAppended), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="259"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="260"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Wall&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="261"></A>        }
+<A NAME="262"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="263"></A>
+<A NAME="264"></A>
+<A NAME="265"></A>    }
+<A NAME="266"></A>
+<A NAME="267"></A>    @Override
+<A NAME="268"></A>    <FONT ID="Public">public</FONT> Return&lt;Wall&gt; muteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee, <FONT ID="Final">final</FONT> Obj wallReference__) {
+<A NAME="269"></A>
+<A NAME="270"></A>        Return&lt;Wall&gt; r;
+<A NAME="271"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="272"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Wall&gt;(crudWallLocal_
+<A NAME="273"></A>                    .doUAddMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallReference__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
+<A NAME="274"></A>                            mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="275"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="276"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Wall&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="277"></A>        }
+<A NAME="278"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="279"></A>
+<A NAME="280"></A>
+<A NAME="281"></A>    }
+<A NAME="282"></A>
+<A NAME="283"></A>    @Override
+<A NAME="284"></A>    <FONT ID="Public">public</FONT> Return&lt;Wall&gt; unmuteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee, <FONT ID="Final">final</FONT> Obj wallReference__) {
+<A NAME="285"></A>
+<A NAME="286"></A>        Return&lt;Wall&gt; r;
+<A NAME="287"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="288"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Wall&gt;(crudWallLocal_
+<A NAME="289"></A>                    .doURemoveMuteEntry(dirtyRPrivateEventAsAny(operator__.getObj(), (Long) wallReference__.getObjectAsValid()).returnValueBadly().getPrivateEventWall().getWallId(),
+<A NAME="290"></A>                            mutee.getObj()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="291"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="292"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Wall&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="293"></A>        }
+<A NAME="294"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="295"></A>
+<A NAME="296"></A>
+<A NAME="297"></A>    }
+<A NAME="298"></A>
+<A NAME="299"></A><FONT ID="SingleLineComment">//    public Return&lt;Wall&gt; uPrivateEventClearWall(HumanId operator__, long privateEventId__) {
+<A NAME="300"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="301"></A></FONT><FONT ID="SingleLineComment">//        Return&lt;Wall&gt; r;
+<A NAME="302"></A></FONT><FONT ID="SingleLineComment">//        try {
+<A NAME="303"></A></FONT><FONT ID="SingleLineComment">//            r = new ReturnImpl&lt;Wall&gt;(crudWallLocal_
+<A NAME="304"></A></FONT><FONT ID="SingleLineComment">//                    .doUClearWall(dirtyRPrivateEventAsAny(operator__.getObj(), privateEventId__).returnValueBadly().getPrivateEventWall().getWallId()), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="305"></A></FONT><FONT ID="SingleLineComment">//        } catch (final AbstractEjbApplicationException t) {
+<A NAME="306"></A></FONT><FONT ID="SingleLineComment">//            r = new ReturnImpl&lt;Wall&gt;(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+<A NAME="307"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="308"></A></FONT><FONT ID="SingleLineComment">//        return r;
+<A NAME="309"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="310"></A></FONT>
+<A NAME="311"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="312"></A>    @Override
+<A NAME="313"></A>    <FONT ID="Public">public</FONT> Return&lt;Wall&gt; readWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall__, <FONT ID="Final">final</FONT> Obj requester__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec__) {
+<A NAME="314"></A>
+<A NAME="315"></A>        Return&lt;Wall&gt; r;
+<A NAME="316"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="317"></A>            <FONT ID="Final">final</FONT> PrivateEvent privateEvent = dirtyRPrivateEventAsAny(whosWall__.getObj(), (Long) requester__.getObjectAsValid()).returnValueBadly();
+<A NAME="318"></A>            <FONT ID="Final">final</FONT> Wall wall = crudWallLocal_.doRWall(privateEvent.getPrivateEventWall().getWallId(), refreshSpec__);
+<A NAME="319"></A>
+<A NAME="320"></A>            <FONT ID="If">if</FONT> (wall.getWallMetadata() == <FONT ID="Null">null</FONT>) {
+<A NAME="321"></A>                RecoveringFromAbsentMetadata:
+<A NAME="322"></A>                {
+<A NAME="323"></A>                    <FONT ID="Final">final</FONT> String key = Wall.WallMetadataKey.PRIVATE_EVENT.toString();
+<A NAME="324"></A>                    <FONT ID="Final">final</FONT> String value = <FONT ID="StringLiteral">""</FONT> + privateEvent.getPrivateEventId();
+<A NAME="325"></A>
+<A NAME="326"></A>                    crudWallLocal_.doUpdateMetadata(wall.getWallId(), key, value);
+<A NAME="327"></A>                }
+<A NAME="328"></A>            }
+<A NAME="329"></A>
+<A NAME="330"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Wall&gt;(wall, READ_WALL_SUCCESSFUL);
+<A NAME="331"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="332"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Wall&gt;(t, READ_WALL_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="333"></A>        }
+<A NAME="334"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="335"></A>    }
+<A NAME="336"></A>
+<A NAME="337"></A>
+<A NAME="338"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="339"></A>    @Override
+<A NAME="340"></A>    <FONT ID="Public">public</FONT> Return&lt;List&lt;Msg&gt;&gt; readWallLastEntries(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> Obj&lt;Long&gt; wallId, <FONT ID="Final">final</FONT> Integer numberOfEntriesToFetch, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec__) {
+<A NAME="341"></A>        Return&lt;List&lt;Msg&gt;&gt; r;
+<A NAME="342"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;Msg&gt;&gt;(crudWallLocal_.doRHumansWallLastEntries(wallId.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
+<A NAME="343"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="344"></A>
+<A NAME="345"></A>    }
+<A NAME="346"></A>
+<A NAME="347"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="348"></A>    @Override
+<A NAME="349"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; dirtyRPrivateEventAsAny(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId) {
+<A NAME="350"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="351"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="352"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(rPrivateEventLocal_.doRPrivateEventAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="353"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="354"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, VIEW_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="355"></A>        }
+<A NAME="356"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="357"></A>
+<A NAME="358"></A>    }
+<A NAME="359"></A>
+<A NAME="360"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="361"></A>    @Override
+<A NAME="362"></A>    <FONT ID="Public">public</FONT> Return&lt;List&lt;PrivateEvent&gt;&gt; doDirtyRPrivateEventsOfHuman(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="363"></A>        Return&lt;List&lt;PrivateEvent&gt;&gt; r;
+<A NAME="364"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="365"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;PrivateEvent&gt;&gt;(rPrivateEventLocal_.doRPrivateEventsOfHuman(humanId.getObj()), VIEW_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="366"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationRuntimeException.java.html">AbstractEjbApplicationRuntimeException</A> t) {
+<A NAME="367"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;PrivateEvent&gt;&gt;(t, VIEW_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="368"></A>        }
+<A NAME="369"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="370"></A>
+<A NAME="371"></A>    }
+<A NAME="372"></A>
+<A NAME="373"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="374"></A>    @Override
+<A NAME="375"></A>    <FONT ID="Public">public</FONT> Return&lt;PrivateEvent&gt; dirtyRPrivateEventInfoAsAny(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId) {
+<A NAME="376"></A>        Return&lt;PrivateEvent&gt; r;
+<A NAME="377"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="378"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(rPrivateEventLocal_.doRPrivateEventBasicAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="379"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="380"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;PrivateEvent&gt;(t, VIEW_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="381"></A>        }
+<A NAME="382"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="383"></A>
+<A NAME="384"></A>    }
+<A NAME="385"></A>
+<A NAME="386"></A>    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="387"></A>    @Override
+<A NAME="388"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; dirtyRPrivateEventIsOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> Long privateEventId) {
+<A NAME="389"></A>        Return&lt;Boolean&gt; r;
+<A NAME="390"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="391"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(rPrivateEventLocal_.doRPrivateEventIsOwner(humanId.getObjectAsValid(), privateEventId), CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="392"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="393"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, CHECK_OWNERSHIP_OF_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="394"></A>        }
+<A NAME="395"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="396"></A>    }
+<A NAME="397"></A>
+<A NAME="398"></A>    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="399"></A>    @Override
+<A NAME="400"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; dirtyRPrivateEventIsViewer(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> Long privateEventId) {
+<A NAME="401"></A>        Return&lt;Boolean&gt; r;
+<A NAME="402"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="403"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(rPrivateEventLocal_.doRPrivateEventIsViewer(humanId.getObjectAsValid(), privateEventId), CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="404"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="405"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="406"></A>        }
+<A NAME="407"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="408"></A>    }
+<A NAME="409"></A>
+<A NAME="410"></A>    @Override
+<A NAME="411"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; dPrivateEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId) {
+<A NAME="412"></A>        Return&lt;Boolean&gt; r;
+<A NAME="413"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="414"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(dPrivateEventLocal_.doNTxDPrivateEvent(operator.getObjectAsValid(), privateEventId), DELETE_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="415"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="416"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, DELETE_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="417"></A>        }
+<A NAME="418"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="419"></A>
+<A NAME="420"></A>    }
+<A NAME="421"></A>
+<A NAME="422"></A>    @Override
+<A NAME="423"></A>    @Deprecated
+<A NAME="424"></A>    <FONT ID="Public">public</FONT> Return&lt;Album&gt; rPrivateEventReadAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__) {
+<A NAME="425"></A>        Return&lt;Album&gt; r;
+<A NAME="426"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="427"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Album&gt;(crudAlbumLocal_.doRAlbumByPrivateEvent(operator__.getObjectAsValid(), privateEventId__, <FONT ID="True">true</FONT>), READ_ALBUM_SUCCESSFUL);
+<A NAME="428"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="429"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Album&gt;(t, READ_ALBUM_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="430"></A>        }
+<A NAME="431"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="432"></A>    }
+<A NAME="433"></A>
+<A NAME="434"></A>    @Override
+<A NAME="435"></A>    @Deprecated
+<A NAME="436"></A>    <FONT ID="Public">public</FONT> Return&lt;Album&gt; rPrivateEventReadAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) {
+<A NAME="437"></A>        Return&lt;Album&gt; r;
+<A NAME="438"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="439"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Album&gt;(crudAlbumLocal_.doRAlbumByPrivateEvent(operator__.getObjectAsValid(), privateEventId__, refreshSpec), READ_ALBUM_SUCCESSFUL);
+<A NAME="440"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="441"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Album&gt;(t, READ_ALBUM_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="442"></A>        }
+<A NAME="443"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="444"></A>    }
+<A NAME="445"></A>
+<A NAME="446"></A>    @Override
+<A NAME="447"></A>    <FONT ID="Public">public</FONT> Return&lt;Album&gt; uPrivateEventAddEntryToAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; cdnFileName) {
+<A NAME="448"></A>        Return&lt;Album&gt; r;
+<A NAME="449"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="450"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Album&gt;(crudAlbumLocal_.doUAlbumOfPrivateEventAddEntry(privateEventId__, operator__.getObjectAsValid(), cdnFileName.getObjectAsValid()), ADD_PHOTO_TO_ALBUM_SUCCESSFUL);
+<A NAME="451"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="452"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Album&gt;(t, ADD_PHOTO_TO_ALBUM_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="453"></A>        }
+<A NAME="454"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="455"></A>    }
+<A NAME="456"></A>
+<A NAME="457"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Use human, or move to a different class"</FONT>)
+<A NAME="458"></A>    @Override
+<A NAME="459"></A>    <FONT ID="Public">public</FONT> Return&lt;List&lt;PrivateEvent&gt;&gt; doRPrivateEventsByBounds(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitudeSouth, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitudeNorth, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitudeWest, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitudeEast) {
+<A NAME="460"></A>        Return&lt;List&lt;PrivateEvent&gt;&gt; r;
+<A NAME="461"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="462"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;PrivateEvent&gt;&gt;(rPrivateEventLocal_.doRPrivateEventsByBoundingBoxAsSystem(latitudeSouth, latitudeNorth, longitudeWest, longitudeEast), FETCH_BOUNDED_EVENTS_SUCCESSFUL);
+<A NAME="463"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="464"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;PrivateEvent&gt;&gt;(t, FETCH_BOUNDED_EVENTS_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="465"></A>        }
+<A NAME="466"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="467"></A>    }
+<A NAME="468"></A>
+<A NAME="469"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Use human, or move to a different class"</FONT>)
+<A NAME="470"></A>    @Override
+<A NAME="471"></A>    <FONT ID="Public">public</FONT> Return&lt;List&lt;PrivateEvent&gt;&gt; doRPrivateEventsByBoundsAsSystem(<FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitudeSouth, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitudeNorth, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitudeWest, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitudeEast) {
+<A NAME="472"></A>        Return&lt;List&lt;PrivateEvent&gt;&gt; r;
+<A NAME="473"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="474"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;PrivateEvent&gt;&gt;(rPrivateEventLocal_.doRPrivateEventsByBoundingBoxAsSystem(latitudeSouth, latitudeNorth, longitudeWest, longitudeEast), FETCH_BOUNDED_EVENTS_SUCCESSFUL);
+<A NAME="475"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="476"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;PrivateEvent&gt;&gt;(t, FETCH_BOUNDED_EVENTS_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="477"></A>        }
+<A NAME="478"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="479"></A>    }
+<A NAME="480"></A>
+<A NAME="481"></A>    @Override
+<A NAME="482"></A>    <FONT ID="Public">public</FONT> Return&lt;Album&gt; uPrivateEventRemoveEntryFromAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__) {
+<A NAME="483"></A>        <FONT ID="Throw">throw</FONT> ExceptionCache.METHOD_NOT_IMPLEMENTED;
+<A NAME="484"></A>    }
+<A NAME="485"></A>}</pre>
+</BODY>
+</HTML>

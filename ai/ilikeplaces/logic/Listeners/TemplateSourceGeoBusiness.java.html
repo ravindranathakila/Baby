@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.TemplateSourceGeoBusiness (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TemplateSourceGeoBusiness.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/ExceptionCache.java.html">ai.ilikeplaces.util.ExceptionCache</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.itsnat.core.tmpl.TemplateSource;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.io.InputStream;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.net.*;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TemplateSourceGeoBusiness <FONT ID="Implements">implements</FONT> TemplateSource {
+<A NAME="15"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="16"></A></FONT>
+<A NAME="17"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DOMAIN = <FONT ID="StringLiteral">"domain"</FONT>;
+<A NAME="18"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String USER_AGENT = <FONT ID="StringLiteral">"User-Agent"</FONT>;
+<A NAME="19"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HTML = <FONT ID="StringLiteral">".html"</FONT>;
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String URISYNTAX_EXCEPTION = <FONT ID="StringLiteral">"URISyntaxException"</FONT>;
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MALFORMED_URLEXCEPTION = <FONT ID="StringLiteral">"MalformedURLException"</FONT>;
+<A NAME="22"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IOEXCEPTION = <FONT ID="StringLiteral">"IOException"</FONT>;
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ILIKEPLACES_COM = <FONT ID="StringLiteral">"ilikeplaces.com"</FONT>;
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOCALHOST_8080 = <FONT ID="StringLiteral">"localhost:8080"</FONT>;
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WWW_ILIKEPLACES_COM = <FONT ID="StringLiteral">"www.ilikeplaces.com"</FONT>;
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SLASH = <FONT ID="StringLiteral">"/"</FONT>;
+<A NAME="27"></A>
+<A NAME="28"></A><FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="29"></A></FONT>
+<A NAME="30"></A>
+<A NAME="31"></A><FONT ID="SingleLineComment">// --------------------- Interface TemplateSource ---------------------
+<A NAME="32"></A></FONT>
+<A NAME="33"></A>    @Override
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> isMustReload(<FONT ID="Final">final</FONT> ItsNatServletRequest itsNatServletRequest, <FONT ID="Final">final</FONT> ItsNatServletResponse response) {
+<A NAME="35"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>    @Override
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> InputStream getInputStream(<FONT ID="Final">final</FONT> ItsNatServletRequest itsNatServletRequest, <FONT ID="Final">final</FONT> ItsNatServletResponse response) {
+<A NAME="40"></A>        <FONT ID="Final">final</FONT> String domain;
+<A NAME="41"></A>        <FONT ID="Final">final</FONT> InputStream returnVal;
+<A NAME="42"></A>
+<A NAME="43"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="44"></A>            domain = <FONT ID="New">new</FONT> URI(((HttpServletRequest) itsNatServletRequest.getServletRequest()).getRequestURL().toString()).getHost();
+<A NAME="45"></A>            <FONT ID="If">if</FONT> (domain.endsWith(ILIKEPLACES_COM) || domain.contains(LOCALHOST_8080)) {<FONT ID="SingleLineComment">//Normal request on our website. Just forward.
+<A NAME="46"></A></FONT>                <FONT ID="Throw">throw</FONT> ExceptionCache.ILLEGAL_ACCESS_ERROR;
+<A NAME="47"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="48"></A>                <FONT ID="Final">final</FONT> URL url;
+<A NAME="49"></A>
+<A NAME="50"></A>                TemplateSourceGeoBusinessType type = TemplateSourceGeoBusinessType.FullyImplementedHTML;
+<A NAME="51"></A>
+<A NAME="52"></A>                <FONT ID="Switch">switch</FONT> (type) {
+<A NAME="53"></A>                    <FONT ID="Case">case</FONT> FullyImplementedHTML:
+<A NAME="54"></A>                        url = <FONT ID="New">new</FONT> URL(type.toString().replace(WWW_ILIKEPLACES_COM, WWW_ILIKEPLACES_COM) + domain + SLASH + domain + HTML);
+<A NAME="55"></A>                        URLConnection conn = url.openConnection();
+<A NAME="56"></A>                        HttpServletRequest httpRequest = (HttpServletRequest) itsNatServletRequest.getServletRequest();
+<A NAME="57"></A>                        String userAgent = httpRequest.getHeader(USER_AGENT);
+<A NAME="58"></A>                        conn.setRequestProperty(USER_AGENT, userAgent);
+<A NAME="59"></A>                        returnVal = conn.getInputStream();
+<A NAME="60"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="61"></A>                    <FONT ID="Case">case</FONT> PiratesAttackingUsPirates:
+<A NAME="62"></A>                        <FONT ID="Throw">throw</FONT> ExceptionCache.ILLEGAL_ACCESS_ERROR;<FONT ID="SingleLineComment">//IMPLEMENT to string and redirect to pirate caught page instead
+<A NAME="63"></A></FONT>                    <FONT ID="Default">default</FONT>:
+<A NAME="64"></A>                        <FONT ID="Throw">throw</FONT> ExceptionCache.UNSUPPORTED_SWITCH;
+<A NAME="65"></A>                }
+<A NAME="66"></A>            }
+<A NAME="67"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> URISyntaxException e) {
+<A NAME="68"></A>            Loggers.EXCEPTION.error(URISYNTAX_EXCEPTION, e);
+<A NAME="69"></A>            <FONT ID="Throw">throw</FONT> ExceptionCache.ILLEGAL_ACCESS_ERROR;
+<A NAME="70"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> MalformedURLException e) {
+<A NAME="71"></A>            Loggers.EXCEPTION.error(MALFORMED_URLEXCEPTION, e);
+<A NAME="72"></A>            <FONT ID="Throw">throw</FONT> ExceptionCache.ILLEGAL_ACCESS_ERROR;
+<A NAME="73"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="74"></A>            Loggers.EXCEPTION.error(IOEXCEPTION, e);
+<A NAME="75"></A>            <FONT ID="Throw">throw</FONT> ExceptionCache.ILLEGAL_ACCESS_ERROR;
+<A NAME="76"></A>        }
+<A NAME="77"></A>
+<A NAME="78"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="79"></A>    }
+<A NAME="80"></A>
+<A NAME="81"></A><FONT ID="SingleLineComment">// -------------------------- ENUMERATIONS --------------------------
+<A NAME="82"></A></FONT>
+<A NAME="83"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum TemplateSourceGeoBusinessType {
+<A NAME="84"></A>        FullyImplementedHTML() {
+<A NAME="85"></A>            <FONT ID="FormalComment">/**
+<A NAME="86"></A>             * @return the url BASE, starting with http: if web based, or file: if local. use base/www.exampledomain.co.uk.html format
+<A NAME="87"></A>             */</FONT>
+<A NAME="88"></A>            @Override
+<A NAME="89"></A>            <FONT ID="Public">public</FONT> String toString() {
+<A NAME="90"></A>                <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"http:"</FONT> + SLASH + <FONT ID="StringLiteral">"/www.ilikeplaces.com/cdn/FullyImplementedHTML/"</FONT>;
+<A NAME="91"></A>            }},
+<A NAME="92"></A>
+<A NAME="93"></A>        PiratesAttackingUsPirates() {
+<A NAME="94"></A>            <FONT ID="FormalComment">/**
+<A NAME="95"></A>             * @return the url of this template, starting with http: if web based, or file: if local.
+<A NAME="96"></A>             */</FONT>
+<A NAME="97"></A>            @Override
+<A NAME="98"></A>            <FONT ID="Public">public</FONT> String toString() {
+<A NAME="99"></A>                <FONT ID="Throw">throw</FONT> ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION;<FONT ID="SingleLineComment">//This should be the url of the pirate caught page
+<A NAME="100"></A></FONT>            }};
+<A NAME="101"></A>
+<A NAME="102"></A>        <FONT ID="FormalComment">/**
+<A NAME="103"></A>         * @return the url of this template, starting with http: if web based, or file: if local.
+<A NAME="104"></A>         */</FONT>
+<A NAME="105"></A>        @Override
+<A NAME="106"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="107"></A>            <FONT ID="Return">return</FONT> <FONT ID="Super">super</FONT>.toString();
+<A NAME="108"></A>        }
+<A NAME="109"></A>    }
+<A NAME="110"></A>}</pre>
+</BODY>
+</HTML>

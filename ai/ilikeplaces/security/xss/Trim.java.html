@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.security.xss.Trim (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Trim.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.security.xss;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="7"></A>
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * @author Ravindranath Akila
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A>
+<A NAME="13"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="14"></A>@FIXME(issue = <FONT ID="StringLiteral">"trim before db and after db. say trimallin trimallout. reason: sql escape only upon in"</FONT>)
+<A NAME="15"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Trim {
+<A NAME="16"></A>
+<A NAME="17"></A>    <FONT ID="Private">private</FONT> Trim() {
+<A NAME="18"></A>    }
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../ai/ilikeplaces/security/xss/Trim.java.html">Trim</A>.<FONT ID="Class">class</FONT>);
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="FormalComment">/**
+<A NAME="23"></A>     * Trims the given string to escape HTML JavaScript and SQL.
+<A NAME="24"></A>     *
+<A NAME="25"></A>     * @param inputString
+<A NAME="26"></A>     * @param useNewString ...
+<A NAME="27"></A>     * @return trimmed string
+<A NAME="28"></A>     */</FONT>
+<A NAME="29"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String trimAll(<FONT ID="Final">final</FONT> String inputString, <FONT ID="Final">final</FONT> Boolean... useNewString) {
+<A NAME="30"></A>        <FONT ID="Return">return</FONT> useNewString.length == <FONT ID="IntegerLiteral">1</FONT> &amp;&amp; useNewString[<FONT ID="IntegerLiteral">0</FONT>] ? trimAllLocal(<FONT ID="New">new</FONT> String(inputString)) : trimAllLocal(inputString);
+<A NAME="31"></A>    }
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String trimAllLocal(<FONT ID="Final">final</FONT> String inputString) {
+<A NAME="34"></A>        <FONT ID="SingleLineComment">//return escapeSql(escapeJavaScript(escapeHtml(inputString)));
+<A NAME="35"></A></FONT>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"Apache commons lang has a memory leak this this method was removed. Try finding a new XSS solution."</FONT>);
+<A NAME="36"></A>    }
+<A NAME="37"></A>}
+<A NAME="38"></A></pre>
+</BODY>
+</HTML>

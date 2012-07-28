@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">RPrivateLocationLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> * Created by IntelliJ IDEA.
+<A NAME="13"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="14"></A> * Date: Jan 13, 2010
+<A NAME="15"></A> * Time: 12:20:48 AM
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>
+<A NAME="18"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="19"></A>@Local
+<A NAME="20"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> RPrivateLocationLocal {
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="FormalComment">/**
+<A NAME="23"></A>     * @param humanId
+<A NAME="24"></A>     * @param privateLocationId
+<A NAME="25"></A>     * @return
+<A NAME="26"></A>     * @throws DBDishonourCheckedException
+<A NAME="27"></A>     * @throws DBFetchDataException
+<A NAME="28"></A>     */</FONT>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> doRPrivateLocationAsAny(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long privateLocationId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="FormalComment">/**
+<A NAME="32"></A>     * @param humanId
+<A NAME="33"></A>     * @param privateLocationId
+<A NAME="34"></A>     * @return
+<A NAME="35"></A>     * @throws DBDishonourCheckedException
+<A NAME="36"></A>     * @throws DBFetchDataException
+<A NAME="37"></A>     */</FONT>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doRPrivateLocationIsOwner(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long privateLocationId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="FormalComment">/**
+<A NAME="41"></A>     * @param humanId
+<A NAME="42"></A>     * @param privateLocationId
+<A NAME="43"></A>     * @return
+<A NAME="44"></A>     * @throws DBDishonourCheckedException
+<A NAME="45"></A>     * @throws DBFetchDataException
+<A NAME="46"></A>     */</FONT>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doRPrivateLocationIsViewer(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long privateLocationId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="FormalComment">/**
+<A NAME="50"></A>     * @param humanId
+<A NAME="51"></A>     * @param privateLocationId
+<A NAME="52"></A>     * @return
+<A NAME="53"></A>     * @throws DBDishonourCheckedException
+<A NAME="54"></A>     * @throws DBFetchDataException
+<A NAME="55"></A>     */</FONT>
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doRPrivateLocationIsViewerOrOwner(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long privateLocationId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="57"></A>
+<A NAME="58"></A>    <FONT ID="FormalComment">/**
+<A NAME="59"></A>     * @param humanId
+<A NAME="60"></A>     * @param privateLocationId
+<A NAME="61"></A>     * @return
+<A NAME="62"></A>     * @throws DBDishonourCheckedException
+<A NAME="63"></A>     * @throws DBFetchDataException
+<A NAME="64"></A>     */</FONT>
+<A NAME="65"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> doRPrivateLocationAsViewer(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long privateLocationId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="66"></A>
+<A NAME="67"></A>    <FONT ID="FormalComment">/**
+<A NAME="68"></A>     * @param humanId
+<A NAME="69"></A>     * @param privateLocationId
+<A NAME="70"></A>     * @return
+<A NAME="71"></A>     * @throws DBDishonourCheckedException
+<A NAME="72"></A>     * @throws DBFetchDataException
+<A NAME="73"></A>     */</FONT>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> doRPrivateLocationAsOwner(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long privateLocationId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="75"></A>
+<A NAME="76"></A>    <FONT ID="FormalComment">/**
+<A NAME="77"></A>     * @param PrivateLocationLatitudeSouth horizontal bottom of bounding box
+<A NAME="78"></A>     * @param PrivateLocationLatitudeNorth horizontal up of bounding box
+<A NAME="79"></A>     * @param PrivateLocationLongitudeWest vertical left of bounding box
+<A NAME="80"></A>     * @param PrivateLocationLongitudeEast vertical right of bounding box
+<A NAME="81"></A>     * @return the set of private locations inside a specific bounding box
+<A NAME="82"></A>     */</FONT>
+<A NAME="83"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; doRPrivateLocationsAsGlobal(
+<A NAME="84"></A>            <FONT ID="Final">final</FONT> Double PrivateLocationLatitudeSouth,
+<A NAME="85"></A>            <FONT ID="Final">final</FONT> Double PrivateLocationLatitudeNorth,
+<A NAME="86"></A>            <FONT ID="Final">final</FONT> Double PrivateLocationLongitudeWest,
+<A NAME="87"></A>            <FONT ID="Final">final</FONT> Double PrivateLocationLongitudeEast);
+<A NAME="88"></A>
+<A NAME="89"></A>    <FONT ID="FormalComment">/**
+<A NAME="90"></A>     *
+<A NAME="91"></A>     * @param privateLocationId
+<A NAME="92"></A>     * @param eager
+<A NAME="93"></A>     * @return
+<A NAME="94"></A>     * @throws DBDishonourCheckedException
+<A NAME="95"></A>     * @throws DBFetchDataException
+<A NAME="96"></A>     */</FONT>
+<A NAME="97"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> doRPrivateLocationAsSystem(<FONT ID="Final">final</FONT> Long privateLocationId, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> eager) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="98"></A>}
+<A NAME="99"></A></pre>
+</BODY>
+</HTML>

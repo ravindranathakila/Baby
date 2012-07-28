@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.ServletMobile (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ServletMobile.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">ai.ilikeplaces.entities.HumansAuthentication</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">ai.ilikeplaces.entities.Tribe</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/Listeners/widgets/Bate.java.html">ai.ilikeplaces.logic.Listeners.widgets.Bate</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/Listeners/widgets/WallWidgetTribe.java.html">ai.ilikeplaces.logic.Listeners.widgets.WallWidgetTribe</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUser.java.html">ai.ilikeplaces.logic.role.HumanUser</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">ai.ilikeplaces.logic.validators.unit.Password</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">ai.ilikeplaces.logic.validators.unit.VLong</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> com.google.gson.Gson;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.servlet.ServletException;
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServlet;
+<A NAME="22"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="23"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="24"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="25"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="26"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="27"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="28"></A>
+<A NAME="29"></A><FONT ID="FormalComment">/**
+<A NAME="30"></A> * Created by IntelliJ IDEA.
+<A NAME="31"></A> * User: Ravindranath Akila
+<A NAME="32"></A> * Date: 11/13/11
+<A NAME="33"></A> * Time: 8:03 PM
+<A NAME="34"></A> */</FONT>
+<A NAME="35"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ServletMobile <FONT ID="Extends">extends</FONT> HttpServlet {
+<A NAME="36"></A>
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String URL = <FONT ID="StringLiteral">"url"</FONT>;
+<A NAME="39"></A>
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> HttpServletRequest req, <FONT ID="Final">final</FONT> HttpServletResponse resp) <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="42"></A>        <FONT ID="Final">final</FONT> HttpSession activeSession = req.getSession(<FONT ID="True">true</FONT>);
+<A NAME="43"></A>
+<A NAME="44"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="45"></A>
+<A NAME="46"></A>            <FONT ID="Final">final</FONT> Map parameterMap = req.getParameterMap();
+<A NAME="47"></A>
+<A NAME="48"></A>
+<A NAME="49"></A>            <FONT ID="If">if</FONT> (parameterMap.containsKey(<FONT ID="StringLiteral">"login"</FONT>)) {
+<A NAME="50"></A>
+<A NAME="51"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> email = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>((((String[]) parameterMap.get(<FONT ID="StringLiteral">"email"</FONT>))[<FONT ID="IntegerLiteral">0</FONT>]));
+<A NAME="52"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A> password = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A>((((String[]) parameterMap.get(<FONT ID="StringLiteral">"password"</FONT>))[<FONT ID="IntegerLiteral">0</FONT>]));
+<A NAME="53"></A>
+<A NAME="54"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> existingUser = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(email.getObjectAsValid());
+<A NAME="55"></A>
+<A NAME="56"></A>                <FONT ID="If">if</FONT> (existingUser != <FONT ID="Null">null</FONT> &amp;&amp; existingUser.getHumanAlive()) {<FONT ID="MultiLineComment">/*Ok user name valid but now we check for password*/</FONT>
+<A NAME="57"></A>
+<A NAME="58"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">HumansAuthentication</A> humansAuthentication = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(email).returnValue();
+<A NAME="59"></A>
+<A NAME="60"></A>                    <FONT ID="Final">final</FONT> String hash = humansAuthentication.getHumanAuthenticationHash();
+<A NAME="61"></A>                    <FONT ID="Final">final</FONT> String salt = humansAuthentication.getHumanAuthenticationSalt();
+<A NAME="62"></A>
+<A NAME="63"></A>                    <FONT ID="Final">final</FONT> Gson gson = <FONT ID="New">new</FONT> Gson();
+<A NAME="64"></A>
+<A NAME="65"></A>
+<A NAME="66"></A>                    <FONT ID="If">if</FONT> (hash.equals(DB.getSingletonHashingFaceLocal(<FONT ID="True">true</FONT>).getHash(password.getObjectAsValid(), salt))) {
+<A NAME="67"></A>                        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> humanUserLocal = HumanUser.getHumanUserLocal(<FONT ID="True">true</FONT>);
+<A NAME="68"></A>
+<A NAME="69"></A>                        humanUserLocal.setHumanUserId(email.getObjectAsValid());
+<A NAME="70"></A>
+<A NAME="71"></A>                        activeSession.setAttribute(HumanUserLocal.NAME, (<FONT ID="New">new</FONT> SessionBoundBadRefWrapper&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;(humanUserLocal, activeSession)));
+<A NAME="72"></A>
+<A NAME="73"></A>                        activeSession.setAttribute(ServletLogin.Username, existingUser.getHumanId());
+<A NAME="74"></A>
+<A NAME="75"></A>
+<A NAME="76"></A>                        resp.getWriter().flush();
+<A NAME="77"></A>                        resp.getWriter().append(gson.toJson(<FONT ID="True">true</FONT>));
+<A NAME="78"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="79"></A>                        resp.getWriter().flush();
+<A NAME="80"></A>                        resp.getWriter().append(gson.toJson(<FONT ID="False">false</FONT>));
+<A NAME="81"></A>                    }
+<A NAME="82"></A>                }
+<A NAME="83"></A>
+<A NAME="84"></A>
+<A NAME="85"></A>            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (parameterMap.containsKey(<FONT ID="StringLiteral">"signup"</FONT>)) {
+<A NAME="86"></A>
+<A NAME="87"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myemail = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>((((String[]) parameterMap.get(<FONT ID="StringLiteral">"email"</FONT>))[<FONT ID="IntegerLiteral">0</FONT>]));
+<A NAME="88"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A> mypassword = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A>((((String[]) parameterMap.get(<FONT ID="StringLiteral">"password"</FONT>))[<FONT ID="IntegerLiteral">0</FONT>]));
+<A NAME="89"></A>
+<A NAME="90"></A>                Return&lt;Boolean&gt; humanCreateReturn = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(<FONT ID="False">false</FONT>, <FONT ID="StringLiteral">"Could not create account"</FONT>);
+<A NAME="91"></A>
+<A NAME="92"></A>                <FONT ID="If">if</FONT> (myemail.validate() == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; mypassword.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="93"></A>                    <FONT ID="If">if</FONT> (!DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
+<A NAME="94"></A>
+<A NAME="95"></A>                        humanCreateReturn = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(
+<A NAME="96"></A>                                <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>().setObjAsValid(myemail.getObj()),
+<A NAME="97"></A>                                mypassword,
+<A NAME="98"></A>                                myemail);
+<A NAME="99"></A>
+<A NAME="100"></A>                        <FONT ID="If">if</FONT> (humanCreateReturn.valid() &amp;&amp; humanCreateReturn.returnValue()) {
+<A NAME="101"></A>
+<A NAME="102"></A>                            UserIntroduction.createIntroData(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(myemail.getObj()));
+<A NAME="103"></A>
+<A NAME="104"></A>                            <FONT ID="Final">final</FONT> String activationURL = <FONT ID="New">new</FONT> Parameter(<FONT ID="StringLiteral">"http://www.ilikeplaces.com/"</FONT> + <FONT ID="StringLiteral">"activate"</FONT>)
+<A NAME="105"></A>                                    .append(ServletLogin.Username, myemail.getObj(), <FONT ID="True">true</FONT>)
+<A NAME="106"></A>                                    .append(ServletLogin.Password,
+<A NAME="107"></A>                                            DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(myemail.getObj()))
+<A NAME="108"></A>                                                    .returnValue()
+<A NAME="109"></A>                                                    .getHumanAuthenticationHash())
+<A NAME="110"></A>                                    .get();
+<A NAME="111"></A>
+<A NAME="112"></A>
+<A NAME="113"></A>                            String htmlBody = Bate.getHTMLStringForOfflineFriendInvite(<FONT ID="StringLiteral">"I Like Places"</FONT>, myemail.getObj());
+<A NAME="114"></A>
+<A NAME="115"></A>                            htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+<A NAME="116"></A>                            htmlBody = htmlBody.replace(Bate.PASSWORD_ADVICE, <FONT ID="StringLiteral">""</FONT>);
+<A NAME="117"></A>                            htmlBody = htmlBody.replace(Bate.PASSWORD_DETAILS, <FONT ID="StringLiteral">""</FONT>);
+<A NAME="118"></A>
+<A NAME="119"></A>                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+<A NAME="120"></A>                                    myemail.getObj(),
+<A NAME="121"></A>                                    <FONT ID="StringLiteral">"I Like Places prides you with an Exclusive Invite!"</FONT>,
+<A NAME="122"></A>                                    htmlBody);
+<A NAME="123"></A>
+<A NAME="124"></A>                            <FONT ID="SingleLineComment">//$$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+<A NAME="125"></A></FONT>                        } <FONT ID="Else">else</FONT> {
+<A NAME="126"></A>                            <FONT ID="SingleLineComment">//$$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
+<A NAME="127"></A></FONT>                        }
+<A NAME="128"></A>
+<A NAME="129"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="130"></A>                        <FONT ID="SingleLineComment">//$$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("This email is TAKEN!:(");
+<A NAME="131"></A></FONT>                    }
+<A NAME="132"></A>
+<A NAME="133"></A>                    <FONT ID="Final">final</FONT> Gson gson = <FONT ID="New">new</FONT> Gson();
+<A NAME="134"></A>
+<A NAME="135"></A>                    resp.getWriter().flush();
+<A NAME="136"></A>                    resp.getWriter().append(gson.toJson(humanCreateReturn.valid() &amp;&amp; humanCreateReturn.returnValue()));
+<A NAME="137"></A>                }
+<A NAME="138"></A>
+<A NAME="139"></A>
+<A NAME="140"></A>            } <FONT ID="Else">else</FONT> {<FONT ID="SingleLineComment">//Not a login request, Not a sign up Request, so the user either should be logged in or client programmer did a mistake
+<A NAME="141"></A></FONT>
+<A NAME="142"></A>
+<A NAME="143"></A>                <FONT ID="Final">final</FONT> Object attribute__ = activeSession.getAttribute(ServletLogin.HumanUser);
+<A NAME="144"></A>
+<A NAME="145"></A>                <FONT ID="Final">final</FONT> SessionBoundBadRefWrapper&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt; sessionBoundBadRefWrapper = getEJBSession(attribute__);
+<A NAME="146"></A>
+<A NAME="147"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> humanUserAsValid = HumanUser.getHumanUserAsValid(sessionBoundBadRefWrapper);
+<A NAME="148"></A>
+<A NAME="149"></A>
+<A NAME="150"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId = humanUserAsValid.getHumanId();
+<A NAME="151"></A>
+<A NAME="152"></A>
+<A NAME="153"></A>                <FONT ID="If">if</FONT> (parameterMap.containsKey(<FONT ID="StringLiteral">"add"</FONT>)) {
+<A NAME="154"></A>
+<A NAME="155"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> email = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>((((String[]) parameterMap.get(<FONT ID="StringLiteral">"email"</FONT>))[<FONT ID="IntegerLiteral">0</FONT>]));
+<A NAME="156"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> tribeId = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>(Long.parseLong(((String[]) parameterMap.get(<FONT ID="StringLiteral">"tribe"</FONT>))[<FONT ID="IntegerLiteral">0</FONT>]));
+<A NAME="157"></A>
+<A NAME="158"></A>                    <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; returnVal = DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).addToTribe(email, tribeId);
+<A NAME="159"></A>
+<A NAME="160"></A>                    <FONT ID="Final">final</FONT> Gson gson = <FONT ID="New">new</FONT> Gson();
+<A NAME="161"></A>
+<A NAME="162"></A>                    resp.getWriter().flush();
+<A NAME="163"></A>                    resp.getWriter().append(gson.toJson(returnVal.valid()));
+<A NAME="164"></A>
+<A NAME="165"></A>                } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (parameterMap.containsKey(<FONT ID="StringLiteral">"tribe"</FONT>)) {
+<A NAME="166"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> tribe = DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).getTribe(humanId,
+<A NAME="167"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>(Long.parseLong(((String[]) parameterMap.get(<FONT ID="StringLiteral">"tribe"</FONT>))[<FONT ID="IntegerLiteral">0</FONT>])));
+<A NAME="168"></A>
+<A NAME="169"></A>                    <FONT ID="Final">final</FONT> Gson gson = <FONT ID="New">new</FONT> Gson();
+<A NAME="170"></A>
+<A NAME="171"></A>                    resp.getWriter().flush();
+<A NAME="172"></A>                    resp.getWriter().append(gson.toJson(tribe));
+<A NAME="173"></A>                } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (parameterMap.containsKey(<FONT ID="StringLiteral">"wall"</FONT>)) {
+<A NAME="174"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> wallId = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>(Long.parseLong(((String[]) parameterMap.get(<FONT ID="StringLiteral">"wall"</FONT>))[<FONT ID="IntegerLiteral">0</FONT>]));
+<A NAME="175"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec = WallWidgetTribe.REFRESH_SPEC;
+<A NAME="176"></A>
+<A NAME="177"></A>                    Loggers.INFO.info(<FONT ID="StringLiteral">""</FONT> + wallId.getObjectAsValid());
+<A NAME="178"></A>                    Loggers.INFO.info(<FONT ID="StringLiteral">""</FONT> + refreshSpec.toString());
+<A NAME="179"></A>                    Loggers.INFO.info(<FONT ID="StringLiteral">""</FONT> + humanId);
+<A NAME="180"></A>
+<A NAME="181"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> wall = DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).readWall(
+<A NAME="182"></A>                            humanId,
+<A NAME="183"></A>                            wallId,
+<A NAME="184"></A>                            refreshSpec
+<A NAME="185"></A>                    ).returnValueBadly();
+<A NAME="186"></A>
+<A NAME="187"></A>                    <FONT ID="Final">final</FONT> Gson gson = <FONT ID="New">new</FONT> Gson();
+<A NAME="188"></A>
+<A NAME="189"></A>                    resp.getWriter().flush();
+<A NAME="190"></A>                    resp.getWriter().append(gson.toJson(wall));
+<A NAME="191"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="192"></A>                    resp.getWriter().flush();
+<A NAME="193"></A>                    <FONT ID="Final">final</FONT> Set&lt;<A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; tribes = DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).getHumansTribesAsSet(humanId);
+<A NAME="194"></A>                    resp.getWriter().append((<FONT ID="New">new</FONT> Gson().toJson(tribes)));
+<A NAME="195"></A>                }
+<A NAME="196"></A>            }
+<A NAME="197"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="198"></A>            resp.getWriter().flush();
+<A NAME="199"></A>            resp.getWriter().append(t.getMessage());
+<A NAME="200"></A>        }
+<A NAME="201"></A>
+<A NAME="202"></A>    }
+<A NAME="203"></A>
+<A NAME="204"></A>
+<A NAME="205"></A>    <FONT ID="FormalComment">/**
+<A NAME="206"></A>     * Handles the HTTP &lt;code&gt;GET&lt;/code&gt; method.
+<A NAME="207"></A>     *
+<A NAME="208"></A>     * @param request  servlet request
+<A NAME="209"></A>     * @param response servlet response
+<A NAME="210"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="211"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="212"></A>     */</FONT>
+<A NAME="213"></A>    @Override
+<A NAME="214"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> doGet(<FONT ID="Final">final</FONT> HttpServletRequest request, <FONT ID="Final">final</FONT> HttpServletResponse response)
+<A NAME="215"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="216"></A>        processRequest(request, response);
+<A NAME="217"></A>    }
+<A NAME="218"></A>
+<A NAME="219"></A>    <FONT ID="FormalComment">/**
+<A NAME="220"></A>     * Handles the HTTP &lt;code&gt;POST&lt;/code&gt; method.
+<A NAME="221"></A>     *
+<A NAME="222"></A>     * @param request  servlet request
+<A NAME="223"></A>     * @param response servlet response
+<A NAME="224"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="225"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="226"></A>     */</FONT>
+<A NAME="227"></A>    @Override
+<A NAME="228"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> doPost(<FONT ID="Final">final</FONT> HttpServletRequest request, <FONT ID="Final">final</FONT> HttpServletResponse response)
+<A NAME="229"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="230"></A>        processRequest(request, response);
+<A NAME="231"></A>    }
+<A NAME="232"></A>
+<A NAME="233"></A>
+<A NAME="234"></A>    <FONT ID="Private">private</FONT> SessionBoundBadRefWrapper&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt; getEJBSession(Object attribute__) {
+<A NAME="235"></A>        <FONT ID="Return">return</FONT> attribute__ == <FONT ID="Null">null</FONT> ?
+<A NAME="236"></A>                <FONT ID="Null">null</FONT> : (!((SessionBoundBadRefWrapper&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;) attribute__).isAlive() ?
+<A NAME="237"></A>                <FONT ID="Null">null</FONT> : ((SessionBoundBadRefWrapper&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;) attribute__));
+<A NAME="238"></A>    }
+<A NAME="239"></A>}
+<A NAME="240"></A></pre>
+</BODY>
+</HTML>

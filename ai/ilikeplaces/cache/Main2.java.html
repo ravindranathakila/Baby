@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.cache.Main2 (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Main2.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.cache;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/cache/SmartCache2.java.html">ai.ilikeplaces.util.cache.SmartCache2</A>;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="FormalComment">/**
+<A NAME="6"></A> * Created by IntelliJ IDEA.
+<A NAME="7"></A> * User: Ravindranath Akila
+<A NAME="8"></A> * Date: 10/9/11
+<A NAME="9"></A> * Time: 11:04 AM
+<A NAME="10"></A> */</FONT>
+<A NAME="11"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Main2 <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/util/cache/SmartCache2.java.html">SmartCache2.RecoverWith</A>&lt;String, Integer, String&gt; {
+<A NAME="12"></A>
+<A NAME="13"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/cache/SmartCache2.java.html">SmartCache2</A>&lt;String, Integer,String&gt; CACHE = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/cache/SmartCache2.java.html">SmartCache2</A>&lt;String, Integer,String&gt;();
+<A NAME="14"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/cache/SmartCache2.java.html">SmartCache2</A>&lt;String, Integer,String&gt; CACHE_2 = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/cache/SmartCache2.java.html">SmartCache2</A>&lt;String, Integer,String&gt;(
+<A NAME="15"></A>            <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/cache/Main2.java.html">Main2</A>()
+<A NAME="16"></A>    );
+<A NAME="17"></A>
+<A NAME="18"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Int">int</FONT> value = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(<FONT ID="Final">final</FONT> String args[]) {
+<A NAME="21"></A>
+<A NAME="22"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/cache/Main2.java.html">Main2</A> main = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/cache/Main2.java.html">Main2</A>();
+<A NAME="23"></A>        System.out.println(CACHE.get(<FONT ID="StringLiteral">"1"</FONT>, main));
+<A NAME="24"></A>        System.out.println(CACHE.get(<FONT ID="StringLiteral">"1"</FONT>, main));
+<A NAME="25"></A>        System.gc();
+<A NAME="26"></A>        System.out.println(CACHE.get(<FONT ID="StringLiteral">"1"</FONT>, main));
+<A NAME="27"></A>        System.out.println(CACHE.get(<FONT ID="StringLiteral">"2"</FONT>, main));
+<A NAME="28"></A>
+<A NAME="29"></A>        System.out.println(CACHE_2.get(<FONT ID="StringLiteral">"1"</FONT>, <FONT ID="StringLiteral">"na"</FONT>));
+<A NAME="30"></A>        System.out.println(CACHE_2.get(<FONT ID="StringLiteral">"1"</FONT>, <FONT ID="StringLiteral">"na"</FONT>));
+<A NAME="31"></A>        System.gc();
+<A NAME="32"></A>        System.out.println(CACHE_2.get(<FONT ID="StringLiteral">"1"</FONT>, <FONT ID="StringLiteral">"na"</FONT>));
+<A NAME="33"></A>        System.out.println(CACHE_2.get(<FONT ID="StringLiteral">"2"</FONT>, <FONT ID="StringLiteral">"na"</FONT>));
+<A NAME="34"></A>        CACHE_2.invalidate(<FONT ID="StringLiteral">"2"</FONT>);
+<A NAME="35"></A>        System.out.println(CACHE_2.get(<FONT ID="StringLiteral">"2"</FONT>, <FONT ID="StringLiteral">"na"</FONT>));
+<A NAME="36"></A>        System.out.println(CACHE_2.get(<FONT ID="StringLiteral">"2"</FONT>, <FONT ID="StringLiteral">"na"</FONT>));
+<A NAME="37"></A>        System.out.println(CACHE_2.get(<FONT ID="StringLiteral">"2"</FONT>, <FONT ID="StringLiteral">"na"</FONT>));
+<A NAME="38"></A>        CACHE_2.invalidate(<FONT ID="StringLiteral">"2"</FONT>);
+<A NAME="39"></A>        System.out.println(CACHE_2.get(<FONT ID="StringLiteral">"2"</FONT>, <FONT ID="StringLiteral">"na"</FONT>));
+<A NAME="40"></A>
+<A NAME="41"></A>
+<A NAME="42"></A>
+<A NAME="43"></A>    }
+<A NAME="44"></A>
+<A NAME="45"></A>    @Override
+<A NAME="46"></A>    <FONT ID="Public">public</FONT> Integer getValue(<FONT ID="Final">final</FONT> String string, <FONT ID="Final">final</FONT> String runtime) {
+<A NAME="47"></A>        System.out.println(<FONT ID="StringLiteral">"UPDATING:"</FONT> + string);
+<A NAME="48"></A>        <FONT ID="Return">return</FONT> Integer.valueOf(string);
+<A NAME="49"></A>    }
+<A NAME="50"></A>}
+<A NAME="51"></A></pre>
+</BODY>
+</HTML>

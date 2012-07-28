@@ -1,0 +1,465 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerOrganize (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerOrganize.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.DOCUMENTATION;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.Listeners.widgets.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventCreate.java.html">ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventCreate</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventDelete.java.html">ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventView.java.html">ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMoment.java.html">ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMoment</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMomentCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMomentCriteria</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="19"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="20"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="21"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="22"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="25"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="26"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="27"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="28"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="29"></A><FONT ID="Import">import</FONT> org.w3c.dom.Node;
+<A NAME="30"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="31"></A>
+<A NAME="32"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="33"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>.*;
+<A NAME="34"></A>
+<A NAME="35"></A><FONT ID="FormalComment">/**
+<A NAME="36"></A> * @author Ravindranath Akila
+<A NAME="37"></A> */</FONT>
+<A NAME="38"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="39"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerOrganize <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> NumberFormatException CATEGORY_NUMBER_FORMAT_EXCEPTION = <FONT ID="New">new</FONT> NumberFormatException(<FONT ID="StringLiteral">"SORRY! INVALID CATEGORY VALUE."</FONT>);
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> ModeIntroduction = <FONT ID="IntegerLiteral">123</FONT>;
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> ModeCreatePlace = <FONT ID="IntegerLiteral">143</FONT>;
+<A NAME="44"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DISCOVER_AND_HAVE_FUN_IN_PLACES = <FONT ID="StringLiteral">"Discover and Have Fun in Places! "</FONT>;
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BN = <FONT ID="StringLiteral">"bn"</FONT>;
+<A NAME="46"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = <FONT ID="StringLiteral">"ai.ilikeplaces.logic.Listeners.ListenerMain.0004"</FONT>;
+<A NAME="47"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTOS = <FONT ID="StringLiteral">"PROFILE_PHOTOS"</FONT>;
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ORGANIZE_MAIN_TITLE = <FONT ID="StringLiteral">"organize.main.title"</FONT>;
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ORGANIZE_MAIN_TITLE_TITLE = <FONT ID="StringLiteral">"organize.main.title.title"</FONT>;
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ORGANIZE_MAIN_INTRO = <FONT ID="StringLiteral">"organize.main.intro"</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ORGANIZE_MAIN_INTRO_TITLE = <FONT ID="StringLiteral">"organize.main.intro.title"</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EQUALS = <FONT ID="StringLiteral">"="</FONT>;
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String QMARK = <FONT ID="StringLiteral">"?"</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ARROW_LEFT_GIF = <FONT ID="StringLiteral">"arrow-left.gif"</FONT>;
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NO_RIGHTS_TO_VIEW = <FONT ID="StringLiteral">"NO_RIGHTS_TO_VIEW"</FONT>;
+<A NAME="56"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_DENIED_RIGHTS_TO_VIEW_THIS_PRIVATE_EVENT = <FONT ID="StringLiteral">" is denied rights to view this private event:"</FONT>;
+<A NAME="57"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_ACCEPTED_AS_A_VIEWER_OF_THIS_LOCATION = <FONT ID="StringLiteral">" is accepted as a viewer of this location:"</FONT>;
+<A NAME="58"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_ACCEPTED_AS_A_OWNER_OF_THIS_LOCATION = <FONT ID="StringLiteral">" is accepted as a owner of this location:"</FONT>;
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_DENIED_RIGHTS_TO_VIEW_THIS_PRIVATE_LOCATION = <FONT ID="StringLiteral">" is denied rights to view this private location:"</FONT>;
+<A NAME="60"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_GRANTED_ACCESS_TO_VIEW_THIS_PRIVATE_EVENT = <FONT ID="StringLiteral">" is granted access to view this private event."</FONT>;
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FAILS_TO_ACCESS_THIS_LOCATION = <FONT ID="StringLiteral">" fails to access this location"</FONT>;
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FAILS_TO_ACCESS_THIS_EVENT = <FONT ID="StringLiteral">" fails to access this event"</FONT>;
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NO_EXIST_OR_ERROR = <FONT ID="StringLiteral">"NO_EXIST_OR_ERROR"</FONT>;
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NO_EXIST_OR_ERROR_EVENT = <FONT ID="StringLiteral">"NO_EXIST_OR_ERROR_EVENT"</FONT>;
+<A NAME="65"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NO_LOGIN = <FONT ID="StringLiteral">"NoLogin"</FONT>;
+<A NAME="66"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RETURNING_ORGANIZE_PAGE = <FONT ID="StringLiteral">"Returning organize page"</FONT>;
+<A NAME="67"></A>
+<A NAME="68"></A>    <FONT ID="FormalComment">/**
+<A NAME="69"></A>     * @param request__
+<A NAME="70"></A>     * @param response__
+<A NAME="71"></A>     */</FONT>
+<A NAME="72"></A>    @Override
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> ItsNatServletResponse response__) {
+<A NAME="74"></A>
+<A NAME="75"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/AbstractSkeletonListener.java.html">AbstractSkeletonListener</A>(request__, response__) {
+<A NAME="76"></A>
+<A NAME="77"></A>            <FONT ID="FormalComment">/**
+<A NAME="78"></A>             * Initialize your document here by appending fragments
+<A NAME="79"></A>             */</FONT>
+<A NAME="80"></A>            @Override
+<A NAME="81"></A>            @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="82"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="83"></A>
+<A NAME="84"></A>                layoutNeededForAllPages:
+<A NAME="85"></A>                {
+<A NAME="86"></A>                    setLoginWidget:
+<A NAME="87"></A>                    {
+<A NAME="88"></A>                        setLoginWidget(request__, SignInOnCriteria.SignInOnDisplayComponent.MOMENTS);
+<A NAME="89"></A>                    }
+<A NAME="90"></A>
+<A NAME="91"></A>                    setTitle:
+<A NAME="92"></A>                    {
+<A NAME="93"></A>                        <FONT ID="SingleLineComment">//set below
+<A NAME="94"></A></FONT>                    }
+<A NAME="95"></A>                    setProfileDataLink:
+<A NAME="96"></A>                    {
+<A NAME="97"></A>                        setProfileDataLink();
+<A NAME="98"></A>                    }
+<A NAME="99"></A>                    sideBarFriends:
+<A NAME="100"></A>                    {
+<A NAME="101"></A>                        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.MOMENTS);
+<A NAME="102"></A>                    }
+<A NAME="103"></A>                    signinupActionNotice:
+<A NAME="104"></A>                    {
+<A NAME="105"></A>                        <FONT ID="SingleLineComment">//We do nothing now
+<A NAME="106"></A></FONT>                    }
+<A NAME="107"></A>                    SetNotifications:
+<A NAME="108"></A>                    {
+<A NAME="109"></A>                        setNotifications();
+<A NAME="110"></A>                    }
+<A NAME="111"></A>                }
+<A NAME="112"></A>
+<A NAME="113"></A>                <FONT ID="If">if</FONT> (getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="114"></A>                    handleRequestType:
+<A NAME="115"></A>                    {
+<A NAME="116"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="117"></A>                            <FONT ID="MultiLineComment">/*Be fault tolerant with the user. Just parse category here. Later parse other values when needed*/</FONT>
+<A NAME="118"></A>                            <FONT ID="Int">int</FONT> category = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="119"></A>                            <FONT ID="Try">try</FONT> {
+<A NAME="120"></A>                                <FONT ID="Final">final</FONT> String tolerantCategory = request__.getServletRequest().getParameter(Controller.Page.DocOrganizeCategory);
+<A NAME="121"></A>                                category = Integer.parseInt(tolerantCategory != <FONT ID="Null">null</FONT> ? tolerantCategory : <FONT ID="StringLiteral">"123"</FONT>);
+<A NAME="122"></A>                            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NumberFormatException nfe_) {
+<A NAME="123"></A>                                USER_EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, nfe_);
+<A NAME="124"></A>                            }
+<A NAME="125"></A>                            <FONT ID="Switch">switch</FONT> (category) {
+<A NAME="126"></A>                                <FONT ID="Case">case</FONT> ModeIntroduction:
+<A NAME="127"></A>                                    UCEngage:
+<A NAME="128"></A>                                    {
+<A NAME="129"></A>                                        <FONT ID="Try">try</FONT> {
+<A NAME="130"></A>                                            UCIntroduction:
+<A NAME="131"></A>                                            {
+<A NAME="132"></A>                                                SmartLogger.g().appendToLogMSG(<FONT ID="StringLiteral">"Mode: ModeIntroduction"</FONT>);
+<A NAME="133"></A>
+<A NAME="134"></A>                                                <FONT ID="MultiLineComment">/*//We are abandonning this to use an image instead
+<A NAME="135"></A>                                                $(SkeletonCPageTitle).setTextContent(GUI.getString(ORGANIZE_MAIN_TITLE));
+<A NAME="136"></A>                                                $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_TITLE_TITLE));
+<A NAME="137"></A>                                                $(SkeletonCPageIntro).setTextContent(GUI.getString(ORGANIZE_MAIN_INTRO));
+<A NAME="138"></A>                                                $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_INTRO_TITLE));
+<A NAME="139"></A>                                                */</FONT>
+<A NAME="140"></A>
+<A NAME="141"></A>                                                @DOCUMENTATION(
+<A NAME="142"></A>                                                        TODO = {
+<A NAME="143"></A>                                                                @TODO(<FONT ID="StringLiteral">"Move this to a widget to ease themeing etc."</FONT>)
+<A NAME="144"></A>                                                        }
+<A NAME="145"></A>                                                )
+<A NAME="146"></A>                                                <FONT ID="Final">final</FONT> Node unnecessaryVariable = $(Skeleton_center_skeleton).appendChild(
+<A NAME="147"></A>                                                        ElementComposer.compose(
+<A NAME="148"></A>                                                                $(MarkupTag.IMG)
+<A NAME="149"></A>                                                        ).$ElementSetAttribute(MarkupTag.IMG.src(), <FONT ID="StringLiteral">"/images/create_moment.png"</FONT>)
+<A NAME="150"></A>                                                                .$ElementSetAttribute(MarkupTag.IMG.style(), <FONT ID="StringLiteral">"width:100%;"</FONT>).get()
+<A NAME="151"></A>                                                );
+<A NAME="152"></A>
+<A NAME="153"></A>                                            }
+<A NAME="154"></A>                                            UCListOfActions:
+<A NAME="155"></A>                                            {
+<A NAME="156"></A>                                                <FONT ID="New">new</FONT> PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
+<A NAME="157"></A>                                                };
+<A NAME="158"></A>                                                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> prvLoc : DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansPrivateLocation(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
+<A NAME="159"></A>                                                    attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), prvLoc, <FONT ID="True">true</FONT>, <FONT ID="False">false</FONT>);
+<A NAME="160"></A>                                                }
+<A NAME="161"></A>                                            }
+<A NAME="162"></A>                                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="163"></A>                                            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="164"></A>                                        }
+<A NAME="165"></A>                                    }
+<A NAME="166"></A>                                    <FONT ID="Break">break</FONT>;
+<A NAME="167"></A>                                <FONT ID="Case">case</FONT> Controller.Page.DocOrganizeModeOrganize:
+<A NAME="168"></A>                                    UCOrganize:
+<A NAME="169"></A>                                    {
+<A NAME="170"></A>                                        SmartLogger.g().appendToLogMSG(<FONT ID="StringLiteral">"Mode: "</FONT> +Controller.Page.DocOrganizeModeOrganize);
+<A NAME="171"></A>
+<A NAME="172"></A>                                        <FONT ID="Try">try</FONT> {
+<A NAME="173"></A>                                            <FONT ID="New">new</FONT> PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
+<A NAME="174"></A>                                            };
+<A NAME="175"></A>                                            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> prvLoc : DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansPrivateLocation(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid())).returnValue().getPrivateLocationsViewed()) {
+<A NAME="176"></A>                                                attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), prvLoc, <FONT ID="True">true</FONT>, <FONT ID="False">false</FONT>);
+<A NAME="177"></A>                                            }
+<A NAME="178"></A>
+<A NAME="179"></A>                                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="180"></A>                                            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="181"></A>                                        }
+<A NAME="182"></A>                                    }
+<A NAME="183"></A>                                    <FONT ID="Break">break</FONT>;
+<A NAME="184"></A>                                <FONT ID="Case">case</FONT> ModeCreatePlace:
+<A NAME="185"></A>                                    UCCretePlace:
+<A NAME="186"></A>                                    {
+<A NAME="187"></A>
+<A NAME="188"></A>                                        SmartLogger.g().appendToLogMSG(<FONT ID="StringLiteral">"Mode: ModeCreatePlace"</FONT>);
+<A NAME="189"></A>
+<A NAME="190"></A>                                        <FONT ID="Try">try</FONT> {
+<A NAME="191"></A>                                            <FONT ID="New">new</FONT> PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
+<A NAME="192"></A>                                            };
+<A NAME="193"></A>                                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="194"></A>                                            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="195"></A>                                        }
+<A NAME="196"></A>                                    }
+<A NAME="197"></A>                                    <FONT ID="Break">break</FONT>;
+<A NAME="198"></A>                                <FONT ID="Case">case</FONT> Controller.Page.DocOrganizeModeLocation:
+<A NAME="199"></A>                                    UCLocation:
+<A NAME="200"></A>                                    {
+<A NAME="201"></A>
+<A NAME="202"></A>                                        SmartLogger.g().appendToLogMSG(<FONT ID="StringLiteral">"Mode: "</FONT> + Controller.Page.DocOrganizeModeLocation);
+<A NAME="203"></A>
+<A NAME="204"></A>                                        @NOTE(note = <FONT ID="StringLiteral">"Outside try as this is caught by the outermost common Number format exception."</FONT>)
+<A NAME="205"></A>                                        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> location = Integer.parseInt(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
+<A NAME="206"></A>                                        <FONT ID="Try">try</FONT> {
+<A NAME="207"></A>                                            <FONT ID="Final">final</FONT> Element intro = $(MarkupTag.P);
+<A NAME="208"></A>                                            <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> userLoc = DB.getHumanCRUDLocationLocal(<FONT ID="True">true</FONT>).dirtyRLocation(location).returnValue();
+<A NAME="209"></A>                                            intro.setTextContent(userLoc.getLocationName());
+<A NAME="210"></A>                                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="211"></A>                                            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="212"></A>                                        }
+<A NAME="213"></A>                                    }
+<A NAME="214"></A>                                    <FONT ID="Break">break</FONT>;
+<A NAME="215"></A>
+<A NAME="216"></A>                                <FONT ID="Case">case</FONT> Controller.Page.DocOrganizeModePrivateLocation:
+<A NAME="217"></A>                                    UCPrivateLocation:
+<A NAME="218"></A>                                    {
+<A NAME="219"></A>
+<A NAME="220"></A>                                        SmartLogger.g().appendToLogMSG(<FONT ID="StringLiteral">"Mode: "</FONT> + Controller.Page.DocOrganizeModePrivateLocation);
+<A NAME="221"></A>
+<A NAME="222"></A>                                        <FONT ID="Try">try</FONT> {
+<A NAME="223"></A>                                            @NOTE(note = <FONT ID="StringLiteral">"Outside try as this is caught by the outermost common Number format exception."</FONT>)
+<A NAME="224"></A>                                            <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
+<A NAME="225"></A>                                            <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r = DB.getHumanCrudPrivateLocationLocal(<FONT ID="True">true</FONT>).dirtyRPrivateLocationAsAny(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>().setObjAsValid(getUsername()), requestedPrivateLocation);
+<A NAME="226"></A>                                            <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="227"></A>                                                UCPrivateLocationIsExistent:
+<A NAME="228"></A>                                                {
+<A NAME="229"></A>                                                    <FONT ID="Try">try</FONT> {
+<A NAME="230"></A>                                                        setTitle:
+<A NAME="231"></A>                                                        {
+<A NAME="232"></A>                                                            $(skeletonTitle).setTextContent(r.returnValue().getPrivateLocationName());
+<A NAME="233"></A>                                                        }
+<A NAME="234"></A>                                                        setBackButton:
+<A NAME="235"></A>                                                        {
+<A NAME="236"></A>                                                            <FONT ID="SingleLineComment">//Planned for removal. The link makes the UI ugly. Browser has a back button. Left navigation links help. We also can have more intuitive navigation later.
+<A NAME="237"></A></FONT>                                                            <FONT ID="MultiLineComment">/*new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
+<A NAME="238"></A>                                                                @Override
+<A NAME="239"></A>                                                                protected void init(final Object... initArgs) {
+<A NAME="240"></A>                                                                    $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + QMARK
+<A NAME="241"></A>                                                                            + Controller.Page.DocOrganizeCategory + EQUALS + 0);
+<A NAME="242"></A>                                                                    $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_LEFT_GIF);
+<A NAME="243"></A>                                                                }
+<A NAME="244"></A>                                                            };*/</FONT>
+<A NAME="245"></A>                                                        }
+<A NAME="246"></A>                                                        attachPrivateLocationAsRolesPermit(request__, $(Skeleton_center_skeleton), r.returnValue(), <FONT ID="False">false</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="247"></A>                                                    } <FONT ID="Catch">catch</FONT> (
+<A NAME="248"></A>                                                            <FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="249"></A>                                                        EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="250"></A>                                                    }
+<A NAME="251"></A>                                                }
+<A NAME="252"></A>                                            } <FONT ID="Else">else</FONT> {
+<A NAME="253"></A>                                                NonExistentLocation:
+<A NAME="254"></A>                                                {
+<A NAME="255"></A>                                                    USER.warn(getUsernameAsValid() + FAILS_TO_ACCESS_THIS_LOCATION);
+<A NAME="256"></A>                                                    $(Skeleton_notice).setTextContent(GUI.getString(NO_EXIST_OR_ERROR));
+<A NAME="257"></A>                                                }
+<A NAME="258"></A>                                            }
+<A NAME="259"></A>                                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="260"></A>                                            EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, t);
+<A NAME="261"></A>                                        }
+<A NAME="262"></A>                                    }
+<A NAME="263"></A>                                    <FONT ID="Break">break</FONT>;
+<A NAME="264"></A>                                <FONT ID="Case">case</FONT> Controller.Page.DocOrganizeModeEvent: {
+<A NAME="265"></A>
+<A NAME="266"></A>                                    SmartLogger.g().appendToLogMSG(<FONT ID="StringLiteral">"Mode: "</FONT> + Controller.Page.DocOrganizeModeEvent);
+<A NAME="267"></A>
+<A NAME="268"></A>                                    @NOTE(note = <FONT ID="StringLiteral">"Outside try as this is caught by the outermost common Number format exception."</FONT>)
+<A NAME="269"></A>                                    <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
+<A NAME="270"></A>
+<A NAME="271"></A>                                    @NOTE(note = <FONT ID="StringLiteral">"Outside try as this is caught by the outermost common Number format exception."</FONT>)
+<A NAME="272"></A>                                    <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> event = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeEvent));
+<A NAME="273"></A>                                    <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; r = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).dirtyRPrivateEventAsAny(getUsernameAsValid(), event);
+<A NAME="274"></A>                                    <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="275"></A>                                        <FONT ID="Try">try</FONT> {
+<A NAME="276"></A>                                            UCUpdateUserLocation:
+<A NAME="277"></A>                                            {
+<A NAME="278"></A>                                                <FONT ID="Super">super</FONT>.getHumanUserAsValid().storeAndUpdateWith(
+<A NAME="279"></A>                                                        HumanUserLocal.STORE_KEY.USER_LOCATION_TYPE,
+<A NAME="280"></A>                                                        Wall.wallTypePrivateEvent
+<A NAME="281"></A>                                                );
+<A NAME="282"></A>                                                <FONT ID="Super">super</FONT>.getHumanUserAsValid().storeAndUpdateWith(
+<A NAME="283"></A>                                                        HumanUserLocal.STORE_KEY.USER_LOCATION_DETAILS,
+<A NAME="284"></A>                                                        r.returnValueBadly().getPrivateEventId()
+<A NAME="285"></A>                                                );
+<A NAME="286"></A>                                            }
+<A NAME="287"></A>
+<A NAME="288"></A>                                            UCSetTitle:
+<A NAME="289"></A>                                            {
+<A NAME="290"></A>                                                $(skeletonTitle).setTextContent(r.returnValue().getPrivateEventName());
+<A NAME="291"></A>                                            }
+<A NAME="292"></A>                                            UCSetBackButton:
+<A NAME="293"></A>                                            {
+<A NAME="294"></A>                                                <FONT ID="SingleLineComment">//Planned for removal. The link makes the UI ugly. Browser has a back button. Left navigation links help. We also can have more intuitive navigation later.
+<A NAME="295"></A></FONT>                                                <FONT ID="MultiLineComment">/*new Button(request__, $(Skeleton_center_skeleton), LOCATIONS, false) {
+<A NAME="296"></A>                                                    @Override
+<A NAME="297"></A>                                                    protected void init(final Object... initArgs) {
+<A NAME="298"></A>                                                        $$(Controller.Page.GenericButtonLink).setAttribute(MarkupTag.A.href(), Controller.Page.Organize.getURL() + QMARK
+<A NAME="299"></A>                                                                + Controller.Page.DocOrganizeCategory + EQUALS + 0);
+<A NAME="300"></A>                                                        $$(Controller.Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_LEFT_GIF);
+<A NAME="301"></A>                                                    }
+<A NAME="302"></A>                                                };*/</FONT>
+<A NAME="303"></A>                                            }
+<A NAME="304"></A>                                            UCShowEvent:
+<A NAME="305"></A>                                            {
+<A NAME="306"></A>                                                <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="307"></A>                                                    UCReadPrivateEventOK:
+<A NAME="308"></A>                                                    {
+<A NAME="309"></A>                                                        attachPrivateEventAsRolesPermit(request__, $(Skeleton_center_skeleton), r.returnValue(), <FONT ID="False">false</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="310"></A>                                                    }
+<A NAME="311"></A>                                                } <FONT ID="Else">else</FONT> {
+<A NAME="312"></A>                                                    UCReadNonExistingPrivateEventEtc:
+<A NAME="313"></A>                                                    {
+<A NAME="314"></A>                                                        userError(getUsernameAsValid(), r.returnMsg());
+<A NAME="315"></A>                                                    }
+<A NAME="316"></A>                                                }
+<A NAME="317"></A>                                            }
+<A NAME="318"></A>
+<A NAME="319"></A>                                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="320"></A>                                            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="321"></A>                                        }
+<A NAME="322"></A>                                    } <FONT ID="Else">else</FONT> {
+<A NAME="323"></A>                                        UCNonExistentEvent:
+<A NAME="324"></A>                                        {
+<A NAME="325"></A>                                            USER.warn(getUsernameAsValid() + FAILS_TO_ACCESS_THIS_EVENT);
+<A NAME="326"></A>                                            $(Skeleton_notice).setTextContent(GUI.getString(NO_EXIST_OR_ERROR_EVENT));
+<A NAME="327"></A>                                        }
+<A NAME="328"></A>                                    }
+<A NAME="329"></A>                                }
+<A NAME="330"></A>                                <FONT ID="Break">break</FONT>;
+<A NAME="331"></A>                                <FONT ID="Default">default</FONT>:
+<A NAME="332"></A>                                    <FONT ID="Throw">throw</FONT> CATEGORY_NUMBER_FORMAT_EXCEPTION;
+<A NAME="333"></A>                            }
+<A NAME="334"></A>                        } <FONT ID="Catch">catch</FONT> (
+<A NAME="335"></A>                                <FONT ID="Final">final</FONT> NumberFormatException e_) {
+<A NAME="336"></A>                            SmartLogger.g().appendToLogMSG(e_.getMessage());
+<A NAME="337"></A>                            USER_EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, e_);
+<A NAME="338"></A>                        }
+<A NAME="339"></A>                    }
+<A NAME="340"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="341"></A>                    SmartLogger.g().appendToLogMSG(<FONT ID="StringLiteral">"Appending TeachMoment"</FONT>);
+<A NAME="342"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMoment.java.html">TeachMoment</A>(request__, <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMomentCriteria.java.html">TeachMomentCriteria</A>(<FONT ID="Null">null</FONT>), $(Controller.Page.Skeleton_center_content));
+<A NAME="343"></A>                }
+<A NAME="344"></A>                SmartLogger.g().complete(Loggers.DONE);<FONT ID="SingleLineComment">//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
+<A NAME="345"></A></FONT>            }
+<A NAME="346"></A>
+<A NAME="347"></A>
+<A NAME="348"></A>            <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> attachPrivateEventAsRolesPermit(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> r, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> favorViewership, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> detailedMode__) {
+<A NAME="349"></A>                <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isOwner = r.getPrivateEventOwners().contains(<FONT ID="New">new</FONT> HumanIdEq(getUsernameAsValid()));
+<A NAME="350"></A>                <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isViewer = r.getPrivateEventViewers().contains(<FONT ID="New">new</FONT> HumanIdEq(getUsernameAsValid()));
+<A NAME="351"></A>
+<A NAME="352"></A>                <FONT ID="If">if</FONT> ((isOwner || isViewer)) {
+<A NAME="353"></A>                    USER.info(getUsernameAsValid() + IS_GRANTED_ACCESS_TO_VIEW_THIS_PRIVATE_EVENT);
+<A NAME="354"></A>                    <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> validPrivateLocationId = r.getPrivateEventId();
+<A NAME="355"></A>                    <FONT ID="If">if</FONT> (isOwner) {
+<A NAME="356"></A>                        <FONT ID="If">if</FONT> (!favorViewership) {
+<A NAME="357"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventDelete.java.html">PrivateEventDelete</A>(request__, appendToElement, getUsernameAsValid(), r.getPrivateEventId(), detailedMode__) {
+<A NAME="358"></A>                            };
+<A NAME="359"></A>                        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (isViewer) {
+<A NAME="360"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventView.java.html">PrivateEventView</A>(request__, appendToElement, getUsernameAsValid(), r.getPrivateEventId(), detailedMode__) {
+<A NAME="361"></A>                            };
+<A NAME="362"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="363"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventDelete.java.html">PrivateEventDelete</A>(request__, appendToElement, getUsernameAsValid(), r.getPrivateEventId(), detailedMode__) {
+<A NAME="364"></A>                            };
+<A NAME="365"></A>                        }
+<A NAME="366"></A>
+<A NAME="367"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="368"></A>                        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventView.java.html">PrivateEventView</A>(request__, appendToElement, getUsernameAsValid(), r.getPrivateEventId(), detailedMode__) {
+<A NAME="369"></A>                        };
+<A NAME="370"></A>                    }
+<A NAME="371"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="372"></A>                    USER.info(getUsernameAsValid() + IS_DENIED_RIGHTS_TO_VIEW_THIS_PRIVATE_EVENT + r.getPrivateEventId());
+<A NAME="373"></A>                    $(Skeleton_notice).setTextContent(RBGet.gui().getString(NO_RIGHTS_TO_VIEW));
+<A NAME="374"></A>                }
+<A NAME="375"></A>            }
+<A NAME="376"></A>
+<A NAME="377"></A>            <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> attachPrivateLocationAsRolesPermit(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement, <A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> r, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> favorViewership, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> showEventCreate) {
+<A NAME="378"></A>
+<A NAME="379"></A>                <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> requestedPrivateLocation = r.getPrivateLocationId();
+<A NAME="380"></A>
+<A NAME="381"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> pl = DB.getHumanCrudPrivateLocationLocal(<FONT ID="True">true</FONT>).dirtyRPrivateLocationAsAny(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid()).getSelfAsValid(), r.getPrivateLocationId()).returnValueBadly();
+<A NAME="382"></A>
+<A NAME="383"></A>                <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isOwner = pl.getPrivateLocationOwners().contains(<FONT ID="New">new</FONT> HumanIdEq(getUsernameAsValid()));
+<A NAME="384"></A>                <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isViewer = pl.getPrivateLocationViewers().contains(<FONT ID="New">new</FONT> HumanIdEq(getUsernameAsValid()));
+<A NAME="385"></A>
+<A NAME="386"></A>
+<A NAME="387"></A>                <FONT ID="If">if</FONT> (isOwner || isViewer) {
+<A NAME="388"></A>                    <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> validPrivateLocationId = pl.getPrivateLocationId();
+<A NAME="389"></A>
+<A NAME="390"></A>                    UseCaseIntroduction:
+<A NAME="391"></A>                    {
+<A NAME="392"></A>
+<A NAME="393"></A>                        <FONT ID="If">if</FONT> (isOwner) {
+<A NAME="394"></A>                            DEBUG.debug(getUsernameAsValid() + IS_ACCEPTED_AS_A_OWNER_OF_THIS_LOCATION + validPrivateLocationId);
+<A NAME="395"></A>                            <FONT ID="If">if</FONT> (!favorViewership) {
+<A NAME="396"></A>                                <FONT ID="New">new</FONT> PrivateLocationDelete(request__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
+<A NAME="397"></A>                                };
+<A NAME="398"></A>                            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (isViewer) {<FONT ID="SingleLineComment">//Because this can be false even though a user is an owner
+<A NAME="399"></A></FONT>                                <FONT ID="New">new</FONT> PrivateLocationView(request__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
+<A NAME="400"></A>                                };
+<A NAME="401"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="402"></A>                                <FONT ID="New">new</FONT> PrivateLocationDelete(request__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
+<A NAME="403"></A>                                };
+<A NAME="404"></A>                            }
+<A NAME="405"></A>
+<A NAME="406"></A>                            UseCaseCreatePrivateEvents:
+<A NAME="407"></A><FONT ID="SingleLineComment">//Can be done only by owners
+<A NAME="408"></A></FONT>                            {
+<A NAME="409"></A>                                <FONT ID="If">if</FONT> (showEventCreate) {
+<A NAME="410"></A>                                    <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventCreate.java.html">PrivateEventCreate</A>(request__, appendToElement, getUsernameAsValid(), validPrivateLocationId) {
+<A NAME="411"></A>                                    };
+<A NAME="412"></A>                                }
+<A NAME="413"></A>                            }
+<A NAME="414"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="415"></A>                            DEBUG.debug(getUsernameAsValid() + IS_ACCEPTED_AS_A_VIEWER_OF_THIS_LOCATION + validPrivateLocationId);
+<A NAME="416"></A>                            <FONT ID="New">new</FONT> PrivateLocationView(request__, appendToElement, getUsernameAsValid(), requestedPrivateLocation) {
+<A NAME="417"></A>                            };
+<A NAME="418"></A>                        }
+<A NAME="419"></A>
+<A NAME="420"></A><FONT ID="SingleLineComment">//                        UseCaseViewPrivateEvents://Private events are showed in private location widgets so this is not necessary
+<A NAME="421"></A></FONT><FONT ID="SingleLineComment">//                        {
+<A NAME="422"></A></FONT><FONT ID="SingleLineComment">//                            for (final PrivateEvent p : DB.getHumanCRUDHumanLocal(true).doDirtyRHumansPrivateEvent(new HumanId(getUsernameAsValid())).returnValue().getPrivateEventsViewed())
+<A NAME="423"></A></FONT><FONT ID="SingleLineComment">//                                if (p.getPrivateLocation().getPrivateLocationId() == validPrivateLocationId) {
+<A NAME="424"></A></FONT><FONT ID="SingleLineComment">//                                    new PrivateEventView(request__, appendToElement, getUsernameAsValid(), p.getPrivateEventId(), false) {
+<A NAME="425"></A></FONT><FONT ID="SingleLineComment">//                                    };
+<A NAME="426"></A></FONT><FONT ID="SingleLineComment">//                                }
+<A NAME="427"></A></FONT><FONT ID="SingleLineComment">//                        }
+<A NAME="428"></A></FONT>                    }
+<A NAME="429"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="430"></A>                    USER.info(getUsernameAsValid() + IS_DENIED_RIGHTS_TO_VIEW_THIS_PRIVATE_LOCATION + r.getPrivateLocationId());
+<A NAME="431"></A>                    $(Skeleton_notice).setTextContent(RBGet.gui().getString(NO_RIGHTS_TO_VIEW));
+<A NAME="432"></A>                }
+<A NAME="433"></A>            }
+<A NAME="434"></A>
+<A NAME="435"></A>            <FONT ID="FormalComment">/**
+<A NAME="436"></A>             * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="437"></A>             */</FONT>
+<A NAME="438"></A>            @Override
+<A NAME="439"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(
+<A NAME="440"></A>                    <FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__,
+<A NAME="441"></A>                    <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__,
+<A NAME="442"></A>                    <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__) {
+<A NAME="443"></A>            }
+<A NAME="444"></A>        };
+<A NAME="445"></A>    }
+<A NAME="446"></A>}</pre>
+</BODY>
+</HTML>

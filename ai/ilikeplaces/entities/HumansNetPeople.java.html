@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.HumansNetPeople (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumansNetPeople.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.UNIDIRECTIONAL;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBException.java.html">ai.ilikeplaces.exception.DBException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * These are the people needed for an event
+<A NAME="17"></A> * &lt;p/&gt;
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="20"></A> * Date: Dec 8, 2009
+<A NAME="21"></A> * Time: 9:54:03 PM
+<A NAME="22"></A> */</FONT>
+<A NAME="23"></A>
+<A NAME="24"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="25"></A>@Entity
+<A NAME="26"></A>@NamedQueries(
+<A NAME="27"></A>        {
+<A NAME="28"></A>                @NamedQuery(
+<A NAME="29"></A>                        name = <FONT ID="StringLiteral">"FindHumansNetPeoplesWhoHaveMeAsAFriend"</FONT>,
+<A NAME="30"></A>                        query = <FONT ID="StringLiteral">"SELECT humansNetPeople FROM HumansNetPeople humansNetPeople "</FONT> +
+<A NAME="31"></A>                                <FONT ID="StringLiteral">"WHERE humansNetPeople.humanId "</FONT> +
+<A NAME="32"></A>                                <FONT ID="StringLiteral">"IN("</FONT> +
+<A NAME="33"></A>                                <FONT ID="StringLiteral">"SELECT humansNetPeople2 FROM HumansNetPeople humansNetPeople2, HumansNetPeople humansNetPeople3 "</FONT> +
+<A NAME="34"></A>                                <FONT ID="StringLiteral">"WHERE humansNetPeople3.humanId = :humanId AND humansNetPeople3 MEMBER OF humansNetPeople2.humansNetPeoples)"</FONT><FONT ID="SingleLineComment">//Don't ask me how I did it. It took me hours! Weather wasn't ideal either
+<A NAME="35"></A></FONT>                )
+<A NAME="36"></A>        }
+<A NAME="37"></A>)
+<A NAME="38"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="39"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumansNetPeople <FONT ID="Extends">extends</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanEquals.java.html">HumanEquals</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A>, <A HREF="../../../ai/ilikeplaces/entities/HumanIdFace.java.html">HumanIdFace</A>, Serializable {
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> String humanId;
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> String humanIdCOL = <FONT ID="StringLiteral">"humanId"</FONT>;
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansNet.java.html">HumansNet</A> humansNet;
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A>&gt; humansNetPeoples;
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HUMANS_NET_PEOPLE = <FONT ID="StringLiteral">"HumansNetPeople{"</FONT>;
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HUMAN_ID = <FONT ID="StringLiteral">"humanId='"</FONT>;
+<A NAME="46"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT> CHAR = <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="47"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT> BACKSLASH = <FONT ID="CharacerLiteral">'\''</FONT>;
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> String FindHumansNetPeoplesWhoHaveMeAsAFriend = <FONT ID="StringLiteral">"FindHumansNetPeoplesWhoHaveMeAsAFriend"</FONT>;
+<A NAME="50"></A>
+<A NAME="51"></A>    @Id
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> String getHumanId() {
+<A NAME="53"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="54"></A>    }
+<A NAME="55"></A>
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumanId(<FONT ID="Final">final</FONT> String humanId__) {
+<A NAME="57"></A>        <FONT ID="This">this</FONT>.humanId = humanId__;
+<A NAME="58"></A>    }
+<A NAME="59"></A>
+<A NAME="60"></A>    @OneToOne(cascade = CascadeType.REFRESH)
+<A NAME="61"></A>    @PrimaryKeyJoinColumn
+<A NAME="62"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansNet.java.html">HumansNet</A> getHumansNet() {
+<A NAME="63"></A>        <FONT ID="Return">return</FONT> humansNet;
+<A NAME="64"></A>    }
+<A NAME="65"></A>
+<A NAME="66"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumansNet(<A HREF="../../../ai/ilikeplaces/entities/HumansNet.java.html">HumansNet</A> humansNet) {
+<A NAME="67"></A>        <FONT ID="This">this</FONT>.humansNet = humansNet;
+<A NAME="68"></A>    }
+<A NAME="69"></A>
+<A NAME="70"></A>    @NOTE(note = <FONT ID="StringLiteral">"This implementation will be fast a.l.a the Human entity has lazy in its getters."</FONT>)
+<A NAME="71"></A>    @Override
+<A NAME="72"></A>    @Transient
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> String getDisplayName() {
+<A NAME="74"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.getHumansNet().getDisplayName();
+<A NAME="75"></A>    }
+<A NAME="76"></A>
+<A NAME="77"></A>    @Override
+<A NAME="78"></A>    @Transient
+<A NAME="79"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> ifFriend(<FONT ID="Final">final</FONT> String friendsHumanId) {
+<A NAME="80"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; r = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyIsHumansNetPeople(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>(<FONT ID="This">this</FONT>.humanId), <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>(friendsHumanId));
+<A NAME="81"></A>        <FONT ID="If">if</FONT> (r.returnStatus() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="82"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBException.java.html">DBException</A>(r.returnError());
+<A NAME="83"></A>        }
+<A NAME="84"></A>        <FONT ID="Return">return</FONT> r.returnValue();
+<A NAME="85"></A>    }
+<A NAME="86"></A>
+<A NAME="87"></A>    @Override
+<A NAME="88"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> notFriend(<FONT ID="Final">final</FONT> String friendsHumanId) {
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> !ifFriend(friendsHumanId);
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    @NOTE(note = <FONT ID="StringLiteral">"MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN."</FONT>)
+<A NAME="93"></A>    @UNIDIRECTIONAL(note = <FONT ID="StringLiteral">"Asymmetric Relationship"</FONT>)
+<A NAME="94"></A>    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+<A NAME="95"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A>&gt; getHumansNetPeoples() {
+<A NAME="96"></A>        <FONT ID="Return">return</FONT> humansNetPeoples;
+<A NAME="97"></A>    }
+<A NAME="98"></A>
+<A NAME="99"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumansNetPeoples(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A>&gt; humansNetPeoples) {
+<A NAME="100"></A>        <FONT ID="This">this</FONT>.humansNetPeoples = humansNetPeoples;
+<A NAME="101"></A>    }
+<A NAME="102"></A>
+<A NAME="103"></A>    @Override
+<A NAME="104"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(Object o) {
+<A NAME="105"></A>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT> == o) <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="106"></A>
+<A NAME="107"></A>        <FONT ID="If">if</FONT> (o == <FONT ID="Null">null</FONT>) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="108"></A>
+<A NAME="109"></A>        <FONT ID="If">if</FONT> (getClass() == o.getClass()) {
+<A NAME="110"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> that = (<A HREF="../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A>) o;
+<A NAME="111"></A>            <FONT ID="Return">return</FONT> (!(<FONT ID="This">this</FONT>.getHumanId() == <FONT ID="Null">null</FONT> || that.getHumanId() == <FONT ID="Null">null</FONT>)) &amp;&amp; <FONT ID="This">this</FONT>.getHumanId().equals(that.getHumanId());
+<A NAME="112"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="113"></A>            <FONT ID="Return">return</FONT> matchHumanId(o);
+<A NAME="114"></A>        }
+<A NAME="115"></A>    }
+<A NAME="116"></A>
+<A NAME="117"></A>    @Override
+<A NAME="118"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> hashCode() {
+<A NAME="119"></A>        <FONT ID="Return">return</FONT> humanId != <FONT ID="Null">null</FONT> ? humanId.hashCode() : <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="120"></A>    }
+<A NAME="121"></A>
+<A NAME="122"></A>    @Override
+<A NAME="123"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="124"></A>        <FONT ID="Return">return</FONT> HUMANS_NET_PEOPLE +
+<A NAME="125"></A>                HUMAN_ID + humanId + BACKSLASH +
+<A NAME="126"></A>                CHAR;
+<A NAME="127"></A>    }
+<A NAME="128"></A>}
+<A NAME="129"></A></pre>
+</BODY>
+</HTML>

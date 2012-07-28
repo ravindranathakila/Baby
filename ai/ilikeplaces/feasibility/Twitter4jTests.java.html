@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.feasibility.Twitter4jTests (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Twitter4jTests.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.feasibility;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> twitter4j.*;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A> * Created by IntelliJ IDEA.
+<A NAME="8"></A> * User: Ravindranath Akila
+<A NAME="9"></A> * Date: Oct 29, 2010
+<A NAME="10"></A> * Time: 7:05:16 AM
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="13"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Twitter4jTests {
+<A NAME="14"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(<FONT ID="Final">final</FONT> String args[]) <FONT ID="Throws">throws</FONT> TwitterException {
+<A NAME="15"></A>        Twitter twitter = <FONT ID="New">new</FONT> TwitterFactory().getInstance();
+<A NAME="16"></A>        <FONT ID="Final">final</FONT> RateLimitStatus r = twitter.getRateLimitStatus();
+<A NAME="17"></A>
+<A NAME="18"></A>        System.out.println(<FONT ID="StringLiteral">"Hourly Limit:"</FONT> + r.getHourlyLimit());
+<A NAME="19"></A>        System.out.println(<FONT ID="StringLiteral">"Hits Left:"</FONT> + r.getRemainingHits());
+<A NAME="20"></A>
+<A NAME="21"></A>        Query query = <FONT ID="New">new</FONT> Query(<FONT ID="StringLiteral">"fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)"</FONT>);
+<A NAME="22"></A>
+<A NAME="23"></A>            <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> start = System.currentTimeMillis();
+<A NAME="24"></A>            QueryResult result = twitter.search(query.geoCode(<FONT ID="New">new</FONT> GeoLocation(<FONT ID="FloatPointLiteral">6.876754135813088</FONT>, <FONT ID="FloatPointLiteral">79.93997275829315</FONT>), <FONT ID="IntegerLiteral">20</FONT>, Query.MILES));
+<A NAME="25"></A>            System.out.println(<FONT ID="StringLiteral">"hits:"</FONT> + result.getMaxId());
+<A NAME="26"></A>            <FONT ID="For">for</FONT> (Tweet tweet : result.getTweets()) {
+<A NAME="27"></A>                System.out.println(tweet.getFromUser() + <FONT ID="StringLiteral">":"</FONT> + tweet.getText());
+<A NAME="28"></A>            }
+<A NAME="29"></A>            System.out.println(<FONT ID="StringLiteral">"Time taken:"</FONT> + (System.currentTimeMillis() - start));
+<A NAME="30"></A>    }
+<A NAME="31"></A>}
+<A NAME="32"></A></pre>
+</BODY>
+</HTML>

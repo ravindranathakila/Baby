@@ -1,0 +1,558 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.FindFriend (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">FindFriend.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">ai.ilikeplaces.entities.HumansIdentity</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">ai.ilikeplaces.entities.HumansNetPeople</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ai.ilikeplaces.logic.contactimports.ImportedContact</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/google/GoogleContactImporter.java.html">ai.ilikeplaces.logic.contactimports.google.GoogleContactImporter</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">ai.ilikeplaces.logic.validators.unit.Password</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/ServletLogin.java.html">ai.ilikeplaces.servlets.ServletLogin</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="19"></A><FONT ID="Import">import</FONT> net.sf.oval.exception.ConstraintsViolatedException;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.NodePropertyTransport;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="25"></A><FONT ID="Import">import</FONT> org.w3c.dom.Document;
+<A NAME="26"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="27"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="28"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="29"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="30"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="31"></A>
+<A NAME="32"></A><FONT ID="Import">import</FONT> java.util.*;
+<A NAME="33"></A>
+<A NAME="34"></A>
+<A NAME="35"></A><FONT ID="FormalComment">/**
+<A NAME="36"></A> * Why the fuck I used {@link ai.ilikeplaces.entities.HumansNet} on this class I have no idea.
+<A NAME="37"></A> * It fucking uses up a lot of memory.
+<A NAME="38"></A> * Judging by my previous rants, I'm sure there was a reason. But I still don't get it.
+<A NAME="39"></A> * I write this at the time I'm trying to hook up contact imports with existing users on ilikeplaces.com .
+<A NAME="40"></A> * &lt;p/&gt;  &lt;br/&gt;
+<A NAME="41"></A> * &lt;b&gt;Okay, lets clear this out.  &lt;br/&gt;
+<A NAME="42"></A> * There are 3 kinds. Basically,    &lt;br/&gt;
+<A NAME="43"></A> * Existing on ilikeplaces and her friend &lt;br/&gt;
+<A NAME="44"></A> * Existing on ilikeplaces not her friend   &lt;br/&gt;
+<A NAME="45"></A> * Not existing on ilikeplaces  &lt;br/&gt; &lt;br/&gt;
+<A NAME="46"></A> * &lt;/b&gt;
+<A NAME="47"></A> * &lt;p/&gt;&lt;br/&gt;
+<A NAME="48"></A> * It seems we are fetching her existing friends each time she does a search. This is OK, but can be cached on the widget.
+<A NAME="49"></A> * I'm sure at the time of writing this code I was so poor I decided reading from the DB to RAM each time is better than
+<A NAME="50"></A> * caching it. I never checked Memory $ vs CPU cycles $. It's too late for either. Let's fix the code as we go.
+<A NAME="51"></A> *
+<A NAME="52"></A> * @author Ravindranath Akila
+<A NAME="53"></A> */</FONT>
+<A NAME="54"></A>
+<A NAME="55"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="56"></A>@OK
+<A NAME="57"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> FindFriend <FONT ID="Extends">extends</FONT> AbstractWidgetListener {
+<A NAME="58"></A>
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PASSWORD_DETAILS = <FONT ID="StringLiteral">"_passwordDetails"</FONT>;
+<A NAME="60"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PASSWORD_ADVICE = <FONT ID="StringLiteral">"_passwordAdvice"</FONT>;
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String URL = <FONT ID="StringLiteral">"_url"</FONT>;
+<A NAME="62"></A>
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ACCESS_TOKEN = <FONT ID="StringLiteral">"access_token"</FONT>;
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HASH = <FONT ID="StringLiteral">"#"</FONT>;
+<A NAME="65"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DEFAULT = <FONT ID="StringLiteral">"default"</FONT>;
+<A NAME="66"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/FindFriend.java.html">FindFriend</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="67"></A>
+<A NAME="68"></A>    <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId;
+<A NAME="69"></A>
+<A NAME="70"></A>    <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> humansIdentity;
+<A NAME="71"></A>
+<A NAME="72"></A>    RefObj&lt;List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt;&gt; matches = <FONT ID="Null">null</FONT>;
+<A NAME="73"></A>
+<A NAME="74"></A>    Set&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; emails;
+<A NAME="75"></A>
+<A NAME="76"></A>
+<A NAME="77"></A>    <FONT ID="Public">public</FONT> FindFriend(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="78"></A>        <FONT ID="Super">super</FONT>(request__, Page.FindFriend, appendToElement__, humanId);
+<A NAME="79"></A>    }
+<A NAME="80"></A>
+<A NAME="81"></A>    <FONT ID="FormalComment">/**
+<A NAME="82"></A>     *
+<A NAME="83"></A>     */</FONT>
+<A NAME="84"></A>    @Override
+<A NAME="85"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="86"></A>        matches = <FONT ID="New">new</FONT> Obj&lt;List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt;&gt;(<FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt;());
+<A NAME="87"></A>        emails = <FONT ID="New">new</FONT> HashSet&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt;();
+<A NAME="88"></A>
+<A NAME="89"></A>        <FONT ID="If">if</FONT> (((<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">0</FONT>]).validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="90"></A>            <FONT ID="This">this</FONT>.humanId = ((<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="91"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="92"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(((<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">0</FONT>]).getViolations());
+<A NAME="93"></A>        }
+<A NAME="94"></A>
+<A NAME="95"></A>        humansIdentity = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansIdentity(humanId).returnValueBadly();<FONT ID="SingleLineComment">//DO NOT USE CACHE HERE AT IT MIGHT SPOIL THE CACHE BY NON CRTICAL DATA
+<A NAME="96"></A></FONT>
+<A NAME="97"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> herExistingFriends = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansNetPeople(humanId);<FONT ID="SingleLineComment">//First important variable to notice
+<A NAME="98"></A></FONT>
+<A NAME="99"></A>        UCAttemptToRecognizeGoogleContactImportRedirect:
+<A NAME="100"></A>        {
+<A NAME="101"></A>
+<A NAME="102"></A>            <FONT ID="Final">final</FONT> String authToken = request.getServletRequest().getParameter(ACCESS_TOKEN);
+<A NAME="103"></A>
+<A NAME="104"></A>            <FONT ID="If">if</FONT> (authToken != <FONT ID="Null">null</FONT>) {
+<A NAME="105"></A>
+<A NAME="106"></A>                <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt; whoppingImportedContacts;<FONT ID="SingleLineComment">//Second important variable to notice
+<A NAME="107"></A></FONT>                Import_Google_Contacts__Add_To_Emails_List:
+<A NAME="108"></A>                {
+<A NAME="109"></A>                    whoppingImportedContacts = GoogleContactImporter.fetchContacts(DEFAULT, authToken).getValue();
+<A NAME="110"></A>
+<A NAME="111"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> importedContact : whoppingImportedContacts) {<FONT ID="SingleLineComment">//LOOPING A WHOPPING 1000
+<A NAME="112"></A></FONT>                        emails.add(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(importedContact.getHumanId()));
+<A NAME="113"></A>                    }
+<A NAME="114"></A>                }
+<A NAME="115"></A>
+<A NAME="116"></A>                <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt; existingUsersFromDB;<FONT ID="SingleLineComment">//Third important variable to notice
+<A NAME="117"></A></FONT>                <FONT ID="Final">final</FONT> List&lt;String&gt; existingUsers = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();<FONT ID="SingleLineComment">//LOOPING 300
+<A NAME="118"></A></FONT>                Get_Users_Existing_Friends__Add_To_Humans_Network:
+<A NAME="119"></A>                {
+<A NAME="120"></A>                    existingUsersFromDB = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansIdentitiesByEmails(<FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt;(emails));
+<A NAME="121"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> h : herExistingFriends.getHumansNetPeoples()) {
+<A NAME="122"></A>                        existingUsers.add(h.getHumanId());
+<A NAME="123"></A>                    }
+<A NAME="124"></A>                }
+<A NAME="125"></A>
+<A NAME="126"></A>                clear($$(Controller.Page.friendFindSearchResults));
+<A NAME="127"></A>
+<A NAME="128"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> humansIdentity : existingUsersFromDB) {
+<A NAME="129"></A>                    <FONT ID="If">if</FONT> (!existingUsers.contains(humansIdentity.getHumanId())) {
+<A NAME="130"></A>                        generateFriendAddWidgetFor(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humansIdentity.getHumanId()), humanId);
+<A NAME="131"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="132"></A>                        generateFriendDeleteWidgetFor(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humansIdentity.getHumanId()), humanId);
+<A NAME="133"></A>                    }
+<A NAME="134"></A>                }
+<A NAME="135"></A>
+<A NAME="136"></A>                <FONT ID="Final">final</FONT> String invitersDisplayName = humansIdentity.getHuman().getDisplayName();
+<A NAME="137"></A>
+<A NAME="138"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> importedContact : whoppingImportedContacts) {
+<A NAME="139"></A>                    <FONT ID="If">if</FONT> (!herExistingFriends.getHumansNetPeoples().contains(importedContact)) {
+<A NAME="140"></A>                        generateFriendInviteWidgetFor(importedContact, humanId, invitersDisplayName);
+<A NAME="141"></A>                    }
+<A NAME="142"></A>                }
+<A NAME="143"></A>            }
+<A NAME="144"></A>        }
+<A NAME="145"></A>
+<A NAME="146"></A>        UCDisplayYouHaventAddedFriendsYet:
+<A NAME="147"></A>        {
+<A NAME="148"></A>            <FONT ID="If">if</FONT> (herExistingFriends.getHumansNetPeoples().size() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="149"></A>                $$(Controller.Page.friendFindSearchNotice).setTextContent(<FONT ID="StringLiteral">"Oops! You haven't added any friends yet. Add your friends to get going!"</FONT>);
+<A NAME="150"></A>            }
+<A NAME="151"></A>        }
+<A NAME="152"></A>
+<A NAME="153"></A>        List&lt;String&gt; emails = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();
+<A NAME="154"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> hnp : herExistingFriends.getHumansNetPeoples()) {
+<A NAME="155"></A>            emails.add(hnp.getHumanId());
+<A NAME="156"></A>        }
+<A NAME="157"></A>
+<A NAME="158"></A>        UCDisplayExistingUserMails:
+<A NAME="159"></A>        {
+<A NAME="160"></A>            <FONT ID="FormalComment">/**
+<A NAME="161"></A>             * Normal approach
+<A NAME="162"></A>             */</FONT>
+<A NAME="163"></A>            $$(Controller.Page.friendFindSearchTextInput).setAttribute(MarkupTag.TEXTAREA.value(), Arrays.toString(emails.toArray()));
+<A NAME="164"></A>
+<A NAME="165"></A>            <FONT ID="FormalComment">/**
+<A NAME="166"></A>             * For chrome!
+<A NAME="167"></A>             */</FONT>
+<A NAME="168"></A>            $$(Controller.Page.friendFindSearchTextInput).setTextContent(Arrays.toString(emails.toArray()));
+<A NAME="169"></A>        }
+<A NAME="170"></A>
+<A NAME="171"></A>        UCDisplayExistingUsers:
+<A NAME="172"></A>        {
+<A NAME="173"></A>            <FONT ID="SingleLineComment">//clear($$(Controller.Page.friendFindSearchResults));
+<A NAME="174"></A></FONT>
+<A NAME="175"></A>
+<A NAME="176"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> friend : herExistingFriends.getHumansNetPeoples()) {
+<A NAME="177"></A>
+<A NAME="178"></A>                generateFriendDeleteWidgetFor(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(friend.getHumanId()), humanId);
+<A NAME="179"></A>
+<A NAME="180"></A>            }
+<A NAME="181"></A>
+<A NAME="182"></A>        }
+<A NAME="183"></A>    }
+<A NAME="184"></A>
+<A NAME="185"></A>    @Override
+<A NAME="186"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__) {
+<A NAME="187"></A>
+<A NAME="188"></A>        UCProcessUserEmailInput:
+<A NAME="189"></A>        {
+<A NAME="190"></A>
+<A NAME="191"></A>            itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.friendFindSearchTextInput), EventType.BLUR.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="192"></A>
+<A NAME="193"></A>                <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="194"></A>                <FONT ID="Private">private</FONT> RefObj&lt;List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt;&gt; mymatches = matches;
+<A NAME="195"></A>                <FONT ID="Private">private</FONT> Set&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; myemails = emails;
+<A NAME="196"></A>
+<A NAME="197"></A>                @Override
+<A NAME="198"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="199"></A>                    <FONT ID="Final">final</FONT> String emailString = ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value());
+<A NAME="200"></A>                    <FONT ID="Final">final</FONT> SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, <FONT ID="StringLiteral">"Processing email string "</FONT> + emailString, <FONT ID="IntegerLiteral">60000</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="201"></A>                    myemails.clear();
+<A NAME="202"></A>                    myemails.addAll(Email.emails(emailString));
+<A NAME="203"></A>                    <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt; existingUsers = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansIdentitiesByEmails(<FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt;(myemails));
+<A NAME="204"></A>                    UCExistingFriendAdd:
+<A NAME="205"></A>                    {
+<A NAME="206"></A>                        mymatches.setObj(existingUsers);
+<A NAME="207"></A>                    }
+<A NAME="208"></A>
+<A NAME="209"></A>                    <FONT ID="FormalComment">/**
+<A NAME="210"></A>                     * remember, multiple entries in browser mailto "to" parameter separated by commas,
+<A NAME="211"></A>                     * doesn't work in some browser though they appear to support it.
+<A NAME="212"></A>                     * They in fact don't send the mail.
+<A NAME="213"></A>                     */</FONT>
+<A NAME="214"></A>                    UCNonExistingFriendInvite:
+<A NAME="215"></A>                    {
+<A NAME="216"></A>                        <FONT ID="FormalComment">/**
+<A NAME="217"></A>                         * Just include subject, and body.
+<A NAME="218"></A>                         */</FONT>
+<A NAME="219"></A>                        UCSimpleMailToLink:
+<A NAME="220"></A>                        {
+<A NAME="221"></A>                            <FONT ID="SingleLineComment">//This is there in the template
+<A NAME="222"></A></FONT>                        }
+<A NAME="223"></A>
+<A NAME="224"></A>                        <FONT ID="FormalComment">/**
+<A NAME="225"></A>                         * Invite each friend individually link.
+<A NAME="226"></A>                         */</FONT>
+<A NAME="227"></A>                        UCIndividualMailToLink:
+<A NAME="228"></A>                        {
+<A NAME="229"></A>                            <FONT ID="SingleLineComment">//postponed, may not be necessary. kind of a headache to the user too.
+<A NAME="230"></A></FONT>                        }
+<A NAME="231"></A>                    }
+<A NAME="232"></A>                    sl.complete(Loggers.DONE);
+<A NAME="233"></A>
+<A NAME="234"></A>                }
+<A NAME="235"></A>
+<A NAME="236"></A>            }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="237"></A>        }
+<A NAME="238"></A>
+<A NAME="239"></A>        UCAddRemoveFriends:
+<A NAME="240"></A>        {
+<A NAME="241"></A>
+<A NAME="242"></A>            itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.friendFindSearchButtonInput), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="243"></A>
+<A NAME="244"></A>                <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="245"></A>                <FONT ID="Private">private</FONT> RefObj&lt;List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt;&gt; mymatches = matches;
+<A NAME="246"></A>                <FONT ID="Private">private</FONT> Set&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; myemails = emails;
+<A NAME="247"></A>
+<A NAME="248"></A>                @Override
+<A NAME="249"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="250"></A>                    <FONT ID="Final">final</FONT> SmartLogger sl = SmartLogger.start(Loggers.LEVEL.USER,
+<A NAME="251"></A>                            myhumanId.getObj() + <FONT ID="StringLiteral">" finding friends"</FONT>,
+<A NAME="252"></A>                            <FONT ID="IntegerLiteral">60000</FONT>,
+<A NAME="253"></A>                            <FONT ID="Null">null</FONT>,
+<A NAME="254"></A>                            <FONT ID="True">true</FONT>
+<A NAME="255"></A>                    );
+<A NAME="256"></A>
+<A NAME="257"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> humansNetPeople = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansNetPeople(myhumanId);
+<A NAME="258"></A>
+<A NAME="259"></A>                    <FONT ID="Final">final</FONT> List&lt;String&gt; humansNetPeoples = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();
+<A NAME="260"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> h : humansNetPeople.getHumansNetPeoples()) {
+<A NAME="261"></A>                        humansNetPeoples.add(h.getHumanId());
+<A NAME="262"></A>                    }
+<A NAME="263"></A>
+<A NAME="264"></A>                    clear($$(Controller.Page.friendFindSearchResults));
+<A NAME="265"></A>                    <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; matchedEmailList = <FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt;();
+<A NAME="266"></A>
+<A NAME="267"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> humansIdentity : mymatches.getObj()) {
+<A NAME="268"></A>                        matchedEmailList.add(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(humansIdentity.getHumanId()));
+<A NAME="269"></A>                        <FONT ID="If">if</FONT> (!humansNetPeoples.contains(humansIdentity.getHumanId())) {
+<A NAME="270"></A>                            generateFriendAddWidgetFor(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humansIdentity.getHumanId()), myhumanId);
+<A NAME="271"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="272"></A>                            generateFriendDeleteWidgetFor(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humansIdentity.getHumanId()), myhumanId);
+<A NAME="273"></A>                        }
+<A NAME="274"></A>                    }
+<A NAME="275"></A>
+<A NAME="276"></A>
+<A NAME="277"></A>                    clear($$(Controller.Page.friendFindSearchInvites));
+<A NAME="278"></A>
+<A NAME="279"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email : myemails) {
+<A NAME="280"></A>                        <FONT ID="If">if</FONT> (!matchedEmailList.contains(email)) {
+<A NAME="281"></A>
+<A NAME="282"></A>                            <FONT ID="Final">final</FONT> Element userPropertyContent = ElementComposer.compose($$(MarkupTag.A))
+<A NAME="283"></A>                                    .$ElementSetHref(<FONT ID="StringLiteral">"#"</FONT>)
+<A NAME="284"></A>                                    .$ElementSetText(<FONT ID="StringLiteral">"Invite"</FONT>)
+<A NAME="285"></A>                                    .$ElementSetClasses(<FONT ID="StringLiteral">"cursor_link"</FONT>)
+<A NAME="286"></A>                                    .$ElementSetAttribute(<FONT ID="StringLiteral">"style"</FONT>,<FONT ID="StringLiteral">"text-decoration:underline;"</FONT>)
+<A NAME="287"></A>                                    .get();
+<A NAME="288"></A>
+<A NAME="289"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">UserProperty</A>(request, $$(Controller.Page.friendFindSearchInvites), userPropertyContent,
+<A NAME="290"></A>                                    <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/InviteCriteria.java.html">InviteCriteria</A>(
+<A NAME="291"></A>                                            email.getObjectAsValid(), <FONT ID="StringLiteral">"http://www.ilikeplaces.com"</FONT>, <FONT ID="StringLiteral">"#"</FONT>, myhumanId,
+<A NAME="292"></A>                                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>().setEmailR(email.getObjectAsValid()).setFullNameR(email.getObjectAsValid())
+<A NAME="293"></A>                                    )) {
+<A NAME="294"></A>                                <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mymyhumanId = myhumanId;
+<A NAME="295"></A>                                <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> myemail = email;
+<A NAME="296"></A>
+<A NAME="297"></A>                                @Override
+<A NAME="298"></A>                                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(Object... initArgs) {
+<A NAME="299"></A>                                }
+<A NAME="300"></A>
+<A NAME="301"></A>                                @Override
+<A NAME="302"></A>                                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="303"></A>                                    itsNatDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="304"></A>                                        @Override
+<A NAME="305"></A>                                        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="306"></A>                                            <FONT ID="Final">final</FONT> SmartLogger inviteSL = SmartLogger.start(Loggers.LEVEL.USER,
+<A NAME="307"></A>                                                    mymyhumanId.getObj() + <FONT ID="StringLiteral">" sending join social network invitation to "</FONT> + myemail.getObj(),
+<A NAME="308"></A>                                                    <FONT ID="IntegerLiteral">60000</FONT>,
+<A NAME="309"></A>                                                    <FONT ID="Null">null</FONT>,
+<A NAME="310"></A>                                                    <FONT ID="True">true</FONT>);
+<A NAME="311"></A>                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+<A NAME="312"></A>                                                    myemail.getObjectAsValid(),
+<A NAME="313"></A>                                                    humansIdentity.getHuman().getDisplayName(),
+<A NAME="314"></A>                                                    UserProperty.getUserPropertyHtmlFor(mymyhumanId, myemail.getObjectAsValid(),
+<A NAME="315"></A>                                                            <FONT ID="StringLiteral">"I think you should get on-board DOWN TOWN. It's for offline socializing. Invite your friends and get invited back in! http://www.ilikeplaces.com"</FONT>
+<A NAME="316"></A>                                                    )
+<A NAME="317"></A>                                            );
+<A NAME="318"></A>                                            inviteSL.complete(Loggers.LEVEL.USER, Loggers.DONE);
+<A NAME="319"></A>                                            $$clear($$(Page.user_property_content));
+<A NAME="320"></A>                                            $$(Page.user_property_content).setTextContent(<FONT ID="StringLiteral">"Invited!"</FONT>);
+<A NAME="321"></A>                                            remove(evt_.getTarget(), EventType.CLICK, <FONT ID="This">this</FONT>);
+<A NAME="322"></A>                                        }
+<A NAME="323"></A>                                    }, <FONT ID="False">false</FONT>);
+<A NAME="324"></A>                                }
+<A NAME="325"></A>                            };
+<A NAME="326"></A>
+<A NAME="327"></A>
+<A NAME="328"></A><FONT ID="SingleLineComment">//                            new Button(request, $$(Controller.Page.friendFindSearchInvites), "Invite " + email, false) {
+<A NAME="329"></A></FONT><FONT ID="SingleLineComment">//                                private HumanId mymyhumanId = myhumanId;
+<A NAME="330"></A></FONT><FONT ID="SingleLineComment">//                                private Email mymyemail = email;
+<A NAME="331"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="332"></A></FONT><FONT ID="SingleLineComment">//                                @Override
+<A NAME="333"></A></FONT><FONT ID="SingleLineComment">//                                protected void init(final Object... initArgs) {
+<A NAME="334"></A></FONT><FONT ID="SingleLineComment">//                                    setBluePrintCSSSpan(14, 0, 0, true);
+<A NAME="335"></A></FONT><FONT ID="SingleLineComment">//                                }
+<A NAME="336"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="337"></A></FONT><FONT ID="SingleLineComment">//                                @Override
+<A NAME="338"></A></FONT><FONT ID="SingleLineComment">//                                protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
+<A NAME="339"></A></FONT><FONT ID="SingleLineComment">//                                    itsNatDocument_.addEventListener((EventTarget) $$(Controller.Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
+<A NAME="340"></A></FONT><FONT ID="SingleLineComment">//                                        @Override
+<A NAME="341"></A></FONT><FONT ID="SingleLineComment">//                                        public void handleEvent(final Event evt_) {
+<A NAME="342"></A></FONT><FONT ID="SingleLineComment">//                                            final SmartLogger inviteSL = SmartLogger.start(Loggers.LEVEL.USER,
+<A NAME="343"></A></FONT><FONT ID="SingleLineComment">//                                                    mymyhumanId.getObj() + " sending join social network invitation to " + mymyemail.getObj(),
+<A NAME="344"></A></FONT><FONT ID="SingleLineComment">//                                                    60000,
+<A NAME="345"></A></FONT><FONT ID="SingleLineComment">//                                                    null,
+<A NAME="346"></A></FONT><FONT ID="SingleLineComment">//                                                    true);
+<A NAME="347"></A></FONT><FONT ID="SingleLineComment">//                                            SendMail.getSendMailLocal().sendAsSimpleText(
+<A NAME="348"></A></FONT><FONT ID="SingleLineComment">//                                                    mymyemail.getObj(),
+<A NAME="349"></A></FONT><FONT ID="SingleLineComment">//                                                    "On behalf of " + mymyhumanId.getObj(),
+<A NAME="350"></A></FONT><FONT ID="SingleLineComment">//                                                    "Hey, try out I Like Places(http://www.ilikeplaces.com). I've joined too.");
+<A NAME="351"></A></FONT><FONT ID="SingleLineComment">//                                            $$(Controller.Page.GenericButtonLink).setTextContent("Okay, Invitation Sent.");
+<A NAME="352"></A></FONT><FONT ID="SingleLineComment">//                                            inviteSL.complete(Loggers.LEVEL.USER, Loggers.DONE);
+<A NAME="353"></A></FONT><FONT ID="SingleLineComment">//                                            remove(evt_.getTarget(), EventType.CLICK, this);
+<A NAME="354"></A></FONT><FONT ID="SingleLineComment">//                                        }
+<A NAME="355"></A></FONT><FONT ID="SingleLineComment">//                                    }, false);
+<A NAME="356"></A></FONT><FONT ID="SingleLineComment">//                                }
+<A NAME="357"></A></FONT><FONT ID="SingleLineComment">//                            };
+<A NAME="358"></A></FONT>                        }
+<A NAME="359"></A>                    }
+<A NAME="360"></A>                    sl.complete(Loggers.LEVEL.USER, Loggers.DONE);
+<A NAME="361"></A>                }
+<A NAME="362"></A>
+<A NAME="363"></A>            }, <FONT ID="False">false</FONT>);
+<A NAME="364"></A>        }
+<A NAME="365"></A>    }
+<A NAME="366"></A>
+<A NAME="367"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> generateFriendDeleteWidgetFor(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanIdWhosProfileToShow, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> currentUser) {
+<A NAME="368"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">UserProperty</A>(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
+<A NAME="369"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="370"></A>                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/FriendDelete.java.html">FriendDelete</A>(request, $$(Page.user_property_content), (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">0</FONT>], (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) ((Object[]) initArgs[<FONT ID="IntegerLiteral">1</FONT>])[<FONT ID="IntegerLiteral">0</FONT>]) {<FONT ID="SingleLineComment">//This var args thingy is an awesome way to flexibility, except when not careful!
+<A NAME="371"></A></FONT>                };
+<A NAME="372"></A>            }
+<A NAME="373"></A>        };
+<A NAME="374"></A>    }
+<A NAME="375"></A>
+<A NAME="376"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> generateFriendAddWidgetFor(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanIdWhosProfileToShow, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> currentUser) {
+<A NAME="377"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">UserProperty</A>(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
+<A NAME="378"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="379"></A>                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/FriendAdd.java.html">FriendAdd</A>(request, $$(Page.user_property_content), (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">0</FONT>], (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) ((Object[]) initArgs[<FONT ID="IntegerLiteral">1</FONT>])[<FONT ID="IntegerLiteral">0</FONT>]) {<FONT ID="SingleLineComment">//This var args thingy is an awesome way to flexibility, except when not careful!
+<A NAME="380"></A></FONT>                };
+<A NAME="381"></A>            }
+<A NAME="382"></A>        };
+<A NAME="383"></A>    }
+<A NAME="384"></A>
+<A NAME="385"></A>
+<A NAME="386"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> generateFriendInviteWidgetFor(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> importedContact, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> currentUser, <FONT ID="Final">final</FONT> String invitersName) {
+<A NAME="387"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">UserProperty</A>(
+<A NAME="388"></A>                request,
+<A NAME="389"></A>                $$(Page.friendFindSearchInvites),
+<A NAME="390"></A>                ElementComposer.compose($$(MarkupTag.BR)).get(),
+<A NAME="391"></A>                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/InviteCriteria.java.html">InviteCriteria</A>(
+<A NAME="392"></A>                        invitersName,
+<A NAME="393"></A>                        <FONT ID="StringLiteral">"#"</FONT>,
+<A NAME="394"></A>                        <FONT ID="StringLiteral">"#"</FONT>,
+<A NAME="395"></A>                        currentUser,
+<A NAME="396"></A>                        importedContact)) {
+<A NAME="397"></A>
+<A NAME="398"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="399"></A>
+<A NAME="400"></A>                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/Button.java.html">Button</A>(
+<A NAME="401"></A>                        request,
+<A NAME="402"></A>                        $$(Page.user_property_content),
+<A NAME="403"></A>                        (<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/ButtonCriteria.java.html">ButtonCriteria</A>(<FONT ID="False">false</FONT>, <FONT ID="StringLiteral">"Invite"</FONT>, <FONT ID="StringLiteral">"#"</FONT>, <FONT ID="StringLiteral">"padding-left:0%; width:20%; padding-right:80%;"</FONT>)
+<A NAME="404"></A>                                .setMetadata(
+<A NAME="405"></A>                                        ((<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/InviteCriteria.java.html">InviteCriteria</A>) initArgs[<FONT ID="IntegerLiteral">1</FONT>]).getInviter(),
+<A NAME="406"></A>                                        ((<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/InviteCriteria.java.html">InviteCriteria</A>) initArgs[<FONT ID="IntegerLiteral">1</FONT>]).getInvitee(),
+<A NAME="407"></A>                                        ((<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/InviteCriteria.java.html">InviteCriteria</A>) initArgs[<FONT ID="IntegerLiteral">1</FONT>]).getInviterDisplayName()))) {
+<A NAME="408"></A>
+<A NAME="409"></A>                    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> inviter;
+<A NAME="410"></A>                    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> invitee;
+<A NAME="411"></A>                    <FONT ID="Private">private</FONT> String invitersName;
+<A NAME="412"></A>
+<A NAME="413"></A>                    @Override
+<A NAME="414"></A>                    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/ButtonCriteria.java.html">ButtonCriteria</A> buttonCriteria) {
+<A NAME="415"></A>                        inviter = (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) buttonCriteria.getMetadata()[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="416"></A>                        invitee = (<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>) buttonCriteria.getMetadata()[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="417"></A>                        invitersName = (String) buttonCriteria.getMetadata()[<FONT ID="IntegerLiteral">2</FONT>];
+<A NAME="418"></A>                    }
+<A NAME="419"></A>
+<A NAME="420"></A>                    @Override
+<A NAME="421"></A>                    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="422"></A>
+<A NAME="423"></A>                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="424"></A>                            <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myinviter = inviter;
+<A NAME="425"></A>                            <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> myinvitee = invitee;
+<A NAME="426"></A>                            <FONT ID="Private">private</FONT> String myinvitersName = invitersName;
+<A NAME="427"></A>
+<A NAME="428"></A>                            @Override
+<A NAME="429"></A>                            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt) {
+<A NAME="430"></A>
+<A NAME="431"></A>                                <FONT ID="Try">try</FONT> {
+<A NAME="432"></A>
+<A NAME="433"></A>                                    <FONT ID="Final">final</FONT> String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+<A NAME="434"></A>
+<A NAME="435"></A>                                    <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; humanCreateReturn = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(
+<A NAME="436"></A>                                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>().setObjAsValid(myinvitee.getEmail()),
+<A NAME="437"></A>                                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A>(randomPassword),
+<A NAME="438"></A>                                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(myinvitee.getEmail()));
+<A NAME="439"></A>
+<A NAME="440"></A>                                    <FONT ID="If">if</FONT> (humanCreateReturn.returnValue()) {
+<A NAME="441"></A>
+<A NAME="442"></A>                                        UserIntroduction.createIntroData(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(myinvitee.getEmail()));
+<A NAME="443"></A>
+<A NAME="444"></A>                                        <FONT ID="Final">final</FONT> String activationURL = <FONT ID="New">new</FONT> Parameter(<FONT ID="StringLiteral">"http://www.ilikeplaces.com/"</FONT> + <FONT ID="StringLiteral">"activate"</FONT>)
+<A NAME="445"></A>                                                .append(ServletLogin.Username, myinvitee.getEmail(), <FONT ID="True">true</FONT>)
+<A NAME="446"></A>                                                .append(ServletLogin.Password,
+<A NAME="447"></A>                                                        DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(myinvitee.getEmail()))
+<A NAME="448"></A>                                                                .returnValue()
+<A NAME="449"></A>                                                                .getHumanAuthenticationHash())
+<A NAME="450"></A>                                                .get();
+<A NAME="451"></A>
+<A NAME="452"></A>                                        String htmlBody = getHTMLStringForOnlineFriendInvite(myinviter, myinvitersName, myinvitee.getFullName());
+<A NAME="453"></A>                                        htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+<A NAME="454"></A>                                        htmlBody = htmlBody.replace(PASSWORD_DETAILS, <FONT ID="StringLiteral">"Your temporary password is "</FONT> + randomPassword);
+<A NAME="455"></A>                                        htmlBody = htmlBody.replace(PASSWORD_ADVICE, <FONT ID="StringLiteral">"Make sure you change it."</FONT>);
+<A NAME="456"></A>
+<A NAME="457"></A>                                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+<A NAME="458"></A>                                                myinvitee.getHumanId(),
+<A NAME="459"></A>                                                <FONT ID="StringLiteral">"Invitation from "</FONT> + myinvitersName,
+<A NAME="460"></A>                                                htmlBody);
+<A NAME="461"></A>                                    }
+<A NAME="462"></A>                                } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="463"></A>                                    Loggers.EXCEPTION.error(<FONT ID="StringLiteral">"Error creating user"</FONT>, t);
+<A NAME="464"></A>                                }
+<A NAME="465"></A>
+<A NAME="466"></A>                                $$(Page.GenericButtonText).setTextContent(<FONT ID="StringLiteral">"Invited!"</FONT>);
+<A NAME="467"></A>
+<A NAME="468"></A>                                $$remove(evt, EventType.CLICK, <FONT ID="This">this</FONT>);
+<A NAME="469"></A>                            }
+<A NAME="470"></A>                        }, <FONT ID="False">false</FONT>);
+<A NAME="471"></A>                    }
+<A NAME="472"></A>                };
+<A NAME="473"></A>            }
+<A NAME="474"></A>
+<A NAME="475"></A>            @Override
+<A NAME="476"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="477"></A>
+<A NAME="478"></A>                itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="479"></A>
+<A NAME="480"></A>                    @Override
+<A NAME="481"></A>                    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt) {
+<A NAME="482"></A>                        <FONT ID="SingleLineComment">//$$displayNone($$(Page.user_property_widget));
+<A NAME="483"></A></FONT>                        $$sendJS(JSCodeToSend.jqueryHide($$getId(Page.user_property_widget)));
+<A NAME="484"></A>                    }
+<A NAME="485"></A>                }, <FONT ID="False">false</FONT>);
+<A NAME="486"></A>
+<A NAME="487"></A>            }
+<A NAME="488"></A>        };
+<A NAME="489"></A>    }
+<A NAME="490"></A>
+<A NAME="491"></A>    <FONT ID="FormalComment">/**
+<A NAME="492"></A>     * Online, implies that the inviterName is online
+<A NAME="493"></A>     *
+<A NAME="494"></A>     * @param inviterName
+<A NAME="495"></A>     * @param inviteeeName
+<A NAME="496"></A>     * @return
+<A NAME="497"></A>     */</FONT>
+<A NAME="498"></A>    <FONT ID="Final">final</FONT> String getHTMLStringForOnlineFriendInvite(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> inviterEmail, <FONT ID="Final">final</FONT> String inviterName, <FONT ID="Final">final</FONT> String inviteeeName) {
+<A NAME="499"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="500"></A>
+<A NAME="501"></A>            <FONT ID="Final">final</FONT> Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
+<A NAME="502"></A>
+<A NAME="503"></A>            $$(Controller.Page.user_property_name, document).setTextContent(inviterName);
+<A NAME="504"></A>            $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), <FONT ID="StringLiteral">"http://www.ilikeplaces.com"</FONT>);
+<A NAME="505"></A>
+<A NAME="506"></A>
+<A NAME="507"></A>            <FONT ID="Final">final</FONT> String profilePhotoUrl = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansProfilePhoto(inviterEmail).returnValueBadly();
+<A NAME="508"></A>
+<A NAME="509"></A>            $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
+<A NAME="510"></A>                    UserProperty.formatProfilePhotoUrlStatic(profilePhotoUrl));
+<A NAME="511"></A>
+<A NAME="512"></A>
+<A NAME="513"></A>            $$(Controller.Page.user_property_content, document).appendChild(
+<A NAME="514"></A>                    document.importNode(
+<A NAME="515"></A>                            ElementComposer.compose(
+<A NAME="516"></A>                                    document.createElement(MarkupTag.DIV.toString())
+<A NAME="517"></A>                            ).$ElementSetText(
+<A NAME="518"></A>                                    <FONT ID="StringLiteral">"Hey! "</FONT> + inviterName + <FONT ID="StringLiteral">" has just invited you to I LIKE PLACES! "</FONT> +
+<A NAME="519"></A>                                            <FONT ID="StringLiteral">"The website is for meeting people you care at interesting places. "</FONT> +
+<A NAME="520"></A>                                            <FONT ID="StringLiteral">"In it, you can find interesting places and organize moments with your friends and family. "</FONT> +
+<A NAME="521"></A>                                            <FONT ID="StringLiteral">"You can join I Like Places only through an invite. "</FONT> +
+<A NAME="522"></A>                                            <FONT ID="StringLiteral">"Now that "</FONT> + inviterName + <FONT ID="StringLiteral">" has gotten you in, use the following link to access I Like Places. "</FONT> +
+<A NAME="523"></A>                                            URL + <FONT ID="StringLiteral">" . "</FONT> +
+<A NAME="524"></A>                                            PASSWORD_DETAILS + <FONT ID="StringLiteral">" "</FONT> +
+<A NAME="525"></A>                                            PASSWORD_ADVICE + <FONT ID="StringLiteral">" "</FONT> +
+<A NAME="526"></A>                                            <FONT ID="StringLiteral">"All the best and Have Fun! "</FONT>
+<A NAME="527"></A>                            ).getAsNode(),
+<A NAME="528"></A>                            <FONT ID="True">true</FONT>)
+<A NAME="529"></A>            );
+<A NAME="530"></A>
+<A NAME="531"></A>
+<A NAME="532"></A>            <FONT ID="Return">return</FONT> HTMLDocParser.convertNodeToHtml($$(Page.user_property_widget, document));
+<A NAME="533"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable e) {
+<A NAME="534"></A>            <FONT ID="Throw">throw</FONT> LogNull.getRuntimeException(e);
+<A NAME="535"></A>        }
+<A NAME="536"></A>
+<A NAME="537"></A>    }
+<A NAME="538"></A>
+<A NAME="539"></A>}</pre>
+</BODY>
+</HTML>

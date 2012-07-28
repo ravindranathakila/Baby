@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CRUDWall (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CRUDWall.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">ai.ilikeplaces.entities.Msg</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Mute.java.html">ai.ilikeplaces.entities.Mute</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourException.java.html">ai.ilikeplaces.exception.DBDishonourException</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/QueryParameter.java.html">ai.ilikeplaces.jpa.QueryParameter</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/LogNull.java.html">ai.ilikeplaces.util.LogNull</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">ai.ilikeplaces.util.jpa.RefreshException</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="22"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="23"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="24"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="25"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="26"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="27"></A>
+<A NAME="28"></A><FONT ID="FormalComment">/**
+<A NAME="29"></A> * @author Ravindranath Akila
+<A NAME="30"></A> */</FONT>
+<A NAME="31"></A>
+<A NAME="32"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="33"></A>@Stateless
+<A NAME="34"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> CRUDWall <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CRUDWallLocal.java.html">CRUDWallLocal</A> {
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_NULL_OR_EMPTY = <FONT ID="StringLiteral">" IS NULL OR EMPTY!"</FONT>;
+<A NAME="37"></A>    @EJB
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; crudServiceLocal_;
+<A NAME="39"></A>
+<A NAME="40"></A>    @EJB
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt; msgCrudServiceLocal_;
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> CRUDWall() {
+<A NAME="44"></A>    }
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CRUDWall.java.html">CRUDWall</A>.<FONT ID="Class">class</FONT>);
+<A NAME="47"></A>
+<A NAME="48"></A>    @Override
+<A NAME="49"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doNTxCWall(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> wall) {
+<A NAME="51"></A>        <FONT ID="Return">return</FONT> crudServiceLocal_.create(wall);
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>    @Override
+<A NAME="55"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doDirtyRWall(<FONT ID="Long">long</FONT> wallId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> {
+<A NAME="57"></A>        <FONT ID="Return">return</FONT> crudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>.<FONT ID="Class">class</FONT>, wallId);
+<A NAME="58"></A>    }
+<A NAME="59"></A>
+<A NAME="60"></A>    @Override
+<A NAME="61"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="62"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doRWall(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="63"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="64"></A>            <FONT ID="Return">return</FONT> crudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>.<FONT ID="Class">class</FONT>, wallId).refresh(refreshSpec);
+<A NAME="65"></A>        } <FONT ID="Catch">catch</FONT> (<A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> e) {
+<A NAME="66"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>(e);
+<A NAME="67"></A>        }
+<A NAME="68"></A>    }
+<A NAME="69"></A>
+<A NAME="70"></A><FONT ID="SingleLineComment">//    @Override
+<A NAME="71"></A></FONT><FONT ID="SingleLineComment">//    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="72"></A></FONT><FONT ID="SingleLineComment">//    @Deprecated
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//    public Wall doNTxUAppendToWall(long wallId, String contentToBeAppended) throws DBDishonourCheckedException {
+<A NAME="74"></A></FONT><FONT ID="SingleLineComment">//        final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
+<A NAME="75"></A></FONT><FONT ID="SingleLineComment">//        final int wallLength = returnVal.getWallContent().length();
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">//        if (wallLength &gt; (Wall.WALL_LENGTH - 1) - contentToBeAppended.length()) {
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//            Loggers.DEBUG.debug("Trimming long wall content.");
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//            returnVal.setWallContent(returnVal.getWallContent().subSequence(
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//                    contentToBeAppended.length() - 1, wallLength - 1)
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//                    .toString());
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="82"></A></FONT><FONT ID="SingleLineComment">//        returnVal.setWallContent(returnVal.getWallContent() + contentToBeAppended);
+<A NAME="83"></A></FONT><FONT ID="SingleLineComment">//        return returnVal;
+<A NAME="84"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="85"></A></FONT>
+<A NAME="86"></A>    @Override
+<A NAME="87"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="88"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doUAddEntry(<FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> String humanId, String contentToBeAppended) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> {
+<A NAME="89"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> returnVal = rWallBadly(wallId);
+<A NAME="90"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> msg = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>()
+<A NAME="91"></A>                .setMsgContentR(contentToBeAppended)
+<A NAME="92"></A>                .setMsgTypeR(Msg.msgTypeHUMAN)
+<A NAME="93"></A>                .setMsgMetadataR(humanId);
+<A NAME="94"></A>
+<A NAME="95"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> managedMsg = msgCrudServiceLocal_.create(msg);
+<A NAME="96"></A>
+<A NAME="97"></A>        returnVal.getWallMsgs().size();<FONT ID="SingleLineComment">//refreshing
+<A NAME="98"></A></FONT>        returnVal.getWallMsgs().add(msg);
+<A NAME="99"></A>
+<A NAME="100"></A>        crudServiceLocal_.update(returnVal);
+<A NAME="101"></A>
+<A NAME="102"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="103"></A>    }
+<A NAME="104"></A>
+<A NAME="105"></A>    @Override
+<A NAME="106"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="107"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doUAddMuteEntry(<FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> String mutee) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> {
+<A NAME="108"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> returnVal = rWallBadly(wallId);
+<A NAME="109"></A>
+<A NAME="110"></A>        <FONT ID="If">if</FONT> (returnVal.getWallMutes().contains(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(mutee).getSelfAsValid())) {
+<A NAME="111"></A>            <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
+<A NAME="112"></A>        }
+<A NAME="113"></A>
+<A NAME="114"></A>        returnVal.getWallMutes().add(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Mute.java.html">Mute</A>()
+<A NAME="115"></A>                .setMuteContentR(mutee)
+<A NAME="116"></A>                .setMuteTypeR(Mute.muteTypeHUMAN)
+<A NAME="117"></A>                .setMuteMetadataR(mutee));
+<A NAME="118"></A>
+<A NAME="119"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="120"></A>    }
+<A NAME="121"></A>
+<A NAME="122"></A>    @Override
+<A NAME="123"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="124"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doURemoveMuteEntry(<FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> String mutee) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> {
+<A NAME="125"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> returnVal = rWallBadly(wallId);
+<A NAME="126"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(mutee).getSelfAsValid();
+<A NAME="127"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Mute.java.html">Mute</A>&gt; existing = <FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Mute.java.html">Mute</A>&gt;(<FONT ID="IntegerLiteral">2</FONT>);<FONT ID="SingleLineComment">//One for existing, other expecting duplicate entries.
+<A NAME="128"></A></FONT>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Mute.java.html">Mute</A> mute : returnVal.getWallMutes()) {
+<A NAME="129"></A>            <FONT ID="If">if</FONT> (mute.equals(humanId)) {
+<A NAME="130"></A>                existing.add(mute);
+<A NAME="131"></A>            }
+<A NAME="132"></A>        }
+<A NAME="133"></A>        <FONT ID="If">if</FONT> (!returnVal.getWallMutes().removeAll(existing)) {
+<A NAME="134"></A>            <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="135"></A>        }
+<A NAME="136"></A>
+<A NAME="137"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="138"></A>    }
+<A NAME="139"></A>
+<A NAME="140"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> rWallBadly(<FONT ID="Long">long</FONT> wallId) {
+<A NAME="141"></A>        <FONT ID="Return">return</FONT> crudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>.<FONT ID="Class">class</FONT>, wallId);
+<A NAME="142"></A>    }
+<A NAME="143"></A>
+<A NAME="144"></A><FONT ID="SingleLineComment">//    @Override
+<A NAME="145"></A></FONT><FONT ID="SingleLineComment">//    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="146"></A></FONT><FONT ID="SingleLineComment">//    public Wall doUClearWall(long wallId) throws DBDishonourCheckedException {
+<A NAME="147"></A></FONT><FONT ID="SingleLineComment">//        final Wall returnVal = crudServiceLocal_.findBadly(Wall.class, wallId);
+<A NAME="148"></A></FONT><FONT ID="SingleLineComment">//        returnVal.setWallContent("");
+<A NAME="149"></A></FONT><FONT ID="SingleLineComment">//        return returnVal;
+<A NAME="150"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="151"></A></FONT>
+<A NAME="152"></A>    @Override
+<A NAME="153"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="154"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doNTxDWall(<FONT ID="Long">long</FONT> wallId) {
+<A NAME="155"></A>        crudServiceLocal_.delete(<A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>.<FONT ID="Class">class</FONT>, wallId);
+<A NAME="156"></A>    }
+<A NAME="157"></A>
+<A NAME="158"></A>
+<A NAME="159"></A>    @Override
+<A NAME="160"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="161"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt; doRHumansWallLastEntries(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> Integer numberOfEntriesToFetch) {
+<A NAME="162"></A>
+<A NAME="163"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt; lastWallEntryInList = msgCrudServiceLocal_.findWithNamedQuery(Msg.FindWallEntriesByWallIdOrderByIdDesc,
+<A NAME="164"></A>                QueryParameter.newInstance().add(Wall.wallIdCOL, wallId).parameters(), numberOfEntriesToFetch);
+<A NAME="165"></A>
+<A NAME="166"></A>        <FONT ID="Return">return</FONT> lastWallEntryInList;
+<A NAME="167"></A>    }
+<A NAME="168"></A>
+<A NAME="169"></A>    @Override
+<A NAME="170"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="171"></A>    @WARNING(<FONT ID="StringLiteral">"Reflect any changes on CRUDHumansWall as well"</FONT>)
+<A NAME="172"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doUpdateMetadata(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> String key, <FONT ID="Final">final</FONT> String value) {
+<A NAME="173"></A>        <FONT ID="If">if</FONT> (key == <FONT ID="Null">null</FONT> || key.isEmpty()) {
+<A NAME="174"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NullPointerException(key + IS_NULL_OR_EMPTY);
+<A NAME="175"></A>        }
+<A NAME="176"></A>
+<A NAME="177"></A>        <FONT ID="If">if</FONT> (value == <FONT ID="Null">null</FONT> || value.isEmpty()) {
+<A NAME="178"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NullPointerException(value + IS_NULL_OR_EMPTY);
+<A NAME="179"></A>        }
+<A NAME="180"></A>
+<A NAME="181"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> wall = rWallBadly(wallId);
+<A NAME="182"></A>        <FONT ID="Final">final</FONT> String wallMetadata = wall.getWallMetadata();
+<A NAME="183"></A>        <FONT ID="If">if</FONT> (wallMetadata == <FONT ID="Null">null</FONT> || wallMetadata.isEmpty()) {
+<A NAME="184"></A>            wall.setWallMetadata(key + <FONT ID="StringLiteral">"="</FONT> + value);
+<A NAME="185"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="186"></A>            <FONT ID="Final">final</FONT> String[] pairs = wallMetadata.split(<FONT ID="StringLiteral">","</FONT>);
+<A NAME="187"></A>            <FONT ID="Boolean">boolean</FONT> present = <FONT ID="False">false</FONT>;
+<A NAME="188"></A>            <FONT ID="Boolean">boolean</FONT> same = <FONT ID="False">false</FONT>;
+<A NAME="189"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> String pairString : pairs) {
+<A NAME="190"></A>                <FONT ID="Final">final</FONT> String[] pair = pairString.split(<FONT ID="StringLiteral">"="</FONT>);
+<A NAME="191"></A>                <FONT ID="If">if</FONT> (key.equals(pair[<FONT ID="IntegerLiteral">0</FONT>])) {
+<A NAME="192"></A>                    present = <FONT ID="True">true</FONT>;
+<A NAME="193"></A>                    LetsWarnAnபInconsistencies:
+<A NAME="194"></A>                    {
+<A NAME="195"></A>                        <FONT ID="If">if</FONT> (!value.equals(pair[<FONT ID="IntegerLiteral">1</FONT>])) {
+<A NAME="196"></A>                            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourException.java.html">DBDishonourException</A>(<FONT ID="StringLiteral">"You tried to assign "</FONT> + key + <FONT ID="StringLiteral">"="</FONT> + value + <FONT ID="StringLiteral">" to "</FONT> + wall.toString() + <FONT ID="StringLiteral">" but it already contains a DIFFERENT VALUE for they key"</FONT>);
+<A NAME="197"></A>                        }
+<A NAME="198"></A>                    }
+<A NAME="199"></A>                }
+<A NAME="200"></A>            }
+<A NAME="201"></A>            <FONT ID="If">if</FONT> (!present) {
+<A NAME="202"></A>                wall.setWallMetadata(wall.getWallMetadata() + <FONT ID="StringLiteral">","</FONT> + key + <FONT ID="StringLiteral">"="</FONT> + value);
+<A NAME="203"></A>            }
+<A NAME="204"></A>        }
+<A NAME="205"></A>    }
+<A NAME="206"></A>}</pre>
+</BODY>
+</HTML>

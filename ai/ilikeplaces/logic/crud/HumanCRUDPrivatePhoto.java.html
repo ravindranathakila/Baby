@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDPrivatePhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDPrivatePhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">ai.ilikeplaces.entities.PrivatePhoto</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/NoPrivilegesException.java.html">ai.ilikeplaces.exception.NoPrivilegesException</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.crud.unit.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="22"></A>
+<A NAME="23"></A><FONT ID="FormalComment">/**
+<A NAME="24"></A> * @author Ravindranath Akila
+<A NAME="25"></A> */</FONT>
+<A NAME="26"></A>
+<A NAME="27"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="28"></A>@Stateless
+<A NAME="29"></A>@Interceptors({DBOffilne.<FONT ID="Class">class</FONT>, ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>, RuntimeExceptionWrapper.<FONT ID="Class">class</FONT>})
+<A NAME="30"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanCRUDPrivatePhoto <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhotoLocal.java.html">HumanCRUDPrivatePhotoLocal</A> {
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WRITE_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Write Wall Successful!"</FONT>;
+<A NAME="33"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WRITE_WALL_FAILED = <FONT ID="StringLiteral">"Write Wall FAILED!"</FONT>;
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MUTE_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Mute Wall Successful!"</FONT>;
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MUTE_WALL_FAILED = <FONT ID="StringLiteral">"Mute Wall FAILED!"</FONT>;
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UNMUTE_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Unmute Wall Successful!"</FONT>;
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UNMUTE_WALL_FAILED = <FONT ID="StringLiteral">"Unmute Wall FAILED!"</FONT>;
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Read Wall Successful!"</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_FAILED = <FONT ID="StringLiteral">"Read Wall FAILED!"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EMPTY = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="41"></A>    @EJB
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> CPrivatePhotoLocal cPrivatePhotoLocal_;
+<A NAME="43"></A>
+<A NAME="44"></A>    @EJB
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> UPrivatePhotoLocal uPrivatePhotoLocal_;
+<A NAME="46"></A>
+<A NAME="47"></A>    @EJB
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> RPrivatePhotoLocal rPrivatePhotoLocal_;
+<A NAME="49"></A>
+<A NAME="50"></A>    @EJB
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> DPrivatePhotoLocal dPrivatePhotoLocal_;
+<A NAME="52"></A>
+<A NAME="53"></A>    @EJB
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> CRUDWallLocal crudWallLocal_;
+<A NAME="55"></A>
+<A NAME="56"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FIND_ALL_PHOTOS_BY_HUMAN_FAILED = <FONT ID="StringLiteral">"Find all photos by human FAILED!"</FONT>;
+<A NAME="57"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL = <FONT ID="StringLiteral">"Find all photos by human Successful!"</FONT>;
+<A NAME="58"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETE_PRIVATE_PHOTO_SUCCESSFUL = <FONT ID="StringLiteral">"Delete PrivatePhoto Successful!"</FONT>;
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETE_PRIVATE_PHOTO_FAILED = <FONT ID="StringLiteral">"Delete PrivatePhoto FAILED!"</FONT>;
+<A NAME="60"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETE_PHOTO_WITH_ID = <FONT ID="StringLiteral">"delete photo with id:"</FONT>;
+<A NAME="61"></A>
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> REFRESH_SPEC = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"privatePhotoWall"</FONT>);
+<A NAME="63"></A>
+<A NAME="64"></A>    <FONT ID="Public">public</FONT> HumanCRUDPrivatePhoto() {
+<A NAME="65"></A>    }
+<A NAME="66"></A>
+<A NAME="67"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="68"></A>    @WARNING(warning = <FONT ID="StringLiteral">"transactional"</FONT>, warnings = {<FONT ID="StringLiteral">"These two Merge and Persist Each other. Do not update their fields after this block"</FONT>})
+<A NAME="69"></A>    <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> doHumanCPrivatePhoto(<FONT ID="Final">final</FONT> String humanId, <A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> privatePhoto) <FONT ID="Throws">throws</FONT> javax.ejb.EJBTransactionRolledbackException {
+<A NAME="70"></A>        cPrivatePhotoLocal_.doCPrivatePhotoLocal(humanId, privatePhoto);
+<A NAME="71"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>
+<A NAME="75"></A>    @Override
+<A NAME="76"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt; cPrivatePhoto(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> String fileName, <FONT ID="Final">final</FONT> String privatePhotoName, <FONT ID="Final">final</FONT> String privatePhotoDescription, <FONT ID="Final">final</FONT> String privatePhotoURLPath) {
+<A NAME="77"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt; r;
+<A NAME="78"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;(cPrivatePhotoLocal_.doCPrivatePhotoLocal(humanId,
+<A NAME="79"></A>                privatePhotoName,
+<A NAME="80"></A>                fileName,
+<A NAME="81"></A>                privatePhotoDescription,
+<A NAME="82"></A>                privatePhotoURLPath
+<A NAME="83"></A>        ), <FONT ID="StringLiteral">"Create PrivatePhoto by human Successful!"</FONT>);
+<A NAME="84"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="85"></A>    }
+<A NAME="86"></A>
+<A NAME="87"></A>
+<A NAME="88"></A>    @Override
+<A NAME="89"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="90"></A>    <FONT ID="Public">public</FONT> Return&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;&gt; rPrivatePhotos(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="91"></A>        Return&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;&gt; r;
+<A NAME="92"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="93"></A>            <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;&gt;(rPrivatePhotoLocal_.doDirtyRAllPrivatePhotos(humanId), FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL);
+<A NAME="94"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="95"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;&gt;(t, FIND_ALL_PHOTOS_BY_HUMAN_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="96"></A>        }
+<A NAME="97"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="98"></A>    }
+<A NAME="99"></A>
+<A NAME="100"></A>    @Override
+<A NAME="101"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="102"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt; rPrivatePhoto(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> Obj&lt;Long&gt; privatePhotoId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) {
+<A NAME="103"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt; r;
+<A NAME="104"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="105"></A>            <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;(rPrivatePhotoLocal_.doRPrivatePhoto(humanId.getObjectAsValid(), privatePhotoId.getObjectAsValid(), refreshSpec), FIND_ALL_PHOTOS_BY_HUMAN_SUCCESSFUL);
+<A NAME="106"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="107"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;(t, FIND_ALL_PHOTOS_BY_HUMAN_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="108"></A>        }
+<A NAME="109"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="110"></A>    }
+<A NAME="111"></A>
+<A NAME="112"></A>    <FONT ID="FormalComment">/**
+<A NAME="113"></A>     * Proper demonstration of using unit classes and role/authorization based classes.
+<A NAME="114"></A>     * &lt;p/&gt;
+<A NAME="115"></A>     * Check roles/authorizations here.
+<A NAME="116"></A>     * &lt;p/&gt;
+<A NAME="117"></A>     * Call units based on the roles/authorizaions.
+<A NAME="118"></A>     *
+<A NAME="119"></A>     * @param humanId
+<A NAME="120"></A>     * @param privatePhotoId
+<A NAME="121"></A>     * @return
+<A NAME="122"></A>     */</FONT>
+<A NAME="123"></A>    @Override
+<A NAME="124"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="125"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; dPrivatePhoto(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privatePhotoId) {
+<A NAME="126"></A>        <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; r;
+<A NAME="127"></A>        <FONT ID="Boolean">boolean</FONT> isHumansPhoto = <FONT ID="False">false</FONT>;
+<A NAME="128"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> privatePhoto : rPrivatePhotos(humanId.getHumanId()).returnValue()) {
+<A NAME="129"></A>            <FONT ID="If">if</FONT> (privatePhoto.getPrivatePhotoId() == privatePhotoId) {
+<A NAME="130"></A>                isHumansPhoto = <FONT ID="True">true</FONT>;
+<A NAME="131"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="132"></A>            }
+<A NAME="133"></A>        }
+<A NAME="134"></A>
+<A NAME="135"></A>        <FONT ID="If">if</FONT> (!isHumansPhoto) {
+<A NAME="136"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/exception/NoPrivilegesException.java.html">NoPrivilegesException</A>(humanId.getHumanId(), DELETE_PHOTO_WITH_ID + privatePhotoId), DELETE_PRIVATE_PHOTO_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="137"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="138"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(dPrivatePhotoLocal_.doNTxDPrivatePhoto(privatePhotoId), DELETE_PRIVATE_PHOTO_SUCCESSFUL);
+<A NAME="139"></A>        }
+<A NAME="140"></A>
+<A NAME="141"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="142"></A>    }
+<A NAME="143"></A>
+<A NAME="144"></A>
+<A NAME="145"></A>    @Override
+<A NAME="146"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; addEntryToWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> msgOwner__, <FONT ID="Final">final</FONT> Obj wallReference__, <FONT ID="Final">final</FONT> String contentToBeAppended) {
+<A NAME="147"></A>
+<A NAME="148"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="149"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="150"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudWallLocal_
+<A NAME="151"></A>                    .doUAddEntry(rPrivatePhoto(whosWall__, wallReference__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
+<A NAME="152"></A>                            msgOwner__.getObj(),
+<A NAME="153"></A>                            contentToBeAppended), WRITE_WALL_SUCCESSFUL);
+<A NAME="154"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="155"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, WRITE_WALL_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="156"></A>        }
+<A NAME="157"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="158"></A>
+<A NAME="159"></A>
+<A NAME="160"></A>    }
+<A NAME="161"></A>
+<A NAME="162"></A>    @Override
+<A NAME="163"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; muteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee, <FONT ID="Final">final</FONT> Obj wallReference__) {
+<A NAME="164"></A>
+<A NAME="165"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="166"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="167"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudWallLocal_
+<A NAME="168"></A>                    .doUAddMuteEntry(rPrivatePhoto(operator__, wallReference__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
+<A NAME="169"></A>                            mutee.getObj()), MUTE_WALL_SUCCESSFUL);
+<A NAME="170"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="171"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, MUTE_WALL_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="172"></A>        }
+<A NAME="173"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="174"></A>
+<A NAME="175"></A>
+<A NAME="176"></A>    }
+<A NAME="177"></A>
+<A NAME="178"></A>    @Override
+<A NAME="179"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; unmuteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee, <FONT ID="Final">final</FONT> Obj wallReference__) {
+<A NAME="180"></A>
+<A NAME="181"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="182"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="183"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudWallLocal_
+<A NAME="184"></A>                    .doURemoveMuteEntry(rPrivatePhoto(operator__, wallReference__, REFRESH_SPEC).returnValueBadly().getPrivatePhotoWall().getWallId(),
+<A NAME="185"></A>                            mutee.getObj()), UNMUTE_WALL_SUCCESSFUL);
+<A NAME="186"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="187"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, UNMUTE_WALL_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="188"></A>        }
+<A NAME="189"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="190"></A>
+<A NAME="191"></A>
+<A NAME="192"></A>    }
+<A NAME="193"></A>
+<A NAME="194"></A>
+<A NAME="195"></A>    @Override
+<A NAME="196"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; readWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall__, <FONT ID="Final">final</FONT> Obj requester__, <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec__) {
+<A NAME="197"></A>
+<A NAME="198"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="199"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="200"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> privatePhoto = rPrivatePhoto(whosWall__, requester__, REFRESH_SPEC).returnValueBadly();
+<A NAME="201"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> privatePhotoWall = privatePhoto.getPrivatePhotoWall();
+<A NAME="202"></A>
+<A NAME="203"></A>            <FONT ID="If">if</FONT> (privatePhotoWall.getWallMetadata() == <FONT ID="Null">null</FONT>) {
+<A NAME="204"></A>                RecoveringFromAbsentMetadata:
+<A NAME="205"></A>                {
+<A NAME="206"></A>                    <FONT ID="Final">final</FONT> String key = Wall.WallMetadataKey.PRIVATE_PHOTO.toString();
+<A NAME="207"></A>                    <FONT ID="Final">final</FONT> String value = EMPTY + privatePhoto.getPrivatePhotoId();
+<A NAME="208"></A>
+<A NAME="209"></A>                    crudWallLocal_.doUpdateMetadata(privatePhotoWall.getWallId(), key, value);
+<A NAME="210"></A>                }
+<A NAME="211"></A>            }
+<A NAME="212"></A>
+<A NAME="213"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudWallLocal_
+<A NAME="214"></A>                    .doRWall(privatePhotoWall.getWallId(), refreshSpec__), READ_WALL_SUCCESSFUL);
+<A NAME="215"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="216"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, READ_WALL_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="217"></A>        }
+<A NAME="218"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="219"></A>    }
+<A NAME="220"></A>
+<A NAME="221"></A>
+<A NAME="222"></A>    <FONT ID="MultiLineComment">/*END OF NON TRANSACTIONAL METHODS*/</FONT>
+<A NAME="223"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhoto.java.html">HumanCRUDPrivatePhoto</A>.<FONT ID="Class">class</FONT>);
+<A NAME="224"></A>}</pre>
+</BODY>
+</HTML>

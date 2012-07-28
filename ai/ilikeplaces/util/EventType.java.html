@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.EventType (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">EventType.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="FormalComment">/**
+<A NAME="6"></A> * DOM event types
+<A NAME="7"></A> * &lt;p/&gt;
+<A NAME="8"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="9"></A> * Date: Dec 8, 2009
+<A NAME="10"></A> * Time: 11:17:06 PM
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A>
+<A NAME="13"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="14"></A><FONT ID="Public">public</FONT> enum EventType {
+<A NAME="15"></A>    CLICK() {
+<A NAME="16"></A>        @Override
+<A NAME="17"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="18"></A>            <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"click"</FONT>;
+<A NAME="19"></A>        }
+<A NAME="20"></A>    },
+<A NAME="21"></A>    BLUR() {
+<A NAME="22"></A>        @Override
+<A NAME="23"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="24"></A>            <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"blur"</FONT>;
+<A NAME="25"></A>        }
+<A NAME="26"></A>    },
+<A NAME="27"></A>    CHANGE() {
+<A NAME="28"></A>        @Override
+<A NAME="29"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="30"></A>            <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"change"</FONT>;
+<A NAME="31"></A>        }
+<A NAME="32"></A>    },
+<A NAME="33"></A>    UNLOAD() {
+<A NAME="34"></A>        @Override
+<A NAME="35"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="36"></A>            <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"onunload"</FONT>;
+<A NAME="37"></A>        }
+<A NAME="38"></A>    },
+<A NAME="39"></A>
+<A NAME="40"></A>    ONMOUSEOVER() {
+<A NAME="41"></A>        @Override
+<A NAME="42"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="43"></A>            <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"mouseover"</FONT>;
+<A NAME="44"></A>        }
+<A NAME="45"></A>    };
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="48"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"SORRY! THIS METHOD IS SUPPOSED TO BE OVERRIDEN."</FONT>);
+<A NAME="49"></A>    }
+<A NAME="50"></A>}
+<A NAME="51"></A>
+<A NAME="52"></A>
+<A NAME="53"></A><FONT ID="MultiLineComment">/*    These are the events copied off from some internal ItsNat code
+<A NAME="54"></A>
+<A NAME="55"></A>        "click",
+<A NAME="56"></A>        "dblclick",
+<A NAME="57"></A>        "mousedown",
+<A NAME="58"></A>        "mouseup",
+<A NAME="59"></A>        "mouseover",
+<A NAME="60"></A>        "mousemove",
+<A NAME="61"></A>        "mouseout",
+<A NAME="62"></A>
+<A NAME="63"></A>        "keypress",
+<A NAME="64"></A>        "keydown",
+<A NAME="65"></A>        "keyup",
+<A NAME="66"></A>
+<A NAME="67"></A>        "load",
+<A NAME="68"></A>        "unload",
+<A NAME="69"></A>        "abort",
+<A NAME="70"></A>        "error",
+<A NAME="71"></A>        "resize",
+<A NAME="72"></A>        "scroll",
+<A NAME="73"></A>        "select",
+<A NAME="74"></A>        "change",
+<A NAME="75"></A>        "submit",
+<A NAME="76"></A>        "reset",
+<A NAME="77"></A>        "focus",
+<A NAME="78"></A>        "blur",
+<A NAME="79"></A>
+<A NAME="80"></A>        "DOMFocusIn"
+<A NAME="81"></A>        "DOMFocusOut"
+<A NAME="82"></A>        "DOMActivate",
+<A NAME="83"></A>
+<A NAME="84"></A>        "DOMSubtreeModified"
+<A NAME="85"></A>        "DOMNodeInserted"
+<A NAME="86"></A>        "DOMNodeRemoved"
+<A NAME="87"></A>        "DOMAttrModified"
+<A NAME="88"></A>        "DOMCharacterDataModified"
+<A NAME="89"></A>        "DOMNodeInsertedIntoDocument"
+<A NAME="90"></A>        "DOMNodeRemovedFromDocument"
+<A NAME="91"></A>
+<A NAME="92"></A>        "beforeunload"
+<A NAME="93"></A>
+<A NAME="94"></A>        "DOMContentLoaded"
+<A NAME="95"></A>
+<A NAME="96"></A>
+<A NAME="97"></A>        */</FONT></pre>
+</BODY>
+</HTML>

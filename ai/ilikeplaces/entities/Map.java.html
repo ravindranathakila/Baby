@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.Map (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Map.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * Created by IntelliJ IDEA.
+<A NAME="11"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="12"></A> * Date: Jan 1, 2010
+<A NAME="13"></A> * Time: 10:46:46 PM
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A>
+<A NAME="16"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="17"></A>@Entity
+<A NAME="18"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Map <FONT ID="Implements">implements</FONT> Serializable {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> Integer id;
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> String label;
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> String entry;
+<A NAME="26"></A>
+<A NAME="27"></A>    @Id
+<A NAME="28"></A>    @GeneratedValue
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> Integer getId() {
+<A NAME="30"></A>        <FONT ID="Return">return</FONT> id;
+<A NAME="31"></A>    }
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setId(<FONT ID="Final">final</FONT> Integer id) {
+<A NAME="34"></A>        <FONT ID="This">this</FONT>.id = id;
+<A NAME="35"></A>    }
+<A NAME="36"></A>
+<A NAME="37"></A>    @Column(length = <FONT ID="IntegerLiteral">255</FONT>)
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> String getLabel() {
+<A NAME="39"></A>        <FONT ID="Return">return</FONT> label;
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLabel(<FONT ID="Final">final</FONT> String label) {
+<A NAME="43"></A>        <FONT ID="This">this</FONT>.label = label;
+<A NAME="44"></A>    }
+<A NAME="45"></A>
+<A NAME="46"></A>    @Column(length = <FONT ID="IntegerLiteral">1000</FONT>)
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> String getEntry() {
+<A NAME="48"></A>        <FONT ID="Return">return</FONT> entry;
+<A NAME="49"></A>    }
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setEntry(<FONT ID="Final">final</FONT> String entry) {
+<A NAME="52"></A>        <FONT ID="This">this</FONT>.entry = entry;
+<A NAME="53"></A>    }
+<A NAME="54"></A>
+<A NAME="55"></A>    @Override
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="57"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"Map{"</FONT> +
+<A NAME="58"></A>                <FONT ID="StringLiteral">"id="</FONT> + id +
+<A NAME="59"></A>                <FONT ID="StringLiteral">", label='"</FONT> + label + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="60"></A>                <FONT ID="StringLiteral">", entry='"</FONT> + entry + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="61"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="62"></A>    } 
+<A NAME="63"></A>}
+<A NAME="64"></A></pre>
+</BODY>
+</HTML>

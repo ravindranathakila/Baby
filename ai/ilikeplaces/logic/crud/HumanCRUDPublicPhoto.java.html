@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDPublicPhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDPublicPhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">ai.ilikeplaces.entities.PublicPhoto</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationException</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CPublicPhotoLocal.java.html">ai.ilikeplaces.logic.crud.unit.CPublicPhotoLocal</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/DPublicPhotoLocal.java.html">ai.ilikeplaces.logic.crud.unit.DPublicPhotoLocal</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/RPublicPhotoLocal.java.html">ai.ilikeplaces.logic.crud.unit.RPublicPhotoLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/UPublicPhotoLocal.java.html">ai.ilikeplaces.logic.crud.unit.UPublicPhotoLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="FormalComment">/**
+<A NAME="22"></A> * @author Ravindranath Akila
+<A NAME="23"></A> */</FONT>
+<A NAME="24"></A>
+<A NAME="25"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="26"></A>@Stateless
+<A NAME="27"></A>@CONVENTION(convention = <FONT ID="StringLiteral">"do all the possible needful9setters etc) before going into the transaction, via an intermediate method. saves resources. "</FONT> +
+<A NAME="28"></A>        <FONT ID="StringLiteral">"why not let the caller do this? lets do the hard work. give the guy a break! besides, we can enforce him to give us required fields. this also "</FONT> +
+<A NAME="29"></A>        <FONT ID="StringLiteral">"facilitates setting granular role permissions."</FONT>)
+<A NAME="30"></A>@Interceptors({DBOffilne.<FONT ID="Class">class</FONT>,ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>, RuntimeExceptionWrapper.<FONT ID="Class">class</FONT>})
+<A NAME="31"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanCRUDPublicPhoto <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A> {
+<A NAME="32"></A>
+<A NAME="33"></A>    @EJB
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CPublicPhotoLocal.java.html">CPublicPhotoLocal</A> cPublicPhotoLocal_;
+<A NAME="35"></A>    @EJB
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/UPublicPhotoLocal.java.html">UPublicPhotoLocal</A> uPublicPhotoLocal_;
+<A NAME="37"></A>    @EJB
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/DPublicPhotoLocal.java.html">DPublicPhotoLocal</A> dPublicPhotoLocal_;
+<A NAME="39"></A>    @EJB
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/RPublicPhotoLocal.java.html">RPublicPhotoLocal</A> rPublicPhotoLocal_;
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> HumanCRUDPublicPhoto() {
+<A NAME="43"></A>    }
+<A NAME="44"></A>
+<A NAME="45"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="46"></A>    @WARNING(warning = <FONT ID="StringLiteral">"transactional"</FONT>, warnings = {<FONT ID="StringLiteral">"These two Merge and Persist Each other. Do not update their fields after this block"</FONT>})
+<A NAME="47"></A>    <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> doHumanCPublicPhoto(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId, <A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A> publicPhoto) <FONT ID="Throws">throws</FONT> javax.ejb.EJBTransactionRolledbackException {
+<A NAME="48"></A>        cPublicPhotoLocal_.doNTxCPublicPhotoLocal(humanId, locationId, publicPhoto);
+<A NAME="49"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> doHumanDPublicPhoto(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId) {
+<A NAME="54"></A>        <FONT ID="Return">return</FONT> dPublicPhotoLocal_.doNTxDPublicPhotoLocal(publicPhotoId);
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doHumanUPublicPhotoDescription(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId, <FONT ID="Final">final</FONT> String publicPhotoDescription) {
+<A NAME="59"></A>        <FONT ID="Return">return</FONT> uPublicPhotoLocal_.doUPublicPhotoDescriptionLocal(publicPhotoId, publicPhotoDescription);
+<A NAME="60"></A>    }
+<A NAME="61"></A>
+<A NAME="62"></A>    @FIXME(issue = <FONT ID="StringLiteral">"When adding a location, there cannot be two equal location names such that super locations are equal too. Please update specific CRUD service. Also His As, My As."</FONT>)
+<A NAME="63"></A>    @Override
+<A NAME="64"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; cPublicPhoto(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId, <FONT ID="Final">final</FONT> String fileName, <FONT ID="Final">final</FONT> String publicPhotoName, <FONT ID="Final">final</FONT> String publicPhotoDescription, <FONT ID="Final">final</FONT> String publicPhotoURLPath, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> retries) {
+<A NAME="65"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; r;
+<A NAME="66"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A> publicPhoto = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>();
+<A NAME="67"></A>
+<A NAME="68"></A>        publicPhoto.setPublicPhotoName(publicPhotoName);
+<A NAME="69"></A>        publicPhoto.setPublicPhotoFilePath(fileName);
+<A NAME="70"></A>        publicPhoto.setPublicPhotoDescription(publicPhotoDescription);
+<A NAME="71"></A>        publicPhoto.setPublicPhotoURLPath(publicPhotoURLPath);
+<A NAME="72"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt;(cPublicPhotoLocal_.doNTxCPublicPhotoLocal(humanId, locationId, publicPhoto), <FONT ID="StringLiteral">"Create photo by human with location Successful!"</FONT>);
+<A NAME="73"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="74"></A>    }
+<A NAME="75"></A>
+<A NAME="76"></A>    @Override
+<A NAME="77"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="78"></A>    <FONT ID="Public">public</FONT> Return&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt;&gt; rPublicPhoto(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="79"></A>        Return&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt;&gt; r;
+<A NAME="80"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt;&gt;(rPublicPhotoLocal_.doRAllPublicPhotos(humanId), <FONT ID="StringLiteral">"Find all photos by human Successful!"</FONT>);
+<A NAME="81"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="82"></A>    }
+<A NAME="83"></A>
+<A NAME="84"></A>    <FONT ID="MultiLineComment">/*BEGINING OF NON TRANSACTIONAL METHODS*/</FONT>
+<A NAME="85"></A>
+<A NAME="86"></A>    @Override
+<A NAME="87"></A>    @TODO(task = <FONT ID="StringLiteral">"verify if it is the right human before deleting"</FONT>)
+<A NAME="88"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> uPublicPhotoDescription(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId, <FONT ID="Final">final</FONT> String publicPhotoDescription) {
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> doHumanUPublicPhotoDescription(publicPhotoId, publicPhotoDescription);
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    @Override
+<A NAME="93"></A>    @TODO(task = <FONT ID="StringLiteral">"verify if it is the right human before deleting"</FONT>)
+<A NAME="94"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> dPublicPhoto(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId) {
+<A NAME="95"></A>        <FONT ID="Return">return</FONT> doHumanDPublicPhoto(publicPhotoId);
+<A NAME="96"></A>    }
+<A NAME="97"></A>    <FONT ID="MultiLineComment">/*END OF NON TRANSACTIONAL METHODS*/</FONT>
+<A NAME="98"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhoto.java.html">HumanCRUDPublicPhoto</A>.<FONT ID="Class">class</FONT>);
+<A NAME="99"></A>}
+<A NAME="100"></A></pre>
+</BODY>
+</HTML>

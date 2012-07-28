@@ -1,0 +1,422 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.mail.SendMail (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SendMail.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.mail;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.activation.DataHandler;
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.activation.FileDataSource;
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.annotation.PostConstruct;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.annotation.PreDestroy;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.mail.*;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.mail.internet.InternetAddress;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.mail.internet.MimeBodyPart;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.mail.internet.MimeMessage;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.mail.internet.MimeMultipart;
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.naming.Context;
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.naming.InitialContext;
+<A NAME="22"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="23"></A><FONT ID="Import">import</FONT> java.io.File;
+<A NAME="24"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="25"></A><FONT ID="Import">import</FONT> java.net.URL;
+<A NAME="26"></A><FONT ID="Import">import</FONT> java.util.Arrays;
+<A NAME="27"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="28"></A><FONT ID="Import">import</FONT> java.util.Properties;
+<A NAME="29"></A>
+<A NAME="30"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>.*;
+<A NAME="31"></A>
+<A NAME="32"></A><FONT ID="FormalComment">/**
+<A NAME="33"></A> * @author Ravindranath Akila
+<A NAME="34"></A> */</FONT>
+<A NAME="35"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="36"></A>@Stateless
+<A NAME="37"></A>@Interceptors({ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>})
+<A NAME="38"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SendMail <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/mail/SendMailLocal.java.html">SendMailLocal</A> {
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Properties P_ = <FONT ID="New">new</FONT> Properties();
+<A NAME="41"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Context Context_ = <FONT ID="Null">null</FONT>;
+<A NAME="42"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> OK_ = <FONT ID="False">false</FONT>;
+<A NAME="43"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String ICF = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"oejb.LICF"</FONT>);
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String M_A_I_L_S_E_R_V_E_R = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"mail.server"</FONT>);
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="47"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="48"></A>            SendMail.P_.put(Context.INITIAL_CONTEXT_FACTORY, SendMail.ICF);
+<A NAME="49"></A>            SendMail.Context_ = <FONT ID="New">new</FONT> InitialContext(P_);
+<A NAME="50"></A>            SendMail.OK_ = <FONT ID="True">true</FONT>;
+<A NAME="51"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="52"></A>            SendMail.OK_ = <FONT ID="False">false</FONT>;
+<A NAME="53"></A>            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, ex);
+<A NAME="54"></A>        }
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> isOK() {
+<A NAME="58"></A>        <FONT ID="If">if</FONT> (!OK_) {
+<A NAME="59"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(<FONT ID="StringLiteral">"SORRY! MAIL SESSION BEAN INITIALIZATION FAILED!"</FONT>);
+<A NAME="60"></A>        }
+<A NAME="61"></A>    }
+<A NAME="62"></A>
+<A NAME="63"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/mail/SendMailLocal.java.html">SendMailLocal</A> getSendMailLocal() {
+<A NAME="64"></A>        isOK();
+<A NAME="65"></A>        <A HREF="../../../../ai/ilikeplaces/logic/mail/SendMailLocal.java.html">SendMailLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="66"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="67"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/mail/SendMailLocal.java.html">SendMailLocal</A>) Context_.lookup(SendMailLocal.NAME);
+<A NAME="68"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="69"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, ex);
+<A NAME="70"></A>        }
+<A NAME="71"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/mail/SendMailLocal.java.html">SendMailLocal</A>) LogNull.logThrow();
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String U_S_E_R_N_A_M_E = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"noti_mail"</FONT>);
+<A NAME="75"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String P_A_S_S_W_O_R_D = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"noti_parsewerd"</FONT>);
+<A NAME="76"></A>
+<A NAME="77"></A>    Properties props;
+<A NAME="78"></A>    Session mailSession;
+<A NAME="79"></A>    Transport transport;
+<A NAME="80"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TEXT_PLAIN = <FONT ID="StringLiteral">"text/plain"</FONT>;
+<A NAME="81"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TEXT_HTML = <FONT ID="StringLiteral">"text/html; charset=ISO-8859-1"</FONT>;
+<A NAME="82"></A>
+<A NAME="83"></A>    @PostConstruct
+<A NAME="84"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> postConstruct() {
+<A NAME="85"></A>        props = <FONT ID="New">new</FONT> Properties();
+<A NAME="86"></A>        props.setProperty(<FONT ID="StringLiteral">"mail.transport.protocol"</FONT>, <FONT ID="StringLiteral">"smtp"</FONT>);
+<A NAME="87"></A>        props.setProperty(<FONT ID="StringLiteral">"mail.host"</FONT>, M_A_I_L_S_E_R_V_E_R);
+<A NAME="88"></A>        props.setProperty(<FONT ID="StringLiteral">"mail.user"</FONT>, U_S_E_R_N_A_M_E);
+<A NAME="89"></A>        props.setProperty(<FONT ID="StringLiteral">"mail.password"</FONT>, P_A_S_S_W_O_R_D);
+<A NAME="90"></A>        mailSession = Session.getDefaultInstance(props, <FONT ID="Null">null</FONT>);
+<A NAME="91"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="92"></A>            transport = mailSession.getTransport();
+<A NAME="93"></A>            transport.connect(U_S_E_R_N_A_M_E, P_A_S_S_W_O_R_D);
+<A NAME="94"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> MessagingException e) {
+<A NAME="95"></A>            EXCEPTION.error(<FONT ID="StringLiteral">"SORRY! MAIL SESSION BEAN INITIALIZATION FAILED!\n"</FONT> +
+<A NAME="96"></A>                    <FONT ID="StringLiteral">"This could happen if \n"</FONT> +
+<A NAME="97"></A>                    <FONT ID="StringLiteral">"1. Gerenimo javamail is taken instead of Sun."</FONT> +
+<A NAME="98"></A>                    <FONT ID="StringLiteral">"2. Password is wrong."</FONT>, e);
+<A NAME="99"></A>        }
+<A NAME="100"></A>    }
+<A NAME="101"></A>
+<A NAME="102"></A>    @PreDestroy
+<A NAME="103"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> preDestroy() {
+<A NAME="104"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="105"></A>            transport.close();
+<A NAME="106"></A>        } <FONT ID="Catch">catch</FONT> (MessagingException e) {
+<A NAME="107"></A>            EXCEPTION.error(<FONT ID="StringLiteral">"SORRY! SESSION BEAN TRANSPORT CLOSE FAILED WHILE BEAN DESTROY!"</FONT>, e);
+<A NAME="108"></A>        }
+<A NAME="109"></A>
+<A NAME="110"></A>    }
+<A NAME="111"></A>
+<A NAME="112"></A>
+<A NAME="113"></A>    <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> finalSend(<FONT ID="Final">final</FONT> Message message) <FONT ID="Throws">throws</FONT> MessagingException, IOException {
+<A NAME="114"></A>        <FONT ID="Boolean">boolean</FONT> returnVal = <FONT ID="False">false</FONT>;
+<A NAME="115"></A>        <FONT ID="SingleLineComment">//String protocol = "smtp";
+<A NAME="116"></A></FONT>        <FONT ID="SingleLineComment">//props.put("mail." + protocol + ".auth", "true");
+<A NAME="117"></A></FONT>        <FONT ID="Try">try</FONT> {
+<A NAME="118"></A>            <FONT ID="If">if</FONT> (!transport.isConnected()) {
+<A NAME="119"></A>                transport.connect(U_S_E_R_N_A_M_E, P_A_S_S_W_O_R_D);
+<A NAME="120"></A>            }
+<A NAME="121"></A>
+<A NAME="122"></A>            sendMail:
+<A NAME="123"></A>            {
+<A NAME="124"></A>                <FONT ID="Final">final</FONT> SmartLogger sl = SmartLogger.start(
+<A NAME="125"></A>                        LEVEL.INFO, Loggers.CODE_MAIL +
+<A NAME="126"></A>                                <FONT ID="StringLiteral">"SENDING A MAIL TO THE FOLLOWING USERS:"</FONT> + Arrays.toString(message.getAllRecipients()),
+<A NAME="127"></A>                        <FONT ID="IntegerLiteral">3000</FONT>,
+<A NAME="128"></A>                        <FONT ID="StringLiteral">"HELLO, I AM ABOUT TO SEND A MAIL TO THE FOLLOWING USERS:"</FONT> + Arrays.toString(message.getAllRecipients()),
+<A NAME="129"></A>                        <FONT ID="True">true</FONT>);
+<A NAME="130"></A>                transport.sendMessage(message, message.getAllRecipients());
+<A NAME="131"></A>                sl.complete(LEVEL.INFO, <FONT ID="StringLiteral">"done."</FONT>);
+<A NAME="132"></A>            }
+<A NAME="133"></A>
+<A NAME="134"></A>            returnVal = <FONT ID="True">true</FONT>;
+<A NAME="135"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception e) {
+<A NAME="136"></A>            EXCEPTION.error(<FONT ID="StringLiteral">"SORRY! MAIL SEND FAILED!"</FONT>, e);
+<A NAME="137"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Address address : message.getAllRecipients()) {
+<A NAME="138"></A>                USER.error(address + <FONT ID="StringLiteral">" was supposed to get the following mail notification, but did not.["</FONT> +
+<A NAME="139"></A>                        <FONT ID="StringLiteral">"Subject:"</FONT> + message.getSubject() +
+<A NAME="140"></A>                        <FONT ID="StringLiteral">"Body:"</FONT> + message.getContent().toString() +
+<A NAME="141"></A>                        <FONT ID="StringLiteral">"]"</FONT>);
+<A NAME="142"></A>            }
+<A NAME="143"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="144"></A>        }
+<A NAME="145"></A>
+<A NAME="146"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="147"></A>    }
+<A NAME="148"></A>
+<A NAME="149"></A>    @Override
+<A NAME="150"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="151"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; sendAsSimpleText(<FONT ID="Final">final</FONT> String recepientEmail, <FONT ID="Final">final</FONT> String simpleTextSubject, <FONT ID="Final">final</FONT> String simpleTextBody) {
+<A NAME="152"></A>        Return&lt;Boolean&gt; r;
+<A NAME="153"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="154"></A>
+<A NAME="155"></A>            <FONT ID="Final">final</FONT> MimeMessage message = <FONT ID="New">new</FONT> MimeMessage(mailSession);
+<A NAME="156"></A>            message.setSender(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="157"></A>            message.setFrom(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="158"></A>
+<A NAME="159"></A>            message.setSubject(simpleTextSubject);
+<A NAME="160"></A>            message.setContent(simpleTextBody, TEXT_PLAIN);
+<A NAME="161"></A>            message.addRecipient(Message.RecipientType.TO, <FONT ID="New">new</FONT> InternetAddress(recepientEmail));
+<A NAME="162"></A>            message.addRecipient(Message.RecipientType.CC, <FONT ID="New">new</FONT> InternetAddress(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"noti_app_mail"</FONT>)));
+<A NAME="163"></A>
+<A NAME="164"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(finalSend(message), <FONT ID="StringLiteral">"Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" successful!"</FONT>);
+<A NAME="165"></A>
+<A NAME="166"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="167"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, <FONT ID="StringLiteral">"FAILED! Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="168"></A>        }
+<A NAME="169"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="170"></A>    }
+<A NAME="171"></A>
+<A NAME="172"></A>    @Deprecated
+<A NAME="173"></A>    @Override
+<A NAME="174"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="175"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; sendWithAttachmentAsSimpleText(<FONT ID="Final">final</FONT> String recepientEmail, <FONT ID="Final">final</FONT> String simpleTextSubject, <FONT ID="Final">final</FONT> String simpleTextBody, <FONT ID="Final">final</FONT> List&lt;String&gt; files) {
+<A NAME="176"></A>        Return&lt;Boolean&gt; r;
+<A NAME="177"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="178"></A>
+<A NAME="179"></A>            <FONT ID="Final">final</FONT> MimeMessage message = <FONT ID="New">new</FONT> MimeMessage(mailSession);
+<A NAME="180"></A>            message.setSender(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="181"></A>            message.setFrom(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="182"></A>
+<A NAME="183"></A>            message.setSubject(simpleTextSubject);
+<A NAME="184"></A>
+<A NAME="185"></A>            <FONT ID="SingleLineComment">// Create the Multipart to be added the parts to
+<A NAME="186"></A></FONT>            Multipart mp = <FONT ID="New">new</FONT> MimeMultipart();
+<A NAME="187"></A>            {
+<A NAME="188"></A>                <FONT ID="SingleLineComment">// Create and fill the first message part
+<A NAME="189"></A></FONT>                MimeBodyPart mbp = <FONT ID="New">new</FONT> MimeBodyPart();
+<A NAME="190"></A>                mbp.setText(simpleTextBody);
+<A NAME="191"></A>                mp.addBodyPart(mbp);
+<A NAME="192"></A>
+<A NAME="193"></A>                <FONT ID="SingleLineComment">// Attach the files to the message
+<A NAME="194"></A></FONT>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> String file : files) {
+<A NAME="195"></A>                    mbp.setDataHandler(<FONT ID="New">new</FONT> DataHandler(<FONT ID="New">new</FONT> URL(file)));
+<A NAME="196"></A>                    mp.addBodyPart(mbp);
+<A NAME="197"></A>                }
+<A NAME="198"></A>            }
+<A NAME="199"></A>
+<A NAME="200"></A>            message.setContent(mp);
+<A NAME="201"></A>            <FONT ID="SingleLineComment">//message.setContent(simpleTextBody, TEXT_PLAIN);
+<A NAME="202"></A></FONT>            message.addRecipient(Message.RecipientType.TO, <FONT ID="New">new</FONT> InternetAddress(recepientEmail));
+<A NAME="203"></A>            message.addRecipient(Message.RecipientType.CC, <FONT ID="New">new</FONT> InternetAddress(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"noti_app_mail"</FONT>)));
+<A NAME="204"></A>
+<A NAME="205"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(finalSend(message), <FONT ID="StringLiteral">"Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" successful!"</FONT>);
+<A NAME="206"></A>
+<A NAME="207"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="208"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, <FONT ID="StringLiteral">"FAILED! Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="209"></A>        }
+<A NAME="210"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="211"></A>    }
+<A NAME="212"></A>
+<A NAME="213"></A>    @Override
+<A NAME="214"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="215"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; sendAsSimpleTextAsynchronously(<FONT ID="Final">final</FONT> String recepientEmail, <FONT ID="Final">final</FONT> String simpleTextSubject, <FONT ID="Final">final</FONT> String simpleTextBody) {
+<A NAME="216"></A>        Return&lt;Boolean&gt; r;
+<A NAME="217"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="218"></A>
+<A NAME="219"></A>            <FONT ID="New">new</FONT> Thread(
+<A NAME="220"></A>                    <FONT ID="New">new</FONT> Runnable() {
+<A NAME="221"></A>
+<A NAME="222"></A>                        @Override
+<A NAME="223"></A>                        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="224"></A>                            sendAsSimpleText(recepientEmail, simpleTextSubject, simpleTextBody);
+<A NAME="225"></A>                        }
+<A NAME="226"></A>                    }).start();
+<A NAME="227"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(<FONT ID="True">true</FONT>, <FONT ID="StringLiteral">"Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" issued asynchronously!"</FONT>);
+<A NAME="228"></A>
+<A NAME="229"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="230"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, <FONT ID="StringLiteral">"FAILED! Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="231"></A>        }
+<A NAME="232"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="233"></A>    }
+<A NAME="234"></A>
+<A NAME="235"></A>    @Deprecated
+<A NAME="236"></A>    @Override
+<A NAME="237"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="238"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; sendWithAttachmentAsSimpleTextAsynchronously(<FONT ID="Final">final</FONT> String recepientEmail, <FONT ID="Final">final</FONT> String simpleTextSubject, <FONT ID="Final">final</FONT> String simpleTextBody, <FONT ID="Final">final</FONT> List&lt;String&gt; files) {
+<A NAME="239"></A>        Return&lt;Boolean&gt; r;
+<A NAME="240"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="241"></A>
+<A NAME="242"></A>            <FONT ID="New">new</FONT> Thread(
+<A NAME="243"></A>                    <FONT ID="New">new</FONT> Runnable() {
+<A NAME="244"></A>
+<A NAME="245"></A>                        @Override
+<A NAME="246"></A>                        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="247"></A>                            sendWithAttachmentAsSimpleText(recepientEmail, simpleTextSubject, simpleTextBody, files);
+<A NAME="248"></A>                        }
+<A NAME="249"></A>                    }).start();
+<A NAME="250"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(<FONT ID="True">true</FONT>, <FONT ID="StringLiteral">"Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" issued asynchronously!"</FONT>);
+<A NAME="251"></A>
+<A NAME="252"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="253"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, <FONT ID="StringLiteral">"FAILED! Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="254"></A>        }
+<A NAME="255"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="256"></A>    }
+<A NAME="257"></A>
+<A NAME="258"></A>    @Override
+<A NAME="259"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="260"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; sendWithAttachmentAsSimpleTextAsynchronously(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/logic/mail/GetMailAddress.java.html">GetMailAddress</A>&gt; recepientEmails, <FONT ID="Final">final</FONT> String simpleTextSubject, <FONT ID="Final">final</FONT> String simpleTextBody, <FONT ID="Final">final</FONT> List&lt;String&gt; files) {
+<A NAME="261"></A>        Return&lt;Boolean&gt; r;
+<A NAME="262"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="263"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/mail/GetMailAddress.java.html">GetMailAddress</A> recepientEmail : recepientEmails) {
+<A NAME="264"></A>                <FONT ID="New">new</FONT> Thread(
+<A NAME="265"></A>                        <FONT ID="New">new</FONT> Runnable() {
+<A NAME="266"></A>
+<A NAME="267"></A>                            @Override
+<A NAME="268"></A>                            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="269"></A>                                sendWithAttachmentAsSimpleText(recepientEmail.email(), simpleTextSubject, simpleTextBody, files);
+<A NAME="270"></A>                            }
+<A NAME="271"></A>                        }).start();
+<A NAME="272"></A>            }
+<A NAME="273"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(<FONT ID="True">true</FONT>, <FONT ID="StringLiteral">"Mail sending to group issued asynchronously!"</FONT>);
+<A NAME="274"></A>
+<A NAME="275"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="276"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, <FONT ID="StringLiteral">"FAILED! Mail sending to group FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="277"></A>        }
+<A NAME="278"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="279"></A>    }
+<A NAME="280"></A>
+<A NAME="281"></A>
+<A NAME="282"></A>    @Override
+<A NAME="283"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; sendAsHTML(<FONT ID="Final">final</FONT> String recepientEmail, <FONT ID="Final">final</FONT> String simpleTextSubject, <FONT ID="Final">final</FONT> String htmlBody) {
+<A NAME="284"></A>        Return&lt;Boolean&gt; r;
+<A NAME="285"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="286"></A>
+<A NAME="287"></A>            <FONT ID="Final">final</FONT> MimeMessage message = <FONT ID="New">new</FONT> MimeMessage(mailSession);
+<A NAME="288"></A>            message.setSender(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="289"></A>            message.setFrom(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="290"></A>
+<A NAME="291"></A>            message.setSubject(simpleTextSubject);
+<A NAME="292"></A>            message.setContent(htmlBody, TEXT_HTML);
+<A NAME="293"></A>            message.addRecipient(Message.RecipientType.TO, <FONT ID="New">new</FONT> InternetAddress(recepientEmail));
+<A NAME="294"></A>            message.addRecipient(Message.RecipientType.CC, <FONT ID="New">new</FONT> InternetAddress(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"noti_app_mail"</FONT>)));
+<A NAME="295"></A>
+<A NAME="296"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(finalSend(message), <FONT ID="StringLiteral">"Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" successful!"</FONT>);
+<A NAME="297"></A>
+<A NAME="298"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="299"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, <FONT ID="StringLiteral">"FAILED! Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="300"></A>        }
+<A NAME="301"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="302"></A>    }
+<A NAME="303"></A>
+<A NAME="304"></A>    @Override
+<A NAME="305"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; sendAsHTMLAsynchronously(<FONT ID="Final">final</FONT> String recepientEmail, <FONT ID="Final">final</FONT> String simpleTextSubject, <FONT ID="Final">final</FONT> String htmlBody) {
+<A NAME="306"></A>        Return&lt;Boolean&gt; r;
+<A NAME="307"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="308"></A>            <FONT ID="New">new</FONT> Thread(
+<A NAME="309"></A>                    <FONT ID="New">new</FONT> Runnable() {
+<A NAME="310"></A>
+<A NAME="311"></A>                        @Override
+<A NAME="312"></A>                        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="313"></A>                            sendAsHTML(recepientEmail, simpleTextSubject, htmlBody);
+<A NAME="314"></A>                        }
+<A NAME="315"></A>                    }).start();
+<A NAME="316"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(<FONT ID="True">true</FONT>, <FONT ID="StringLiteral">"Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" issued asynchronously!"</FONT>);
+<A NAME="317"></A>
+<A NAME="318"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="319"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, <FONT ID="StringLiteral">"FAILED! Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="320"></A>        }
+<A NAME="321"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="322"></A>    }
+<A NAME="323"></A>
+<A NAME="324"></A>    @Override
+<A NAME="325"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; sendWithAttachmentAsSimpleText(<FONT ID="Final">final</FONT> String recepientEmail, <FONT ID="Final">final</FONT> String simpleTextSubject, <FONT ID="Final">final</FONT> String simpleTextBody, <FONT ID="Final">final</FONT> File file) {
+<A NAME="326"></A>
+<A NAME="327"></A>        Return&lt;Boolean&gt; r;
+<A NAME="328"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="329"></A>
+<A NAME="330"></A>            <FONT ID="Final">final</FONT> MimeMessage message = <FONT ID="New">new</FONT> MimeMessage(mailSession);
+<A NAME="331"></A>            message.setSender(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="332"></A>            message.setFrom(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="333"></A>            message.setSubject(simpleTextSubject);
+<A NAME="334"></A>
+<A NAME="335"></A>            message.addRecipient(Message.RecipientType.TO, <FONT ID="New">new</FONT> InternetAddress(recepientEmail));
+<A NAME="336"></A>            message.addRecipient(Message.RecipientType.CC, <FONT ID="New">new</FONT> InternetAddress(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"noti_app_mail"</FONT>)));
+<A NAME="337"></A>
+<A NAME="338"></A>
+<A NAME="339"></A>            <FONT ID="Final">final</FONT> MimeBodyPart textPart = <FONT ID="New">new</FONT> MimeBodyPart();
+<A NAME="340"></A>            textPart.setContent(simpleTextBody, TEXT_PLAIN);
+<A NAME="341"></A>
+<A NAME="342"></A>            <FONT ID="Final">final</FONT> FileDataSource fds = <FONT ID="New">new</FONT> FileDataSource(file);
+<A NAME="343"></A>
+<A NAME="344"></A>            <FONT ID="Final">final</FONT> MimeBodyPart attachFilePart = <FONT ID="New">new</FONT> MimeBodyPart();
+<A NAME="345"></A>            attachFilePart.setDataHandler(<FONT ID="New">new</FONT> DataHandler(fds));
+<A NAME="346"></A>            attachFilePart.setFileName(fds.getName());
+<A NAME="347"></A>
+<A NAME="348"></A>            <FONT ID="Final">final</FONT> Multipart mp = <FONT ID="New">new</FONT> MimeMultipart();
+<A NAME="349"></A>            mp.addBodyPart(textPart);
+<A NAME="350"></A>            mp.addBodyPart(attachFilePart);
+<A NAME="351"></A>
+<A NAME="352"></A>            message.setContent(mp);
+<A NAME="353"></A>
+<A NAME="354"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(finalSend(message), <FONT ID="StringLiteral">"Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" successful!"</FONT>);
+<A NAME="355"></A>
+<A NAME="356"></A>
+<A NAME="357"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="358"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, <FONT ID="StringLiteral">"FAILED! Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="359"></A>        }
+<A NAME="360"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="361"></A>
+<A NAME="362"></A>    }
+<A NAME="363"></A>
+<A NAME="364"></A>    @Override
+<A NAME="365"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; sendWithAttachmentAsHTML(<FONT ID="Final">final</FONT> String recepientEmail, <FONT ID="Final">final</FONT> String simpleTextSubject, <FONT ID="Final">final</FONT> String htmlBody, <FONT ID="Final">final</FONT> File file) {
+<A NAME="366"></A>
+<A NAME="367"></A>        Return&lt;Boolean&gt; r;
+<A NAME="368"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="369"></A>
+<A NAME="370"></A>            <FONT ID="Final">final</FONT> MimeMessage message = <FONT ID="New">new</FONT> MimeMessage(mailSession);
+<A NAME="371"></A>            message.setSender(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="372"></A>            message.setFrom(<FONT ID="New">new</FONT> InternetAddress(U_S_E_R_N_A_M_E));
+<A NAME="373"></A>            message.setSubject(simpleTextSubject);
+<A NAME="374"></A>
+<A NAME="375"></A>            message.addRecipient(Message.RecipientType.TO, <FONT ID="New">new</FONT> InternetAddress(recepientEmail));
+<A NAME="376"></A>            message.addRecipient(Message.RecipientType.CC, <FONT ID="New">new</FONT> InternetAddress(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"noti_app_mail"</FONT>)));
+<A NAME="377"></A>
+<A NAME="378"></A>
+<A NAME="379"></A>            <FONT ID="Final">final</FONT> MimeBodyPart textPart = <FONT ID="New">new</FONT> MimeBodyPart();
+<A NAME="380"></A>            textPart.setContent(htmlBody, TEXT_HTML);
+<A NAME="381"></A>
+<A NAME="382"></A>            <FONT ID="Final">final</FONT> FileDataSource fds = <FONT ID="New">new</FONT> FileDataSource(file);
+<A NAME="383"></A>
+<A NAME="384"></A>            <FONT ID="Final">final</FONT> MimeBodyPart attachFilePart = <FONT ID="New">new</FONT> MimeBodyPart();
+<A NAME="385"></A>            attachFilePart.setDataHandler(<FONT ID="New">new</FONT> DataHandler(fds));
+<A NAME="386"></A>            attachFilePart.setFileName(fds.getName());
+<A NAME="387"></A>
+<A NAME="388"></A>            <FONT ID="Final">final</FONT> Multipart mp = <FONT ID="New">new</FONT> MimeMultipart();
+<A NAME="389"></A>            mp.addBodyPart(textPart);
+<A NAME="390"></A>            mp.addBodyPart(attachFilePart);
+<A NAME="391"></A>
+<A NAME="392"></A>            message.setContent(mp);
+<A NAME="393"></A>
+<A NAME="394"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(finalSend(message), <FONT ID="StringLiteral">"Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" successful!"</FONT>);
+<A NAME="395"></A>
+<A NAME="396"></A>
+<A NAME="397"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="398"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, <FONT ID="StringLiteral">"FAILED! Mail sending to "</FONT> + recepientEmail + <FONT ID="StringLiteral">" FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="399"></A>        }
+<A NAME="400"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="401"></A>    }
+<A NAME="402"></A>
+<A NAME="403"></A>}</pre>
+</BODY>
+</HTML>

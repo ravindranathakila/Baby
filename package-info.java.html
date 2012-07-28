@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>package-info (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">package-info.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="FormalComment">/** This package handles all db cruds
+<A NAME="2"></A>
+<A NAME="3"></A> First note that all the stateless beans were made as granular as possible so that,
+<A NAME="4"></A> in the event of a large system taking up a lot of memory, services can be fine tuned.
+<A NAME="5"></A> This approach was taken against one huge service class to do this optimization later.
+<A NAME="6"></A> How ever, fine grained control on stateless beans are yet to be supported by vendors.
+<A NAME="7"></A>
+<A NAME="8"></A>
+<A NAME="9"></A> Following content is rather old and out dated
+<A NAME="10"></A> Following content is NOT outdated as reviewed on 2011/09/24
+<A NAME="11"></A>
+<A NAME="12"></A> C = Create
+<A NAME="13"></A> R = Read
+<A NAME="14"></A> U = Update
+<A NAME="15"></A> D = Delete,
+<A NAME="16"></A>
+<A NAME="17"></A> Public classes here are always one entity handling 
+<A NAME="18"></A> another. For example A creates B, so the class ACB is public.
+<A NAME="19"></A> The rest of the classes are visible only to the package.,
+<A NAME="20"></A>
+<A NAME="21"></A> CrudService in injected only to the package visible
+<A NAME="22"></A> only classes.
+<A NAME="23"></A> In most cases, there are pure entity handles. i.e. NOT one
+<A NAME="24"></A> entity handling a nother.,
+<A NAME="25"></A>
+<A NAME="26"></A> CrudService never creates a transaction. It SUPPORTS and MANDATORY. Hence 
+<A NAME="27"></A> the callers should handle the transactions.
+<A NAME="28"></A> The classes containing CrudService always ENFORCE a transaction level. i.e. REQUIRES_NEW(NTxR), NOT_SUPPORTED(DirtyR), REQUIRED(R)
+<A NAME="29"></A> Others always define a transaction level, REQUIRES_NEW(NTxR), NOT_SUPPORTED(DirtyR), REQUIRED(R)
+<A NAME="30"></A> Please note that each one of these will have a separate method such as doC[type], doDirtyC[type], doNTxC[type]
+<A NAME="31"></A> where NTx stands for transactional(meaning do it in a new transaction).
+<A NAME="32"></A>
+<A NAME="33"></A> Always remember that database cleanliness(handling null fields) is done by classes
+<A NAME="34"></A> containing CrudService,
+<A NAME="35"></A> Map
+<A NAME="36"></A> MANDATORY-&gt;REQUIRES_NEW,MANDATORY
+<A NAME="37"></A> SUPPORTS-&gt;ALL,
+<A NAME="38"></A>
+<A NAME="39"></A> As
+<A NAME="40"></A> C=Create
+<A NAME="41"></A> R=Read
+<A NAME="42"></A> U=Update
+<A NAME="43"></A> D=Delete
+<A NAME="44"></A> Implies the operation, instead of saying set or get, we say do. For
+<A NAME="45"></A> Example, doEntity1UEntityB, which implies \Do Entity 1 Update Entity2.,
+<A NAME="46"></A> The private classes show attitude \I don't care who calls me, as long as I can 
+<A NAME="47"></A> work on the database to make a consistant crud without leading to stale data\.
+<A NAME="48"></A> The public classes show attitude \I do care who calls me. I will make sure
+<A NAME="49"></A> this guy can really do this operation, and if he sends me the correct data\.,
+<A NAME="50"></A>
+<A NAME="51"></A> There should not be any exception thrown in this package which are conflicts in database.
+<A NAME="52"></A> Each logic should be checked and handle here regardless of if the caller does it.
+<A NAME="53"></A> Therefore, if the caller makes a mistake, the exception thrown to him should be a tailor-made one,
+<A NAME="54"></A> where as the error should NOT execute. Is simple words, no operation can break the database by calling
+<A NAME="55"></A> any class in this package!,
+<A NAME="56"></A>
+<A NAME="57"></A> In simple words,
+<A NAME="58"></A> CrudService is flexible in transaction scope and never creates one.(MANDATORY(mostly create operations), SUPPORTS)
+<A NAME="59"></A> Classes containing CrudService(unit classes), enforce database atomicity.
+<A NAME="60"></A> Hence enforce transactional scopes(NOT_SUPPORTED(implying to the caller it is non TX), REQUIRED, REQUIRES_NEW)})
+<A NAME="61"></A> **/</FONT></pre>
+</BODY>
+</HTML>

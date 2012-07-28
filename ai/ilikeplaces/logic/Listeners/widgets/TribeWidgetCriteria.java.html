@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.TribeWidgetCriteria (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TribeWidgetCriteria.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">ai.ilikeplaces.entities.Tribe</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">ai.ilikeplaces.logic.validators.unit.VLong</A>;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="FormalComment">/**
+<A NAME="9"></A> * Created by IntelliJ IDEA.
+<A NAME="10"></A> * User: Ravindranath Akila
+<A NAME="11"></A> * Date: 10/20/11
+<A NAME="12"></A> * Time: 8:51 PM
+<A NAME="13"></A> */</FONT>
+<A NAME="14"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TribeWidgetCriteria {
+<A NAME="15"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="16"></A></FONT>
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS (NON-STATIC)--------------------
+<A NAME="19"></A></FONT> 
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId;
+<A NAME="22"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> tribeId;
+<A NAME="23"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> tribe;
+<A NAME="24"></A>    
+<A NAME="25"></A>    <FONT ID="Private">private</FONT> InviteData inviteData;
+<A NAME="26"></A>
+<A NAME="27"></A><FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="28"></A></FONT>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> getHumanId() {
+<A NAME="29"></A>
+<A NAME="30"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="31"></A>    }
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> getTribe() {
+<A NAME="33"></A>
+<A NAME="34"></A>        <FONT ID="Return">return</FONT> tribe;
+<A NAME="35"></A>    }
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTribe(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> tribe) {
+<A NAME="37"></A>
+<A NAME="38"></A>        <FONT ID="This">this</FONT>.tribe = tribe;
+<A NAME="39"></A>    }
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> getTribeId() {
+<A NAME="41"></A>
+<A NAME="42"></A>        <FONT ID="Return">return</FONT> tribeId;
+<A NAME="43"></A>    }
+<A NAME="44"></A>
+<A NAME="45"></A><FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="46"></A></FONT>        <FONT ID="Public">public</FONT> InviteData getInviteData() {
+<A NAME="47"></A>
+<A NAME="48"></A>        <FONT ID="Return">return</FONT> inviteData == <FONT ID="Null">null</FONT> ? (inviteData = <FONT ID="New">new</FONT> InviteData()) : inviteData;
+<A NAME="49"></A>    }
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeWidgetCriteria.java.html">TribeWidgetCriteria</A> setHumanId(<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="51"></A>
+<A NAME="52"></A>        <FONT ID="This">this</FONT>.humanId = humanId;
+<A NAME="53"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="54"></A>    }
+<A NAME="55"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeWidgetCriteria.java.html">TribeWidgetCriteria</A> setTribeId(<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> tribeId) {
+<A NAME="56"></A>
+<A NAME="57"></A>        <FONT ID="This">this</FONT>.tribeId = tribeId;
+<A NAME="58"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="59"></A>    }
+<A NAME="60"></A>
+<A NAME="61"></A><FONT ID="SingleLineComment">// -------------------------- INNER CLASSES --------------------------
+<A NAME="62"></A></FONT>
+<A NAME="63"></A>    <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> InviteData {
+<A NAME="64"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="65"></A></FONT>
+<A NAME="66"></A>
+<A NAME="67"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS (NON-STATIC)--------------------
+<A NAME="68"></A></FONT> 
+<A NAME="69"></A>
+<A NAME="70"></A>        <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email;
+<A NAME="71"></A>
+<A NAME="72"></A><FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="73"></A></FONT>        <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> getEmail() {
+<A NAME="74"></A>
+<A NAME="75"></A>            <FONT ID="Return">return</FONT> email;
+<A NAME="76"></A>        }
+<A NAME="77"></A>
+<A NAME="78"></A><FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="79"></A></FONT>        <FONT ID="Public">public</FONT> InviteData setEmail(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email) {
+<A NAME="80"></A>
+<A NAME="81"></A>            <FONT ID="This">this</FONT>.email = email;
+<A NAME="82"></A>            <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="83"></A>        }
+<A NAME="84"></A>    }
+<A NAME="85"></A>}
+<A NAME="86"></A></pre>
+</BODY>
+</HTML>

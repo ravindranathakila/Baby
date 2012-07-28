@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.DPrivateLocation (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DPrivateLocation.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">ai.ilikeplaces.entities.HumansPrivateLocation</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="FormalComment">/**
+<A NAME="19"></A> * Created by IntelliJ IDEA.
+<A NAME="20"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="21"></A> * Date: Jan 14, 2010
+<A NAME="22"></A> * Time: 11:53:11 PM
+<A NAME="23"></A> */</FONT>
+<A NAME="24"></A>
+<A NAME="25"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="26"></A>@Stateless
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DPrivateLocation <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/DPrivateLocationLocal.java.html">DPrivateLocationLocal</A> {
+<A NAME="28"></A>
+<A NAME="29"></A>    @EJB
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>&gt; privateLocationCrudServiceLocal_;
+<A NAME="31"></A>
+<A NAME="32"></A>
+<A NAME="33"></A>    @EJB
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>&gt; humansPrivateLocationCrudServiceLocal;
+<A NAME="35"></A>
+<A NAME="36"></A>    @NOTE(note = <FONT ID="StringLiteral">"Complex Logic"</FONT>, mustsee = <FONT ID="StringLiteral">"logic.conf.1"</FONT>)
+<A NAME="37"></A>    @Override
+<A NAME="38"></A>    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doNTxDPrivateLocation(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="40"></A>
+<A NAME="41"></A>        <FONT ID="Boolean">boolean</FONT> returnVal = <FONT ID="False">false</FONT>;
+<A NAME="42"></A>
+<A NAME="43"></A>        checkIfOwner:
+<A NAME="44"></A>        {
+<A NAME="45"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A> humansPrivateLocation = humansPrivateLocationCrudServiceLocal.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="46"></A>
+<A NAME="47"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> privateLocation = privateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>.<FONT ID="Class">class</FONT>, privateLocationId);
+<A NAME="48"></A>
+<A NAME="49"></A>            <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>&gt; privateLocationOwners = privateLocation.refresh().getPrivateLocationOwners();
+<A NAME="50"></A>            <FONT ID="If">if</FONT> (privateLocationOwners.contains(humansPrivateLocation)) {
+<A NAME="51"></A>                <FONT ID="If">if</FONT> (privateLocationOwners.size() == <FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="52"></A>                    privateLocationCrudServiceLocal_.delete(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>.<FONT ID="Class">class</FONT>, privateLocation.getPrivateLocationId());
+<A NAME="53"></A>                    returnVal = <FONT ID="True">true</FONT>;
+<A NAME="54"></A>                }<FONT ID="Else">else</FONT>{
+<A NAME="55"></A>                    List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>&gt; privateLocationViewers = privateLocation.getPrivateLocationViewers();
+<A NAME="56"></A>                    privateLocationOwners.remove(humansPrivateLocation);
+<A NAME="57"></A>                    privateLocationViewers.remove(humansPrivateLocation);
+<A NAME="58"></A>                    <FONT ID="SingleLineComment">//Not removing this human from all private events associated with this location since this might happen accidentally
+<A NAME="59"></A></FONT>                    <FONT ID="SingleLineComment">//In that case, upon reallocating the user as a owner or viewer, he can navigate to the specific moment.
+<A NAME="60"></A></FONT>                }
+<A NAME="61"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="62"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> SecurityException(RBGet.expMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.logic.crud.unit.DPrivateLocation.0001"</FONT>));
+<A NAME="63"></A>            }
+<A NAME="64"></A>        }
+<A NAME="65"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="66"></A>    }
+<A NAME="67"></A>}
+<A NAME="68"></A></pre>
+</BODY>
+</HTML>

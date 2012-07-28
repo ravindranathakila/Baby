@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.hotspots.HotspotAnalyzer (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HotspotAnalyzer.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.hotspots;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">ai.ilikeplaces.logic.validators.unit.BoundingBox</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> com.google.gdata.data.geo.impl.W3CPoint;
+<A NAME="8"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.util.HashSet;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * This class calculates hotspots on a given bounding box.
+<A NAME="15"></A> * &lt;p/&gt;
+<A NAME="16"></A> * It takes a list of geocordinates along with their common names,
+<A NAME="17"></A> * and analyzes the hotspots and the "mode" name for that spot.
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * &lt;p/&gt;
+<A NAME="20"></A> * It also takes an optional block size(per hotspot).
+<A NAME="21"></A> * &lt;p/&gt;
+<A NAME="22"></A> * Created by IntelliJ IDEA.
+<A NAME="23"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="24"></A> * Date: Oct 10, 2010
+<A NAME="25"></A> * Time: 2:35:54 PM
+<A NAME="26"></A> */</FONT>
+<A NAME="27"></A>
+<A NAME="28"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="29"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HotspotAnalyzer {
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> Set&lt;<A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>&gt; rawspots;
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A> bb;
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A>[][] mesh;
+<A NAME="36"></A><FONT ID="SingleLineComment">//    private Map&lt;Integer, Map&lt;Integer, BoundingBox&gt;&gt; mesh;
+<A NAME="37"></A></FONT>
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Hotspot.java.html">Hotspot</A>[][] hotspots;
+<A NAME="39"></A><FONT ID="SingleLineComment">//    private Map&lt;Integer, Map&lt;Integer, Hotspot&gt;&gt; hotspots;
+<A NAME="40"></A></FONT>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <FONT ID="Double">double</FONT>[] blockWH;
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> arrayWSize;
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> arrayHSize;
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl = SmartLogger.start(Loggers.LEVEL.DEBUG, <FONT ID="StringLiteral">"HotspotAnalyzer"</FONT>, <FONT ID="IntegerLiteral">5000</FONT>, <FONT ID="StringLiteral">"started"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BYTES = <FONT ID="StringLiteral">" Bytes"</FONT>;
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GENERATE_HOTSPOTS_RAWSPOTS_AVERAGE_DONE_DONE = <FONT ID="StringLiteral">"generateHotspots rawspots average done done - "</FONT>;
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GENERATE_HOTSPOTS_RAWSPOTS_ADDITION_DONE = <FONT ID="StringLiteral">"generateHotspots rawspots addition done - "</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GENERATE_HOTSPOTS_INTERNALS_INIT_DONE = <FONT ID="StringLiteral">"generateHotspots internals init done - "</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String INIT_MESH_POST_MESH_HOTSPOT_INIT = <FONT ID="StringLiteral">"initMesh Post mesh hotspot init - "</FONT>;
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String INIT_MESH_PRE_CONTRUCTION = <FONT ID="StringLiteral">"initMesh Pre Contruction - "</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String POST_CONTRUCTION = <FONT ID="StringLiteral">"Post Contruction - "</FONT>;
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PRE_CONTRUCTION = <FONT ID="StringLiteral">"Pre Contruction - "</FONT>;
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="SingleLineComment">//lat 0.0005325823430535 / 4 = 0.000133145585763375
+<A NAME="58"></A></FONT>    <FONT ID="SingleLineComment">//lng 0.0007376074791 / 4 =  0.000184401869775
+<A NAME="59"></A></FONT>
+<A NAME="60"></A>    <FONT ID="SingleLineComment">//6.876754135813088,79.93997275829315,6.8772867181561415,79.94071036577225
+<A NAME="61"></A></FONT>
+<A NAME="62"></A>    <FONT ID="Public">public</FONT> HotspotAnalyzer(<FONT ID="Final">final</FONT> Set&lt;<A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>&gt; rawspots, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A> bb) {
+<A NAME="63"></A>        sl.appendToLogMSG(PRE_CONTRUCTION + memory());
+<A NAME="64"></A>        <FONT ID="This">this</FONT>.rawspots = rawspots;
+<A NAME="65"></A>        <FONT ID="This">this</FONT>.bb = bb;
+<A NAME="66"></A>        sl.appendToLogMSG(POST_CONTRUCTION + memory());
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> initMesh() {
+<A NAME="70"></A>        sl.appendToLogMSG(INIT_MESH_PRE_CONTRUCTION + memory());
+<A NAME="71"></A>
+<A NAME="72"></A>        <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> widthStart = bb.getObjectAsValid()[<FONT ID="IntegerLiteral">0</FONT>].getObjectAsValid().getLongitude();
+<A NAME="73"></A>        <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> widthEnd = bb.getObjectAsValid()[<FONT ID="IntegerLiteral">1</FONT>].getObjectAsValid().getLongitude();
+<A NAME="74"></A>
+<A NAME="75"></A>        <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> heightStart = bb.getObjectAsValid()[<FONT ID="IntegerLiteral">0</FONT>].getObjectAsValid().getLatitude();
+<A NAME="76"></A>        <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> heightEnd = bb.getObjectAsValid()[<FONT ID="IntegerLiteral">1</FONT>].getObjectAsValid().getLatitude();
+<A NAME="77"></A>
+<A NAME="78"></A>
+<A NAME="79"></A>        <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> width = widthEnd - widthStart;
+<A NAME="80"></A>        <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> height = heightEnd - heightStart;
+<A NAME="81"></A>
+<A NAME="82"></A>        blockWH = <FONT ID="New">new</FONT> <FONT ID="Double">double</FONT>[]{width / <FONT ID="IntegerLiteral">12</FONT>, height / <FONT ID="IntegerLiteral">12</FONT>};
+<A NAME="83"></A>        <FONT ID="SingleLineComment">//blockWH = new double[]{0.000184401869775, 0.000133145585763375};
+<A NAME="84"></A></FONT>
+<A NAME="85"></A><FONT ID="SingleLineComment">//        arrayWSize = (int) Math.ceil(width / blockWH[0]);
+<A NAME="86"></A></FONT><FONT ID="SingleLineComment">//        arrayHSize = (int) Math.ceil(height / blockWH[1]);
+<A NAME="87"></A></FONT>
+<A NAME="88"></A>        arrayWSize = (<FONT ID="Int">int</FONT>) Math.ceil(width / blockWH[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="89"></A>        arrayHSize = (<FONT ID="Int">int</FONT>) Math.ceil(height / blockWH[<FONT ID="IntegerLiteral">1</FONT>]);
+<A NAME="90"></A>
+<A NAME="91"></A>        mesh = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A>[arrayWSize][arrayHSize];
+<A NAME="92"></A>        hotspots = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Hotspot.java.html">Hotspot</A>[arrayWSize][arrayHSize];
+<A NAME="93"></A>
+<A NAME="94"></A><FONT ID="SingleLineComment">//        sl.appendToLogMSG("initMesh Pre MESH Contruction - " + memory());
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//        mesh = new HashMap&lt;Integer, Map&lt;Integer, BoundingBox&gt;&gt;(arrayWSize) {{
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//            for (int i = 0; i &lt; arrayWSize; i++) {
+<A NAME="97"></A></FONT><FONT ID="SingleLineComment">//                put(i, new HashMap&lt;Integer, BoundingBox&gt;(arrayHSize));
+<A NAME="98"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="99"></A></FONT><FONT ID="SingleLineComment">//        }};
+<A NAME="100"></A></FONT><FONT ID="SingleLineComment">//        sl.appendToLogMSG("initMesh Pre HOTSPOT Contruction - " + memory());
+<A NAME="101"></A></FONT><FONT ID="SingleLineComment">//        hotspots = new HashMap&lt;Integer, Map&lt;Integer, Hotspot&gt;&gt;(arrayWSize) {{
+<A NAME="102"></A></FONT><FONT ID="SingleLineComment">//            for (int i = 0; i &lt; arrayWSize; i++) {
+<A NAME="103"></A></FONT><FONT ID="SingleLineComment">//                put(i, new HashMap&lt;Integer, Hotspot&gt;(arrayHSize));
+<A NAME="104"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="105"></A></FONT><FONT ID="SingleLineComment">//        }};
+<A NAME="106"></A></FONT>
+<A NAME="107"></A>        sl.appendToLogMSG(INIT_MESH_POST_MESH_HOTSPOT_INIT + memory());
+<A NAME="108"></A>
+<A NAME="109"></A>        <FONT ID="Double">double</FONT> currentLatitude, currentLongitude;
+<A NAME="110"></A>
+<A NAME="111"></A>        currentLongitude = widthStart;
+<A NAME="112"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; arrayWSize; i++) {
+<A NAME="113"></A>
+<A NAME="114"></A>            currentLatitude = heightStart;
+<A NAME="115"></A>            <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> j = <FONT ID="IntegerLiteral">0</FONT>; j &lt; arrayHSize; j++) {
+<A NAME="116"></A>
+<A NAME="117"></A>                mesh[i][j] = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A>().setObj(currentLatitude, currentLongitude, currentLatitude + blockWH[<FONT ID="IntegerLiteral">1</FONT>], currentLongitude + blockWH[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="118"></A>                mesh[i][j].validateThrow(v);
+<A NAME="119"></A>
+<A NAME="120"></A><FONT ID="SingleLineComment">//                mesh.get(i).put(j, (BoundingBox)
+<A NAME="121"></A></FONT><FONT ID="SingleLineComment">//                        new BoundingBox()
+<A NAME="122"></A></FONT><FONT ID="SingleLineComment">//                                .setObj(currentLatitude, currentLongitude, currentLatitude + blockWH[1], currentLongitude + blockWH[0])
+<A NAME="123"></A></FONT><FONT ID="SingleLineComment">//                                .getSelfAsValid());//new
+<A NAME="124"></A></FONT>
+<A NAME="125"></A>                currentLatitude += blockWH[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="126"></A>            }
+<A NAME="127"></A>
+<A NAME="128"></A>            currentLongitude += blockWH[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="129"></A>        }
+<A NAME="130"></A>        sl.appendToLogMSG(<FONT ID="StringLiteral">"initMesh done - "</FONT> + memory());
+<A NAME="131"></A>    }
+<A NAME="132"></A>
+<A NAME="133"></A>    <FONT ID="Private">private</FONT> <FONT ID="Synchronized">synchronized</FONT> <FONT ID="Void">void</FONT> generateHotspots() {
+<A NAME="134"></A>        sl.appendToLogMSG(<FONT ID="StringLiteral">"generateHotspots init - "</FONT> + memory());
+<A NAME="135"></A>
+<A NAME="136"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/BBWithSpots.java.html">BBWithSpots</A>[][] allocatedrawspots = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/BBWithSpots.java.html">BBWithSpots</A>[arrayWSize][arrayHSize];
+<A NAME="137"></A>
+<A NAME="138"></A><FONT ID="SingleLineComment">//        final Map&lt;Integer, Map&lt;Integer, BBWithSpots&gt;&gt; allocatedrawspots = new HashMap&lt;Integer, Map&lt;Integer, BBWithSpots&gt;&gt;(arrayWSize) {{
+<A NAME="139"></A></FONT><FONT ID="SingleLineComment">//            for (int i = 0; i &lt; arrayWSize; i++) {
+<A NAME="140"></A></FONT><FONT ID="SingleLineComment">//                put(i, new HashMap&lt;Integer, BBWithSpots&gt;(arrayHSize));
+<A NAME="141"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="142"></A></FONT><FONT ID="SingleLineComment">//        }};
+<A NAME="143"></A></FONT>
+<A NAME="144"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; mesh.length; i++) {
+<A NAME="145"></A>            <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> j = <FONT ID="IntegerLiteral">0</FONT>; j &lt; mesh[i].length; j++) {
+<A NAME="146"></A>                allocatedrawspots[i][j] = (<A HREF="../../../../ai/ilikeplaces/logic/hotspots/BBWithSpots.java.html">BBWithSpots</A>) <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/BBWithSpots.java.html">BBWithSpots</A>().setPair(mesh[i][j], <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/RawspotElasticArray.java.html">RawspotElasticArray</A>());
+<A NAME="147"></A>            }
+<A NAME="148"></A>        }
+<A NAME="149"></A>
+<A NAME="150"></A><FONT ID="SingleLineComment">//        for (int i = 0; i &lt; arrayWSize; i++) {
+<A NAME="151"></A></FONT><FONT ID="SingleLineComment">//            for (int j = 0; j &lt; arrayHSize; j++) {
+<A NAME="152"></A></FONT><FONT ID="SingleLineComment">//                allocatedrawspots.get(i).put(j, (BBWithSpots) new BBWithSpots().setPair(mesh.get(i).get(j), new RawspotElasticArray()));
+<A NAME="153"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="154"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="155"></A></FONT>
+<A NAME="156"></A>        sl.appendToLogMSG(GENERATE_HOTSPOTS_INTERNALS_INIT_DONE + memory());
+<A NAME="157"></A>
+<A NAME="158"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A> location : rawspots) {
+<A NAME="159"></A>            <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; mesh.length; i++) {
+<A NAME="160"></A>                <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> j = <FONT ID="IntegerLiteral">0</FONT>; j &lt; mesh[i].length; j++) {
+<A NAME="161"></A>                    <FONT ID="If">if</FONT> (mesh[i][j].bounds(location.getCoordinates())) {
+<A NAME="162"></A>                        allocatedrawspots[i][j].getValue().addEntries(location);
+<A NAME="163"></A>                    }
+<A NAME="164"></A>                }
+<A NAME="165"></A>            }
+<A NAME="166"></A>        }
+<A NAME="167"></A>
+<A NAME="168"></A>
+<A NAME="169"></A><FONT ID="SingleLineComment">//        for (final Rawspot location : rawspots) {
+<A NAME="170"></A></FONT><FONT ID="SingleLineComment">//            for (int i = 0; i &lt; arrayWSize; i++) {
+<A NAME="171"></A></FONT><FONT ID="SingleLineComment">//                for (int j = 0; j &lt; arrayHSize; j++) {
+<A NAME="172"></A></FONT><FONT ID="SingleLineComment">//                    if (mesh.get(i).get(j).bounds(location.getCoordinates())) {
+<A NAME="173"></A></FONT><FONT ID="SingleLineComment">//                        allocatedrawspots.get(i).get(j).getValue().addEntries(location);
+<A NAME="174"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="175"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="176"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="177"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="178"></A></FONT>        sl.appendToLogMSG(GENERATE_HOTSPOTS_RAWSPOTS_ADDITION_DONE + memory());
+<A NAME="179"></A>
+<A NAME="180"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; allocatedrawspots.length; i++) {
+<A NAME="181"></A>            <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> j = <FONT ID="IntegerLiteral">0</FONT>; j &lt; allocatedrawspots[i].length; j++) {
+<A NAME="182"></A>                hotspots[i][j] = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Hotspot.java.html">Hotspot</A>(allocatedrawspots[i][j].spotAverage(), allocatedrawspots[i][j].modeName(), allocatedrawspots[i][j].getValue().array.length);
+<A NAME="183"></A>            }
+<A NAME="184"></A>        }
+<A NAME="185"></A>
+<A NAME="186"></A><FONT ID="SingleLineComment">//        for (int i = 0; i &lt; allocatedrawspots.size(); i++) {
+<A NAME="187"></A></FONT><FONT ID="SingleLineComment">//            for (int j = 0; j &lt; allocatedrawspots.get(i).size(); j++) {
+<A NAME="188"></A></FONT><FONT ID="SingleLineComment">//                hotspots.get(i).put(j, new Hotspot(allocatedrawspots.get(i).get(j).spotAverage(), allocatedrawspots.get(i).get(j).modeName(), allocatedrawspots.get(i).get(j).getValue().array.length));
+<A NAME="189"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="190"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="191"></A></FONT>
+<A NAME="192"></A>        sl.complete(GENERATE_HOTSPOTS_RAWSPOTS_AVERAGE_DONE_DONE + memory());
+<A NAME="193"></A>    }
+<A NAME="194"></A>
+<A NAME="195"></A>    <FONT ID="Private">private</FONT> <FONT ID="Synchronized">synchronized</FONT> <FONT ID="Void">void</FONT> refresh() {
+<A NAME="196"></A>        initMesh();
+<A NAME="197"></A>        generateHotspots();
+<A NAME="198"></A>    }
+<A NAME="199"></A>
+<A NAME="200"></A>
+<A NAME="201"></A><FONT ID="SingleLineComment">//    public synchronized Map&lt;Integer, Map&lt;Integer, Hotspot&gt;&gt; getHotspots() {
+<A NAME="202"></A></FONT><FONT ID="SingleLineComment">//        refresh();
+<A NAME="203"></A></FONT><FONT ID="SingleLineComment">//        return hotspots;
+<A NAME="204"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="205"></A></FONT>
+<A NAME="206"></A>    <FONT ID="Public">public</FONT> <FONT ID="Synchronized">synchronized</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Hotspot.java.html">Hotspot</A>[][] getHotspots() {
+<A NAME="207"></A>        refresh();
+<A NAME="208"></A>        <FONT ID="Return">return</FONT> hotspots;
+<A NAME="209"></A>    }
+<A NAME="210"></A>
+<A NAME="211"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(String args[]) {
+<A NAME="212"></A>        <FONT ID="Final">final</FONT> Set&lt;<A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>&gt; rs = <FONT ID="New">new</FONT> HashSet&lt;<A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>&gt;();
+<A NAME="213"></A>        <FONT ID="SingleLineComment">//tl
+<A NAME="214"></A></FONT>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877182864646137</FONT>, <FONT ID="FloatPointLiteral">79.94012966752052</FONT>), <FONT ID="StringLiteral">"a1 of californina"</FONT>));
+<A NAME="215"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877180201735318</FONT>, <FONT ID="FloatPointLiteral">79.94016319513321</FONT>), <FONT ID="StringLiteral">"a2 of california"</FONT>));
+<A NAME="216"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877192184833859</FONT>, <FONT ID="FloatPointLiteral">79.94016319513321</FONT>), <FONT ID="StringLiteral">"a3 of colombo"</FONT>));
+<A NAME="217"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877192184833859</FONT>, <FONT ID="FloatPointLiteral">79.94012966752052</FONT>), <FONT ID="StringLiteral">"a4 of matara"</FONT>));
+<A NAME="218"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877182864646137</FONT>, <FONT ID="FloatPointLiteral">79.94016319513321</FONT>), <FONT ID="StringLiteral">"a5 in galle"</FONT>));
+<A NAME="219"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877182864646137</FONT>, <FONT ID="FloatPointLiteral">79.94016319513321</FONT>), <FONT ID="StringLiteral">"a6 of course"</FONT>));
+<A NAME="220"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877182864646137</FONT>, <FONT ID="FloatPointLiteral">79.94016319513321</FONT>), <FONT ID="StringLiteral">"a7 not really"</FONT>));
+<A NAME="221"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877182864646137</FONT>, <FONT ID="FloatPointLiteral">79.94016319513321</FONT>), <FONT ID="StringLiteral">"a8 just a"</FONT>));
+<A NAME="222"></A>
+<A NAME="223"></A>        <FONT ID="SingleLineComment">//middle
+<A NAME="224"></A></FONT>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.876984477749757</FONT>, <FONT ID="FloatPointLiteral">79.9405038356781</FONT>), <FONT ID="StringLiteral">"m1 just m"</FONT>));
+<A NAME="225"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.876984477749757</FONT>, <FONT ID="FloatPointLiteral">79.9405038356781</FONT>), <FONT ID="StringLiteral">"m2 is m?"</FONT>));
+<A NAME="226"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877064365100539</FONT>, <FONT ID="FloatPointLiteral">79.94048774242401</FONT>), <FONT ID="StringLiteral">"m5 pizza 4 hut"</FONT>));
+<A NAME="227"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877064365100539</FONT>, <FONT ID="FloatPointLiteral">79.94048774242401</FONT>), <FONT ID="StringLiteral">"Pizza 1 hut"</FONT>));
+<A NAME="228"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877064365100539</FONT>, <FONT ID="FloatPointLiteral">79.94048774242401</FONT>), <FONT ID="StringLiteral">"pizza 2 hut"</FONT>));
+<A NAME="229"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877064365100539</FONT>, <FONT ID="FloatPointLiteral">79.94048774242401</FONT>), <FONT ID="StringLiteral">"PIZZa HUT 2"</FONT>));
+<A NAME="230"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877064365100539</FONT>, <FONT ID="FloatPointLiteral">79.94048774242401</FONT>), <FONT ID="StringLiteral">"pizza 2 hut"</FONT>));
+<A NAME="231"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877064365100539</FONT>, <FONT ID="FloatPointLiteral">79.94048774242401</FONT>), <FONT ID="StringLiteral">"pizza 3 hut"</FONT>));
+<A NAME="232"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877064365100539</FONT>, <FONT ID="FloatPointLiteral">79.94048774242401</FONT>), <FONT ID="StringLiteral">"pizza 3 hut"</FONT>));
+<A NAME="233"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.877064365100539</FONT>, <FONT ID="FloatPointLiteral">79.94048774242401</FONT>), <FONT ID="StringLiteral">"pizza 3 hut 2"</FONT>));
+<A NAME="234"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.8770377359851045</FONT>, <FONT ID="FloatPointLiteral">79.94051322340965</FONT>), <FONT ID="StringLiteral">"hotel pizza hut"</FONT>));
+<A NAME="235"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.8770377359851045</FONT>, <FONT ID="FloatPointLiteral">79.94051322340965</FONT>), <FONT ID="StringLiteral">"namu"</FONT>));
+<A NAME="236"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.876997792309147</FONT>, <FONT ID="FloatPointLiteral">79.94052529335022</FONT>), <FONT ID="StringLiteral">"m7"</FONT>));
+<A NAME="237"></A>        rs.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(<FONT ID="New">new</FONT> W3CPoint(<FONT ID="FloatPointLiteral">6.876997792309147</FONT>, <FONT ID="FloatPointLiteral">79.94052529335022</FONT>), <FONT ID="StringLiteral">"m8 kamak na"</FONT>));
+<A NAME="238"></A>
+<A NAME="239"></A>
+<A NAME="240"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A> bb = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A>().setObj(<FONT ID="StringLiteral">"6.876754135813088,79.93997275829315,6.8772867181561415,79.94071036577225"</FONT>);
+<A NAME="241"></A>
+<A NAME="242"></A>        memory();
+<A NAME="243"></A>
+<A NAME="244"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/HotspotAnalyzer.java.html">HotspotAnalyzer</A> hsa = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/HotspotAnalyzer.java.html">HotspotAnalyzer</A>(rs, (<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A>) bb.validateThrowAndGetThis());
+<A NAME="245"></A>        memory();
+<A NAME="246"></A><FONT ID="SingleLineComment">//        final Map&lt;Integer, Map&lt;Integer, Hotspot&gt;&gt; hotspots = hsa.getHotspots();
+<A NAME="247"></A></FONT>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/hotspots/Hotspot.java.html">Hotspot</A>[][] hotspots = hsa.getHotspots();
+<A NAME="248"></A><FONT ID="SingleLineComment">//        memory();
+<A NAME="249"></A></FONT><FONT ID="SingleLineComment">//        for (final Integer place : hotspots.keySet()) {
+<A NAME="250"></A></FONT><FONT ID="SingleLineComment">//            for (final Integer innerplace : hotspots.get(place).keySet()) {
+<A NAME="251"></A></FONT><FONT ID="SingleLineComment">//                if (hotspots.get(place).get(innerplace).getCoordinates() != null) {
+<A NAME="252"></A></FONT><FONT ID="SingleLineComment">//                    System.out.println("Hotspot:" + hotspots.get(place).get(innerplace).getCommonName() + ":" + hotspots.get(place).get(innerplace).getCoordinates().getLatitude() + "," + hotspots.get(place).get(innerplace).getCoordinates().getLongitude());
+<A NAME="253"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="254"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="255"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="256"></A></FONT>
+<A NAME="257"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; hotspots.length; i++) {
+<A NAME="258"></A>            <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> j = <FONT ID="IntegerLiteral">0</FONT>; j &lt; hotspots[i].length; j++) {
+<A NAME="259"></A>                <FONT ID="Final">final</FONT> W3CPoint coords = hotspots[i][j].getCoordinates();
+<A NAME="260"></A>
+<A NAME="261"></A>                <FONT ID="If">if</FONT> (coords != <FONT ID="Null">null</FONT>) {
+<A NAME="262"></A>                    System.out.println(<FONT ID="StringLiteral">"Hotspot:"</FONT> + hotspots[i][j].getCommonName() + <FONT ID="StringLiteral">":"</FONT> + coords.getLatitude() + <FONT ID="StringLiteral">","</FONT> + coords.getLongitude());
+<A NAME="263"></A>                }
+<A NAME="264"></A>            }
+<A NAME="265"></A>        }
+<A NAME="266"></A>
+<A NAME="267"></A>        memory();
+<A NAME="268"></A>
+<A NAME="269"></A>    }
+<A NAME="270"></A>
+<A NAME="271"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> String memory() {
+<A NAME="272"></A>        <FONT ID="Return">return</FONT> Runtime.getRuntime().freeMemory() + BYTES;
+<A NAME="273"></A>    }
+<A NAME="274"></A>
+<A NAME="275"></A>}
+<A NAME="276"></A></pre>
+</BODY>
+</HTML>

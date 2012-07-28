@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.validators.unit.ProfileUrl (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ProfileUrl.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.validators.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.IsInvariant;
+<A NAME="6"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.MatchPattern;
+<A NAME="7"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotEmpty;
+<A NAME="8"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotNull;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> * Created by IntelliJ IDEA.
+<A NAME="12"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="13"></A> * Date: Jan 21, 2010
+<A NAME="14"></A> * Time: 8:58:01 PM
+<A NAME="15"></A> */</FONT>
+<A NAME="16"></A>
+<A NAME="17"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="18"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ProfileUrl <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; {
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> ProfileUrl() {
+<A NAME="21"></A>    }
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> ProfileUrl(<FONT ID="Final">final</FONT> String name) {
+<A NAME="24"></A>        obj = name;
+<A NAME="25"></A>    }
+<A NAME="26"></A>
+<A NAME="27"></A>    @IsInvariant
+<A NAME="28"></A>    @NotNull(message = <FONT ID="StringLiteral">"Sorry! You must enter a value."</FONT>)
+<A NAME="29"></A>    @NotEmpty(message = <FONT ID="StringLiteral">"Sorry! You must enter a value."</FONT>)
+<A NAME="30"></A>    @MatchPattern(
+<A NAME="31"></A>            message = <FONT ID="StringLiteral">"Sorry! Use only letters numbers and underscores"</FONT>,
+<A NAME="32"></A>            pattern = <FONT ID="StringLiteral">"^[a-zA-Z0-9_]*$"</FONT>)
+<A NAME="33"></A>    @Override
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> String getObj() {
+<A NAME="35"></A>        <FONT ID="Return">return</FONT> obj;
+<A NAME="36"></A>    }
+<A NAME="37"></A>}</pre>
+</BODY>
+</HTML>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDHumanLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDHumanLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">ai.ilikeplaces.logic.validators.unit.DisplayNameString</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">ai.ilikeplaces.logic.validators.unit.Password</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/verify/util/Verify.java.html">ai.ilikeplaces.logic.verify.util.Verify</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.Remote;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="FormalComment">/**
+<A NAME="20"></A> * @author Ravindranath Akila
+<A NAME="21"></A> */</FONT>
+<A NAME="22"></A>
+<A NAME="23"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="24"></A>@Remote
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> HumanCRUDHumanLocal <FONT ID="Extends">extends</FONT> <A HREF="../../../../ai/ilikeplaces/logic/verify/util/Verify.java.html">Verify</A> {
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> NAME = <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A>.<FONT ID="Class">class</FONT>.getSimpleName();
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> Human doDirtyRHuman(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> humanId);
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> Human doDirtyRHuman(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;HumansAuthentication&gt; doDirtyRHumansAuthentication(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> HumansNetPeople doDirtyRHumansNetPeople(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;HumansPrivateLocation&gt; doDirtyRHumansPrivateLocation(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;HumansPrivateEvent&gt; doDirtyRHumansPrivateEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doNTxAddHumansNetPeople(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; adderHumanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; addeeHumanId);
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doNTxRemoveHumansNetPeople(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; adderHumanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; addeeHumanId);
+<A NAME="44"></A>
+<A NAME="45"></A>    @NOTE(note = <FONT ID="StringLiteral">"Triple e's were intentional. Two e's confuses er with ee."</FONT>)
+<A NAME="46"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doNTxIsHumansNetPeople(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; checkerHumanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; checkeeeHumanId);
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doNTxUDisplayName(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">DisplayNameString</A> displayName);
+<A NAME="49"></A>
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doDirtyIsHumansNetPeople(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; adderHumanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; addeeHumanId);
+<A NAME="51"></A>
+<A NAME="52"></A>    <FONT ID="FormalComment">/**
+<A NAME="53"></A>     * Checks if the user exists on ilikeplaces.com by her email
+<A NAME="54"></A>     *
+<A NAME="55"></A>     * @param emails
+<A NAME="56"></A>     * @return
+<A NAME="57"></A>     */</FONT>
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> List&lt;HumansIdentity&gt; doDirtyRHumansIdentitiesByEmails(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; emails);
+<A NAME="59"></A>
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doCHuman(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; username, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; password, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; email);
+<A NAME="61"></A>
+<A NAME="62"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doUActivateHuman(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; username);
+<A NAME="63"></A>
+<A NAME="64"></A>    <FONT ID="FormalComment">/**
+<A NAME="65"></A>     * Checks if a human is in the database
+<A NAME="66"></A>     *
+<A NAME="67"></A>     * @param humanId
+<A NAME="68"></A>     * @return boolean true if user exists
+<A NAME="69"></A>     */</FONT>
+<A NAME="70"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doDirtyCheckHuman(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> humanId);
+<A NAME="71"></A>
+<A NAME="72"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doDHuman(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doUHumanPassword(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A> currentPassword, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A> newPassword);
+<A NAME="75"></A>
+<A NAME="76"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; doUHumanPassword(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A> newPassword);
+<A NAME="77"></A>
+<A NAME="78"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;HumansIdentity&gt; doUHumansProfilePhoto(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> url);
+<A NAME="79"></A>
+<A NAME="80"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; doDirtyRHumansProfilePhoto(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;HumansIdentity&gt; doUHumansPublicURL(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> url);
+<A NAME="83"></A>
+<A NAME="84"></A>    <FONT ID="FormalComment">/**
+<A NAME="85"></A>     * Just a critical note. The humanId sent here does not imply signed on status of this user by any means. This is
+<A NAME="86"></A>     * actually a profile URL lookup that would be done by any user on another users profile. Hence the information
+<A NAME="87"></A>     * shown by the result of this call, which is the URL is privacy sensitive. Of course this will be handled, but
+<A NAME="88"></A>     * a warning will just make usage more prudent.
+<A NAME="89"></A>     *
+<A NAME="90"></A>     * @param humanId
+<A NAME="91"></A>     * @return
+<A NAME="92"></A>     */</FONT>
+<A NAME="93"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; doDirtyRHumansPublicURL(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="94"></A>
+<A NAME="95"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;HumansIdentity&gt; doDirtyRHumansIdentity(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="96"></A>
+<A NAME="97"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; doDirtyProfileFromURL(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> url);
+<A NAME="98"></A>
+<A NAME="99"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;List&lt;HumansNetPeople&gt;&gt; doDirtyRHumansBefriends(<FONT ID="Final">final</FONT>  <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanId);
+<A NAME="100"></A>
+<A NAME="101"></A>}
+<A NAME="102"></A>
+<A NAME="103"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.MemberChoice (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">MemberChoice.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="FormalComment">/**
+<A NAME="9"></A> * Created by IntelliJ IDEA.
+<A NAME="10"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="11"></A> * Date: Feb 7, 2010
+<A NAME="12"></A> * Time: 12:30:41 PM
+<A NAME="13"></A> */</FONT>
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * A class to help adding removing members from a list on enroll basis.
+<A NAME="17"></A> * For example, if we need to track which members are added for an event, this can be used.
+<A NAME="18"></A> *
+<A NAME="19"></A> * The user interface is provided with this member, along with the add and remove lists.
+<A NAME="20"></A> *
+<A NAME="21"></A> * When a user selects/unselscts(radio button say) the member gets added to the relevant list.
+<A NAME="22"></A> *
+<A NAME="23"></A> * 
+<A NAME="24"></A> * @param &lt;L&gt;
+<A NAME="25"></A> * @param &lt;M&gt;
+<A NAME="26"></A> */</FONT>
+<A NAME="27"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="28"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> MemberChoice&lt;L <FONT ID="Extends">extends</FONT> Set&lt;M&gt;, M&gt; {
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> L added;
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> L removed;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> M member;
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="FormalComment">/**
+<A NAME="35"></A>     * 
+<A NAME="36"></A>     * @param member  reference to the member to be added or removed
+<A NAME="37"></A>     * @param added   reference to the list to add members
+<A NAME="38"></A>     * @param removed reference to the list to remove members
+<A NAME="39"></A>     */</FONT>
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> MemberChoice(<FONT ID="Final">final</FONT> M member, <FONT ID="Final">final</FONT> L added, <FONT ID="Final">final</FONT> L removed) {
+<A NAME="41"></A>        <FONT ID="This">this</FONT>.member = member;
+<A NAME="42"></A>        
+<A NAME="43"></A>        <FONT ID="This">this</FONT>.added = added;
+<A NAME="44"></A>        <FONT ID="This">this</FONT>.removed = removed;
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> add() {
+<A NAME="48"></A>        removed.remove(member);
+<A NAME="49"></A>        <FONT ID="Return">return</FONT> added.add(member);
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> remove() {
+<A NAME="53"></A>        added.remove(member);
+<A NAME="54"></A>        <FONT ID="Return">return</FONT> removed.add(member);
+<A NAME="55"></A>    }
+<A NAME="56"></A>}
+<A NAME="57"></A></pre>
+</BODY>
+</HTML>

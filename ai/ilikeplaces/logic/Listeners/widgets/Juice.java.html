@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.Juice (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Juice.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.DOCUMENTATION;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.SEE;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ai.ilikeplaces.logic.contactimports.ImportedContact</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.text.MessageFormat;
+<A NAME="21"></A>
+<A NAME="22"></A><FONT ID="FormalComment">/**
+<A NAME="23"></A> * Created by IntelliJ IDEA.
+<A NAME="24"></A> * User: Ravindranath Akila
+<A NAME="25"></A> * Date: 2/17/12
+<A NAME="26"></A> * Time: 6:47 PM
+<A NAME="27"></A> */</FONT>
+<A NAME="28"></A>@DOCUMENTATION(
+<A NAME="29"></A>        NOTE = {
+<A NAME="30"></A>                @NOTE(<FONT ID="StringLiteral">"The term JUICE was coined up from Seth Godin's book Unleashing the Idea Virus."</FONT>),
+<A NAME="31"></A>                @NOTE(<FONT ID="StringLiteral">"The idea is to provide so much positive Juice into a HIVE which we believe can get infected by our idea virus."</FONT>),
+<A NAME="32"></A>                @NOTE(<FONT ID="StringLiteral">"We have a pitfall though. We have four sections, Talk, Tribes, Moments and Snaps. This needs 4 ideas(or do we?)"</FONT>),
+<A NAME="33"></A>                @NOTE(<FONT ID="StringLiteral">"Having four ideas might confuse the user."</FONT>),
+<A NAME="34"></A>                @NOTE(<FONT ID="StringLiteral">"This also gives us Mixed Fruit Juice rather than a fine blend of one:-/."</FONT>),
+<A NAME="35"></A>
+<A NAME="36"></A>                @NOTE(<FONT ID="StringLiteral">"Excitement: http://www.psychologytoday.com/blog/learning-play/200912/the-nature-excitement"</FONT>),
+<A NAME="37"></A>                @NOTE(<FONT ID="StringLiteral">"Excitement (more depth): http://worldcupcollege.com/2010/06/the-psychology-of-excitement/"</FONT>)
+<A NAME="38"></A>        }
+<A NAME="39"></A>)
+<A NAME="40"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Juice <FONT ID="Extends">extends</FONT> AbstractWidgetListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/JuiceCriteria.java.html">JuiceCriteria</A>&gt; {
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ENTER_A_VALID_EMAIL = <FONT ID="StringLiteral">"enter.a.valid.email"</FONT>;
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String INVITED_ADDED_0 = <FONT ID="StringLiteral">"invited.added.0"</FONT>;
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COULD_NOT_INVITE_AND_ADD_TRY_AGAIN = <FONT ID="StringLiteral">"could.not.invite.and.add.try.again"</FONT>;
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MESSAGE_ADDING_SELF_AS_FRIEND = <FONT ID="StringLiteral">"message.adding.self.as.friend"</FONT>;
+<A NAME="46"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_ALREADY_YOUR_FRIEND = <FONT ID="StringLiteral">"0.is.already.your.friend"</FONT>;
+<A NAME="47"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_MORE = <FONT ID="StringLiteral">"read.more"</FONT>;
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum JuiceIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="50"></A>        Juice_Content,
+<A NAME="51"></A>
+<A NAME="52"></A>        Juice_Talk,
+<A NAME="53"></A>        Juice_Talk_Content,
+<A NAME="54"></A>        Juice_Tribe,
+<A NAME="55"></A>        Juice_Tribe_Content,
+<A NAME="56"></A>        Juice_Moment,
+<A NAME="57"></A>        Juice_Moment_Content,
+<A NAME="58"></A>        Juice_Snap,
+<A NAME="59"></A>        Juice_Snap_Content,
+<A NAME="60"></A>
+<A NAME="61"></A>        Juice_Signup_Show,
+<A NAME="62"></A>
+<A NAME="63"></A>        Juice_Email,
+<A NAME="64"></A>        Juice_Signup_Click,
+<A NAME="65"></A>        Juice_Noti,
+<A NAME="66"></A>
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>
+<A NAME="70"></A>    <FONT ID="FormalComment">/**
+<A NAME="71"></A>     * @param request__
+<A NAME="72"></A>     * @param appendToElement__
+<A NAME="73"></A>     */</FONT>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> Juice(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/JuiceCriteria.java.html">JuiceCriteria</A> juiceCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="75"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.Juice, juiceCriteria, appendToElement__);
+<A NAME="76"></A>        <FONT ID="Super">super</FONT>.registerUserNotifier(JuiceIds.Juice_Noti);
+<A NAME="77"></A>    }
+<A NAME="78"></A>
+<A NAME="79"></A>    <FONT ID="FormalComment">/**
+<A NAME="80"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="81"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="82"></A>     * automatically called by the constructor
+<A NAME="83"></A>     *
+<A NAME="84"></A>     * @param itsNatHTMLDocument_
+<A NAME="85"></A>     * @param hTMLDocument_
+<A NAME="86"></A>     */</FONT>
+<A NAME="87"></A>    @Override
+<A NAME="88"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="89"></A>        <FONT ID="Super">super</FONT>.registerForInputText(JuiceIds.Juice_Email, <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/JuiceCriteria.java.html">JuiceCriteria</A>&gt;(criteria) {
+<A NAME="90"></A>            <FONT ID="FormalComment">/**
+<A NAME="91"></A>             * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="92"></A>             *
+<A NAME="93"></A>             * @param evt fired from client
+<A NAME="94"></A>             */</FONT>
+<A NAME="95"></A>            @Override
+<A NAME="96"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="97"></A>                <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email__ = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(getTargetInputText(evt));
+<A NAME="98"></A>                <FONT ID="If">if</FONT> (email__.valid()) {
+<A NAME="99"></A>                    criteria.getInviteData().setEmail(email__);
+<A NAME="100"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="101"></A>                    notifyUser(<FONT ID="StringLiteral">"Sorry, but we think this email is invalid :-("</FONT>);
+<A NAME="102"></A>                }
+<A NAME="103"></A>            }
+<A NAME="104"></A>        });
+<A NAME="105"></A>
+<A NAME="106"></A>        <FONT ID="Super">super</FONT>.registerForClick(JuiceIds.Juice_Signup_Click, <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/JuiceCriteria.java.html">JuiceCriteria</A>&gt;(criteria) {
+<A NAME="107"></A>            <FONT ID="FormalComment">/**
+<A NAME="108"></A>             * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="109"></A>             *
+<A NAME="110"></A>             * @param evt fired from client
+<A NAME="111"></A>             */</FONT>
+<A NAME="112"></A>            @Override
+<A NAME="113"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="114"></A>                notifyUser(<FONT ID="StringLiteral">"Hold on please... We are signing you up!"</FONT>);
+<A NAME="115"></A>            }
+<A NAME="116"></A>        });
+<A NAME="117"></A>        <FONT ID="Super">super</FONT>.registerForClick(JuiceIds.Juice_Signup_Click, <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/JuiceCriteria.java.html">JuiceCriteria</A>&gt;(criteria) {
+<A NAME="118"></A>
+<A NAME="119"></A>            <FONT ID="FormalComment">/**
+<A NAME="120"></A>             * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="121"></A>             *
+<A NAME="122"></A>             * @param evt fired from client
+<A NAME="123"></A>             */</FONT>
+<A NAME="124"></A>            @Override
+<A NAME="125"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="126"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email = criteria.getInviteData().getEmail();
+<A NAME="127"></A>
+<A NAME="128"></A>                <FONT ID="If">if</FONT> (email.valid()) {
+<A NAME="129"></A>                    <FONT ID="If">if</FONT> (!DB.getHumanCRUDHumanLocal(<FONT ID="False">false</FONT>).doDirtyCheckHuman(email.getObj()).returnValue()) {
+<A NAME="130"></A>
+<A NAME="131"></A>                        <FONT ID="New">new</FONT> Thread(<FONT ID="New">new</FONT> Runnable() {
+<A NAME="132"></A>                            @Override
+<A NAME="133"></A>                            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="134"></A>
+<A NAME="135"></A>                                <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
+<A NAME="136"></A>                                        <FONT ID="StringLiteral">"I Like Places"</FONT>,
+<A NAME="137"></A>                                        <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>().setEmail(email.getObj()).setFullName(<FONT ID="StringLiteral">""</FONT>));
+<A NAME="138"></A>                                <FONT ID="If">if</FONT> (!returnVal.valid() || !returnVal.returnValue()) {
+<A NAME="139"></A>                                    <FONT ID="SingleLineComment">//we are being optimistic and assuming user entered the proper email.
+<A NAME="140"></A></FONT>                                    <FONT ID="SingleLineComment">//This is because mail server check takes a lot of time
+<A NAME="141"></A></FONT>                                }
+<A NAME="142"></A>                            }
+<A NAME="143"></A>                        }).start();
+<A NAME="144"></A>
+<A NAME="145"></A>                        $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+<A NAME="146"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="147"></A>                        $$sendJS(JSCodeToSend.redirectPageWithURL(Controller.Page.Profile.getURL()));
+<A NAME="148"></A>                    }
+<A NAME="149"></A>                }
+<A NAME="150"></A>            }
+<A NAME="151"></A>        });
+<A NAME="152"></A>
+<A NAME="153"></A>        <FONT ID="Super">super</FONT>.registerForClick(JuiceIds.Juice_Signup_Show, <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/JuiceCriteria.java.html">JuiceCriteria</A>&gt;(criteria) {
+<A NAME="154"></A>            <FONT ID="SingleLineComment">//this is in place just to record analytics
+<A NAME="155"></A></FONT>        });
+<A NAME="156"></A>    }
+<A NAME="157"></A>}
+<A NAME="158"></A></pre>
+</BODY>
+</HTML>

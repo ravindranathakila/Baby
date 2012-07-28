@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CPrivateLocation (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CPrivateLocation.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">ai.ilikeplaces.entities.HumansPrivateLocation</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="FormalComment">/**
+<A NAME="17"></A> * Created by IntelliJ IDEA.
+<A NAME="18"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="19"></A> * Date: Jan 14, 2010
+<A NAME="20"></A> * Time: 12:04:30 AM
+<A NAME="21"></A> */</FONT>
+<A NAME="22"></A>
+<A NAME="23"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="24"></A>@Stateless
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> CPrivateLocation <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CPrivateLocationLocal.java.html">CPrivateLocationLocal</A> {
+<A NAME="26"></A>
+<A NAME="27"></A>    @EJB
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>&gt; privateLocationCrudServiceLocal_;
+<A NAME="29"></A>
+<A NAME="30"></A>    @EJB
+<A NAME="31"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>&gt; humansPrivateLocationCrudServiceLocal_;
+<A NAME="32"></A>
+<A NAME="33"></A>    @EJB
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>&gt; humanCrudServiceLocal_;
+<A NAME="35"></A>
+<A NAME="36"></A>
+<A NAME="37"></A>    @Override
+<A NAME="38"></A>    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> doNTxCPrivateLocation(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> String locationName, <FONT ID="Final">final</FONT> String locationInfo) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="40"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A> owner = humanCrudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="41"></A>
+<A NAME="42"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> privateLocation = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>();
+<A NAME="43"></A>
+<A NAME="44"></A>        privateLocation.setPrivateLocationName(locationName);
+<A NAME="45"></A>        privateLocation.setPrivateLocationInfo(locationInfo);
+<A NAME="46"></A>
+<A NAME="47"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> returnVal = privateLocationCrudServiceLocal_.create(privateLocation);
+<A NAME="48"></A>
+<A NAME="49"></A>        <FONT ID="MultiLineComment">/*Give rights to CRUD private location*/</FONT>
+<A NAME="50"></A>        returnVal.refresh().getPrivateLocationOwners().add(owner.getHumansPrivateLocation());
+<A NAME="51"></A>
+<A NAME="52"></A>        <FONT ID="MultiLineComment">/*Give rights to View private location*/</FONT>
+<A NAME="53"></A>        returnVal.refresh().getPrivateLocationViewers().add(owner.getHumansPrivateLocation());
+<A NAME="54"></A>
+<A NAME="55"></A>        <FONT ID="MultiLineComment">/*Enrolled private locations. Right to view only*/</FONT>
+<A NAME="56"></A>        owner.getHumansPrivateLocation().getPrivateLocationsViewed().add(returnVal);
+<A NAME="57"></A>
+<A NAME="58"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="59"></A>
+<A NAME="60"></A>    }
+<A NAME="61"></A>
+<A NAME="62"></A>    @Override
+<A NAME="63"></A>    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+<A NAME="64"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> doNTxCPrivateLocation(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> String locationName, <FONT ID="Final">final</FONT> String locationInfo, <FONT ID="Final">final</FONT> Double latitude, <FONT ID="Final">final</FONT> Double longitude) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="65"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A> owner = humanCrudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="66"></A>
+<A NAME="67"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> privateLocation = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>();
+<A NAME="68"></A>
+<A NAME="69"></A>        privateLocation.setPrivateLocationName(locationName);
+<A NAME="70"></A>        privateLocation.setPrivateLocationInfo(locationInfo);
+<A NAME="71"></A>        privateLocation.setPrivateLocationLatitude(latitude);
+<A NAME="72"></A>        privateLocation.setPrivateLocationLongitude(longitude);
+<A NAME="73"></A>
+<A NAME="74"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> returnVal = privateLocationCrudServiceLocal_.create(privateLocation);
+<A NAME="75"></A>
+<A NAME="76"></A>        <FONT ID="MultiLineComment">/*Give rights to CRUD private location*/</FONT>
+<A NAME="77"></A>        returnVal.refresh().getPrivateLocationOwners().add(owner.getHumansPrivateLocation());
+<A NAME="78"></A>
+<A NAME="79"></A>        <FONT ID="MultiLineComment">/*Give rights to View private location*/</FONT>
+<A NAME="80"></A>        returnVal.refresh().getPrivateLocationViewers().add(owner.getHumansPrivateLocation());
+<A NAME="81"></A>
+<A NAME="82"></A>        <FONT ID="MultiLineComment">/*Enrolled private locations. Right to view only*/</FONT>
+<A NAME="83"></A>        owner.getHumansPrivateLocation().getPrivateLocationsViewed().add(returnVal);
+<A NAME="84"></A>
+<A NAME="85"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="86"></A>
+<A NAME="87"></A>    }
+<A NAME="88"></A>}
+<A NAME="89"></A></pre>
+</BODY>
+</HTML>

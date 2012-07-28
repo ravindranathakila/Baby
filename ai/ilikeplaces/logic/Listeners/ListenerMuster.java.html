@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerMuster (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerMuster.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/Bate.java.html">ai.ilikeplaces.logic.Listeners.widgets.Bate</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page.Skeleton_center_content</A>;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="FormalComment">/**
+<A NAME="17"></A> * @author Ravindranath Akila
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A>
+<A NAME="20"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="21"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerMuster <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="FormalComment">/**
+<A NAME="24"></A>     * @param request__
+<A NAME="25"></A>     * @param response__
+<A NAME="26"></A>     */</FONT>
+<A NAME="27"></A>    @Override
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> ItsNatServletResponse response__) {
+<A NAME="29"></A>
+<A NAME="30"></A>
+<A NAME="31"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/AbstractSkeletonListener.java.html">AbstractSkeletonListener</A>(request__, response__) {
+<A NAME="32"></A>
+<A NAME="33"></A>            <FONT ID="FormalComment">/**
+<A NAME="34"></A>             * Intialize your document here by appending fragments
+<A NAME="35"></A>             */</FONT>
+<A NAME="36"></A>            @Override
+<A NAME="37"></A>            @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="38"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="39"></A>                <FONT ID="Super">super</FONT>.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
+<A NAME="40"></A>
+<A NAME="41"></A>
+<A NAME="42"></A>                <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/Bate.java.html">Bate</A>(request__,$(Skeleton_center_content)){};
+<A NAME="43"></A>
+<A NAME="44"></A>                SmartLogger.g().complete(Loggers.LEVEL.DEBUG, Loggers.DONE);<FONT ID="SingleLineComment">//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
+<A NAME="45"></A></FONT>            }
+<A NAME="46"></A>
+<A NAME="47"></A>            @Override
+<A NAME="48"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__) {
+<A NAME="49"></A>            }
+<A NAME="50"></A>        };
+<A NAME="51"></A>    }
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="FormalComment">/**
+<A NAME="54"></A>     * @param showChangeLog__
+<A NAME="55"></A>     * @return changeLog
+<A NAME="56"></A>     */</FONT>
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> String toString(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> showChangeLog__) {
+<A NAME="58"></A>        String changeLog = <FONT ID="New">new</FONT> String(toString() + <FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="59"></A>        <FONT ID="Return">return</FONT> showChangeLog__ ? changeLog : toString();
+<A NAME="60"></A>    }
+<A NAME="61"></A>}
+<A NAME="62"></A></pre>
+</BODY>
+</HTML>

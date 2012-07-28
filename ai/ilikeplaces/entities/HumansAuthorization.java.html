@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.HumansAuthorization (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumansAuthorization.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> javax.persistence.Entity;
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.persistence.EntityListeners;
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.persistence.Id;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> *
+<A NAME="12"></A> * @author Ravindranath Akila
+<A NAME="13"></A> */</FONT>
+<A NAME="14"></A>@Entity
+<A NAME="15"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumansAuthorization <FONT ID="Implements">implements</FONT> Serializable {
+<A NAME="17"></A>
+<A NAME="18"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> serialVersionUID = <FONT ID="IntegerLiteral">1L</FONT>;
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> String humanIdentification;
+<A NAME="21"></A>
+<A NAME="22"></A>
+<A NAME="23"></A>    @Id
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> String getHumanIdentification() {
+<A NAME="25"></A>        <FONT ID="Return">return</FONT> humanIdentification;
+<A NAME="26"></A>    }
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumanIdentification(<FONT ID="Final">final</FONT> String humanIdentification__) {
+<A NAME="29"></A>        <FONT ID="This">this</FONT>.humanIdentification = humanIdentification__;
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A>    @Override
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> hashCode() {
+<A NAME="34"></A>        <FONT ID="Int">int</FONT> hash = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="35"></A>        hash += (humanIdentification != <FONT ID="Null">null</FONT> ? humanIdentification.hashCode() : <FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="36"></A>        <FONT ID="Return">return</FONT> hash;
+<A NAME="37"></A>    }
+<A NAME="38"></A>
+<A NAME="39"></A>    @Override
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(Object object) {
+<A NAME="41"></A>        <FONT ID="SingleLineComment">// TODO: Warning - this method won't work in the case the id fields are not set
+<A NAME="42"></A></FONT>        <FONT ID="If">if</FONT> (!(object <FONT ID="InstanceOf">instanceof</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansAuthorization.java.html">HumansAuthorization</A>)) {
+<A NAME="43"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="44"></A>        }
+<A NAME="45"></A>        <A HREF="../../../ai/ilikeplaces/entities/HumansAuthorization.java.html">HumansAuthorization</A> other = (<A HREF="../../../ai/ilikeplaces/entities/HumansAuthorization.java.html">HumansAuthorization</A>) object;
+<A NAME="46"></A>        <FONT ID="If">if</FONT> ((<FONT ID="This">this</FONT>.humanIdentification == <FONT ID="Null">null</FONT> &amp;&amp; other.humanIdentification != <FONT ID="Null">null</FONT>) || (<FONT ID="This">this</FONT>.humanIdentification != <FONT ID="Null">null</FONT> &amp;&amp; !<FONT ID="This">this</FONT>.humanIdentification.equals(other.humanIdentification))) {
+<A NAME="47"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="48"></A>        }
+<A NAME="49"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>    @Override
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="54"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"ai.ilikeplaces.entities.HumansAuthorizations[id="</FONT> + humanIdentification + <FONT ID="StringLiteral">"]"</FONT>;
+<A NAME="55"></A>    }
+<A NAME="56"></A>}
+<A NAME="57"></A></pre>
+</BODY>
+</HTML>

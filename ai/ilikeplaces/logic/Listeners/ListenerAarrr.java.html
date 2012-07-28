@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerAarrr (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerAarrr.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">ai.ilikeplaces.entities.HumansIdentity</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.Listeners.widgets.*;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/filters/ProfileRedirect.java.html">ai.ilikeplaces.servlets.filters.ProfileRedirect</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/AbstractListener.java.html">ai.ilikeplaces.util.AbstractListener</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/MarkupTag.java.html">ai.ilikeplaces.util.MarkupTag</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="22"></A>
+<A NAME="23"></A><FONT ID="Import">import</FONT> java.util.ResourceBundle;
+<A NAME="24"></A>
+<A NAME="25"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="26"></A>
+<A NAME="27"></A><FONT ID="FormalComment">/**
+<A NAME="28"></A> * @author Ravindranath Akila
+<A NAME="29"></A> */</FONT>
+<A NAME="30"></A>
+<A NAME="31"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="32"></A></FONT>@TODO(task = <FONT ID="StringLiteral">"rename to listenerlocation. do a string search on listenermain to find usage first. current search shows no issues. refac delayed till next check"</FONT>)
+<A NAME="33"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerAarrr <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="34"></A>
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Protected">protected</FONT> String LocationId = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"LOCATIONID"</FONT>);
+<A NAME="37"></A>
+<A NAME="38"></A>
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="FormalComment">/**
+<A NAME="41"></A>     * @param request__
+<A NAME="42"></A>     * @param response__
+<A NAME="43"></A>     */</FONT>
+<A NAME="44"></A>    @Override
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> ItsNatServletResponse response__) {
+<A NAME="46"></A>
+<A NAME="47"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/AbstractListener.java.html">AbstractListener</A>(request__, response__) {
+<A NAME="48"></A><FONT ID="SingleLineComment">//        new AbstractSkeletonListener(request__) {
+<A NAME="49"></A></FONT>
+<A NAME="50"></A>            <FONT ID="FormalComment">/**
+<A NAME="51"></A>             * Intialize your document here by appending fragments
+<A NAME="52"></A>             */</FONT>
+<A NAME="53"></A>            @Override
+<A NAME="54"></A>            @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="55"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="56"></A>                <FONT ID="Final">final</FONT> ResourceBundle gUI = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.GUI"</FONT>);
+<A NAME="57"></A>
+<A NAME="58"></A>
+<A NAME="59"></A>                <FONT ID="New">new</FONT> SignInOn(request__, $(Controller.Page.AarrrHeader),
+<A NAME="60"></A>                        <FONT ID="New">new</FONT> SignInOnCriteria()
+<A NAME="61"></A>                                .setHumanId(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsername()))
+<A NAME="62"></A>                                .setSignInOnDisplayComponent(SignInOnCriteria.SignInOnDisplayComponent.HOME)) {
+<A NAME="63"></A>                };
+<A NAME="64"></A>
+<A NAME="65"></A>                <FONT ID="New">new</FONT> DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
+<A NAME="66"></A>
+<A NAME="67"></A>                <FONT ID="If">if</FONT> (getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="68"></A>                    displayNone($(Controller.Page.AarrrJuice));
+<A NAME="69"></A>                    displayBlock($(Controller.Page.AarrrDownTownHeatMap));
+<A NAME="70"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="71"></A>                    <FONT ID="New">new</FONT> Juice(request__, <FONT ID="New">new</FONT> JuiceCriteria(), $(Controller.Page.AarrrJuice));
+<A NAME="72"></A>                    displayBlock($(Controller.Page.AarrrJuice));
+<A NAME="73"></A>                    displayNone($(Controller.Page.AarrrDownTownHeatMap));
+<A NAME="74"></A>                }
+<A NAME="75"></A>
+<A NAME="76"></A>
+<A NAME="77"></A>                SmartLogger.g().complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
+<A NAME="78"></A>            }
+<A NAME="79"></A>
+<A NAME="80"></A>            <FONT ID="FormalComment">/**
+<A NAME="81"></A>             * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="82"></A>             */</FONT>
+<A NAME="83"></A>            @Override
+<A NAME="84"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__) {
+<A NAME="85"></A>
+<A NAME="86"></A>            }
+<A NAME="87"></A>        };
+<A NAME="88"></A>    }
+<A NAME="89"></A>}</pre>
+</BODY>
+</HTML>

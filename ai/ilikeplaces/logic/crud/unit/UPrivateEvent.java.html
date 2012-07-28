@@ -1,0 +1,451 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.UPrivateEvent (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">UPrivateEvent.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.EXPECTNULL;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FORGETNULL;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">ai.ilikeplaces.entities.HumansFriend</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">ai.ilikeplaces.entities.HumansPrivateEvent</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.exception.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="FormalComment">/**
+<A NAME="21"></A> * Created by IntelliJ IDEA.
+<A NAME="22"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="23"></A> * Date: Jan 15, 2010
+<A NAME="24"></A> * Time: 12:26:35 AM
+<A NAME="25"></A> */</FONT>
+<A NAME="26"></A>
+<A NAME="27"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="28"></A>@Stateless
+<A NAME="29"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> UPrivateEvent <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/UPrivateEventLocal.java.html">UPrivateEventLocal</A> {
+<A NAME="30"></A>
+<A NAME="31"></A>    @EJB
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>&gt; privateEventCrudServiceLocal_;
+<A NAME="33"></A>
+<A NAME="34"></A>    @EJB
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RPrivateEventLocal.java.html">RPrivateEventLocal</A> rPrivateEventLocal_;
+<A NAME="36"></A>
+<A NAME="37"></A>    @EJB
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>&gt; humansPrivateEventCrudServiceLocal_;
+<A NAME="39"></A>
+<A NAME="40"></A>    @EJB
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>&gt; humanCrudServiceLocal_;
+<A NAME="42"></A>
+<A NAME="43"></A>    @EJB
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/UHumansNetPeopleLocal.java.html">UHumansNetPeopleLocal</A> uHumansNetPeopleLocal;
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_EVENT_DATA_OF = <FONT ID="StringLiteral">"update event data of "</FONT>;
+<A NAME="47"></A>
+<A NAME="48"></A>    @OK
+<A NAME="49"></A>    @Override
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> doUPrivateEventData(<FONT ID="Final">final</FONT> String humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> String privateEventName__, <FONT ID="Final">final</FONT> String privateEventInfo__, <FONT ID="Final">final</FONT> String privateEventStartDate__, <FONT ID="Final">final</FONT> String privateEventEndDate__) <FONT ID="Throws">throws</FONT> DBDishonourCheckedException, DBFetchDataException {
+<A NAME="51"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent_ = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId__);
+<A NAME="52"></A>        <FONT ID="If">if</FONT> (rPrivateEventLocal_.doRPrivateEventIsOwner(humanId__, privateEventId__)) {
+<A NAME="53"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(humanId__, UPDATE_EVENT_DATA_OF + privateEvent_.toString());
+<A NAME="54"></A>        }
+<A NAME="55"></A>
+<A NAME="56"></A>        <FONT ID="If">if</FONT> (privateEventName__ != <FONT ID="Null">null</FONT>) {
+<A NAME="57"></A>            privateEvent_.setPrivateEventName(privateEventName__);
+<A NAME="58"></A>        }
+<A NAME="59"></A>        <FONT ID="If">if</FONT> (privateEventInfo__ != <FONT ID="Null">null</FONT>) {
+<A NAME="60"></A>            privateEvent_.setPrivateEventInfo(privateEventInfo__);
+<A NAME="61"></A>        }
+<A NAME="62"></A>        <FONT ID="If">if</FONT> (privateEventStartDate__ != <FONT ID="Null">null</FONT>) {
+<A NAME="63"></A>            privateEvent_.setPrivateEventStartDate(privateEventStartDate__);
+<A NAME="64"></A>        }
+<A NAME="65"></A>        <FONT ID="If">if</FONT> (privateEventEndDate__ != <FONT ID="Null">null</FONT>) {
+<A NAME="66"></A>            privateEvent_.setPrivateEventEndDate(privateEventEndDate__);
+<A NAME="67"></A>        }
+<A NAME="68"></A>        <FONT ID="Return">return</FONT> privateEvent_;
+<A NAME="69"></A>    }
+<A NAME="70"></A>
+<A NAME="71"></A>
+<A NAME="72"></A>    @OK
+<A NAME="73"></A>    @Override
+<A NAME="74"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="75"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> doUPrivateEventAddOwner(<FONT ID="Final">final</FONT> String adder, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee) <FONT ID="Throws">throws</FONT> DBDishonourCheckedException {
+<A NAME="76"></A>
+<A NAME="77"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
+<A NAME="78"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(adder, addeee.getHumanId());
+<A NAME="79"></A>        }
+<A NAME="80"></A>
+<A NAME="81"></A>        @EXPECTNULL
+<A NAME="82"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent_ = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId__);
+<A NAME="83"></A>
+<A NAME="84"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="85"></A></FONT>        checkAuthority:
+<A NAME="86"></A>        {
+<A NAME="87"></A>            @EXPECTNULL
+<A NAME="88"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> adderhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, adder);
+<A NAME="89"></A>
+<A NAME="90"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventOwners().contains(adderhumansPrivateEvent)) {
+<A NAME="91"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(adderhumansPrivateEvent.getHumanId(), <FONT ID="StringLiteral">"manage private event:"</FONT> + privateEvent_.toString());
+<A NAME="92"></A>            }
+<A NAME="93"></A>        }
+<A NAME="94"></A>
+<A NAME="95"></A>
+<A NAME="96"></A>        wiringBothSides:
+<A NAME="97"></A>        {
+<A NAME="98"></A>
+<A NAME="99"></A>            @FORGETNULL
+<A NAME="100"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, addeee.getHumanId());
+<A NAME="101"></A>
+<A NAME="102"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventOwners().contains(adeehumansPrivateEvent)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="103"></A></FONT>                privateEvent_.getPrivateEventOwners().add(adeehumansPrivateEvent);
+<A NAME="104"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="105"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
+<A NAME="106"></A>            }
+<A NAME="107"></A>            <FONT ID="If">if</FONT> (!adeehumansPrivateEvent.getPrivateEventsOwned().contains(privateEvent_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="108"></A></FONT>                adeehumansPrivateEvent.getPrivateEventsOwned().add(privateEvent_);
+<A NAME="109"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="110"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
+<A NAME="111"></A>            }
+<A NAME="112"></A>        }
+<A NAME="113"></A>
+<A NAME="114"></A>
+<A NAME="115"></A>        <FONT ID="Return">return</FONT> privateEvent_;
+<A NAME="116"></A>    }
+<A NAME="117"></A>
+<A NAME="118"></A>
+<A NAME="119"></A>    @Override
+<A NAME="120"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> doUPrivateEventRemoveOwner(<FONT ID="Final">final</FONT> String remover, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removeee) <FONT ID="Throws">throws</FONT> DBDishonourCheckedException {
+<A NAME="122"></A>
+<A NAME="123"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
+<A NAME="124"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(remover, removeee.getHumanId());
+<A NAME="125"></A>        }
+<A NAME="126"></A>
+<A NAME="127"></A>        @EXPECTNULL
+<A NAME="128"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent_ = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId__);
+<A NAME="129"></A>
+<A NAME="130"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="131"></A></FONT>        checkAuthority:
+<A NAME="132"></A>        {
+<A NAME="133"></A>            @FORGETNULL
+<A NAME="134"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, remover);
+<A NAME="135"></A>
+<A NAME="136"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventOwners().contains(removerhumansPrivateEvent)) {
+<A NAME="137"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(removerhumansPrivateEvent.getHumanId(), <FONT ID="StringLiteral">"manage private event:"</FONT> + privateEvent_.toString());
+<A NAME="138"></A>            }
+<A NAME="139"></A>        }
+<A NAME="140"></A>
+<A NAME="141"></A>        wiringBothSides:
+<A NAME="142"></A>        {
+<A NAME="143"></A>            @FORGETNULL
+<A NAME="144"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, removeee.getHumanId());
+<A NAME="145"></A>
+<A NAME="146"></A>            <FONT ID="If">if</FONT> (privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="147"></A></FONT>                privateEvent_.getPrivateEventOwners().remove(removeehumansPrivateEvent);
+<A NAME="148"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="149"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="150"></A>            }
+<A NAME="151"></A>            <FONT ID="If">if</FONT> (removeehumansPrivateEvent.getPrivateEventsOwned().contains(privateEvent_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="152"></A></FONT>                removeehumansPrivateEvent.getPrivateEventsOwned().remove(privateEvent_);
+<A NAME="153"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="154"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="155"></A>            }
+<A NAME="156"></A>        }
+<A NAME="157"></A>
+<A NAME="158"></A>
+<A NAME="159"></A>        <FONT ID="Return">return</FONT> privateEvent_;
+<A NAME="160"></A>    }
+<A NAME="161"></A>
+<A NAME="162"></A>
+<A NAME="163"></A>    @Override
+<A NAME="164"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="165"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> doUPrivateEventAddViewer(<FONT ID="Final">final</FONT> String adder, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee) <FONT ID="Throws">throws</FONT> DBDishonourCheckedException {
+<A NAME="166"></A>
+<A NAME="167"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
+<A NAME="168"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(adder, addeee.getHumanId());
+<A NAME="169"></A>        }
+<A NAME="170"></A>
+<A NAME="171"></A>        @EXPECTNULL
+<A NAME="172"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent_ = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId__);
+<A NAME="173"></A>
+<A NAME="174"></A>
+<A NAME="175"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="176"></A></FONT>        checkAuthority:
+<A NAME="177"></A>        {
+<A NAME="178"></A>            @FORGETNULL
+<A NAME="179"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> adderhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, adder);
+<A NAME="180"></A>
+<A NAME="181"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventViewers().contains(adderhumansPrivateEvent)) {
+<A NAME="182"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(adderhumansPrivateEvent.getHumanId(), <FONT ID="StringLiteral">"manage private event:"</FONT> + privateEvent_.toString());
+<A NAME="183"></A>            }
+<A NAME="184"></A>        }
+<A NAME="185"></A>
+<A NAME="186"></A>
+<A NAME="187"></A>        wiringBothSides:
+<A NAME="188"></A>        {
+<A NAME="189"></A>            @FORGETNULL
+<A NAME="190"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, addeee.getHumanId());
+<A NAME="191"></A>
+<A NAME="192"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventViewers().contains(adeehumansPrivateEvent)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="193"></A></FONT>                privateEvent_.getPrivateEventViewers().add(adeehumansPrivateEvent);
+<A NAME="194"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="195"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
+<A NAME="196"></A>            }
+<A NAME="197"></A>            <FONT ID="If">if</FONT> (!adeehumansPrivateEvent.getPrivateEventsViewed().contains(privateEvent_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="198"></A></FONT>                adeehumansPrivateEvent.getPrivateEventsViewed().add(privateEvent_);
+<A NAME="199"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="200"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
+<A NAME="201"></A>            }
+<A NAME="202"></A>        }
+<A NAME="203"></A>
+<A NAME="204"></A>
+<A NAME="205"></A>        <FONT ID="Return">return</FONT> privateEvent_;
+<A NAME="206"></A>    }
+<A NAME="207"></A>
+<A NAME="208"></A>
+<A NAME="209"></A>    @Override
+<A NAME="210"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="211"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> doUPrivateEventRemoveViewer(<FONT ID="Final">final</FONT> String remover, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removeee) <FONT ID="Throws">throws</FONT> DBDishonourCheckedException {
+<A NAME="212"></A>
+<A NAME="213"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
+<A NAME="214"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(remover, removeee.getHumanId());
+<A NAME="215"></A>        }
+<A NAME="216"></A>
+<A NAME="217"></A>        @EXPECTNULL
+<A NAME="218"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent_ = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId__);
+<A NAME="219"></A>
+<A NAME="220"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="221"></A></FONT>        checkAuthority:
+<A NAME="222"></A>        {
+<A NAME="223"></A>            @FORGETNULL
+<A NAME="224"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, remover);
+<A NAME="225"></A>
+<A NAME="226"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {
+<A NAME="227"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(removeehumansPrivateEvent.getHumanId(), <FONT ID="StringLiteral">"manage private event:"</FONT> + privateEvent_.toString());
+<A NAME="228"></A>            }
+<A NAME="229"></A>        }
+<A NAME="230"></A>
+<A NAME="231"></A>        wiringBothSides:
+<A NAME="232"></A>        {
+<A NAME="233"></A>            @FORGETNULL
+<A NAME="234"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, removeee.getHumanId());
+<A NAME="235"></A>
+<A NAME="236"></A>            <FONT ID="If">if</FONT> (privateEvent_.getPrivateEventViewers().contains(removerhumansPrivateEvent)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="237"></A></FONT>                privateEvent_.getPrivateEventViewers().remove(removerhumansPrivateEvent);
+<A NAME="238"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="239"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="240"></A>            }
+<A NAME="241"></A>            <FONT ID="If">if</FONT> (removerhumansPrivateEvent.getPrivateEventsViewed().contains(privateEvent_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="242"></A></FONT>                removerhumansPrivateEvent.getPrivateEventsViewed().remove(privateEvent_);
+<A NAME="243"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="244"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="245"></A>            }
+<A NAME="246"></A>        }
+<A NAME="247"></A>
+<A NAME="248"></A>
+<A NAME="249"></A>        <FONT ID="Return">return</FONT> privateEvent_;
+<A NAME="250"></A>    }
+<A NAME="251"></A>
+<A NAME="252"></A>
+<A NAME="253"></A>    @Override
+<A NAME="254"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="255"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> doUPrivateEventAddInvite(<FONT ID="Final">final</FONT> String adder, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee) <FONT ID="Throws">throws</FONT> NoPrivilegesException {
+<A NAME="256"></A>
+<A NAME="257"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
+<A NAME="258"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(adder, addeee.getHumanId());
+<A NAME="259"></A>        }
+<A NAME="260"></A>
+<A NAME="261"></A>        @EXPECTNULL
+<A NAME="262"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent_ = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId__);
+<A NAME="263"></A>
+<A NAME="264"></A>
+<A NAME="265"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="266"></A></FONT>        checkAuthority:
+<A NAME="267"></A>        {
+<A NAME="268"></A>            @FORGETNULL
+<A NAME="269"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> adderhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, adder);
+<A NAME="270"></A>
+<A NAME="271"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventInvites().contains(adderhumansPrivateEvent)) {
+<A NAME="272"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(adderhumansPrivateEvent.getHumanId(), <FONT ID="StringLiteral">"manage private event:"</FONT> + privateEvent_.toString());
+<A NAME="273"></A>            }
+<A NAME="274"></A>        }
+<A NAME="275"></A>
+<A NAME="276"></A>
+<A NAME="277"></A>        wiringBothSides:
+<A NAME="278"></A>        {
+<A NAME="279"></A>            @FORGETNULL
+<A NAME="280"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, addeee.getHumanId());
+<A NAME="281"></A>
+<A NAME="282"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventInvites().contains(adeehumansPrivateEvent)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="283"></A></FONT>                privateEvent_.getPrivateEventInvites().add(adeehumansPrivateEvent);
+<A NAME="284"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="285"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> DBDishonourException(<FONT ID="StringLiteral">"Adding an existing invite"</FONT>);
+<A NAME="286"></A>            }
+<A NAME="287"></A>            <FONT ID="If">if</FONT> (!adeehumansPrivateEvent.getPrivateEventsInvited().contains(privateEvent_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="288"></A></FONT>                adeehumansPrivateEvent.getPrivateEventsInvited().add(privateEvent_);
+<A NAME="289"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="290"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> DBDishonourException(<FONT ID="StringLiteral">"Adding an existing event"</FONT>);
+<A NAME="291"></A>            }
+<A NAME="292"></A>        }
+<A NAME="293"></A>
+<A NAME="294"></A>
+<A NAME="295"></A>        <FONT ID="Return">return</FONT> privateEvent_;
+<A NAME="296"></A>    }
+<A NAME="297"></A>
+<A NAME="298"></A>
+<A NAME="299"></A>    @Override
+<A NAME="300"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="301"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> doUPrivateEventRemoveInvite(<FONT ID="Final">final</FONT> String remover, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removeee) <FONT ID="Throws">throws</FONT> DBDishonourCheckedException {
+<A NAME="302"></A>
+<A NAME="303"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
+<A NAME="304"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(remover, removeee.getHumanId());
+<A NAME="305"></A>        }
+<A NAME="306"></A>
+<A NAME="307"></A>        @EXPECTNULL
+<A NAME="308"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent_ = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId__);
+<A NAME="309"></A>
+<A NAME="310"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="311"></A></FONT>        checkAuthority:
+<A NAME="312"></A>        {
+<A NAME="313"></A>            @FORGETNULL
+<A NAME="314"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, remover);
+<A NAME="315"></A>
+<A NAME="316"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {
+<A NAME="317"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(removeehumansPrivateEvent.getHumanId(), <FONT ID="StringLiteral">"manage private event:"</FONT> + privateEvent_.toString());
+<A NAME="318"></A>            }
+<A NAME="319"></A>        }
+<A NAME="320"></A>
+<A NAME="321"></A>        wiringBothSides:
+<A NAME="322"></A>        {
+<A NAME="323"></A>            @FORGETNULL
+<A NAME="324"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, removeee.getHumanId());
+<A NAME="325"></A>
+<A NAME="326"></A>            <FONT ID="If">if</FONT> (privateEvent_.getPrivateEventInvites().contains(removerhumansPrivateEvent)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="327"></A></FONT>                privateEvent_.getPrivateEventInvites().remove(removerhumansPrivateEvent);
+<A NAME="328"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="329"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="330"></A>            }
+<A NAME="331"></A>            <FONT ID="If">if</FONT> (removerhumansPrivateEvent.getPrivateEventsInvited().contains(privateEvent_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="332"></A></FONT>                removerhumansPrivateEvent.getPrivateEventsInvited().remove(privateEvent_);
+<A NAME="333"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="334"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="335"></A>            }
+<A NAME="336"></A>        }
+<A NAME="337"></A>
+<A NAME="338"></A>
+<A NAME="339"></A>        <FONT ID="Return">return</FONT> privateEvent_;
+<A NAME="340"></A>    }
+<A NAME="341"></A>
+<A NAME="342"></A>
+<A NAME="343"></A>    @Override
+<A NAME="344"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="345"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> doUPrivateEventAddReject(<FONT ID="Final">final</FONT> String adder, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee) <FONT ID="Throws">throws</FONT> DBDishonourCheckedException {
+<A NAME="346"></A>
+<A NAME="347"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
+<A NAME="348"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(adder, addeee.getHumanId());
+<A NAME="349"></A>        }
+<A NAME="350"></A>
+<A NAME="351"></A>        @EXPECTNULL
+<A NAME="352"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent_ = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId__);
+<A NAME="353"></A>
+<A NAME="354"></A>
+<A NAME="355"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="356"></A></FONT>        checkAuthority:
+<A NAME="357"></A>        {
+<A NAME="358"></A>            @FORGETNULL
+<A NAME="359"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> adderhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, adder);
+<A NAME="360"></A>
+<A NAME="361"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventRejects().contains(adderhumansPrivateEvent)) {
+<A NAME="362"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(adderhumansPrivateEvent.getHumanId(), <FONT ID="StringLiteral">"manage private event:"</FONT> + privateEvent_.toString());
+<A NAME="363"></A>            }
+<A NAME="364"></A>        }
+<A NAME="365"></A>
+<A NAME="366"></A>
+<A NAME="367"></A>        wiringBothSides:
+<A NAME="368"></A>        {
+<A NAME="369"></A>            @FORGETNULL
+<A NAME="370"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, addeee.getHumanId());
+<A NAME="371"></A>
+<A NAME="372"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventRejects().contains(adeehumansPrivateEvent)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="373"></A></FONT>                privateEvent_.getPrivateEventRejects().add(adeehumansPrivateEvent);
+<A NAME="374"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="375"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
+<A NAME="376"></A>            }
+<A NAME="377"></A>            <FONT ID="If">if</FONT> (!adeehumansPrivateEvent.getPrivateEventsRejected().contains(privateEvent_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="378"></A></FONT>                adeehumansPrivateEvent.getPrivateEventsRejected().add(privateEvent_);
+<A NAME="379"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="380"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE;
+<A NAME="381"></A>            }
+<A NAME="382"></A>        }
+<A NAME="383"></A>
+<A NAME="384"></A>
+<A NAME="385"></A>        <FONT ID="Return">return</FONT> privateEvent_;
+<A NAME="386"></A>    }
+<A NAME="387"></A>
+<A NAME="388"></A>
+<A NAME="389"></A>    @Override
+<A NAME="390"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="391"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> doUPrivateEventRemoveReject(<FONT ID="Final">final</FONT> String remover, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removeee) <FONT ID="Throws">throws</FONT> DBDishonourCheckedException {
+<A NAME="392"></A>
+<A NAME="393"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
+<A NAME="394"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(remover, removeee.getHumanId());
+<A NAME="395"></A>        }
+<A NAME="396"></A>
+<A NAME="397"></A>        @EXPECTNULL
+<A NAME="398"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent_ = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId__);
+<A NAME="399"></A>
+<A NAME="400"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="401"></A></FONT>        checkAuthority:
+<A NAME="402"></A>        {
+<A NAME="403"></A>            @FORGETNULL
+<A NAME="404"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, remover);
+<A NAME="405"></A>
+<A NAME="406"></A>            <FONT ID="If">if</FONT> (!privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {
+<A NAME="407"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(removeehumansPrivateEvent.getHumanId(), <FONT ID="StringLiteral">"manage private event:"</FONT> + privateEvent_.toString());
+<A NAME="408"></A>            }
+<A NAME="409"></A>        }
+<A NAME="410"></A>
+<A NAME="411"></A>        wiringBothSides:
+<A NAME="412"></A>        {
+<A NAME="413"></A>            @FORGETNULL
+<A NAME="414"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, removeee.getHumanId());
+<A NAME="415"></A>
+<A NAME="416"></A>            <FONT ID="If">if</FONT> (privateEvent_.getPrivateEventRejects().contains(removerhumansPrivateEvent)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="417"></A></FONT>                privateEvent_.getPrivateEventRejects().remove(removerhumansPrivateEvent);
+<A NAME="418"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="419"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="420"></A>            }
+<A NAME="421"></A>            <FONT ID="If">if</FONT> (removerhumansPrivateEvent.getPrivateEventsRejected().contains(privateEvent_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="422"></A></FONT>                removerhumansPrivateEvent.getPrivateEventsRejected().remove(privateEvent_);
+<A NAME="423"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="424"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="425"></A>            }
+<A NAME="426"></A>        }
+<A NAME="427"></A>
+<A NAME="428"></A>
+<A NAME="429"></A>        <FONT ID="Return">return</FONT> privateEvent_;
+<A NAME="430"></A>    }
+<A NAME="431"></A>}
+<A NAME="432"></A></pre>
+</BODY>
+</HTML>

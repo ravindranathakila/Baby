@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDWall (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDWall.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">ai.ilikeplaces.entities.Msg</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDHumansWallLocal.java.html">ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDWallLocal.java.html">ai.ilikeplaces.logic.crud.unit.CRUDWallLocal</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="21"></A>
+<A NAME="22"></A><FONT ID="FormalComment">/**
+<A NAME="23"></A> * Created by IntelliJ IDEA.
+<A NAME="24"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="25"></A> * Date: Jan 13, 2010
+<A NAME="26"></A> * Time: 11:58:04 PM
+<A NAME="27"></A> */</FONT>
+<A NAME="28"></A>
+<A NAME="29"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="30"></A>@Stateless
+<A NAME="31"></A>@Interceptors({ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>, RuntimeExceptionWrapper.<FONT ID="Class">class</FONT>})
+<A NAME="32"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanCRUDWall <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDWallLocal.java.html">HumanCRUDWallLocal</A> {
+<A NAME="33"></A>
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_ID_SUCCESSFUL = <FONT ID="StringLiteral">"Read Wall Id Successful!"</FONT>;
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_ID_FAILED = <FONT ID="StringLiteral">"Read Wall Id FAILED!"</FONT>;
+<A NAME="37"></A>    @WARNING(warning = <FONT ID="StringLiteral">"Try not to use CRUDWallLocal because CRUDHumansWallLocal suffices. Pay special attention to performance issues here. Walls are bulky"</FONT>)
+<A NAME="38"></A>    @EJB
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDHumansWallLocal.java.html">CRUDHumansWallLocal</A> crudHumansWallLocal_;
+<A NAME="40"></A>
+<A NAME="41"></A>    @WARNING(warning = <FONT ID="StringLiteral">"Try not to use CRUDWallLocal because CRUDHumansWallLocal suffices. Pay special attention to performance issues here. Walls are bulky"</FONT>)
+<A NAME="42"></A>    @EJB
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDWallLocal.java.html">CRUDWallLocal</A> crudWallLocal_;
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Read Wall Successful!"</FONT>;
+<A NAME="46"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_FAILED = <FONT ID="StringLiteral">"Read Wall FAILED!"</FONT>;
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Update Wall Successful!"</FONT>;
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_WALL_FAILED = <FONT ID="StringLiteral">"Update wall FAILED!"</FONT>;
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL = <FONT ID="StringLiteral">"Update Wall Subscription Successful!"</FONT>;
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_WALL_SUBSCRIPTION_FALIED = <FONT ID="StringLiteral">"Update Wall Subscription FALIED!"</FONT>;
+<A NAME="51"></A>
+<A NAME="52"></A>
+<A NAME="53"></A>    @Override
+<A NAME="54"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="55"></A>    @Deprecated
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; readWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall, <FONT ID="Final">final</FONT> Obj requester, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec__) {
+<A NAME="57"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="58"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudHumansWallLocal_.doRHumansWallRefreshed(whosWall.getObj()).getWall(), READ_WALL_SUCCESSFUL);
+<A NAME="59"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="60"></A>
+<A NAME="61"></A>    }
+<A NAME="62"></A>
+<A NAME="63"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="64"></A>    <FONT ID="Public">public</FONT> Return&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt;&gt; readWallLastEntries(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall, <FONT ID="Final">final</FONT> Obj requester, <FONT ID="Final">final</FONT> Integer numberOfEntriesToFetch, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec__) {
+<A NAME="65"></A>        Return&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt;&gt; r;
+<A NAME="66"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt;&gt;(crudHumansWallLocal_.doRHumansWallLastEntries(whosWall.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
+<A NAME="67"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="68"></A>
+<A NAME="69"></A>    }
+<A NAME="70"></A>
+<A NAME="71"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="72"></A>    <FONT ID="Public">public</FONT> Return&lt;Long&gt; readWallId(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall, <FONT ID="Final">final</FONT> Obj requester) {
+<A NAME="73"></A>        Return&lt;Long&gt; r;
+<A NAME="74"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="75"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Long&gt;(crudHumansWallLocal_.doDirtyRHumansWallID(whosWall.getObj()), READ_WALL_ID_SUCCESSFUL);
+<A NAME="76"></A>        } <FONT ID="Catch">catch</FONT> (<A HREF="../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> e) {
+<A NAME="77"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Long&gt;(e, READ_WALL_ID_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="78"></A>        }
+<A NAME="79"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="80"></A>
+<A NAME="81"></A>    }
+<A NAME="82"></A>
+<A NAME="83"></A>    @WARNING(warning = <FONT ID="StringLiteral">"Please not that the underlaying rHumansWall method assumes transaction scope REQUIRED, which is used here."</FONT>)
+<A NAME="84"></A>    @Override
+<A NAME="85"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="86"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; addEntryToWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> msgOwner__, Obj wallReference__, <FONT ID="Final">final</FONT> String contentToBeAppended) {
+<A NAME="87"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> wall = crudHumansWallLocal_.doRHumansWallRefreshed(whosWall.getObj()).getWall();
+<A NAME="88"></A>
+<A NAME="89"></A><FONT ID="SingleLineComment">//        wall.getWallMsgs().size();//refreshing
+<A NAME="90"></A></FONT><FONT ID="SingleLineComment">//        wall.getWallMsgs().add(new Msg()
+<A NAME="91"></A></FONT><FONT ID="SingleLineComment">//                .setMsgContentR(contentToBeAppended)
+<A NAME="92"></A></FONT><FONT ID="SingleLineComment">//                .setMsgTypeR(Msg.msgTypeHUMAN)
+<A NAME="93"></A></FONT><FONT ID="SingleLineComment">//                .setMsgMetadataR(msgOwner__.getObj()));
+<A NAME="94"></A></FONT>
+<A NAME="95"></A>        crudHumansWallLocal_.doUHumansWallMsgs(whosWall.getObj(), (<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>()
+<A NAME="96"></A>                .setMsgContentR(contentToBeAppended)
+<A NAME="97"></A>                .setMsgTypeR(Msg.msgTypeHUMAN)
+<A NAME="98"></A>                .setMsgMetadataR(msgOwner__.getObj())));
+<A NAME="99"></A>
+<A NAME="100"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(wall, UPDATE_WALL_SUCCESSFUL);
+<A NAME="101"></A>
+<A NAME="102"></A>    }
+<A NAME="103"></A>
+<A NAME="104"></A>    @Override
+<A NAME="105"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; muteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee, Obj wallReference) {
+<A NAME="106"></A>
+<A NAME="107"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="108"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="109"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudWallLocal_
+<A NAME="110"></A>                    .doUAddMuteEntry(crudHumansWallLocal_.doDirtyRHumansWallID(operator__.getHumanId()),
+<A NAME="111"></A>                            mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
+<A NAME="112"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="113"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, UPDATE_WALL_SUBSCRIPTION_FALIED, <FONT ID="True">true</FONT>);
+<A NAME="114"></A>        }
+<A NAME="115"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="116"></A>
+<A NAME="117"></A>
+<A NAME="118"></A>    }
+<A NAME="119"></A>
+<A NAME="120"></A>    @Override
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; unmuteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee, Obj wallReference) {
+<A NAME="122"></A>
+<A NAME="123"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="124"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="125"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudWallLocal_
+<A NAME="126"></A>                    .doURemoveMuteEntry(crudHumansWallLocal_.doDirtyRHumansWallID(operator__.getHumanId()),
+<A NAME="127"></A>                            mutee.getObj()), UPDATE_WALL_SUBSCRIPTION_SUCCESSFUL);
+<A NAME="128"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="129"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, UPDATE_WALL_SUBSCRIPTION_FALIED, <FONT ID="True">true</FONT>);
+<A NAME="130"></A>        }
+<A NAME="131"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="132"></A>
+<A NAME="133"></A>
+<A NAME="134"></A>    }
+<A NAME="135"></A>
+<A NAME="136"></A>
+<A NAME="137"></A>    @Override
+<A NAME="138"></A>    <FONT ID="Public">public</FONT> String verify() {
+<A NAME="139"></A>        <FONT ID="Throw">throw</FONT> ExceptionCache.METHOD_NOT_IMPLEMENTED;
+<A NAME="140"></A>    }
+<A NAME="141"></A>}</pre>
+</BODY>
+</HTML>

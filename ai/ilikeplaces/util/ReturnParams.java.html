@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.ReturnParams (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ReturnParams.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="FormalComment">/**
+<A NAME="9"></A> * Created by IntelliJ IDEA.
+<A NAME="10"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="11"></A> * Date: Jan 13, 2010
+<A NAME="12"></A> * Time: 10:11:46 PM
+<A NAME="13"></A> */</FONT>
+<A NAME="14"></A>
+<A NAME="15"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ReturnParams <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/util/ReturnParamsFace.java.html">ReturnParamsFace</A> {
+<A NAME="17"></A>
+<A NAME="18"></A>    <FONT ID="Private">private</FONT> List&lt;Object&gt; params;
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> ReturnParams(<FONT ID="Final">final</FONT> Object... params) {
+<A NAME="21"></A>        <FONT ID="Final">final</FONT> List&lt;Object&gt; localParams = <FONT ID="New">new</FONT> ArrayList&lt;Object&gt;();
+<A NAME="22"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Object param : params) {
+<A NAME="23"></A>            localParams.add(param);
+<A NAME="24"></A>        }
+<A NAME="25"></A>        <FONT ID="This">this</FONT>.params = localParams;
+<A NAME="26"></A>    }
+<A NAME="27"></A>
+<A NAME="28"></A>
+<A NAME="29"></A>    @Override
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/ReturnParamsFace.java.html">ReturnParamsFace</A> add(<FONT ID="Final">final</FONT> Object... obj) {
+<A NAME="31"></A>        params.add(obj);
+<A NAME="32"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="33"></A>    }    
+<A NAME="34"></A>
+<A NAME="35"></A>    @Override
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/ReturnParamsFace.java.html">ReturnParamsFace</A> set(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> index, <FONT ID="Final">final</FONT> Object... obj) {
+<A NAME="37"></A>        params.set(index, obj);
+<A NAME="38"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="39"></A>    }
+<A NAME="40"></A>
+<A NAME="41"></A>    @Override
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> Object get(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> index) {
+<A NAME="43"></A>        <FONT ID="Return">return</FONT> params.get(index);
+<A NAME="44"></A>    }
+<A NAME="45"></A>}
+<A NAME="46"></A></pre>
+</BODY>
+</HTML>

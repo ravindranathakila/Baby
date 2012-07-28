@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.security.FileRandom (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">FileRandom.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.security;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.util.Random;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.util.WeakHashMap;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> *
+<A NAME="11"></A> * @author Ravindranath Akila
+<A NAME="12"></A> */</FONT>
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="15"></A></FONT>@Deprecated
+<A NAME="16"></A>@FIXME(issue = <FONT ID="StringLiteral">"this class is not being used. it was returning wrong values and was not debugged"</FONT>)
+<A NAME="17"></A>@OK
+<A NAME="18"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> FileRandom {
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Random r = <FONT ID="New">new</FONT> Random(System.currentTimeMillis());
+<A NAME="21"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> WeakHashMap&lt;Long, Long&gt; whm = <FONT ID="New">new</FONT> WeakHashMap&lt;Long, Long&gt;();
+<A NAME="22"></A>
+<A NAME="23"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Returns odd names java.utile.random kind of names. Is it due to weak hashmap?"</FONT>)
+<A NAME="24"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String getName() {
+<A NAME="25"></A>        <FONT ID="Return">return</FONT> genRandom(System.currentTimeMillis());
+<A NAME="26"></A>    }
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Synchronized">synchronized</FONT> String genRandom(Long time) {
+<A NAME="29"></A>        Long randomVal = r.nextLong();
+<A NAME="30"></A>        <FONT ID="While">while</FONT> (whm.containsValue(randomVal)) {
+<A NAME="31"></A>            randomVal = r.nextLong();
+<A NAME="32"></A>        }
+<A NAME="33"></A>        whm.put(time, randomVal);
+<A NAME="34"></A>        <FONT ID="Return">return</FONT> String.valueOf(r) + String.valueOf(time);
+<A NAME="35"></A>    }
+<A NAME="36"></A>}
+<A NAME="37"></A></pre>
+</BODY>
+</HTML>

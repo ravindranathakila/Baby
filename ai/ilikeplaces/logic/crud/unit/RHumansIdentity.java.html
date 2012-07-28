@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.RHumansIdentity (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">RHumansIdentity.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">ai.ilikeplaces.entities.HumansIdentity</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Url.java.html">ai.ilikeplaces.entities.Url</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/QueryParameter.java.html">ai.ilikeplaces.jpa.QueryParameter</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="16"></A>
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.util.Arrays;
+<A NAME="22"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="23"></A>
+<A NAME="24"></A><FONT ID="FormalComment">/**
+<A NAME="25"></A> * @author Ravindranath Akila
+<A NAME="26"></A> */</FONT>
+<A NAME="27"></A>
+<A NAME="28"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="29"></A>@NOTE(note = <FONT ID="StringLiteral">"SEE CRUDSERVICE WHERE TO SUPPORT READ AND DIRTY READ, THE TX TYPE IS SUPPORTS."</FONT>)
+<A NAME="30"></A>@Stateless
+<A NAME="31"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> RHumansIdentity <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RHumansIdentityLocal.java.html">RHumansIdentityLocal</A> {
+<A NAME="32"></A>
+<A NAME="33"></A>    @EJB
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt; humansIdentityCrudServiceLocal_;
+<A NAME="35"></A>    @EJB
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Url.java.html">Url</A>&gt; urlCrudServiceLocal;
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> RHumansIdentity() {
+<A NAME="39"></A>    }
+<A NAME="40"></A>
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RHumansIdentity.java.html">RHumansIdentity</A>.<FONT ID="Class">class</FONT>);
+<A NAME="43"></A>
+<A NAME="44"></A>
+<A NAME="45"></A>    @Override
+<A NAME="46"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt; doDirtyRHumansIdentitiesByEmails(<FONT ID="Final">final</FONT> List&lt;String&gt; emails) {
+<A NAME="48"></A>        <FONT ID="Return">return</FONT> humansIdentityCrudServiceLocal_.findWithNamedQuery(HumansIdentity.FindPaginatedHumansByEmails,
+<A NAME="49"></A>                QueryParameter.with(HumansIdentity.HumansIdentityEmails, emails).parameters());
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>    @Override
+<A NAME="53"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> String doDirtyProfilePhoto(<FONT ID="Final">final</FONT> String humanId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> {
+<A NAME="55"></A>        <FONT ID="Return">return</FONT> humansIdentityCrudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>.<FONT ID="Class">class</FONT>, humanId).getHumansIdentityProfilePhoto();
+<A NAME="56"></A>    }
+<A NAME="57"></A>
+<A NAME="58"></A>    @Override
+<A NAME="59"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW<FONT ID="MultiLineComment">/*Since lazy loading*/</FONT>)
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> String doDirtyPublicURL(<FONT ID="Final">final</FONT> String humanId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> {
+<A NAME="61"></A>        <FONT ID="Return">return</FONT> humansIdentityCrudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>.<FONT ID="Class">class</FONT>, humanId).getUrl().getUrl();
+<A NAME="62"></A>    }
+<A NAME="63"></A>
+<A NAME="64"></A>    @Override
+<A NAME="65"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="66"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> doDirtyRHumansIdentity(<FONT ID="Final">final</FONT> String humanId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> {
+<A NAME="67"></A>        <FONT ID="Return">return</FONT> humansIdentityCrudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="68"></A>    }
+<A NAME="69"></A>
+<A NAME="70"></A>    @Override
+<A NAME="71"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="72"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> doRHumansIdentity(<FONT ID="Final">final</FONT> String humanId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> {
+<A NAME="73"></A>        <FONT ID="Return">return</FONT> humansIdentityCrudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="74"></A>    }
+<A NAME="75"></A>
+<A NAME="76"></A>    @Override
+<A NAME="77"></A>    <FONT ID="Public">public</FONT> String doDirtyProfileFromURL(<FONT ID="Final">final</FONT> String url) {
+<A NAME="78"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Url.java.html">Url</A> loadedUrl = urlCrudServiceLocal.find(<A HREF="../../../../../ai/ilikeplaces/entities/Url.java.html">Url</A>.<FONT ID="Class">class</FONT>, url);
+<A NAME="79"></A>        <FONT ID="Return">return</FONT> loadedUrl == <FONT ID="Null">null</FONT> ? <FONT ID="Null">null</FONT> : loadedUrl.getMetadata();
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    @Override
+<A NAME="83"></A>    <FONT ID="Public">public</FONT> String test(<FONT ID="Final">final</FONT> String emails) {
+<A NAME="84"></A>        <FONT ID="Final">final</FONT> String[] emailarr = emails.replace(<FONT ID="StringLiteral">" "</FONT>, <FONT ID="StringLiteral">""</FONT>).split(<FONT ID="StringLiteral">","</FONT>);
+<A NAME="85"></A>        logger.debug(<FONT ID="StringLiteral">"Emails:"</FONT> + Arrays.toString(emailarr));
+<A NAME="86"></A>        String str = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="87"></A>        <FONT ID="For">for</FONT> (<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> hi : doDirtyRHumansIdentitiesByEmails(Arrays.asList(emailarr))) {
+<A NAME="88"></A>            str += hi.getHumanId();
+<A NAME="89"></A>        }
+<A NAME="90"></A>        <FONT ID="Return">return</FONT> str;
+<A NAME="91"></A>    }
+<A NAME="92"></A>}</pre>
+</BODY>
+</HTML>

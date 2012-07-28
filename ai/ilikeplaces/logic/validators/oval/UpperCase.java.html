@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.validators.oval.UpperCase (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">UpperCase.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.validators.oval;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/ERRORCODE.java.html">ai.ilikeplaces.logic.validators.ERRORCODE</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/oval/internal/UpperCaseCheck.java.html">ai.ilikeplaces.logic.validators.oval.internal.UpperCaseCheck</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.Constraint;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.lang.annotation.ElementType;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.lang.annotation.Retention;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.lang.annotation.RetentionPolicy;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.lang.annotation.Target;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * Created by IntelliJ IDEA.
+<A NAME="16"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="17"></A> * Date: Mar 8, 2010
+<A NAME="18"></A> * Time: 3:21:27 PM
+<A NAME="19"></A> */</FONT>
+<A NAME="20"></A>
+<A NAME="21"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="22"></A>@Retention(RetentionPolicy.RUNTIME)
+<A NAME="23"></A>@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
+<A NAME="24"></A>@Constraint(checkWith = <A HREF="../../../../../ai/ilikeplaces/logic/validators/oval/internal/UpperCaseCheck.java.html">UpperCaseCheck</A>.<FONT ID="Class">class</FONT>)
+<A NAME="25"></A>@NOTE(note = <FONT ID="StringLiteral">"COPIED FROM OVAL DOCUMENTATION AND FIXED"</FONT>)
+<A NAME="26"></A><FONT ID="Public">public</FONT> @<FONT ID="Interface">interface</FONT> UpperCase {
+<A NAME="27"></A>    <FONT ID="FormalComment">/**
+<A NAME="28"></A>     * message to be used for the ConstraintsViolatedException
+<A NAME="29"></A>     *
+<A NAME="30"></A>     * @see net.sf.oval.exception.ConstraintsViolatedException
+<A NAME="31"></A>     */</FONT>
+<A NAME="32"></A>    String message() <FONT ID="Default">default</FONT> <FONT ID="StringLiteral">"must be upper case"</FONT>;
+<A NAME="33"></A>}</pre>
+</BODY>
+</HTML>

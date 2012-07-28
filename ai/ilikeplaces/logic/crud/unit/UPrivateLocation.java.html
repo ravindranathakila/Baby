@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.UPrivateLocation (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">UPrivateLocation.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">ai.ilikeplaces.entities.HumansFriend</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">ai.ilikeplaces.entities.HumansPrivateLocation</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.exception.*;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="16"></A>
+<A NAME="17"></A><FONT ID="FormalComment">/**
+<A NAME="18"></A> * Created by IntelliJ IDEA.
+<A NAME="19"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="20"></A> * Date: Jan 15, 2010
+<A NAME="21"></A> * Time: 12:26:35 AM
+<A NAME="22"></A> */</FONT>
+<A NAME="23"></A>
+<A NAME="24"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="25"></A>@Stateless
+<A NAME="26"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> UPrivateLocation <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/UPrivateLocationLocal.java.html">UPrivateLocationLocal</A> {
+<A NAME="27"></A>
+<A NAME="28"></A>    @EJB
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>&gt; privateLocationCrudServiceLocal_;
+<A NAME="30"></A>
+<A NAME="31"></A>    @EJB
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>&gt; humansPrivateLocationCrudServiceLocal_;
+<A NAME="33"></A>
+<A NAME="34"></A>    @EJB
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>&gt; humanCrudServiceLocal_;
+<A NAME="36"></A>
+<A NAME="37"></A>    @EJB
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/UHumansNetPeopleLocal.java.html">UHumansNetPeopleLocal</A> uHumansNetPeopleLocal;
+<A NAME="39"></A>
+<A NAME="40"></A>    @Override
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> doUPrivateLocationData(<FONT ID="Final">final</FONT> String humanId__, <FONT ID="Final">final</FONT> String privateLocationId__, <FONT ID="Final">final</FONT> String privateLocationName__, <FONT ID="Final">final</FONT> String privateLocationInfo__) {
+<A NAME="42"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> privateLocation_ = privateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>.<FONT ID="Class">class</FONT>, privateLocationId__);
+<A NAME="43"></A>        <FONT ID="If">if</FONT> (privateLocationName__ != <FONT ID="Null">null</FONT>) {
+<A NAME="44"></A>            privateLocation_.setPrivateLocationName(privateLocationName__);
+<A NAME="45"></A>        }
+<A NAME="46"></A>        <FONT ID="If">if</FONT> (privateLocationInfo__ != <FONT ID="Null">null</FONT>) {
+<A NAME="47"></A>            privateLocation_.setPrivateLocationInfo(privateLocationInfo__);
+<A NAME="48"></A>        }
+<A NAME="49"></A>        <FONT ID="Return">return</FONT> privateLocation_;
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>
+<A NAME="53"></A>    @Override
+<A NAME="54"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="55"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> doUPrivateLocationAddOwner(<FONT ID="Final">final</FONT> String adder, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee) <FONT ID="Throws">throws</FONT> NoPrivilegesException, DBFetchDataException {
+<A NAME="56"></A>
+<A NAME="57"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
+<A NAME="58"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(adder, addeee.getHumanId());
+<A NAME="59"></A>        }
+<A NAME="60"></A>
+<A NAME="61"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> privateLocation_ = privateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>.<FONT ID="Class">class</FONT>, privateLocationId__).refresh();
+<A NAME="62"></A>
+<A NAME="63"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A> adeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>.<FONT ID="Class">class</FONT>, addeee.getHumanId());
+<A NAME="64"></A>
+<A NAME="65"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="66"></A></FONT>        checkAuthority:
+<A NAME="67"></A>        {
+<A NAME="68"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A> adderhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>.<FONT ID="Class">class</FONT>, adder);
+<A NAME="69"></A>
+<A NAME="70"></A>            <FONT ID="If">if</FONT> (!privateLocation_.getPrivateLocationOwners().contains(adderhumansPrivateLocation)) {
+<A NAME="71"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(adderhumansPrivateLocation.getHumanId(), <FONT ID="StringLiteral">"manage private location:"</FONT> + privateLocation_.toString());
+<A NAME="72"></A>            }
+<A NAME="73"></A>        }
+<A NAME="74"></A>
+<A NAME="75"></A>
+<A NAME="76"></A>        wiringBothSides:
+<A NAME="77"></A>        {
+<A NAME="78"></A>            <FONT ID="If">if</FONT> (!privateLocation_.getPrivateLocationOwners().contains(adeehumansPrivateLocation)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="79"></A></FONT>                privateLocation_.getPrivateLocationOwners().add(adeehumansPrivateLocation);
+<A NAME="80"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="81"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> DBDishonourException(<FONT ID="StringLiteral">"Adding an existing owner"</FONT>);
+<A NAME="82"></A>            }
+<A NAME="83"></A>            <FONT ID="If">if</FONT> (!adeehumansPrivateLocation.getPrivateLocationsOwned().contains(privateLocation_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="84"></A></FONT>                adeehumansPrivateLocation.getPrivateLocationsOwned().add(privateLocation_);
+<A NAME="85"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="86"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> DBDishonourException(<FONT ID="StringLiteral">"Adding an existing location"</FONT>);
+<A NAME="87"></A>            }
+<A NAME="88"></A>        }
+<A NAME="89"></A>
+<A NAME="90"></A>
+<A NAME="91"></A>        <FONT ID="Return">return</FONT> privateLocation_;
+<A NAME="92"></A>    }
+<A NAME="93"></A>
+<A NAME="94"></A>
+<A NAME="95"></A>    @Override
+<A NAME="96"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="97"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> doUPrivateLocationRemoveOwner(<FONT ID="Final">final</FONT> String remover, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removee) <FONT ID="Throws">throws</FONT> NoPrivilegesException, DBFetchDataException {
+<A NAME="98"></A>
+<A NAME="99"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
+<A NAME="100"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(remover, removee.getHumanId());
+<A NAME="101"></A>        }
+<A NAME="102"></A>
+<A NAME="103"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> privateLocation_ = privateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>.<FONT ID="Class">class</FONT>, privateLocationId__).refresh();
+<A NAME="104"></A>
+<A NAME="105"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="106"></A></FONT>        checkAuthority:
+<A NAME="107"></A>        {
+<A NAME="108"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A> removerhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>.<FONT ID="Class">class</FONT>, remover);
+<A NAME="109"></A>
+<A NAME="110"></A>            <FONT ID="If">if</FONT> (!privateLocation_.getPrivateLocationOwners().contains(removerhumansPrivateLocation)) {
+<A NAME="111"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(removerhumansPrivateLocation.getHumanId(), <FONT ID="StringLiteral">"manage private location:"</FONT> + privateLocation_.toString());
+<A NAME="112"></A>            }
+<A NAME="113"></A>        }
+<A NAME="114"></A>
+<A NAME="115"></A>        wiringBothSides:
+<A NAME="116"></A>        {
+<A NAME="117"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A> removeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>.<FONT ID="Class">class</FONT>, removee.getHumanId());
+<A NAME="118"></A>
+<A NAME="119"></A>            <FONT ID="If">if</FONT> (privateLocation_.getPrivateLocationOwners().contains(removeehumansPrivateLocation)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="120"></A></FONT>                privateLocation_.getPrivateLocationOwners().remove(removeehumansPrivateLocation);
+<A NAME="121"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="122"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> DBDishonourException(<FONT ID="StringLiteral">"Removing a non existing owner"</FONT>);
+<A NAME="123"></A>            }
+<A NAME="124"></A>            <FONT ID="If">if</FONT> (removeehumansPrivateLocation.getPrivateLocationsOwned().contains(privateLocation_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="125"></A></FONT>                removeehumansPrivateLocation.getPrivateLocationsOwned().remove(privateLocation_);
+<A NAME="126"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="127"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> DBDishonourException(<FONT ID="StringLiteral">"Removing a non existing location"</FONT>);
+<A NAME="128"></A>            }
+<A NAME="129"></A>        }
+<A NAME="130"></A>
+<A NAME="131"></A>
+<A NAME="132"></A>        <FONT ID="Return">return</FONT> privateLocation_;
+<A NAME="133"></A>    }
+<A NAME="134"></A>
+<A NAME="135"></A>
+<A NAME="136"></A>    @Override
+<A NAME="137"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="138"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> doUPrivateLocationAddViewer(<FONT ID="Final">final</FONT> String adder, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee) <FONT ID="Throws">throws</FONT> NoPrivilegesException, DBFetchDataException {
+<A NAME="139"></A>
+<A NAME="140"></A><FONT ID="SingleLineComment">//        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
+<A NAME="141"></A></FONT><FONT ID="SingleLineComment">//            throw new NotFriendsException(adder, addee.getHumanId());
+<A NAME="142"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="143"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="144"></A></FONT><FONT ID="SingleLineComment">//        final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.find(PrivateLocation.class, privateLocationId__).refresh();
+<A NAME="145"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="146"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="147"></A></FONT><FONT ID="SingleLineComment">//        //also safe to keep adder scoped within
+<A NAME="148"></A></FONT><FONT ID="SingleLineComment">//        checkAuthority:
+<A NAME="149"></A></FONT><FONT ID="SingleLineComment">//        {
+<A NAME="150"></A></FONT><FONT ID="SingleLineComment">//            final HumansPrivateLocation adderhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, adder);
+<A NAME="151"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="152"></A></FONT><FONT ID="SingleLineComment">//            if (!privateLocation_.getPrivateLocationViewers().contains(adderhumansPrivateLocation)) {
+<A NAME="153"></A></FONT><FONT ID="SingleLineComment">//                throw new NoPrivilegesException(adderhumansPrivateLocation.getHumanId(), "manage private location:" + privateLocation_.toString());
+<A NAME="154"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="155"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="156"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="157"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="158"></A></FONT><FONT ID="SingleLineComment">//        wiringBothSides:
+<A NAME="159"></A></FONT><FONT ID="SingleLineComment">//        {
+<A NAME="160"></A></FONT><FONT ID="SingleLineComment">//            final HumansPrivateLocation adeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(HumansPrivateLocation.class, addee.getHumanId());
+<A NAME="161"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="162"></A></FONT><FONT ID="SingleLineComment">//            if (!privateLocation_.getPrivateLocationViewers().contains(adeehumansPrivateLocation)) {//Concurrent update safe
+<A NAME="163"></A></FONT><FONT ID="SingleLineComment">//                privateLocation_.getPrivateLocationViewers().add(adeehumansPrivateLocation);
+<A NAME="164"></A></FONT><FONT ID="SingleLineComment">//            } else {
+<A NAME="165"></A></FONT><FONT ID="SingleLineComment">//                throw new DBDishonourException("Adding an existing viewer");
+<A NAME="166"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="167"></A></FONT><FONT ID="SingleLineComment">//            if (!adeehumansPrivateLocation.getPrivateLocationsViewed().contains(privateLocation_)) {//Concurrent update safe
+<A NAME="168"></A></FONT><FONT ID="SingleLineComment">//                adeehumansPrivateLocation.getPrivateLocationsViewed().add(privateLocation_);
+<A NAME="169"></A></FONT><FONT ID="SingleLineComment">//            } else {
+<A NAME="170"></A></FONT><FONT ID="SingleLineComment">//                throw new DBDishonourException("Adding an existing location");
+<A NAME="171"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="172"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="173"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="174"></A></FONT>
+<A NAME="175"></A>        <FONT ID="Return">return</FONT> doUPrivateLocationAddViewer(adder, privateLocationId__, addeee.getHumanId());
+<A NAME="176"></A>    }
+<A NAME="177"></A>
+<A NAME="178"></A>
+<A NAME="179"></A>    @Override
+<A NAME="180"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="181"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> doUPrivateLocationAddViewer(<FONT ID="Final">final</FONT> String adder, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> String addeee) <FONT ID="Throws">throws</FONT> NoPrivilegesException, DBFetchDataException {
+<A NAME="182"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee)) {
+<A NAME="183"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(adder, addeee);
+<A NAME="184"></A>        }
+<A NAME="185"></A>
+<A NAME="186"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> privateLocation_ = privateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>.<FONT ID="Class">class</FONT>, privateLocationId__).refresh();
+<A NAME="187"></A>
+<A NAME="188"></A>
+<A NAME="189"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="190"></A></FONT>        checkAuthority:
+<A NAME="191"></A>        {
+<A NAME="192"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A> adderhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>.<FONT ID="Class">class</FONT>, adder);
+<A NAME="193"></A>
+<A NAME="194"></A>            <FONT ID="If">if</FONT> (!privateLocation_.getPrivateLocationViewers().contains(adderhumansPrivateLocation)) {
+<A NAME="195"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(adderhumansPrivateLocation.getHumanId(), <FONT ID="StringLiteral">"manage private location:"</FONT> + privateLocation_.toString());
+<A NAME="196"></A>            }
+<A NAME="197"></A>        }
+<A NAME="198"></A>
+<A NAME="199"></A>
+<A NAME="200"></A>        wiringBothSides:
+<A NAME="201"></A>        {
+<A NAME="202"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A> adeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>.<FONT ID="Class">class</FONT>, addeee);
+<A NAME="203"></A>
+<A NAME="204"></A>            <FONT ID="If">if</FONT> (!privateLocation_.getPrivateLocationViewers().contains(adeehumansPrivateLocation)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="205"></A></FONT>                privateLocation_.getPrivateLocationViewers().add(adeehumansPrivateLocation);
+<A NAME="206"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="207"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> DBDishonourException(<FONT ID="StringLiteral">"Adding an existing viewer"</FONT>);
+<A NAME="208"></A>            }
+<A NAME="209"></A>            <FONT ID="If">if</FONT> (!adeehumansPrivateLocation.getPrivateLocationsViewed().contains(privateLocation_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="210"></A></FONT>                adeehumansPrivateLocation.getPrivateLocationsViewed().add(privateLocation_);
+<A NAME="211"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="212"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> DBDishonourException(<FONT ID="StringLiteral">"Adding an existing location"</FONT>);
+<A NAME="213"></A>            }
+<A NAME="214"></A>        }
+<A NAME="215"></A>
+<A NAME="216"></A>
+<A NAME="217"></A>        <FONT ID="Return">return</FONT> privateLocation_;
+<A NAME="218"></A>    }
+<A NAME="219"></A>
+<A NAME="220"></A>
+<A NAME="221"></A>    @Override
+<A NAME="222"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="223"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> doUPrivateLocationRemoveViewer(<FONT ID="Final">final</FONT> String remover, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removeee) <FONT ID="Throws">throws</FONT> DBDishonourCheckedException, DBFetchDataException {
+<A NAME="224"></A>
+<A NAME="225"></A>        <FONT ID="If">if</FONT> (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
+<A NAME="226"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NotFriendsException(remover, removeee.getHumanId());
+<A NAME="227"></A>        }
+<A NAME="228"></A>
+<A NAME="229"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A> privateLocation_ = privateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">PrivateLocation</A>.<FONT ID="Class">class</FONT>, privateLocationId__).refresh();
+<A NAME="230"></A>
+<A NAME="231"></A>        <FONT ID="SingleLineComment">//also safe to keep adder scoped within
+<A NAME="232"></A></FONT>        checkAuthority:
+<A NAME="233"></A>        {
+<A NAME="234"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A> removeehumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>.<FONT ID="Class">class</FONT>, remover);
+<A NAME="235"></A>
+<A NAME="236"></A>            <FONT ID="If">if</FONT> (!privateLocation_.getPrivateLocationOwners().contains(removeehumansPrivateLocation)) {
+<A NAME="237"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NoPrivilegesException(removeehumansPrivateLocation.getHumanId(), <FONT ID="StringLiteral">"manage private location:"</FONT> + privateLocation_.toString());
+<A NAME="238"></A>            }
+<A NAME="239"></A>        }
+<A NAME="240"></A>
+<A NAME="241"></A>        wiringBothSides:
+<A NAME="242"></A>        {
+<A NAME="243"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A> removerhumansPrivateLocation = humansPrivateLocationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateLocation.java.html">HumansPrivateLocation</A>.<FONT ID="Class">class</FONT>, removeee.getHumanId());
+<A NAME="244"></A>
+<A NAME="245"></A>            <FONT ID="If">if</FONT> (privateLocation_.getPrivateLocationViewers().contains(removerhumansPrivateLocation)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="246"></A></FONT>                privateLocation_.getPrivateLocationViewers().remove(removerhumansPrivateLocation);
+<A NAME="247"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="248"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="249"></A>            }
+<A NAME="250"></A>            <FONT ID="If">if</FONT> (removerhumansPrivateLocation.getPrivateLocationsViewed().contains(privateLocation_)) {<FONT ID="SingleLineComment">//Concurrent update safe
+<A NAME="251"></A></FONT>                removerhumansPrivateLocation.getPrivateLocationsViewed().remove(privateLocation_);
+<A NAME="252"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="253"></A>                <FONT ID="Throw">throw</FONT> DBDishonourCheckedException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="254"></A>            }
+<A NAME="255"></A>        }
+<A NAME="256"></A>
+<A NAME="257"></A>
+<A NAME="258"></A>        <FONT ID="Return">return</FONT> privateLocation_;
+<A NAME="259"></A>    }
+<A NAME="260"></A>
+<A NAME="261"></A>}
+<A NAME="262"></A></pre>
+</BODY>
+</HTML>

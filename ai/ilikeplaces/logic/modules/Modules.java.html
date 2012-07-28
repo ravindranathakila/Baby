@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.modules.Modules (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Modules.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.modules;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/conf/JNDILookupModule.java.html">ai.ilikeplaces.logic.modules.conf.JNDILookupModule</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/MethodParams.java.html">ai.ilikeplaces.util.MethodParams</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/MethodTimer.java.html">ai.ilikeplaces.util.MethodTimer</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/ParamValidator.java.html">ai.ilikeplaces.util.ParamValidator</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jndi/impl/JNDILookupFactory.java.html">ai.ilikeplaces.util.jndi.impl.JNDILookupFactory</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> com.google.inject.Guice;
+<A NAME="11"></A><FONT ID="Import">import</FONT> com.google.inject.Injector;
+<A NAME="12"></A><FONT ID="Import">import</FONT> com.google.places.api.impl.impl.GooglePlacesAPIClient;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.annotation.PostConstruct;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.annotation.PreDestroy;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.Singleton;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.Startup;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="FormalComment">/**
+<A NAME="22"></A> * @author Ravindranath Akila
+<A NAME="23"></A> */</FONT>
+<A NAME="24"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="25"></A>@Singleton
+<A NAME="26"></A>@Startup
+<A NAME="27"></A>@Interceptors({<A HREF="../../../../ai/ilikeplaces/util/ParamValidator.java.html">ParamValidator</A>.<FONT ID="Class">class</FONT>, <A HREF="../../../../ai/ilikeplaces/util/MethodTimer.java.html">MethodTimer</A>.<FONT ID="Class">class</FONT>, <A HREF="../../../../ai/ilikeplaces/util/MethodParams.java.html">MethodParams</A>.<FONT ID="Class">class</FONT>})
+<A NAME="28"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Modules <FONT ID="Extends">extends</FONT> <A HREF="../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/ModulesLocal.java.html">ModulesLocal</A> {
+<A NAME="29"></A>
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="FormalComment">/**
+<A NAME="32"></A>     * Only the jndi factory should be done statically. Do NOT initialize other modules like this.
+<A NAME="33"></A>     */</FONT>
+<A NAME="34"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Injector jndiLookupFactoryInjector = Guice.createInjector(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/conf/JNDILookupModule.java.html">JNDILookupModule</A>());
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="FormalComment">/**
+<A NAME="37"></A>     * Only the jndi factory should be done statically. Do NOT initialize other modules like this.
+<A NAME="38"></A>     */</FONT>
+<A NAME="39"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/jndi/impl/JNDILookupFactory.java.html">JNDILookupFactory</A> jndiLookupFactory = jndiLookupFactoryInjector.getInstance(<A HREF="../../../../ai/ilikeplaces/util/jndi/impl/JNDILookupFactory.java.html">JNDILookupFactory</A>.<FONT ID="Class">class</FONT>);
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> ai.ilikeplaces.ygp.impl.ClientFactory yahooGeoPlanetFactory;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> com.disqus.api.impl.ClientFactory disqusApiFactory;
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> com.google.places.api.impl.ClientFactory googlePlacesApiFactory;
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> Modules() {
+<A NAME="46"></A>        {
+<A NAME="47"></A>            <FONT ID="Final">final</FONT> Injector yahooGeoPlanetFactoryInjector = Guice.createInjector(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/YahooGeoPlanetClientModule.java.html">YahooGeoPlanetClientModule</A>());
+<A NAME="48"></A>            yahooGeoPlanetFactory = yahooGeoPlanetFactoryInjector.getInstance(ai.ilikeplaces.ygp.impl.ClientFactory.<FONT ID="Class">class</FONT>);
+<A NAME="49"></A>        }
+<A NAME="50"></A>        {
+<A NAME="51"></A>            <FONT ID="Final">final</FONT> Injector disqusApiFactoryInjector = Guice.createInjector(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/DisqusAPIClientModule.java.html">DisqusAPIClientModule</A>());
+<A NAME="52"></A>            disqusApiFactory = disqusApiFactoryInjector.getInstance(com.disqus.api.impl.ClientFactory.<FONT ID="Class">class</FONT>);
+<A NAME="53"></A>        }
+<A NAME="54"></A>        {
+<A NAME="55"></A>            <FONT ID="Final">final</FONT> Injector googlePlacesApiFactoryInjector = Guice.createInjector(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/GooglePlacesAPIClientModule.java.html">GooglePlacesAPIClientModule</A>());
+<A NAME="56"></A>            googlePlacesApiFactory = googlePlacesApiFactoryInjector.getInstance(com.google.places.api.impl.ClientFactory.<FONT ID="Class">class</FONT>);
+<A NAME="57"></A>        }
+<A NAME="58"></A>    }
+<A NAME="59"></A>
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/ModulesLocal.java.html">ModulesLocal</A> getModules(){
+<A NAME="61"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="62"></A>            <FONT ID="Return">return</FONT> (<A HREF="../../../../ai/ilikeplaces/logic/modules/ModulesLocal.java.html">ModulesLocal</A>) (jndiLookupFactory.getInstance(ModulesLocal.NAME)).lookup();
+<A NAME="63"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NamingException e) {
+<A NAME="64"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="65"></A>        }
+<A NAME="66"></A>    }
+<A NAME="67"></A>
+<A NAME="68"></A>    <FONT ID="Public">public</FONT> ai.ilikeplaces.ygp.impl.ClientFactory getYahooGeoPlanetFactory() {
+<A NAME="69"></A>        <FONT ID="Return">return</FONT> yahooGeoPlanetFactory;
+<A NAME="70"></A>    }
+<A NAME="71"></A>
+<A NAME="72"></A>    <FONT ID="Public">public</FONT> com.disqus.api.impl.ClientFactory getDisqusAPIFactory() {
+<A NAME="73"></A>        <FONT ID="Return">return</FONT> disqusApiFactory;
+<A NAME="74"></A>    }
+<A NAME="75"></A>
+<A NAME="76"></A>    <FONT ID="Public">public</FONT> com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory(){
+<A NAME="77"></A>        <FONT ID="Return">return</FONT> googlePlacesApiFactory;
+<A NAME="78"></A>    }
+<A NAME="79"></A>
+<A NAME="80"></A>    @PostConstruct
+<A NAME="81"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> postConstruct() {
+<A NAME="82"></A>
+<A NAME="83"></A>    }
+<A NAME="84"></A>
+<A NAME="85"></A>    @PreDestroy
+<A NAME="86"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> preDestroy() {
+<A NAME="87"></A>
+<A NAME="88"></A>    }
+<A NAME="89"></A>
+<A NAME="90"></A>}</pre>
+</BODY>
+</HTML>

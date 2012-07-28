@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.HumansNet (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumansNet.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBException.java.html">ai.ilikeplaces.exception.DBException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * This entity would be about friends. &lt;p/&gt;
+<A NAME="16"></A> * &lt;p/&gt;
+<A NAME="17"></A> * THEORY:&lt;p/&gt;
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * SIMPLE VS COMPLEX RELATIONSHIP MANAGEMENT
+<A NAME="20"></A> * Twitter is still dominant. Simplicity plays a huge role.
+<A NAME="21"></A> * Just as similar to a Wizard setup as opposed to complex control panel setup preferred,
+<A NAME="22"></A> * the ideal feature would be to offer complex relationships presented with simplicity.
+<A NAME="23"></A> * Hence here we predefine "Knowns, Family, Relatives, Best Friends, Friends, Professionals, Crosses, Rejects, Followers"
+<A NAME="24"></A> * and facilitate 3 other customs.
+<A NAME="25"></A> * Rejects cannot see this person.
+<A NAME="26"></A> * Followers, frankly is like twitter. People who like you and you can't give a shit about as the base might be huge.
+<A NAME="27"></A> * While some of these are exclusive, some intersect, and some are subsets. Thia has to be fixed.
+<A NAME="28"></A> * &lt;p/&gt;
+<A NAME="29"></A> * RESEARCH: &lt;p/&gt;
+<A NAME="30"></A> * TYPES OF RELATIONSHIPS IN SOCIAL NETWORKS &lt;p/&gt;
+<A NAME="31"></A> * To be honest I thought of the relationship mode of asymmetry myself.
+<A NAME="32"></A> * That is like in real world. If you are decide a person is a friend, you just do it.
+<A NAME="33"></A> * There is no need to announce it to the friend. The friend on the other hand, just might
+<A NAME="34"></A> * think of you as a "known" person. Each other only know by themselves who the other person is.
+<A NAME="35"></A> * This is the model ilikeplaces uses.
+<A NAME="36"></A> * &lt;p/&gt;
+<A NAME="37"></A> * http://bokardo.com/archives/relationship-symmetry-in-social-networks-why-facebook-will-go-fully-asymmetric/
+<A NAME="38"></A> * &lt;p/&gt;
+<A NAME="39"></A> * &lt;p/&gt;
+<A NAME="40"></A> * &lt;p/&gt;
+<A NAME="41"></A> * FIXING PRIVACY ISSUE:&lt;p/&gt;
+<A NAME="42"></A> * It wasn't easy to find out a easy mid point between privacy levels, relationship categories and update feeds. Then
+<A NAME="43"></A> * again there are followers to whom a user has to cater. The best approach I think is introducing a "Privacy Level".
+<A NAME="44"></A> * &lt;p/&gt;
+<A NAME="45"></A> * &lt;p/&gt;
+<A NAME="46"></A> * &lt;p/&gt;
+<A NAME="47"></A> * &lt;p/&gt;
+<A NAME="48"></A> * &lt;p/&gt;
+<A NAME="49"></A> * PENDING RESEARCH: &lt;p/&gt;
+<A NAME="50"></A> * &lt;p/&gt;
+<A NAME="51"></A> * HOW TO SOLVE THE LOST FRIENDS PARADOX tm&lt;p/&gt;
+<A NAME="52"></A> * Well we all know, if we are out of our social networks for sometime, others just forget us.
+<A NAME="53"></A> * This is related to how updates are being shared. I think ilikeplaces should introduce a
+<A NAME="54"></A> * "Miss" concept or maybe for guys rather "Where t f are you?" type of thing(Let the user define the sentence?).
+<A NAME="55"></A> * I don't know if these ideas could be stolen, but at least since they cannot be patented yet by me,
+<A NAME="56"></A> * we can beat them to it.          &lt;p/&gt;
+<A NAME="57"></A> * &lt;p/&gt;
+<A NAME="58"></A> * HOW TO SOLVE LOVE WITHDRAWAL&lt;P/&gt;
+<A NAME="59"></A> * &lt;p/&gt;
+<A NAME="60"></A> * Married couples and love affairs tend to make networkers withdraw from a lot of activity.
+<A NAME="61"></A> * http://family.jrank.org/pages/1602/Social-Networks-Social-Network-Structure-Relationship-Opportunities-Constraints.html
+<A NAME="62"></A> * &lt;p/&gt;
+<A NAME="63"></A> * HOW TO SOLVE GENERIC NETWORK ISSUE&lt;p/&gt;
+<A NAME="64"></A> * &lt;p/&gt;
+<A NAME="65"></A> * Having a social network account needs to be "real-time" and "painting". The network should be able to outline and
+<A NAME="66"></A> * help grow an individuals future. Like, make new connections etc. This probably needs more agendas than just this
+<A NAME="67"></A> * entity.
+<A NAME="68"></A> * &lt;p/&gt;
+<A NAME="69"></A> * Well there should be a name to it. Not "What are you up to". Not "Updates". "Has/Has Just | Is | Will, Will be"
+<A NAME="70"></A> * &lt;p/&gt;
+<A NAME="71"></A> * But then again updates alone will not help. In fact, it might suck since who cares what we are up to THAT much. This
+<A NAME="72"></A> * certainly needs revision.                                     &lt;p/&gt;
+<A NAME="73"></A> * &lt;p/&gt;
+<A NAME="74"></A> * http://gigaom.com/2009/04/08/facebook-population-200m-faces-an-identity-crisis/ &lt;p/&gt;
+<A NAME="75"></A> * &lt;p/&gt;
+<A NAME="76"></A> * &lt;p/&gt;
+<A NAME="77"></A> * &lt;p/&gt;
+<A NAME="78"></A> * &lt;p/&gt;
+<A NAME="79"></A> * user: Ravindranath Akila
+<A NAME="80"></A> * Date: Dec 6, 2009
+<A NAME="81"></A> * Time: 6:09:59 PM
+<A NAME="82"></A> *
+<A NAME="83"></A> * @author Ravindranath Akila
+<A NAME="84"></A> */</FONT>
+<A NAME="85"></A>
+<A NAME="86"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="87"></A>@Entity
+<A NAME="88"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="89"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumansNet <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanPkJoinFace.java.html">HumanPkJoinFace</A>, <A HREF="../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A>, Serializable {
+<A NAME="90"></A>
+<A NAME="91"></A>    <FONT ID="Public">public</FONT> String humanId;
+<A NAME="92"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> human;
+<A NAME="93"></A>
+<A NAME="94"></A>    @NOTE(note = <FONT ID="StringLiteral">"Display name is used for adding removing users etc. This can also be the nick name."</FONT> +
+<A NAME="95"></A>            <FONT ID="StringLiteral">"The compulsory requirement for this name is that others know the user by this name."</FONT> +
+<A NAME="96"></A>            <FONT ID="StringLiteral">"This name is important for us as it helps DB performance(instead of loading identity bean."</FONT> +
+<A NAME="97"></A>            <FONT ID="StringLiteral">"This is one place where the benefit breaking table with PK is elaborated.(we made this displayName entry much "</FONT> +
+<A NAME="98"></A>            <FONT ID="StringLiteral">"later in the development cycle)"</FONT>)
+<A NAME="99"></A>    <FONT ID="Public">public</FONT> String displayName;
+<A NAME="100"></A>
+<A NAME="101"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> humansNetPeople;
+<A NAME="102"></A>
+<A NAME="103"></A>    @Id
+<A NAME="104"></A>    <FONT ID="Public">public</FONT> String getHumanId() {
+<A NAME="105"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="106"></A>    }
+<A NAME="107"></A>
+<A NAME="108"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumanId(<FONT ID="Final">final</FONT> String humanId__) {
+<A NAME="109"></A>        <FONT ID="This">this</FONT>.humanId = humanId__;
+<A NAME="110"></A>    }
+<A NAME="111"></A>
+<A NAME="112"></A>    @OneToOne(cascade = CascadeType.REFRESH)
+<A NAME="113"></A>    @PrimaryKeyJoinColumn
+<A NAME="114"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> getHuman() {
+<A NAME="115"></A>        <FONT ID="Return">return</FONT> human;
+<A NAME="116"></A>    }
+<A NAME="117"></A>
+<A NAME="118"></A>    @Override
+<A NAME="119"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHuman(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> human) {
+<A NAME="120"></A>        <FONT ID="This">this</FONT>.human = human;
+<A NAME="121"></A>    }
+<A NAME="122"></A>
+<A NAME="123"></A>    <FONT ID="Public">public</FONT> String getDisplayName() {
+<A NAME="124"></A>        <FONT ID="Return">return</FONT> displayName;
+<A NAME="125"></A>    }
+<A NAME="126"></A>
+<A NAME="127"></A>    @Override
+<A NAME="128"></A>    @Transient
+<A NAME="129"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> ifFriend(<FONT ID="Final">final</FONT> String friendsHumanId) {
+<A NAME="130"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; r = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyIsHumansNetPeople(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>(<FONT ID="This">this</FONT>.humanId), <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>(friendsHumanId));
+<A NAME="131"></A>        <FONT ID="If">if</FONT> (r.returnStatus() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="132"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBException.java.html">DBException</A>(r.returnError());
+<A NAME="133"></A>        }
+<A NAME="134"></A>        <FONT ID="Return">return</FONT> r.returnValue();
+<A NAME="135"></A>    }
+<A NAME="136"></A>
+<A NAME="137"></A>    @Override
+<A NAME="138"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> notFriend(<FONT ID="Final">final</FONT> String friendsHumanId) {
+<A NAME="139"></A>        <FONT ID="Return">return</FONT> !ifFriend(friendsHumanId);
+<A NAME="140"></A>    }
+<A NAME="141"></A>
+<A NAME="142"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setDisplayName(String displayName) {
+<A NAME="143"></A>        <FONT ID="This">this</FONT>.displayName = displayName;
+<A NAME="144"></A>    }
+<A NAME="145"></A>
+<A NAME="146"></A>    @WARNING(warning = <FONT ID="StringLiteral">"Do not change LAZY loading."</FONT>,
+<A NAME="147"></A>            warnings = {<FONT ID="StringLiteral">"If you are changing, check with Human which fetches this eager."</FONT>,
+<A NAME="148"></A>                    <FONT ID="StringLiteral">"If you are changing, check how to efficiently fetch displayName."</FONT>,
+<A NAME="149"></A>                    <FONT ID="StringLiteral">"You could use pkjoincolumn between HumansNet and the requiring entity."</FONT>})
+<A NAME="150"></A>    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+<A NAME="151"></A>    @PrimaryKeyJoinColumn
+<A NAME="152"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> getHumansNetPeople() {
+<A NAME="153"></A>        <FONT ID="Return">return</FONT> humansNetPeople;
+<A NAME="154"></A>    }
+<A NAME="155"></A>
+<A NAME="156"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumansNetPeople(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> humansNetPeople) {
+<A NAME="157"></A>        <FONT ID="This">this</FONT>.humansNetPeople = humansNetPeople;
+<A NAME="158"></A>    }
+<A NAME="159"></A>}
+<A NAME="160"></A></pre>
+</BODY>
+</HTML>

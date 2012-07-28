@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>PhotoCRUD (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">PhotoCRUD.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="SingleLineComment">//package ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="3"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.doc.License;
+<A NAME="4"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.doc.OK;
+<A NAME="5"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.entities.PrivatePhoto;
+<A NAME="6"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.entities.PublicPhoto;
+<A NAME="7"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.jpa.CrudServiceLocal;
+<A NAME="8"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.logic.crud.DB;
+<A NAME="9"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.servlets.Controller.Page;
+<A NAME="10"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.util.AbstractWidgetListener;
+<A NAME="11"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.util.EventType;
+<A NAME="12"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.util.Loggers;
+<A NAME="13"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.util.MarkupTag;
+<A NAME="14"></A></FONT><FONT ID="SingleLineComment">//import org.itsnat.core.ItsNatDocument;
+<A NAME="15"></A></FONT><FONT ID="SingleLineComment">//import org.itsnat.core.ItsNatServletRequest;
+<A NAME="16"></A></FONT><FONT ID="SingleLineComment">//import org.itsnat.core.event.NodePropertyTransport;
+<A NAME="17"></A></FONT><FONT ID="SingleLineComment">//import org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="18"></A></FONT><FONT ID="SingleLineComment">//import org.slf4j.Logger;
+<A NAME="19"></A></FONT><FONT ID="SingleLineComment">//import org.slf4j.LoggerFactory;
+<A NAME="20"></A></FONT><FONT ID="SingleLineComment">//import org.w3c.dom.Element;
+<A NAME="21"></A></FONT><FONT ID="SingleLineComment">//import org.w3c.dom.events.Event;
+<A NAME="22"></A></FONT><FONT ID="SingleLineComment">//import org.w3c.dom.events.EventListener;
+<A NAME="23"></A></FONT><FONT ID="SingleLineComment">//import org.w3c.dom.events.EventTarget;
+<A NAME="24"></A></FONT><FONT ID="SingleLineComment">//import org.w3c.dom.html.HTMLDocument;
+<A NAME="25"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="26"></A></FONT><FONT ID="SingleLineComment">//import javax.naming.Context;
+<A NAME="27"></A></FONT><FONT ID="SingleLineComment">//import java.util.Properties;
+<A NAME="28"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="29"></A></FONT><FONT ID="SingleLineComment">//import static ai.ilikeplaces.servlets.Controller.Page.*;
+<A NAME="30"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="31"></A></FONT><FONT ID="SingleLineComment">///**
+<A NAME="32"></A></FONT><FONT ID="SingleLineComment">// * @author Ravindranath Akila
+<A NAME="33"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="34"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="35"></A></FONT><FONT ID="SingleLineComment">//@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="36"></A></FONT><FONT ID="SingleLineComment">//@OK
+<A NAME="37"></A></FONT><FONT ID="SingleLineComment">//abstract public class PhotoCRUD extends AbstractWidgetListener {
+<A NAME="38"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="39"></A></FONT><FONT ID="SingleLineComment">//    PublicPhoto publicPhoto;
+<A NAME="40"></A></FONT><FONT ID="SingleLineComment">//    PrivatePhoto privatePhoto;
+<A NAME="41"></A></FONT><FONT ID="SingleLineComment">//    final private Properties p_ = new Properties();
+<A NAME="42"></A></FONT><FONT ID="SingleLineComment">//    private Context context = null;
+<A NAME="43"></A></FONT><FONT ID="SingleLineComment">//    private CrudServiceLocal&lt;PublicPhoto&gt; crudPublicPhoto = null;
+<A NAME="44"></A></FONT><FONT ID="SingleLineComment">//    private CrudServiceLocal&lt;PrivatePhoto&gt; crudPrivatePhoto = null;
+<A NAME="45"></A></FONT><FONT ID="SingleLineComment">//    final private Logger logger = LoggerFactory.getLogger(PhotoCRUD.class.getName());
+<A NAME="46"></A></FONT><FONT ID="SingleLineComment">//    final String humanId;
+<A NAME="47"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="48"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="49"></A></FONT><FONT ID="SingleLineComment">//     * @param itsNatDocument__
+<A NAME="50"></A></FONT><FONT ID="SingleLineComment">//     * @param appendToElement__
+<A NAME="51"></A></FONT><FONT ID="SingleLineComment">//     * @param publicPhoto__
+<A NAME="52"></A></FONT><FONT ID="SingleLineComment">//     * @param humanId__
+<A NAME="53"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="54"></A></FONT><FONT ID="SingleLineComment">//    public PhotoCRUD(final ItsNatServletRequest request__,  final Element appendToElement__, final PublicPhoto publicPhoto__, final String humanId__) {
+<A NAME="55"></A></FONT><FONT ID="SingleLineComment">//        super(request__, Page.PhotoCRUD, appendToElement__);
+<A NAME="56"></A></FONT><FONT ID="SingleLineComment">//        this.humanId = humanId__;
+<A NAME="57"></A></FONT><FONT ID="SingleLineComment">//        this.publicPhoto = publicPhoto__;
+<A NAME="58"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="59"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="60"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="61"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="62"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="63"></A></FONT><FONT ID="SingleLineComment">//    @Override
+<A NAME="64"></A></FONT><FONT ID="SingleLineComment">//    protected void init(final Object... initArgs) {
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//    @Override
+<A NAME="68"></A></FONT><FONT ID="SingleLineComment">//    protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__) {
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_close), EventType.CLICK.toString(), new EventListener() {
+<A NAME="71"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="72"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//            public void handleEvent(final Event evt_) {
+<A NAME="74"></A></FONT><FONT ID="SingleLineComment">//                toggleVisible(pc_close);
+<A NAME="75"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//            public void finalize() throws Throwable {
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//                Loggers.finalized(this.getClass().getName());
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//                super.finalize();
+<A NAME="82"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="83"></A></FONT><FONT ID="SingleLineComment">//        }, false);
+<A NAME="84"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="85"></A></FONT><FONT ID="SingleLineComment">//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_delete), EventType.CLICK.toString(), new EventListener() {
+<A NAME="86"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="87"></A></FONT><FONT ID="SingleLineComment">//            final EventListener self = this;
+<A NAME="88"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="89"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="90"></A></FONT><FONT ID="SingleLineComment">//            public void handleEvent(final Event evt_) {
+<A NAME="91"></A></FONT><FONT ID="SingleLineComment">//                DB.getHumanCRUDPublicPhotoLocal(true).dPublicPhoto(humanId, publicPhoto.getPublicPhotoId());
+<A NAME="92"></A></FONT><FONT ID="SingleLineComment">//                remove(evt_.getTarget(), EventType.CLICK, self);
+<A NAME="93"></A></FONT><FONT ID="SingleLineComment">//                toggleVisible(pc_close);
+<A NAME="94"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="97"></A></FONT><FONT ID="SingleLineComment">//            public void finalize() throws Throwable {
+<A NAME="98"></A></FONT><FONT ID="SingleLineComment">//                Loggers.finalized(this.getClass().getName());
+<A NAME="99"></A></FONT><FONT ID="SingleLineComment">//                super.finalize();
+<A NAME="100"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="101"></A></FONT><FONT ID="SingleLineComment">//        }, false);
+<A NAME="102"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="103"></A></FONT><FONT ID="SingleLineComment">//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(pc_photo_description), EventType.BLUR.toString(), new EventListener() {
+<A NAME="104"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="105"></A></FONT><FONT ID="SingleLineComment">//            final EventListener self = this;
+<A NAME="106"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="107"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="108"></A></FONT><FONT ID="SingleLineComment">//            public void handleEvent(final Event evt_) {
+<A NAME="109"></A></FONT><FONT ID="SingleLineComment">//                logger.debug("{}", ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="110"></A></FONT><FONT ID="SingleLineComment">//                DB.getHumanCRUDPublicPhotoLocal(true).uPublicPhotoDescription(humanId, publicPhoto.getPublicPhotoId(), ((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="111"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="112"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="113"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="114"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="115"></A></FONT><FONT ID="SingleLineComment">//            public void finalize() throws Throwable {
+<A NAME="116"></A></FONT><FONT ID="SingleLineComment">//                Loggers.finalized(this.getClass().getName());
+<A NAME="117"></A></FONT><FONT ID="SingleLineComment">//                super.finalize();
+<A NAME="118"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="119"></A></FONT><FONT ID="SingleLineComment">//        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="120"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="121"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="122"></A></FONT><FONT ID="SingleLineComment">//    @Override
+<A NAME="123"></A></FONT><FONT ID="SingleLineComment">//    public void finalize() throws Throwable {
+<A NAME="124"></A></FONT><FONT ID="SingleLineComment">//        Loggers.finalized(this.getClass().getName());
+<A NAME="125"></A></FONT><FONT ID="SingleLineComment">//        super.finalize();
+<A NAME="126"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="127"></A></FONT><FONT ID="SingleLineComment">//}
+<A NAME="128"></A></FONT></pre>
+</BODY>
+</HTML>

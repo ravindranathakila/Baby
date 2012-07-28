@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerProfile (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerProfile.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.Listeners.widgets.*;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.itsnat.core.http.ItsNatHttpSession;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="16"></A>
+<A NAME="17"></A><FONT ID="FormalComment">/**
+<A NAME="18"></A> * @author Ravindranath Akila
+<A NAME="19"></A> */</FONT>
+<A NAME="20"></A>
+<A NAME="21"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="22"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerProfile <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="23"></A>
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="FormalComment">/**
+<A NAME="26"></A>     * @param request__
+<A NAME="27"></A>     * @param response__
+<A NAME="28"></A>     */</FONT>
+<A NAME="29"></A>    @Override
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> ItsNatServletResponse response__) {
+<A NAME="31"></A>
+<A NAME="32"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/AbstractSkeletonListener.java.html">AbstractSkeletonListener</A>(request__, response__) {
+<A NAME="33"></A>
+<A NAME="34"></A>            <FONT ID="FormalComment">/**
+<A NAME="35"></A>             * Intialize your document here by appending fragments
+<A NAME="36"></A>             */</FONT>
+<A NAME="37"></A>            @Override
+<A NAME="38"></A>            @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="39"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="40"></A>                <FONT ID="Super">super</FONT>.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
+<A NAME="41"></A>
+<A NAME="42"></A>                <FONT ID="If">if</FONT> (getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="43"></A>                    <FONT ID="Try">try</FONT> {
+<A NAME="44"></A>                        {
+<A NAME="45"></A>                            <FONT ID="New">new</FONT> DisplayName(request__, $(Skeleton_center_content), <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid()));
+<A NAME="46"></A>
+<A NAME="47"></A>                            <FONT ID="New">new</FONT> Profile(request__, $(Skeleton_center_content), <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid()));
+<A NAME="48"></A>
+<A NAME="49"></A>                            <FONT ID="New">new</FONT> PasswordManager(request__, $(Skeleton_center_content), <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid()), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
+<A NAME="50"></A>                            };
+<A NAME="51"></A>
+<A NAME="52"></A>                        }
+<A NAME="53"></A>
+<A NAME="54"></A>                    } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="55"></A>                        Loggers.EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="56"></A>                    }
+<A NAME="57"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="58"></A>                    <FONT ID="Try">try</FONT> {
+<A NAME="59"></A>                        {
+<A NAME="60"></A>                            <FONT ID="New">new</FONT> ForgotPasswordManager(request__, $(Skeleton_center_content), ((ItsNatHttpSession) request__.getItsNatSession()).getHttpSession()) {
+<A NAME="61"></A>                            };
+<A NAME="62"></A>                        }
+<A NAME="63"></A>
+<A NAME="64"></A>                    } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="65"></A>                        Loggers.EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="66"></A>                    }
+<A NAME="67"></A>                }
+<A NAME="68"></A>            }
+<A NAME="69"></A>
+<A NAME="70"></A>            <FONT ID="FormalComment">/**
+<A NAME="71"></A>             * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="72"></A>             */</FONT>
+<A NAME="73"></A>            @Override
+<A NAME="74"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(
+<A NAME="75"></A>                    <FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__,
+<A NAME="76"></A>                    <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__,
+<A NAME="77"></A>                    <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__) {
+<A NAME="78"></A>            }
+<A NAME="79"></A>        };
+<A NAME="80"></A>    }
+<A NAME="81"></A>}</pre>
+</BODY>
+</HTML>

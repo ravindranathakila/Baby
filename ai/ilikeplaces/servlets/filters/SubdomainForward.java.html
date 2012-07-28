@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.filters.SubdomainForward (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SubdomainForward.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets.filters;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/TemplateSourceGeoBusiness.java.html">ai.ilikeplaces.logic.Listeners.TemplateSourceGeoBusiness</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Parameter.java.html">ai.ilikeplaces.util.Parameter</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.servlet.*;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.net.URI;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * Okay this class if for the profiles. However, still we do not support "very" short urls.
+<A NAME="17"></A> * Instead, we support www.ilikeplaces/i/username kind of urls here. Looks better huh? :D
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * &lt;p/&gt;
+<A NAME="20"></A> * Hey this filter I say again, is to support www.ilikeplaces.com/i/ urls. No other filter should mess with this url too.
+<A NAME="21"></A> * &lt;p/&gt;
+<A NAME="22"></A> * &lt;p/&gt;
+<A NAME="23"></A> * Well, nevertheless, when a request comes in the above format, we redirect it to the
+<A NAME="24"></A> * ItsNat servlet, (current url format is /page/_i?up=userurl and maybe /page/_i_userurl.
+<A NAME="25"></A> * We send a redirect there.
+<A NAME="26"></A> * &lt;p/&gt;
+<A NAME="27"></A> * &lt;p/&gt;
+<A NAME="28"></A> * Let's try to make it fast and simple.
+<A NAME="29"></A> * &lt;p/&gt;
+<A NAME="30"></A> * &lt;p/&gt;
+<A NAME="31"></A> * Created by IntelliJ IDEA.
+<A NAME="32"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="33"></A> * Date: Jun 10, 2010
+<A NAME="34"></A> * Time: 3:27:18 PM
+<A NAME="35"></A> */</FONT>
+<A NAME="36"></A>
+<A NAME="37"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="38"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SubdomainForward <FONT ID="Implements">implements</FONT> Filter {
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SLASH = <FONT ID="StringLiteral">"/"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SUBDOMAIN_PAGE_FORMAT = <FONT ID="StringLiteral">"/page/_org?"</FONT> + <FONT ID="StringLiteral">"subdomain"</FONT> + <FONT ID="StringLiteral">"="</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String REDIRECTING_USER_TO = <FONT ID="StringLiteral">"Redirecting User To:"</FONT>;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String REQUESTED_PATH = <FONT ID="StringLiteral">"Requested Path:"</FONT>;
+<A NAME="43"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DROPPING_SUBDOMAIN_GRAB_FOR = <FONT ID="StringLiteral">"Dropping Subdomain Grab for:"</FONT>;
+<A NAME="44"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WWW = <FONT ID="StringLiteral">"www"</FONT>;
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Boolean">boolean</FONT> ON = <FONT ID="False">false</FONT>;
+<A NAME="47"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROCESSING_SUBDOMAIN_FORWARD = <FONT ID="StringLiteral">"Processing Subdomain Forward"</FONT>;
+<A NAME="48"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EMPTY = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ON_PARAMETER_IN_WEB_DOT_XML = <FONT ID="StringLiteral">"ON"</FONT>;
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ILIKEPLACES_COM = <FONT ID="StringLiteral">"ilikeplaces.com"</FONT>;
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOCALHOST = <FONT ID="StringLiteral">"localhost"</FONT>;
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DOMAIN_FORWARD_MAPPING_TO = <FONT ID="StringLiteral">"Domain Forward mapping to "</FONT>;
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SPACE = <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="54"></A>
+<A NAME="55"></A>    @Override
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> FilterConfig filterConfig) <FONT ID="Throws">throws</FONT> ServletException {
+<A NAME="57"></A>        ON = Boolean.valueOf(filterConfig.getInitParameter(ON_PARAMETER_IN_WEB_DOT_XML));
+<A NAME="58"></A>    }
+<A NAME="59"></A>
+<A NAME="60"></A>    @Override
+<A NAME="61"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doFilter(<FONT ID="Final">final</FONT> ServletRequest request, <FONT ID="Final">final</FONT> ServletResponse servletResponse, <FONT ID="Final">final</FONT> FilterChain filterChain) <FONT ID="Throws">throws</FONT> IOException, ServletException {
+<A NAME="62"></A>
+<A NAME="63"></A>        <FONT ID="If">if</FONT> (!ON) {
+<A NAME="64"></A>            filterChain.doFilter(request, servletResponse);
+<A NAME="65"></A>            <FONT ID="Return">return</FONT>;
+<A NAME="66"></A>        }
+<A NAME="67"></A>
+<A NAME="68"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl = SmartLogger.start(Loggers.LEVEL.DEBUG, <FONT ID="Null">null</FONT>, <FONT ID="IntegerLiteral">100</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="69"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="70"></A>            <FONT ID="Final">final</FONT> String unformattedurl = ((HttpServletRequest) request).getRequestURL().toString();
+<A NAME="71"></A>
+<A NAME="72"></A>            sl.appendToLogMSG(REQUESTED_PATH + unformattedurl);
+<A NAME="73"></A>
+<A NAME="74"></A>            <FONT ID="Final">final</FONT> String domain = <FONT ID="New">new</FONT> URI(unformattedurl).getHost();
+<A NAME="75"></A>
+<A NAME="76"></A>            <FONT ID="If">if</FONT> (domain.endsWith(ILIKEPLACES_COM) || domain.contains(LOCALHOST)) {<FONT ID="SingleLineComment">//Normal request on our website. Just forward.
+<A NAME="77"></A></FONT>                filterChain.doFilter(request, servletResponse);
+<A NAME="78"></A>                sl.complete(Loggers.LEVEL.DEBUG, <FONT ID="StringLiteral">"Simple Forward. Done."</FONT>);
+<A NAME="79"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="80"></A>                sl.appendToLogMSG(DOMAIN_FORWARD_MAPPING_TO + domain);
+<A NAME="81"></A>                request.getRequestDispatcher(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/Parameter.java.html">Parameter</A>(Controller.Page.GeoBusiness.getURL()).append(TemplateSourceGeoBusiness.DOMAIN, domain, <FONT ID="True">true</FONT>).get()).forward(request, servletResponse);
+<A NAME="82"></A>                sl.complete(Loggers.LEVEL.DEBUG, PROCESSING_SUBDOMAIN_FORWARD + SPACE + Loggers.DONE);
+<A NAME="83"></A>            }
+<A NAME="84"></A>
+<A NAME="85"></A><FONT ID="SingleLineComment">//            if(domain.endsWith(".GeoBusiness.ilikeplaces.com")){//Do this strict checks. We don't need somebody exploiting these stuff as bugs :-/
+<A NAME="86"></A></FONT><FONT ID="SingleLineComment">//               final String[] temp = domain.split(".GeoBusiness.ilikeplaces.com"); //Escape regesx
+<A NAME="87"></A></FONT><FONT ID="SingleLineComment">//            }else{
+<A NAME="88"></A></FONT><FONT ID="SingleLineComment">//                //Not a subdomain forward. drop drop drop. Be very strict
+<A NAME="89"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="90"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="91"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="92"></A></FONT>
+<A NAME="93"></A><FONT ID="SingleLineComment">//            final String[] domainArr = domain.split(".");
+<A NAME="94"></A></FONT><FONT ID="SingleLineComment">//            String subdomain = EMPTY;
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//            for (int i = 0; i &lt; domainArr.length - 2/*Disregards co.uk, co.in, us nd goes for com, org type length 3*/; i++) {
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//                subdomain += domainArr[i];
+<A NAME="97"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="98"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="99"></A></FONT><FONT ID="SingleLineComment">//            if (!subdomain.toLowerCase().equals(WWW) &amp;&amp; !subdomain.toLowerCase().equals(EMPTY)) {
+<A NAME="100"></A></FONT><FONT ID="SingleLineComment">//                sl.appendToLogMSG(REDIRECTING_USER_TO + subdomain);
+<A NAME="101"></A></FONT><FONT ID="SingleLineComment">//                ((HttpServletResponse) servletResponse).sendRedirect(SUBDOMAIN_PAGE_FORMAT + subdomain);
+<A NAME="102"></A></FONT><FONT ID="SingleLineComment">//                sl.complete(Loggers.DONE);
+<A NAME="103"></A></FONT><FONT ID="SingleLineComment">//            } else {
+<A NAME="104"></A></FONT><FONT ID="SingleLineComment">//                filterChain.doFilter(request, servletResponse);
+<A NAME="105"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="106"></A></FONT>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable e) {
+<A NAME="107"></A>            sl.complete(Loggers.LEVEL.ERROR, e);
+<A NAME="108"></A>            filterChain.doFilter(request, servletResponse);
+<A NAME="109"></A>        }
+<A NAME="110"></A>    }
+<A NAME="111"></A>
+<A NAME="112"></A>    @Override
+<A NAME="113"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> destroy() {
+<A NAME="114"></A>        <FONT ID="SingleLineComment">//So far nothing to put here
+<A NAME="115"></A></FONT>    }
+<A NAME="116"></A>}
+<A NAME="117"></A></pre>
+</BODY>
+</HTML>

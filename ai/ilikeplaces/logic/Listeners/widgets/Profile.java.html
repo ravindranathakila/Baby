@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.Profile (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Profile.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">ai.ilikeplaces.entities.HumansIdentity</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/ProfileUrl.java.html">ai.ilikeplaces.logic.validators.unit.ProfileUrl</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/filters/ProfileRedirect.java.html">ai.ilikeplaces.servlets.filters.ProfileRedirect</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.NodePropertyTransport;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="FormalComment">/**
+<A NAME="22"></A> * @author Ravindranath Akila
+<A NAME="23"></A> */</FONT>
+<A NAME="24"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Profile <FONT ID="Extends">extends</FONT> AbstractWidgetListener {
+<A NAME="26"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="27"></A></FONT>
+<A NAME="28"></A>    <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId = <FONT ID="Null">null</FONT>;
+<A NAME="29"></A>    <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/ProfileUrl.java.html">ProfileUrl</A> url = <FONT ID="Null">null</FONT>;
+<A NAME="30"></A>
+<A NAME="31"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="32"></A></FONT>
+<A NAME="33"></A>    <FONT ID="FormalComment">/**
+<A NAME="34"></A>     * @param request__
+<A NAME="35"></A>     * @param appendToElement__
+<A NAME="36"></A>     * @param humanId
+<A NAME="37"></A>     */</FONT>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> Profile(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="39"></A>        <FONT ID="Super">super</FONT>(
+<A NAME="40"></A>                request__,
+<A NAME="41"></A>                Page.ProfileWidget,
+<A NAME="42"></A>                appendToElement__,
+<A NAME="43"></A>                humanId
+<A NAME="44"></A>        );
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    @Override
+<A NAME="48"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="49"></A>        <FONT ID="This">this</FONT>.humanId = (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="50"></A>        <FONT ID="This">this</FONT>.url = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/ProfileUrl.java.html">ProfileUrl</A>(<FONT ID="Null">null</FONT>);
+<A NAME="51"></A>        $$(Page.ProfileURL).setAttribute(
+<A NAME="52"></A>                MarkupTag.INPUT.value(),
+<A NAME="53"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansPublicURL(humanId).returnValueBadly()
+<A NAME="54"></A>        );
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="58"></A>        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.ProfileURL), EventType.CHANGE.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="59"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="60"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/ProfileUrl.java.html">ProfileUrl</A> myurl = url;
+<A NAME="61"></A>
+<A NAME="62"></A>            @Override
+<A NAME="63"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="64"></A>                myurl.setObj($$(evt_).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="65"></A>                <FONT ID="If">if</FONT> (myurl.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="66"></A>                    $$(Page.ProfileNotice).setTextContent(myurl.getViolationAsString());
+<A NAME="67"></A>                    myurl.setObj(<FONT ID="Null">null</FONT>);<FONT ID="SingleLineComment">//Moving this before calling getviolations will throw an exception
+<A NAME="68"></A></FONT>                }
+<A NAME="69"></A>            }
+<A NAME="70"></A>        }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="71"></A>
+<A NAME="72"></A>
+<A NAME="73"></A>        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.ProfileURLUpdate), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="74"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="75"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/ProfileUrl.java.html">ProfileUrl</A> myurl = url;
+<A NAME="76"></A>
+<A NAME="77"></A>            @Override
+<A NAME="78"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="79"></A>                <FONT ID="If">if</FONT> (myurl.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="80"></A>                    <FONT ID="Final">final</FONT> String oldUrl = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansPublicURL(myhumanId).returnValueBadly();
+<A NAME="81"></A>
+<A NAME="82"></A>                    <FONT ID="If">if</FONT> (myurl.getObj().equals(oldUrl)) {
+<A NAME="83"></A>                        $$(Page.ProfileNotice).setTextContent(<FONT ID="StringLiteral">"Please enter a different value"</FONT>);
+<A NAME="84"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="85"></A>                        <FONT ID="If">if</FONT> (DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyProfileFromURL(myurl.getObj()).returnValue() != <FONT ID="Null">null</FONT>) {
+<A NAME="86"></A>                            $$(Page.ProfileNotice).setTextContent(<FONT ID="StringLiteral">"That's already taken :-("</FONT>);
+<A NAME="87"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="88"></A>                            <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt; humansIdentityReturn = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doUHumansPublicURL(myhumanId, myurl.getObjectAsValid());
+<A NAME="89"></A>                            <FONT ID="If">if</FONT> (!humansIdentityReturn.valid()) {
+<A NAME="90"></A>                                $$(Page.ProfileNotice).setTextContent(<FONT ID="StringLiteral">"Something went wrong :-("</FONT>);
+<A NAME="91"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="92"></A>                                <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> humansIdentity = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansIdentity(myhumanId).returnValue();
+<A NAME="93"></A>                                UserProperty.HUMANS_IDENTITY_CACHE.invalidate(humansIdentity.getHumanId());
+<A NAME="94"></A>                                $$(Page.ProfileNotice).setTextContent(<FONT ID="StringLiteral">"Updated. Please wait while you are taken to the new address..."</FONT>);
+<A NAME="95"></A>                                $$sendJS(JSCodeToSend.redirectPageWithURL(ProfileRedirect.PROFILE_URL + humansIdentity.getUrl().getUrl()));
+<A NAME="96"></A>                            }
+<A NAME="97"></A>                        }
+<A NAME="98"></A>                    }
+<A NAME="99"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="100"></A>                    $$(Page.ProfileNotice).setTextContent(myurl.getViolationAsString());
+<A NAME="101"></A>                    myurl.setObj(<FONT ID="Null">null</FONT>);<FONT ID="SingleLineComment">//Moving this before calling getviolations will throw an exception
+<A NAME="102"></A></FONT>                }
+<A NAME="103"></A>            }
+<A NAME="104"></A>        }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="105"></A>    }
+<A NAME="106"></A>}</pre>
+</BODY>
+</HTML>

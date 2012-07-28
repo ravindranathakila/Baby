@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.filters.FilterCharset (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">FilterCharset.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets.filters;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="FormalComment">/**
+<A NAME="4"></A> *
+<A NAME="5"></A> * http://stackoverflow.com/questions/138948/how-to-get-utf-8-working-in-java-webapps
+<A NAME="6"></A> *
+<A NAME="7"></A> * Please note that the location import itself, without wrong charsets(maybe) had data entries in
+<A NAME="8"></A> * database such as ?? instead of the location name. Try doing
+<A NAME="9"></A> *
+<A NAME="10"></A> * select * from ilp.location where woeid=24865698 or any other id having encoding issues to verify
+<A NAME="11"></A> *
+<A NAME="12"></A> * Created by IntelliJ IDEA.
+<A NAME="13"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="14"></A> * Date: Jul 5, 2010
+<A NAME="15"></A> * Time: 12:34:33 PM
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.servlet.*;
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="22"></A>
+<A NAME="23"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="24"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> FilterCharset <FONT ID="Implements">implements</FONT> Filter {
+<A NAME="25"></A>    <FONT ID="Private">private</FONT> String encoding;
+<A NAME="26"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TEXT_HTML_CHARSET_UTF_8 = <FONT ID="StringLiteral">"text/html; charset=UTF-8"</FONT>;
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UTF_8 = <FONT ID="StringLiteral">"UTF-8"</FONT>;
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init(FilterConfig config) <FONT ID="Throws">throws</FONT> ServletException {
+<A NAME="30"></A>        encoding = config.getInitParameter(<FONT ID="StringLiteral">"requestEncoding"</FONT>);
+<A NAME="31"></A>
+<A NAME="32"></A>        <FONT ID="If">if</FONT> (encoding == <FONT ID="Null">null</FONT>) encoding = UTF_8;
+<A NAME="33"></A>    }
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doFilter(<FONT ID="Final">final</FONT> ServletRequest request, <FONT ID="Final">final</FONT> ServletResponse response, <FONT ID="Final">final</FONT> FilterChain next)
+<A NAME="36"></A>            <FONT ID="Throws">throws</FONT> IOException, ServletException {
+<A NAME="37"></A>        <FONT ID="SingleLineComment">// Respect the client-specified character encoding
+<A NAME="38"></A></FONT>        <FONT ID="SingleLineComment">// (see HTTP specification section 3.4.1)
+<A NAME="39"></A></FONT>        <FONT ID="If">if</FONT> (<FONT ID="Null">null</FONT> == request.getCharacterEncoding())
+<A NAME="40"></A>            request.setCharacterEncoding(encoding);
+<A NAME="41"></A>
+<A NAME="42"></A>
+<A NAME="43"></A>        <FONT ID="FormalComment">/**
+<A NAME="44"></A>         * Set the default response content type and encoding
+<A NAME="45"></A>         */</FONT>
+<A NAME="46"></A>        response.setContentType(TEXT_HTML_CHARSET_UTF_8);
+<A NAME="47"></A>        response.setCharacterEncoding(UTF_8);
+<A NAME="48"></A>
+<A NAME="49"></A>
+<A NAME="50"></A>        next.doFilter(request, response);
+<A NAME="51"></A>    }
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> destroy() {
+<A NAME="54"></A>    }
+<A NAME="55"></A>}</pre>
+</BODY>
+</HTML>

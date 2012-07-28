@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControls (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AutoplayControls.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets.autoplay;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">ai.ilikeplaces.entities.HumansIdentity</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">ai.ilikeplaces.entities.PrivatePhoto</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">ai.ilikeplaces.logic.validators.unit.VLong</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/filters/ProfileRedirect.java.html">ai.ilikeplaces.servlets.filters.ProfileRedirect</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="22"></A>
+<A NAME="23"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControlsCriteria.AUTOPLAY_STATE.PAUSED</A>;
+<A NAME="24"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControlsCriteria.AUTOPLAY_STATE.PLAYING</A>;
+<A NAME="25"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="26"></A>
+<A NAME="27"></A><FONT ID="FormalComment">/**
+<A NAME="28"></A> * Created by IntelliJ IDEA.
+<A NAME="29"></A> * User: Ravindranath Akila
+<A NAME="30"></A> * Date: 1/13/12
+<A NAME="31"></A> * Time: 7:16 PM
+<A NAME="32"></A> */</FONT>
+<A NAME="33"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> AutoplayControls <FONT ID="Extends">extends</FONT> AbstractWidgetListener&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria</A>&gt; {
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HAS_AN_UPDATE_ON_WALL = <FONT ID="StringLiteral">" HAS AN UPDATE ON WALL "</FONT>;
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BUT_CANNOT_ACCESS_IT_SINCE_ITS_METADATA_AND_OR_TYPE_ARE_NOT_UPDATED = <FONT ID="StringLiteral">" BUT CANNOT ACCESS IT SINCE ITS METADATA AND/OR TYPE ARE NOT UPDATED."</FONT>;
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum AutoplayControlsIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="39"></A>        AutoplayControlsPlay,
+<A NAME="40"></A>        AutoplayControlsPause,
+<A NAME="41"></A>        AutoplayControlsPlaySection,
+<A NAME="42"></A>        AutoplayControlsPauseSection,
+<A NAME="43"></A>        AutoplayControlsStop,
+<A NAME="44"></A>        AutoplayControlsTimeout,
+<A NAME="45"></A>        AutoplayControlsPlayState,
+<A NAME="46"></A>    }
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="FormalComment">/**
+<A NAME="49"></A>     * @param request__
+<A NAME="50"></A>     * @param appendToElement__
+<A NAME="51"></A>     */</FONT>
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> AutoplayControls(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria</A> autoplayControlsCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="53"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.AutoplayControls, autoplayControlsCriteria, appendToElement__);
+<A NAME="54"></A>    }
+<A NAME="55"></A>
+<A NAME="56"></A>
+<A NAME="57"></A>    @Override
+<A NAME="58"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria</A> autoplayControlsCriteria) {
+<A NAME="59"></A>        <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria.AUTOPLAY_STATE</A> autoplayState = (<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria.AUTOPLAY_STATE</A>) criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, <FONT ID="Null">null</FONT>);
+<A NAME="60"></A>        autoplayState = (autoplayState != <FONT ID="Null">null</FONT> ? autoplayState :
+<A NAME="61"></A>                PAUSED);
+<A NAME="62"></A>        <FONT ID="Switch">switch</FONT> (autoplayState) {
+<A NAME="63"></A>            <FONT ID="Case">case</FONT> PLAYING: {
+<A NAME="64"></A>                $$displayBlock(AutoplayControlsIds.AutoplayControlsPauseSection);
+<A NAME="65"></A>                criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, PLAYING);
+<A NAME="66"></A>                $$(AutoplayControlsIds.AutoplayControlsPlayState).setAttribute(MarkupTag.INPUT.value(), Boolean.TRUE.toString());
+<A NAME="67"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="68"></A>            }
+<A NAME="69"></A>            <FONT ID="Case">case</FONT> PAUSED: {
+<A NAME="70"></A>                $$displayBlock(AutoplayControlsIds.AutoplayControlsPlaySection);
+<A NAME="71"></A>                criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, PAUSED);
+<A NAME="72"></A>                $$(AutoplayControlsIds.AutoplayControlsPlayState).setAttribute(MarkupTag.INPUT.value(), Boolean.FALSE.toString());
+<A NAME="73"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="74"></A>            }
+<A NAME="75"></A>        }
+<A NAME="76"></A>
+<A NAME="77"></A>    }
+<A NAME="78"></A>
+<A NAME="79"></A>    <FONT ID="FormalComment">/**
+<A NAME="80"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="81"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="82"></A>     * automatically called by the constructor
+<A NAME="83"></A>     *
+<A NAME="84"></A>     * @param itsNatHTMLDocument_
+<A NAME="85"></A>     * @param hTMLDocument_
+<A NAME="86"></A>     */</FONT>
+<A NAME="87"></A>    @Override
+<A NAME="88"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="89"></A>
+<A NAME="90"></A>        <FONT ID="Super">super</FONT>.registerForClick(
+<A NAME="91"></A>                AutoplayControlsIds.AutoplayControlsPlay,
+<A NAME="92"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria</A>&gt;(criteria) {
+<A NAME="93"></A>                    <FONT ID="FormalComment">/**
+<A NAME="94"></A>                     * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="95"></A>                     *
+<A NAME="96"></A>                     * @param evt fired from client
+<A NAME="97"></A>                     */</FONT>
+<A NAME="98"></A>                    @Override
+<A NAME="99"></A>                    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(<A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt) {
+<A NAME="100"></A>
+<A NAME="101"></A>                        criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, PLAYING);
+<A NAME="102"></A>                        $$displayNone(AutoplayControlsIds.AutoplayControlsPlaySection);
+<A NAME="103"></A>                        $$displayBlock(AutoplayControlsIds.AutoplayControlsPauseSection);
+<A NAME="104"></A>
+<A NAME="105"></A>
+<A NAME="106"></A>                    }
+<A NAME="107"></A>                });
+<A NAME="108"></A>
+<A NAME="109"></A>        <FONT ID="Super">super</FONT>.registerForClick(
+<A NAME="110"></A>                AutoplayControlsIds.AutoplayControlsPause,
+<A NAME="111"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria</A>&gt;(criteria) {
+<A NAME="112"></A>                    <FONT ID="FormalComment">/**
+<A NAME="113"></A>                     * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="114"></A>                     *
+<A NAME="115"></A>                     * @param evt fired from client
+<A NAME="116"></A>                     */</FONT>
+<A NAME="117"></A>                    @Override
+<A NAME="118"></A>                    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(<A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt) {
+<A NAME="119"></A>                        criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, PAUSED);
+<A NAME="120"></A>                        $$displayNone(AutoplayControlsIds.AutoplayControlsPauseSection);
+<A NAME="121"></A>                        $$displayBlock(AutoplayControlsIds.AutoplayControlsPlaySection);
+<A NAME="122"></A>                    }
+<A NAME="123"></A>                });
+<A NAME="124"></A>
+<A NAME="125"></A>        <FONT ID="Super">super</FONT>.registerForClick(
+<A NAME="126"></A>                AutoplayControlsIds.AutoplayControlsStop,
+<A NAME="127"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria</A>&gt;(criteria) {
+<A NAME="128"></A>
+<A NAME="129"></A>                });
+<A NAME="130"></A>
+<A NAME="131"></A>        <FONT ID="Super">super</FONT>.registerForClick(
+<A NAME="132"></A>                AutoplayControlsIds.AutoplayControlsTimeout,
+<A NAME="133"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria</A>&gt;(criteria) {
+<A NAME="134"></A>                    <FONT ID="FormalComment">/**
+<A NAME="135"></A>                     * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="136"></A>                     *
+<A NAME="137"></A>                     * @param evt fired from client
+<A NAME="138"></A>                     */</FONT>
+<A NAME="139"></A>                    @Override
+<A NAME="140"></A>                    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(<A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt) {
+<A NAME="141"></A>
+<A NAME="142"></A>                        <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria.AUTOPLAY_STATE</A> autplayState = (<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/autoplay/AutoplayControlsCriteria.java.html">AutoplayControlsCriteria.AUTOPLAY_STATE</A>) criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.AUTOPLAY_STATE, <FONT ID="Null">null</FONT>);
+<A NAME="143"></A>                        autplayState = (autplayState != <FONT ID="Null">null</FONT> ? autplayState :
+<A NAME="144"></A>                                PLAYING);
+<A NAME="145"></A>
+<A NAME="146"></A>                        <FONT ID="Switch">switch</FONT> (autplayState) {
+<A NAME="147"></A>                            <FONT ID="Case">case</FONT> PLAYING: {
+<A NAME="148"></A>
+<A NAME="149"></A>                                <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; updatedWalls = DB.getHumanCRUDHumansUnseenLocal(<FONT ID="False">false</FONT>).readEntries(criteria.getHumanId().getHumanId());
+<A NAME="150"></A>
+<A NAME="151"></A>                                <FONT ID="If">if</FONT> (!updatedWalls.isEmpty()) {
+<A NAME="152"></A>                                    <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> hopefullyLastWall = updatedWalls.get(updatedWalls.size() - <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="153"></A>
+<A NAME="154"></A>                                    <FONT ID="If">if</FONT> (hopefullyLastWall.getWallType() == <FONT ID="Null">null</FONT>) {
+<A NAME="155"></A>                                        hopefullyLastWall.setWallType(Wall.wallTypePrivateEvent);
+<A NAME="156"></A>                                    }
+<A NAME="157"></A>
+<A NAME="158"></A>                                    Loggers.debug(<FONT ID="StringLiteral">""</FONT> + hopefullyLastWall.getWallType());
+<A NAME="159"></A>                                    <FONT ID="Switch">switch</FONT> (hopefullyLastWall.getWallType()) {
+<A NAME="160"></A>                                        <FONT ID="Case">case</FONT> Wall.wallTypeHuman: {
+<A NAME="161"></A>                                            <FONT ID="Final">final</FONT> String otherHumansId = hopefullyLastWall.metadataValueFor(Wall.WallMetadataKey.HUMAN);
+<A NAME="162"></A>                                            <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> humansIdentity = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(otherHumansId, <FONT ID="StringLiteral">""</FONT>);
+<A NAME="163"></A>
+<A NAME="164"></A>                                            $$sendJS(JSCodeToSend.redirectPageWithURL(
+<A NAME="165"></A>                                                    ProfileRedirect.PROFILE_URL + humansIdentity.getUrl().getUrl()
+<A NAME="166"></A>                                            ));
+<A NAME="167"></A>
+<A NAME="168"></A>                                            <FONT ID="Break">break</FONT>;
+<A NAME="169"></A>                                        }
+<A NAME="170"></A>                                        <FONT ID="Case">case</FONT> Wall.wallTypeTribe: {
+<A NAME="171"></A>                                            <FONT ID="Final">final</FONT> String tribeIdAsString = hopefullyLastWall.metadataValueFor(Wall.WallMetadataKey.TRIBE);
+<A NAME="172"></A>                                            <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> tribeId = Long.parseLong(tribeIdAsString);
+<A NAME="173"></A>
+<A NAME="174"></A>                                            <FONT ID="Final">final</FONT> String href = <FONT ID="New">new</FONT> Parameter(Tribes.getURL())
+<A NAME="175"></A>                                                    .append(DocTribesMode, DocTribesModeView, <FONT ID="True">true</FONT>)
+<A NAME="176"></A>                                                    .append(DocTribesWhich, tribeId)
+<A NAME="177"></A>                                                    .get();
+<A NAME="178"></A>
+<A NAME="179"></A>                                            $$sendJS(JSCodeToSend.redirectPageWithURL(
+<A NAME="180"></A>                                                    href)
+<A NAME="181"></A>                                            );
+<A NAME="182"></A>
+<A NAME="183"></A>                                            <FONT ID="Break">break</FONT>;
+<A NAME="184"></A>                                        }
+<A NAME="185"></A>                                        <FONT ID="Default">default</FONT>: {<FONT ID="SingleLineComment">//Private Event is default. Humans set metadata
+<A NAME="186"></A></FONT>                                            <FONT ID="Final">final</FONT> String privateEventString = hopefullyLastWall.metadataValueFor(Wall.WallMetadataKey.PRIVATE_EVENT);
+<A NAME="187"></A>                                            <FONT ID="Final">final</FONT> String privatePhotoString = hopefullyLastWall.metadataValueFor(Wall.WallMetadataKey.PRIVATE_PHOTO);
+<A NAME="188"></A>                                            Loggers.debug(<FONT ID="StringLiteral">""</FONT> + privateEventString);
+<A NAME="189"></A>                                            Loggers.debug(<FONT ID="StringLiteral">""</FONT> + privatePhotoString);
+<A NAME="190"></A>
+<A NAME="191"></A>
+<A NAME="192"></A>                                            <FONT ID="If">if</FONT> (privateEventString != <FONT ID="Null">null</FONT>) {
+<A NAME="193"></A>                                                <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> privateEvent = ai.ilikeplaces.logic.Listeners.widgets.privateevent
+<A NAME="194"></A>                                                        .PrivateEventViewSidebar.PRIVATE_EVENT_BASIC_INFO_CACHE.get(Long.parseLong(privateEventString), criteria.getHumanId());
+<A NAME="195"></A>
+<A NAME="196"></A>
+<A NAME="197"></A>                                                <FONT ID="Final">final</FONT> String href = <FONT ID="New">new</FONT> Parameter(Organize.getURL())
+<A NAME="198"></A>                                                        .append(DocOrganizeCategory, DocOrganizeModeEvent, <FONT ID="True">true</FONT>)
+<A NAME="199"></A>                                                        .append(DocOrganizeLocation, privateEvent.getPrivateLocation().getPrivateLocationId())
+<A NAME="200"></A>                                                        .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+<A NAME="201"></A>                                                        .get();
+<A NAME="202"></A>
+<A NAME="203"></A>                                                $$sendJS(JSCodeToSend.redirectPageWithURL(href));
+<A NAME="204"></A>
+<A NAME="205"></A>                                            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (privatePhotoString != <FONT ID="Null">null</FONT>) {
+<A NAME="206"></A>                                                <FONT ID="Final">final</FONT> Integer userLocationType = (Integer) criteria.getHumanUserLocal().storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_TYPE, <FONT ID="Null">null</FONT>);
+<A NAME="207"></A>
+<A NAME="208"></A>                                                Loggers.debug(<FONT ID="StringLiteral">""</FONT> + userLocationType);
+<A NAME="209"></A>                                                <FONT ID="Switch">switch</FONT> (userLocationType) {
+<A NAME="210"></A>                                                    <FONT ID="Case">case</FONT> Wall.wallTypePrivateEvent: {
+<A NAME="211"></A>
+<A NAME="212"></A>                                                        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privatePhotoLong = Long.parseLong(privatePhotoString);
+<A NAME="213"></A>                                                        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>&gt; privatePhotos = (List&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>&gt;) $$getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, <FONT ID="Null">null</FONT>);
+<A NAME="214"></A>
+<A NAME="215"></A>                                                        <FONT ID="If">if</FONT> (privatePhotos != <FONT ID="Null">null</FONT> &amp;&amp; privatePhotos.contains(privatePhotoLong)) {
+<A NAME="216"></A>                                                            <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> vLongPrivatePhoto = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>().setObjAsValid(privatePhotoLong);
+<A NAME="217"></A>                                                            <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> privatePhoto = DB.getHumanCRUDPrivatePhotoLocal(<FONT ID="False">false</FONT>)
+<A NAME="218"></A>                                                                    .rPrivatePhoto(criteria.getHumanId(), vLongPrivatePhoto,
+<A NAME="219"></A>                                                                            <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>()
+<A NAME="220"></A>                                                                    ).returnValueBadly();
+<A NAME="221"></A>
+<A NAME="222"></A>                                                            DB.getHumanCRUDHumansUnseenLocal(<FONT ID="False">false</FONT>).removeEntry(criteria.getHumanId().getHumanId(), hopefullyLastWall.getWallId());
+<A NAME="223"></A>
+<A NAME="224"></A>                                                            $$sendJS(JSCodeToSend.resetHashWith(
+<A NAME="225"></A>                                                                    privatePhoto.getPrivatePhotoURLPath()
+<A NAME="226"></A>                                                            ));
+<A NAME="227"></A>                                                        }
+<A NAME="228"></A>
+<A NAME="229"></A>                                                        <FONT ID="Break">break</FONT>;
+<A NAME="230"></A>                                                    }
+<A NAME="231"></A>                                                    <FONT ID="Case">case</FONT> Wall.wallTypeTribe: {
+<A NAME="232"></A>
+<A NAME="233"></A>                                                        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privatePhotoLong = Long.parseLong(privatePhotoString);
+<A NAME="234"></A>                                                        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>&gt; privatePhotos = (List&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>&gt;) $$getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, <FONT ID="Null">null</FONT>);
+<A NAME="235"></A>
+<A NAME="236"></A>                                                        <FONT ID="If">if</FONT> (privatePhotos != <FONT ID="Null">null</FONT> &amp;&amp; privatePhotos.contains(privatePhotoLong)) {
+<A NAME="237"></A>                                                            <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> vLongPrivatePhoto = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>().setObjAsValid(privatePhotoLong);
+<A NAME="238"></A>                                                            <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> privatePhoto = DB.getHumanCRUDPrivatePhotoLocal(<FONT ID="False">false</FONT>)
+<A NAME="239"></A>                                                                    .rPrivatePhoto(criteria.getHumanId(), vLongPrivatePhoto,
+<A NAME="240"></A>                                                                            <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>()
+<A NAME="241"></A>                                                                    ).returnValueBadly();
+<A NAME="242"></A>
+<A NAME="243"></A>                                                            DB.getHumanCRUDHumansUnseenLocal(<FONT ID="False">false</FONT>).removeEntry(criteria.getHumanId().getHumanId(), hopefullyLastWall.getWallId());
+<A NAME="244"></A>
+<A NAME="245"></A>                                                            $$sendJS(JSCodeToSend.resetHashWith(
+<A NAME="246"></A>                                                                    privatePhoto.getPrivatePhotoURLPath()
+<A NAME="247"></A>                                                            ));
+<A NAME="248"></A>                                                        }
+<A NAME="249"></A>
+<A NAME="250"></A>                                                        <FONT ID="Break">break</FONT>;
+<A NAME="251"></A>                                                    }
+<A NAME="252"></A>                                                }
+<A NAME="253"></A>                                            } <FONT ID="Else">else</FONT> {
+<A NAME="254"></A>                                                Loggers.error(criteria.getHumanId() + HAS_AN_UPDATE_ON_WALL + hopefullyLastWall.toString() + BUT_CANNOT_ACCESS_IT_SINCE_ITS_METADATA_AND_OR_TYPE_ARE_NOT_UPDATED);
+<A NAME="255"></A>                                            }
+<A NAME="256"></A>                                        }
+<A NAME="257"></A>                                    }
+<A NAME="258"></A>                                }
+<A NAME="259"></A>
+<A NAME="260"></A>                                <FONT ID="Break">break</FONT>;
+<A NAME="261"></A>                            }
+<A NAME="262"></A>                            <FONT ID="Case">case</FONT> PAUSED: {
+<A NAME="263"></A>                                <FONT ID="Break">break</FONT>;
+<A NAME="264"></A>                            }
+<A NAME="265"></A>
+<A NAME="266"></A>
+<A NAME="267"></A>                        }
+<A NAME="268"></A>                    }
+<A NAME="269"></A>                });
+<A NAME="270"></A>    }
+<A NAME="271"></A>}
+<A NAME="272"></A></pre>
+</BODY>
+</HTML>

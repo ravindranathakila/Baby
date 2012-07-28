@@ -1,0 +1,870 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.contactimports.google.GoogleContactImporter (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">GoogleContactImporter.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.contactimports.google;
+<A NAME="2"></A>
+<A NAME="3"></A>
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ai.ilikeplaces.logic.contactimports.ImportedContact</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleName.java.html">ai.ilikeplaces.logic.validators.unit.SimpleName</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Pair.java.html">ai.ilikeplaces.util.Pair</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> com.google.gdata.client.contacts.ContactsService;
+<A NAME="9"></A><FONT ID="SingleLineComment">//import sample.contacts.ContactsExampleParameters.Actions;
+<A NAME="10"></A></FONT><FONT ID="Import">import</FONT> com.google.gdata.data.Link;
+<A NAME="11"></A><FONT ID="Import">import</FONT> com.google.gdata.data.Person;
+<A NAME="12"></A><FONT ID="Import">import</FONT> com.google.gdata.data.contacts.*;
+<A NAME="13"></A><FONT ID="Import">import</FONT> com.google.gdata.data.extensions.Email;
+<A NAME="14"></A><FONT ID="Import">import</FONT> com.google.gdata.data.extensions.ExtendedProperty;
+<A NAME="15"></A><FONT ID="Import">import</FONT> com.google.gdata.data.extensions.Im;
+<A NAME="16"></A><FONT ID="Import">import</FONT> com.google.gdata.data.extensions.Name;
+<A NAME="17"></A><FONT ID="Import">import</FONT> com.google.gdata.util.ServiceException;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.net.MalformedURLException;
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.net.URL;
+<A NAME="22"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="23"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="24"></A>
+<A NAME="25"></A><FONT ID="FormalComment">/**
+<A NAME="26"></A> * Created by IntelliJ IDEA.
+<A NAME="27"></A> * User: Ravindranath Akila
+<A NAME="28"></A> * Date: 8/17/11
+<A NAME="29"></A> * Time: 10:04 PM
+<A NAME="30"></A> */</FONT>
+<A NAME="31"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> GoogleContactImporter {
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ILIKEPLACES_COM = <FONT ID="StringLiteral">"ilikeplaces.com"</FONT>;
+<A NAME="33"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HTTPS_WWW_GOOGLE_COM_M8_FEEDS_CONTACTS = <FONT ID="StringLiteral">"https://www.google.com/m8/feeds/contacts/"</FONT>;
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RESULT_LIMIT = RBGet.getGlobalConfigKey(<FONT ID="StringLiteral">"GOOGLE_CONTACTS_RESULT_LIMIT"</FONT>);
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FULL_MAX_RESULTS_1000 = <FONT ID="StringLiteral">"/full?max-results="</FONT> + RESULT_LIMIT;
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>, List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt;&gt; fetchContacts(<FONT ID="Final">final</FONT> String emailToImportFrom, <FONT ID="Final">final</FONT> String authSubToken) {
+<A NAME="38"></A>
+<A NAME="39"></A>        <FONT ID="Final">final</FONT> ContactFeed resultFeed = getResultFeed(emailToImportFrom, authSubToken);
+<A NAME="40"></A>
+<A NAME="41"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt; importedContacts = getContracts(resultFeed);
+<A NAME="42"></A>
+<A NAME="43"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>, List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt;&gt;(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>(resultFeed.getId()), importedContacts);
+<A NAME="44"></A>
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleName.java.html">SimpleName</A>, List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt;&gt; fetchContactsWithAuthorName(<FONT ID="Final">final</FONT> String emailToImportFrom, <FONT ID="Final">final</FONT> String authSubToken) {
+<A NAME="48"></A>
+<A NAME="49"></A>        <FONT ID="Final">final</FONT> ContactFeed resultFeed = getResultFeed(emailToImportFrom, authSubToken);
+<A NAME="50"></A>
+<A NAME="51"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt; importedContacts = getContracts(resultFeed);
+<A NAME="52"></A>
+<A NAME="53"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleName.java.html">SimpleName</A>, List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt;&gt;(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleName.java.html">SimpleName</A>(resultFeed.getAuthors().get(<FONT ID="IntegerLiteral">0</FONT>).getName()), importedContacts);
+<A NAME="54"></A>
+<A NAME="55"></A>    }
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;Person, List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt;&gt; fetchContactsWithAuthor(<FONT ID="Final">final</FONT> String emailToImportFrom, <FONT ID="Final">final</FONT> String authSubToken) {
+<A NAME="57"></A>
+<A NAME="58"></A>        <FONT ID="Final">final</FONT> ContactFeed resultFeed = getResultFeed(emailToImportFrom, authSubToken);
+<A NAME="59"></A>
+<A NAME="60"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt; importedContacts = getContracts(resultFeed);
+<A NAME="61"></A>
+<A NAME="62"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;Person, List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt;&gt;(resultFeed.getAuthors().get(<FONT ID="IntegerLiteral">0</FONT>), importedContacts);
+<A NAME="63"></A>
+<A NAME="64"></A>    }
+<A NAME="65"></A>
+<A NAME="66"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> Person fetchAuthor(<FONT ID="Final">final</FONT> String emailToImportFrom, <FONT ID="Final">final</FONT> String authSubToken) {
+<A NAME="67"></A>
+<A NAME="68"></A>        <FONT ID="Final">final</FONT> ContactFeed resultFeed = getResultFeed(emailToImportFrom, authSubToken);
+<A NAME="69"></A>
+<A NAME="70"></A>        <FONT ID="Return">return</FONT> resultFeed.getAuthors().get(<FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="71"></A>
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt; getContracts(ContactFeed resultFeed) {
+<A NAME="75"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt; importedContacts = <FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>&gt;();
+<A NAME="76"></A>
+<A NAME="77"></A>        CONTACTS:
+<A NAME="78"></A>        <FONT ID="For">for</FONT> (ContactEntry entry : resultFeed.getEntries()) {
+<A NAME="79"></A>
+<A NAME="80"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> contact = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>();
+<A NAME="81"></A>
+<A NAME="82"></A>            SetEmail:
+<A NAME="83"></A>            {
+<A NAME="84"></A>                Email alternateEmail = <FONT ID="Null">null</FONT>;
+<A NAME="85"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Email email : entry.getEmailAddresses()) {
+<A NAME="86"></A>                    <FONT ID="If">if</FONT> (email.getPrimary()) {
+<A NAME="87"></A>                        contact.setEmail(email.getAddress());
+<A NAME="88"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="89"></A>                        alternateEmail = email;
+<A NAME="90"></A>                    }
+<A NAME="91"></A>                }
+<A NAME="92"></A>
+<A NAME="93"></A>                <FONT ID="If">if</FONT> (contact.getEmail() == <FONT ID="Null">null</FONT>) {
+<A NAME="94"></A>                    <FONT ID="If">if</FONT> (alternateEmail != <FONT ID="Null">null</FONT>) {
+<A NAME="95"></A>                        contact.setEmail(alternateEmail.getAddress());
+<A NAME="96"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="97"></A>                        <FONT ID="Continue">continue</FONT> CONTACTS;
+<A NAME="98"></A>                    }
+<A NAME="99"></A>                }
+<A NAME="100"></A>            }
+<A NAME="101"></A>
+<A NAME="102"></A>
+<A NAME="103"></A>            SetName:
+<A NAME="104"></A>            {
+<A NAME="105"></A>                <FONT ID="If">if</FONT> (entry.hasName()) {
+<A NAME="106"></A>                    <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleName.java.html">Name</A> name = entry.getName();
+<A NAME="107"></A>                    <FONT ID="If">if</FONT> (name.hasFullName()) { <FONT ID="SingleLineComment">//This should work based on result inspection. The bean seems to combine the data and return here.
+<A NAME="108"></A></FONT>                        String nameToDisplay = name.getFullName().getValue();
+<A NAME="109"></A>                        <FONT ID="If">if</FONT> (name.getFullName().hasYomi()) {
+<A NAME="110"></A>                            nameToDisplay += <FONT ID="StringLiteral">""</FONT> + name.getFullName().getYomi();
+<A NAME="111"></A>                        }
+<A NAME="112"></A>                        contact.setFullName(nameToDisplay);
+<A NAME="113"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="114"></A>                        String nameToDisplay = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="115"></A>                        <FONT ID="If">if</FONT> (name.hasAdditionalName()) {
+<A NAME="116"></A>                            nameToDisplay += name.getAdditionalName().getValue() + <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="117"></A>                            <FONT ID="If">if</FONT> (name.getAdditionalName().hasYomi()) {
+<A NAME="118"></A>                                nameToDisplay += name.getAdditionalName().getYomi() + <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="119"></A>                            }
+<A NAME="120"></A>                        }
+<A NAME="121"></A>
+<A NAME="122"></A>                        <FONT ID="If">if</FONT> (name.hasFamilyName()) {
+<A NAME="123"></A>                            nameToDisplay += name.getFamilyName().getValue() + <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="124"></A>                            <FONT ID="If">if</FONT> (name.getFamilyName().hasYomi()) {
+<A NAME="125"></A>                                nameToDisplay += <FONT ID="StringLiteral">" "</FONT> + name.getFamilyName().getYomi() + <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="126"></A>                            }
+<A NAME="127"></A>                        }
+<A NAME="128"></A>                        contact.setFullName(nameToDisplay);<FONT ID="SingleLineComment">//if name="" we are screwed, but we're used to it aren't we
+<A NAME="129"></A></FONT>                    }
+<A NAME="130"></A>
+<A NAME="131"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="132"></A>                    <FONT ID="SingleLineComment">//now what!
+<A NAME="133"></A></FONT>                }
+<A NAME="134"></A>            }
+<A NAME="135"></A>
+<A NAME="136"></A>            importedContacts.add(contact);
+<A NAME="137"></A>        }
+<A NAME="138"></A>        <FONT ID="Return">return</FONT> importedContacts;
+<A NAME="139"></A>    }
+<A NAME="140"></A>
+<A NAME="141"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> ContactFeed getResultFeed(String emailToImportFrom, String authSubToken) {
+<A NAME="142"></A>        <FONT ID="Final">final</FONT> ContactsService myService = <FONT ID="New">new</FONT> ContactsService(ILIKEPLACES_COM);<FONT ID="SingleLineComment">//
+<A NAME="143"></A></FONT>        myService.setAuthSubToken(authSubToken, <FONT ID="Null">null</FONT><FONT ID="MultiLineComment">/*This sucks, so I passed null and it worked!*/</FONT>);
+<A NAME="144"></A>
+<A NAME="145"></A>
+<A NAME="146"></A>        <FONT ID="SingleLineComment">// Request the feed
+<A NAME="147"></A></FONT>        <FONT ID="Final">final</FONT> URL feedUrl;
+<A NAME="148"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="149"></A>            feedUrl = <FONT ID="New">new</FONT> URL(HTTPS_WWW_GOOGLE_COM_M8_FEEDS_CONTACTS + emailToImportFrom + FULL_MAX_RESULTS_1000);
+<A NAME="150"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> MalformedURLException e) {
+<A NAME="151"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="152"></A>        }
+<A NAME="153"></A>
+<A NAME="154"></A>        <FONT ID="Final">final</FONT> ContactFeed resultFeed;
+<A NAME="155"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="156"></A>            resultFeed = myService.getFeed(feedUrl, ContactFeed.<FONT ID="Class">class</FONT>);
+<A NAME="157"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> ServiceException e) {
+<A NAME="158"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="159"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="160"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="161"></A>        }
+<A NAME="162"></A>        <FONT ID="Return">return</FONT> resultFeed;
+<A NAME="163"></A>    }
+<A NAME="164"></A>
+<A NAME="165"></A>
+<A NAME="166"></A><FONT ID="SingleLineComment">//    private enum SystemGroup {
+<A NAME="167"></A></FONT><FONT ID="SingleLineComment">//        MY_CONTACTS("Contacts", "My Contacts"),
+<A NAME="168"></A></FONT><FONT ID="SingleLineComment">//        FRIENDS("Friends", "Friends"),
+<A NAME="169"></A></FONT><FONT ID="SingleLineComment">//        FAMILY("Family", "Family"),
+<A NAME="170"></A></FONT><FONT ID="SingleLineComment">//        COWORKERS("Coworkers", "Coworkers");
+<A NAME="171"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="172"></A></FONT><FONT ID="SingleLineComment">//        private final String systemGroupId;
+<A NAME="173"></A></FONT><FONT ID="SingleLineComment">//        private final String prettyName;
+<A NAME="174"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="175"></A></FONT><FONT ID="SingleLineComment">//        SystemGroup(String systemGroupId, String prettyName) {
+<A NAME="176"></A></FONT><FONT ID="SingleLineComment">//            this.systemGroupId = systemGroupId;
+<A NAME="177"></A></FONT><FONT ID="SingleLineComment">//            this.prettyName = prettyName;
+<A NAME="178"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="179"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="180"></A></FONT><FONT ID="SingleLineComment">//        static SystemGroup fromSystemGroupId(String id) {
+<A NAME="181"></A></FONT><FONT ID="SingleLineComment">//            for (SystemGroup group : SystemGroup.values()) {
+<A NAME="182"></A></FONT><FONT ID="SingleLineComment">//                if (id.equals(group.systemGroupId)) {
+<A NAME="183"></A></FONT><FONT ID="SingleLineComment">//                    return group;
+<A NAME="184"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="185"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="186"></A></FONT><FONT ID="SingleLineComment">//            throw new IllegalArgumentException("Unrecognized system group id: " + id);
+<A NAME="187"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="188"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="189"></A></FONT><FONT ID="SingleLineComment">//        @Override
+<A NAME="190"></A></FONT><FONT ID="SingleLineComment">//        public String toString() {
+<A NAME="191"></A></FONT><FONT ID="SingleLineComment">//            return prettyName;
+<A NAME="192"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="193"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="194"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="195"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="196"></A></FONT><FONT ID="SingleLineComment">//     * Base URL for the feed
+<A NAME="197"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="198"></A></FONT><FONT ID="SingleLineComment">//    private final URL feedUrl;
+<A NAME="199"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="200"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="201"></A></FONT><FONT ID="SingleLineComment">//     * Service used to communicate with contacts feed.
+<A NAME="202"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="203"></A></FONT><FONT ID="SingleLineComment">//    private final ContactsService service;
+<A NAME="204"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="205"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="206"></A></FONT><FONT ID="SingleLineComment">//     * Projection used for the feed
+<A NAME="207"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="208"></A></FONT><FONT ID="SingleLineComment">//    private final String projection;
+<A NAME="209"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="210"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="211"></A></FONT><FONT ID="SingleLineComment">//     * The ID of the last added contact or group.
+<A NAME="212"></A></FONT><FONT ID="SingleLineComment">//     * Used in case of script execution - you can add and remove contact just
+<A NAME="213"></A></FONT><FONT ID="SingleLineComment">//     * created.
+<A NAME="214"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="215"></A></FONT><FONT ID="SingleLineComment">//    private static String lastAddedId;
+<A NAME="216"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="217"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="218"></A></FONT><FONT ID="SingleLineComment">//     * Reference to the logger for setting verbose mode.
+<A NAME="219"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="220"></A></FONT><FONT ID="SingleLineComment">//    private static final Logger httpRequestLogger =
+<A NAME="221"></A></FONT><FONT ID="SingleLineComment">//            Logger.getLogger(HttpGDataRequest.class.getName());
+<A NAME="222"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="223"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="224"></A></FONT><FONT ID="SingleLineComment">//     * Contacts Example.
+<A NAME="225"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="226"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters command line parameters
+<A NAME="227"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="228"></A></FONT><FONT ID="SingleLineComment">//    public GoogleContactImporter(ContactsExampleParameters parameters)
+<A NAME="229"></A></FONT><FONT ID="SingleLineComment">//            throws MalformedURLException, AuthenticationException {
+<A NAME="230"></A></FONT><FONT ID="SingleLineComment">//        projection = parameters.getProjection();
+<A NAME="231"></A></FONT><FONT ID="SingleLineComment">//        String url = parameters.getBaseUrl()
+<A NAME="232"></A></FONT><FONT ID="SingleLineComment">//                + (parameters.isGroupFeed() ? "groups/" : "contacts/")
+<A NAME="233"></A></FONT><FONT ID="SingleLineComment">//                + parameters.getUserName() + "/" + projection;
+<A NAME="234"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="235"></A></FONT><FONT ID="SingleLineComment">//        feedUrl = new URL(url);
+<A NAME="236"></A></FONT><FONT ID="SingleLineComment">//        service = new ContactsService("Google-contactsExampleApp-3");
+<A NAME="237"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="238"></A></FONT><FONT ID="SingleLineComment">//        String userName = parameters.getUserName();
+<A NAME="239"></A></FONT><FONT ID="SingleLineComment">//        String password = parameters.getPassword();
+<A NAME="240"></A></FONT><FONT ID="SingleLineComment">//        if (userName == null || password == null) {
+<A NAME="241"></A></FONT><FONT ID="SingleLineComment">//            return;
+<A NAME="242"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="243"></A></FONT><FONT ID="SingleLineComment">//        service.setUserCredentials(userName, password);
+<A NAME="244"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="245"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="246"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="247"></A></FONT><FONT ID="SingleLineComment">//     * Deletes a contact or a group
+<A NAME="248"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="249"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters the parameters determining contact to delete.
+<A NAME="250"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="251"></A></FONT><FONT ID="SingleLineComment">//    private void deleteEntry(ContactsExampleParameters parameters)
+<A NAME="252"></A></FONT><FONT ID="SingleLineComment">//            throws IOException, ServiceException {
+<A NAME="253"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.isGroupFeed()) {
+<A NAME="254"></A></FONT><FONT ID="SingleLineComment">//            // get the Group then delete it
+<A NAME="255"></A></FONT><FONT ID="SingleLineComment">//            ContactGroupEntry group = getGroupInternal(parameters.getId());
+<A NAME="256"></A></FONT><FONT ID="SingleLineComment">//            if (group == null) {
+<A NAME="257"></A></FONT><FONT ID="SingleLineComment">//                System.err.println("No Group found with id: " + parameters.getId());
+<A NAME="258"></A></FONT><FONT ID="SingleLineComment">//                return;
+<A NAME="259"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="260"></A></FONT><FONT ID="SingleLineComment">//            group.delete();
+<A NAME="261"></A></FONT><FONT ID="SingleLineComment">//        } else {
+<A NAME="262"></A></FONT><FONT ID="SingleLineComment">//            // get the contact then delete them
+<A NAME="263"></A></FONT><FONT ID="SingleLineComment">//            ContactEntry contact = getContactInternal(parameters.getId());
+<A NAME="264"></A></FONT><FONT ID="SingleLineComment">//            if (contact == null) {
+<A NAME="265"></A></FONT><FONT ID="SingleLineComment">//                System.err.println("No contact found with id: " + parameters.getId());
+<A NAME="266"></A></FONT><FONT ID="SingleLineComment">//                return;
+<A NAME="267"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="268"></A></FONT><FONT ID="SingleLineComment">//            contact.delete();
+<A NAME="269"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="270"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="271"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="272"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="273"></A></FONT><FONT ID="SingleLineComment">//     * Updates a contact or a group. Presence of any property of a given kind
+<A NAME="274"></A></FONT><FONT ID="SingleLineComment">//     * (im, phone, mail, etc.) causes the existing properties of that kind to be
+<A NAME="275"></A></FONT><FONT ID="SingleLineComment">//     * replaced.
+<A NAME="276"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="277"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters parameters storing updated contact values.
+<A NAME="278"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="279"></A></FONT><FONT ID="SingleLineComment">//    public void updateEntry(ContactsExampleParameters parameters)
+<A NAME="280"></A></FONT><FONT ID="SingleLineComment">//            throws IOException, ServiceException {
+<A NAME="281"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.isGroupFeed()) {
+<A NAME="282"></A></FONT><FONT ID="SingleLineComment">//            ContactGroupEntry group = buildGroup(parameters);
+<A NAME="283"></A></FONT><FONT ID="SingleLineComment">//            // get the group then update it
+<A NAME="284"></A></FONT><FONT ID="SingleLineComment">//            ContactGroupEntry canonicalGroup = getGroupInternal(parameters.getId());
+<A NAME="285"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="286"></A></FONT><FONT ID="SingleLineComment">//            canonicalGroup.setTitle(group.getTitle());
+<A NAME="287"></A></FONT><FONT ID="SingleLineComment">//            canonicalGroup.setContent(group.getContent());
+<A NAME="288"></A></FONT><FONT ID="SingleLineComment">//            // update fields
+<A NAME="289"></A></FONT><FONT ID="SingleLineComment">//            List&lt;ExtendedProperty&gt; extendedProperties =
+<A NAME="290"></A></FONT><FONT ID="SingleLineComment">//                    canonicalGroup.getExtendedProperties();
+<A NAME="291"></A></FONT><FONT ID="SingleLineComment">//            extendedProperties.clear();
+<A NAME="292"></A></FONT><FONT ID="SingleLineComment">//            if (group.hasExtendedProperties()) {
+<A NAME="293"></A></FONT><FONT ID="SingleLineComment">//                extendedProperties.addAll(group.getExtendedProperties());
+<A NAME="294"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="295"></A></FONT><FONT ID="SingleLineComment">//            printGroup(canonicalGroup.update());
+<A NAME="296"></A></FONT><FONT ID="SingleLineComment">//        } else {
+<A NAME="297"></A></FONT><FONT ID="SingleLineComment">//            ContactEntry contact = buildContact(parameters);
+<A NAME="298"></A></FONT><FONT ID="SingleLineComment">//            // get the contact then update it
+<A NAME="299"></A></FONT><FONT ID="SingleLineComment">//            ContactEntry canonicalContact = getContactInternal(parameters.getId());
+<A NAME="300"></A></FONT><FONT ID="SingleLineComment">//            ElementHelper.updateContact(canonicalContact, contact);
+<A NAME="301"></A></FONT><FONT ID="SingleLineComment">//            printContact(canonicalContact.update());
+<A NAME="302"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="303"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="304"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="305"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="306"></A></FONT><FONT ID="SingleLineComment">//     * Gets a contact by it's id.
+<A NAME="307"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="308"></A></FONT><FONT ID="SingleLineComment">//     * @param id the id of the contact.
+<A NAME="309"></A></FONT><FONT ID="SingleLineComment">//     * @return the ContactEntry or null if not found.
+<A NAME="310"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="311"></A></FONT><FONT ID="SingleLineComment">//    private ContactEntry getContactInternal(String id)
+<A NAME="312"></A></FONT><FONT ID="SingleLineComment">//            throws IOException, ServiceException {
+<A NAME="313"></A></FONT><FONT ID="SingleLineComment">//        return service.getEntry(
+<A NAME="314"></A></FONT><FONT ID="SingleLineComment">//                new URL(id.replace("/base/", "/" + projection + "/")),
+<A NAME="315"></A></FONT><FONT ID="SingleLineComment">//                ContactEntry.class);
+<A NAME="316"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="317"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="318"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="319"></A></FONT><FONT ID="SingleLineComment">//     * Gets a Group by it's id.
+<A NAME="320"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="321"></A></FONT><FONT ID="SingleLineComment">//     * @param id the id of the group.
+<A NAME="322"></A></FONT><FONT ID="SingleLineComment">//     * @return the GroupEntry or null if not found.
+<A NAME="323"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="324"></A></FONT><FONT ID="SingleLineComment">//    private ContactGroupEntry getGroupInternal(String id)
+<A NAME="325"></A></FONT><FONT ID="SingleLineComment">//            throws IOException, ServiceException {
+<A NAME="326"></A></FONT><FONT ID="SingleLineComment">//        return service.getEntry(
+<A NAME="327"></A></FONT><FONT ID="SingleLineComment">//                new URL(id.replace("/base/", "/" + projection + "/")),
+<A NAME="328"></A></FONT><FONT ID="SingleLineComment">//                ContactGroupEntry.class);
+<A NAME="329"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="330"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="331"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="332"></A></FONT><FONT ID="SingleLineComment">//     * Print the contents of a ContactEntry to System.err.
+<A NAME="333"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="334"></A></FONT><FONT ID="SingleLineComment">//     * @param contact The ContactEntry to display.
+<A NAME="335"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="336"></A></FONT><FONT ID="SingleLineComment">//    private static void printContact(ContactEntry contact) {
+<A NAME="337"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Id: " + contact.getId());
+<A NAME="338"></A></FONT><FONT ID="SingleLineComment">//        if (contact.getTitle() != null) {
+<A NAME="339"></A></FONT><FONT ID="SingleLineComment">//            System.err.println("Contact name: " + contact.getTitle().getPlainText());
+<A NAME="340"></A></FONT><FONT ID="SingleLineComment">//        } else {
+<A NAME="341"></A></FONT><FONT ID="SingleLineComment">//            System.err.println("Contact has no name");
+<A NAME="342"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="343"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="344"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Last updated: " + contact.getUpdated().toUiString());
+<A NAME="345"></A></FONT><FONT ID="SingleLineComment">//        if (contact.hasDeleted()) {
+<A NAME="346"></A></FONT><FONT ID="SingleLineComment">//            System.err.println("Deleted:");
+<A NAME="347"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="348"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="349"></A></FONT><FONT ID="SingleLineComment">//        ElementHelper.printContact(System.err, contact);
+<A NAME="350"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="351"></A></FONT><FONT ID="SingleLineComment">//        Link photoLink = contact.getLink(
+<A NAME="352"></A></FONT><FONT ID="SingleLineComment">//                "http://schemas.google.com/contacts/2008/rel#photo", "image/*");
+<A NAME="353"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Photo link: " + photoLink.getHref());
+<A NAME="354"></A></FONT><FONT ID="SingleLineComment">//        String photoEtag = photoLink.getEtag();
+<A NAME="355"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("  Photo ETag: "
+<A NAME="356"></A></FONT><FONT ID="SingleLineComment">//                + (photoEtag != null ? photoEtag : "(No contact photo uploaded)"));
+<A NAME="357"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Self link: " + contact.getSelfLink().getHref());
+<A NAME="358"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Edit link: " + contact.getEditLink().getHref());
+<A NAME="359"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("ETag: " + contact.getEtag());
+<A NAME="360"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("-------------------------------------------\n");
+<A NAME="361"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="362"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="363"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="364"></A></FONT><FONT ID="SingleLineComment">//     * Prints the contents of a GroupEntry to System.err
+<A NAME="365"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="366"></A></FONT><FONT ID="SingleLineComment">//     * @param groupEntry The GroupEntry to display
+<A NAME="367"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="368"></A></FONT><FONT ID="SingleLineComment">//    private static void printGroup(ContactGroupEntry groupEntry) {
+<A NAME="369"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Id: " + groupEntry.getId());
+<A NAME="370"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Group Name: " + groupEntry.getTitle().getPlainText());
+<A NAME="371"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Last Updated: " + groupEntry.getUpdated());
+<A NAME="372"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Extended Properties:");
+<A NAME="373"></A></FONT><FONT ID="SingleLineComment">//        for (ExtendedProperty property : groupEntry.getExtendedProperties()) {
+<A NAME="374"></A></FONT><FONT ID="SingleLineComment">//            if (property.getValue() != null) {
+<A NAME="375"></A></FONT><FONT ID="SingleLineComment">//                System.err.println("  " + property.getName() + "(value) = " +
+<A NAME="376"></A></FONT><FONT ID="SingleLineComment">//                        property.getValue());
+<A NAME="377"></A></FONT><FONT ID="SingleLineComment">//            } else if (property.getXmlBlob() != null) {
+<A NAME="378"></A></FONT><FONT ID="SingleLineComment">//                System.err.println("  " + property.getName() + "(xmlBlob) = " +
+<A NAME="379"></A></FONT><FONT ID="SingleLineComment">//                        property.getXmlBlob().getBlob());
+<A NAME="380"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="381"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="382"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="383"></A></FONT><FONT ID="SingleLineComment">//        System.err.print("Which System Group: ");
+<A NAME="384"></A></FONT><FONT ID="SingleLineComment">//        if (groupEntry.hasSystemGroup()) {
+<A NAME="385"></A></FONT><FONT ID="SingleLineComment">//            SystemGroup systemGroup
+<A NAME="386"></A></FONT><FONT ID="SingleLineComment">//                    = SystemGroup.fromSystemGroupId(groupEntry.getSystemGroup().getId());
+<A NAME="387"></A></FONT><FONT ID="SingleLineComment">//            System.err.println(systemGroup);
+<A NAME="388"></A></FONT><FONT ID="SingleLineComment">//        } else {
+<A NAME="389"></A></FONT><FONT ID="SingleLineComment">//            System.err.println("(Not a system group)");
+<A NAME="390"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="391"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="392"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Self Link: " + groupEntry.getSelfLink().getHref());
+<A NAME="393"></A></FONT><FONT ID="SingleLineComment">//        if (!groupEntry.hasSystemGroup()) {
+<A NAME="394"></A></FONT><FONT ID="SingleLineComment">//            // System groups are not modifiable, and thus don't have an edit link.
+<A NAME="395"></A></FONT><FONT ID="SingleLineComment">//            System.err.println("Edit Link: " + groupEntry.getEditLink().getHref());
+<A NAME="396"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="397"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("-------------------------------------------\n");
+<A NAME="398"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="399"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="400"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="401"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="402"></A></FONT><FONT ID="SingleLineComment">//     * Processes script consisting of sequence of parameter lines in the same
+<A NAME="403"></A></FONT><FONT ID="SingleLineComment">//     * form as command line parameters.
+<A NAME="404"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="405"></A></FONT><FONT ID="SingleLineComment">//     * @param example    object controlling the execution
+<A NAME="406"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters parameters passed from command line
+<A NAME="407"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="408"></A></FONT><FONT ID="SingleLineComment">//    private static void processScript(GoogleContactImporter example,
+<A NAME="409"></A></FONT><FONT ID="SingleLineComment">//                                      ContactsExampleParameters parameters) throws IOException,
+<A NAME="410"></A></FONT><FONT ID="SingleLineComment">//            ServiceException {
+<A NAME="411"></A></FONT><FONT ID="SingleLineComment">//        BufferedReader reader =
+<A NAME="412"></A></FONT><FONT ID="SingleLineComment">//                new BufferedReader(new FileReader(parameters.getScript()));
+<A NAME="413"></A></FONT><FONT ID="SingleLineComment">//        try {
+<A NAME="414"></A></FONT><FONT ID="SingleLineComment">//            String line;
+<A NAME="415"></A></FONT><FONT ID="SingleLineComment">//            while ((line = reader.readLine()) != null) {
+<A NAME="416"></A></FONT><FONT ID="SingleLineComment">//                ContactsExampleParameters newParams =
+<A NAME="417"></A></FONT><FONT ID="SingleLineComment">//                        new ContactsExampleParameters(parameters, line);
+<A NAME="418"></A></FONT><FONT ID="SingleLineComment">//                processAction(example, newParams);
+<A NAME="419"></A></FONT><FONT ID="SingleLineComment">//                if (lastAddedId != null) {
+<A NAME="420"></A></FONT><FONT ID="SingleLineComment">//                    parameters.setId(lastAddedId);
+<A NAME="421"></A></FONT><FONT ID="SingleLineComment">//                    lastAddedId = null;
+<A NAME="422"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="423"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="424"></A></FONT><FONT ID="SingleLineComment">//        } finally {
+<A NAME="425"></A></FONT><FONT ID="SingleLineComment">//            if (reader != null) {
+<A NAME="426"></A></FONT><FONT ID="SingleLineComment">//                reader.close();
+<A NAME="427"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="428"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="429"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="430"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="431"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="432"></A></FONT><FONT ID="SingleLineComment">//     * Performs action specified as action parameter.
+<A NAME="433"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="434"></A></FONT><FONT ID="SingleLineComment">//     * @param example    object controlling the execution
+<A NAME="435"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters parameters from command line or script
+<A NAME="436"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="437"></A></FONT><FONT ID="SingleLineComment">//    private static void processAction(GoogleContactImporter example,
+<A NAME="438"></A></FONT><FONT ID="SingleLineComment">//                                      ContactsExampleParameters parameters) throws IOException,
+<A NAME="439"></A></FONT><FONT ID="SingleLineComment">//            ServiceException {
+<A NAME="440"></A></FONT><FONT ID="SingleLineComment">//        ContactsExampleParameters.Actions action = parameters.getAction();
+<A NAME="441"></A></FONT><FONT ID="SingleLineComment">//        System.err.println("Executing action: " + action);
+<A NAME="442"></A></FONT><FONT ID="SingleLineComment">//        switch (action) {
+<A NAME="443"></A></FONT><FONT ID="SingleLineComment">//            case LIST:
+<A NAME="444"></A></FONT><FONT ID="SingleLineComment">//                example.listEntries(parameters);
+<A NAME="445"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="446"></A></FONT><FONT ID="SingleLineComment">//            case QUERY:
+<A NAME="447"></A></FONT><FONT ID="SingleLineComment">//                example.queryEntries(parameters);
+<A NAME="448"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="449"></A></FONT><FONT ID="SingleLineComment">//            case ADD:
+<A NAME="450"></A></FONT><FONT ID="SingleLineComment">//                example.addEntry(parameters);
+<A NAME="451"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="452"></A></FONT><FONT ID="SingleLineComment">//            case DELETE:
+<A NAME="453"></A></FONT><FONT ID="SingleLineComment">//                example.deleteEntry(parameters);
+<A NAME="454"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="455"></A></FONT><FONT ID="SingleLineComment">//            case UPDATE:
+<A NAME="456"></A></FONT><FONT ID="SingleLineComment">//                example.updateEntry(parameters);
+<A NAME="457"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="458"></A></FONT><FONT ID="SingleLineComment">//            default:
+<A NAME="459"></A></FONT><FONT ID="SingleLineComment">//                System.err.println("No such action");
+<A NAME="460"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="461"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="462"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="463"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="464"></A></FONT><FONT ID="SingleLineComment">//     * Query entries (Contacts/Groups) according to parameters specified.
+<A NAME="465"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="466"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters parameter for contact quest
+<A NAME="467"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="468"></A></FONT><FONT ID="SingleLineComment">//    private void queryEntries(ContactsExampleParameters parameters)
+<A NAME="469"></A></FONT><FONT ID="SingleLineComment">//            throws IOException, ServiceException {
+<A NAME="470"></A></FONT><FONT ID="SingleLineComment">//        Query myQuery = new Query(feedUrl);
+<A NAME="471"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.getUpdatedMin() != null) {
+<A NAME="472"></A></FONT><FONT ID="SingleLineComment">//            DateTime startTime = DateTime.parseDateTime(parameters.getUpdatedMin());
+<A NAME="473"></A></FONT><FONT ID="SingleLineComment">//            myQuery.setUpdatedMin(startTime);
+<A NAME="474"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="475"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.getMaxResults() != null) {
+<A NAME="476"></A></FONT><FONT ID="SingleLineComment">//            myQuery.setMaxResults(parameters.getMaxResults().intValue());
+<A NAME="477"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="478"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.getStartIndex() != null) {
+<A NAME="479"></A></FONT><FONT ID="SingleLineComment">//            myQuery.setStartIndex(parameters.getStartIndex());
+<A NAME="480"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="481"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.isShowDeleted()) {
+<A NAME="482"></A></FONT><FONT ID="SingleLineComment">//            myQuery.setStringCustomParameter("showdeleted", "true");
+<A NAME="483"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="484"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.getRequireAllDeleted() != null) {
+<A NAME="485"></A></FONT><FONT ID="SingleLineComment">//            myQuery.setStringCustomParameter("requirealldeleted",
+<A NAME="486"></A></FONT><FONT ID="SingleLineComment">//                    parameters.getRequireAllDeleted());
+<A NAME="487"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="488"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.getSortorder() != null) {
+<A NAME="489"></A></FONT><FONT ID="SingleLineComment">//            myQuery.setStringCustomParameter("sortorder", parameters.getSortorder());
+<A NAME="490"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="491"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.getOrderBy() != null) {
+<A NAME="492"></A></FONT><FONT ID="SingleLineComment">//            myQuery.setStringCustomParameter("orderby", parameters.getOrderBy());
+<A NAME="493"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="494"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.getGroup() != null) {
+<A NAME="495"></A></FONT><FONT ID="SingleLineComment">//            myQuery.setStringCustomParameter("group", parameters.getGroup());
+<A NAME="496"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="497"></A></FONT><FONT ID="SingleLineComment">//        try {
+<A NAME="498"></A></FONT><FONT ID="SingleLineComment">//            if (parameters.isGroupFeed()) {
+<A NAME="499"></A></FONT><FONT ID="SingleLineComment">//                ContactGroupFeed groupFeed = service.query(
+<A NAME="500"></A></FONT><FONT ID="SingleLineComment">//                        myQuery, ContactGroupFeed.class);
+<A NAME="501"></A></FONT><FONT ID="SingleLineComment">//                for (ContactGroupEntry entry : groupFeed.getEntries()) {
+<A NAME="502"></A></FONT><FONT ID="SingleLineComment">//                    printGroup(entry);
+<A NAME="503"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="504"></A></FONT><FONT ID="SingleLineComment">//                System.err.println("Total: " + groupFeed.getEntries().size()
+<A NAME="505"></A></FONT><FONT ID="SingleLineComment">//                        + " entries found");
+<A NAME="506"></A></FONT><FONT ID="SingleLineComment">//            } else {
+<A NAME="507"></A></FONT><FONT ID="SingleLineComment">//                ContactFeed resultFeed = service.query(myQuery, ContactFeed.class);
+<A NAME="508"></A></FONT><FONT ID="SingleLineComment">//                for (ContactEntry entry : resultFeed.getEntries()) {
+<A NAME="509"></A></FONT><FONT ID="SingleLineComment">//                    printContact(entry);
+<A NAME="510"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="511"></A></FONT><FONT ID="SingleLineComment">//                System.err.println("Total: " + resultFeed.getEntries().size()
+<A NAME="512"></A></FONT><FONT ID="SingleLineComment">//                        + " entries found");
+<A NAME="513"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="514"></A></FONT><FONT ID="SingleLineComment">//        } catch (NoLongerAvailableException ex) {
+<A NAME="515"></A></FONT><FONT ID="SingleLineComment">//            System.err.println(
+<A NAME="516"></A></FONT><FONT ID="SingleLineComment">//                    "Not all placehorders of deleted entries are available");
+<A NAME="517"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="518"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="519"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="520"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="521"></A></FONT><FONT ID="SingleLineComment">//     * List Contacts or Group entries (no parameter are taken into account)
+<A NAME="522"></A></FONT><FONT ID="SingleLineComment">//     * Note! only 25 results will be returned - this is default.
+<A NAME="523"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="524"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters
+<A NAME="525"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="526"></A></FONT><FONT ID="SingleLineComment">//    private void listEntries(ContactsExampleParameters parameters)
+<A NAME="527"></A></FONT><FONT ID="SingleLineComment">//            throws IOException, ServiceException {
+<A NAME="528"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.isGroupFeed()) {
+<A NAME="529"></A></FONT><FONT ID="SingleLineComment">//            ContactGroupFeed groupFeed =
+<A NAME="530"></A></FONT><FONT ID="SingleLineComment">//                    service.getFeed(feedUrl, ContactGroupFeed.class);
+<A NAME="531"></A></FONT><FONT ID="SingleLineComment">//            System.err.println(groupFeed.getTitle().getPlainText());
+<A NAME="532"></A></FONT><FONT ID="SingleLineComment">//            for (ContactGroupEntry entry : groupFeed.getEntries()) {
+<A NAME="533"></A></FONT><FONT ID="SingleLineComment">//                printGroup(entry);
+<A NAME="534"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="535"></A></FONT><FONT ID="SingleLineComment">//            System.err.println("Total: " + groupFeed.getEntries().size() +
+<A NAME="536"></A></FONT><FONT ID="SingleLineComment">//                    " groups found");
+<A NAME="537"></A></FONT><FONT ID="SingleLineComment">//        } else {
+<A NAME="538"></A></FONT><FONT ID="SingleLineComment">//            ContactFeed resultFeed = service.getFeed(feedUrl, ContactFeed.class);
+<A NAME="539"></A></FONT><FONT ID="SingleLineComment">//            // Print the results
+<A NAME="540"></A></FONT><FONT ID="SingleLineComment">//            System.err.println(resultFeed.getTitle().getPlainText());
+<A NAME="541"></A></FONT><FONT ID="SingleLineComment">//            for (ContactEntry entry : resultFeed.getEntries()) {
+<A NAME="542"></A></FONT><FONT ID="SingleLineComment">//                printContact(entry);
+<A NAME="543"></A></FONT><FONT ID="SingleLineComment">//                // Since 2.0, the photo link is always there, the presence of an actual
+<A NAME="544"></A></FONT><FONT ID="SingleLineComment">//                // photo is indicated by the presence of an ETag.
+<A NAME="545"></A></FONT><FONT ID="SingleLineComment">//                Link photoLink = entry.getLink(
+<A NAME="546"></A></FONT><FONT ID="SingleLineComment">//                        "http://schemas.google.com/contacts/2008/rel#photo", "image/*");
+<A NAME="547"></A></FONT><FONT ID="SingleLineComment">//                if (photoLink.getEtag() != null) {
+<A NAME="548"></A></FONT><FONT ID="SingleLineComment">//                    Service.GDataRequest request =
+<A NAME="549"></A></FONT><FONT ID="SingleLineComment">//                            service.createLinkQueryRequest(photoLink);
+<A NAME="550"></A></FONT><FONT ID="SingleLineComment">//                    request.execute();
+<A NAME="551"></A></FONT><FONT ID="SingleLineComment">//                    InputStream in = request.getResponseStream();
+<A NAME="552"></A></FONT><FONT ID="SingleLineComment">//                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+<A NAME="553"></A></FONT><FONT ID="SingleLineComment">//                    RandomAccessFile file = new RandomAccessFile(
+<A NAME="554"></A></FONT><FONT ID="SingleLineComment">//                            "/tmp/" + entry.getSelfLink().getHref().substring(
+<A NAME="555"></A></FONT><FONT ID="SingleLineComment">//                                    entry.getSelfLink().getHref().lastIndexOf('/') + 1), "rw");
+<A NAME="556"></A></FONT><FONT ID="SingleLineComment">//                    byte[] buffer = new byte[4096];
+<A NAME="557"></A></FONT><FONT ID="SingleLineComment">//                    for (int read = 0; (read = in.read(buffer)) != -1;
+<A NAME="558"></A></FONT><FONT ID="SingleLineComment">//                         out.write(buffer, 0, read)) {
+<A NAME="559"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="560"></A></FONT><FONT ID="SingleLineComment">//                    file.write(out.toByteArray());
+<A NAME="561"></A></FONT><FONT ID="SingleLineComment">//                    file.close();
+<A NAME="562"></A></FONT><FONT ID="SingleLineComment">//                    in.close();
+<A NAME="563"></A></FONT><FONT ID="SingleLineComment">//                    request.end();
+<A NAME="564"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="565"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="566"></A></FONT><FONT ID="SingleLineComment">//            System.err.println("Total: " + resultFeed.getEntries().size()
+<A NAME="567"></A></FONT><FONT ID="SingleLineComment">//                    + " entries found");
+<A NAME="568"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="569"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="570"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="571"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="572"></A></FONT><FONT ID="SingleLineComment">//     * Adds contact or group entry according to the parameters specified.
+<A NAME="573"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="574"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters parameters for contact adding
+<A NAME="575"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="576"></A></FONT><FONT ID="SingleLineComment">//    private void addEntry(ContactsExampleParameters parameters)
+<A NAME="577"></A></FONT><FONT ID="SingleLineComment">//            throws IOException, ServiceException {
+<A NAME="578"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.isGroupFeed()) {
+<A NAME="579"></A></FONT><FONT ID="SingleLineComment">//            ContactGroupEntry addedGroup =
+<A NAME="580"></A></FONT><FONT ID="SingleLineComment">//                    service.insert(feedUrl, buildGroup(parameters));
+<A NAME="581"></A></FONT><FONT ID="SingleLineComment">//            printGroup(addedGroup);
+<A NAME="582"></A></FONT><FONT ID="SingleLineComment">//            lastAddedId = addedGroup.getId();
+<A NAME="583"></A></FONT><FONT ID="SingleLineComment">//        } else {
+<A NAME="584"></A></FONT><FONT ID="SingleLineComment">//            ContactEntry addedContact =
+<A NAME="585"></A></FONT><FONT ID="SingleLineComment">//                    service.insert(feedUrl, buildContact(parameters));
+<A NAME="586"></A></FONT><FONT ID="SingleLineComment">//            printContact(addedContact);
+<A NAME="587"></A></FONT><FONT ID="SingleLineComment">//            // Store id of the added contact so that scripts can use it in next steps
+<A NAME="588"></A></FONT><FONT ID="SingleLineComment">//            lastAddedId = addedContact.getId();
+<A NAME="589"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="590"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="591"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="592"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="593"></A></FONT><FONT ID="SingleLineComment">//     * Build ContactEntry from parameters.
+<A NAME="594"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="595"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters parameters
+<A NAME="596"></A></FONT><FONT ID="SingleLineComment">//     * @return A contact.
+<A NAME="597"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="598"></A></FONT><FONT ID="SingleLineComment">//    private static ContactEntry buildContact(
+<A NAME="599"></A></FONT><FONT ID="SingleLineComment">//            ContactsExampleParameters parameters) {
+<A NAME="600"></A></FONT><FONT ID="SingleLineComment">//        ContactEntry contact = new ContactEntry();
+<A NAME="601"></A></FONT><FONT ID="SingleLineComment">//        ElementHelper.buildContact(contact, parameters.getElementDesc());
+<A NAME="602"></A></FONT><FONT ID="SingleLineComment">//        return contact;
+<A NAME="603"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="604"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="605"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="606"></A></FONT><FONT ID="SingleLineComment">//     * Builds GroupEntry from parameters
+<A NAME="607"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="608"></A></FONT><FONT ID="SingleLineComment">//     * @param parameters ContactExamplParameters
+<A NAME="609"></A></FONT><FONT ID="SingleLineComment">//     * @return GroupEntry Object
+<A NAME="610"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="611"></A></FONT><FONT ID="SingleLineComment">//    private static ContactGroupEntry buildGroup(
+<A NAME="612"></A></FONT><FONT ID="SingleLineComment">//            ContactsExampleParameters parameters) {
+<A NAME="613"></A></FONT><FONT ID="SingleLineComment">//        ContactGroupEntry groupEntry = new ContactGroupEntry();
+<A NAME="614"></A></FONT><FONT ID="SingleLineComment">//        ElementHelper.buildGroup(groupEntry, parameters.getElementDesc());
+<A NAME="615"></A></FONT><FONT ID="SingleLineComment">//        return groupEntry;
+<A NAME="616"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="617"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="618"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="619"></A></FONT><FONT ID="SingleLineComment">//     * Displays usage information.
+<A NAME="620"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="621"></A></FONT><FONT ID="SingleLineComment">//    private static void displayUsage() {
+<A NAME="622"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="623"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="624"></A></FONT><FONT ID="SingleLineComment">//        String usageInstructions =
+<A NAME="625"></A></FONT><FONT ID="SingleLineComment">//                "USAGE:\n"
+<A NAME="626"></A></FONT><FONT ID="SingleLineComment">//                        + " -----------------------------------------------------------\n"
+<A NAME="627"></A></FONT><FONT ID="SingleLineComment">//                        + "  Basic command line usage:\n"
+<A NAME="628"></A></FONT><FONT ID="SingleLineComment">//                        + "    GoogleContactImporter [&lt;options&gt;] &lt;authenticationInformation&gt; "
+<A NAME="629"></A></FONT><FONT ID="SingleLineComment">//                        + "&lt;--contactfeed|--groupfeed&gt; "
+<A NAME="630"></A></FONT><FONT ID="SingleLineComment">//                        + "--action=&lt;action&gt; [&lt;action options&gt;]  "
+<A NAME="631"></A></FONT><FONT ID="SingleLineComment">//                        + "(default contactfeed)\n"
+<A NAME="632"></A></FONT><FONT ID="SingleLineComment">//                        + "  Scripting commands usage:\n"
+<A NAME="633"></A></FONT><FONT ID="SingleLineComment">//                        + "    GoogleContactImporter [&lt;options&gt;] &lt;authenticationInformation&gt; "
+<A NAME="634"></A></FONT><FONT ID="SingleLineComment">//                        + "&lt;--contactfeed|--groupfeed&gt;   --script=&lt;script file&gt;  "
+<A NAME="635"></A></FONT><FONT ID="SingleLineComment">//                        + "(default contactFeed) \n"
+<A NAME="636"></A></FONT><FONT ID="SingleLineComment">//                        + "  Print usage (this screen):\n"
+<A NAME="637"></A></FONT><FONT ID="SingleLineComment">//                        + "   --help\n"
+<A NAME="638"></A></FONT><FONT ID="SingleLineComment">//                        + " -----------------------------------------------------------\n\n"
+<A NAME="639"></A></FONT><FONT ID="SingleLineComment">//                        + "  Options: \n"
+<A NAME="640"></A></FONT><FONT ID="SingleLineComment">//                        + "    --base-url=&lt;url to connect to&gt; "
+<A NAME="641"></A></FONT><FONT ID="SingleLineComment">//                        + "(default http://www.google.com/m8/feeds/) \n"
+<A NAME="642"></A></FONT><FONT ID="SingleLineComment">//                        + "    --projection=[thin|full|property-KEY] "
+<A NAME="643"></A></FONT><FONT ID="SingleLineComment">//                        + "(default thin)\n"
+<A NAME="644"></A></FONT><FONT ID="SingleLineComment">//                        + "    --verbose : dumps communication information\n"
+<A NAME="645"></A></FONT><FONT ID="SingleLineComment">//                        + "  Authentication Information (obligatory on command line): \n"
+<A NAME="646"></A></FONT><FONT ID="SingleLineComment">//                        + "    --username=&lt;username email&gt; --password=&lt;password&gt;\n"
+<A NAME="647"></A></FONT><FONT ID="SingleLineComment">//                        + "  Actions: \n"
+<A NAME="648"></A></FONT><FONT ID="SingleLineComment">//                        + "     * list  list all contacts\n"
+<A NAME="649"></A></FONT><FONT ID="SingleLineComment">//                        + "     * query  query contacts\n"
+<A NAME="650"></A></FONT><FONT ID="SingleLineComment">//                        + "        options:\n"
+<A NAME="651"></A></FONT><FONT ID="SingleLineComment">//                        + "             --showdeleted : shows also deleted contacts\n"
+<A NAME="652"></A></FONT><FONT ID="SingleLineComment">//                        + "             --updated-min=YYYY-MM-DDTHH:MM:SS : only updated "
+<A NAME="653"></A></FONT><FONT ID="SingleLineComment">//                        + "after the time specified\n"
+<A NAME="654"></A></FONT><FONT ID="SingleLineComment">//                        + "             --requre-all-deleted=[true|false] : specifies "
+<A NAME="655"></A></FONT><FONT ID="SingleLineComment">//                        + "server behaviour in case of placeholders for deleted entries are"
+<A NAME="656"></A></FONT><FONT ID="SingleLineComment">//                        + "lost. Relevant only if --showdeleted and --updated-min also "
+<A NAME="657"></A></FONT><FONT ID="SingleLineComment">//                        + "provided.\n"
+<A NAME="658"></A></FONT><FONT ID="SingleLineComment">//                        + "             --orderby=lastmodified : order by last modified\n"
+<A NAME="659"></A></FONT><FONT ID="SingleLineComment">//                        + "             --sortorder=[ascending|descending] : sort order\n"
+<A NAME="660"></A></FONT><FONT ID="SingleLineComment">//                        + "             --max-results=&lt;n&gt; : return maximum n results\n"
+<A NAME="661"></A></FONT><FONT ID="SingleLineComment">//                        + "             --start-index=&lt;n&gt; : return results starting from "
+<A NAME="662"></A></FONT><FONT ID="SingleLineComment">//                        + "the starting index\n"
+<A NAME="663"></A></FONT><FONT ID="SingleLineComment">//                        + "             --querygroupid=&lt;groupid&gt; : return results from the "
+<A NAME="664"></A></FONT><FONT ID="SingleLineComment">//                        + "group\n"
+<A NAME="665"></A></FONT><FONT ID="SingleLineComment">//                        + "    * add  add new contact\n"
+<A NAME="666"></A></FONT><FONT ID="SingleLineComment">//                        + "        options:\n"
+<A NAME="667"></A></FONT><FONT ID="SingleLineComment">//                        + ElementHelper.getUsageString()
+<A NAME="668"></A></FONT><FONT ID="SingleLineComment">//                        + "    * delete  delete contact\n"
+<A NAME="669"></A></FONT><FONT ID="SingleLineComment">//                        + "        options:\n"
+<A NAME="670"></A></FONT><FONT ID="SingleLineComment">//                        + "             --id=&lt;contact id&gt;\n"
+<A NAME="671"></A></FONT><FONT ID="SingleLineComment">//                        + "    * update  updates contact\n"
+<A NAME="672"></A></FONT><FONT ID="SingleLineComment">//                        + "        options:\n"
+<A NAME="673"></A></FONT><FONT ID="SingleLineComment">//                        + "             --id=&lt;contact id&gt;\n"
+<A NAME="674"></A></FONT><FONT ID="SingleLineComment">//                        + ElementHelper.getUsageString();
+<A NAME="675"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="676"></A></FONT><FONT ID="SingleLineComment">//        System.err.println(usageInstructions);
+<A NAME="677"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="678"></A></FONT>
+<A NAME="679"></A>    <FONT ID="FormalComment">/**
+<A NAME="680"></A>     * Run the example program.
+<A NAME="681"></A>     *
+<A NAME="682"></A>     * @param args Command-line arguments.
+<A NAME="683"></A>     */</FONT>
+<A NAME="684"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(String[] args) <FONT ID="Throws">throws</FONT> ServiceException, IOException {
+<A NAME="685"></A>        printAllContacts();
+<A NAME="686"></A><FONT ID="SingleLineComment">//
+<A NAME="687"></A></FONT><FONT ID="SingleLineComment">//        ContactsExampleParameters parameters = new ContactsExampleParameters(args);
+<A NAME="688"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.isVerbose()) {
+<A NAME="689"></A></FONT><FONT ID="SingleLineComment">//            httpRequestLogger.setLevel(Level.FINEST);
+<A NAME="690"></A></FONT><FONT ID="SingleLineComment">//            ConsoleHandler handler = new ConsoleHandler();
+<A NAME="691"></A></FONT><FONT ID="SingleLineComment">//            handler.setLevel(Level.FINEST);
+<A NAME="692"></A></FONT><FONT ID="SingleLineComment">//            httpRequestLogger.addHandler(handler);
+<A NAME="693"></A></FONT><FONT ID="SingleLineComment">//            httpRequestLogger.setUseParentHandlers(false);
+<A NAME="694"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="695"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="696"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.numberOfParameters() == 0 || parameters.isHelp()
+<A NAME="697"></A></FONT><FONT ID="SingleLineComment">//                || (parameters.getAction() == null &amp;&amp; parameters.getScript() == null)) {
+<A NAME="698"></A></FONT><FONT ID="SingleLineComment">//            displayUsage();
+<A NAME="699"></A></FONT><FONT ID="SingleLineComment">//            return;
+<A NAME="700"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="701"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="702"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.getUserName() == null || parameters.getPassword() == null) {
+<A NAME="703"></A></FONT><FONT ID="SingleLineComment">//            System.err.println("Both username and password must be specified.");
+<A NAME="704"></A></FONT><FONT ID="SingleLineComment">//            return;
+<A NAME="705"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="706"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="707"></A></FONT><FONT ID="SingleLineComment">//        // Check that at most one of contactfeed and groupfeed has been provided
+<A NAME="708"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.isContactFeed() &amp;&amp; parameters.isGroupFeed()) {
+<A NAME="709"></A></FONT><FONT ID="SingleLineComment">//            throw new RuntimeException("Only one of contactfeed / groupfeed should" +
+<A NAME="710"></A></FONT><FONT ID="SingleLineComment">//                    "be specified");
+<A NAME="711"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="712"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="713"></A></FONT><FONT ID="SingleLineComment">//        GoogleContactImporter example = new GoogleContactImporter(parameters);
+<A NAME="714"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="715"></A></FONT><FONT ID="SingleLineComment">//        if (parameters.getScript() != null) {
+<A NAME="716"></A></FONT><FONT ID="SingleLineComment">//            processScript(example, parameters);
+<A NAME="717"></A></FONT><FONT ID="SingleLineComment">//        } else {
+<A NAME="718"></A></FONT><FONT ID="SingleLineComment">//            processAction(example, parameters);
+<A NAME="719"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="720"></A></FONT><FONT ID="SingleLineComment">//        System.out.flush();
+<A NAME="721"></A></FONT>    }
+<A NAME="722"></A>
+<A NAME="723"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> printAllContacts()
+<A NAME="724"></A>            <FONT ID="Throws">throws</FONT> ServiceException, IOException {
+<A NAME="725"></A>
+<A NAME="726"></A>        <FONT ID="Final">final</FONT> ContactsService myService = <FONT ID="New">new</FONT> ContactsService(<FONT ID="StringLiteral">"Google-contactsExampleApp-3"</FONT>);
+<A NAME="727"></A>        myService.setAuthSubToken(<FONT ID="StringLiteral">"ya29.AHES6ZSK3ElkyTBcjd63yZDlXCrtukLXoj_jbIk3cP-7u1pypLr2aQ"</FONT>, <FONT ID="Null">null</FONT>);
+<A NAME="728"></A>
+<A NAME="729"></A>        <FONT ID="SingleLineComment">// Request the feed
+<A NAME="730"></A></FONT>        URL feedUrl = <FONT ID="New">new</FONT> URL(<FONT ID="StringLiteral">"https://www.google.com/m8/feeds/contacts/ravindranathakila@gmail.com/full"</FONT>);
+<A NAME="731"></A>        ContactFeed resultFeed = myService.getFeed(feedUrl, ContactFeed.<FONT ID="Class">class</FONT>);
+<A NAME="732"></A>
+<A NAME="733"></A>        <FONT ID="SingleLineComment">// Print the results
+<A NAME="734"></A></FONT>        System.out.println(resultFeed.getTitle().getPlainText());
+<A NAME="735"></A>        <FONT ID="For">for</FONT> (ContactEntry entry : resultFeed.getEntries()) {
+<A NAME="736"></A>            <FONT ID="If">if</FONT> (entry.hasName()) {
+<A NAME="737"></A>                <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleName.java.html">Name</A> name = entry.getName();
+<A NAME="738"></A>                <FONT ID="If">if</FONT> (name.hasFullName()) {
+<A NAME="739"></A>                    String fullNameToDisplay = name.getFullName().getValue();
+<A NAME="740"></A>                    <FONT ID="If">if</FONT> (name.getFullName().hasYomi()) {
+<A NAME="741"></A>                        fullNameToDisplay += <FONT ID="StringLiteral">" ("</FONT> + name.getFullName().getYomi() + <FONT ID="StringLiteral">")"</FONT>;
+<A NAME="742"></A>                    }
+<A NAME="743"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t"</FONT> + fullNameToDisplay);
+<A NAME="744"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="745"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t (no full name found)"</FONT>);
+<A NAME="746"></A>                }
+<A NAME="747"></A>                <FONT ID="If">if</FONT> (name.hasNamePrefix()) {
+<A NAME="748"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t"</FONT> + name.getNamePrefix().getValue());
+<A NAME="749"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="750"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t (no name prefix found)"</FONT>);
+<A NAME="751"></A>                }
+<A NAME="752"></A>                <FONT ID="If">if</FONT> (name.hasGivenName()) {
+<A NAME="753"></A>                    String givenNameToDisplay = name.getGivenName().getValue();
+<A NAME="754"></A>                    <FONT ID="If">if</FONT> (name.getGivenName().hasYomi()) {
+<A NAME="755"></A>                        givenNameToDisplay += <FONT ID="StringLiteral">" ("</FONT> + name.getGivenName().getYomi() + <FONT ID="StringLiteral">")"</FONT>;
+<A NAME="756"></A>                    }
+<A NAME="757"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t"</FONT> + givenNameToDisplay);
+<A NAME="758"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="759"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t (no given name found)"</FONT>);
+<A NAME="760"></A>                }
+<A NAME="761"></A>                <FONT ID="If">if</FONT> (name.hasAdditionalName()) {
+<A NAME="762"></A>                    String additionalNameToDisplay = name.getAdditionalName().getValue();
+<A NAME="763"></A>                    <FONT ID="If">if</FONT> (name.getAdditionalName().hasYomi()) {
+<A NAME="764"></A>                        additionalNameToDisplay += <FONT ID="StringLiteral">" ("</FONT> + name.getAdditionalName().getYomi() + <FONT ID="StringLiteral">")"</FONT>;
+<A NAME="765"></A>                    }
+<A NAME="766"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t"</FONT> + additionalNameToDisplay);
+<A NAME="767"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="768"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t (no additional name found)"</FONT>);
+<A NAME="769"></A>                }
+<A NAME="770"></A>                <FONT ID="If">if</FONT> (name.hasFamilyName()) {
+<A NAME="771"></A>                    String familyNameToDisplay = name.getFamilyName().getValue();
+<A NAME="772"></A>                    <FONT ID="If">if</FONT> (name.getFamilyName().hasYomi()) {
+<A NAME="773"></A>                        familyNameToDisplay += <FONT ID="StringLiteral">" ("</FONT> + name.getFamilyName().getYomi() + <FONT ID="StringLiteral">")"</FONT>;
+<A NAME="774"></A>                    }
+<A NAME="775"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t"</FONT> + familyNameToDisplay);
+<A NAME="776"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="777"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t (no family name found)"</FONT>);
+<A NAME="778"></A>                }
+<A NAME="779"></A>                <FONT ID="If">if</FONT> (name.hasNameSuffix()) {
+<A NAME="780"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t"</FONT> + name.getNameSuffix().getValue());
+<A NAME="781"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="782"></A>                    System.out.println(<FONT ID="StringLiteral">"\t\t (no name suffix found)"</FONT>);
+<A NAME="783"></A>                }
+<A NAME="784"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="785"></A>                System.out.println(<FONT ID="StringLiteral">"\t (no name found)"</FONT>);
+<A NAME="786"></A>            }
+<A NAME="787"></A>
+<A NAME="788"></A>            System.out.println(<FONT ID="StringLiteral">"Email addresses:"</FONT>);
+<A NAME="789"></A>            <FONT ID="For">for</FONT> (Email email : entry.getEmailAddresses()) {
+<A NAME="790"></A>                System.out.print(<FONT ID="StringLiteral">" "</FONT> + email.getAddress());
+<A NAME="791"></A>                <FONT ID="If">if</FONT> (email.getRel() != <FONT ID="Null">null</FONT>) {
+<A NAME="792"></A>                    System.out.print(<FONT ID="StringLiteral">" rel:"</FONT> + email.getRel());
+<A NAME="793"></A>                }
+<A NAME="794"></A>                <FONT ID="If">if</FONT> (email.getLabel() != <FONT ID="Null">null</FONT>) {
+<A NAME="795"></A>                    System.out.print(<FONT ID="StringLiteral">" label:"</FONT> + email.getLabel());
+<A NAME="796"></A>                }
+<A NAME="797"></A>                <FONT ID="If">if</FONT> (email.getPrimary()) {
+<A NAME="798"></A>                    System.out.print(<FONT ID="StringLiteral">" (primary) "</FONT>);
+<A NAME="799"></A>                }
+<A NAME="800"></A>                System.out.print(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="801"></A>            }
+<A NAME="802"></A>
+<A NAME="803"></A>            System.out.println(<FONT ID="StringLiteral">"IM addresses:"</FONT>);
+<A NAME="804"></A>            <FONT ID="For">for</FONT> (Im im : entry.getImAddresses()) {
+<A NAME="805"></A>                System.out.print(<FONT ID="StringLiteral">" "</FONT> + im.getAddress());
+<A NAME="806"></A>                <FONT ID="If">if</FONT> (im.getLabel() != <FONT ID="Null">null</FONT>) {
+<A NAME="807"></A>                    System.out.print(<FONT ID="StringLiteral">" label:"</FONT> + im.getLabel());
+<A NAME="808"></A>                }
+<A NAME="809"></A>                <FONT ID="If">if</FONT> (im.getRel() != <FONT ID="Null">null</FONT>) {
+<A NAME="810"></A>                    System.out.print(<FONT ID="StringLiteral">" rel:"</FONT> + im.getRel());
+<A NAME="811"></A>                }
+<A NAME="812"></A>                <FONT ID="If">if</FONT> (im.getProtocol() != <FONT ID="Null">null</FONT>) {
+<A NAME="813"></A>                    System.out.print(<FONT ID="StringLiteral">" protocol:"</FONT> + im.getProtocol());
+<A NAME="814"></A>                }
+<A NAME="815"></A>                <FONT ID="If">if</FONT> (im.getPrimary()) {
+<A NAME="816"></A>                    System.out.print(<FONT ID="StringLiteral">" (primary) "</FONT>);
+<A NAME="817"></A>                }
+<A NAME="818"></A>                System.out.print(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="819"></A>            }
+<A NAME="820"></A>
+<A NAME="821"></A>            System.out.println(<FONT ID="StringLiteral">"Groups:"</FONT>);
+<A NAME="822"></A>            <FONT ID="For">for</FONT> (GroupMembershipInfo group : entry.getGroupMembershipInfos()) {
+<A NAME="823"></A>                String groupHref = group.getHref();
+<A NAME="824"></A>                System.out.println(<FONT ID="StringLiteral">"  Id: "</FONT> + groupHref);
+<A NAME="825"></A>            }
+<A NAME="826"></A>
+<A NAME="827"></A>            System.out.println(<FONT ID="StringLiteral">"Extended Properties:"</FONT>);
+<A NAME="828"></A>            <FONT ID="For">for</FONT> (ExtendedProperty property : entry.getExtendedProperties()) {
+<A NAME="829"></A>                <FONT ID="If">if</FONT> (property.getValue() != <FONT ID="Null">null</FONT>) {
+<A NAME="830"></A>                    System.out.println(<FONT ID="StringLiteral">"  "</FONT> + property.getName() + <FONT ID="StringLiteral">"(value) = "</FONT> +
+<A NAME="831"></A>                            property.getValue());
+<A NAME="832"></A>                } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (property.getXmlBlob() != <FONT ID="Null">null</FONT>) {
+<A NAME="833"></A>                    System.out.println(<FONT ID="StringLiteral">"  "</FONT> + property.getName() + <FONT ID="StringLiteral">"(xmlBlob)= "</FONT> +
+<A NAME="834"></A>                            property.getXmlBlob().getBlob());
+<A NAME="835"></A>                }
+<A NAME="836"></A>            }
+<A NAME="837"></A>
+<A NAME="838"></A>            Link photoLink = entry.getContactPhotoLink();
+<A NAME="839"></A>            String photoLinkHref = photoLink.getHref();
+<A NAME="840"></A>            System.out.println(<FONT ID="StringLiteral">"Photo Link: "</FONT> + photoLinkHref);
+<A NAME="841"></A>
+<A NAME="842"></A>            <FONT ID="If">if</FONT> (photoLink.getEtag() != <FONT ID="Null">null</FONT>) {
+<A NAME="843"></A>                System.out.println(<FONT ID="StringLiteral">"Contact Photo's ETag: "</FONT> + photoLink.getEtag());
+<A NAME="844"></A>            }
+<A NAME="845"></A>
+<A NAME="846"></A>            System.out.println(<FONT ID="StringLiteral">"Contact's ETag: "</FONT> + entry.getEtag());
+<A NAME="847"></A>        }
+<A NAME="848"></A>    }
+<A NAME="849"></A>
+<A NAME="850"></A>}
+<A NAME="851"></A></pre>
+</BODY>
+</HTML>

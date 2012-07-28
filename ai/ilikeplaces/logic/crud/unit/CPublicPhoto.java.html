@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CPublicPhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CPublicPhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">ai.ilikeplaces.entities.HumansPublicPhoto</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">ai.ilikeplaces.entities.PublicPhoto</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="16"></A>
+<A NAME="17"></A><FONT ID="FormalComment">/**
+<A NAME="18"></A> * @author Ravindranath Akila
+<A NAME="19"></A> */</FONT>
+<A NAME="20"></A>
+<A NAME="21"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="22"></A>@Stateless
+<A NAME="23"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> CPublicPhoto <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CPublicPhotoLocal.java.html">CPublicPhotoLocal</A> {
+<A NAME="24"></A>
+<A NAME="25"></A>    @EJB
+<A NAME="26"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>&gt; crudServiceHuman_;
+<A NAME="27"></A>    @EJB
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; crudServiceLocation_;
+<A NAME="29"></A>    @EJB
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">PublicPhoto</A>&gt; CrudServicePublicPhoto_;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> CPublicPhoto() {
+<A NAME="33"></A>    }
+<A NAME="34"></A>
+<A NAME="35"></A>    @Override
+<A NAME="36"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">PublicPhoto</A> doNTxCPublicPhotoLocal(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">PublicPhoto</A> publicPhoto) {
+<A NAME="38"></A>        <FONT ID="If">if</FONT> (publicPhoto.getLocation() != <FONT ID="Null">null</FONT> || publicPhoto.getHumansPublicPhoto() != <FONT ID="Null">null</FONT>) {
+<A NAME="39"></A>            logger.warn(<FONT ID="StringLiteral">"HEY! DON'T SET THE "</FONT>
+<A NAME="40"></A>                    + <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>.getSimpleName() + <FONT ID="StringLiteral">" OR "</FONT>
+<A NAME="41"></A>                    + <A HREF="../../../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">HumansPublicPhoto</A>.<FONT ID="Class">class</FONT>.getSimpleName() + <FONT ID="StringLiteral">" PARAMETERS OF "</FONT>
+<A NAME="42"></A>                    + <A HREF="../../../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">PublicPhoto</A>.<FONT ID="Class">class</FONT>.getSimpleName() + <FONT ID="StringLiteral">" WHEN CALLING THIS METHOD!"</FONT>);
+<A NAME="43"></A>        }
+<A NAME="44"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">HumansPublicPhoto</A> humansPublicPhoto = crudServiceHuman_.find(<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>.<FONT ID="Class">class</FONT>, humanId).getHumansPublicPhoto();
+<A NAME="45"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location = crudServiceLocation_.find(<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>, locationId);
+<A NAME="46"></A>
+<A NAME="47"></A>        publicPhoto.setLocation(location);
+<A NAME="48"></A>        publicPhoto.setHumansPublicPhoto(humansPublicPhoto);
+<A NAME="49"></A>
+<A NAME="50"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">PublicPhoto</A> managedPublicPhoto = CrudServicePublicPhoto_.create(publicPhoto);
+<A NAME="51"></A>
+<A NAME="52"></A>        location.getPublicPhotos().add(managedPublicPhoto);
+<A NAME="53"></A>        humansPublicPhoto.getPublicPhotos().add(managedPublicPhoto);
+<A NAME="54"></A>
+<A NAME="55"></A>        <FONT ID="Return">return</FONT> publicPhoto;
+<A NAME="56"></A>    }
+<A NAME="57"></A>
+<A NAME="58"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CPublicPhoto.java.html">CPublicPhoto</A>.<FONT ID="Class">class</FONT>);
+<A NAME="59"></A>}
+<A NAME="60"></A></pre>
+</BODY>
+</HTML>

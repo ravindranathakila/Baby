@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.SmartLoggerTest (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SmartLoggerTest.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> org.junit.Before;
+<A NAME="4"></A><FONT ID="Import">import</FONT> org.junit.Test;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A>* Created by IntelliJ IDEA.
+<A NAME="8"></A>* User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="9"></A>* Date: 5/14/11
+<A NAME="10"></A>* Time: 7:15 PM
+<A NAME="11"></A>*/</FONT>
+<A NAME="12"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SmartLoggerTest {
+<A NAME="13"></A>
+<A NAME="14"></A>    <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> slHappy = <FONT ID="Null">null</FONT>;
+<A NAME="15"></A>
+<A NAME="16"></A>    @Before
+<A NAME="17"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> beforeSmartLoggerTest() {
+<A NAME="18"></A>        slHappy = SmartLogger.start(Loggers.LEVEL.DEBUG, <FONT ID="StringLiteral">"SL Happy"</FONT>, <FONT ID="IntegerLiteral">10</FONT>, <FONT ID="StringLiteral">"Starting SL Happy Logger"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="19"></A>    }
+<A NAME="20"></A>
+<A NAME="21"></A>    @Test
+<A NAME="22"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> testSmartLoggerTest() {
+<A NAME="23"></A>        slHappy.l(<FONT ID="StringLiteral">"Message 1"</FONT>);
+<A NAME="24"></A>        <FONT ID="Try">try</FONT>{
+<A NAME="25"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> Exception(<FONT ID="StringLiteral">"Exception 1"</FONT>);
+<A NAME="26"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception e){
+<A NAME="27"></A>            slHappy.l(e);
+<A NAME="28"></A>        }
+<A NAME="29"></A>    }
+<A NAME="30"></A>
+<A NAME="31"></A>    @Test
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> afterSmartLoggerTest() {
+<A NAME="33"></A>        slHappy.complete(<FONT ID="StringLiteral">"Ending SL Happy Logger"</FONT>);
+<A NAME="34"></A>    }
+<A NAME="35"></A>}
+<A NAME="36"></A></pre>
+</BODY>
+</HTML>

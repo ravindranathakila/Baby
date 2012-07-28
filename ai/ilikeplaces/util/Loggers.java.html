@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.Loggers (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Loggers.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * Any loggers used outside the context of the variable name, might result in losing log entries.
+<A NAME="9"></A> * For example, do not use DEBUG.debug("msg"). Use, DEBUG.debug("msg").
+<A NAME="10"></A> * &lt;p/&gt;
+<A NAME="11"></A> * &lt;p/&gt;
+<A NAME="12"></A> * Okay, this next part, is admittedly written because I messed up with the my "OWN" logging convention.
+<A NAME="13"></A> * &lt;p/&gt;
+<A NAME="14"></A> * Why the hell did I use capitals? Well, the intention is the ease of noticing text within a exception stack trace,
+<A NAME="15"></A> * This leads to rule #1.
+<A NAME="16"></A> * &lt;p/&gt;
+<A NAME="17"></A> * Then again, warnings and errors should be clearly shown among debug messages. Hence #2.
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * Hello and sorry was used to give a personal touch. Always helps when you are in QA or support staring at logs all day. Therefore
+<A NAME="20"></A> * do bring in the application as "I". In fact, it IS a bot. Hence #3 and #4.
+<A NAME="21"></A> * &lt;p/&gt;
+<A NAME="22"></A> * #1. Use all caps for an exception message
+<A NAME="23"></A> * &lt;p/&gt;
+<A NAME="24"></A> * #2. Use all caps for warnings and errors. Better append a couple or 3 exclamation marks if immediate attention is needed.
+<A NAME="25"></A> * &lt;p/&gt;
+<A NAME="26"></A> * #3. "Hello," for +ve messages and "SORRY!" for -ve messages. Simple.
+<A NAME="27"></A> * &lt;p/&gt;
+<A NAME="28"></A> * #4. Treat the application in first person("I") sense.
+<A NAME="29"></A> * &lt;p/&gt;
+<A NAME="30"></A> * &lt;p/&gt;
+<A NAME="31"></A> * &lt;p/&gt;
+<A NAME="32"></A> * Created by IntelliJ IDEA.
+<A NAME="33"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="34"></A> * Date: Jan 30, 2010
+<A NAME="35"></A> * Time: 3:09:36 AM
+<A NAME="36"></A> */</FONT>
+<A NAME="37"></A>
+<A NAME="38"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="39"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Loggers {
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NULL = <FONT ID="StringLiteral">"null"</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"Static usage only"</FONT>);
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CAUSED = <FONT ID="StringLiteral">" caused "</FONT>;
+<A NAME="43"></A>
+<A NAME="44"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String EMBED = <FONT ID="StringLiteral">"{}"</FONT>;
+<A NAME="45"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String DONE = <FONT ID="StringLiteral">"done. "</FONT>;
+<A NAME="46"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FAILED = <FONT ID="StringLiteral">"FAILED! "</FONT>;
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="FormalComment">/**
+<A NAME="49"></A>     * Try to make the codes real 'codes' in the sense that, if you use ordinary words like "mail", a grep might
+<A NAME="50"></A>     * bring in unwanted lines. Here for mail, I used mds to imply mail delivery system
+<A NAME="51"></A>     */</FONT>
+<A NAME="52"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String CODE_GFG = <FONT ID="StringLiteral">"[GFG]"</FONT>;<FONT ID="SingleLineComment">//Code for Generic File Grabber servlet
+<A NAME="53"></A></FONT>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String CODE_MEMC = <FONT ID="StringLiteral">"[MEMC]"</FONT>;<FONT ID="SingleLineComment">//Code for Memc
+<A NAME="54"></A></FONT>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String CODE_MAIL = <FONT ID="StringLiteral">"[MDS]"</FONT>;<FONT ID="SingleLineComment">//Code to indicate mail delivery system
+<A NAME="55"></A></FONT>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String CODE_HC = <FONT ID="StringLiteral">"[HC]"</FONT>;<FONT ID="SingleLineComment">//Code to indicate Hazelcast
+<A NAME="56"></A></FONT>
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> enum LEVEL {
+<A NAME="58"></A>        DEBUG,
+<A NAME="59"></A>        INFO,
+<A NAME="60"></A>        WARN,
+<A NAME="61"></A>        ERROR,
+<A NAME="62"></A>        SERVER_STATUS,
+<A NAME="63"></A>        USER,
+<A NAME="64"></A>        USER_EXCEPTION,
+<A NAME="65"></A>        NON_USER,
+<A NAME="66"></A>        FAILED_SIGNUPS,
+<A NAME="67"></A>        FAILED_LOGINS
+<A NAME="68"></A>    }
+<A NAME="69"></A>
+<A NAME="70"></A>    <FONT ID="Private">private</FONT> Loggers() {
+<A NAME="71"></A>        <FONT ID="Throw">throw</FONT> UNSUPPORTED_OPERATION_EXCEPTION;
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="FormalComment">/**
+<A NAME="75"></A>     * For the purpose of logging user activity
+<A NAME="76"></A>     */</FONT>
+<A NAME="77"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger USER = LoggerFactory.getLogger(<FONT ID="StringLiteral">"USER"</FONT>);
+<A NAME="78"></A>
+<A NAME="79"></A>    <FONT ID="FormalComment">/**
+<A NAME="80"></A>     * For the purpose of logging non user activity
+<A NAME="81"></A>     */</FONT>
+<A NAME="82"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger NON_USER = LoggerFactory.getLogger(<FONT ID="StringLiteral">"NON_USER"</FONT>);
+<A NAME="83"></A>
+<A NAME="84"></A>    <FONT ID="FormalComment">/**
+<A NAME="85"></A>     * For the purpose of logging failed signup emails
+<A NAME="86"></A>     */</FONT>
+<A NAME="87"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger FAILED_SIGNUPS = LoggerFactory.getLogger(<FONT ID="StringLiteral">"FAILED_SIGNUPS"</FONT>);
+<A NAME="88"></A>
+<A NAME="89"></A>
+<A NAME="90"></A>    <FONT ID="FormalComment">/**
+<A NAME="91"></A>     * For the purpose of logging failed logins
+<A NAME="92"></A>     */</FONT>
+<A NAME="93"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger FAILED_LOGINS = LoggerFactory.getLogger(<FONT ID="StringLiteral">"FAILED_LOGINS"</FONT>);
+<A NAME="94"></A>
+<A NAME="95"></A>
+<A NAME="96"></A>    <FONT ID="FormalComment">/**
+<A NAME="97"></A>     * Exceptions and Errors in one logger is easy for monitoring
+<A NAME="98"></A>     */</FONT>
+<A NAME="99"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger ERROR = LoggerFactory.getLogger(<FONT ID="StringLiteral">"EXCEPTION"</FONT>);
+<A NAME="100"></A>
+<A NAME="101"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> error(<FONT ID="Final">final</FONT> String message, <FONT ID="Final">final</FONT> Throwable throwable) {
+<A NAME="102"></A>        ERROR.error(message, throwable);
+<A NAME="103"></A>    }
+<A NAME="104"></A>
+<A NAME="105"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> error(<FONT ID="Final">final</FONT> String message) {
+<A NAME="106"></A>        ERROR.error(message);
+<A NAME="107"></A>    }
+<A NAME="108"></A>
+<A NAME="109"></A>
+<A NAME="110"></A>    <FONT ID="FormalComment">/**
+<A NAME="111"></A>     * Exceptions and Errors in one logger is easy for monitoring
+<A NAME="112"></A>     * DO NOT ASSIGN THIS TO A NEW LOGGER. POINT TO {@link #ERROR ERROR} INSTEAD.
+<A NAME="113"></A>     */</FONT>
+<A NAME="114"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger EXCEPTION = ERROR;
+<A NAME="115"></A>
+<A NAME="116"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> exception(<FONT ID="Final">final</FONT> String message, <FONT ID="Final">final</FONT> Exception exception) {
+<A NAME="117"></A>        EXCEPTION.error(message, exception);
+<A NAME="118"></A>    }
+<A NAME="119"></A>
+<A NAME="120"></A>
+<A NAME="121"></A>    <FONT ID="FormalComment">/**
+<A NAME="122"></A>     * Log server status/performance logs here
+<A NAME="123"></A>     */</FONT>
+<A NAME="124"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger STATUS = LoggerFactory.getLogger(<FONT ID="StringLiteral">"SERVER_STATUS"</FONT>);
+<A NAME="125"></A>
+<A NAME="126"></A>    <FONT ID="FormalComment">/**
+<A NAME="127"></A>     * User generated exceptions due to various mishandling(wrong parameters) of which logging should be
+<A NAME="128"></A>     * possible to be disabled. This is because high traffic with wrong parameters can introduce millions of
+<A NAME="129"></A>     * exceptions. So a separated logger is in place to log them. Logging them is important for analysis.
+<A NAME="130"></A>     */</FONT>
+<A NAME="131"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger USER_EXCEPTION = LoggerFactory.getLogger(<FONT ID="StringLiteral">"USER_EXCEPTION"</FONT>);
+<A NAME="132"></A>
+<A NAME="133"></A>    <FONT ID="FormalComment">/**
+<A NAME="134"></A>     * Just for ease of user instead of creating loggers everywhere
+<A NAME="135"></A>     */</FONT>
+<A NAME="136"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger DEBUG = LoggerFactory.getLogger(<FONT ID="StringLiteral">"DEBUG"</FONT>);
+<A NAME="137"></A>
+<A NAME="138"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> debug(<FONT ID="Final">final</FONT> String message) {
+<A NAME="139"></A>        DEBUG.debug(message);
+<A NAME="140"></A>    }
+<A NAME="141"></A>
+<A NAME="142"></A>    <FONT ID="FormalComment">/**
+<A NAME="143"></A>     * Just for ease of user instead of creating loggers everywhere
+<A NAME="144"></A>     */</FONT>
+<A NAME="145"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger INFO = LoggerFactory.getLogger(<FONT ID="StringLiteral">"INFO"</FONT>);
+<A NAME="146"></A>
+<A NAME="147"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> info(<FONT ID="Final">final</FONT> String message) {
+<A NAME="148"></A>        INFO.info(message);
+<A NAME="149"></A>    }
+<A NAME="150"></A>
+<A NAME="151"></A>    <FONT ID="FormalComment">/**
+<A NAME="152"></A>     * Just for ease of user instead of creating loggers everywhere
+<A NAME="153"></A>     */</FONT>
+<A NAME="154"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Logger WARN = LoggerFactory.getLogger(<FONT ID="StringLiteral">"WARN"</FONT>);
+<A NAME="155"></A>
+<A NAME="156"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> warn(<FONT ID="Final">final</FONT> String message) {
+<A NAME="157"></A>        WARN.warn(message);
+<A NAME="158"></A>    }
+<A NAME="159"></A>
+<A NAME="160"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Object ifNullToString(<FONT ID="Final">final</FONT> Object object) {
+<A NAME="161"></A>        <FONT ID="Return">return</FONT> object != <FONT ID="Null">null</FONT> ? object : NULL;
+<A NAME="162"></A>    }
+<A NAME="163"></A>
+<A NAME="164"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> userError(<FONT ID="Final">final</FONT> String username, <FONT ID="Final">final</FONT> String error) {
+<A NAME="165"></A>        USER_EXCEPTION.error(username + CAUSED + error);
+<A NAME="166"></A>    }
+<A NAME="167"></A>
+<A NAME="168"></A>    <FONT ID="FormalComment">/**
+<A NAME="169"></A>     * Used to indicate that an object was finalized.
+<A NAME="170"></A>     *
+<A NAME="171"></A>     * @param msg
+<A NAME="172"></A>     */</FONT>
+<A NAME="173"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> finalized(<FONT ID="Final">final</FONT> String msg) {
+<A NAME="174"></A>        <FONT ID="SingleLineComment">//DEBUG.debug(msg);
+<A NAME="175"></A></FONT>    }
+<A NAME="176"></A>
+<A NAME="177"></A>    <FONT ID="FormalComment">/**
+<A NAME="178"></A>     * Note that in the case of exception, the object will be/should be able to be,
+<A NAME="179"></A>     * cast to {@link Throwable}
+<A NAME="180"></A>     *
+<A NAME="181"></A>     * @param level
+<A NAME="182"></A>     * @param message
+<A NAME="183"></A>     * @param obj
+<A NAME="184"></A>     */</FONT>
+<A NAME="185"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> log(<FONT ID="Final">final</FONT> LEVEL level, <FONT ID="Final">final</FONT> String message, <FONT ID="Final">final</FONT> Object obj) {
+<A NAME="186"></A>        <FONT ID="Switch">switch</FONT> (level) {
+<A NAME="187"></A>            <FONT ID="Case">case</FONT> DEBUG:
+<A NAME="188"></A>                Loggers.DEBUG.debug(message, obj);
+<A NAME="189"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="190"></A>            <FONT ID="Case">case</FONT> INFO:
+<A NAME="191"></A>                Loggers.INFO.info(message, obj);
+<A NAME="192"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="193"></A>            <FONT ID="Case">case</FONT> WARN:
+<A NAME="194"></A>                Loggers.WARN.warn(message, obj);
+<A NAME="195"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="196"></A>            <FONT ID="Case">case</FONT> ERROR:
+<A NAME="197"></A>                Loggers.EXCEPTION.error(message, obj <FONT ID="InstanceOf">instanceof</FONT> Throwable ? (Throwable) obj : <FONT ID="New">new</FONT> Throwable(obj.toString()));
+<A NAME="198"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="199"></A>            <FONT ID="Case">case</FONT> SERVER_STATUS:
+<A NAME="200"></A>                Loggers.STATUS.info(message, obj);
+<A NAME="201"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="202"></A>            <FONT ID="Case">case</FONT> USER:
+<A NAME="203"></A>                Loggers.USER.info(message, obj);
+<A NAME="204"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="205"></A>            <FONT ID="Case">case</FONT> USER_EXCEPTION:
+<A NAME="206"></A>                Loggers.USER_EXCEPTION.error(message, obj <FONT ID="InstanceOf">instanceof</FONT> Throwable ? (Throwable) obj : <FONT ID="New">new</FONT> Throwable(obj.toString()));
+<A NAME="207"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="208"></A>            <FONT ID="Case">case</FONT> NON_USER:
+<A NAME="209"></A>                Loggers.NON_USER.info(message, obj);
+<A NAME="210"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="211"></A>            <FONT ID="Case">case</FONT> FAILED_SIGNUPS:
+<A NAME="212"></A>                Loggers.FAILED_SIGNUPS.info(message);
+<A NAME="213"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="214"></A>            <FONT ID="Default">default</FONT>:
+<A NAME="215"></A>                Loggers.DEBUG.debug(
+<A NAME="216"></A>                        message + <FONT ID="StringLiteral">"(WARNING:MSG DEFAULTED DUE TO INAPPROPRIATE USAGE OF THIS METHOD"</FONT>,
+<A NAME="217"></A>                        obj);
+<A NAME="218"></A>        }
+<A NAME="219"></A>    }
+<A NAME="220"></A>
+<A NAME="221"></A>    <FONT ID="FormalComment">/**
+<A NAME="222"></A>     * Note that in the case of exception, the object will be/should be able to be,
+<A NAME="223"></A>     * cast to {@link Throwable}
+<A NAME="224"></A>     *
+<A NAME="225"></A>     * @param level
+<A NAME="226"></A>     * @param message
+<A NAME="227"></A>     */</FONT>
+<A NAME="228"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> log(<FONT ID="Final">final</FONT> LEVEL level, <FONT ID="Final">final</FONT> String message) {
+<A NAME="229"></A>        <FONT ID="Switch">switch</FONT> (level) {
+<A NAME="230"></A>            <FONT ID="Case">case</FONT> DEBUG:
+<A NAME="231"></A>                Loggers.DEBUG.debug(message);
+<A NAME="232"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="233"></A>            <FONT ID="Case">case</FONT> INFO:
+<A NAME="234"></A>                Loggers.INFO.info(message);
+<A NAME="235"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="236"></A>            <FONT ID="Case">case</FONT> WARN:
+<A NAME="237"></A>                Loggers.WARN.warn(message);
+<A NAME="238"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="239"></A>            <FONT ID="Case">case</FONT> ERROR:
+<A NAME="240"></A>                Loggers.EXCEPTION.error(message);
+<A NAME="241"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="242"></A>            <FONT ID="Case">case</FONT> SERVER_STATUS:
+<A NAME="243"></A>                Loggers.STATUS.info(message);
+<A NAME="244"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="245"></A>            <FONT ID="Case">case</FONT> USER:
+<A NAME="246"></A>                Loggers.USER.info(message);
+<A NAME="247"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="248"></A>            <FONT ID="Case">case</FONT> USER_EXCEPTION:
+<A NAME="249"></A>                Loggers.USER_EXCEPTION.error(message);
+<A NAME="250"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="251"></A>            <FONT ID="Case">case</FONT> NON_USER:
+<A NAME="252"></A>                Loggers.NON_USER.info(message);
+<A NAME="253"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="254"></A>            <FONT ID="Case">case</FONT> FAILED_SIGNUPS:
+<A NAME="255"></A>                Loggers.FAILED_SIGNUPS.info(message);
+<A NAME="256"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="257"></A>            <FONT ID="Case">case</FONT> FAILED_LOGINS:
+<A NAME="258"></A>                Loggers.FAILED_LOGINS.info(message);
+<A NAME="259"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="260"></A>            <FONT ID="Default">default</FONT>:
+<A NAME="261"></A>                Loggers.DEBUG.debug(
+<A NAME="262"></A>                        message + <FONT ID="StringLiteral">"(WARNING:MSG DEFAULTED DUE TO INAPPROPRIATE USAGE OF THIS METHOD"</FONT>);
+<A NAME="263"></A>        }
+<A NAME="264"></A>    }
+<A NAME="265"></A>}
+<A NAME="266"></A></pre>
+</BODY>
+</HTML>

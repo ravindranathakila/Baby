@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.mail.SendMailLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SendMailLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.mail;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.io.File;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> * Just one thing. When sending mails, DON'T WASTE TIME OF PEOPLE.
+<A NAME="12"></A> * &lt;p/&gt;
+<A NAME="13"></A> * Right now I am deciding even whether to talk off the disclaimer at the end.
+<A NAME="14"></A> * &lt;p/&gt;
+<A NAME="15"></A> * The snappier the mails and responses are, the closer we are to McDonaldization anyway, which is also good.
+<A NAME="16"></A> * &lt;p/&gt;
+<A NAME="17"></A> * &lt;p/&gt;
+<A NAME="18"></A> * So, make the subject bear what the mail is about which makes it easier for the user to decide whether to open the
+<A NAME="19"></A> * mail even at work or not.
+<A NAME="20"></A> * &lt;p/&gt;
+<A NAME="21"></A> * Make the mail bodies in point form unless it is a really creative content or an HTML promotional mail.
+<A NAME="22"></A> * &lt;p/&gt;
+<A NAME="23"></A> * &lt;p/&gt;
+<A NAME="24"></A> * Happy Mailing!
+<A NAME="25"></A> * &lt;p/&gt;
+<A NAME="26"></A> * &lt;p/&gt;
+<A NAME="27"></A> * Created by IntelliJ IDEA.
+<A NAME="28"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="29"></A> * Date: Jan 13, 2010
+<A NAME="30"></A> * Time: 2:41:45 PM
+<A NAME="31"></A> */</FONT>
+<A NAME="32"></A>
+<A NAME="33"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="34"></A>@Local
+<A NAME="35"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> SendMailLocal {
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NAME = <A HREF="../../../../ai/ilikeplaces/logic/mail/SendMailLocal.java.html">SendMailLocal</A>.<FONT ID="Class">class</FONT>.getSimpleName();
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; sendAsSimpleText(<FONT ID="Final">final</FONT> String recepientEmail,
+<A NAME="40"></A>                                            <FONT ID="Final">final</FONT> String simpleTextSubject,
+<A NAME="41"></A>                                            <FONT ID="Final">final</FONT> String simpleTextBody);
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; sendWithAttachmentAsSimpleText(<FONT ID="Final">final</FONT> String recepientEmail,
+<A NAME="44"></A>                                            <FONT ID="Final">final</FONT> String simpleTextSubject,
+<A NAME="45"></A>                                            <FONT ID="Final">final</FONT> String simpleTextBody,
+<A NAME="46"></A>                                            <FONT ID="Final">final</FONT> List&lt;String&gt; files);
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; sendAsSimpleTextAsynchronously(<FONT ID="Final">final</FONT> String recepientEmail,
+<A NAME="49"></A>                                                          <FONT ID="Final">final</FONT> String simpleTextSubject,
+<A NAME="50"></A>                                                          <FONT ID="Final">final</FONT> String simpleTextBody);
+<A NAME="51"></A>
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; sendAsHTML(<FONT ID="Final">final</FONT> String recepientEmail,
+<A NAME="53"></A>                                      <FONT ID="Final">final</FONT> String simpleTextSubject,
+<A NAME="54"></A>                                      <FONT ID="Final">final</FONT> String htmlBody);
+<A NAME="55"></A>
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; sendWithAttachmentAsSimpleTextAsynchronously(<FONT ID="Final">final</FONT> String recepientEmail,
+<A NAME="57"></A>                                                          <FONT ID="Final">final</FONT> String simpleTextSubject,
+<A NAME="58"></A>                                                          <FONT ID="Final">final</FONT> String simpleTextBody,
+<A NAME="59"></A>                                                          <FONT ID="Final">final</FONT> List&lt;String&gt; files);
+<A NAME="60"></A>
+<A NAME="61"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; sendWithAttachmentAsSimpleTextAsynchronously(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/logic/mail/GetMailAddress.java.html">GetMailAddress</A>&gt; recepientEmails,
+<A NAME="62"></A>                                                          <FONT ID="Final">final</FONT> String simpleTextSubject,
+<A NAME="63"></A>                                                          <FONT ID="Final">final</FONT> String simpleTextBody,
+<A NAME="64"></A>                                                          <FONT ID="Final">final</FONT> List&lt;String&gt; files);
+<A NAME="65"></A>
+<A NAME="66"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; sendAsHTMLAsynchronously(
+<A NAME="67"></A>            <FONT ID="Final">final</FONT> String recepientEmail,
+<A NAME="68"></A>            <FONT ID="Final">final</FONT> String simpleTextSubject,
+<A NAME="69"></A>            <FONT ID="Final">final</FONT> String htmlBody);
+<A NAME="70"></A>
+<A NAME="71"></A>
+<A NAME="72"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; sendWithAttachmentAsSimpleText(<FONT ID="Final">final</FONT> String recepientEmail,
+<A NAME="73"></A>                                                          <FONT ID="Final">final</FONT> String simpleTextSubject,
+<A NAME="74"></A>                                                          <FONT ID="Final">final</FONT> String simpleTextBody,
+<A NAME="75"></A>                                                          <FONT ID="Final">final</FONT> File file);
+<A NAME="76"></A>
+<A NAME="77"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; sendWithAttachmentAsHTML(<FONT ID="Final">final</FONT> String recepientEmail,
+<A NAME="78"></A>                                                    <FONT ID="Final">final</FONT> String simpleTextSubject,
+<A NAME="79"></A>                                                    <FONT ID="Final">final</FONT> String htmlBody,
+<A NAME="80"></A>                                                    <FONT ID="Final">final</FONT> File file);
+<A NAME="81"></A>
+<A NAME="82"></A>}</pre>
+</BODY>
+</HTML>

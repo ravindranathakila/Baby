@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.jpa.TestBean (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TestBean.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.jpa;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/Refresh.java.html">ai.ilikeplaces.util.jpa.Refresh</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">ai.ilikeplaces.util.jpa.RefreshException</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshId.java.html">ai.ilikeplaces.util.jpa.RefreshId</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/Refreshable.java.html">ai.ilikeplaces.util.jpa.Refreshable</A>;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.persistence.Transient;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * Created by IntelliJ IDEA.
+<A NAME="14"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="15"></A> * Date: 2/6/11
+<A NAME="16"></A> * Time: 9:45 PM
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TestBean <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/Refreshable.java.html">Refreshable</A>&lt;<A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A>&gt; {
+<A NAME="19"></A>
+<A NAME="20"></A>    @<A HREF="../../../ai/ilikeplaces/util/jpa/RefreshId.java.html">RefreshId</A>(<FONT ID="StringLiteral">"testCollection"</FONT>)
+<A NAME="21"></A>    List&lt;String&gt; testCollection;
+<A NAME="22"></A>
+<A NAME="23"></A>    @<A HREF="../../../ai/ilikeplaces/util/jpa/RefreshId.java.html">RefreshId</A>(<FONT ID="StringLiteral">"nonCollection"</FONT>)
+<A NAME="24"></A>    String nonCollection = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="25"></A>
+<A NAME="26"></A>
+<A NAME="27"></A>    @<A HREF="../../../ai/ilikeplaces/util/jpa/RefreshId.java.html">RefreshId</A>(<FONT ID="StringLiteral">"testCollection"</FONT>)
+<A NAME="28"></A>    List&lt;String&gt; testSameAnnotatedValueCollection;
+<A NAME="29"></A>
+<A NAME="30"></A>    @Transient
+<A NAME="31"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/Refresh.java.html">Refresh</A>&lt;<A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A>&gt; REFRESH = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/Refresh.java.html">Refresh</A>&lt;<A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A>&gt;();
+<A NAME="32"></A>
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> List&lt;String&gt; getTestCollection() {
+<A NAME="35"></A>        <FONT ID="Return">return</FONT> testCollection;
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTestCollection(List&lt;String&gt; testCollection) {
+<A NAME="39"></A>        <FONT ID="This">this</FONT>.testCollection = testCollection;
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> String getNonCollection() {
+<A NAME="43"></A>        <FONT ID="Return">return</FONT> nonCollection;
+<A NAME="44"></A>    }
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setNonCollection(String nonCollection) {
+<A NAME="47"></A>        <FONT ID="This">this</FONT>.nonCollection = nonCollection;
+<A NAME="48"></A>    }
+<A NAME="49"></A>
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> List&lt;String&gt; getTestSameAnnotatedValueCollection() {
+<A NAME="51"></A>        <FONT ID="Return">return</FONT> testSameAnnotatedValueCollection;
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTestSameAnnotatedValueCollection(List&lt;String&gt; testSameAnnotatedValueCollection) {
+<A NAME="55"></A>        <FONT ID="This">this</FONT>.testSameAnnotatedValueCollection = testSameAnnotatedValueCollection;
+<A NAME="56"></A>    }
+<A NAME="57"></A>
+<A NAME="58"></A>    @Override
+<A NAME="59"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A> refresh(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> {
+<A NAME="60"></A>        REFRESH.refresh(<FONT ID="This">this</FONT>, refreshSpec);
+<A NAME="61"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="62"></A>    }
+<A NAME="63"></A>}
+<A NAME="64"></A></pre>
+</BODY>
+</HTML>

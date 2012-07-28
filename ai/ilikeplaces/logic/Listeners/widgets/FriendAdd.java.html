@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.FriendAdd (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">FriendAdd.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">ai.ilikeplaces.util.AbstractWidgetListener</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/EventType.java.html">ai.ilikeplaces.util.EventType</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="21"></A>
+<A NAME="22"></A><FONT ID="FormalComment">/**
+<A NAME="23"></A> * Created by IntelliJ IDEA.
+<A NAME="24"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="25"></A> * Date: Jan 21, 2010
+<A NAME="26"></A> * Time: 10:03:54 PM
+<A NAME="27"></A> */</FONT>
+<A NAME="28"></A>
+<A NAME="29"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="30"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> FriendAdd <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">AbstractWidgetListener</A> {
+<A NAME="31"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/FriendAdd.java.html">FriendAdd</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="32"></A>
+<A NAME="33"></A>    <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> addee = <FONT ID="Null">null</FONT>;
+<A NAME="34"></A>    <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> caller = <FONT ID="Null">null</FONT>;
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="FormalComment">/**
+<A NAME="37"></A>     * @param request__
+<A NAME="38"></A>     * @param appendToElement__
+<A NAME="39"></A>     * @param addee
+<A NAME="40"></A>     * @param caller
+<A NAME="41"></A>     */</FONT>
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> FriendAdd(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> addee, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> caller) {
+<A NAME="43"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.FriendAdd, appendToElement__, addee, caller);
+<A NAME="44"></A>    }
+<A NAME="45"></A>
+<A NAME="46"></A>    @Override
+<A NAME="47"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="48"></A>        <FONT ID="This">this</FONT>.addee = (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="49"></A>        <FONT ID="This">this</FONT>.caller = (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="50"></A>
+<A NAME="51"></A>        $$(Controller.Page.friendAddDisplayNameLabel).setTextContent(DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(addee).getDisplayName());
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="FormalComment">/**
+<A NAME="55"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="56"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="57"></A>     * automatically called by the contructor
+<A NAME="58"></A>     *
+<A NAME="59"></A>     * @param itsNatHTMLDocument_
+<A NAME="60"></A>     * @param hTMLDocument_
+<A NAME="61"></A>     */</FONT>
+<A NAME="62"></A>    @Override
+<A NAME="63"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="64"></A>        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.friendAddAddButton), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="65"></A>
+<A NAME="66"></A>            <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myaddee = addee;
+<A NAME="67"></A>            <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mycaller = caller;
+<A NAME="68"></A>
+<A NAME="69"></A>            @Override
+<A NAME="70"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="71"></A>                logger.debug(<FONT ID="StringLiteral">"{}"</FONT>, <FONT ID="StringLiteral">"Clicked Find"</FONT>);
+<A NAME="72"></A>                <A HREF="../../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; r = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doNTxAddHumansNetPeople(mycaller, myaddee);
+<A NAME="73"></A>                <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="74"></A>                    logger.debug(<FONT ID="StringLiteral">"{}"</FONT>, r.toString());
+<A NAME="75"></A>                    $$displayNone($$(Controller.Page.friendAddAddButton));
+<A NAME="76"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A> adder = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(mycaller.getObj());
+<A NAME="77"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A> addee = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(mycaller.getObj());
+<A NAME="78"></A>                    <FONT ID="If">if</FONT> (!addee.ifFriend(adder.getHumanId())) {
+<A NAME="79"></A>                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(myaddee.getObj(),
+<A NAME="80"></A>                                adder.getDisplayName(),
+<A NAME="81"></A>                                UserProperty.getUserPropertyHtmlFor(
+<A NAME="82"></A>                                        <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(adder.getHumanId()),
+<A NAME="83"></A>                                        myaddee.getObjectAsValid(),
+<A NAME="84"></A>                                        <FONT ID="StringLiteral">"I added you as a friend. You can add me back as your friend at "</FONT>
+<A NAME="85"></A>                                                + <FONT ID="StringLiteral">"http://www.ilikeplaces.com/i/"</FONT> + DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansPublicURL(mycaller).returnValue()));
+<A NAME="86"></A>                    }
+<A NAME="87"></A>                    remove(evt_.getTarget(), EventType.CLICK, <FONT ID="This">this</FONT>);
+<A NAME="88"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="89"></A>                    <FONT ID="SingleLineComment">//DO something!
+<A NAME="90"></A></FONT>                }
+<A NAME="91"></A>            }
+<A NAME="92"></A>        }, <FONT ID="False">false</FONT>);
+<A NAME="93"></A>    }
+<A NAME="94"></A>}
+<A NAME="95"></A></pre>
+</BODY>
+</HTML>

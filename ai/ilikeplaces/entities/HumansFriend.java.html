@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.HumansFriend (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumansFriend.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> javax.persistence.Id;
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.persistence.Transient;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="FormalComment">/**
+<A NAME="9"></A> * Created by IntelliJ IDEA.
+<A NAME="10"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="11"></A> * Date: Feb 10, 2010
+<A NAME="12"></A> * Time: 6:39:28 PM
+<A NAME="13"></A> */</FONT>
+<A NAME="14"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="15"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> HumansFriend <FONT ID="Extends">extends</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanIdFace.java.html">HumanIdFace</A> {
+<A NAME="16"></A>
+<A NAME="17"></A>    <FONT ID="Public">public</FONT> String getHumanId();
+<A NAME="18"></A>
+<A NAME="19"></A>    @Transient
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> String getDisplayName();
+<A NAME="21"></A>
+<A NAME="22"></A>    @Transient
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> ifFriend(<FONT ID="Final">final</FONT> String friendsHumanId);
+<A NAME="24"></A>
+<A NAME="25"></A>    @Transient
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> notFriend(<FONT ID="Final">final</FONT> String friendsHumanId);
+<A NAME="27"></A>
+<A NAME="28"></A>}
+<A NAME="29"></A></pre>
+</BODY>
+</HTML>

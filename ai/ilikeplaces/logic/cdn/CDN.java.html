@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.cdn.CDN (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CDN.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.cdn;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> com.rackspacecloud.client.cloudfiles.FilesClient;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.imageio.ImageIO;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.naming.Context;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.naming.InitialContext;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.awt.*;
+<A NAME="14"></A><FONT ID="Import">import</FONT> java.awt.image.BufferedImage;
+<A NAME="15"></A><FONT ID="Import">import</FONT> java.io.File;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.util.Properties;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers.EXCEPTION</A>;
+<A NAME="20"></A>
+<A NAME="21"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="22"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> CDN <FONT ID="Extends">extends</FONT> <A HREF="../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> {
+<A NAME="23"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="24"></A></FONT>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CL0_UD_K3_Y = <FONT ID="StringLiteral">"CL0UD_K3Y"</FONT>;
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOADING_IMAGE_FROM = <FONT ID="StringLiteral">"Loading Image From:"</FONT>;
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOGGED_INTO_RACKSPACE = <FONT ID="StringLiteral">"Logged into Rackspace!"</FONT>;
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOGIN_INTO_RACKSPACE_FAILED = <FONT ID="StringLiteral">"Login into Rackspace FAILED!"</FONT>;
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SORRY_MAIL_SESSION_BEAN_INITIALIZATION_FAILED = <FONT ID="StringLiteral">"SORRY! MAIL SESSION BEAN INITIALIZATION FAILED!"</FONT>;
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String U53_R_NAM3 = <FONT ID="StringLiteral">"U53R_NAM3"</FONT>;
+<A NAME="31"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Boolean">boolean</FONT> OK_ = <FONT ID="False">false</FONT>;
+<A NAME="32"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> Context Context_ = <FONT ID="Null">null</FONT>;
+<A NAME="33"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Properties P_ = <FONT ID="New">new</FONT> Properties();
+<A NAME="34"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> String ICF = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"oejb.LICF"</FONT>);
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOGIN_FAILED = <FONT ID="StringLiteral">"LOGIN TO RACKSPACE FOR FILE UPLOAD FAILED. THIS EXCEPTION WILL DESTROY THIS INSTANCE"</FONT>;<FONT ID="SingleLineComment">//This classes is designed to be used with stateless beans connecting to containers
+<A NAME="36"></A></FONT>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> RuntimeException LOGIN_EXCEPTION = <FONT ID="New">new</FONT> RuntimeException(LOGIN_FAILED);
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Protected">protected</FONT> FilesClient client = <FONT ID="Null">null</FONT>;
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="41"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="42"></A>            CDN.P_.put(Context.INITIAL_CONTEXT_FACTORY, CDN.ICF);
+<A NAME="43"></A>            CDN.Context_ = <FONT ID="New">new</FONT> InitialContext(P_);
+<A NAME="44"></A>            CDN.OK_ = <FONT ID="True">true</FONT>;
+<A NAME="45"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="46"></A>            CDN.OK_ = <FONT ID="False">false</FONT>;
+<A NAME="47"></A>            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, ex);
+<A NAME="48"></A>        }
+<A NAME="49"></A>    }
+<A NAME="50"></A>
+<A NAME="51"></A><FONT ID="SingleLineComment">// ------------------------ CANONICAL METHODS ------------------------
+<A NAME="52"></A></FONT>
+<A NAME="53"></A>
+<A NAME="54"></A><FONT ID="SingleLineComment">// -------------------------- STATIC METHODS --------------------------
+<A NAME="55"></A></FONT>
+<A NAME="56"></A>    <FONT ID="FormalComment">/**
+<A NAME="57"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="58"></A>     *
+<A NAME="59"></A>     * @param ref
+<A NAME="60"></A>     * @return null or buffered image
+<A NAME="61"></A>     * @throws Exception
+<A NAME="62"></A>     */</FONT>
+<A NAME="63"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> BufferedImage loadImage(<FONT ID="Final">final</FONT> File ref) <FONT ID="Throws">throws</FONT> Exception {
+<A NAME="64"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="65"></A>            Loggers.DEBUG.debug(LOADING_IMAGE_FROM + ref.getCanonicalPath());
+<A NAME="66"></A>            <FONT ID="Return">return</FONT> ImageIO.read(ref);
+<A NAME="67"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception e) {
+<A NAME="68"></A>            EXCEPTION.error(Loggers.EMBED, e);
+<A NAME="69"></A>            <FONT ID="Throw">throw</FONT> e;
+<A NAME="70"></A>        }
+<A NAME="71"></A>    }
+<A NAME="72"></A>
+<A NAME="73"></A>    <FONT ID="FormalComment">/**
+<A NAME="74"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="75"></A>     *
+<A NAME="76"></A>     * @param img
+<A NAME="77"></A>     * @param newW
+<A NAME="78"></A>     * @param newH
+<A NAME="79"></A>     * @return
+<A NAME="80"></A>     */</FONT>
+<A NAME="81"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> BufferedImage resizeImage(BufferedImage img, <FONT ID="Int">int</FONT> newW, <FONT ID="Int">int</FONT> newH) {
+<A NAME="82"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> w = img.getWidth();
+<A NAME="83"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> h = img.getHeight();
+<A NAME="84"></A>        BufferedImage dimg = <FONT ID="New">new</FONT> BufferedImage(newW, newH, img.getType());
+<A NAME="85"></A>        Graphics2D g = dimg.createGraphics();
+<A NAME="86"></A>        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+<A NAME="87"></A>        g.drawImage(img, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, newW, newH, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, w, h, <FONT ID="Null">null</FONT>);
+<A NAME="88"></A>        g.dispose();
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> dimg;
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    <FONT ID="FormalComment">/**
+<A NAME="93"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="94"></A>     * &lt;p/&gt;
+<A NAME="95"></A>     * modified by me to scale image as per web page requirement of 190px of width. Thats it.
+<A NAME="96"></A>     * Hence, this accepts only the width parameter and will scale the hight proportaionaltely
+<A NAME="97"></A>     *
+<A NAME="98"></A>     * @param img
+<A NAME="99"></A>     * @param newWidth
+<A NAME="100"></A>     * @return
+<A NAME="101"></A>     */</FONT>
+<A NAME="102"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> BufferedImage scaleImage(<FONT ID="Final">final</FONT> BufferedImage img, <FONT ID="Int">int</FONT> newWidth) {
+<A NAME="103"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> oldWidth = img.getWidth();
+<A NAME="104"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> oldHeight = img.getHeight();
+<A NAME="105"></A>
+<A NAME="106"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> newHeight = (<FONT ID="Int">int</FONT>) Math.round(((<FONT ID="Double">double</FONT>) newWidth / (<FONT ID="Double">double</FONT>) oldWidth) * (<FONT ID="Double">double</FONT>) oldHeight);
+<A NAME="107"></A>
+<A NAME="108"></A>        <FONT ID="Final">final</FONT> BufferedImage dimg = <FONT ID="New">new</FONT> BufferedImage(newWidth, newHeight, img.getType());
+<A NAME="109"></A>        <FONT ID="Final">final</FONT> Graphics2D g = dimg.createGraphics();
+<A NAME="110"></A>        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+<A NAME="111"></A>        g.drawImage(img, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, newWidth, newHeight, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, oldWidth, oldHeight, <FONT ID="Null">null</FONT>);
+<A NAME="112"></A>        g.dispose();
+<A NAME="113"></A>        <FONT ID="Return">return</FONT> dimg;
+<A NAME="114"></A>    }
+<A NAME="115"></A>
+<A NAME="116"></A>    <FONT ID="FormalComment">/**
+<A NAME="117"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="118"></A>     * &lt;p/&gt;
+<A NAME="119"></A>     * Saves a BufferedImage to the given file, pathname must not have any
+<A NAME="120"></A>     * periods "." in it except for the one before the format, i.e. C:/images/fooimage.png
+<A NAME="121"></A>     * &lt;p/&gt;
+<A NAME="122"></A>     *
+<A NAME="123"></A>     * @param img
+<A NAME="124"></A>     * @param ref
+<A NAME="125"></A>     */</FONT>
+<A NAME="126"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> saveImage(<FONT ID="Final">final</FONT> BufferedImage img, <FONT ID="Final">final</FONT> File ref) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="127"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="128"></A>            <FONT ID="SingleLineComment">//final String format = (ref.endsWith(".png")) ? "png" : "jpg";
+<A NAME="129"></A></FONT>            <FONT ID="SingleLineComment">//ImageIO.write(img, format, new File(ref));
+<A NAME="130"></A></FONT>            ImageIO.write(img, ref.getName().substring(ref.getName().lastIndexOf(<FONT ID="StringLiteral">"."</FONT>) + <FONT ID="IntegerLiteral">1</FONT>), ref);
+<A NAME="131"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="132"></A>            EXCEPTION.error(Loggers.EMBED, e);
+<A NAME="133"></A>            <FONT ID="Throw">throw</FONT> e;
+<A NAME="134"></A>        }
+<A NAME="135"></A>    }
+<A NAME="136"></A>
+<A NAME="137"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> isOK() {
+<A NAME="138"></A>        <FONT ID="If">if</FONT> (!OK_) {
+<A NAME="139"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(SORRY_MAIL_SESSION_BEAN_INITIALIZATION_FAILED);
+<A NAME="140"></A>        }
+<A NAME="141"></A>    }
+<A NAME="142"></A>
+<A NAME="143"></A><FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="144"></A></FONT>
+<A NAME="145"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Boolean">boolean</FONT> doLogin() {
+<A NAME="146"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="147"></A>            client = <FONT ID="New">new</FONT> FilesClient(RBGet.globalConfig.getString(U53_R_NAM3), RBGet.globalConfig.getString(CL0_UD_K3_Y), <FONT ID="Null">null</FONT>);
+<A NAME="148"></A>            <FONT ID="Boolean">boolean</FONT> result = client.login();
+<A NAME="149"></A>
+<A NAME="150"></A>            <FONT ID="If">if</FONT> (result) {
+<A NAME="151"></A>                Loggers.log(Loggers.LEVEL.SERVER_STATUS, Loggers.EMBED, LOGGED_INTO_RACKSPACE);
+<A NAME="152"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="153"></A>                Loggers.log(Loggers.LEVEL.SERVER_STATUS, Loggers.EMBED, LOGIN_INTO_RACKSPACE_FAILED);
+<A NAME="154"></A>            }
+<A NAME="155"></A>
+<A NAME="156"></A>            <FONT ID="Return">return</FONT> result;
+<A NAME="157"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="158"></A>            Loggers.log(Loggers.LEVEL.ERROR, Loggers.EMBED, e);
+<A NAME="159"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="160"></A>        }
+<A NAME="161"></A>    }
+<A NAME="162"></A>
+<A NAME="163"></A><FONT ID="SingleLineComment">//    /**
+<A NAME="164"></A></FONT><FONT ID="SingleLineComment">//     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="165"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="166"></A></FONT><FONT ID="SingleLineComment">//     * @param ref
+<A NAME="167"></A></FONT><FONT ID="SingleLineComment">//     * @param img
+<A NAME="168"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="169"></A></FONT><FONT ID="SingleLineComment">//    public static void saveOldWay(final String ref, final BufferedImage img) {
+<A NAME="170"></A></FONT><FONT ID="SingleLineComment">//        BufferedOutputStream out;
+<A NAME="171"></A></FONT><FONT ID="SingleLineComment">//        try {
+<A NAME="172"></A></FONT><FONT ID="SingleLineComment">//            out = new BufferedOutputStream(new FileOutputStream(ref));
+<A NAME="173"></A></FONT><FONT ID="SingleLineComment">//            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+<A NAME="174"></A></FONT><FONT ID="SingleLineComment">//            JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(img);
+<A NAME="175"></A></FONT><FONT ID="SingleLineComment">//            int quality = 5;
+<A NAME="176"></A></FONT><FONT ID="SingleLineComment">//            quality = Math.max(0, Math.min(quality, 100));
+<A NAME="177"></A></FONT><FONT ID="SingleLineComment">//            param.setQuality((float) quality / 100.0f, false);
+<A NAME="178"></A></FONT><FONT ID="SingleLineComment">//            encoder.setJPEGEncodeParam(param);
+<A NAME="179"></A></FONT><FONT ID="SingleLineComment">//            encoder.encode(img);
+<A NAME="180"></A></FONT><FONT ID="SingleLineComment">//            out.close();
+<A NAME="181"></A></FONT><FONT ID="SingleLineComment">//        } catch (final Exception e) {
+<A NAME="182"></A></FONT><FONT ID="SingleLineComment">//            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+<A NAME="183"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="184"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="185"></A></FONT>}</pre>
+</BODY>
+</HTML>

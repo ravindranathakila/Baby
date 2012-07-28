@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.management.MemoryWarningSystem (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">MemoryWarningSystem.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.management;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/ThreadSleep.java.html">ai.ilikeplaces.util.ThreadSleep</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.management.Notification;
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.management.NotificationEmitter;
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.management.NotificationListener;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.lang.management.ManagementFactory;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.lang.management.MemoryNotificationInfo;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.lang.management.MemoryPoolMXBean;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.lang.management.MemoryType;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="14"></A><FONT ID="Import">import</FONT> java.util.Collection;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="FormalComment">/**
+<A NAME="17"></A> * This memory warning system will call the listener when we
+<A NAME="18"></A> * exceed the percentage of available memory specified.  There
+<A NAME="19"></A> * should only be one instance of this object created, since the
+<A NAME="20"></A> * usage threshold can only be set to one number.
+<A NAME="21"></A> * &lt;p/&gt;
+<A NAME="22"></A> * &lt;p/&gt;
+<A NAME="23"></A> * &lt;b&gt;OutOfMemoryError Warning System&lt;/b&gt;
+<A NAME="24"></A> * &lt;p/&gt;
+<A NAME="25"></A> * source:
+<A NAME="26"></A> * 2004-07-20 The Java Specialists' Newsletter [Issue 092] - OutOfMemoryError Warning System
+<A NAME="27"></A> * &lt;p/&gt;
+<A NAME="28"></A> * Author: Dr. Heinz M. Kabutz
+<A NAME="29"></A> * &lt;p/&gt;
+<A NAME="30"></A> * Found by me at : http://www.roseindia.net/javatutorials/OutOfMemoryError_Warning_System.shtml
+<A NAME="31"></A> * &lt;p/&gt;
+<A NAME="32"></A> * &lt;p/&gt;
+<A NAME="33"></A> * In Issue 061 of my newsletter, I asked readers whether their applications had ever caused an OutOfMemoryError. I then asked them to email me if they would like to know how to receive a warning, shortly before it was about to happen. Wow, the response! The requests kept on pouring in, and so far, I have had over 200 enquiries. At the time, my ideas for a warning system were sketchy at best, and would have been hopelessly inaccurate, in comparison to what JDK 1.5 offers us.
+<A NAME="34"></A> * &lt;p/&gt;
+<A NAME="35"></A> * JDK 1.5 has added some wonderful new management beans that make writing an OutOfMemoryError Warning System possible. The most difficult part was probably finding resources on the topic. Google turned up two resources: The JDK documentation and a website written in Japanese ;-)
+<A NAME="36"></A> * &lt;p/&gt;
+<A NAME="37"></A> * An OutOfMemoryError (OOME) is bad. It can happen at any time, with any thread. There is little that you can do about it, except to exit the program, change the -Xmx value, and restart the JVM. If you then make the -Xmx value too large, you slow down your application. The secret is to make the maximum heap value the right size, neither too small, nor too big. OOME can happen with any thread, and when it does, that thread typically dies. Often, there is not enough memory to build up a stack trace for the OOME, so you cannot even determine where it occurred, or why. You can use the exception catching mechanism of Issue 089, but that is then an after-the-fact measure, rather than preventative.
+<A NAME="38"></A> * &lt;p/&gt;
+<A NAME="39"></A> * In January this year, I was migrating a program from MySQL to MS SQL Server. The author of the original program had used some JDBC commands that caused memory leaks under the SQL Server JDBC driver. This meant that periodically, one of the application's threads would simply vanish, leaving parts of the system paralyzed. Eliminating the OOME was a major task, and only happened when I rewrote all the database access code!
+<A NAME="40"></A> * &lt;p/&gt;
+<A NAME="41"></A> * Back to the issue at hand - how can we know when OOME's are about to occur? The answer lies in the java.lang.management package of JDK 1.5. The ManagementFactory class returns all sorts of useful JMX beans that we can use to manage the JVM. One of these beans is the MemoryMXBean. Sun's implementation of the MemoryMXBean interface also implements the interface javax.management.NotificationEmitter. The recommended way of listening to notifications by the memory bean is by downcasting the MemoryMXBean to the NotificationEmitter interface. I can hardly believe it myself, you can verify this by looking at the documentation of the MemoryMXBean.
+<A NAME="42"></A> * &lt;p/&gt;
+<A NAME="43"></A> * Once you have downcast the MemoryMXBean to a NotificationEmitter, you can add a NotificationListener to the MemoryMXBean. You should verify that the notification is of type MEMORY_THRESHOLD_EXCEEDED. In my MemoryWarningSystem you add listeners that implement the MemoryWarningSystem.Listener interface, with one method memoryUsageLow(long usedMemory, long maxMemory) that will be called when the threshold is reached. In my experiments, the memory bean notifies us quite soon after the usage threshold has been exceeded, but I could not determine the granularity. Something to note is that the listener is being called by a special thread, called the Low Memory Detector thread, that is now part of the standard JVM.
+<A NAME="44"></A> * &lt;p/&gt;
+<A NAME="45"></A> * What is the threshold? And which of the many pools should we monitor? The only sensible pool to monitor is the Tenured Generation (Old Space). When you set the size of the memory with -Xmx256m, you are setting the maximum memory to be used in the Tenured Generation. I could not find a neat way of finding the tenured generation, except by looking through all the pools in my findTenuredGenPool() method, and returning the first one that was of type HEAP and where I was permitted to specify a usage threshold. I do not know whether a better approach would not have been to search for the name "Tenured Gen"?
+<A NAME="46"></A> * &lt;p/&gt;
+<A NAME="47"></A> * In my setPercentageUsageThreshold(double percentage) method, I specify when I would like to be notified. Note that this is a global setting since you can only have one usage threshold per Java Virtual Machine. The percentage is used to calculate the usage threshold, based on the maximum memory size of the Tenured Generation pool (not the Runtime.getRuntime().maxMemory() value!).
+<A NAME="48"></A> */</FONT>
+<A NAME="49"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> MemoryWarningSystem {
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> Collection&lt;MemoryListener&gt; memoryListeners = <FONT ID="New">new</FONT> ArrayList&lt;MemoryListener&gt;();
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Double">double</FONT> MemoryNormalValue = <FONT ID="FloatPointLiteral">0.2</FONT>;
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Double">double</FONT> MemoryThreshold = <FONT ID="FloatPointLiteral">0.9</FONT>;
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> IllegalStateException ILLEGAL_STATE_EXCEPTION = <FONT ID="New">new</FONT> IllegalStateException(<FONT ID="StringLiteral">"SORRY! FREE_MEMORY_THRESHOLD&lt; ( 1 - MEMORY_THRESHOLD) IS NOT LOGICAL."</FONT>);
+<A NAME="56"></A>
+<A NAME="57"></A>
+<A NAME="58"></A><FONT ID="SingleLineComment">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<A NAME="59"></A></FONT>
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> MemoryListener {
+<A NAME="61"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> memoryUsageLow(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> usedMemory, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> maxMemory);
+<A NAME="62"></A>
+<A NAME="63"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> memoryUsageNormal(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> usedMemory, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> maxMemory);
+<A NAME="64"></A>    }
+<A NAME="65"></A>
+<A NAME="66"></A><FONT ID="SingleLineComment">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<A NAME="67"></A></FONT>
+<A NAME="68"></A>    <FONT ID="FormalComment">/**
+<A NAME="69"></A>     * Tenured Space Pool can be determined by it being of type
+<A NAME="70"></A>     * HEAP and by it being possible to set the usage threshold.
+<A NAME="71"></A>     *
+<A NAME="72"></A>     * @return
+<A NAME="73"></A>     */</FONT>
+<A NAME="74"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> MemoryPoolMXBean findTenuredGenPool() {
+<A NAME="75"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> MemoryPoolMXBean pool : ManagementFactory.getMemoryPoolMXBeans()) {
+<A NAME="76"></A>            <FONT ID="SingleLineComment">// I don't know whether this approach is better, or whether
+<A NAME="77"></A></FONT>            <FONT ID="SingleLineComment">// we should rather check for the pool name "Tenured Gen"?
+<A NAME="78"></A></FONT>            <FONT ID="If">if</FONT> (pool.getType() == MemoryType.HEAP &amp;&amp; pool.isUsageThresholdSupported()) {
+<A NAME="79"></A>                <FONT ID="Return">return</FONT> pool;
+<A NAME="80"></A>            }
+<A NAME="81"></A>        }
+<A NAME="82"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> AssertionError(<FONT ID="StringLiteral">"SORRY!COULD NOT FIND TENURED SPACE."</FONT>);
+<A NAME="83"></A>    }
+<A NAME="84"></A>
+<A NAME="85"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> MemoryPoolMXBean tenuredGenPool = findTenuredGenPool();
+<A NAME="86"></A>
+<A NAME="87"></A><FONT ID="SingleLineComment">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<A NAME="88"></A></FONT>
+<A NAME="89"></A>    <FONT ID="Public">public</FONT> MemoryWarningSystem() {
+<A NAME="90"></A>        <FONT ID="If">if</FONT>(MemoryNormalValue + MemoryThreshold &lt; <FONT ID="IntegerLiteral">1</FONT>){
+<A NAME="91"></A>            <FONT ID="Throw">throw</FONT> ILLEGAL_STATE_EXCEPTION;
+<A NAME="92"></A>        }
+<A NAME="93"></A>
+<A NAME="94"></A>        <FONT ID="Final">final</FONT> NotificationEmitter emitter = (NotificationEmitter) ManagementFactory.getMemoryMXBean();
+<A NAME="95"></A>
+<A NAME="96"></A>        emitter.addNotificationListener(<FONT ID="New">new</FONT> NotificationListener() {
+<A NAME="97"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleNotification(Notification n, Object hb) {
+<A NAME="98"></A>                <FONT ID="If">if</FONT> (n.getType().equals(MemoryNotificationInfo.MEMORY_THRESHOLD_EXCEEDED)) {
+<A NAME="99"></A>                    <FONT ID="Long">long</FONT> maxMemory = tenuredGenPool.getUsage().getMax();
+<A NAME="100"></A>                    <FONT ID="Long">long</FONT> usedMemory = tenuredGenPool.getUsage().getUsed();
+<A NAME="101"></A>
+<A NAME="102"></A>                    <FONT ID="SingleLineComment">//New thread to monitor free state of memory
+<A NAME="103"></A></FONT>                    <FONT ID="Final">final</FONT> Thread r = <FONT ID="New">new</FONT> Thread(
+<A NAME="104"></A>                            <FONT ID="New">new</FONT> Runnable() {
+<A NAME="105"></A>                                <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> Collection&lt;MemoryListener&gt; mylisteners = memoryListeners;
+<A NAME="106"></A>                                <FONT ID="Final">final</FONT> MemoryPoolMXBean mytenuredGenPool = tenuredGenPool;
+<A NAME="107"></A>                                <FONT ID="Long">long</FONT> timeout = <FONT ID="IntegerLiteral">2000</FONT>;
+<A NAME="108"></A>                                <FONT ID="Double">double</FONT> free = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="109"></A>
+<A NAME="110"></A>                                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="111"></A>                                    ThreadSleep.sleep(<FONT ID="IntegerLiteral">2000</FONT>);
+<A NAME="112"></A>                                    Loggers.STATUS.info(<FONT ID="StringLiteral">"Hello! I started the normal memory checker."</FONT>);
+<A NAME="113"></A>                                    loop:
+<A NAME="114"></A>                                    <FONT ID="While">while</FONT> (<FONT ID="True">true</FONT>) {
+<A NAME="115"></A>                                        ThreadSleep.sleep(<FONT ID="IntegerLiteral">2000</FONT>);
+<A NAME="116"></A>                                        <FONT ID="SingleLineComment">//we don't want to create local variable since if the loop is set to go fast, it will consume memory
+<A NAME="117"></A></FONT>                                        free = ((<FONT ID="Double">double</FONT>) (mytenuredGenPool.getUsage().getMax() - mytenuredGenPool.getUsage().getUsed()) / (<FONT ID="Double">double</FONT>) mytenuredGenPool.getUsage().getMax());
+<A NAME="118"></A>                                        <FONT ID="If">if</FONT> (free &gt; MemoryNormalValue) {
+<A NAME="119"></A>                                            Loggers.STATUS.info(<FONT ID="StringLiteral">"Memory Back to Normal. Free Percentage:"</FONT> + free);
+<A NAME="120"></A>                                            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> MemoryListener listener : mylisteners) {
+<A NAME="121"></A>                                                listener.memoryUsageNormal(mytenuredGenPool.getUsage().getUsed(), mytenuredGenPool.getUsage().getMax());
+<A NAME="122"></A>                                            }
+<A NAME="123"></A>                                            <FONT ID="Break">break</FONT> loop;
+<A NAME="124"></A>                                        }
+<A NAME="125"></A>                                    }
+<A NAME="126"></A>                                }
+<A NAME="127"></A>                            }
+<A NAME="128"></A>                    );
+<A NAME="129"></A>                    r.setUncaughtExceptionHandler(<FONT ID="New">new</FONT> Thread.UncaughtExceptionHandler() {
+<A NAME="130"></A>                        @Override
+<A NAME="131"></A>                        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> uncaughtException(Thread t, Throwable e) {
+<A NAME="132"></A>                            Loggers.WARN.error(<FONT ID="StringLiteral">"SORRY! MEMC BACK TO NORMAL MONITOR THREAD POSSIBLY FAILED!"</FONT>, e);
+<A NAME="133"></A>                        }
+<A NAME="134"></A>                    });
+<A NAME="135"></A>                    r.setName(<FONT ID="StringLiteral">"Normal Memory Detector"</FONT>);
+<A NAME="136"></A>                    r.start();
+<A NAME="137"></A>
+<A NAME="138"></A>                    <FONT ID="For">for</FONT> (MemoryListener memoryListener : memoryListeners) {
+<A NAME="139"></A>                        memoryListener.memoryUsageLow(usedMemory, maxMemory);
+<A NAME="140"></A>                    }
+<A NAME="141"></A>
+<A NAME="142"></A>
+<A NAME="143"></A>                }
+<A NAME="144"></A>            }
+<A NAME="145"></A>        }, <FONT ID="Null">null</FONT>, <FONT ID="Null">null</FONT>);
+<A NAME="146"></A>    }
+<A NAME="147"></A>
+<A NAME="148"></A>
+<A NAME="149"></A><FONT ID="SingleLineComment">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<A NAME="150"></A></FONT>
+<A NAME="151"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> addListener(<FONT ID="Final">final</FONT> MemoryListener memoryListener) {
+<A NAME="152"></A>        <FONT ID="Return">return</FONT> memoryListeners.add(memoryListener);
+<A NAME="153"></A>    }
+<A NAME="154"></A>
+<A NAME="155"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> removeListener(<FONT ID="Final">final</FONT> MemoryListener memoryListener) {
+<A NAME="156"></A>        <FONT ID="Return">return</FONT> memoryListeners.remove(memoryListener);
+<A NAME="157"></A>    }
+<A NAME="158"></A>
+<A NAME="159"></A><FONT ID="SingleLineComment">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<A NAME="160"></A></FONT>
+<A NAME="161"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setPercentageUsageThreshold(<FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> threshold) {
+<A NAME="162"></A>        <FONT ID="If">if</FONT> (threshold &lt;= <FONT ID="FloatPointLiteral">0.0</FONT> || threshold &gt; <FONT ID="FloatPointLiteral">1.0</FONT>) {
+<A NAME="163"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException(<FONT ID="StringLiteral">"Threshold value should be between "</FONT> + <FONT ID="FloatPointLiteral">0.0</FONT> + <FONT ID="StringLiteral">" and "</FONT> + <FONT ID="FloatPointLiteral">1.0</FONT>);
+<A NAME="164"></A>        }
+<A NAME="165"></A>        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> maxMemory = tenuredGenPool.getUsage().getMax();
+<A NAME="166"></A>        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> warningThreshold = (<FONT ID="Long">long</FONT>) (maxMemory * threshold);
+<A NAME="167"></A>        tenuredGenPool.setUsageThreshold(warningThreshold);
+<A NAME="168"></A>        MemoryThreshold = threshold;
+<A NAME="169"></A>    }
+<A NAME="170"></A>
+<A NAME="171"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setPercentageUsageNormal(<FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> normalAgain) {
+<A NAME="172"></A>        <FONT ID="If">if</FONT> (normalAgain &lt;= <FONT ID="FloatPointLiteral">0.0</FONT> || normalAgain &gt; <FONT ID="FloatPointLiteral">1.0</FONT>) {
+<A NAME="173"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException(<FONT ID="StringLiteral">"Memory normal value should be between "</FONT> + <FONT ID="FloatPointLiteral">0.0</FONT> + <FONT ID="StringLiteral">" and "</FONT> + <FONT ID="FloatPointLiteral">1.0</FONT>);
+<A NAME="174"></A>        }
+<A NAME="175"></A>        MemoryNormalValue = normalAgain;
+<A NAME="176"></A>    }
+<A NAME="177"></A>
+<A NAME="178"></A><FONT ID="SingleLineComment">////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<A NAME="179"></A></FONT>
+<A NAME="180"></A>}
+<A NAME="181"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CRUDAlbumLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CRUDAlbumLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">ai.ilikeplaces.entities.Album</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">ai.ilikeplaces.util.jpa.RefreshException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * @author Ravindranath Akila
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="18"></A>@Local
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> CRUDAlbumLocal {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="FormalComment">/**
+<A NAME="22"></A>     *
+<A NAME="23"></A>     * @param privateEventId
+<A NAME="24"></A>     * @param humanId
+<A NAME="25"></A>     * @param photoUrl
+<A NAME="26"></A>     * @return
+<A NAME="27"></A>     * @throws DBDishonourCheckedException
+<A NAME="28"></A>     * @throws DBFetchDataException
+<A NAME="29"></A>     */</FONT>
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doUAlbumOfPrivateEventAddEntry(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId, <FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> String photoUrl) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="FormalComment">/**
+<A NAME="33"></A>     * @param humanId
+<A NAME="34"></A>     * @param privateEventId by which to fetch the album
+<A NAME="35"></A>     * @param eager
+<A NAME="36"></A>     * @return
+<A NAME="37"></A>     * @throws DBDishonourCheckedException
+<A NAME="38"></A>     */</FONT>
+<A NAME="39"></A>    @Deprecated
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doRAlbumByPrivateEvent(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> eager) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="41"></A>
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="FormalComment">/**
+<A NAME="44"></A>     * @param humanId
+<A NAME="45"></A>     * @param privateEventId by which to fetch the album
+<A NAME="46"></A>     * @param refreshSpec
+<A NAME="47"></A>     * @return
+<A NAME="48"></A>     * @throws DBDishonourCheckedException
+<A NAME="49"></A>     */</FONT>
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doRAlbumByPrivateEvent(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="51"></A>
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="FormalComment">/**
+<A NAME="54"></A>     *
+<A NAME="55"></A>     * @param tribeId
+<A NAME="56"></A>     * @param humanId
+<A NAME="57"></A>     * @param photoUrl
+<A NAME="58"></A>     * @return
+<A NAME="59"></A>     * @throws DBDishonourCheckedException
+<A NAME="60"></A>     * @throws DBFetchDataException
+<A NAME="61"></A>     */</FONT>
+<A NAME="62"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doUAlbumOfTribeAddEntry(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> tribeId, <FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> String photoUrl) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>, <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A>;
+<A NAME="63"></A>
+<A NAME="64"></A>
+<A NAME="65"></A>    <FONT ID="FormalComment">/**
+<A NAME="66"></A>     * @param humanId
+<A NAME="67"></A>     * @param tribeId by which to fetch the album
+<A NAME="68"></A>     * @param refreshSpec
+<A NAME="69"></A>     * @return
+<A NAME="70"></A>     * @throws DBDishonourCheckedException
+<A NAME="71"></A>     */</FONT>
+<A NAME="72"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doRAlbumByTribe(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> tribeId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="73"></A>}</pre>
+</BODY>
+</HTML>

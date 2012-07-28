@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.MethodParams (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">MethodParams.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.interceptor.AroundInvoke;
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.interceptor.InvocationContext;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.Arrays;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> * Created by IntelliJ IDEA.
+<A NAME="13"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="14"></A> * Date: Jan 15, 2010
+<A NAME="15"></A> * Time: 1:14:18 AM
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>
+<A NAME="18"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> MethodParams {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/util/MethodParams.java.html">MethodParams</A>.<FONT ID="Class">class</FONT>);
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SORRY_YOU_CANNOT_ASSIGN_A_NULL = <FONT ID="StringLiteral">"SORRY! YOU CANNOT ASSIGN A NULL."</FONT>;
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;Boolean&gt; DO_LOG = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Obj.java.html">Obj</A>&lt;Boolean&gt;(<FONT ID="True">true</FONT>) {
+<A NAME="25"></A>
+<A NAME="26"></A>        @Override
+<A NAME="27"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setObj(<FONT ID="Final">final</FONT> Boolean status) {
+<A NAME="28"></A>            <FONT ID="If">if</FONT> (status != <FONT ID="Null">null</FONT>) {
+<A NAME="29"></A>                obj = status;
+<A NAME="30"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="31"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> SecurityException(SORRY_YOU_CANNOT_ASSIGN_A_NULL);
+<A NAME="32"></A>            }
+<A NAME="33"></A>        }
+<A NAME="34"></A>    };
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TARGET = <FONT ID="StringLiteral">"TARGET: "</FONT>;
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String METHOD_NAME = <FONT ID="StringLiteral">"\tMETHOD NAME: "</FONT>;
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PARAMETERS = <FONT ID="StringLiteral">"\tPARAMETERS: "</FONT>;
+<A NAME="38"></A>
+<A NAME="39"></A>    @AroundInvoke
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> Object profile(InvocationContext invocation) <FONT ID="Throws">throws</FONT> Exception {
+<A NAME="41"></A>        <FONT ID="If">if</FONT> (DO_LOG.getObj()) {
+<A NAME="42"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="43"></A>                logger.debug(
+<A NAME="44"></A>                        TARGET + invocation.getTarget().toString() +
+<A NAME="45"></A>                                METHOD_NAME + invocation.getMethod().getName() +
+<A NAME="46"></A>                                PARAMETERS + Arrays.toString(invocation.getParameters()));
+<A NAME="47"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="48"></A>                Loggers.EXCEPTION.error(<FONT ID="StringLiteral">"SORRY! I FAILED TO LOG THE METHOD PARAMETERS. DETAILS FOLLOW:"</FONT>, t);
+<A NAME="49"></A>            }
+<A NAME="50"></A>            <FONT ID="Return">return</FONT> invocation.proceed();
+<A NAME="51"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="52"></A>            <FONT ID="Return">return</FONT> invocation.proceed();
+<A NAME="53"></A>        }
+<A NAME="54"></A>    }
+<A NAME="55"></A>}</pre>
+</BODY>
+</HTML>

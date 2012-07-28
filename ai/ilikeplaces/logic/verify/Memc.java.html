@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.verify.Memc (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Memc.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.verify;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/mail/SendMailLocal.java.html">ai.ilikeplaces.logic.mail.SendMailLocal</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/management/MemorySafe.java.html">ai.ilikeplaces.management.MemorySafe</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.annotation.Resource;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.*;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.text.SimpleDateFormat;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.util.Date;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="FormalComment">/**
+<A NAME="20"></A> * Created by IntelliJ IDEA.
+<A NAME="21"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="22"></A> * Date: Apr 29, 2010
+<A NAME="23"></A> * Time: 4:10:12 PM
+<A NAME="24"></A> */</FONT>
+<A NAME="25"></A>
+<A NAME="26"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="27"></A>@Stateless
+<A NAME="28"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Memc <FONT ID="Extends">extends</FONT> <A HREF="../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/verify/MemcLocal.java.html">MemcLocal</A> {
+<A NAME="29"></A>    @Resource
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> TimerService timerService;
+<A NAME="31"></A>
+<A NAME="32"></A>    @EJB
+<A NAME="33"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/mail/SendMailLocal.java.html">SendMailLocal</A> sendMailLocal;
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> interval = <FONT ID="IntegerLiteral">10000</FONT>;
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Runtime RUNTIME = Runtime.getRuntime();
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MEMC_MILLIS_FREE = <FONT ID="StringLiteral">"MEMC{millis,free}:"</FONT>;
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String STRING_OPEN_BRACE = <FONT ID="StringLiteral">"{"</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String STRING_CLOSE_BRACE = <FONT ID="StringLiteral">"}"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String STRING_COMMA = <FONT ID="StringLiteral">","</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Long">long</FONT> lastWarningMail = System.currentTimeMillis() - <FONT ID="IntegerLiteral">24</FONT> * <FONT ID="IntegerLiteral">60</FONT> * <FONT ID="IntegerLiteral">60</FONT> * <FONT ID="IntegerLiteral">1000</FONT>;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Long">long</FONT> lastStatusMail = System.currentTimeMillis() - <FONT ID="IntegerLiteral">24</FONT> * <FONT ID="IntegerLiteral">60</FONT> * <FONT ID="IntegerLiteral">60</FONT> * <FONT ID="IntegerLiteral">1000</FONT>;
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> MB = <FONT ID="IntegerLiteral">1024</FONT> * <FONT ID="IntegerLiteral">1024</FONT>;
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NOTIFY_MAIL = <FONT ID="StringLiteral">"ravindranathakila@gmail.com"</FONT>;
+<A NAME="45"></A>
+<A NAME="46"></A>    @FIXME(issue = <FONT ID="StringLiteral">"SimpleDateFormat is concurrent safe?"</FONT>)
+<A NAME="47"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> SimpleDateFormat sdf = <FONT ID="New">new</FONT> SimpleDateFormat(<FONT ID="StringLiteral">"G-yyyy-MM-dd-HH:mm(ss)"</FONT>);
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> MINUTES_10 = Integer.parseInt(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"SERVER_MEMORY_MAIL"</FONT>));
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> HOURS_3 = Integer.parseInt(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"SERVER_LOW_MEMORY_MAIL"</FONT>));
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> LOW_MEMORY_LIMIT = Integer.parseInt(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"LOW_MEMORY_THRESHOLD"</FONT>));
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String STRING_PERCENTAGE = <FONT ID="StringLiteral">"%"</FONT>;
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="FormalComment">/**
+<A NAME="54"></A>     * This method is called manually to start the timer
+<A NAME="55"></A>     */</FONT>
+<A NAME="56"></A>    @Override
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> logTime() {
+<A NAME="58"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, Loggers.CODE_MEMC +
+<A NAME="59"></A>                <FONT ID="StringLiteral">"HELLO, STARTING MEMC TIMER  WITH TIMER INTERVAL:"</FONT> + interval,
+<A NAME="60"></A>                <FONT ID="IntegerLiteral">60000</FONT>,
+<A NAME="61"></A>                <FONT ID="Null">null</FONT>,
+<A NAME="62"></A>                <FONT ID="True">true</FONT>);
+<A NAME="63"></A>        timerService.createTimer(<FONT ID="IntegerLiteral">0</FONT>, interval, <FONT ID="Null">null</FONT>);
+<A NAME="64"></A>        sl.complete(Loggers.LEVEL.INFO, Loggers.DONE);
+<A NAME="65"></A>    }
+<A NAME="66"></A>
+<A NAME="67"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> sendAlertMail(<FONT ID="Final">final</FONT> String status) {
+<A NAME="68"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="69"></A>            <FONT ID="New">new</FONT> Thread(<FONT ID="New">new</FONT> Runnable() {
+<A NAME="70"></A>
+<A NAME="71"></A>                @Override
+<A NAME="72"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="73"></A>                    sendEmail:
+<A NAME="74"></A>                    {
+<A NAME="75"></A>                        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl = SmartLogger.start(Loggers.LEVEL.INFO, Loggers.CODE_MEMC + <FONT ID="StringLiteral">"Mailing status report to "</FONT> + NOTIFY_MAIL, <FONT ID="IntegerLiteral">60000</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="76"></A>                        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; r = SendMail.getSendMailLocal().sendAsSimpleText(NOTIFY_MAIL, status, getReport().toString());
+<A NAME="77"></A>                        <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; r.returnValue()) {
+<A NAME="78"></A>                            sl.complete(Loggers.LEVEL.INFO, <FONT ID="StringLiteral">"done."</FONT>);
+<A NAME="79"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="80"></A>                            sl.complete(Loggers.LEVEL.ERROR, r.returnError());
+<A NAME="81"></A>                        }
+<A NAME="82"></A>                    }
+<A NAME="83"></A>
+<A NAME="84"></A>                }
+<A NAME="85"></A>            }).start();
+<A NAME="86"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception t) {
+<A NAME="87"></A>            Loggers.STATUS.error(<FONT ID="StringLiteral">"SORRY! AN ERROR OCCURRED WHILE TRYING TO SEND ALERT MAIL."</FONT>, t);
+<A NAME="88"></A>        }
+<A NAME="89"></A>    }
+<A NAME="90"></A>
+<A NAME="91"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> StringBuilder getReport() {
+<A NAME="92"></A>        <FONT ID="Final">final</FONT> StringBuilder report = <FONT ID="New">new</FONT> StringBuilder(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="93"></A>        report
+<A NAME="94"></A>                .append(<FONT ID="StringLiteral">"Max Memory:"</FONT>).append(RUNTIME.maxMemory() / MB).append(<FONT ID="StringLiteral">"\n"</FONT>)
+<A NAME="95"></A>                .append(<FONT ID="StringLiteral">"Total Memory:"</FONT>).append(RUNTIME.totalMemory() / MB).append(<FONT ID="StringLiteral">"\n"</FONT>)
+<A NAME="96"></A>                .append(<FONT ID="StringLiteral">"Used Memory:"</FONT>).append(RUNTIME.totalMemory() - RUNTIME.freeMemory() / MB).append(<FONT ID="StringLiteral">"\n"</FONT>)
+<A NAME="97"></A>                .append(<FONT ID="StringLiteral">"Free Memory:"</FONT>).append(RUNTIME.freeMemory() / MB).append(<FONT ID="StringLiteral">"\n"</FONT>).append(<FONT ID="StringLiteral">"\n\n"</FONT>)
+<A NAME="98"></A>                .append(<FONT ID="StringLiteral">"Report Generated At:"</FONT>).append(sdf.format(<FONT ID="New">new</FONT> Date(System.currentTimeMillis())));
+<A NAME="99"></A>        <FONT ID="Return">return</FONT> report;
+<A NAME="100"></A>    }
+<A NAME="101"></A>
+<A NAME="102"></A>    <FONT ID="FormalComment">/**
+<A NAME="103"></A>     * Simple check to see and log if Out of Memory Occurs
+<A NAME="104"></A>     * synchronized to avoid concurrent calls with delayed timers
+<A NAME="105"></A>     *
+<A NAME="106"></A>     * @param timer
+<A NAME="107"></A>     */</FONT>
+<A NAME="108"></A>    @Timeout
+<A NAME="109"></A>    <FONT ID="Synchronized">synchronized</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> outOfMemoryCheck(<FONT ID="Final">final</FONT> Timer timer) {
+<A NAME="110"></A>        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> free = RUNTIME.freeMemory();
+<A NAME="111"></A>        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> total = RUNTIME.totalMemory();
+<A NAME="112"></A>        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> now = System.currentTimeMillis();
+<A NAME="113"></A>
+<A NAME="114"></A>        <FONT ID="If">if</FONT> ((free / MB) &lt; LOW_MEMORY_LIMIT) {
+<A NAME="115"></A>            warningMail:
+<A NAME="116"></A>            {
+<A NAME="117"></A>                <FONT ID="If">if</FONT> ((now - lastWarningMail) &gt; MINUTES_10) {
+<A NAME="118"></A>                    lastWarningMail = now;
+<A NAME="119"></A>                    sendAlertMail(<FONT ID="StringLiteral">"ILPREPORT - LOW MEMORY AT I LIKE PLACES"</FONT>);
+<A NAME="120"></A>                }
+<A NAME="121"></A>            }
+<A NAME="122"></A>            Loggers.STATUS.warn(MEMC_MILLIS_FREE + STRING_OPEN_BRACE
+<A NAME="123"></A>                    + (<FONT ID="Double">double</FONT>) free / MemorySafe.MB + STRING_OPEN_BRACE + ((<FONT ID="Double">double</FONT>) free / (<FONT ID="Double">double</FONT>) total) * <FONT ID="IntegerLiteral">100</FONT> + STRING_PERCENTAGE + STRING_CLOSE_BRACE + STRING_COMMA
+<A NAME="124"></A>                    + (<FONT ID="Double">double</FONT>) total / MemorySafe.MB + STRING_CLOSE_BRACE);
+<A NAME="125"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="126"></A>            Loggers.STATUS.info(MEMC_MILLIS_FREE + STRING_OPEN_BRACE
+<A NAME="127"></A>                    + (<FONT ID="Double">double</FONT>) free / MemorySafe.MB + STRING_OPEN_BRACE + ((<FONT ID="Double">double</FONT>) free / (<FONT ID="Double">double</FONT>) total) * <FONT ID="IntegerLiteral">100</FONT> + STRING_PERCENTAGE + STRING_CLOSE_BRACE + STRING_COMMA
+<A NAME="128"></A>                    + (<FONT ID="Double">double</FONT>) total / MemorySafe.MB + STRING_CLOSE_BRACE);
+<A NAME="129"></A>
+<A NAME="130"></A>        }
+<A NAME="131"></A>
+<A NAME="132"></A>        statusMail:
+<A NAME="133"></A>        {
+<A NAME="134"></A>            <FONT ID="If">if</FONT> ((now - lastStatusMail) &gt; HOURS_3) {
+<A NAME="135"></A>                lastStatusMail = now;
+<A NAME="136"></A>                sendAlertMail(<FONT ID="StringLiteral">"ILPREPORT - Monitor Report of I Like Places"</FONT>);
+<A NAME="137"></A>            }
+<A NAME="138"></A>        }
+<A NAME="139"></A>
+<A NAME="140"></A>    }
+<A NAME="141"></A>}
+<A NAME="142"></A>
+<A NAME="143"></A></pre>
+</BODY>
+</HTML>

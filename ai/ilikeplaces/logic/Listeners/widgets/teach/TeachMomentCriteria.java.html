@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMomentCriteria (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TeachMomentCriteria.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets.teach;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A> * Created by IntelliJ IDEA.
+<A NAME="8"></A> * User: Ravindranath Akila
+<A NAME="9"></A> * Date: 11/27/11
+<A NAME="10"></A> * Time: 8:08 AM
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TeachMomentCriteria {
+<A NAME="13"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="14"></A></FONT>
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS (NON-STATIC)--------------------
+<A NAME="17"></A></FONT>
+<A NAME="18"></A>
+<A NAME="19"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId;
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Private">private</FONT> SignupCriteria signupCriteria;
+<A NAME="22"></A>
+<A NAME="23"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="24"></A></FONT>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> TeachMomentCriteria() {
+<A NAME="26"></A>    }
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> TeachMomentCriteria(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="29"></A>
+<A NAME="30"></A>        <FONT ID="This">this</FONT>.humanId = humanId;
+<A NAME="31"></A>    }
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="34"></A></FONT>    <FONT ID="Public">public</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> getHumanId() {
+<A NAME="35"></A>
+<A NAME="36"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="37"></A>    }
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> SignupCriteria getSignupCriteria() {
+<A NAME="40"></A>
+<A NAME="41"></A>        <FONT ID="Return">return</FONT> signupCriteria == <FONT ID="Null">null</FONT> ? (signupCriteria = <FONT ID="New">new</FONT> SignupCriteria()) : signupCriteria;
+<A NAME="42"></A>    }
+<A NAME="43"></A>
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="46"></A></FONT>    <FONT ID="Public">public</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/teach/TeachMomentCriteria.java.html">TeachMomentCriteria</A> setHumanId(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="47"></A>
+<A NAME="48"></A>        <FONT ID="This">this</FONT>.humanId = humanId;
+<A NAME="49"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A><FONT ID="SingleLineComment">// -------------------------- INNER CLASSES --------------------------
+<A NAME="53"></A></FONT>
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SignupCriteria {
+<A NAME="55"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="56"></A></FONT>
+<A NAME="57"></A>
+<A NAME="58"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS (NON-STATIC)--------------------
+<A NAME="59"></A></FONT>
+<A NAME="60"></A>
+<A NAME="61"></A>        <FONT ID="Private">private</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email;
+<A NAME="62"></A>
+<A NAME="63"></A>        <FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="64"></A></FONT>        <FONT ID="Public">public</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> getEmail() {
+<A NAME="65"></A>
+<A NAME="66"></A>            <FONT ID="Return">return</FONT> email == <FONT ID="Null">null</FONT> ? (email = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>()) : email;
+<A NAME="67"></A>        }
+<A NAME="68"></A>
+<A NAME="69"></A>        <FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="70"></A></FONT>        <FONT ID="Public">public</FONT> SignupCriteria setEmail(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email) {
+<A NAME="71"></A>
+<A NAME="72"></A>            <FONT ID="This">this</FONT>.email = email;
+<A NAME="73"></A>            <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="74"></A>        }
+<A NAME="75"></A>    }
+<A NAME="76"></A>}
+<A NAME="77"></A></pre>
+</BODY>
+</HTML>

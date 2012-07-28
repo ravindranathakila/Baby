@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.ElementComposer (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ElementComposer.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.w3c.dom.Node;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.w3c.dom.Text;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="FormalComment">/**
+<A NAME="9"></A> * Created by IntelliJ IDEA.
+<A NAME="10"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="11"></A> * Date: Mar 14, 2010
+<A NAME="12"></A> * Time: 10:23:47 PM
+<A NAME="13"></A> */</FONT>
+<A NAME="14"></A>
+<A NAME="15"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ElementComposer {
+<A NAME="17"></A>
+<A NAME="18"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String A_HREF = <FONT ID="StringLiteral">"&lt;a href='"</FONT>;
+<A NAME="19"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String A_HREF_OPEN_END = <FONT ID="StringLiteral">"' &gt;"</FONT>;
+<A NAME="20"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String A_HREF_CLOSE = <FONT ID="StringLiteral">"&lt;/a&gt;"</FONT>;
+<A NAME="21"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> Element element;
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Private">private</FONT> ElementComposer(<FONT ID="Final">final</FONT> Element element) {
+<A NAME="24"></A>        <FONT ID="This">this</FONT>.element = element;
+<A NAME="25"></A>    }
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="FormalComment">/**
+<A NAME="28"></A>     * Element to be composed can already be initialized.
+<A NAME="29"></A>     * Be prudent about what attributes you set as the element should support it
+<A NAME="30"></A>     *
+<A NAME="31"></A>     * @param elementToBeComposed
+<A NAME="32"></A>     * @return
+<A NAME="33"></A>     */</FONT>
+<A NAME="34"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A> compose(<FONT ID="Final">final</FONT> Element elementToBeComposed) {
+<A NAME="35"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A>(elementToBeComposed);
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> Element get() {
+<A NAME="39"></A>        <FONT ID="Return">return</FONT> element;
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> Node getAsNode() {
+<A NAME="44"></A>        <FONT ID="Return">return</FONT> (Node) element;
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="FormalComment">/**
+<A NAME="48"></A>     * @param elementToBeWrapped and null if nothing needs to be wrapped(ignored)
+<A NAME="49"></A>     * @return ElementComposer
+<A NAME="50"></A>     */</FONT>
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A> wrapThis(<FONT ID="Final">final</FONT> Element elementToBeWrapped) {
+<A NAME="52"></A>        <FONT ID="If">if</FONT> (elementToBeWrapped != <FONT ID="Null">null</FONT>) {
+<A NAME="53"></A>            element.appendChild(elementToBeWrapped);
+<A NAME="54"></A>        }
+<A NAME="55"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="56"></A>    }
+<A NAME="57"></A>
+<A NAME="58"></A>
+<A NAME="59"></A>    <FONT ID="FormalComment">/**
+<A NAME="60"></A>     * @param elementToBeWrappedInto
+<A NAME="61"></A>     * @return ElementComposer
+<A NAME="62"></A>     */</FONT>
+<A NAME="63"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A> wrapIntoThis(<FONT ID="Final">final</FONT> Element elementToBeWrappedInto) {
+<A NAME="64"></A>        elementToBeWrappedInto.appendChild(element);
+<A NAME="65"></A>        <FONT ID="Return">return</FONT> ElementComposer.compose(elementToBeWrappedInto);
+<A NAME="66"></A>    }
+<A NAME="67"></A>
+<A NAME="68"></A>    <FONT ID="FormalComment">/**
+<A NAME="69"></A>     * W3C implementation returns the added element when appending a child.
+<A NAME="70"></A>     * This returns the element appended to. I.E parent
+<A NAME="71"></A>     *
+<A NAME="72"></A>     * @param appendToElement
+<A NAME="73"></A>     * @param childToBeAppended
+<A NAME="74"></A>     * @return appendToElement
+<A NAME="75"></A>     */</FONT>
+<A NAME="76"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Element appendChild(<FONT ID="Final">final</FONT> Element appendToElement, <FONT ID="Final">final</FONT> Element childToBeAppended) {
+<A NAME="77"></A>        appendToElement.appendChild(childToBeAppended);
+<A NAME="78"></A>        <FONT ID="Return">return</FONT> appendToElement;
+<A NAME="79"></A>    }
+<A NAME="80"></A>
+<A NAME="81"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> Element $ElementSetText(<FONT ID="Final">final</FONT> Element elementToBeSetTextOf, <FONT ID="Final">final</FONT> String textToBeSet) {
+<A NAME="82"></A>        ((Text) elementToBeSetTextOf.getFirstChild()).setData(textToBeSet);
+<A NAME="83"></A>        <FONT ID="Return">return</FONT> elementToBeSetTextOf;
+<A NAME="84"></A>    }
+<A NAME="85"></A>
+<A NAME="86"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A> $ElementSetText(<FONT ID="Final">final</FONT> String textToBeSet) {
+<A NAME="87"></A>        element.setTextContent(textToBeSet);
+<A NAME="88"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="89"></A>    }
+<A NAME="90"></A>
+<A NAME="91"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A> $ElementSetHref(<FONT ID="Final">final</FONT> String href) {
+<A NAME="92"></A>        element.setAttribute(MarkupTag.GENERIC.href(), href);
+<A NAME="93"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="94"></A>    }
+<A NAME="95"></A>
+<A NAME="96"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> Element $ElementSetHref(<FONT ID="Final">final</FONT> Element element, <FONT ID="Final">final</FONT> String href) {
+<A NAME="97"></A>        element.setAttribute(MarkupTag.GENERIC.href(), href);
+<A NAME="98"></A>        <FONT ID="Return">return</FONT> element;
+<A NAME="99"></A>    }
+<A NAME="100"></A>
+<A NAME="101"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A> $ElementSetTitle(<FONT ID="Final">final</FONT> String title) {
+<A NAME="102"></A>        element.setAttribute(MarkupTag.GENERIC.title(), title);
+<A NAME="103"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="104"></A>    }
+<A NAME="105"></A>
+<A NAME="106"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> Element $ElementSetTitle(<FONT ID="Final">final</FONT> Element element, <FONT ID="Final">final</FONT> String title) {
+<A NAME="107"></A>        element.setAttribute(MarkupTag.GENERIC.title(), title);
+<A NAME="108"></A>        <FONT ID="Return">return</FONT> element;
+<A NAME="109"></A>    }
+<A NAME="110"></A>
+<A NAME="111"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A> $ElementSetAlt(<FONT ID="Final">final</FONT> String alt) {
+<A NAME="112"></A>        element.setAttribute(MarkupTag.GENERIC.alt(), alt);
+<A NAME="113"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="114"></A>    }
+<A NAME="115"></A>
+<A NAME="116"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> Element $ElementSetAlt(<FONT ID="Final">final</FONT> Element element, <FONT ID="Final">final</FONT> String alt) {
+<A NAME="117"></A>        element.setAttribute(MarkupTag.GENERIC.alt(), alt);
+<A NAME="118"></A>        <FONT ID="Return">return</FONT> element;
+<A NAME="119"></A>    }
+<A NAME="120"></A>
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A> $ElementSetClasses(String classes) {
+<A NAME="122"></A>        element.setAttribute(MarkupTag.GENERIC.classs(), classes);
+<A NAME="123"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="124"></A>    }
+<A NAME="125"></A>
+<A NAME="126"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> Element $ElementSetClasses(<FONT ID="Final">final</FONT> Element element, <FONT ID="Final">final</FONT> String classes) {
+<A NAME="127"></A>        element.setAttribute(MarkupTag.GENERIC.classs(), classes);
+<A NAME="128"></A>        <FONT ID="Return">return</FONT> element;
+<A NAME="129"></A>    }
+<A NAME="130"></A>
+<A NAME="131"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/ElementComposer.java.html">ElementComposer</A> $ElementSetAttribute(<FONT ID="Final">final</FONT> String attributeName, <FONT ID="Final">final</FONT> String attributeValue) {
+<A NAME="132"></A>        element.setAttribute(attributeName, attributeValue);
+<A NAME="133"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="134"></A>    }
+<A NAME="135"></A>
+<A NAME="136"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> Element $ElementSetAttribute(<FONT ID="Final">final</FONT> Element element, <FONT ID="Final">final</FONT> String attributeName, <FONT ID="Final">final</FONT> String attributeValue) {
+<A NAME="137"></A>        element.setAttribute(attributeName, attributeValue);
+<A NAME="138"></A>        <FONT ID="Return">return</FONT> element;
+<A NAME="139"></A>    }
+<A NAME="140"></A>
+<A NAME="141"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String generateNamedLinkTo(<FONT ID="Final">final</FONT> String url, <FONT ID="Final">final</FONT> String name) {
+<A NAME="142"></A>        <FONT ID="Return">return</FONT> A_HREF +
+<A NAME="143"></A>                url + A_HREF_OPEN_END + name + A_HREF_CLOSE;
+<A NAME="144"></A>    }
+<A NAME="145"></A>
+<A NAME="146"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String generateSimpleLinkTo(<FONT ID="Final">final</FONT> String url) {
+<A NAME="147"></A>        <FONT ID="Return">return</FONT> generateNamedLinkTo(url, url);
+<A NAME="148"></A>    }
+<A NAME="149"></A>
+<A NAME="150"></A>}
+<A NAME="151"></A></pre>
+</BODY>
+</HTML>

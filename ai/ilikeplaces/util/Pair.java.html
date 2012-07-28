@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.Pair (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Pair.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="FormalComment">/**
+<A NAME="6"></A> * Simple Key Value Pair.
+<A NAME="7"></A> * &lt;p/&gt;
+<A NAME="8"></A> * &lt;p/&gt;
+<A NAME="9"></A> * Example Usage:
+<A NAME="10"></A> * &lt;p/&gt;
+<A NAME="11"></A> * &lt;p/&gt;
+<A NAME="12"></A> * &lt;code&gt;
+<A NAME="13"></A> * System.out.println(new Pair&lt;String, Integer&gt;().setPair("Susan Boyle", 1).toString());
+<A NAME="14"></A> * &lt;/code&gt;
+<A NAME="15"></A> * &lt;p/&gt;
+<A NAME="16"></A> * &lt;code&gt;
+<A NAME="17"></A> * System.out.println(new Pair&lt;String, Integer&gt;().setKey("Susan Boyle").setValue(1).toString());
+<A NAME="18"></A> * &lt;/code&gt;
+<A NAME="19"></A> * &lt;p/&gt;
+<A NAME="20"></A> * &lt;code&gt;
+<A NAME="21"></A> * System.out.println(new Pair&lt;String, Integer&gt;("Susan Boyle", 1).toString());
+<A NAME="22"></A> * &lt;/code&gt;
+<A NAME="23"></A> * &lt;p/&gt;
+<A NAME="24"></A> * &lt;p/&gt;
+<A NAME="25"></A> * &lt;p/&gt;
+<A NAME="26"></A> * {@link #equals(Object)} checks only on key for equality
+<A NAME="27"></A> * &lt;p/&gt;
+<A NAME="28"></A> * Created by IntelliJ IDEA.
+<A NAME="29"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="30"></A> * Date: Oct 10, 2010
+<A NAME="31"></A> * Time: 5:36:16 PM
+<A NAME="32"></A> */</FONT>
+<A NAME="33"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under Apache License Version 2.0"</FONT>)
+<A NAME="34"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Pair&lt;K, V&gt; {
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> K key;
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> V value;
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String OPEN_BRACE = <FONT ID="StringLiteral">"{"</FONT>;
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COMMA = <FONT ID="StringLiteral">","</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CLOSE_BRACE = <FONT ID="StringLiteral">"}"</FONT>;
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> Pair() {
+<A NAME="42"></A>    }
+<A NAME="43"></A>
+<A NAME="44"></A>    <FONT ID="FormalComment">/**
+<A NAME="45"></A>     * @param key   key to be set
+<A NAME="46"></A>     * @param value value to be set
+<A NAME="47"></A>     */</FONT>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> Pair(<FONT ID="Final">final</FONT> K key, <FONT ID="Final">final</FONT> V value) {
+<A NAME="49"></A>        <FONT ID="This">this</FONT>.key = key;
+<A NAME="50"></A>        <FONT ID="This">this</FONT>.value = value;
+<A NAME="51"></A>    }
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="FormalComment">/**
+<A NAME="54"></A>     * @param key   key to be set
+<A NAME="55"></A>     * @param value value to be set
+<A NAME="56"></A>     * @return this
+<A NAME="57"></A>     */</FONT>
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;K, V&gt; setPair(<FONT ID="Final">final</FONT> K key, <FONT ID="Final">final</FONT> V value) {
+<A NAME="59"></A>        <FONT ID="This">this</FONT>.key = key;
+<A NAME="60"></A>        <FONT ID="This">this</FONT>.value = value;
+<A NAME="61"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="62"></A>    }
+<A NAME="63"></A>
+<A NAME="64"></A>    <FONT ID="FormalComment">/**
+<A NAME="65"></A>     * @return key
+<A NAME="66"></A>     */</FONT>
+<A NAME="67"></A>    <FONT ID="Public">public</FONT> K getKey() {
+<A NAME="68"></A>        <FONT ID="Return">return</FONT> key;
+<A NAME="69"></A>    }
+<A NAME="70"></A>
+<A NAME="71"></A>    <FONT ID="FormalComment">/**
+<A NAME="72"></A>     * @param key key to be set
+<A NAME="73"></A>     * @return this
+<A NAME="74"></A>     */</FONT>
+<A NAME="75"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;K, V&gt; setKey(<FONT ID="Final">final</FONT> K key) {
+<A NAME="76"></A>        <FONT ID="This">this</FONT>.key = key;
+<A NAME="77"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="78"></A>    }
+<A NAME="79"></A>
+<A NAME="80"></A>    <FONT ID="FormalComment">/**
+<A NAME="81"></A>     * @return value
+<A NAME="82"></A>     */</FONT>
+<A NAME="83"></A>    <FONT ID="Public">public</FONT> V getValue() {
+<A NAME="84"></A>        <FONT ID="Return">return</FONT> value;
+<A NAME="85"></A>    }
+<A NAME="86"></A>
+<A NAME="87"></A>    <FONT ID="FormalComment">/**
+<A NAME="88"></A>     * @param value value to be set
+<A NAME="89"></A>     * @return this
+<A NAME="90"></A>     */</FONT>
+<A NAME="91"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;K, V&gt; setValue(<FONT ID="Final">final</FONT> V value) {
+<A NAME="92"></A>        <FONT ID="This">this</FONT>.value = value;
+<A NAME="93"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="94"></A>    }
+<A NAME="95"></A>
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="97"></A>        <FONT ID="Return">return</FONT> OPEN_BRACE + key + COMMA + value + CLOSE_BRACE;
+<A NAME="98"></A>    }
+<A NAME="99"></A>
+<A NAME="100"></A>    <FONT ID="FormalComment">/**
+<A NAME="101"></A>     * @return {key,val} as string
+<A NAME="102"></A>     */</FONT>
+<A NAME="103"></A>    <FONT ID="Public">public</FONT> String toTuple() {
+<A NAME="104"></A>        <FONT ID="Return">return</FONT> OPEN_BRACE + key + COMMA + value + CLOSE_BRACE;
+<A NAME="105"></A>    }
+<A NAME="106"></A>
+<A NAME="107"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(String args[]) {
+<A NAME="108"></A>        System.out.println(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt;().setPair(<FONT ID="StringLiteral">"Susan Boyle"</FONT>, <FONT ID="IntegerLiteral">1</FONT>).toString());
+<A NAME="109"></A>
+<A NAME="110"></A>        System.out.println(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt;().setKey(<FONT ID="StringLiteral">"Susan Boyle"</FONT>).setValue(<FONT ID="IntegerLiteral">1</FONT>).toString());
+<A NAME="111"></A>
+<A NAME="112"></A>        System.out.println(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>&lt;String, Integer&gt;(<FONT ID="StringLiteral">"Susan Boyle"</FONT>, <FONT ID="IntegerLiteral">1</FONT>).toString());
+<A NAME="113"></A>    }
+<A NAME="114"></A>
+<A NAME="115"></A>    <FONT ID="FormalComment">/**
+<A NAME="116"></A>     * Matches checked only on key
+<A NAME="117"></A>     *
+<A NAME="118"></A>     * @param o
+<A NAME="119"></A>     * @return
+<A NAME="120"></A>     */</FONT>
+<A NAME="121"></A>    @Override
+<A NAME="122"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(Object o) {
+<A NAME="123"></A>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT> == o) <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="124"></A>        <FONT ID="If">if</FONT> (o == <FONT ID="Null">null</FONT> || getClass() != o.getClass()) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="125"></A>
+<A NAME="126"></A>        <A HREF="../../../ai/ilikeplaces/util/Pair.java.html">Pair</A> pair = (<A HREF="../../../ai/ilikeplaces/util/Pair.java.html">Pair</A>) o;
+<A NAME="127"></A>
+<A NAME="128"></A>        <FONT ID="If">if</FONT> (key != <FONT ID="Null">null</FONT> ? !key.equals(pair.key) : pair.key != <FONT ID="Null">null</FONT>) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="129"></A>
+<A NAME="130"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="131"></A>    }
+<A NAME="132"></A>
+<A NAME="133"></A>    @Override
+<A NAME="134"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> hashCode() {
+<A NAME="135"></A>        <FONT ID="Return">return</FONT> key != <FONT ID="Null">null</FONT> ? key.hashCode() : <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="136"></A>    }
+<A NAME="137"></A>}
+<A NAME="138"></A></pre>
+</BODY>
+</HTML>

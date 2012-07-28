@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.AbstractSkeletonListener (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AbstractSkeletonListener.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">ai.ilikeplaces.entities.HumansIdentity</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.Listeners.widgets.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="Import">import</FONT> java.util.ResourceBundle;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="21"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers.EXCEPTION</A>;
+<A NAME="22"></A>
+<A NAME="23"></A><FONT ID="FormalComment">/**
+<A NAME="24"></A> * Created by IntelliJ IDEA.
+<A NAME="25"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="26"></A> * Date: Jul 12, 2010
+<A NAME="27"></A> * Time: 9:54:25 PM
+<A NAME="28"></A> */</FONT>
+<A NAME="29"></A>
+<A NAME="30"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="31"></A>@FIXME(<FONT ID="StringLiteral">"The protected methods to be used by extended classes an be used for setting values in this class. It seems the code is dupliated but need to be checked carefully before changing the code."</FONT>)
+<A NAME="32"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> AbstractSkeletonListener <FONT ID="Extends">extends</FONT> AbstractListener {
+<A NAME="33"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BN = <FONT ID="StringLiteral">"bn"</FONT>;
+<A NAME="34"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> ResourceBundle GUI = RBGet.gui();
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CODENAME_KEY = <FONT ID="StringLiteral">"codename"</FONT>;
+<A NAME="36"></A>    <FONT ID="Boolean">boolean</FONT> initStatus = <FONT ID="False">false</FONT>;
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TALK = <FONT ID="StringLiteral">"Get in touch"</FONT>;
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="FormalComment">/**
+<A NAME="40"></A>     * @param request_
+<A NAME="41"></A>     * @param response_
+<A NAME="42"></A>     */</FONT>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> AbstractSkeletonListener(<FONT ID="Final">final</FONT> ItsNatServletRequest request_, <FONT ID="Final">final</FONT> ItsNatServletResponse response_) {
+<A NAME="44"></A>        <FONT ID="Super">super</FONT>(request_, response_, request_);
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="FormalComment">/**
+<A NAME="48"></A>     * Initializes your document here by appending fragments.
+<A NAME="49"></A>     * &lt;p/&gt;
+<A NAME="50"></A>     * If/when you are overriding this method, remember to call super.init(with required params)  so that,
+<A NAME="51"></A>     * the template is initialized. You have the flexibility as to when to call this method when doing so. i.e. Either
+<A NAME="52"></A>     * after you're done with your own init work, or before doing it, or in the middle!
+<A NAME="53"></A>     *
+<A NAME="54"></A>     * @param itsNatHTMLDocument__
+<A NAME="55"></A>     * @param hTMLDocument__
+<A NAME="56"></A>     * @param itsNatDocument__
+<A NAME="57"></A>     */</FONT>
+<A NAME="58"></A>    @Override
+<A NAME="59"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="60"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="61"></A>        <FONT ID="If">if</FONT> (initStatus) {
+<A NAME="62"></A>            <FONT ID="Throw">throw</FONT> ExceptionCache.MULTIPLE_INITS;
+<A NAME="63"></A>        }
+<A NAME="64"></A>
+<A NAME="65"></A>        initStatus = <FONT ID="True">true</FONT>;
+<A NAME="66"></A>
+<A NAME="67"></A>        <FONT ID="Final">final</FONT> ItsNatServletRequest request__ = (ItsNatServletRequest) initArgs[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="68"></A>
+<A NAME="69"></A>        <FONT ID="SingleLineComment">//itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
+<A NAME="70"></A></FONT>
+<A NAME="71"></A>        layoutNeededForAllPages:
+<A NAME="72"></A>        {
+<A NAME="73"></A>            setLoginWidget:
+<A NAME="74"></A>            {
+<A NAME="75"></A>                setLoginWidget(request__, SignInOnCriteria.SignInOnDisplayComponent.TALKS);
+<A NAME="76"></A>            }
+<A NAME="77"></A>
+<A NAME="78"></A>            setTitle:
+<A NAME="79"></A>            {
+<A NAME="80"></A>                setTitle(RBGet.globalConfig.getString(CODENAME_KEY));
+<A NAME="81"></A>            }
+<A NAME="82"></A>            setProfileDataLink:
+<A NAME="83"></A>            {
+<A NAME="84"></A>                setProfileDataLink();
+<A NAME="85"></A>            }
+<A NAME="86"></A>            sideBarFriends:
+<A NAME="87"></A>            {
+<A NAME="88"></A>                setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS);
+<A NAME="89"></A>            }
+<A NAME="90"></A>            signinupActionNotice:
+<A NAME="91"></A>            {
+<A NAME="92"></A>                <FONT ID="SingleLineComment">//We do nothing now
+<A NAME="93"></A></FONT>            }
+<A NAME="94"></A>            SetNotifications:
+<A NAME="95"></A>            {
+<A NAME="96"></A>                setNotifications();
+<A NAME="97"></A>            }
+<A NAME="98"></A>        }
+<A NAME="99"></A>    }
+<A NAME="100"></A>
+<A NAME="101"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> setNotifications() {
+<A NAME="102"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="103"></A>            <FONT ID="If">if</FONT> (getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="104"></A>                $(Controller.Page.Skeleton_notifications).setTextContent(<FONT ID="StringLiteral">"NOTIFICATIONS - "</FONT> + DB.getHumanCRUDHumansUnseenLocal(<FONT ID="False">false</FONT>).readEntries(getUsernameAsValid()).size());
+<A NAME="105"></A>            }
+<A NAME="106"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="107"></A>            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="108"></A>        }
+<A NAME="109"></A>    }
+<A NAME="110"></A>
+<A NAME="111"></A>    <FONT ID="FormalComment">/**
+<A NAME="112"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="113"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="114"></A>     * automatically called by the constructor
+<A NAME="115"></A>     * &lt;p/&gt;
+<A NAME="116"></A>     * If/when you are overriding this method, remember to call super.registerEventListeners(with required params)  so that,
+<A NAME="117"></A>     *
+<A NAME="118"></A>     * @param itsNatHTMLDocument_
+<A NAME="119"></A>     * @param itsNatDocument__
+<A NAME="120"></A>     * @param hTMLDocument_
+<A NAME="121"></A>     */</FONT>
+<A NAME="122"></A>    @Override
+<A NAME="123"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__) {
+<A NAME="124"></A>    }
+<A NAME="125"></A>
+<A NAME="126"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> setLoginWidget(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> SignInOnCriteria.SignInOnDisplayComponent signInOnDisplayComponent) {
+<A NAME="127"></A>        initStatus = <FONT ID="True">true</FONT>;
+<A NAME="128"></A>
+<A NAME="129"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="130"></A>            <FONT ID="New">new</FONT> SignInOn(request__, $(Skeleton_login_widget), <FONT ID="New">new</FONT> SignInOnCriteria()
+<A NAME="131"></A>                    .setHumanId(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsername()))
+<A NAME="132"></A>                    .setSignInOnDisplayComponent(signInOnDisplayComponent)) {
+<A NAME="133"></A>            };
+<A NAME="134"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="135"></A>            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="136"></A>        }
+<A NAME="137"></A>    }
+<A NAME="138"></A>
+<A NAME="139"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> setTitle(<FONT ID="Final">final</FONT> String customTitle) {
+<A NAME="140"></A>        initStatus = <FONT ID="True">true</FONT>;
+<A NAME="141"></A>
+<A NAME="142"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="143"></A>            setMainTitle:
+<A NAME="144"></A>            {
+<A NAME="145"></A>                <FONT ID="If">if</FONT> (customTitle != <FONT ID="Null">null</FONT>) {
+<A NAME="146"></A>                    $(skeletonTitle).setTextContent(customTitle);
+<A NAME="147"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="148"></A>                    $(skeletonTitle).setTextContent(RBGet.globalConfig.getString(BN));
+<A NAME="149"></A>                }
+<A NAME="150"></A>            }
+<A NAME="151"></A>            setMetaDescription:
+<A NAME="152"></A>            {
+<A NAME="153"></A>                <FONT ID="If">if</FONT> (customTitle != <FONT ID="Null">null</FONT>) {
+<A NAME="154"></A>                    $(skeletonTitle).setAttribute(MarkupTag.META.namee(), customTitle);
+<A NAME="155"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="156"></A>                    $(skeletonTitle).setAttribute(MarkupTag.META.namee(), RBGet.globalConfig.getString(BN));
+<A NAME="157"></A>                }
+<A NAME="158"></A>            }
+<A NAME="159"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="160"></A>            Loggers.DEBUG.debug(t.getMessage());
+<A NAME="161"></A>        }
+<A NAME="162"></A>    }
+<A NAME="163"></A>
+<A NAME="164"></A>
+<A NAME="165"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> setProfileDataLink() {
+<A NAME="166"></A>        initStatus = <FONT ID="True">true</FONT>;
+<A NAME="167"></A>
+<A NAME="168"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="169"></A>            <FONT ID="If">if</FONT> (getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="170"></A>
+<A NAME="171"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> hi = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(getUsernameAsValid(), <FONT ID="StringLiteral">""</FONT>);
+<A NAME="172"></A>                String profilePhotoURL = hi.getHumansIdentityProfilePhoto();
+<A NAME="173"></A>                $(Skeleton_profile_photo).setAttribute(
+<A NAME="174"></A>                        MarkupTag.IMG.src(),
+<A NAME="175"></A>                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(profilePhotoURL)
+<A NAME="176"></A>                );
+<A NAME="177"></A>
+<A NAME="178"></A>                $(Skeleton_othersidebar_identity).setTextContent(ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(getUsername(), <FONT ID="StringLiteral">""</FONT>).getHuman().getDisplayName());
+<A NAME="179"></A>            }
+<A NAME="180"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="181"></A>            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="182"></A>        }
+<A NAME="183"></A>    }
+<A NAME="184"></A>
+<A NAME="185"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> setSideBarFriends(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> DownTownFlowCriteria.DownTownFlowDisplayComponent type) {
+<A NAME="186"></A>        initStatus = <FONT ID="True">true</FONT>;
+<A NAME="187"></A>
+<A NAME="188"></A>        <FONT ID="Final">final</FONT> String currentUser = getUsername();
+<A NAME="189"></A>
+<A NAME="190"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="191"></A>            <FONT ID="If">if</FONT> (currentUser != <FONT ID="Null">null</FONT>) {
+<A NAME="192"></A>                <FONT ID="SingleLineComment">//final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
+<A NAME="193"></A></FONT>
+<A NAME="194"></A>
+<A NAME="195"></A>                <FONT ID="New">new</FONT> DownTownFlow(
+<A NAME="196"></A>                        request__,
+<A NAME="197"></A>                        <FONT ID="New">new</FONT> DownTownFlowCriteria()
+<A NAME="198"></A>                                .setDownTownFlowDisplayComponent(type)
+<A NAME="199"></A>                                .setHumanId(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(currentUser))
+<A NAME="200"></A>                                .setHumanUserLocal(getHumanUserAsValid()),
+<A NAME="201"></A>                        $(Controller.Page.Skeleton_sidebar));
+<A NAME="202"></A>            }
+<A NAME="203"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="204"></A>            EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="205"></A>        }
+<A NAME="206"></A>    }
+<A NAME="207"></A>
+<A NAME="208"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> setSideBarFriends(<FONT ID="Final">final</FONT> ItsNatServletRequest request__) {
+<A NAME="209"></A>        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS);
+<A NAME="210"></A>    }
+<A NAME="211"></A>}
+<A NAME="212"></A></pre>
+</BODY>
+</HTML>

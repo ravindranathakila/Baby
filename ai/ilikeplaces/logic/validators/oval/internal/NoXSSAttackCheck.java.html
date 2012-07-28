@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.validators.oval.internal.NoXSSAttackCheck (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">NoXSSAttackCheck.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.validators.oval.internal;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/oval/UpperCase.java.html">ai.ilikeplaces.logic.validators.oval.UpperCase</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="7"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.AbstractAnnotationCheck;
+<A NAME="8"></A><FONT ID="Import">import</FONT> net.sf.oval.context.OValContext;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/apache/fixes/StringEscapeUtilsFixed.java.html">ai.ilikeplaces.util.apache.fixes.StringEscapeUtilsFixed</A>.*;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * Created by IntelliJ IDEA.
+<A NAME="14"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="15"></A> * Date: Mar 8, 2010
+<A NAME="16"></A> * Time: 3:20:12 PM
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A>
+<A NAME="19"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="20"></A>@NOTE(note = <FONT ID="StringLiteral">"USE OWASP ANTISAMY"</FONT>)
+<A NAME="21"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> NoXSSAttackCheck <FONT ID="Extends">extends</FONT> AbstractAnnotationCheck&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/validators/oval/UpperCase.java.html">UpperCase</A>&gt; {
+<A NAME="22"></A>
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> isSatisfied(<FONT ID="Final">final</FONT> Object validatedObject,
+<A NAME="25"></A>                               <FONT ID="Final">final</FONT> Object valueToValidate,
+<A NAME="26"></A>                               <FONT ID="Final">final</FONT> OValContext context,
+<A NAME="27"></A>                               <FONT ID="Final">final</FONT> Validator validator) {
+<A NAME="28"></A>
+<A NAME="29"></A>        <FONT ID="Final">final</FONT> String str = (String) valueToValidate;<FONT ID="SingleLineComment">//Cast so we prevent invalid usage
+<A NAME="30"></A></FONT>
+<A NAME="31"></A>        <FONT ID="Return">return</FONT> !checkescapeJavaScript(str)
+<A NAME="32"></A>                &amp;&amp; !checkescapeXml(str)
+<A NAME="33"></A>                &amp;&amp; !checkescapeHtml(str);
+<A NAME="34"></A>    }
+<A NAME="35"></A>}</pre>
+</BODY>
+</HTML>

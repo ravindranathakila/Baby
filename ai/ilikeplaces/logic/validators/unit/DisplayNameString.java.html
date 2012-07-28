@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.validators.unit.DisplayNameString (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DisplayNameString.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.validators.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.IsInvariant;
+<A NAME="6"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.Length;
+<A NAME="7"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotBlank;
+<A NAME="8"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotEmpty;
+<A NAME="9"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotNull;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> * Created by IntelliJ IDEA.
+<A NAME="13"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="14"></A> * Date: Jan 21, 2010
+<A NAME="15"></A> * Time: 8:58:01 PM
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="18"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DisplayNameString <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; {
+<A NAME="19"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="20"></A></FONT>
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> DisplayNameString() {
+<A NAME="22"></A>    }
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="FormalComment">/**
+<A NAME="25"></A>     * 
+<A NAME="26"></A>     * @param displayNameToBeSet
+<A NAME="27"></A>     */</FONT>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> DisplayNameString(<FONT ID="Final">final</FONT> String displayNameToBeSet) {
+<A NAME="29"></A>        <FONT ID="This">this</FONT>.obj = displayNameToBeSet;
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A><FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="33"></A></FONT>
+<A NAME="34"></A>    @IsInvariant
+<A NAME="35"></A>    @NotNull(message = <FONT ID="StringLiteral">"Sorry! You must enter a value."</FONT>)
+<A NAME="36"></A>    @Length(min = <FONT ID="IntegerLiteral">2</FONT>, max = <FONT ID="IntegerLiteral">255</FONT>)
+<A NAME="37"></A>    @NotBlank
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> String getObj(){
+<A NAME="39"></A>        <FONT ID="Return">return</FONT> obj;
+<A NAME="40"></A>    }
+<A NAME="41"></A>}</pre>
+</BODY>
+</HTML>

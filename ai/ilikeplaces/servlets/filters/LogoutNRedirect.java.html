@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.filters.LogoutNRedirect (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">LogoutNRedirect.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets.filters;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.servlet.*;
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * Okay this class if for the profiles. However, still we do not support "very" short urls.
+<A NAME="16"></A> * Instead, we support www.ilikeplaces/i/username kind of urls here. Looks better huh? :D
+<A NAME="17"></A> * &lt;p/&gt;
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * Hey this filter I say again, is to support www.ilikeplaces.com/i/ urls. No other filter should mess with this url too.
+<A NAME="20"></A> * &lt;p/&gt;
+<A NAME="21"></A> * &lt;p/&gt;
+<A NAME="22"></A> * Well, nevertheless, when a request comes in the above format, we redirect it to the
+<A NAME="23"></A> * ItsNat servlet, (current url format is /page/_i?up=userurl and maybe /page/_i_userurl.
+<A NAME="24"></A> * We send a redirect there.
+<A NAME="25"></A> * &lt;p/&gt;
+<A NAME="26"></A> * &lt;p/&gt;
+<A NAME="27"></A> * Let's try to make it fast and simple.
+<A NAME="28"></A> * &lt;p/&gt;
+<A NAME="29"></A> * &lt;p/&gt;
+<A NAME="30"></A> * Created by IntelliJ IDEA.
+<A NAME="31"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="32"></A> * Date: Jun 10, 2010
+<A NAME="33"></A> * Time: 3:27:18 PM
+<A NAME="34"></A> */</FONT>
+<A NAME="35"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="36"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> LogoutNRedirect <FONT ID="Implements">implements</FONT> Filter {
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SLASH = <FONT ID="StringLiteral">"/"</FONT>;
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOG_OUT_REQUEST_FORMAT = <FONT ID="StringLiteral">"/page/_so"</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HEADER_REFERER = <FONT ID="StringLiteral">"Referer"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOG_OUT_REQUEST_RECEIVED = <FONT ID="StringLiteral">"Log-out Request Received."</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SESSION_REMOVED = <FONT ID="StringLiteral">"Session Removed."</FONT>;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String REDIRECTING_USER_TO_WHERE_REFERRER_PAGE = <FONT ID="StringLiteral">"Redirecting User To Where Referrer Page"</FONT>;
+<A NAME="43"></A>
+<A NAME="44"></A>    @Override
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> FilterConfig filterConfig) <FONT ID="Throws">throws</FONT> ServletException {
+<A NAME="46"></A>        <FONT ID="SingleLineComment">//So far nothing to put here
+<A NAME="47"></A></FONT>    }
+<A NAME="48"></A>
+<A NAME="49"></A>    @Override
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doFilter(<FONT ID="Final">final</FONT> ServletRequest request, <FONT ID="Final">final</FONT> ServletResponse servletResponse, <FONT ID="Final">final</FONT> FilterChain filterChain) <FONT ID="Throws">throws</FONT> IOException, ServletException {
+<A NAME="51"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="52"></A>            <FONT ID="If">if</FONT> (((HttpServletRequest) request).getRequestURL().toString().endsWith(LOG_OUT_REQUEST_FORMAT)) {
+<A NAME="53"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl = SmartLogger.start(Loggers.LEVEL.DEBUG, LOG_OUT_REQUEST_RECEIVED, <FONT ID="IntegerLiteral">100</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="54"></A>
+<A NAME="55"></A>                <FONT ID="Final">final</FONT> HttpServletRequest httpServletRequest = ((HttpServletRequest) request);
+<A NAME="56"></A>
+<A NAME="57"></A>                <FONT ID="Final">final</FONT> HttpSession httpSession = httpServletRequest.getSession(<FONT ID="False">false</FONT>);
+<A NAME="58"></A>                <FONT ID="If">if</FONT> (httpSession != <FONT ID="Null">null</FONT>) {
+<A NAME="59"></A>                    httpSession.invalidate();
+<A NAME="60"></A>                    sl.appendToLogMSG(SESSION_REMOVED);
+<A NAME="61"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="62"></A>                    sl.appendToLogMSG(<FONT ID="StringLiteral">"No Session To Be Removed."</FONT>);
+<A NAME="63"></A>                }
+<A NAME="64"></A>
+<A NAME="65"></A>                sl.appendToLogMSG(REDIRECTING_USER_TO_WHERE_REFERRER_PAGE + Controller.LOCATION_HUB);
+<A NAME="66"></A>
+<A NAME="67"></A>                ((HttpServletResponse) servletResponse).sendRedirect(httpServletRequest.getHeader(HEADER_REFERER));
+<A NAME="68"></A>
+<A NAME="69"></A>                sl.complete(Loggers.DONE);
+<A NAME="70"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="71"></A>                filterChain.doFilter(request, servletResponse);
+<A NAME="72"></A>            }
+<A NAME="73"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable e) {
+<A NAME="74"></A>            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+<A NAME="75"></A>        }
+<A NAME="76"></A>    }
+<A NAME="77"></A>
+<A NAME="78"></A>    @Override
+<A NAME="79"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> destroy() {
+<A NAME="80"></A>        <FONT ID="SingleLineComment">//So far nothing to put here
+<A NAME="81"></A></FONT>    }
+<A NAME="82"></A>}</pre>
+</BODY>
+</HTML>

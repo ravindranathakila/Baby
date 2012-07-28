@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.mail.EmailTest (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">EmailTest.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.mail;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/email/Email.java.html">ai.ilikeplaces.util.email.Email</A>;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="FormalComment">/**
+<A NAME="6"></A> * Created by IntelliJ IDEA.
+<A NAME="7"></A> * User: Ravindranath Akila
+<A NAME="8"></A> * Date: 11/5/11
+<A NAME="9"></A> * Time: 10:29 AM
+<A NAME="10"></A> */</FONT>
+<A NAME="11"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> EmailTest {
+<A NAME="12"></A>
+<A NAME="13"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(<FONT ID="Final">final</FONT> String args[]) {
+<A NAME="14"></A>        <FONT ID="Final">final</FONT> String[] domains = <FONT ID="New">new</FONT> String[<FONT ID="IntegerLiteral">3</FONT>];
+<A NAME="15"></A>        domains[<FONT ID="IntegerLiteral">0</FONT>] = <FONT ID="StringLiteral">"google.com"</FONT>;
+<A NAME="16"></A>        domains[<FONT ID="IntegerLiteral">1</FONT>] = <FONT ID="StringLiteral">"yahoo.com"</FONT>;
+<A NAME="17"></A>        domains[<FONT ID="IntegerLiteral">2</FONT>] = <FONT ID="StringLiteral">"ilikeplaces.com"</FONT>;
+<A NAME="18"></A>
+<A NAME="19"></A>        <FONT ID="For">for</FONT> (String domain : domains) {
+<A NAME="20"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="21"></A>                System.out.println(domain + <FONT ID="StringLiteral">" has "</FONT> +
+<A NAME="22"></A>                        Email.doLookup(domain) + <FONT ID="StringLiteral">" mail servers"</FONT>);
+<A NAME="23"></A>            } <FONT ID="Catch">catch</FONT> (Exception e) {
+<A NAME="24"></A>                System.out.println(domain + <FONT ID="StringLiteral">" : "</FONT> + e.getMessage());
+<A NAME="25"></A>            }
+<A NAME="26"></A>        }
+<A NAME="27"></A>
+<A NAME="28"></A>        String testData[] = {
+<A NAME="29"></A>                <FONT ID="SingleLineComment">//"tim@orbaker.com", // Valid address
+<A NAME="30"></A></FONT>                <FONT ID="SingleLineComment">//"fail.me@nowhere.spam", // Invalid domain name
+<A NAME="31"></A></FONT>                <FONT ID="SingleLineComment">//"arkham@bigmeanogre.net", // Invalid address
+<A NAME="32"></A></FONT>                <FONT ID="StringLiteral">"nosuchaddress@yahoo.com"</FONT>, <FONT ID="SingleLineComment">// Failure of this method
+<A NAME="33"></A></FONT>                <FONT ID="SingleLineComment">//"catchallbutme@ilikeplaces.com", // Invalid but is catch-all on ilikeplaces.com
+<A NAME="34"></A></FONT>                <FONT ID="SingleLineComment">//"catchallbutme@lindfaith.com", // Invalid but is NOT catch-all on ilikeplaces.com
+<A NAME="35"></A></FONT>                <FONT ID="SingleLineComment">//"catchallbutme@google.com", // Invalid but is NOT catch-all on ilikeplaces.com
+<A NAME="36"></A></FONT>                <FONT ID="StringLiteral">"akila@adimpression.mobi"</FONT>, <FONT ID="SingleLineComment">// Invalid
+<A NAME="37"></A></FONT>                <FONT ID="StringLiteral">"nosuchemail@adimpression.mobi"</FONT>, <FONT ID="SingleLineComment">//
+<A NAME="38"></A></FONT>                <FONT ID="SingleLineComment">//"ravindranathakila@gmail.com", //
+<A NAME="39"></A></FONT>                <FONT ID="StringLiteral">"billgatesisnotongmailsfasdklk@gmail.com"</FONT>, <FONT ID="SingleLineComment">//
+<A NAME="40"></A></FONT>                <FONT ID="StringLiteral">"ravindranathakila@yahoo.com"</FONT> ,<FONT ID="SingleLineComment">// Valid
+<A NAME="41"></A></FONT>                <FONT ID="StringLiteral">"201111081@ilikeplaces.com"</FONT> ,<FONT ID="SingleLineComment">// Valid
+<A NAME="42"></A></FONT>                <FONT ID="StringLiteral">"notifications@ilikeplaces.com"</FONT> ,<FONT ID="SingleLineComment">// Valid
+<A NAME="43"></A></FONT>                <FONT ID="StringLiteral">"example@example.com"</FONT> ,<FONT ID="SingleLineComment">// Valid
+<A NAME="44"></A></FONT>                <FONT ID="StringLiteral">"example3@example.com"</FONT> ,<FONT ID="SingleLineComment">// Valid
+<A NAME="45"></A></FONT>        };
+<A NAME="46"></A>
+<A NAME="47"></A>        <FONT ID="For">for</FONT> (String aTestData : testData) {
+<A NAME="48"></A>            System.out.println(aTestData + <FONT ID="StringLiteral">" is valid? "</FONT> +
+<A NAME="49"></A>                    Email.isAddressValidTolerant(aTestData));
+<A NAME="50"></A>        }
+<A NAME="51"></A>    }
+<A NAME="52"></A>}
+<A NAME="53"></A></pre>
+</BODY>
+</HTML>

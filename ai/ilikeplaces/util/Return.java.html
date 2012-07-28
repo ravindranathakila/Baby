@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.Return (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Return.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A> * Created by IntelliJ IDEA.
+<A NAME="8"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="9"></A> * Date: Jan 1, 2010
+<A NAME="10"></A> * Time: 4:26:30 PM
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A>
+<A NAME="13"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="14"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> Return&lt;T&gt; {
+<A NAME="15"></A>
+<A NAME="16"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String YIKES_SOMETHING_WENT_WRONG = RBGet.gui().getString(<FONT ID="StringLiteral">"YIKES_SOMETHING_WENT_WRONG"</FONT>);
+<A NAME="17"></A>
+<A NAME="18"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> returnStatus();
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> <FONT ID="Long">long</FONT> returnErrorSeqCode();
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="Public">public</FONT> T returnValue();
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="FormalComment">/**
+<A NAME="25"></A>     * Use to optimistically obtain return value assuming there were no errors. This will throw a runtime exception if
+<A NAME="26"></A>     * errors had occured.
+<A NAME="27"></A>     *
+<A NAME="28"></A>     * @return
+<A NAME="29"></A>     */</FONT>
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> T returnValueBadly();
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> Throwable returnError();
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> String returnMsg();
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="FormalComment">/**
+<A NAME="37"></A>     *
+<A NAME="38"></A>     * @return true if value of {@link #returnStatus()} == 0
+<A NAME="39"></A>     */</FONT>
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> valid();
+<A NAME="41"></A>
+<A NAME="42"></A>    @Override
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> String toString();
+<A NAME="44"></A>}
+<A NAME="45"></A>
+<A NAME="46"></A></pre>
+</BODY>
+</HTML>

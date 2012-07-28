@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.apache.fixes.StringEscapeUtilsFixed (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">StringEscapeUtilsFixed.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.apache.fixes;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/apache/StringEscapeUtils.java.html">ai.ilikeplaces.util.apache.StringEscapeUtils</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A> * Created by IntelliJ IDEA.
+<A NAME="8"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="9"></A> * Date: Mar 8, 2010
+<A NAME="10"></A> * Time: 11:15:43 PM
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A>
+<A NAME="13"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="14"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> StringEscapeUtilsFixed <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/apache/StringEscapeUtils.java.html">StringEscapeUtils</A> {
+<A NAME="15"></A>
+<A NAME="16"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Boolean">boolean</FONT> checkescapeJava(<FONT ID="Final">final</FONT> String str) {
+<A NAME="17"></A>        <FONT ID="Return">return</FONT> str.equals(escapeJava(str));
+<A NAME="18"></A>    }
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Boolean">boolean</FONT> checkescapeJavaScript(<FONT ID="Final">final</FONT> String str) {
+<A NAME="21"></A>        <FONT ID="Return">return</FONT> str.equals(escapeJavaScript(str));
+<A NAME="22"></A>    }
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Boolean">boolean</FONT> checkescapeHtml(<FONT ID="Final">final</FONT> String str) {
+<A NAME="25"></A>        <FONT ID="Return">return</FONT> str.equals(escapeHtml(str));
+<A NAME="26"></A>    }
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Boolean">boolean</FONT> checkescapeXml(<FONT ID="Final">final</FONT> String str) {
+<A NAME="29"></A>        <FONT ID="Return">return</FONT> str.equals(escapeXml(str));
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String escapeXSS(<FONT ID="Final">final</FONT> String str){
+<A NAME="33"></A>         <FONT ID="Return">return</FONT> escapeJavaScript(escapeXml(escapeHtml(str)));
+<A NAME="34"></A>    }
+<A NAME="35"></A>}
+<A NAME="36"></A></pre>
+</BODY>
+</HTML>

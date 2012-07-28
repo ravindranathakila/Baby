@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.ServletSignup (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ServletSignup.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">ai.ilikeplaces.logic.validators.unit.Password</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Parameter.java.html">ai.ilikeplaces.util.Parameter</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.servlet.ServletException;
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServlet;
+<A NAME="22"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="23"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="24"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="25"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="26"></A><FONT ID="Import">import</FONT> java.text.MessageFormat;
+<A NAME="27"></A><FONT ID="Import">import</FONT> java.util.Enumeration;
+<A NAME="28"></A><FONT ID="Import">import</FONT> java.util.ResourceBundle;
+<A NAME="29"></A>
+<A NAME="30"></A><FONT ID="FormalComment">/**
+<A NAME="31"></A> * @author Ravindranath Akila
+<A NAME="32"></A> */</FONT>
+<A NAME="33"></A>
+<A NAME="34"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="35"></A>@OK(details = <FONT ID="StringLiteral">"Reviewed:20100620"</FONT>)
+<A NAME="36"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ServletSignup <FONT ID="Extends">extends</FONT> HttpServlet {
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Final">final</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/servlets/ServletSignup.java.html">ServletSignup</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="MultiLineComment">/*Session related static id references*/</FONT>
+<A NAME="41"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String Username = <FONT ID="StringLiteral">"Username"</FONT>;
+<A NAME="42"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String Password = <FONT ID="StringLiteral">"Password"</FONT>;
+<A NAME="43"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String ConfirmPassword = <FONT ID="StringLiteral">"ConfirmPassword"</FONT>;
+<A NAME="44"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String Email = <FONT ID="StringLiteral">"Email"</FONT>;
+<A NAME="45"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String Gender = <FONT ID="StringLiteral">"Gender"</FONT>;
+<A NAME="46"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String DateOfBirth = <FONT ID="StringLiteral">"DateOfBirth"</FONT>;
+<A NAME="47"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String UsernameError = <FONT ID="StringLiteral">"UsernameError"</FONT>;
+<A NAME="48"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String PasswordError = <FONT ID="StringLiteral">"PasswordError"</FONT>;
+<A NAME="49"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String ConfirmPasswordError = <FONT ID="StringLiteral">"ConfirmPasswordError"</FONT>;
+<A NAME="50"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String EmailError = <FONT ID="StringLiteral">"EmailError"</FONT>;
+<A NAME="51"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String GenderError = <FONT ID="StringLiteral">"GenderError"</FONT>;
+<A NAME="52"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String DateOfBirthError = <FONT ID="StringLiteral">"DateOfBirthError"</FONT>;
+<A NAME="53"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String UsernameErrorMsg = <FONT ID="StringLiteral">"UsernameErrorMsg"</FONT>;
+<A NAME="54"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String PasswordErrorMsg = <FONT ID="StringLiteral">"PasswordErrorMsg"</FONT>;
+<A NAME="55"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String ConfirmPasswordErrorMsg = <FONT ID="StringLiteral">"ConfirmPasswordErrorMsg"</FONT>;
+<A NAME="56"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String EmailErrorMsg = <FONT ID="StringLiteral">"EmailErrorMsg"</FONT>;
+<A NAME="57"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String GenderErrorMsg = <FONT ID="StringLiteral">"GenderErrorMsg"</FONT>;
+<A NAME="58"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String DateOfBirthErrorMsg = <FONT ID="StringLiteral">"DateOfBirthErrorMsg"</FONT>;
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TRUE = <FONT ID="StringLiteral">"true"</FONT>;
+<A NAME="60"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String ErrorStatusTrue = TRUE;
+<A NAME="61"></A>
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> ResourceBundle logMsgs = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.LogMsgs"</FONT>);
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String JS_NULL = <FONT ID="StringLiteral">"null"</FONT>;
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EMPTY = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="65"></A>
+<A NAME="66"></A>    @Override
+<A NAME="67"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="68"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init() {
+<A NAME="69"></A>    }
+<A NAME="70"></A>
+<A NAME="71"></A>    <FONT ID="FormalComment">/**
+<A NAME="72"></A>     * Processes requests for both HTTP &lt;code&gt;GET&lt;/code&gt; and &lt;code&gt;POST&lt;/code&gt; methods.
+<A NAME="73"></A>     *
+<A NAME="74"></A>     * @param request__
+<A NAME="75"></A>     * @param response__
+<A NAME="76"></A>     * @throws ServletException
+<A NAME="77"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="78"></A>     */</FONT>
+<A NAME="79"></A>    @TODO(task = <FONT ID="StringLiteral">"GET USERS NAME IN JSP. SET THE OTHER PARAMETERS TAKEN FROM THE USER!"</FONT>)
+<A NAME="80"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> HttpServletRequest request__, <FONT ID="Final">final</FONT> HttpServletResponse response__)
+<A NAME="81"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="82"></A>
+<A NAME="83"></A>        response__.setContentType(<FONT ID="StringLiteral">"text/html;charset=UTF-8"</FONT>);
+<A NAME="84"></A>        <FONT ID="Final">final</FONT> ResourceBundle gUI = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.GUI"</FONT>);
+<A NAME="85"></A>
+<A NAME="86"></A>        <FONT ID="Final">final</FONT> Enumeration enumerated = request__.getParameterNames();
+<A NAME="87"></A>        logger.debug(logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0003"</FONT>));
+<A NAME="88"></A>        <FONT ID="While">while</FONT> (enumerated.hasMoreElements()) {
+<A NAME="89"></A>            String param = (String) enumerated.nextElement();
+<A NAME="90"></A>            logger.debug(logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0001"</FONT>), param);
+<A NAME="91"></A>            logger.debug(logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0002"</FONT>), request__.getParameter(param).length());
+<A NAME="92"></A>
+<A NAME="93"></A>        }
+<A NAME="94"></A>        <FONT ID="Final">final</FONT> String username = request__.getParameter(Username);<FONT ID="MultiLineComment">/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/</FONT>
+<A NAME="95"></A>        <FONT ID="Final">final</FONT> String password = request__.getParameter(Password);<FONT ID="MultiLineComment">/*DO NOT ASSIGN TO NEW STRING. NULL REPRESENTS FIRST ENTRANCE*/</FONT>
+<A NAME="96"></A>
+<A NAME="97"></A>        processSignup:
+<A NAME="98"></A>        {
+<A NAME="99"></A>            <FONT ID="If">if</FONT> (!isSignUpPermitted()) {
+<A NAME="100"></A>                request__.getRequestDispatcher(<FONT ID="StringLiteral">"/signup.jsp"</FONT>).forward(request__, response__);
+<A NAME="101"></A>                <FONT ID="Break">break</FONT> processSignup;
+<A NAME="102"></A>            }
+<A NAME="103"></A>
+<A NAME="104"></A>            SleepForSpam:
+<A NAME="105"></A>            {
+<A NAME="106"></A>                <FONT ID="Try">try</FONT> {
+<A NAME="107"></A>                    Thread.sleep(signUpSleep());
+<A NAME="108"></A>                } <FONT ID="Catch">catch</FONT> (InterruptedException e) {
+<A NAME="109"></A>                    e.printStackTrace();
+<A NAME="110"></A>                }
+<A NAME="111"></A>            }
+<A NAME="112"></A>
+<A NAME="113"></A>            <FONT ID="If">if</FONT> (request__.getSession(<FONT ID="False">false</FONT>) == <FONT ID="Null">null</FONT>) {
+<A NAME="114"></A>                request__.getRequestDispatcher(<FONT ID="StringLiteral">"/signup.jsp"</FONT>).forward(request__, response__);
+<A NAME="115"></A>                request__.getSession();
+<A NAME="116"></A>                <FONT ID="Break">break</FONT> processSignup;
+<A NAME="117"></A>            }
+<A NAME="118"></A>
+<A NAME="119"></A>            <FONT ID="FormalComment">/**
+<A NAME="120"></A>             * Remove an existing session
+<A NAME="121"></A>             * 1 user already logged in?
+<A NAME="122"></A>             * 2.returning from signup error(which adds a new session)
+<A NAME="123"></A>             *
+<A NAME="124"></A>             */</FONT>
+<A NAME="125"></A>            <FONT ID="Final">final</FONT> HttpSession oldUserSession_ = request__.getSession(<FONT ID="False">false</FONT>);
+<A NAME="126"></A>            <FONT ID="If">if</FONT> (oldUserSession_ != <FONT ID="Null">null</FONT>) {
+<A NAME="127"></A>                oldUserSession_.removeAttribute(ServletLogin.HumanUser);
+<A NAME="128"></A>                oldUserSession_.invalidate();
+<A NAME="129"></A>            }
+<A NAME="130"></A>
+<A NAME="131"></A>            <FONT ID="FormalComment">/**
+<A NAME="132"></A>             * Now lets maake a new session for this user
+<A NAME="133"></A>             */</FONT>
+<A NAME="134"></A>            <FONT ID="Final">final</FONT> HttpSession userSession_ = request__.getSession();
+<A NAME="135"></A>
+<A NAME="136"></A>            <FONT ID="FormalComment">/**
+<A NAME="137"></A>             * Lets leave time for a very inexperienced user to signup.
+<A NAME="138"></A>             * i.e. call her friend, ask how to fill the form. 20 mins is
+<A NAME="139"></A>             * fine.
+<A NAME="140"></A>             */</FONT>
+<A NAME="141"></A>            userSession_.setMaxInactiveInterval(<FONT ID="IntegerLiteral">1200</FONT>);
+<A NAME="142"></A>
+<A NAME="143"></A>            <FONT ID="MultiLineComment">/*Lets set session values in case signup fails and user does not require to fill all fields again.
+<A NAME="144"></A>            Remember though, we will never be using these values for persisting, as a conventioin.*/</FONT>
+<A NAME="145"></A>            userSession_.setAttribute(Username, username);
+<A NAME="146"></A>            userSession_.setAttribute(Password, EMPTY);
+<A NAME="147"></A>
+<A NAME="148"></A>            Boolean allParametersNotOkFlag = Boolean.FALSE;
+<A NAME="149"></A>            <FONT ID="FormalComment">/**
+<A NAME="150"></A>             * No breaking the block as we need to notify the user all mistakes he did
+<A NAME="151"></A>             */</FONT>
+<A NAME="152"></A>            validation:
+<A NAME="153"></A>            {
+<A NAME="154"></A>                validate_username:
+<A NAME="155"></A>                {
+<A NAME="156"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> eemail = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(username);
+<A NAME="157"></A>                    <FONT ID="If">if</FONT> (username == <FONT ID="Null">null</FONT> || username.equals(EMPTY) || username.equals(JS_NULL)) {<FONT ID="MultiLineComment">/*username*/</FONT>
+<A NAME="158"></A>                        userSession_.setAttribute(UsernameError, ErrorStatusTrue);
+<A NAME="159"></A>                        userSession_.setAttribute(UsernameErrorMsg, gUI.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0002"</FONT>));
+<A NAME="160"></A>                        allParametersNotOkFlag = Boolean.TRUE;
+<A NAME="161"></A>                    } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> ((<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(username).validate()) != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="162"></A>                        userSession_.setAttribute(UsernameError, ErrorStatusTrue);
+<A NAME="163"></A>                        userSession_.setAttribute(UsernameErrorMsg, gUI.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0007"</FONT>));
+<A NAME="164"></A>                        allParametersNotOkFlag = Boolean.TRUE;
+<A NAME="165"></A>                    } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyCheckHuman(username).returnValue()) {
+<A NAME="166"></A>                        userSession_.setAttribute(UsernameError, ErrorStatusTrue);
+<A NAME="167"></A>                        userSession_.setAttribute(UsernameErrorMsg, gUI.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0003"</FONT>) + username);
+<A NAME="168"></A>                        allParametersNotOkFlag = Boolean.TRUE;
+<A NAME="169"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="170"></A>                        logger.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0006"</FONT>));
+<A NAME="171"></A>                    }
+<A NAME="172"></A>                }
+<A NAME="173"></A>
+<A NAME="174"></A>                validate_password:
+<A NAME="175"></A>                {
+<A NAME="176"></A>                    <FONT ID="MultiLineComment">/*Do NOT put the password into the session.*/</FONT>
+<A NAME="177"></A>                    <FONT ID="If">if</FONT> (password == <FONT ID="Null">null</FONT> || password.equals(EMPTY) || password.equals(JS_NULL)) {<FONT ID="MultiLineComment">/*password*/</FONT>
+<A NAME="178"></A>                        userSession_.setAttribute(PasswordError, ErrorStatusTrue);
+<A NAME="179"></A>                        userSession_.setAttribute(PasswordErrorMsg, gUI.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0004"</FONT>));
+<A NAME="180"></A>                        allParametersNotOkFlag = Boolean.TRUE;
+<A NAME="181"></A>                    } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A>(password).validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="182"></A>                        userSession_.setAttribute(PasswordError, ErrorStatusTrue);
+<A NAME="183"></A>                        userSession_.setAttribute(PasswordErrorMsg, gUI.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0008"</FONT>));
+<A NAME="184"></A>                        allParametersNotOkFlag = Boolean.TRUE;
+<A NAME="185"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="186"></A>                        logger.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0007"</FONT>));
+<A NAME="187"></A>                    }
+<A NAME="188"></A>                }
+<A NAME="189"></A>            }
+<A NAME="190"></A>
+<A NAME="191"></A>
+<A NAME="192"></A>            <FONT ID="If">if</FONT> (allParametersNotOkFlag) {
+<A NAME="193"></A>                request__.getRequestDispatcher(<FONT ID="StringLiteral">"/signup.jsp"</FONT>).forward(request__, response__);
+<A NAME="194"></A>                <FONT ID="Break">break</FONT> processSignup;
+<A NAME="195"></A>            }
+<A NAME="196"></A>
+<A NAME="197"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="198"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; r = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(
+<A NAME="199"></A>                        <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>().setObjAsValid(username),
+<A NAME="200"></A>                        <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A>().setObjAsValid(password),
+<A NAME="201"></A>                        <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>().setObjAsValid(username));
+<A NAME="202"></A>
+<A NAME="203"></A>                <FONT ID="If">if</FONT> (r.returnStatus() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="204"></A>                    <FONT ID="Throw">throw</FONT> r.returnError();
+<A NAME="205"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="206"></A>                    <FONT ID="Try">try</FONT> {
+<A NAME="207"></A>                        <FONT ID="Final">final</FONT> String activationURL = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Parameter.java.html">Parameter</A>(<FONT ID="StringLiteral">"http://www.ilikeplaces.com/"</FONT> + <FONT ID="StringLiteral">"activate"</FONT>)
+<A NAME="208"></A>                                .append(ServletLogin.Username, username, <FONT ID="True">true</FONT>)
+<A NAME="209"></A>                                .append(ServletLogin.Password,
+<A NAME="210"></A>                                        DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(request__.getParameter(Username)))
+<A NAME="211"></A>                                                .returnValue()
+<A NAME="212"></A>                                                .getHumanAuthenticationHash())
+<A NAME="213"></A>                                .get();
+<A NAME="214"></A>                        <FONT ID="Final">final</FONT> String mail = MessageFormat.format(gUI.getString(<FONT ID="StringLiteral">"SIGNUP_BODY"</FONT>), RBGet.globalConfig.getString(<FONT ID="StringLiteral">"noti_mail"</FONT>))
+<A NAME="215"></A>                                .replace(<FONT ID="StringLiteral">"activationURL"</FONT>, <FONT ID="StringLiteral">"&lt;a href='"</FONT> +
+<A NAME="216"></A>                                        activationURL + <FONT ID="StringLiteral">"' &gt;"</FONT> + activationURL + <FONT ID="StringLiteral">"&lt;/a&gt;"</FONT>);
+<A NAME="217"></A>                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+<A NAME="218"></A>                                username,
+<A NAME="219"></A>                                gUI.getString(<FONT ID="StringLiteral">"SIGNUP_HEADER"</FONT>),
+<A NAME="220"></A>                                mail);
+<A NAME="221"></A>                        response__.sendRedirect(Page.Activate.getURL());
+<A NAME="222"></A>                    } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="223"></A>                        Loggers.EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="224"></A>                    }
+<A NAME="225"></A>                }
+<A NAME="226"></A>            } <FONT ID="Catch">catch</FONT> (
+<A NAME="227"></A>                    @NOTE(note = <FONT ID="StringLiteral">"COINCIDENCE. ANOTHER USER SIGNED UP IN SAME NAME WHILE THIS USER WAS DOING IT."</FONT>)
+<A NAME="228"></A>                    <FONT ID="Final">final</FONT> Throwable e) {
+<A NAME="229"></A>                userSession_.setAttribute(UsernameError, ErrorStatusTrue);
+<A NAME="230"></A>                userSession_.setAttribute(UsernameErrorMsg, gUI.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletSignup.0001"</FONT>) + username);
+<A NAME="231"></A>                request__.getRequestDispatcher(<FONT ID="StringLiteral">"/signup.jsp"</FONT>).forward(request__, response__);
+<A NAME="232"></A>                <FONT ID="Break">break</FONT> processSignup;
+<A NAME="233"></A>            }
+<A NAME="234"></A>            <FONT ID="SingleLineComment">//final Page login = Page.login;
+<A NAME="235"></A></FONT>            <FONT ID="SingleLineComment">//request__.getRequestDispatcher(login.toString()).forward(request__, response__);
+<A NAME="236"></A></FONT>            <FONT ID="Break">break</FONT> processSignup;
+<A NAME="237"></A>        }
+<A NAME="238"></A>
+<A NAME="239"></A>    }
+<A NAME="240"></A>
+<A NAME="241"></A>    <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> isSignUpPermitted() {
+<A NAME="242"></A>        <FONT ID="Return">return</FONT> RBGet.getGlobalConfigKey(<FONT ID="StringLiteral">"signUpEnabled"</FONT>) != <FONT ID="Null">null</FONT> &amp;&amp; RBGet.getGlobalConfigKey(<FONT ID="StringLiteral">"signUpEnabled"</FONT>).equals(TRUE);
+<A NAME="243"></A>    }
+<A NAME="244"></A>
+<A NAME="245"></A>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> signUpSleep() {
+<A NAME="246"></A>        <FONT ID="Return">return</FONT> RBGet.getGlobalConfigKey(<FONT ID="StringLiteral">"signUpSleep"</FONT>) != <FONT ID="Null">null</FONT> ? Integer.parseInt(RBGet.getGlobalConfigKey(<FONT ID="StringLiteral">"signUpSleep"</FONT>)) : <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="247"></A>    }
+<A NAME="248"></A>
+<A NAME="249"></A>    <FONT ID="FormalComment">/**
+<A NAME="250"></A>     * Handles the HTTP &lt;code&gt;GET&lt;/code&gt; method.
+<A NAME="251"></A>     *
+<A NAME="252"></A>     * @param request  servlet request
+<A NAME="253"></A>     * @param response servlet response
+<A NAME="254"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="255"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="256"></A>     */</FONT>
+<A NAME="257"></A>    @Override
+<A NAME="258"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> doGet(<FONT ID="Final">final</FONT> HttpServletRequest request, <FONT ID="Final">final</FONT> HttpServletResponse response)
+<A NAME="259"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="260"></A>        processRequest(request, response);
+<A NAME="261"></A>    }
+<A NAME="262"></A>
+<A NAME="263"></A>    <FONT ID="FormalComment">/**
+<A NAME="264"></A>     * Handles the HTTP &lt;code&gt;POST&lt;/code&gt; method.
+<A NAME="265"></A>     *
+<A NAME="266"></A>     * @param request  servlet request
+<A NAME="267"></A>     * @param response servlet response
+<A NAME="268"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="269"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="270"></A>     */</FONT>
+<A NAME="271"></A>    @Override
+<A NAME="272"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> doPost(<FONT ID="Final">final</FONT> HttpServletRequest request, <FONT ID="Final">final</FONT> HttpServletResponse response)
+<A NAME="273"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="274"></A>        processRequest(request, response);
+<A NAME="275"></A>    }
+<A NAME="276"></A>
+<A NAME="277"></A>    <FONT ID="FormalComment">/**
+<A NAME="278"></A>     * Returns a short description of the servlet.
+<A NAME="279"></A>     *
+<A NAME="280"></A>     * @return a String containing servlet description
+<A NAME="281"></A>     */</FONT>
+<A NAME="282"></A>    @Override
+<A NAME="283"></A>    <FONT ID="Public">public</FONT> String getServletInfo() {
+<A NAME="284"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"Nothing interesting here!"</FONT>;
+<A NAME="285"></A>    }<FONT ID="SingleLineComment">// &lt;/editor-fold&gt;
+<A NAME="286"></A></FONT>}
+<A NAME="287"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.validators.unit.Email (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Email.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.validators.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.IsInvariant;
+<A NAME="6"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotNull;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.util.regex.Matcher;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.regex.Pattern;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * Created by IntelliJ IDEA.
+<A NAME="15"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="16"></A> * Date: Jan 22, 2010
+<A NAME="17"></A> * Time: 2:16:43 AM
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A>
+<A NAME="20"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="21"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Email <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; {
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> Email() {
+<A NAME="24"></A>    }
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> Email(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="27"></A>        obj = humanId;
+<A NAME="28"></A>    }
+<A NAME="29"></A>
+<A NAME="30"></A>    @IsInvariant
+<A NAME="31"></A>    @NotNull
+<A NAME="32"></A>    @net.sf.oval.constraint.Email
+<A NAME="33"></A>    @Override
+<A NAME="34"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> String getObj() {
+<A NAME="35"></A>        <FONT ID="Return">return</FONT> obj;
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; emails(<FONT ID="Final">final</FONT> String rawEmailsAsString) {
+<A NAME="39"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; emails = <FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt;();
+<A NAME="40"></A>        <FONT ID="SingleLineComment">//Pattern p = EmailCheck.EMAIL_PATTERN;
+<A NAME="41"></A></FONT>        Pattern p = Pattern.compile(<FONT ID="StringLiteral">"(['_A-Za-z0-9-]+(\\.['_A-Za-z0-9-]+)*@([A-Za-z0-9-])+(\\.[A-Za-z0-9-]+)*((\\.[A-Za-z0-9]{2,})|(\\.[A-Za-z0-9]{2,}\\.[A-Za-z0-9]{2,})))"</FONT>);
+<A NAME="42"></A>        Matcher m = p.matcher(rawEmailsAsString);
+<A NAME="43"></A>
+<A NAME="44"></A>        <FONT ID="While">while</FONT> (m.find()) {
+<A NAME="45"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> e = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(m.group());
+<A NAME="46"></A>            <FONT ID="If">if</FONT> (e.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="47"></A>                emails.add(e);
+<A NAME="48"></A>            }
+<A NAME="49"></A>        }
+<A NAME="50"></A>        <FONT ID="Return">return</FONT> emails;
+<A NAME="51"></A>    }
+<A NAME="52"></A>
+<A NAME="53"></A>    @Override
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(<FONT ID="Final">final</FONT> Object o) {
+<A NAME="55"></A>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT> == o) <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="56"></A>        <FONT ID="If">if</FONT> (!(o <FONT ID="InstanceOf">instanceof</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>)) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="57"></A>
+<A NAME="58"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A> refObj = (<A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>) o;
+<A NAME="59"></A>
+<A NAME="60"></A>        <FONT ID="Return">return</FONT> obj.equals(refObj.getObj());
+<A NAME="61"></A>    }
+<A NAME="62"></A>}
+<A NAME="63"></A>
+<A NAME="64"></A>
+<A NAME="65"></A><FONT ID="MultiLineComment">/*
+<A NAME="66"></A>
+<A NAME="67"></A>
+<A NAME="68"></A>&lt;!-- TWO STEPS TO INSTALL EXTRACT EMAIL ADDRESSES:
+<A NAME="69"></A>
+<A NAME="70"></A>1.  Copy the coding into the HEAD of your HTML document
+<A NAME="71"></A>2.  Add the last code into the BODY of your HTML document  --&gt;
+<A NAME="72"></A>
+<A NAME="73"></A>&lt;!-- STEP ONE: Paste this code into the HEAD of your HTML document  --&gt;
+<A NAME="74"></A>
+<A NAME="75"></A>&lt;HEAD&gt;
+<A NAME="76"></A>
+<A NAME="77"></A>&lt;SCRIPT LANGUAGE="JavaScript"&gt;
+<A NAME="78"></A>&lt;!-- Original:  Ronnie T. Moore, Editor --&gt;
+<A NAME="79"></A>
+<A NAME="80"></A>&lt;!-- This script and many more are available free online at --&gt;
+<A NAME="81"></A>&lt;!-- The JavaScript Source!! http://javascript.internet.com --&gt;
+<A NAME="82"></A>
+<A NAME="83"></A>&lt;!-- Begin
+<A NAME="84"></A>function findEmailAddresses(StrObj) {
+<A NAME="85"></A>var separateEmailsBy = ", ";
+<A NAME="86"></A>var email = "&lt;none&gt;"; // if no match, use this
+<A NAME="87"></A>var emailsArray = StrObj.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+<A NAME="88"></A>if (emailsArray) {
+<A NAME="89"></A>email = "";
+<A NAME="90"></A>for (var i = 0; i &lt; emailsArray.length; i++) {
+<A NAME="91"></A>if (i != 0) email += separateEmailsBy;
+<A NAME="92"></A>email += emailsArray[i];
+<A NAME="93"></A>}
+<A NAME="94"></A>}
+<A NAME="95"></A>return email;
+<A NAME="96"></A>}
+<A NAME="97"></A>//  End --&gt;
+<A NAME="98"></A>&lt;/script&gt;
+<A NAME="99"></A>&lt;/HEAD&gt;
+<A NAME="100"></A>
+<A NAME="101"></A>&lt;!-- STEP TWO: Copy this code into the BODY of your HTML document  --&gt;
+<A NAME="102"></A>
+<A NAME="103"></A>&lt;BODY&gt;
+<A NAME="104"></A>
+<A NAME="105"></A>&lt;center&gt;
+<A NAME="106"></A>&lt;form&gt;
+<A NAME="107"></A>&lt;textarea name=comments rows=10 cols=50 onBlur="this.form.email.value=findEmailAddresses(this.value);"&gt;&lt;/textarea&gt;
+<A NAME="108"></A>&lt;br&gt;
+<A NAME="109"></A>Email:  &lt;input type=text name=email&gt;
+<A NAME="110"></A>&lt;/form&gt;
+<A NAME="111"></A>&lt;/center&gt;
+<A NAME="112"></A>
+<A NAME="113"></A>&lt;p&gt;&lt;center&gt;
+<A NAME="114"></A>&lt;font face="arial, helvetica" size="-2"&gt;Free JavaScripts provided&lt;br&gt;
+<A NAME="115"></A>by &lt;a href="http://javascriptsource.com"&gt;The JavaScript Source&lt;/a&gt;&lt;/font&gt;
+<A NAME="116"></A>&lt;/center&gt;&lt;p&gt;
+<A NAME="117"></A>
+<A NAME="118"></A>&lt;!-- Script Size:  1.19 KB --&gt;*/</FONT>
+<A NAME="119"></A>
+<A NAME="120"></A><FONT ID="MultiLineComment">/*   //WORKING METHOD FOR EMAIL EXTRACTION
+<A NAME="121"></A> public static String emails(final String StrObj) {
+<A NAME="122"></A>
+<A NAME="123"></A>        //Pattern p = EmailCheck.EMAIL_PATTERN;
+<A NAME="124"></A>        Pattern p = Pattern.compile("(['_A-Za-z0-9-]+(\\.['_A-Za-z0-9-]+)*@([A-Za-z0-9-])+(\\.[A-Za-z0-9-]+)*((\\.[A-Za-z0-9]{2,})|(\\.[A-Za-z0-9]{2,}\\.[A-Za-z0-9]{2,})))");
+<A NAME="125"></A>        //Pattern p = Pattern.compile("/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9._-]+)/gi");
+<A NAME="126"></A>        //Pattern p = Pattern.compile("cat");
+<A NAME="127"></A>        //Pattern p = Pattern.compile("@");
+<A NAME="128"></A>        Matcher m = p.matcher(" akila@fmid.com sdfd wer sdfs@dfdf.com df2342rf &amp;*((#,dfsd@der.li " +
+<A NAME="129"></A>                "\"quotecheck\"@doma.com " +
+<A NAME="130"></A>                "\"space check\"@doma.com " +
+<A NAME="131"></A>                "valid@doma.com " +
+<A NAME="132"></A>                "nothere@\"quotecheck\".com " +
+<A NAME="133"></A>                "nothere@\"space heck\".com " +
+<A NAME="134"></A>                "nothere@valid.com " +
+<A NAME="135"></A>                "");
+<A NAME="136"></A>        //Matcher m = p.matcher("one cat two cats in the yard");
+<A NAME="137"></A>        StringBuffer sb = new StringBuffer();
+<A NAME="138"></A>        while (m.find()) {
+<A NAME="139"></A>            sb.append(m.group()+"\n");
+<A NAME="140"></A>        }
+<A NAME="141"></A>        //m.appendTail(sb);
+<A NAME="142"></A>        return sb.toString();
+<A NAME="143"></A>
+<A NAME="144"></A>//        String separateEmailsBy = ", ";
+<A NAME="145"></A>//        String email = ""; // if no match, use this
+<A NAME="146"></A>//        String[] emailsArray = StrObj.split(" ");
+<A NAME="147"></A>//        String[] emailsArray = StrObj.split("/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9._-]+)/gi");
+<A NAME="148"></A>//        email = "";
+<A NAME="149"></A>//        for (int i = 0; i &lt; emailsArray.length; i++) {
+<A NAME="150"></A>//            if (i != 0) email += separateEmailsBy;
+<A NAME="151"></A>//            email += emailsArray[i];
+<A NAME="152"></A>//        }
+<A NAME="153"></A>//        return email;
+<A NAME="154"></A>    }*/</FONT>
+<A NAME="155"></A></pre>
+</BODY>
+</HTML>

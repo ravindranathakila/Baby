@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.WallWidget (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">WallWidget.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/WallEntry.java.html">ai.ilikeplaces.logic.validators.unit.WallEntry</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">ai.ilikeplaces.util.cache.SmartCache</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.NodePropertyTransport;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="14"></A>
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="FormalComment">/**
+<A NAME="17"></A> * @author Ravindranath Akila
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A>
+<A NAME="20"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="21"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> WallWidget&lt;T&gt; <FONT ID="Extends">extends</FONT> AbstractWidgetListener&lt;T&gt; {
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String PARAM_WALL_ENTRY = <FONT ID="StringLiteral">"wall_entry"</FONT>;
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/WallEntry.java.html">WallEntry</A> wallAppend = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/WallEntry.java.html">WallEntry</A>(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MUTE = <FONT ID="StringLiteral">"Mute"</FONT>;
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LISTEN = <FONT ID="StringLiteral">"Listen"</FONT>;
+<A NAME="28"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WALL_SUBMIT_WIDGET = <FONT ID="StringLiteral">"wall_submit_widget"</FONT>;
+<A NAME="29"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ORGANIZE_SECTION = <FONT ID="StringLiteral">"organize"</FONT>;
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">SmartCache</A>&lt;String, Long&gt; HUMANS_WALL_ID = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">SmartCache</A>&lt;String, Long&gt;();
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum WallWidgetIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="34"></A>        <FONT ID="MultiLineComment">/*WallHandler IDs*/</FONT>
+<A NAME="35"></A>        wallWidget,
+<A NAME="36"></A>        wallContent,
+<A NAME="37"></A>        wallAppend,
+<A NAME="38"></A>        wallSubmit,
+<A NAME="39"></A>        wallNotice,
+<A NAME="40"></A>        wallMute,
+<A NAME="41"></A>        wallTitle,
+<A NAME="42"></A>        wallProfilePhoto,
+<A NAME="43"></A>        wallProfileName,
+<A NAME="44"></A>        wallGame,
+<A NAME="45"></A>        wallFollowers
+<A NAME="46"></A>    }
+<A NAME="47"></A>
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> WallWidget(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="50"></A>        <FONT ID="Super">super</FONT>(request__, Page.WallHandler, appendToElement__, initArgs);
+<A NAME="51"></A>
+<A NAME="52"></A>        UCProcessWallText:
+<A NAME="53"></A>        {
+<A NAME="54"></A>
+<A NAME="55"></A>            itsNatDocument_.addEventListener((EventTarget) $$(WallWidgetIds.wallAppend), EventType.BLUR.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="56"></A>
+<A NAME="57"></A>                @Override
+<A NAME="58"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="59"></A>                    wallAppend.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="60"></A>                    <FONT ID="SingleLineComment">//We are removing validation here since it is understood text is supposed to be entered
+<A NAME="61"></A></FONT>                    <FONT ID="MultiLineComment">/*if (wallAppend.validate() == 0) {
+<A NAME="62"></A>                        wallAppend.setObj(wallAppend.getObj());
+<A NAME="63"></A>                        $$clear($$(Page.wallNotice));
+<A NAME="64"></A>                    } else {
+<A NAME="65"></A>                        $$(Page.wallNotice).setTextContent(wallAppend.getViolationAsString());
+<A NAME="66"></A>                        wallAppend.setObj("");
+<A NAME="67"></A>                    }*/</FONT>
+<A NAME="68"></A>                }
+<A NAME="69"></A>
+<A NAME="70"></A>            }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="71"></A>        }
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> WallWidget(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> T t, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="75"></A>        <FONT ID="Super">super</FONT>(request__, Page.WallHandler, t, appendToElement__);
+<A NAME="76"></A>
+<A NAME="77"></A>        UCProcessWallText:
+<A NAME="78"></A>        {
+<A NAME="79"></A>
+<A NAME="80"></A>            itsNatDocument_.addEventListener((EventTarget) $$(WallWidgetIds.wallAppend), EventType.BLUR.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="81"></A>
+<A NAME="82"></A>                @Override
+<A NAME="83"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="84"></A>                    wallAppend.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="85"></A>                    <FONT ID="SingleLineComment">//We are removing validation here since it is understood text is supposed to be entered
+<A NAME="86"></A></FONT>                    <FONT ID="MultiLineComment">/*if (wallAppend.validate() == 0) {
+<A NAME="87"></A>                        wallAppend.setObj(wallAppend.getObj());
+<A NAME="88"></A>                        $$clear($$(Page.wallNotice));
+<A NAME="89"></A>                    } else {
+<A NAME="90"></A>                        $$(Page.wallNotice).setTextContent(wallAppend.getViolationAsString());
+<A NAME="91"></A>                        wallAppend.setObj("");
+<A NAME="92"></A>                    }*/</FONT>
+<A NAME="93"></A>                }
+<A NAME="94"></A>
+<A NAME="95"></A>            }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="96"></A>        }
+<A NAME="97"></A>    }
+<A NAME="98"></A>
+<A NAME="99"></A>
+<A NAME="100"></A>    <FONT ID="Void">void</FONT> $$displayWallAsMuted(<FONT ID="Final">final</FONT> Event evt_, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> doMute) {
+<A NAME="101"></A>        $$displayWallAsMuted($$(evt_), doMute);
+<A NAME="102"></A>    }
+<A NAME="103"></A>
+<A NAME="104"></A>    <FONT ID="Void">void</FONT> $$displayWallAsMuted(<FONT ID="Final">final</FONT> Element element, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> doMute) {
+<A NAME="105"></A>        <FONT ID="If">if</FONT> (doMute) {
+<A NAME="106"></A>            element.setAttribute(
+<A NAME="107"></A>                    MarkupTag.IMG.src(),
+<A NAME="108"></A>                    element.getAttribute(MarkupTag.IMG.src()).replace(<FONT ID="StringLiteral">"mute.png"</FONT>, <FONT ID="StringLiteral">"listen.png"</FONT>));
+<A NAME="109"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="110"></A>            element.setAttribute(
+<A NAME="111"></A>                    MarkupTag.IMG.src(),
+<A NAME="112"></A>                    element.getAttribute(MarkupTag.IMG.src()).replace(<FONT ID="StringLiteral">"listen.png"</FONT>, <FONT ID="StringLiteral">"mute.png"</FONT>));
+<A NAME="113"></A>        }
+<A NAME="114"></A>    }
+<A NAME="115"></A>
+<A NAME="116"></A>    <FONT ID="Void">void</FONT> setWallProfilePhoto(<FONT ID="Final">final</FONT> String profilePhotoUrl) {
+<A NAME="117"></A>        $$(WallWidgetIds.wallProfilePhoto).setAttribute(MarkupTag.IMG.title(), profilePhotoUrl);
+<A NAME="118"></A>    }
+<A NAME="119"></A>
+<A NAME="120"></A>    <FONT ID="Void">void</FONT> setWallTitle(<FONT ID="Final">final</FONT> String wallTitle) {
+<A NAME="121"></A>        $$(WallWidgetIds.wallTitle).setTextContent(wallTitle);
+<A NAME="122"></A>    }
+<A NAME="123"></A>
+<A NAME="124"></A>    <FONT ID="Void">void</FONT> setWallProfileName(<FONT ID="Final">final</FONT> String wallProfileName) {
+<A NAME="125"></A>        $$(WallWidgetIds.wallProfileName).setTextContent(wallProfileName);
+<A NAME="126"></A>    }
+<A NAME="127"></A>
+<A NAME="128"></A>    <FONT ID="Void">void</FONT> fetchToEmailSetLeftSidebar(<FONT ID="Final">final</FONT> String leftSidebar) {
+<A NAME="129"></A>        fetchToEmail = fetchToEmail.replace(<FONT ID="StringLiteral">"___|_"</FONT>, leftSidebar);
+<A NAME="130"></A>    }
+<A NAME="131"></A>
+<A NAME="132"></A>    <FONT ID="Void">void</FONT> fetchToEmailSetCenter(<FONT ID="Final">final</FONT> String center) {
+<A NAME="133"></A>        fetchToEmail = fetchToEmail.replace(<FONT ID="StringLiteral">"___||_"</FONT>, center);
+<A NAME="134"></A>    }
+<A NAME="135"></A>
+<A NAME="136"></A>    <FONT ID="Void">void</FONT> fetchToEmailSetRightSidebar(<FONT ID="Final">final</FONT> String rigtSidebar) {
+<A NAME="137"></A>        fetchToEmail = fetchToEmail.replace(<FONT ID="StringLiteral">"___|||_"</FONT>, rigtSidebar);
+<A NAME="138"></A>    }
+<A NAME="139"></A>
+<A NAME="140"></A>
+<A NAME="141"></A>    <FONT ID="Static">static</FONT> String fetchToEmailSetLeftSidebar(<FONT ID="Final">final</FONT> String leftSidebar, <FONT ID="Final">final</FONT> String document) {
+<A NAME="142"></A>        <FONT ID="Return">return</FONT> document.replace(<FONT ID="StringLiteral">"___|_"</FONT>, leftSidebar);
+<A NAME="143"></A>    }
+<A NAME="144"></A>
+<A NAME="145"></A>    <FONT ID="Static">static</FONT> String fetchToEmailSetCenter(<FONT ID="Final">final</FONT> String center, <FONT ID="Final">final</FONT> String document) {
+<A NAME="146"></A>        <FONT ID="Return">return</FONT> document.replace(<FONT ID="StringLiteral">"___||_"</FONT>, center);
+<A NAME="147"></A>    }
+<A NAME="148"></A>
+<A NAME="149"></A>    <FONT ID="Static">static</FONT> String fetchToEmailSetRightSidebar(<FONT ID="Final">final</FONT> String rightSidebar, <FONT ID="Final">final</FONT> String document) {
+<A NAME="150"></A>        <FONT ID="Return">return</FONT> document.replace(<FONT ID="StringLiteral">"___|||_"</FONT>, rightSidebar);
+<A NAME="151"></A>    }
+<A NAME="152"></A>}</pre>
+</BODY>
+</HTML>

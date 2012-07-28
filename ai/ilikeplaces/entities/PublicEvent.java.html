@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.PublicEvent (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">PublicEvent.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> * Created by IntelliJ IDEA.
+<A NAME="12"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="13"></A> * Date: Feb 09, 2022
+<A NAME="14"></A> * Time: 8:00:40 AM
+<A NAME="15"></A> */</FONT>
+<A NAME="16"></A>
+<A NAME="17"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="18"></A>@CREATED_BY(who = {<A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A>.<FONT ID="Class">class</FONT>},
+<A NAME="19"></A>        note = <FONT ID="StringLiteral">"We need to return this entity to the user for CRUD, hence cascade creation not possible."</FONT>)
+<A NAME="20"></A>
+<A NAME="21"></A>@DOCUMENTATION(
+<A NAME="22"></A>        SEE = @SEE({<A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A>.<FONT ID="Class">class</FONT>, <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>}),
+<A NAME="23"></A>        LOGIC = @LOGIC(
+<A NAME="24"></A>                {
+<A NAME="25"></A>                        @NOTE(<FONT ID="StringLiteral">"Used with PrivateEvent."</FONT>),
+<A NAME="26"></A>                        @NOTE(<FONT ID="StringLiteral">"Has an expiry mechanism (outdated events)"</FONT>),
+<A NAME="27"></A>                        @NOTE(<FONT ID="StringLiteral">"Always assigned to the head of a PrivateEvent tree"</FONT>),
+<A NAME="28"></A>                        @NOTE(<FONT ID="StringLiteral">"A PrivateEvent tree is the set of PrivateEvent's saying they are Public"</FONT>),
+<A NAME="29"></A>                        @NOTE(<FONT ID="StringLiteral">"Each PrivateEvent enlisted under this Public event, belongs to one tree"</FONT>),
+<A NAME="30"></A>                        @NOTE(<FONT ID="StringLiteral">"PublicEvent should also be allocation a Location"</FONT>),
+<A NAME="31"></A>                        @NOTE(<FONT ID="StringLiteral">"Location allocation will help enlist on location pages"</FONT>)
+<A NAME="32"></A>                }
+<A NAME="33"></A>        )
+<A NAME="34"></A>)
+<A NAME="35"></A><FONT ID="SingleLineComment">//@Entity
+<A NAME="36"></A></FONT><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> PublicEvent <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/RefreshData.java.html">RefreshData</A>&lt;<A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A>&gt;, Serializable {
+<A NAME="37"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="38"></A></FONT>
+<A NAME="39"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String privateLocationCOL = <FONT ID="StringLiteral">"privateLocation"</FONT>;
+<A NAME="40"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String locationCOL = <FONT ID="StringLiteral">"location"</FONT>;
+<A NAME="41"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String publicEventAlbumCOL = <FONT ID="StringLiteral">"publicEventAlbum"</FONT>;
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> Long publicEventId;
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> String publicEventName;
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> String publicEventInfo;
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> String publicEventStartDate;
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> String publicEventEndDate;
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> Boolean extendedAccess;
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> publicEventWall;
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> privateLocation;
+<A NAME="58"></A>
+<A NAME="59"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location;
+<A NAME="60"></A>
+<A NAME="61"></A><FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="62"></A></FONT>
+<A NAME="63"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+<A NAME="64"></A>    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+<A NAME="65"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> getLocation() {
+<A NAME="66"></A>        <FONT ID="Return">return</FONT> location;
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLocation(<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location) {
+<A NAME="70"></A>        <FONT ID="This">this</FONT>.location = location;
+<A NAME="71"></A>    }
+<A NAME="72"></A>
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> String getPublicEventEndDate() {
+<A NAME="75"></A>        <FONT ID="Return">return</FONT> publicEventEndDate;
+<A NAME="76"></A>    }
+<A NAME="77"></A>
+<A NAME="78"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicEventEndDate(String publicEventEndDate) {
+<A NAME="79"></A>        <FONT ID="This">this</FONT>.publicEventEndDate = publicEventEndDate;
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    @Id
+<A NAME="83"></A>    @GeneratedValue(strategy = GenerationType.AUTO)
+<A NAME="84"></A>    <FONT ID="Public">public</FONT> Long getPublicEventId() {
+<A NAME="85"></A>        <FONT ID="Return">return</FONT> publicEventId;
+<A NAME="86"></A>    }
+<A NAME="87"></A>
+<A NAME="88"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicEventId(<FONT ID="Final">final</FONT> Long publicEventId) {
+<A NAME="89"></A>        <FONT ID="This">this</FONT>.publicEventId = publicEventId;
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    <FONT ID="Public">public</FONT> String getPublicEventInfo() {
+<A NAME="93"></A>        <FONT ID="Return">return</FONT> publicEventInfo;
+<A NAME="94"></A>    }
+<A NAME="95"></A>
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicEventInfo(String publicEventInfo) {
+<A NAME="97"></A>        <FONT ID="This">this</FONT>.publicEventInfo = publicEventInfo;
+<A NAME="98"></A>    }
+<A NAME="99"></A>
+<A NAME="100"></A>
+<A NAME="101"></A>    <FONT ID="Public">public</FONT> String getPublicEventName() {
+<A NAME="102"></A>        <FONT ID="Return">return</FONT> publicEventName;
+<A NAME="103"></A>    }
+<A NAME="104"></A>
+<A NAME="105"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicEventName(String publicEventName) {
+<A NAME="106"></A>        <FONT ID="This">this</FONT>.publicEventName = publicEventName;
+<A NAME="107"></A>    }
+<A NAME="108"></A>
+<A NAME="109"></A>
+<A NAME="110"></A>    <FONT ID="Public">public</FONT> String getPublicEventStartDate() {
+<A NAME="111"></A>        <FONT ID="Return">return</FONT> publicEventStartDate;
+<A NAME="112"></A>    }
+<A NAME="113"></A>
+<A NAME="114"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicEventStartDate(String publicEventStartDate) {
+<A NAME="115"></A>        <FONT ID="This">this</FONT>.publicEventStartDate = publicEventStartDate;
+<A NAME="116"></A>    }
+<A NAME="117"></A>
+<A NAME="118"></A>    @UNIDIRECTIONAL
+<A NAME="119"></A>    @OneToOne(cascade = CascadeType.ALL)
+<A NAME="120"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> getPublicEventWall() {
+<A NAME="121"></A>        <FONT ID="Return">return</FONT> publicEventWall;
+<A NAME="122"></A>    }
+<A NAME="123"></A>
+<A NAME="124"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicEventWall(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> publicEventWall) {
+<A NAME="125"></A>        <FONT ID="This">this</FONT>.publicEventWall = publicEventWall;
+<A NAME="126"></A>    }
+<A NAME="127"></A>
+<A NAME="128"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+<A NAME="129"></A>    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+<A NAME="130"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> getPrivateLocation() {
+<A NAME="131"></A>        <FONT ID="Return">return</FONT> privateLocation;
+<A NAME="132"></A>    }
+<A NAME="133"></A>
+<A NAME="134"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivateLocation(<A HREF="../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> privateLocation) {
+<A NAME="135"></A>        <FONT ID="This">this</FONT>.privateLocation = privateLocation;
+<A NAME="136"></A>    }
+<A NAME="137"></A>
+<A NAME="138"></A>    <FONT ID="Public">public</FONT> Boolean isExtendedAccess() {
+<A NAME="139"></A>        <FONT ID="Return">return</FONT> extendedAccess;
+<A NAME="140"></A>    }
+<A NAME="141"></A>
+<A NAME="142"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setExtendedAccess(Boolean extendedAccess) {
+<A NAME="143"></A>        <FONT ID="This">this</FONT>.extendedAccess = extendedAccess;
+<A NAME="144"></A>    }
+<A NAME="145"></A>
+<A NAME="146"></A><FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="147"></A></FONT>
+<A NAME="148"></A>
+<A NAME="149"></A><FONT ID="SingleLineComment">// --------------------- Interface RefreshData ---------------------
+<A NAME="150"></A></FONT>
+<A NAME="151"></A>    <FONT ID="FormalComment">/**
+<A NAME="152"></A>     * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
+<A NAME="153"></A>     *
+<A NAME="154"></A>     * @throws ai.ilikeplaces.exception.DBFetchDataException
+<A NAME="155"></A>     *
+<A NAME="156"></A>     */</FONT>
+<A NAME="157"></A>    @Override
+<A NAME="158"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> refresh() <FONT ID="Throws">throws</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="159"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="160"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">Exception</A> e__) {
+<A NAME="161"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>(e__);
+<A NAME="162"></A>        }
+<A NAME="163"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="164"></A>    }
+<A NAME="165"></A>
+<A NAME="166"></A><FONT ID="SingleLineComment">// ------------------------ CANONICAL METHODS ------------------------
+<A NAME="167"></A></FONT>
+<A NAME="168"></A>    @Override
+<A NAME="169"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="170"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"PublicEvent{"</FONT> +
+<A NAME="171"></A>                <FONT ID="StringLiteral">", publicEventId="</FONT> + publicEventId +
+<A NAME="172"></A>                <FONT ID="StringLiteral">", privateLocation="</FONT> + privateLocation +
+<A NAME="173"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="174"></A>    }
+<A NAME="175"></A>
+<A NAME="176"></A><FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="177"></A></FONT>
+<A NAME="178"></A>    @Transient
+<A NAME="179"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> setExtendedAccessR(Boolean extendedAccess) {
+<A NAME="180"></A>        setExtendedAccess(extendedAccess);
+<A NAME="181"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="182"></A>    }
+<A NAME="183"></A>
+<A NAME="184"></A>    @Transient
+<A NAME="185"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> setLocationR(<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location) {
+<A NAME="186"></A>        setLocation(location);
+<A NAME="187"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="188"></A>    }
+<A NAME="189"></A>
+<A NAME="190"></A>    @Transient
+<A NAME="191"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> setPublicEventEndDateR(String publicEventEndDate) {
+<A NAME="192"></A>        setPublicEventEndDate(publicEventEndDate);
+<A NAME="193"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="194"></A>    }
+<A NAME="195"></A>
+<A NAME="196"></A>    @Transient
+<A NAME="197"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> setPublicEventIdR(<FONT ID="Final">final</FONT> Long publicEventId) {
+<A NAME="198"></A>        setPublicEventId(publicEventId);
+<A NAME="199"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="200"></A>    }
+<A NAME="201"></A>
+<A NAME="202"></A>    @Transient
+<A NAME="203"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> setPublicEventInfoR(String publicEventInfo) {
+<A NAME="204"></A>        setPublicEventInfo(publicEventInfo);
+<A NAME="205"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="206"></A>    }
+<A NAME="207"></A>
+<A NAME="208"></A>    @Transient
+<A NAME="209"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> setPublicEventNameR(String publicEventName) {
+<A NAME="210"></A>        setPublicEventName(publicEventName);
+<A NAME="211"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="212"></A>    }
+<A NAME="213"></A>
+<A NAME="214"></A>    @Transient
+<A NAME="215"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> setPublicEventStartDateR(String publicEventStartDate) {
+<A NAME="216"></A>        setPublicEventStartDate(publicEventStartDate);
+<A NAME="217"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="218"></A>    }
+<A NAME="219"></A>
+<A NAME="220"></A>    @Transient
+<A NAME="221"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> setPublicEventWallR(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> publicEventWall) {
+<A NAME="222"></A>        <FONT ID="This">this</FONT>.publicEventWall = publicEventWall;
+<A NAME="223"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="224"></A>    }
+<A NAME="225"></A>
+<A NAME="226"></A>    @Transient
+<A NAME="227"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicEvent.java.html">PublicEvent</A> setPrivateLocationR(<A HREF="../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> privateLocation) {
+<A NAME="228"></A>        <FONT ID="This">this</FONT>.privateLocation = privateLocation;
+<A NAME="229"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="230"></A>    }
+<A NAME="231"></A>}
+<A NAME="232"></A></pre>
+</BODY>
+</HTML>

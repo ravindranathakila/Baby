@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>BasicPersistenceTest (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">BasicPersistenceTest.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="SingleLineComment">//package ai.ilikeplaces.entities;
+<A NAME="2"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="3"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.jpa.CrudService;
+<A NAME="4"></A></FONT><FONT ID="SingleLineComment">//import org.junit.*;
+<A NAME="5"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="6"></A></FONT><FONT ID="SingleLineComment">//public class BasicPersistenceTest extends AbstractPersistenceTest {
+<A NAME="7"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="8"></A></FONT><FONT ID="SingleLineComment">//    String locationName_ = "Sigiriya";
+<A NAME="9"></A></FONT><FONT ID="SingleLineComment">//    String locationInfo_ = "Sigiriya is a world heritage in located Sri Lanka.";
+<A NAME="10"></A></FONT><FONT ID="SingleLineComment">//    Location location_ = new Location();
+<A NAME="11"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="12"></A></FONT><FONT ID="SingleLineComment">//    @Test
+<A NAME="13"></A></FONT><FONT ID="SingleLineComment">//    public void runTest() throws Exception {
+<A NAME="14"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="15"></A></FONT><FONT ID="SingleLineComment">//        location_.setLocationName(locationName_);
+<A NAME="16"></A></FONT><FONT ID="SingleLineComment">//        location_.setLocationInfo(locationInfo_);
+<A NAME="17"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="18"></A></FONT><FONT ID="SingleLineComment">//        CrudService&lt;Location&gt; cs = new CrudService&lt;Location&gt;();
+<A NAME="19"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="20"></A></FONT><FONT ID="SingleLineComment">//        cs.entityManager.getTransaction().begin();
+<A NAME="21"></A></FONT><FONT ID="SingleLineComment">//        location_ = cs.update(location_);
+<A NAME="22"></A></FONT><FONT ID="SingleLineComment">//        cs.entityManager.getTransaction().commit();
+<A NAME="23"></A></FONT><FONT ID="SingleLineComment">//        Location result = (Location) cs.entityManager.createQuery("SELECT location FROM Location location WHERE location.locationName = :locationName").setParameter("locationName", locationName_).getSingleResult();
+<A NAME="24"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="25"></A></FONT><FONT ID="SingleLineComment">//        Assert.assertEquals(locationName_, result.getLocationName());
+<A NAME="26"></A></FONT><FONT ID="SingleLineComment">//        Assert.assertEquals(locationInfo_, result.getLocationInfo());
+<A NAME="27"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="28"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="29"></A></FONT><FONT ID="SingleLineComment">//    @After
+<A NAME="30"></A></FONT><FONT ID="SingleLineComment">//    public void revertTest() {
+<A NAME="31"></A></FONT><FONT ID="SingleLineComment">//        CrudService&lt;Location&gt; cs = new CrudService&lt;Location&gt;();
+<A NAME="32"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="33"></A></FONT><FONT ID="SingleLineComment">//        cs.entityManager.getTransaction().begin();
+<A NAME="34"></A></FONT><FONT ID="SingleLineComment">//        cs.delete(Location.class, locationName_);
+<A NAME="35"></A></FONT><FONT ID="SingleLineComment">//        cs.entityManager.getTransaction().commit();
+<A NAME="36"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="37"></A></FONT><FONT ID="SingleLineComment">//}
+<A NAME="38"></A></FONT></pre>
+</BODY>
+</HTML>

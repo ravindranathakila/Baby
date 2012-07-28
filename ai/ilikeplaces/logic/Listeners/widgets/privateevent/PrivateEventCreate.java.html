@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventCreate (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">PrivateEventCreate.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets.privateevent;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Info.java.html">ai.ilikeplaces.logic.validators.unit.Info</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/SimpleName.java.html">ai.ilikeplaces.logic.validators.unit.SimpleName</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="13"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.NodePropertyTransport;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="24"></A>
+<A NAME="25"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="26"></A>
+<A NAME="27"></A>
+<A NAME="28"></A><FONT ID="FormalComment">/**
+<A NAME="29"></A> * @author Ravindranath Akila
+<A NAME="30"></A> */</FONT>
+<A NAME="31"></A>
+<A NAME="32"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="33"></A>@OK
+<A NAME="34"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> PrivateEventCreate <FONT ID="Extends">extends</FONT> AbstractWidgetListener {
+<A NAME="35"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="36"></A></FONT>
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SAVING = <FONT ID="StringLiteral">"Saving..."</FONT>;
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WAS_CREATED = <FONT ID="StringLiteral">" was created!"</FONT>;
+<A NAME="39"></A>    RefObj&lt;String&gt; privateEventName = <FONT ID="Null">null</FONT>;
+<A NAME="40"></A>
+<A NAME="41"></A>    RefObj&lt;String&gt; privateEventInfo = <FONT ID="Null">null</FONT>;
+<A NAME="42"></A>
+<A NAME="43"></A>    <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId = <FONT ID="Null">null</FONT>;
+<A NAME="44"></A>
+<A NAME="45"></A>    Long privateLocationId = <FONT ID="Null">null</FONT>;
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventCreate.java.html">PrivateEventCreate</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="48"></A>
+<A NAME="49"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="50"></A></FONT>
+<A NAME="51"></A>    <FONT ID="FormalComment">/**
+<A NAME="52"></A>     * @param request__
+<A NAME="53"></A>     * @param appendToElement__
+<A NAME="54"></A>     * @param humanId__
+<A NAME="55"></A>     * @param privateLocationId
+<A NAME="56"></A>     */</FONT>
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> PrivateEventCreate(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> String humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId) {
+<A NAME="58"></A>        <FONT ID="Super">super</FONT>(request__, Page.PrivateEventCreate, appendToElement__, humanId__, privateLocationId);
+<A NAME="59"></A>    }
+<A NAME="60"></A>
+<A NAME="61"></A><FONT ID="SingleLineComment">// ------------------------ OVERRIDING METHODS ------------------------
+<A NAME="62"></A></FONT>    <FONT ID="FormalComment">/**
+<A NAME="63"></A>     *
+<A NAME="64"></A>     */</FONT>
+<A NAME="65"></A>    @Override
+<A NAME="66"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="67"></A>        <FONT ID="This">this</FONT>.humanId = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>((String) initArgs[<FONT ID="IntegerLiteral">0</FONT>], <FONT ID="True">true</FONT>);
+<A NAME="68"></A>        <FONT ID="This">this</FONT>.privateLocationId = (Long) initArgs[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="69"></A>
+<A NAME="70"></A>        <FONT ID="This">this</FONT>.privateEventName = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/SimpleName.java.html">SimpleName</A>();
+<A NAME="71"></A>
+<A NAME="72"></A>        <FONT ID="This">this</FONT>.privateEventInfo = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Info.java.html">Info</A>();
+<A NAME="73"></A>    }
+<A NAME="74"></A>
+<A NAME="75"></A>    @Override
+<A NAME="76"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__) {
+<A NAME="77"></A>        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateName), EventType.BLUR.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="78"></A>            <FONT ID="Final">final</FONT> RefObj&lt;String&gt; myprivateEventName = privateEventName;
+<A NAME="79"></A>            <FONT ID="Final">final</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="80"></A>            RefObj&lt;String&gt; name;
+<A NAME="81"></A>
+<A NAME="82"></A>            @Override
+<A NAME="83"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="84"></A>                name = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/SimpleName.java.html">SimpleName</A>(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="85"></A>                logger.debug(<FONT ID="StringLiteral">"{}"</FONT>, name);
+<A NAME="86"></A>
+<A NAME="87"></A>                <FONT ID="If">if</FONT> (name.validate(v) == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="88"></A>                    myprivateEventName.setObj(name.getObj());
+<A NAME="89"></A>                    $$clear($$(privateEventCreateNotice));
+<A NAME="90"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="91"></A>                    $$(privateEventCreateNotice).setTextContent(name.getViolationAsString());
+<A NAME="92"></A>                }
+<A NAME="93"></A>            }
+<A NAME="94"></A>
+<A NAME="95"></A>            @Override
+<A NAME="96"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> finalize() <FONT ID="Throws">throws</FONT> Throwable {
+<A NAME="97"></A>                Loggers.finalized(<FONT ID="This">this</FONT>.getClass().getName());
+<A NAME="98"></A>                <FONT ID="Super">super</FONT>.finalize();
+<A NAME="99"></A>            }
+<A NAME="100"></A>        }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="101"></A>
+<A NAME="102"></A>        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateInfo), EventType.BLUR.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="103"></A>            <FONT ID="Final">final</FONT> RefObj&lt;String&gt; myprivateEventInfo = privateEventInfo;
+<A NAME="104"></A>            <FONT ID="Final">final</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="105"></A>            RefObj&lt;String&gt; info;
+<A NAME="106"></A>
+<A NAME="107"></A>            @Override
+<A NAME="108"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="109"></A>                info = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/Info.java.html">Info</A>(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="110"></A>                logger.debug(<FONT ID="StringLiteral">"{}"</FONT>, info);
+<A NAME="111"></A>
+<A NAME="112"></A>                <FONT ID="If">if</FONT> (info.validate(v) == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="113"></A>                    myprivateEventInfo.setObj(info.getObj());
+<A NAME="114"></A>                    $$clear($$(privateEventCreateNotice));
+<A NAME="115"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="116"></A>                    $$(privateEventCreateNotice).setTextContent(info.getViolationAsString());
+<A NAME="117"></A>                }
+<A NAME="118"></A>            }
+<A NAME="119"></A>        }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="120"></A>
+<A NAME="121"></A>
+<A NAME="122"></A>        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateSave), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="123"></A>            @Override
+<A NAME="124"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="125"></A>                $$(privateEventCreateNotice).setTextContent(SAVING);
+<A NAME="126"></A>            }
+<A NAME="127"></A>        }, <FONT ID="False">false</FONT>);
+<A NAME="128"></A>
+<A NAME="129"></A>        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateEventCreateSave), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="130"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="131"></A>            <FONT ID="Final">final</FONT> RefObj&lt;String&gt; myprivateEventName = privateEventName;
+<A NAME="132"></A>            <FONT ID="Final">final</FONT> RefObj&lt;String&gt; myprivateEventInfo = privateEventInfo;
+<A NAME="133"></A>            <FONT ID="Final">final</FONT> Long myprivateLocationId = privateLocationId;
+<A NAME="134"></A>            <FONT ID="Final">final</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="135"></A>
+<A NAME="136"></A>            @Override
+<A NAME="137"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="138"></A>                <FONT ID="If">if</FONT> (myprivateEventName.validate(v) == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; myprivateEventInfo.validate(v) == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="139"></A>                    <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; r = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).cPrivateEvent(myhumanId.getObj(), myprivateLocationId, myprivateEventName.getObjectAsValid(), myprivateEventInfo.getObjectAsValid(), <FONT ID="StringLiteral">"TODO DATE"</FONT>, <FONT ID="StringLiteral">"TODO DATE"</FONT>);
+<A NAME="140"></A>                    <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="141"></A>                        remove(evt_.getTarget(), EventType.CLICK, <FONT ID="This">this</FONT>);
+<A NAME="142"></A>                        $$(privateEventCreateNotice).setTextContent(myprivateEventName.getObj() + WAS_CREATED);
+<A NAME="143"></A>                        itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
+<A NAME="144"></A>                                <FONT ID="New">new</FONT> Parameter(Organize.getURL())
+<A NAME="145"></A>                                        .append(DocOrganizeCategory, DocOrganizeModeEvent, <FONT ID="True">true</FONT>)
+<A NAME="146"></A>                                        .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
+<A NAME="147"></A>                                        .append(DocOrganizeEvent, r.returnValue().getPrivateEventId())
+<A NAME="148"></A>                                        .get()
+<A NAME="149"></A>                        ));
+<A NAME="150"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="151"></A>                        $$(privateEventCreateNotice).setTextContent(r.returnMsg());
+<A NAME="152"></A>                    }
+<A NAME="153"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="154"></A>                    <FONT ID="SingleLineComment">//Validation message should've already been given to the users by above individual listeners
+<A NAME="155"></A></FONT>                }
+<A NAME="156"></A>            }
+<A NAME="157"></A>        }, <FONT ID="False">false</FONT>);
+<A NAME="158"></A>    }
+<A NAME="159"></A>}</pre>
+</BODY>
+</HTML>

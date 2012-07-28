@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.cdn.PosterizeTester (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">PosterizeTester.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.cdn;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.imageio.ImageIO;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.awt.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.awt.color.ColorSpace;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.awt.image.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.io.File;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers.EXCEPTION</A>;
+<A NAME="16"></A>
+<A NAME="17"></A><FONT ID="FormalComment">/**
+<A NAME="18"></A> * Created by IntelliJ IDEA.
+<A NAME="19"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="20"></A> * Date: Sep 25, 2010
+<A NAME="21"></A> * Time: 9:56:24 PM
+<A NAME="22"></A> */</FONT>
+<A NAME="23"></A>
+<A NAME="24"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> PosterizeTester {
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOADING_IMAGE_AS_BUFFERED_IMAGE = <FONT ID="StringLiteral">"Loading Image As Buffered Image"</FONT>;
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SCALING_IMAGE = <FONT ID="StringLiteral">"Scaling Image"</FONT>;
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SAVING_SCALED_IMAGE = <FONT ID="StringLiteral">"Saving Scaled Image"</FONT>;
+<A NAME="30"></A>
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(<FONT ID="Final">final</FONT> String args[]) {
+<A NAME="33"></A>
+<A NAME="34"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, <FONT ID="StringLiteral">"Uploading Profile Photo"</FONT>, <FONT ID="IntegerLiteral">120000</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="35"></A>        <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;File&gt; r;
+<A NAME="36"></A>        <FONT ID="FormalComment">/**
+<A NAME="37"></A>         * Renaming the file to contain extension for image manipulation flexibility
+<A NAME="38"></A>         */</FONT>
+<A NAME="39"></A>        File newFile = <FONT ID="New">new</FONT> File(<FONT ID="StringLiteral">"C:\\posterize\\22036_330336595855_726280855_5172426_6354785_n.jpg"</FONT>);
+<A NAME="40"></A>
+<A NAME="41"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="42"></A>            sl.appendToLogMSG(LOADING_IMAGE_AS_BUFFERED_IMAGE);
+<A NAME="43"></A>            BufferedImage bi = loadImage(newFile);
+<A NAME="44"></A>
+<A NAME="45"></A>            BufferedImage dstImg = <FONT ID="New">new</FONT> BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.OPAQUE);
+<A NAME="46"></A>            ColorSpace css = ColorSpace.getInstance(ColorSpace.CS_LINEAR_RGB);
+<A NAME="47"></A>
+<A NAME="48"></A>            ColorConvertOp theOp = <FONT ID="New">new</FONT> ColorConvertOp(css, <FONT ID="Null">null</FONT>);
+<A NAME="49"></A>
+<A NAME="50"></A>            theOp.filter(bi, dstImg);
+<A NAME="51"></A><FONT ID="SingleLineComment">//
+<A NAME="52"></A></FONT><FONT ID="SingleLineComment">//            //sl.appendToLogMSG(SCALING_IMAGE);
+<A NAME="53"></A></FONT><FONT ID="SingleLineComment">//            //bi = scaleImage(bi, 190); //Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
+<A NAME="54"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="55"></A></FONT><FONT ID="SingleLineComment">//            int numberLevels = 1;
+<A NAME="56"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="57"></A></FONT><FONT ID="SingleLineComment">//            int binSize = 256 / numberLevels;
+<A NAME="58"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="59"></A></FONT><FONT ID="SingleLineComment">//            short[] red = new short[256];
+<A NAME="60"></A></FONT><FONT ID="SingleLineComment">//            short[] green = new short[256];
+<A NAME="61"></A></FONT><FONT ID="SingleLineComment">//            short[] blue = new short[256];
+<A NAME="62"></A></FONT><FONT ID="SingleLineComment">//            short[] masterData = new short[256];
+<A NAME="63"></A></FONT><FONT ID="SingleLineComment">//            for (int cnt = 0; cnt &lt; 256; cnt++) {
+<A NAME="64"></A></FONT><FONT ID="SingleLineComment">//                short value = (short) ((cnt / binSize) * binSize + binSize - 1);
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//                //Clip the values at 0 and 255.
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//                if (value &gt;= 256) { value = 255;
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="68"></A></FONT><FONT ID="SingleLineComment">//                if (value &lt; 0) {
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//                    value = 0;
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//                }//Probably not possible.
+<A NAME="71"></A></FONT><FONT ID="SingleLineComment">//                masterData[cnt] = value;
+<A NAME="72"></A></FONT><FONT ID="SingleLineComment">//            }//end for loop
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="74"></A></FONT><FONT ID="SingleLineComment">////            red = masterData;
+<A NAME="75"></A></FONT><FONT ID="SingleLineComment">////            green = masterData;
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">////            blue = masterData;
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//            bi = processImageForThePage(bi, red, green, blue);
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//            sl.appendToLogMSG(SAVING_SCALED_IMAGE);
+<A NAME="82"></A></FONT>            saveImage(dstImg, <FONT ID="New">new</FONT> File(<FONT ID="StringLiteral">"C:\\posterize\\output.jpg"</FONT>));
+<A NAME="83"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception e) {
+<A NAME="84"></A>
+<A NAME="85"></A>            sl.complete(e.getMessage());
+<A NAME="86"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="87"></A>
+<A NAME="88"></A>        }
+<A NAME="89"></A>
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    <FONT ID="FormalComment">/**
+<A NAME="93"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="94"></A>     * &lt;p/&gt;
+<A NAME="95"></A>     * Saves a BufferedImage to the given file, pathname must not have any
+<A NAME="96"></A>     * periods "." in it except for the one before the format, i.e. C:/images/fooimage.png
+<A NAME="97"></A>     * &lt;p/&gt;
+<A NAME="98"></A>     *
+<A NAME="99"></A>     * @param img
+<A NAME="100"></A>     * @param ref
+<A NAME="101"></A>     */</FONT>
+<A NAME="102"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> saveImage(<FONT ID="Final">final</FONT> BufferedImage img, <FONT ID="Final">final</FONT> File ref) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="103"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="104"></A>            <FONT ID="SingleLineComment">//final String format = (ref.endsWith(".png")) ? "png" : "jpg";
+<A NAME="105"></A></FONT>            <FONT ID="SingleLineComment">//ImageIO.write(img, format, new File(ref));
+<A NAME="106"></A></FONT>            ImageIO.write(img, ref.getName().substring(ref.getName().lastIndexOf(<FONT ID="StringLiteral">"."</FONT>) + <FONT ID="IntegerLiteral">1</FONT>), ref);
+<A NAME="107"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="108"></A>            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+<A NAME="109"></A>            <FONT ID="Throw">throw</FONT> e;
+<A NAME="110"></A>        }
+<A NAME="111"></A>    }
+<A NAME="112"></A>
+<A NAME="113"></A>    <FONT ID="FormalComment">/**
+<A NAME="114"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="115"></A>     *
+<A NAME="116"></A>     * @param img
+<A NAME="117"></A>     * @param newW
+<A NAME="118"></A>     * @param newH
+<A NAME="119"></A>     * @return
+<A NAME="120"></A>     */</FONT>
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> BufferedImage resizeImage(BufferedImage img, <FONT ID="Int">int</FONT> newW, <FONT ID="Int">int</FONT> newH) {
+<A NAME="122"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> w = img.getWidth();
+<A NAME="123"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> h = img.getHeight();
+<A NAME="124"></A>        BufferedImage dimg = <FONT ID="New">new</FONT> BufferedImage(newW, newH, img.getType());
+<A NAME="125"></A>        Graphics2D g = dimg.createGraphics();
+<A NAME="126"></A>        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+<A NAME="127"></A>        g.drawImage(img, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, newW, newH, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, w, h, <FONT ID="Null">null</FONT>);
+<A NAME="128"></A>        g.dispose();
+<A NAME="129"></A>        <FONT ID="Return">return</FONT> dimg;
+<A NAME="130"></A>    }
+<A NAME="131"></A>
+<A NAME="132"></A>    <FONT ID="FormalComment">/**
+<A NAME="133"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="134"></A>     * &lt;p/&gt;
+<A NAME="135"></A>     * modified by me to scale image as per web page requirement of 190px of width. Thats it.
+<A NAME="136"></A>     * Hence, this accepts only the width parameter and will scale the hight proportaionaltely
+<A NAME="137"></A>     *
+<A NAME="138"></A>     * @param img
+<A NAME="139"></A>     * @param newWidth
+<A NAME="140"></A>     * @return
+<A NAME="141"></A>     */</FONT>
+<A NAME="142"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> BufferedImage scaleImage(<FONT ID="Final">final</FONT> BufferedImage img, <FONT ID="Int">int</FONT> newWidth) {
+<A NAME="143"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> oldWidth = img.getWidth();
+<A NAME="144"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> oldHeight = img.getHeight();
+<A NAME="145"></A>
+<A NAME="146"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> newHeight = (<FONT ID="Int">int</FONT>) Math.round(((<FONT ID="Double">double</FONT>) newWidth / (<FONT ID="Double">double</FONT>) oldWidth) * (<FONT ID="Double">double</FONT>) oldHeight);
+<A NAME="147"></A>
+<A NAME="148"></A>        <FONT ID="Final">final</FONT> BufferedImage dimg = <FONT ID="New">new</FONT> BufferedImage(newWidth, newHeight, img.getType());
+<A NAME="149"></A>        <FONT ID="Final">final</FONT> Graphics2D g = dimg.createGraphics();
+<A NAME="150"></A>        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+<A NAME="151"></A>        g.drawImage(img, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, newWidth, newHeight, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, oldWidth, oldHeight, <FONT ID="Null">null</FONT>);
+<A NAME="152"></A>        g.dispose();
+<A NAME="153"></A>        <FONT ID="Return">return</FONT> dimg;
+<A NAME="154"></A>    }
+<A NAME="155"></A>
+<A NAME="156"></A>
+<A NAME="157"></A>    <FONT ID="SingleLineComment">//Use the LookupOp class from the Java 2D API along
+<A NAME="158"></A></FONT>    <FONT ID="SingleLineComment">// with three separate data arrays to process the
+<A NAME="159"></A></FONT>    <FONT ID="SingleLineComment">// color values in the selected color bands.  The
+<A NAME="160"></A></FONT>    <FONT ID="SingleLineComment">// alpha value is not modified.  This is a common method
+<A NAME="161"></A></FONT>    <FONT ID="SingleLineComment">// that is called by the code that processes each
+<A NAME="162"></A></FONT>    <FONT ID="SingleLineComment">// individual page in the tabbed pane.
+<A NAME="163"></A></FONT>
+<A NAME="164"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> BufferedImage processImageForThePage(
+<A NAME="165"></A>            BufferedImage src,
+<A NAME="166"></A>            <FONT ID="Short">short</FONT>[] red,
+<A NAME="167"></A>            <FONT ID="Short">short</FONT>[] green,
+<A NAME="168"></A>            <FONT ID="Short">short</FONT>[] blue) {
+<A NAME="169"></A>        <FONT ID="SingleLineComment">//Create and populate a 2D array with data for the
+<A NAME="170"></A></FONT>        <FONT ID="SingleLineComment">// lookup table.  Note that this is a 2D array, rather
+<A NAME="171"></A></FONT>        <FONT ID="SingleLineComment">// than a 1D array, which is the case when a single
+<A NAME="172"></A></FONT>        <FONT ID="SingleLineComment">// data array is used to process all three color bands.
+<A NAME="173"></A></FONT>        <FONT ID="Short">short</FONT>[][] lookupData = <FONT ID="New">new</FONT> <FONT ID="Short">short</FONT>[][]{red, green, blue};
+<A NAME="174"></A>
+<A NAME="175"></A>        <FONT ID="SingleLineComment">//Create the lookup table.  The first parameter is an
+<A NAME="176"></A></FONT>        <FONT ID="SingleLineComment">// offset for extracting data from the array object.
+<A NAME="177"></A></FONT>        <FONT ID="SingleLineComment">//In this case, all of the data is extracted from the
+<A NAME="178"></A></FONT>        <FONT ID="SingleLineComment">// array object beginning at an index of 0.
+<A NAME="179"></A></FONT>        ShortLookupTable lookupTable =
+<A NAME="180"></A>                <FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, lookupData);
+<A NAME="181"></A>
+<A NAME="182"></A>        <FONT ID="SingleLineComment">//Create the filter object. The second parameter
+<A NAME="183"></A></FONT>        <FONT ID="SingleLineComment">// provides the opportunity to use RenderingHints.
+<A NAME="184"></A></FONT>        BufferedImageOp filterObject =
+<A NAME="185"></A>                <FONT ID="New">new</FONT> LookupOp(lookupTable, <FONT ID="Null">null</FONT>);
+<A NAME="186"></A>
+<A NAME="187"></A>
+<A NAME="188"></A>        <FONT ID="SingleLineComment">//Apply the filter to the incoming image and return
+<A NAME="189"></A></FONT>        <FONT ID="SingleLineComment">// a reference to the resulting BufferedImage object.
+<A NAME="190"></A></FONT>        <FONT ID="SingleLineComment">// The second parameter can optionally specify an
+<A NAME="191"></A></FONT>        <FONT ID="SingleLineComment">// existing BufferedImage object to serve as a
+<A NAME="192"></A></FONT>        <FONT ID="SingleLineComment">// destination for the processed image.
+<A NAME="193"></A></FONT>        <FONT ID="Return">return</FONT> filterObject.filter(src, <FONT ID="Null">null</FONT>);
+<A NAME="194"></A>    }<FONT ID="SingleLineComment">//end processImageForThePage
+<A NAME="195"></A></FONT>    <FONT ID="SingleLineComment">//-----------------------------------------------------//
+<A NAME="196"></A></FONT>
+<A NAME="197"></A>    <FONT ID="FormalComment">/**
+<A NAME="198"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="199"></A>     *
+<A NAME="200"></A>     * @param ref
+<A NAME="201"></A>     * @return null or buffered image
+<A NAME="202"></A>     * @throws Exception
+<A NAME="203"></A>     */</FONT>
+<A NAME="204"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> BufferedImage loadImage(<FONT ID="Final">final</FONT> File ref) <FONT ID="Throws">throws</FONT> Exception {
+<A NAME="205"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="206"></A>            Loggers.DEBUG.debug(<FONT ID="StringLiteral">"Loading Image From:"</FONT> + ref.getCanonicalPath());
+<A NAME="207"></A>            <FONT ID="Return">return</FONT> ImageIO.read(ref);
+<A NAME="208"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception e) {
+<A NAME="209"></A>            EXCEPTION.error(Loggers.EMBED, e);
+<A NAME="210"></A>            <FONT ID="Throw">throw</FONT> e;
+<A NAME="211"></A>        }
+<A NAME="212"></A>    }
+<A NAME="213"></A>
+<A NAME="214"></A>}
+<A NAME="215"></A></pre>
+</BODY>
+</HTML>

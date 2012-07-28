@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDTribe (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDTribe.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">ai.ilikeplaces.entities.Album</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">ai.ilikeplaces.entities.Msg</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">ai.ilikeplaces.entities.Tribe</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDAlbumLocal.java.html">ai.ilikeplaces.logic.crud.unit.CRUDAlbumLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDTribeLocal.java.html">ai.ilikeplaces.logic.crud.unit.CRUDTribeLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDWallLocal.java.html">ai.ilikeplaces.logic.crud.unit.CRUDWallLocal</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">ai.ilikeplaces.logic.validators.unit.VLong</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VTribeName.java.html">ai.ilikeplaces.logic.validators.unit.VTribeName</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VTribeStory.java.html">ai.ilikeplaces.logic.validators.unit.VTribeStory</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="22"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="23"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="24"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="25"></A>
+<A NAME="26"></A><FONT ID="FormalComment">/**
+<A NAME="27"></A> * Created by IntelliJ IDEA.
+<A NAME="28"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="29"></A> * Date: Jan 13, 2010
+<A NAME="30"></A> * Time: 11:58:04 PM
+<A NAME="31"></A> */</FONT>
+<A NAME="32"></A>
+<A NAME="33"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="34"></A>@Stateless
+<A NAME="35"></A>@Interceptors({ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>, RuntimeExceptionWrapper.<FONT ID="Class">class</FONT>})
+<A NAME="36"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanCRUDTribe <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDTribeLocal.java.html">HumanCRUDTribeLocal</A> {
+<A NAME="37"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="38"></A></FONT>
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WRITE_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Write Wall Successful!"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WRITE_WALL_FAILED = <FONT ID="StringLiteral">"Write Wall FAILED!"</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MUTE_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Mute Wall Successful!"</FONT>;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MUTE_WALL_FAILED = <FONT ID="StringLiteral">"Mute Wall FAILED!"</FONT>;
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UNMUTE_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Unmute Wall Successful!"</FONT>;
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UNMUTE_WALL_FAILED = <FONT ID="StringLiteral">"Unmute Wall FAILED!"</FONT>;
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_SUCCESSFUL = <FONT ID="StringLiteral">"Read Wall Successful!"</FONT>;
+<A NAME="46"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_WALL_FAILED = <FONT ID="StringLiteral">"Read Wall FAILED!"</FONT>;
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> REFRESH_SPEC = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"privatePhotoWall"</FONT>);
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FETCH_TRIBE_SUCCESSFUL = <FONT ID="StringLiteral">"Fetch Tribe Successful!"</FONT>;
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FETCH_TRIBE_FAILED = <FONT ID="StringLiteral">"Fetch Tribe FAILED!"</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_MEMBER_TO_TRIBE_SUCCESSFUL = <FONT ID="StringLiteral">"Add Member To Tribe Successful!"</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_MEMBER_TO_TRIBE_FAILED = <FONT ID="StringLiteral">"Add Member To Tribe FAILED!"</FONT>;
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String REMOVE_MEMBER_FROM_TRIBE_SUCCESSFUL = <FONT ID="StringLiteral">"Remove Member From Tribe Successful!"</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String REMOVE_MEMBER_FROM_TRIBE_FAILED = <FONT ID="StringLiteral">"Remove Member From Tribe FAILED!"</FONT>;
+<A NAME="55"></A>
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_ALBUM_SUCCESSFUL = <FONT ID="StringLiteral">"Read album Successful!"</FONT>;
+<A NAME="58"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_ALBUM_FAILED = <FONT ID="StringLiteral">"Read album FAILED!"</FONT>;
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_PHOTO_TO_ALBUM_SUCCESSFUL = <FONT ID="StringLiteral">"Add photo to album Successful!"</FONT>;
+<A NAME="60"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_PHOTO_TO_ALBUM_FAILED = <FONT ID="StringLiteral">"Add photo to album FAILED!"</FONT>;
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CREATE_TRIBE_FAILED = <FONT ID="StringLiteral">"Create Tribe FAILED!"</FONT>;
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CREATE_TRIBE_SUCCESSFUL = <FONT ID="StringLiteral">"Create Tribe Successful!"</FONT>;
+<A NAME="63"></A>
+<A NAME="64"></A>
+<A NAME="65"></A>    @EJB
+<A NAME="66"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDTribeLocal.java.html">CRUDTribeLocal</A> crudTribeLocal_;
+<A NAME="67"></A>
+<A NAME="68"></A>    @EJB
+<A NAME="69"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDWallLocal.java.html">CRUDWallLocal</A> crudWallLocal_;
+<A NAME="70"></A>
+<A NAME="71"></A>    @EJB
+<A NAME="72"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/CRUDAlbumLocal.java.html">CRUDAlbumLocal</A> crudAlbumLocal_;
+<A NAME="73"></A>
+<A NAME="74"></A><FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="75"></A></FONT>
+<A NAME="76"></A>
+<A NAME="77"></A><FONT ID="SingleLineComment">// --------------------- Interface GeneralCRUDWall ---------------------
+<A NAME="78"></A></FONT>
+<A NAME="79"></A>
+<A NAME="80"></A>    @Override
+<A NAME="81"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; addEntryToWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> msgOwner__, <FONT ID="Final">final</FONT> Obj wallReference__, <FONT ID="Final">final</FONT> String contentToBeAppended) {
+<A NAME="82"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="83"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="84"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudWallLocal_
+<A NAME="85"></A>                    .doUAddEntry((getTribe(msgOwner__, (<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>) wallReference__).getTribeWall().getWallId()),
+<A NAME="86"></A>                            msgOwner__.getObj(),
+<A NAME="87"></A>                            contentToBeAppended), WRITE_WALL_SUCCESSFUL);
+<A NAME="88"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="89"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, WRITE_WALL_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="90"></A>        }
+<A NAME="91"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="92"></A>    }
+<A NAME="93"></A>
+<A NAME="94"></A>    @Override
+<A NAME="95"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; muteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee, <FONT ID="Final">final</FONT> Obj wallReference__) {
+<A NAME="96"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="97"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="98"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudWallLocal_
+<A NAME="99"></A>                    .doUAddMuteEntry((getTribe(operator__, (<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>) wallReference__).getTribeWall().getWallId()),
+<A NAME="100"></A>                            mutee.getObj()), MUTE_WALL_SUCCESSFUL);
+<A NAME="101"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="102"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, MUTE_WALL_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="103"></A>        }
+<A NAME="104"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="105"></A>    }
+<A NAME="106"></A>
+<A NAME="107"></A>    @Override
+<A NAME="108"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; unmuteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee, <FONT ID="Final">final</FONT> Obj wallReference__) {
+<A NAME="109"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="110"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="111"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(crudWallLocal_
+<A NAME="112"></A>                    .doURemoveMuteEntry((getTribe(operator__, (<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>) wallReference__).getTribeWall().getWallId()),
+<A NAME="113"></A>                            mutee.getObj()), UNMUTE_WALL_SUCCESSFUL);
+<A NAME="114"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="115"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, UNMUTE_WALL_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="116"></A>        }
+<A NAME="117"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="118"></A>    }
+<A NAME="119"></A>
+<A NAME="120"></A>    @Override
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; readWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall__, <FONT ID="Final">final</FONT> Obj requester__, <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec__) {
+<A NAME="122"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; r;
+<A NAME="123"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="124"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> tribe = getTribe(whosWall__, (<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>) requester__);
+<A NAME="125"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> wall = crudWallLocal_
+<A NAME="126"></A>                    .doRWall(tribe.getTribeWall().getWallId(), refreshSpec__);
+<A NAME="127"></A>
+<A NAME="128"></A>            <FONT ID="If">if</FONT> (wall.getWallMetadata() == <FONT ID="Null">null</FONT>) {
+<A NAME="129"></A>                RecoveringFromAbsentMetadata:
+<A NAME="130"></A>                {
+<A NAME="131"></A>                    <FONT ID="Final">final</FONT> String key = Wall.WallMetadataKey.TRIBE.toString();
+<A NAME="132"></A>                    <FONT ID="Final">final</FONT> String value = <FONT ID="StringLiteral">""</FONT> + tribe.getTribeId();
+<A NAME="133"></A>
+<A NAME="134"></A>                    crudWallLocal_.doUpdateMetadata(wall.getWallId(), key, value);
+<A NAME="135"></A>                }
+<A NAME="136"></A>            }
+<A NAME="137"></A>
+<A NAME="138"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(wall, READ_WALL_SUCCESSFUL);
+<A NAME="139"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="140"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt;(t, READ_WALL_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="141"></A>        }
+<A NAME="142"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="143"></A>    }
+<A NAME="144"></A>
+<A NAME="145"></A><FONT ID="SingleLineComment">// --------------------- Interface HumanCRUDTribeLocal ---------------------
+<A NAME="146"></A></FONT>
+<A NAME="147"></A>    <FONT ID="FormalComment">/**
+<A NAME="148"></A>     * Creates a Tribe and adds this user as a Tribe member of it
+<A NAME="149"></A>     *
+<A NAME="150"></A>     * @param humanId To be added to the Tribe
+<A NAME="151"></A>     * @return The created tribe
+<A NAME="152"></A>     */</FONT>
+<A NAME="153"></A>    @Override
+<A NAME="154"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; createTribe(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VTribeName.java.html">VTribeName</A> vTribeName, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VTribeStory.java.html">VTribeStory</A> vTribeStory) {
+<A NAME="155"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; r;
+<A NAME="156"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="157"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;(crudTribeLocal_.doNTxCTribe(humanId.getHumanId(), vTribeName.getObjectAsValid(), vTribeStory.getObjectAsValid()), CREATE_TRIBE_SUCCESSFUL);
+<A NAME="158"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="159"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;(t, CREATE_TRIBE_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="160"></A>        }
+<A NAME="161"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="162"></A>    }
+<A NAME="163"></A>
+<A NAME="164"></A>    <FONT ID="FormalComment">/**
+<A NAME="165"></A>     * @param humanId To be added to the given Tribe
+<A NAME="166"></A>     * @param tribeId The tribe to which to add the given user
+<A NAME="167"></A>     * @return The Tribe
+<A NAME="168"></A>     */</FONT>
+<A NAME="169"></A>    @Override
+<A NAME="170"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; addToTribe(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> tribeId) {
+<A NAME="171"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; r;
+<A NAME="172"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="173"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;(crudTribeLocal_.addToTribe(humanId.getObjectAsValid(), tribeId.getObjectAsValid()), ADD_MEMBER_TO_TRIBE_SUCCESSFUL);
+<A NAME="174"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="175"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;(t, ADD_MEMBER_TO_TRIBE_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="176"></A>        }
+<A NAME="177"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="178"></A>    }
+<A NAME="179"></A>
+<A NAME="180"></A>    <FONT ID="FormalComment">/**
+<A NAME="181"></A>     * @param humanId used to check permissions
+<A NAME="182"></A>     * @param tribeId which to fetch
+<A NAME="183"></A>     * @return Tribe
+<A NAME="184"></A>     */</FONT>
+<A NAME="185"></A>    @Override
+<A NAME="186"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; getTribe(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> tribeId, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> doRefresh) {
+<A NAME="187"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; r;
+<A NAME="188"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="189"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;(crudTribeLocal_.getTribe(tribeId.getObjectAsValid()).refresh(), FETCH_TRIBE_SUCCESSFUL);
+<A NAME="190"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="191"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;(t, FETCH_TRIBE_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="192"></A>        }
+<A NAME="193"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="194"></A>    }
+<A NAME="195"></A>
+<A NAME="196"></A>    <FONT ID="FormalComment">/**
+<A NAME="197"></A>     * @param humanId used to check permissions
+<A NAME="198"></A>     * @param tribeId which to fetch
+<A NAME="199"></A>     * @return Tribe
+<A NAME="200"></A>     */</FONT>
+<A NAME="201"></A>    @Override
+<A NAME="202"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> getTribe(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> tribeId) {
+<A NAME="203"></A>        <FONT ID="Return">return</FONT> crudTribeLocal_.getTribe(tribeId.getObjectAsValid());
+<A NAME="204"></A>    }
+<A NAME="205"></A>
+<A NAME="206"></A>    <FONT ID="FormalComment">/**
+<A NAME="207"></A>     * @param humanId To be removed from the given Tribe
+<A NAME="208"></A>     * @param tribeId The tribe from which to remove the given user, and &lt;b&gt;if last member, removes the tribe too.&lt;/b&gt;
+<A NAME="209"></A>     * @return The Tribe
+<A NAME="210"></A>     */</FONT>
+<A NAME="211"></A>    @Override
+<A NAME="212"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; removeFromTribe(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> tribeId) {
+<A NAME="213"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; r;
+<A NAME="214"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="215"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;(crudTribeLocal_.removeFromTribe(humanId.getObjectAsValid(), tribeId.getObjectAsValid()), REMOVE_MEMBER_FROM_TRIBE_SUCCESSFUL);
+<A NAME="216"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="217"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;(t, REMOVE_MEMBER_FROM_TRIBE_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="218"></A>        }
+<A NAME="219"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="220"></A>    }
+<A NAME="221"></A>
+<A NAME="222"></A>    <FONT ID="FormalComment">/**
+<A NAME="223"></A>     * @param humanId The humanId of whose to return all the Tribes she's member of
+<A NAME="224"></A>     * @return The Tribes the given user is a member of, unrefreshed
+<A NAME="225"></A>     */</FONT>
+<A NAME="226"></A>    @Override
+<A NAME="227"></A>    <FONT ID="Public">public</FONT> Set&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; getHumansTribesAsSet(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="228"></A>        <FONT ID="Return">return</FONT> crudTribeLocal_.getHumansTribesAsSet(humanId.getObjectAsValid());
+<A NAME="229"></A>    }
+<A NAME="230"></A>
+<A NAME="231"></A>    <FONT ID="FormalComment">/**
+<A NAME="232"></A>     * @param humanId The humanId of whose to return all the Tribes she's member of
+<A NAME="233"></A>     * @return The Tribes the given user is a member of, unrefreshed
+<A NAME="234"></A>     */</FONT>
+<A NAME="235"></A>    @Override
+<A NAME="236"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; getHumansTribes(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="237"></A>        <FONT ID="Return">return</FONT> crudTribeLocal_.getHumansTribes(humanId.getObjectAsValid());
+<A NAME="238"></A>    }
+<A NAME="239"></A>
+<A NAME="240"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; rTribeReadAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> tribeId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpecInit) {
+<A NAME="241"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; r;
+<A NAME="242"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="243"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt;(crudTribeLocal_.rTribeReadAlbum(humanId.getHumanId(), tribeId.getObjectAsValid(), refreshSpecInit), <FONT ID="StringLiteral">"Read Album SUCCESSFUL!"</FONT>);
+<A NAME="244"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="245"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt;(t, <FONT ID="StringLiteral">"Read Album FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="246"></A>        }
+<A NAME="247"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="248"></A>    }
+<A NAME="249"></A>
+<A NAME="250"></A>    @Override
+<A NAME="251"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; uTribeAddEntryToAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> tribeId__, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; cdnFileName) {
+<A NAME="252"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; r;
+<A NAME="253"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="254"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt;(crudAlbumLocal_.doUAlbumOfTribeAddEntry(tribeId__, operator__.getObjectAsValid(), cdnFileName.getObjectAsValid()), ADD_PHOTO_TO_ALBUM_SUCCESSFUL);
+<A NAME="255"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="256"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt;(t, ADD_PHOTO_TO_ALBUM_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="257"></A>        }
+<A NAME="258"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="259"></A>    }
+<A NAME="260"></A>
+<A NAME="261"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="262"></A>    <FONT ID="Public">public</FONT> Return&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt;&gt; readWallLastEntries(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> Obj&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>&gt; wallId, <FONT ID="Final">final</FONT> Integer numberOfEntriesToFetch, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec__) {
+<A NAME="263"></A>        Return&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt;&gt; r;
+<A NAME="264"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt;&gt;(crudWallLocal_.doRHumansWallLastEntries(wallId.getObj(), numberOfEntriesToFetch), READ_WALL_SUCCESSFUL);
+<A NAME="265"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="266"></A>
+<A NAME="267"></A>    }
+<A NAME="268"></A>}</pre>
+</BODY>
+</HTML>

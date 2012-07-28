@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.Main (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Main.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../ai/ilikeplaces/util/ReturnImpl.java.html">ai.ilikeplaces.util.ReturnImpl</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> com.google.gson.Gson;
+<A NAME="6"></A><FONT ID="Import">import</FONT> com.google.gson.GsonBuilder;
+<A NAME="7"></A><FONT ID="Import">import</FONT> com.google.gson.InstanceCreator;
+<A NAME="8"></A><FONT ID="Import">import</FONT> com.google.gson.reflect.TypeToken;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.lang.reflect.Type;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * Created by IntelliJ IDEA.
+<A NAME="16"></A> * User: Ravindranath Akila
+<A NAME="17"></A> * Date: 11/13/11
+<A NAME="18"></A> * Time: 7:19 PM
+<A NAME="19"></A> */</FONT>
+<A NAME="20"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Main {
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(<FONT ID="Final">final</FONT> String args[]) {
+<A NAME="22"></A>        System.out.println(<FONT ID="StringLiteral">"################ STARTING GENERAL APPLICATION TESTER ################"</FONT>);
+<A NAME="23"></A>        <FONT ID="New">new</FONT> <A HREF="../../ai/ilikeplaces/Main.java.html">Main</A>().run();
+<A NAME="24"></A>    }
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="27"></A>
+<A NAME="28"></A>        GsonBuilder gb = <FONT ID="New">new</FONT> GsonBuilder();
+<A NAME="29"></A>        gb.registerTypeAdapter(<A HREF="../../ai/ilikeplaces/util/Return.java.html">Return</A>.<FONT ID="Class">class</FONT>, <FONT ID="New">new</FONT> ReturnInstanceCreator());
+<A NAME="30"></A>
+<A NAME="31"></A>        Gson gson = gb.create();
+<A NAME="32"></A>
+<A NAME="33"></A>
+<A NAME="34"></A>        <A HREF="../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;String&gt; myStrings = <FONT ID="New">new</FONT> <A HREF="../../ai/ilikeplaces/util/ReturnImpl.java.html">ReturnImpl</A>&lt;String&gt;(<FONT ID="StringLiteral">"Hi"</FONT>, <FONT ID="StringLiteral">"Successful"</FONT>);
+<A NAME="35"></A>
+<A NAME="36"></A>        Type listType = <FONT ID="New">new</FONT> TypeToken&lt;<A HREF="../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;String&gt;&gt;() {
+<A NAME="37"></A>        }.getType();
+<A NAME="38"></A>
+<A NAME="39"></A>        <FONT ID="Final">final</FONT> String json = gson.toJson(myStrings, listType);
+<A NAME="40"></A>
+<A NAME="41"></A>        System.out.println(json);
+<A NAME="42"></A>
+<A NAME="43"></A>        gson.fromJson(json, listType);
+<A NAME="44"></A>
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ReturnInstanceCreator <FONT ID="Implements">implements</FONT> InstanceCreator&lt;<A HREF="../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;?&gt;&gt; {
+<A NAME="48"></A>
+<A NAME="49"></A>        @Override
+<A NAME="50"></A>        <FONT ID="Public">public</FONT> <A HREF="../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;?&gt; createInstance(Type type) {
+<A NAME="51"></A>            <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../ai/ilikeplaces/util/ReturnImpl.java.html">ReturnImpl</A>&lt;Object&gt;(<FONT ID="StringLiteral">"Bye"</FONT>, <FONT ID="StringLiteral">"Failed"</FONT>);
+<A NAME="52"></A>        }
+<A NAME="53"></A>    }
+<A NAME="54"></A>}
+<A NAME="55"></A></pre>
+</BODY>
+</HTML>

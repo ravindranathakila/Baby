@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerMainTest (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerMainTest.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/DisqusAPIClientModule.java.html">ai.ilikeplaces.logic.modules.DisqusAPIClientModule</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> com.google.inject.Guice;
+<A NAME="5"></A><FONT ID="Import">import</FONT> com.google.inject.Injector;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.json.JSONArray;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.json.JSONObject;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.junit.Before;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.junit.Test;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.HashMap;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * Created by IntelliJ IDEA.
+<A NAME="16"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="17"></A> * Date: 5/12/11
+<A NAME="18"></A> * Time: 7:39 PM
+<A NAME="19"></A> */</FONT>
+<A NAME="20"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerMainTest {
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="Private">private</FONT> com.disqus.api.impl.ClientFactory DISQUS_API_FACTORY;
+<A NAME="23"></A>
+<A NAME="24"></A>    @Before
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> testBeforeDisqusAPICall() <FONT ID="Throws">throws</FONT> Exception {
+<A NAME="26"></A>        <FONT ID="Final">final</FONT> Injector disqusApiFactoryInjector = Guice.createInjector(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/DisqusAPIClientModule.java.html">DisqusAPIClientModule</A>());
+<A NAME="27"></A>        DISQUS_API_FACTORY = disqusApiFactoryInjector.getInstance(com.disqus.api.impl.ClientFactory.<FONT ID="Class">class</FONT>);
+<A NAME="28"></A>    }
+<A NAME="29"></A>
+<A NAME="30"></A>    @Test
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> testDisqusAPICall() <FONT ID="Throws">throws</FONT> Exception {
+<A NAME="32"></A>        <FONT ID="Final">final</FONT> com.disqus.api.impl.Client threads = DISQUS_API_FACTORY.getInstance(<FONT ID="StringLiteral">"http://disqus.com/api/3.0/threads/"</FONT>);
+<A NAME="33"></A>        <FONT ID="Final">final</FONT> com.disqus.api.impl.Client posts = DISQUS_API_FACTORY.getInstance(<FONT ID="StringLiteral">"http://disqus.com/api/3.0/posts/"</FONT>);
+<A NAME="34"></A>
+<A NAME="35"></A>        <FONT ID="Final">final</FONT> Map&lt;String, String&gt; threadParams = <FONT ID="New">new</FONT> HashMap&lt;String, String&gt;();
+<A NAME="36"></A>        threadParams.put(<FONT ID="StringLiteral">"thread"</FONT>, <FONT ID="StringLiteral">"ident:WOEID=24702796"</FONT>);
+<A NAME="37"></A>        <FONT ID="Final">final</FONT> JSONObject threadJsonObject = threads.get(<FONT ID="StringLiteral">"list"</FONT>, threadParams);
+<A NAME="38"></A>        System.out.println(threadJsonObject.toString());
+<A NAME="39"></A>        System.out.println(threadJsonObject.getJSONArray(<FONT ID="StringLiteral">"response"</FONT>).getJSONObject(<FONT ID="IntegerLiteral">0</FONT>).get(<FONT ID="StringLiteral">"id"</FONT>).toString());
+<A NAME="40"></A>
+<A NAME="41"></A>        <FONT ID="Final">final</FONT> Map&lt;String, String&gt; postParams = <FONT ID="New">new</FONT> HashMap&lt;String, String&gt;();
+<A NAME="42"></A>        postParams.put(<FONT ID="StringLiteral">"thread"</FONT>, threadJsonObject.getJSONArray(<FONT ID="StringLiteral">"response"</FONT>).getJSONObject(<FONT ID="IntegerLiteral">0</FONT>).get(<FONT ID="StringLiteral">"id"</FONT>).toString());
+<A NAME="43"></A>
+<A NAME="44"></A>        <FONT ID="Final">final</FONT> JSONObject postJsonObject = posts.get(<FONT ID="StringLiteral">"list"</FONT>, postParams);
+<A NAME="45"></A>        <FONT ID="Final">final</FONT> JSONArray threadPosts = postJsonObject.getJSONArray(<FONT ID="StringLiteral">"response"</FONT>);
+<A NAME="46"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> numberOfThreadPosts = threadPosts.length();
+<A NAME="47"></A>
+<A NAME="48"></A>
+<A NAME="49"></A>        System.out.println(postJsonObject.toString());
+<A NAME="50"></A>        System.out.println(postJsonObject.getJSONArray(<FONT ID="StringLiteral">"response"</FONT>).getJSONObject(<FONT ID="IntegerLiteral">0</FONT>).get(<FONT ID="StringLiteral">"id"</FONT>).toString());
+<A NAME="51"></A>        System.out.println(<FONT ID="StringLiteral">"Number of Items in Thread:"</FONT> + numberOfThreadPosts);
+<A NAME="52"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; numberOfThreadPosts; i++) {
+<A NAME="53"></A>            <FONT ID="Final">final</FONT> JSONObject threadPost =  threadPosts.getJSONObject(i);
+<A NAME="54"></A>            System.out.println(threadPost.get(<FONT ID="StringLiteral">"raw_message"</FONT>));
+<A NAME="55"></A>            System.out.println(threadPost.get(<FONT ID="StringLiteral">"createdAt"</FONT>));
+<A NAME="56"></A>        }
+<A NAME="57"></A>
+<A NAME="58"></A>        UCIReadDataFromDataBase:
+<A NAME="59"></A>        {
+<A NAME="60"></A>
+<A NAME="61"></A>        }
+<A NAME="62"></A>
+<A NAME="63"></A>        UCICheckIfDataNotRefreshedWithinLastWeek:<FONT ID="SingleLineComment">// 500,000 indexed by Google at 80,000 pages a day is about 1 week
+<A NAME="64"></A></FONT>        {
+<A NAME="65"></A>
+<A NAME="66"></A>        }
+<A NAME="67"></A>
+<A NAME="68"></A>        UCICheckIfPostCountIsLessThanAtDisqusToAvoidDisqusErasingOurDatabase:
+<A NAME="69"></A>        {
+<A NAME="70"></A>
+<A NAME="71"></A>        }
+<A NAME="72"></A>    }
+<A NAME="73"></A>}
+<A NAME="74"></A>
+<A NAME="75"></A></pre>
+</BODY>
+</HTML>

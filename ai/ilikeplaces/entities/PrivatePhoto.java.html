@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.PrivatePhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">PrivatePhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/PendingEqualsMethodException.java.html">ai.ilikeplaces.exception.PendingEqualsMethodException</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/Listeners/widgets/WallWidgetPrivatePhoto.java.html">ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivatePhoto</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.jpa.*;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.lang.reflect.Field;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.util.Date;
+<A NAME="14"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="FormalComment">/**
+<A NAME="17"></A> * @author Ravindranath Akila
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="20"></A>@DOCUMENTATION(
+<A NAME="21"></A>        LOGIC = @LOGIC(
+<A NAME="22"></A>                SEE = @SEE(<A HREF="../../../ai/ilikeplaces/logic/Listeners/widgets/WallWidgetPrivatePhoto.java.html">WallWidgetPrivatePhoto</A>.<FONT ID="Class">class</FONT>)
+<A NAME="23"></A>        )
+<A NAME="24"></A>)
+<A NAME="25"></A>@Entity
+<A NAME="26"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> PrivatePhoto <FONT ID="Implements">implements</FONT> Serializable, Comparable&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;, Refreshable&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt; {
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> serialVersionUID = <FONT ID="IntegerLiteral">1L</FONT>;
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> Long privatePhotoId;
+<A NAME="31"></A>
+<A NAME="32"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"CDN security issue. Put in folders?"</FONT>)
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> String privatePhotoFilePath;
+<A NAME="34"></A>
+<A NAME="35"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"The path should be very random as it will be exposed to the www."</FONT> +
+<A NAME="36"></A>            <FONT ID="StringLiteral">"Also make sure this supports good SEO."</FONT>)
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> String privatePhotoURLPath;
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> String privatePhotoName;
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> String privatePhotoDescription;
+<A NAME="42"></A>
+<A NAME="43"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"Required to show users"</FONT>)
+<A NAME="44"></A>    <FONT ID="Public">public</FONT> Date privatePhotoUploadDate;
+<A NAME="45"></A>
+<A NAME="46"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"Required to show users"</FONT>)
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> Date privatePhotoTakenDate;
+<A NAME="48"></A>
+<A NAME="49"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"Who uploaded this image? Wil he request to delete it? "</FONT> +
+<A NAME="50"></A>            <FONT ID="StringLiteral">"Privacy important? "</FONT> +
+<A NAME="51"></A>            <FONT ID="StringLiteral">"Lets preserve the info."</FONT>)
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">HumansPrivatePhoto</A> humansPrivatePhoto;
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; albums;
+<A NAME="55"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String albumsCol = <FONT ID="StringLiteral">"albums"</FONT>;
+<A NAME="56"></A>
+<A NAME="57"></A>    @RefreshId(<FONT ID="StringLiteral">"privatePhotoWall"</FONT>)
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> privatePhotoWall;
+<A NAME="59"></A>
+<A NAME="60"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> Refresh&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt; REFRESH = <FONT ID="New">new</FONT> Refresh&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;();
+<A NAME="61"></A>
+<A NAME="62"></A>    @Id
+<A NAME="63"></A>    @GeneratedValue(strategy = GenerationType.AUTO)
+<A NAME="64"></A>    <FONT ID="Public">public</FONT> Long getPrivatePhotoId() {
+<A NAME="65"></A>        <FONT ID="Return">return</FONT> privatePhotoId;
+<A NAME="66"></A>    }
+<A NAME="67"></A>
+<A NAME="68"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivatePhotoId(Long privatePhotoId) {
+<A NAME="69"></A>        <FONT ID="This">this</FONT>.privatePhotoId = privatePhotoId;
+<A NAME="70"></A>    }
+<A NAME="71"></A>
+<A NAME="72"></A>    @Transient
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> setPrivatePhotoIdR(Long privatePhotoId) {
+<A NAME="74"></A>        setPrivatePhotoId(privatePhotoId);
+<A NAME="75"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="76"></A>    }
+<A NAME="77"></A>
+<A NAME="78"></A>    <FONT ID="Public">public</FONT> String getPrivatePhotoName() {
+<A NAME="79"></A>        <FONT ID="Return">return</FONT> privatePhotoName;
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivatePhotoName(String privatePhotoName) {
+<A NAME="83"></A>        <FONT ID="This">this</FONT>.privatePhotoName = privatePhotoName;
+<A NAME="84"></A>    }
+<A NAME="85"></A>
+<A NAME="86"></A>    @Transient
+<A NAME="87"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> setPrivatePhotoNameR(String privatePhotoName) {
+<A NAME="88"></A>        setPrivatePhotoName(privatePhotoName);
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    <FONT ID="Public">public</FONT> String getPrivatePhotoDescription() {
+<A NAME="93"></A>        <FONT ID="Return">return</FONT> privatePhotoDescription;
+<A NAME="94"></A>    }
+<A NAME="95"></A>
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivatePhotoDescription(<FONT ID="Final">final</FONT> String privatePhotoDescription) {
+<A NAME="97"></A>        <FONT ID="This">this</FONT>.privatePhotoDescription = privatePhotoDescription;
+<A NAME="98"></A>    }
+<A NAME="99"></A>
+<A NAME="100"></A>    @Transient
+<A NAME="101"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> setPrivatePhotoDescriptionR(<FONT ID="Final">final</FONT> String privatePhotoDescription) {
+<A NAME="102"></A>        setPrivatePhotoDescription(privatePhotoDescription);
+<A NAME="103"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="104"></A>    }
+<A NAME="105"></A>
+<A NAME="106"></A>    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+<A NAME="107"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">HumansPrivatePhoto</A> getHumansPrivatePhoto() {
+<A NAME="108"></A>        <FONT ID="Return">return</FONT> humansPrivatePhoto;
+<A NAME="109"></A>    }
+<A NAME="110"></A>
+<A NAME="111"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumansPrivatePhoto(<A HREF="../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">HumansPrivatePhoto</A> humansPrivatePhoto) {
+<A NAME="112"></A>        <FONT ID="This">this</FONT>.humansPrivatePhoto = humansPrivatePhoto;
+<A NAME="113"></A>    }
+<A NAME="114"></A>
+<A NAME="115"></A>    @Transient
+<A NAME="116"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> setHumansPrivatePhotoR(<A HREF="../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">HumansPrivatePhoto</A> humansPrivatePhoto) {
+<A NAME="117"></A>        setHumansPrivatePhoto(humansPrivatePhoto);
+<A NAME="118"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="119"></A>    }
+<A NAME="120"></A>
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> String getPrivatePhotoFilePath() {
+<A NAME="122"></A>        <FONT ID="Return">return</FONT> privatePhotoFilePath;
+<A NAME="123"></A>    }
+<A NAME="124"></A>
+<A NAME="125"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivatePhotoFilePath(String privatePhotoFilePath) {
+<A NAME="126"></A>        <FONT ID="This">this</FONT>.privatePhotoFilePath = privatePhotoFilePath;
+<A NAME="127"></A>    }
+<A NAME="128"></A>
+<A NAME="129"></A>    @Transient
+<A NAME="130"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> setPrivatePhotoFilePathR(String privatePhotoFilePath) {
+<A NAME="131"></A>        setPrivatePhotoFilePath(privatePhotoFilePath);
+<A NAME="132"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="133"></A>    }
+<A NAME="134"></A>
+<A NAME="135"></A>
+<A NAME="136"></A>    @Temporal(javax.persistence.TemporalType.DATE)
+<A NAME="137"></A>    <FONT ID="Public">public</FONT> Date getPrivatePhotoTakenDate() {
+<A NAME="138"></A>        <FONT ID="Return">return</FONT> privatePhotoTakenDate;
+<A NAME="139"></A>    }
+<A NAME="140"></A>
+<A NAME="141"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivatePhotoTakenDate(Date privatePhotoTakenDate) {
+<A NAME="142"></A>        <FONT ID="This">this</FONT>.privatePhotoTakenDate = privatePhotoTakenDate;
+<A NAME="143"></A>    }
+<A NAME="144"></A>
+<A NAME="145"></A>    @Transient
+<A NAME="146"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> setPrivatePhotoTakenDateR(Date privatePhotoTakenDate) {
+<A NAME="147"></A>        setPrivatePhotoTakenDate(privatePhotoTakenDate);
+<A NAME="148"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="149"></A>    }
+<A NAME="150"></A>
+<A NAME="151"></A>    <FONT ID="Public">public</FONT> String getPrivatePhotoURLPath() {
+<A NAME="152"></A>        <FONT ID="Return">return</FONT> privatePhotoURLPath;
+<A NAME="153"></A>    }
+<A NAME="154"></A>
+<A NAME="155"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivatePhotoURLPath(String privatePhotoURLPath) {
+<A NAME="156"></A>        <FONT ID="This">this</FONT>.privatePhotoURLPath = privatePhotoURLPath;
+<A NAME="157"></A>    }
+<A NAME="158"></A>
+<A NAME="159"></A>    @Transient
+<A NAME="160"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> setPrivatePhotoURLPathR(String privatePhotoURLPath) {
+<A NAME="161"></A>        setPrivatePhotoURLPath(privatePhotoURLPath);
+<A NAME="162"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="163"></A>    }
+<A NAME="164"></A>
+<A NAME="165"></A>    @Temporal(javax.persistence.TemporalType.DATE)
+<A NAME="166"></A>    <FONT ID="Public">public</FONT> Date getPrivatePhotoUploadDate() {
+<A NAME="167"></A>        <FONT ID="Return">return</FONT> privatePhotoUploadDate;
+<A NAME="168"></A>    }
+<A NAME="169"></A>
+<A NAME="170"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivatePhotoUploadDate(Date privatePhotoUploadDate) {
+<A NAME="171"></A>        <FONT ID="This">this</FONT>.privatePhotoUploadDate = privatePhotoUploadDate;
+<A NAME="172"></A>    }
+<A NAME="173"></A>
+<A NAME="174"></A>    @Transient
+<A NAME="175"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> setPrivatePhotoUploadDateR(Date privatePhotoUploadDate) {
+<A NAME="176"></A>        setPrivatePhotoUploadDate(privatePhotoUploadDate);
+<A NAME="177"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="178"></A>    }
+<A NAME="179"></A>
+<A NAME="180"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+<A NAME="181"></A>    @WARNING(warning = <FONT ID="StringLiteral">"Owning as deleting a photo should automatically reflect in albums, not vice versa."</FONT>)
+<A NAME="182"></A>    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+<A NAME="183"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; getAlbums() {
+<A NAME="184"></A>        <FONT ID="Return">return</FONT> albums;
+<A NAME="185"></A>    }
+<A NAME="186"></A>
+<A NAME="187"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setAlbums(List&lt;<A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; albums) {
+<A NAME="188"></A>        <FONT ID="This">this</FONT>.albums = albums;
+<A NAME="189"></A>    }
+<A NAME="190"></A>
+<A NAME="191"></A>    @UNIDIRECTIONAL
+<A NAME="192"></A>    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+<A NAME="193"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> getPrivatePhotoWall() {
+<A NAME="194"></A>        <FONT ID="Return">return</FONT> privatePhotoWall;
+<A NAME="195"></A>    }
+<A NAME="196"></A>
+<A NAME="197"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivatePhotoWall(<A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> privatePhotoWall) {
+<A NAME="198"></A>        <FONT ID="This">this</FONT>.privatePhotoWall = privatePhotoWall;
+<A NAME="199"></A>    }
+<A NAME="200"></A>
+<A NAME="201"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> setPrivatePhotoWallR(<A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> privatePhotoWall) {
+<A NAME="202"></A>        <FONT ID="This">this</FONT>.privatePhotoWall = privatePhotoWall;
+<A NAME="203"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="204"></A>    }
+<A NAME="205"></A>
+<A NAME="206"></A>    @Override
+<A NAME="207"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> hashCode() {
+<A NAME="208"></A>        <FONT ID="Int">int</FONT> hash = <FONT ID="IntegerLiteral">5</FONT>;
+<A NAME="209"></A>        hash = <FONT ID="IntegerLiteral">37</FONT> * hash + (<FONT ID="This">this</FONT>.privatePhotoId != <FONT ID="Null">null</FONT> ? <FONT ID="This">this</FONT>.privatePhotoId.hashCode() : <FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="210"></A>        <FONT ID="Return">return</FONT> hash;
+<A NAME="211"></A>    }
+<A NAME="212"></A>
+<A NAME="213"></A>    @Override
+<A NAME="214"></A>    @SuppressWarnings({<FONT ID="StringLiteral">"EqualsWhichDoesntCheckParameterClass"</FONT>, <FONT ID="StringLiteral">"EqualsWhichDoesntCheckParameterClass"</FONT>})
+<A NAME="215"></A>    @TODO(task = <FONT ID="StringLiteral">"DO AS IN PrivatePhoto.class, UUID"</FONT>)
+<A NAME="216"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(Object object) {
+<A NAME="217"></A>        <FONT ID="Throw">throw</FONT> PendingEqualsMethodException.SINGLETON;
+<A NAME="218"></A>    }
+<A NAME="219"></A>
+<A NAME="220"></A>    <FONT ID="FormalComment">/**
+<A NAME="221"></A>     * @return toString_
+<A NAME="222"></A>     */</FONT>
+<A NAME="223"></A>    @Override
+<A NAME="224"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="225"></A>        String toString_ = getClass().getName();
+<A NAME="226"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="227"></A>            <FONT ID="Final">final</FONT> Field[] fields = {getClass().getDeclaredField(<FONT ID="StringLiteral">"locationId"</FONT>),
+<A NAME="228"></A>                    getClass().getDeclaredField(<FONT ID="StringLiteral">"locationName"</FONT>),
+<A NAME="229"></A>                    getClass().getDeclaredField(<FONT ID="StringLiteral">"locationSuperSet"</FONT>)};
+<A NAME="230"></A>
+<A NAME="231"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Field field : fields) {
+<A NAME="232"></A>                <FONT ID="Try">try</FONT> {
+<A NAME="233"></A>                    toString_ += <FONT ID="StringLiteral">"\n{"</FONT> + field.getName() + <FONT ID="StringLiteral">","</FONT> + field.get(<FONT ID="This">this</FONT>) + <FONT ID="StringLiteral">"}"</FONT>;
+<A NAME="234"></A>                } <FONT ID="Catch">catch</FONT> (IllegalArgumentException ex) {
+<A NAME="235"></A>                    LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>.getName()).error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="236"></A>                } <FONT ID="Catch">catch</FONT> (IllegalAccessException ex) {
+<A NAME="237"></A>                    LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>.getName()).error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="238"></A>                }
+<A NAME="239"></A>            }
+<A NAME="240"></A>        } <FONT ID="Catch">catch</FONT> (NoSuchFieldException ex) {
+<A NAME="241"></A>            LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>.getName()).error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="242"></A>        } <FONT ID="Catch">catch</FONT> (SecurityException ex) {
+<A NAME="243"></A>            LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>.getName()).error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="244"></A>        }
+<A NAME="245"></A>
+<A NAME="246"></A>        <FONT ID="Return">return</FONT> toString_;
+<A NAME="247"></A>    }
+<A NAME="248"></A>
+<A NAME="249"></A>    <FONT ID="FormalComment">/**
+<A NAME="250"></A>     * @param showChangeLog__
+<A NAME="251"></A>     * @return changeLog
+<A NAME="252"></A>     */</FONT>
+<A NAME="253"></A>    <FONT ID="Public">public</FONT> String toString(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> showChangeLog__) {
+<A NAME="254"></A>        String changeLog = toString() + <FONT ID="StringLiteral">"\n"</FONT>;
+<A NAME="255"></A>        changeLog += <FONT ID="StringLiteral">"20090914 Added this class \n"</FONT>;
+<A NAME="256"></A>        <FONT ID="Return">return</FONT> showChangeLog__ ? changeLog : toString();
+<A NAME="257"></A>    }
+<A NAME="258"></A>
+<A NAME="259"></A>
+<A NAME="260"></A>    <FONT ID="FormalComment">/**
+<A NAME="261"></A>     * @param toBeComparedWith Object To Be ComparedWith
+<A NAME="262"></A>     * @return curent - toBeComparedWith
+<A NAME="263"></A>     */</FONT>
+<A NAME="264"></A>    @Override
+<A NAME="265"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> compareTo(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> toBeComparedWith) {
+<A NAME="266"></A>        <FONT ID="Return">return</FONT> (<FONT ID="Int">int</FONT>) (<FONT ID="This">this</FONT>.getPrivatePhotoId() - toBeComparedWith.getPrivatePhotoId());
+<A NAME="267"></A>    }
+<A NAME="268"></A>
+<A NAME="269"></A>    @Override
+<A NAME="270"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> refresh(<FONT ID="Final">final</FONT> RefreshSpec refreshSpec) <FONT ID="Throws">throws</FONT> RefreshException {
+<A NAME="271"></A>        REFRESH.refresh(<FONT ID="This">this</FONT>, refreshSpec);
+<A NAME="272"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="273"></A>    }
+<A NAME="274"></A>}
+<A NAME="275"></A></pre>
+</BODY>
+</HTML>

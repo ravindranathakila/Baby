@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.AlbumManager (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AlbumManager.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.BUG;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.DOCUMENTATION;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="7"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/carousel/Carousel.java.html">ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/carousel/CarouselCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselCriteria</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/cdn/CDNAlbumPrivateEvent.java.html">ai.ilikeplaces.logic.cdn.CDNAlbumPrivateEvent</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="19"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="20"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="25"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="26"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="27"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="28"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="29"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="30"></A>
+<A NAME="31"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="32"></A><FONT ID="Import">import</FONT> java.util.Collections;
+<A NAME="33"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="34"></A>
+<A NAME="35"></A>
+<A NAME="36"></A><FONT ID="FormalComment">/**
+<A NAME="37"></A> * @author Ravindranath Akila
+<A NAME="38"></A> */</FONT>
+<A NAME="39"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="40"></A>@DOCUMENTATION(
+<A NAME="41"></A>        WARNING = @WARNING(<FONT ID="StringLiteral">"As of 2011-02-04 the private photo widget, if appended dynamically, will thow a javascript error on client side."</FONT> +
+<A NAME="42"></A>                <FONT ID="StringLiteral">"This issue was not fixed despite much effort."</FONT>)
+<A NAME="43"></A>)
+<A NAME="44"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> AlbumManager <FONT ID="Extends">extends</FONT> AbstractWidgetListener {
+<A NAME="45"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="46"></A></FONT>
+<A NAME="47"></A>
+<A NAME="48"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS STATIC --------------------------
+<A NAME="49"></A></FONT>
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ALBUM__PHOTOS = <FONT ID="StringLiteral">"ALBUM_PHOTOS"</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BUTTONTEXT_EMAIL_FORWARDED = <FONT ID="StringLiteral">"buttontext.email.forwarded"</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BUTTONTEXT_CLICK_TO_CONFIRM = <FONT ID="StringLiteral">"buttontext.click.to.confirm"</FONT>;
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SLASH = <FONT ID="StringLiteral">"/"</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NO_PHOTOS_IN_ALBUM = <FONT ID="StringLiteral">"No photos in album!"</FONT>;
+<A NAME="55"></A>    <FONT ID="SingleLineComment">//private Return&lt;PrivateEvent&gt; privateEventReturn = null;
+<A NAME="56"></A></FONT>
+<A NAME="57"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> REFRESH_SPEC_INIT = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"albumPhotos"</FONT>);
+<A NAME="58"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> REFRESH_SPEC_REGISTER = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"albumPhotos"</FONT>);
+<A NAME="59"></A>
+<A NAME="60"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS (NON-STATIC)--------------------
+<A NAME="61"></A></FONT>
+<A NAME="62"></A>
+<A NAME="63"></A>    List&lt;HumansIdentity&gt; wallProspects;
+<A NAME="64"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/AlbumManager.java.html">AlbumManager</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="65"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId = <FONT ID="Null">null</FONT>;
+<A NAME="66"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/cdn/CDNAlbumPrivateEvent.java.html">PrivateEvent</A> privateEvent;
+<A NAME="67"></A>    <FONT ID="Private">private</FONT> HumansIdentity humansIdentity;
+<A NAME="68"></A>    <FONT ID="Private">private</FONT> Return&lt;Album&gt; albumReturn;
+<A NAME="69"></A>
+<A NAME="70"></A><FONT ID="SingleLineComment">// -------------------------- ENUMERATIONS --------------------------
+<A NAME="71"></A></FONT>
+<A NAME="72"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum AlbumManagerIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="73"></A>        AlbumNotice,
+<A NAME="74"></A>        AlbumPivateEventId,
+<A NAME="75"></A>        AlbumOwner,
+<A NAME="76"></A>        AlbumForwardSection,
+<A NAME="77"></A>        AlbumForward,
+<A NAME="78"></A>        AlbumPhotos,
+<A NAME="79"></A>        AlbumWidget
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="83"></A></FONT>    <FONT ID="Public">public</FONT> AlbumManager(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/cdn/CDNAlbumPrivateEvent.java.html">PrivateEvent</A> privateEvent) {
+<A NAME="84"></A>
+<A NAME="85"></A>        <FONT ID="Super">super</FONT>(request__, Page.Album, appendToElement__, humanId__, privateEvent);
+<A NAME="86"></A>    }
+<A NAME="87"></A>
+<A NAME="88"></A><FONT ID="SingleLineComment">// ------------------------ OVERRIDING METHODS ------------------------
+<A NAME="89"></A></FONT>
+<A NAME="90"></A>    <FONT ID="FormalComment">/**
+<A NAME="91"></A>     *
+<A NAME="92"></A>     */</FONT>
+<A NAME="93"></A>    @Override
+<A NAME="94"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="95"></A>
+<A NAME="96"></A>        humanId = ((<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">0</FONT>]).getSelfAsValid();
+<A NAME="97"></A>        privateEvent = (<A HREF="../../../../../ai/ilikeplaces/logic/cdn/CDNAlbumPrivateEvent.java.html">PrivateEvent</A>) initArgs[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="98"></A>        humansIdentity = UserProperty.HUMANS_IDENTITY_CACHE.get(humanId.getHumanId(), <FONT ID="StringLiteral">""</FONT>);
+<A NAME="99"></A>        <FONT ID="SingleLineComment">//privateEventReturn = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(humanId.getObj(), privateEvent.getPrivateEventId());
+<A NAME="100"></A></FONT>
+<A NAME="101"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; emails = <FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt;(privateEvent.getPrivateEventOwners().size() + privateEvent.getPrivateEventViewers().size() + privateEvent.getPrivateEventInvites().size());
+<A NAME="102"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventOwners()) {
+<A NAME="103"></A>            emails.add(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(humansNetPeople.email()));
+<A NAME="104"></A>        }
+<A NAME="105"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventViewers()) {
+<A NAME="106"></A>            emails.add(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(humansNetPeople.email()));
+<A NAME="107"></A>        }
+<A NAME="108"></A>
+<A NAME="109"></A>
+<A NAME="110"></A>        <FONT ID="For">for</FONT> (@BUG(<FONT ID="StringLiteral">"Adding invitees as prospects might cause privacy leakage"</FONT>) <FONT ID="Final">final</FONT> HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventInvites()) {
+<A NAME="111"></A>            emails.add(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(humansNetPeople.email()));
+<A NAME="112"></A>        }
+<A NAME="113"></A>
+<A NAME="114"></A>        wallProspects = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansIdentitiesByEmails(emails);
+<A NAME="115"></A>
+<A NAME="116"></A>
+<A NAME="117"></A>        setAlbumPhotos:
+<A NAME="118"></A>        {
+<A NAME="119"></A>            albumReturn = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).rPrivateEventReadAlbum(humanId, privateEvent.getPrivateEventId(), REFRESH_SPEC_INIT);
+<A NAME="120"></A>            <FONT ID="If">if</FONT> (albumReturn.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="121"></A>                <FONT ID="Final">final</FONT> Album album = <FONT ID="This">this</FONT>.albumReturn.returnValue();
+<A NAME="122"></A>
+<A NAME="123"></A>                <FONT ID="Int">int</FONT> photoSequenceNumber = <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="124"></A>
+<A NAME="125"></A>                <FONT ID="Final">final</FONT> List&lt;PrivatePhoto&gt; albumPhotos = album.getAlbumPhotos();
+<A NAME="126"></A>
+<A NAME="127"></A>                UCHideAlbumForwardIfNoPhotos:
+<A NAME="128"></A>                {
+<A NAME="129"></A>                    <FONT ID="If">if</FONT> (albumPhotos.size() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="130"></A>                        $$displayNone(AlbumManagerIds.AlbumForwardSection);
+<A NAME="131"></A>                    }
+<A NAME="132"></A>
+<A NAME="133"></A>                    <FONT ID="If">if</FONT> (privateEvent.getPrivateEventOwners().size() + privateEvent.getPrivateEventViewers().size() == <FONT ID="IntegerLiteral">2</FONT>) {
+<A NAME="134"></A>                        $$displayNone(AlbumManagerIds.AlbumWidget);
+<A NAME="135"></A>                    }
+<A NAME="136"></A>                }
+<A NAME="137"></A>
+<A NAME="138"></A>                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/carousel/Carousel.java.html">Carousel</A>(request, <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/carousel/CarouselCriteria.java.html">CarouselCriteria</A>().setAlbumPhotos(albumPhotos), $(Page.Skeleton_right_column));
+<A NAME="139"></A>
+<A NAME="140"></A>                <FONT ID="Final">final</FONT> List&lt;Long&gt; albumPhotoIds = <FONT ID="New">new</FONT> ArrayList&lt;Long&gt;(albumPhotos.size());
+<A NAME="141"></A>
+<A NAME="142"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> PrivatePhoto privatePhoto__ : albumPhotos) {
+<A NAME="143"></A>                    albumPhotoIds.add(privatePhoto__.getPrivatePhotoId());
+<A NAME="144"></A>
+<A NAME="145"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/Photo$Description.java.html">Photo$Description</A>(request, $$(AlbumManagerIds.AlbumPhotos), photoSequenceNumber++, wallProspects) {
+<A NAME="146"></A>                        @Override
+<A NAME="147"></A>                        <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="148"></A>
+<A NAME="149"></A>                            <FONT ID="Final">final</FONT> Integer photoSequenceNumber = (Integer) initArgs[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="150"></A>                            List&lt;HumansIdentity&gt; mywallProspects = (List&lt;HumansIdentity&gt;) initArgs[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="151"></A>                            <FONT ID="Final">final</FONT> String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + privatePhoto__.getPrivatePhotoURLPath();
+<A NAME="152"></A>                            <FONT ID="Final">final</FONT> String imageThumbURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + CDNAlbumPrivateEvent.THUMBNAIL + privatePhoto__.getPrivatePhotoURLPath();
+<A NAME="153"></A>                            $$(Controller.Page.pd_photo_permalink).setAttribute(MarkupTag.A.href(), imageURL);
+<A NAME="154"></A>
+<A NAME="155"></A>                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
+<A NAME="156"></A>
+<A NAME="157"></A>                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), imageThumbURL);
+<A NAME="158"></A>
+<A NAME="159"></A>                            $$setClass($$(Controller.Page.pd), privatePhoto__.getPrivatePhotoURLPath(), <FONT ID="False">false</FONT>);
+<A NAME="160"></A>
+<A NAME="161"></A>                            <FONT ID="MultiLineComment">/* final String photoThumbURL = imageURL.substring(0, imageURL.lastIndexOf(SLASH) + 1) + CDNAlbumPrivateEvent.THUMBNAIL + imageURL.substring(imageURL.lastIndexOf(SLASH) + 1, photoURL.length());
+<A NAME="162"></A>                           $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), photoThumbURL);*/</FONT>
+<A NAME="163"></A>
+<A NAME="164"></A>                            $$(Controller.Page.pd_photo_sequence_number).setTextContent(photoSequenceNumber.toString());
+<A NAME="165"></A>
+<A NAME="166"></A>                            displayNone($$(Controller.Page.pd_photo_delete));
+<A NAME="167"></A>
+<A NAME="168"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/WallWidgetPrivatePhoto.java.html">WallWidgetPrivatePhoto</A>(request, $$(Controller.Page.pd_photo_wall), humanId, privatePhoto__.getPrivatePhotoId(), mywallProspects);
+<A NAME="169"></A>                        }
+<A NAME="170"></A>                    };
+<A NAME="171"></A>                }
+<A NAME="172"></A>
+<A NAME="173"></A>                $$getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, albumPhotoIds);
+<A NAME="174"></A>
+<A NAME="175"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="176"></A>                $$(AlbumManagerIds.AlbumNotice).setTextContent(albumReturn.returnMsg());
+<A NAME="177"></A>            }
+<A NAME="178"></A>        }
+<A NAME="179"></A>
+<A NAME="180"></A>
+<A NAME="181"></A>        setAlbumOwnerMode:
+<A NAME="182"></A>        {
+<A NAME="183"></A>            <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; ro = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).dirtyRPrivateEventIsOwner(humanId, privateEvent.getPrivateEventId());
+<A NAME="184"></A>            <FONT ID="If">if</FONT> (ro.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="185"></A>                <FONT ID="If">if</FONT> (ro.returnValue()) {<FONT ID="SingleLineComment">//owner
+<A NAME="186"></A></FONT>                    $$(AlbumManagerIds.AlbumPivateEventId).setAttribute(MarkupTag.INPUT.value(), privateEvent.getPrivateEventId().toString());
+<A NAME="187"></A>                    displayBlock($$(AlbumManagerIds.AlbumOwner));
+<A NAME="188"></A>                    <FONT ID="SingleLineComment">//show hide operations
+<A NAME="189"></A></FONT>                }
+<A NAME="190"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="191"></A>                $$(AlbumManagerIds.AlbumNotice).setTextContent(ro.returnMsg());
+<A NAME="192"></A>            }
+<A NAME="193"></A>        }
+<A NAME="194"></A>    }
+<A NAME="195"></A>
+<A NAME="196"></A>    @Override
+<A NAME="197"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__) {
+<A NAME="198"></A>
+<A NAME="199"></A>        itsNatHTMLDocument__.addEventListener((EventTarget) $$(AlbumManagerIds.AlbumForward), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="200"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="201"></A>            <FONT ID="Final">final</FONT> Long myprivateEventId = privateEvent.getPrivateEventId();
+<A NAME="202"></A>            <FONT ID="Boolean">boolean</FONT> confirmed = <FONT ID="False">false</FONT>;
+<A NAME="203"></A>            <FONT ID="Final">final</FONT> HumansIdentity myhumansIdentity = humansIdentity;
+<A NAME="204"></A>            <FONT ID="SingleLineComment">//final Return&lt;PrivateEvent&gt; myprivateEventReturn = privateEventReturn;
+<A NAME="205"></A></FONT>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/cdn/CDNAlbumPrivateEvent.java.html">PrivateEvent</A> myprivateEvent = privateEvent;
+<A NAME="206"></A>            <FONT ID="Final">final</FONT> Return&lt;Album&gt; myalbumReturn = albumReturn;
+<A NAME="207"></A>
+<A NAME="208"></A>            @Override
+<A NAME="209"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/cdn/CDNAlbumPrivateEvent.java.html">Event</A> evt_) {
+<A NAME="210"></A>
+<A NAME="211"></A>                <FONT ID="If">if</FONT> (confirmed) {
+<A NAME="212"></A><FONT ID="SingleLineComment">//                    if (myprivateEventReturn.returnStatus() == 0) {
+<A NAME="213"></A></FONT>                    <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/cdn/CDNAlbumPrivateEvent.java.html">PrivateEvent</A> pe = myprivateEvent;<FONT ID="SingleLineComment">// myprivateEventReturn.returnValue();
+<A NAME="214"></A></FONT>                    <FONT ID="Final">final</FONT> Album album = myalbumReturn.returnValue();
+<A NAME="215"></A>                    Collections.sort(album.getAlbumPhotos());
+<A NAME="216"></A>
+<A NAME="217"></A>                    <FONT ID="Final">final</FONT> StringBuilder b = <FONT ID="New">new</FONT> StringBuilder(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="218"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> PrivatePhoto pp : album.getAlbumPhotos()) {
+<A NAME="219"></A>                        b.append(
+<A NAME="220"></A>                                UserProperty.fetchToEmailStatically(
+<A NAME="221"></A>                                        myhumansIdentity.getHuman().getDisplayName(),
+<A NAME="222"></A>                                        UserProperty.formatProfileUrl(myhumansIdentity.getUrl().getUrl(), <FONT ID="True">true</FONT>),
+<A NAME="223"></A>                                        UserProperty.formatProfilePhotoUrl(myhumansIdentity.getHumansIdentityProfilePhoto()),
+<A NAME="224"></A>                                        ElementComposer.compose($$(MarkupTag.IMG)).$ElementSetAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(ALBUM__PHOTOS) + pp.getPrivatePhotoURLPath()).get()
+<A NAME="225"></A>                                )
+<A NAME="226"></A>                        );
+<A NAME="227"></A>                    }
+<A NAME="228"></A>
+<A NAME="229"></A>
+<A NAME="230"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent member : pe.getPrivateEventInvites()) {
+<A NAME="231"></A>                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(member.getHumanId(), pe.getPrivateEventName(), b.toString());
+<A NAME="232"></A>                    }
+<A NAME="233"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent member : pe.getPrivateEventInvites()) {
+<A NAME="234"></A>                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(member.getHumanId(), pe.getPrivateEventName(), b.toString());
+<A NAME="235"></A>                    }
+<A NAME="236"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent member : pe.getPrivateEventInvites()) {
+<A NAME="237"></A>                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(member.getHumanId(), pe.getPrivateEventName(), b.toString());
+<A NAME="238"></A>                    }
+<A NAME="239"></A>
+<A NAME="240"></A><FONT ID="SingleLineComment">//                    } else {
+<A NAME="241"></A></FONT><FONT ID="SingleLineComment">//                        $$(Controller.Page.AlbumNotice).setTextContent(myprivateEventReturn.returnMsg());
+<A NAME="242"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="243"></A></FONT>
+<A NAME="244"></A>                    remove(evt_.getTarget(), EventType.CLICK, <FONT ID="This">this</FONT>, <FONT ID="False">false</FONT>);
+<A NAME="245"></A>                    confirmed = <FONT ID="False">false</FONT>;
+<A NAME="246"></A>                    <FONT ID="SingleLineComment">//$$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_EMAIL_FORWARDED));
+<A NAME="247"></A></FONT>                    $$(evt_).setAttribute(MarkupTag.IMG.src(),
+<A NAME="248"></A>                            $$(evt_).getAttribute(MarkupTag.IMG.src()).replace(<FONT ID="StringLiteral">"confirm_forward_album_to_friends.png"</FONT>, <FONT ID="StringLiteral">"forwarded_forward_album_to_friends.png"</FONT>)
+<A NAME="249"></A>                    );
+<A NAME="250"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="251"></A>                    <FONT ID="If">if</FONT> (!(albumReturn.returnValue().getAlbumPhotos().size() == <FONT ID="IntegerLiteral">0</FONT>)) {
+<A NAME="252"></A>                        confirmed = <FONT ID="True">true</FONT>;
+<A NAME="253"></A>                        $$(evt_).setAttribute(MarkupTag.IMG.src(),
+<A NAME="254"></A>                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace(<FONT ID="StringLiteral">"forward_album_to_friends.png"</FONT>, <FONT ID="StringLiteral">"confirm_forward_album_to_friends.png"</FONT>)
+<A NAME="255"></A>                        );
+<A NAME="256"></A>                        <FONT ID="SingleLineComment">//$$(evt_).setTextContent(RBGet.gui().getString(BUTTONTEXT_CLICK_TO_CONFIRM));
+<A NAME="257"></A></FONT>                    } <FONT ID="Else">else</FONT> {
+<A NAME="258"></A>                        <FONT ID="SingleLineComment">//Why are we displaying the button in the first place if the album doesn't contain photos? To imply photos can be uploaded and forwarded
+<A NAME="259"></A></FONT>                        $$displayNone($$(AlbumManagerIds.AlbumForward));
+<A NAME="260"></A>                    }
+<A NAME="261"></A>                }
+<A NAME="262"></A>            }
+<A NAME="263"></A>        }, <FONT ID="False">false</FONT>);
+<A NAME="264"></A>    }
+<A NAME="265"></A>}
+<A NAME="266"></A></pre>
+</BODY>
+</HTML>

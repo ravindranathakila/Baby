@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.Button (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Button.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.DOCUMENTATION;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="FormalComment">/**
+<A NAME="19"></A> * @author Ravindranath Akila
+<A NAME="20"></A> */</FONT>
+<A NAME="21"></A>
+<A NAME="22"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="23"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Button <FONT ID="Extends">extends</FONT> AbstractWidgetListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/ButtonCriteria.java.html">ButtonCriteria</A>&gt; {
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="FormalComment">/**
+<A NAME="26"></A>     * Now supports image ONLY IF text is unavailable
+<A NAME="27"></A>     *
+<A NAME="28"></A>     * @param request__
+<A NAME="29"></A>     * @param appendToElement__
+<A NAME="30"></A>     * @param buttonText
+<A NAME="31"></A>     * @param doRefreshPageOnClick
+<A NAME="32"></A>     * @param params               [0] should be the img src, if left blank, realized text and will be hidden
+<A NAME="33"></A>     */</FONT>
+<A NAME="34"></A>    @Deprecated
+<A NAME="35"></A>    @DOCUMENTATION(
+<A NAME="36"></A>            NOTE = @NOTE(<FONT ID="StringLiteral">"Depricated because the varargs used here. Super advices that we use a bean instead."</FONT>)
+<A NAME="37"></A>    )
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> Button(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> String buttonText, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> doRefreshPageOnClick, <FONT ID="Final">final</FONT> Object... params) {
+<A NAME="39"></A>        <FONT ID="Super">super</FONT>(request__, Page.GenericButton, appendToElement__, buttonText, doRefreshPageOnClick, params);
+<A NAME="40"></A>
+<A NAME="41"></A>        <FONT ID="If">if</FONT> (buttonText != <FONT ID="Null">null</FONT> &amp;&amp; !buttonText.isEmpty()) {
+<A NAME="42"></A>            $$displayNone($$(Page.GenericButtonImage));
+<A NAME="43"></A>            $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.title(), buttonText);
+<A NAME="44"></A>            $$(Controller.Page.GenericButtonText).setTextContent(buttonText);
+<A NAME="45"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="46"></A>            $$displayNone($$(Controller.Page.GenericButtonText));
+<A NAME="47"></A>            $$(Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), (String) params[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="48"></A>        }
+<A NAME="49"></A>
+<A NAME="50"></A>
+<A NAME="51"></A>        <FONT ID="If">if</FONT> (doRefreshPageOnClick) {
+<A NAME="52"></A>            itsNatDocument_.addEventListener((EventTarget) $$(Controller.Page.GenericButtonLink), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="53"></A>                @Override
+<A NAME="54"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="55"></A>                }
+<A NAME="56"></A>            }, <FONT ID="False">false</FONT>, JSCodeToSend.RefreshPage);
+<A NAME="57"></A>        }
+<A NAME="58"></A>    }
+<A NAME="59"></A>
+<A NAME="60"></A>
+<A NAME="61"></A>    <FONT ID="Public">public</FONT> Button(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/ButtonCriteria.java.html">ButtonCriteria</A> buttonCriteria) {
+<A NAME="62"></A>        <FONT ID="Super">super</FONT>(request__, Page.GenericButton, buttonCriteria, appendToElement__);
+<A NAME="63"></A>
+<A NAME="64"></A>        <FONT ID="If">if</FONT> (buttonCriteria.getButtonText() != <FONT ID="Null">null</FONT> || !buttonCriteria.getButtonText().isEmpty()) {
+<A NAME="65"></A>            $$displayNone($$(Page.GenericButtonImage));
+<A NAME="66"></A>            $$(Controller.Page.GenericButtonText).setAttribute(MarkupTag.GENERIC.title(), buttonCriteria.getButtonText());
+<A NAME="67"></A>            $$(Controller.Page.GenericButtonText).setTextContent(buttonCriteria.getButtonText());
+<A NAME="68"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="69"></A>            $$displayNone($$(Controller.Page.GenericButtonText));
+<A NAME="70"></A>            $$(Page.GenericButtonImage).setAttribute(MarkupTag.IMG.src(), buttonCriteria.getButtonImage());
+<A NAME="71"></A>        }
+<A NAME="72"></A>
+<A NAME="73"></A>
+<A NAME="74"></A>        <FONT ID="If">if</FONT> (buttonCriteria.isDoRefreshPageOnClick()) {
+<A NAME="75"></A>            itsNatDocument_.addEventListener((EventTarget) $$(Controller.Page.GenericButtonLink), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="76"></A>                @Override
+<A NAME="77"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="78"></A>                }
+<A NAME="79"></A>            }, <FONT ID="False">false</FONT>, JSCodeToSend.RefreshPage);
+<A NAME="80"></A>        }
+<A NAME="81"></A>    }
+<A NAME="82"></A>
+<A NAME="83"></A>    @Override
+<A NAME="84"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="85"></A>    }
+<A NAME="86"></A>
+<A NAME="87"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> setBluePrintCSSSpan(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> span, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> prepend, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> append, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isLast) {
+<A NAME="88"></A>        $$(Controller.Page.GenericButtonWidth).setAttribute(<FONT ID="StringLiteral">"class"</FONT>, $$(Controller.Page.GenericButtonWidth).getAttribute(<FONT ID="StringLiteral">"class"</FONT>) + <FONT ID="StringLiteral">" use100"</FONT>);
+<A NAME="89"></A>    }
+<A NAME="90"></A>
+<A NAME="91"></A>}</pre>
+</BODY>
+</HTML>

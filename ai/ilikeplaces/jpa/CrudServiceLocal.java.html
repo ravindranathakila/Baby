@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.jpa.CrudServiceLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CrudServiceLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.jpa;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> * @author Ravindranath Akila
+<A NAME="13"></A> * @param &lt;T&gt;
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A>
+<A NAME="16"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="17"></A>@Local
+<A NAME="18"></A>@OK
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> CrudServiceLocal&lt;T&gt; {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="FormalComment">/**
+<A NAME="22"></A>     * @param t
+<A NAME="23"></A>     * @return
+<A NAME="24"></A>     */</FONT>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> T create(T t);
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="FormalComment">/**
+<A NAME="28"></A>     * @param type
+<A NAME="29"></A>     * @param id
+<A NAME="30"></A>     * @return
+<A NAME="31"></A>     */</FONT>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> T find(Class type, Object id);
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="FormalComment">/**
+<A NAME="35"></A>     * 
+<A NAME="36"></A>     * @param type
+<A NAME="37"></A>     * @param id
+<A NAME="38"></A>     * @return
+<A NAME="39"></A>     */</FONT>
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> T getReference(<FONT ID="Final">final</FONT> Class type, <FONT ID="Final">final</FONT> Object id);
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="FormalComment">/**
+<A NAME="43"></A>     * This method can be used for eager loading, but with a
+<A NAME="44"></A>     * thrown npe exception if null. In fact, this method
+<A NAME="45"></A>     * makes sure you can avoid a null check. If you are doing
+<A NAME="46"></A>     * a null check, you do not need to call this. use find
+<A NAME="47"></A>     * instead.
+<A NAME="48"></A>     *
+<A NAME="49"></A>     * A common approach to using this method is when you are sure a given ID is in the database when looking it up.
+<A NAME="50"></A>     * While this maybe tagged defensive, this approach actually reveals a possible null at the earliest.
+<A NAME="51"></A>     * Noticing a null, which is an attribute of all classes and has no type, at the earliest is best.
+<A NAME="52"></A>     *
+<A NAME="53"></A>     * &lt;p/&gt;
+<A NAME="54"></A>     * Use find if this check is not required.
+<A NAME="55"></A>     * &lt;p/&gt;
+<A NAME="56"></A>     * Use getReference if you need to load lazy with this behavior.
+<A NAME="57"></A>     *
+<A NAME="58"></A>     * @param typeOfEntity
+<A NAME="59"></A>     * @param idByWhichToLookup
+<A NAME="60"></A>     * @return
+<A NAME="61"></A>     */</FONT>
+<A NAME="62"></A>    <FONT ID="Public">public</FONT> T findBadly(Class typeOfEntity, Object idByWhichToLookup);
+<A NAME="63"></A>
+<A NAME="64"></A>    <FONT ID="FormalComment">/**
+<A NAME="65"></A>     * @param t
+<A NAME="66"></A>     * @return
+<A NAME="67"></A>     */</FONT>
+<A NAME="68"></A>    <FONT ID="Public">public</FONT> T update(T t);
+<A NAME="69"></A>
+<A NAME="70"></A>    <FONT ID="FormalComment">/**
+<A NAME="71"></A>     * @param type
+<A NAME="72"></A>     * @param id
+<A NAME="73"></A>     */</FONT>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> delete(Class type, Object id);
+<A NAME="75"></A>
+<A NAME="76"></A>    <FONT ID="FormalComment">/**
+<A NAME="77"></A>     * @param queryName
+<A NAME="78"></A>     * @return
+<A NAME="79"></A>     */</FONT>
+<A NAME="80"></A>    <FONT ID="Public">public</FONT> List findWithNamedQuery(String queryName);
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="FormalComment">/**
+<A NAME="83"></A>     * @param queryName
+<A NAME="84"></A>     * @param resultLimit
+<A NAME="85"></A>     * @return
+<A NAME="86"></A>     */</FONT>
+<A NAME="87"></A>    <FONT ID="Public">public</FONT> List findWithNamedQuery(String queryName, <FONT ID="Int">int</FONT> resultLimit);
+<A NAME="88"></A>
+<A NAME="89"></A>    <FONT ID="FormalComment">/**
+<A NAME="90"></A>     * @param namedQueryName
+<A NAME="91"></A>     * @param parameters
+<A NAME="92"></A>     * @return
+<A NAME="93"></A>     */</FONT>
+<A NAME="94"></A>    <FONT ID="Public">public</FONT> List findWithNamedQuery(String namedQueryName, Map parameters);
+<A NAME="95"></A>
+<A NAME="96"></A>    <FONT ID="FormalComment">/**
+<A NAME="97"></A>     * @param namedQueryName
+<A NAME="98"></A>     * @param parameters
+<A NAME="99"></A>     * @param resultLimit
+<A NAME="100"></A>     * @return
+<A NAME="101"></A>     */</FONT>
+<A NAME="102"></A>    <FONT ID="Public">public</FONT> List findWithNamedQuery(String namedQueryName, Map parameters, <FONT ID="Int">int</FONT> resultLimit);
+<A NAME="103"></A>
+<A NAME="104"></A>    <FONT ID="FormalComment">/**
+<A NAME="105"></A>     * @param sql
+<A NAME="106"></A>     * @param type
+<A NAME="107"></A>     * @return ListF
+<A NAME="108"></A>     */</FONT>
+<A NAME="109"></A>    <FONT ID="Public">public</FONT> List findByNativeQuery(<FONT ID="Final">final</FONT> String sql, <FONT ID="Final">final</FONT> Class type);
+<A NAME="110"></A>}
+<A NAME="111"></A></pre>
+</BODY>
+</HTML>

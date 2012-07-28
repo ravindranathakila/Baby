@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.Location (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Location.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.jpa.*;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * Important, if locationName &amp; locationSuperSet of two objects are equal,
+<A NAME="15"></A> * then the two are talking about the same location. They should be merged.
+<A NAME="16"></A> * i.e. Made to have the same id.
+<A NAME="17"></A> *
+<A NAME="18"></A> * @author Ravindranath Akila
+<A NAME="19"></A> */</FONT>
+<A NAME="20"></A>
+<A NAME="21"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="22"></A>@OK
+<A NAME="23"></A>@Entity
+<A NAME="24"></A>@NamedQueries({
+<A NAME="25"></A>        @NamedQuery(name = <FONT ID="StringLiteral">"FindAllLocationsByName"</FONT>,
+<A NAME="26"></A>                query = <FONT ID="StringLiteral">"SELECT loc FROM Location loc WHERE loc.locationName = :locationName"</FONT>),
+<A NAME="27"></A>        @NamedQuery(name = <FONT ID="StringLiteral">"FindAllLocationsBySuperLocation"</FONT>,
+<A NAME="28"></A>                query = <FONT ID="StringLiteral">"SELECT loc FROM "</FONT> + Location.LocationEntity + <FONT ID="StringLiteral">" loc WHERE loc."</FONT> + Location.LocationSuperSet + <FONT ID="StringLiteral">" = :"</FONT> + Location.LocationSuperSet),
+<A NAME="29"></A>        @NamedQuery(name = <FONT ID="StringLiteral">"FindAllLocationNamesByLikeName"</FONT>,
+<A NAME="30"></A>                query = <FONT ID="StringLiteral">"SELECT loc.locationName FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName"</FONT>),
+<A NAME="31"></A>        @NamedQuery(name = <FONT ID="StringLiteral">"FindAllLocationsByLikeName"</FONT>,
+<A NAME="32"></A>                query = <FONT ID="StringLiteral">"SELECT loc FROM Location loc WHERE UPPER(loc.locationName) LIKE :locationName"</FONT>)})
+<A NAME="33"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="34"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Location <FONT ID="Implements">implements</FONT> Serializable, <A HREF="../../../ai/ilikeplaces/entities/Clearance.java.html">Clearance</A>, Comparable&lt;<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;,Refreshable&lt;<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; {
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="37"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String LocationEntity = <FONT ID="StringLiteral">"Location"</FONT>;
+<A NAME="38"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FindAllLocationsByName = <FONT ID="StringLiteral">"FindAllLocationsByName"</FONT>;
+<A NAME="39"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FindAllLocationsBySuperLocation = <FONT ID="StringLiteral">"FindAllLocationsBySuperLocation"</FONT>;
+<A NAME="40"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FindAllLocationNamesByLikeName = <FONT ID="StringLiteral">"FindAllLocationNamesByLikeName"</FONT>;
+<A NAME="41"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FindAllLocationsByLikeName = <FONT ID="StringLiteral">"FindAllLocationsByLikeName"</FONT>;
+<A NAME="42"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String LocationName = <FONT ID="StringLiteral">"locationName"</FONT>;
+<A NAME="43"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String LocationSuperSet = <FONT ID="StringLiteral">"locationSuperSet"</FONT>;
+<A NAME="44"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Long">long</FONT> serialVersionUID = <FONT ID="IntegerLiteral">1L</FONT>;
+<A NAME="45"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String WOEID = <FONT ID="StringLiteral">"WOEID"</FONT>;
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> Long locationId;
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> Long clearance = <FONT ID="IntegerLiteral">0L</FONT>;
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> String locationName;
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> String locationInfo;
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> locationSuperSet;
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> String locationGeo1;
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> String locationGeo2;
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; publicPhotos;
+<A NAME="55"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; privateEvents;
+<A NAME="56"></A>
+<A NAME="57"></A>    @RefreshId(<FONT ID="StringLiteral">"longMsgs"</FONT>)
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/LongMsg.java.html">LongMsg</A>&gt; longMsgs;
+<A NAME="59"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String OF_SPACE = <FONT ID="StringLiteral">" of "</FONT>;
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String OF_SCORE = <FONT ID="StringLiteral">"_of_"</FONT>;
+<A NAME="61"></A>
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> Refresh&lt;<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; REFRESH = <FONT ID="New">new</FONT> Refresh&lt;<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;();
+<A NAME="63"></A>
+<A NAME="64"></A>
+<A NAME="65"></A>    <FONT ID="FormalComment">/**
+<A NAME="66"></A>     * @return locationId
+<A NAME="67"></A>     */</FONT>
+<A NAME="68"></A>    @Id
+<A NAME="69"></A>    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+<A NAME="70"></A>    <FONT ID="Public">public</FONT> Long getLocationId() {
+<A NAME="71"></A>        <FONT ID="Return">return</FONT> locationId;
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="FormalComment">/**
+<A NAME="75"></A>     * @param locationId__
+<A NAME="76"></A>     */</FONT>
+<A NAME="77"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLocationId(<FONT ID="Final">final</FONT> Long locationId__) {
+<A NAME="78"></A>        <FONT ID="This">this</FONT>.locationId = locationId__;
+<A NAME="79"></A>    }
+<A NAME="80"></A>
+<A NAME="81"></A>    @Override
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> Long getClearance() {
+<A NAME="83"></A>        <FONT ID="Return">return</FONT> clearance;
+<A NAME="84"></A>    }
+<A NAME="85"></A>
+<A NAME="86"></A>    @Override
+<A NAME="87"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setClearance(<FONT ID="Final">final</FONT> Long clearance) {
+<A NAME="88"></A>        <FONT ID="This">this</FONT>.clearance = clearance;
+<A NAME="89"></A>    }
+<A NAME="90"></A>
+<A NAME="91"></A>    <FONT ID="FormalComment">/**
+<A NAME="92"></A>     * @return locationName
+<A NAME="93"></A>     */</FONT>
+<A NAME="94"></A>    @Column(unique = <FONT ID="False">false</FONT>, nullable = <FONT ID="False">false</FONT>)
+<A NAME="95"></A>    <FONT ID="Public">public</FONT> String getLocationName() {
+<A NAME="96"></A>        <FONT ID="Return">return</FONT> locationName;
+<A NAME="97"></A>    }
+<A NAME="98"></A>
+<A NAME="99"></A>    <FONT ID="FormalComment">/**
+<A NAME="100"></A>     * Important, if locationName &amp; locationSuperSet of two objects are equal,
+<A NAME="101"></A>     * then the two are talking about the same location. They should be merged.
+<A NAME="102"></A>     * i.e. Made to have the same id.
+<A NAME="103"></A>     *
+<A NAME="104"></A>     * @param locationName__
+<A NAME="105"></A>     */</FONT>
+<A NAME="106"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLocationName(<FONT ID="Final">final</FONT> String locationName__) {
+<A NAME="107"></A>        <FONT ID="This">this</FONT>.locationName = locationName__;
+<A NAME="108"></A>    }
+<A NAME="109"></A>
+<A NAME="110"></A>    <FONT ID="FormalComment">/**
+<A NAME="111"></A>     * Important, if locationName &amp; locationSuperSet of two objects are equal,
+<A NAME="112"></A>     * then the two are talking about the same location. They should be merged.
+<A NAME="113"></A>     * i.e. Made to have the same id.
+<A NAME="114"></A>     *
+<A NAME="115"></A>     * @return locationInfo
+<A NAME="116"></A>     */</FONT>
+<A NAME="117"></A>    @Column(unique = <FONT ID="False">false</FONT>, nullable = <FONT ID="False">false</FONT>, length = <FONT ID="IntegerLiteral">1000</FONT>)
+<A NAME="118"></A>    <FONT ID="Public">public</FONT> String getLocationInfo() {
+<A NAME="119"></A>        <FONT ID="Return">return</FONT> locationInfo;
+<A NAME="120"></A>    }
+<A NAME="121"></A>
+<A NAME="122"></A>    <FONT ID="FormalComment">/**
+<A NAME="123"></A>     * @param locationInfo__
+<A NAME="124"></A>     */</FONT>
+<A NAME="125"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLocationInfo(<FONT ID="Final">final</FONT> String locationInfo__) {
+<A NAME="126"></A>        <FONT ID="This">this</FONT>.locationInfo = locationInfo__;
+<A NAME="127"></A>    }
+<A NAME="128"></A>
+<A NAME="129"></A>    <FONT ID="FormalComment">/**
+<A NAME="130"></A>     * @return locationSuperSet
+<A NAME="131"></A>     */</FONT>
+<A NAME="132"></A>    @OneToOne(optional = <FONT ID="False">false</FONT>,
+<A NAME="133"></A>            targetEntity = <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>)
+<A NAME="134"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> getLocationSuperSet() {
+<A NAME="135"></A>        <FONT ID="Return">return</FONT> locationSuperSet;
+<A NAME="136"></A>    }
+<A NAME="137"></A>
+<A NAME="138"></A>    <FONT ID="FormalComment">/**
+<A NAME="139"></A>     * @param locationSuperSet__
+<A NAME="140"></A>     */</FONT>
+<A NAME="141"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLocationSuperSet(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> locationSuperSet__) {
+<A NAME="142"></A>        <FONT ID="This">this</FONT>.locationSuperSet = locationSuperSet__;
+<A NAME="143"></A>    }
+<A NAME="144"></A>
+<A NAME="145"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Break Location table by this field or use lazy fetching(better). i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction. Use secondary tables PrimaryKeyJoinTable"</FONT>)
+<A NAME="146"></A>    @OneToMany(mappedBy = PublicPhoto.locationCOL, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+<A NAME="147"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; getPublicPhotos() {
+<A NAME="148"></A>        <FONT ID="Return">return</FONT> publicPhotos;
+<A NAME="149"></A>    }
+<A NAME="150"></A>
+<A NAME="151"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotos(List&lt;<A HREF="../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; publicPhotos) {
+<A NAME="152"></A>        <FONT ID="This">this</FONT>.publicPhotos = publicPhotos;
+<A NAME="153"></A>    }
+<A NAME="154"></A>
+<A NAME="155"></A>    @Column(length = <FONT ID="IntegerLiteral">63</FONT>)
+<A NAME="156"></A>    <FONT ID="Public">public</FONT> String getLocationGeo1() {
+<A NAME="157"></A>        <FONT ID="Return">return</FONT> locationGeo1;
+<A NAME="158"></A>    }
+<A NAME="159"></A>
+<A NAME="160"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLocationGeo1(String locationGeo1) {
+<A NAME="161"></A>        <FONT ID="This">this</FONT>.locationGeo1 = locationGeo1;
+<A NAME="162"></A>    }
+<A NAME="163"></A>
+<A NAME="164"></A>    @Column(length = <FONT ID="IntegerLiteral">63</FONT>)
+<A NAME="165"></A>    <FONT ID="Public">public</FONT> String getLocationGeo2() {
+<A NAME="166"></A>        <FONT ID="Return">return</FONT> locationGeo2;
+<A NAME="167"></A>    }
+<A NAME="168"></A>
+<A NAME="169"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLocationGeo2(String locationGeo2) {
+<A NAME="170"></A>        <FONT ID="This">this</FONT>.locationGeo2 = locationGeo2;
+<A NAME="171"></A>    }
+<A NAME="172"></A>
+<A NAME="173"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+<A NAME="174"></A>    @OneToMany(mappedBy = PrivateEvent.locationCOL,
+<A NAME="175"></A>            cascade = CascadeType.ALL,
+<A NAME="176"></A>            fetch = FetchType.LAZY)
+<A NAME="177"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; getPrivateEvents() {
+<A NAME="178"></A>        <FONT ID="Return">return</FONT> privateEvents;
+<A NAME="179"></A>    }
+<A NAME="180"></A>
+<A NAME="181"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPrivateEvents(List&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; privateEvents) {
+<A NAME="182"></A>        <FONT ID="This">this</FONT>.privateEvents = privateEvents;
+<A NAME="183"></A>    }
+<A NAME="184"></A>
+<A NAME="185"></A>    @UNIDIRECTIONAL
+<A NAME="186"></A>    @OneToMany(cascade = CascadeType.ALL,
+<A NAME="187"></A>            fetch = FetchType.LAZY)
+<A NAME="188"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/LongMsg.java.html">LongMsg</A>&gt; getLongMsgs() {
+<A NAME="189"></A>        <FONT ID="Return">return</FONT> longMsgs;
+<A NAME="190"></A>    }
+<A NAME="191"></A>
+<A NAME="192"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLongMsgs(List&lt;<A HREF="../../../ai/ilikeplaces/entities/LongMsg.java.html">LongMsg</A>&gt; longMsgs) {
+<A NAME="193"></A>        <FONT ID="This">this</FONT>.longMsgs = longMsgs;
+<A NAME="194"></A>    }
+<A NAME="195"></A>
+<A NAME="196"></A>    @Transient
+<A NAME="197"></A>    <FONT ID="Public">public</FONT> Long getWOEID() {
+<A NAME="198"></A>        <FONT ID="Return">return</FONT> locationId;
+<A NAME="199"></A>    }
+<A NAME="200"></A>
+<A NAME="201"></A>    @Override
+<A NAME="202"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> refresh(<FONT ID="Final">final</FONT> RefreshSpec refreshSpec) <FONT ID="Throws">throws</FONT> RefreshException {
+<A NAME="203"></A>        REFRESH.refresh(<FONT ID="This">this</FONT>, refreshSpec);
+<A NAME="204"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="205"></A>    }
+<A NAME="206"></A>
+<A NAME="207"></A>    <FONT ID="FormalComment">/**
+<A NAME="208"></A>     * @return toString_
+<A NAME="209"></A>     */</FONT>
+<A NAME="210"></A>    @Override
+<A NAME="211"></A>    @WARNING(warning = <FONT ID="StringLiteral">"The first location i.e. The Planet Earth, will have itself as its super. Hence will induce a stack overflow if superset.tostring is called."</FONT>)
+<A NAME="212"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="213"></A>        <FONT ID="Return">return</FONT> locationName + ((locationSuperSet == <FONT ID="Null">null</FONT> || <FONT ID="This">this</FONT>.getLocationId().equals(locationSuperSet.getLocationId()) || <FONT ID="This">this</FONT>.getLocationId() == <FONT ID="IntegerLiteral">1</FONT>) ? <FONT ID="StringLiteral">""</FONT> : OF_SPACE + locationSuperSet.toString());
+<A NAME="214"></A>    }
+<A NAME="215"></A>
+<A NAME="216"></A>    @Override
+<A NAME="217"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> compareTo(<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> o) {
+<A NAME="218"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.toString().compareTo(o.toString());
+<A NAME="219"></A>    }
+<A NAME="220"></A>}
+<A NAME="221"></A></pre>
+</BODY>
+</HTML>

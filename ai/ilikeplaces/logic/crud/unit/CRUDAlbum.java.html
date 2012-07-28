@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CRUDAlbum (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CRUDAlbum.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">ai.ilikeplaces.entities.Album</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">ai.ilikeplaces.entities.HumansPrivatePhoto</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">ai.ilikeplaces.entities.PrivatePhoto</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">ai.ilikeplaces.util.jpa.RefreshException</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="21"></A>
+<A NAME="22"></A><FONT ID="FormalComment">/**
+<A NAME="23"></A> * @author Ravindranath Akila
+<A NAME="24"></A> */</FONT>
+<A NAME="25"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="26"></A>@Stateless
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> CRUDAlbum <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CRUDAlbumLocal.java.html">CRUDAlbumLocal</A> {
+<A NAME="28"></A>
+<A NAME="29"></A>    @EJB
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; albumCrudServiceLocal_;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="SingleLineComment">//@EJB
+<A NAME="33"></A></FONT>    <FONT ID="SingleLineComment">//private CrudServiceLocal&lt;PrivatePhoto&gt; privatePhotoCrudServiceLocal_;
+<A NAME="34"></A></FONT>
+<A NAME="35"></A>    @EJB
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CPrivatePhotoLocal.java.html">CPrivatePhotoLocal</A> cPrivatePhotoLocal_;
+<A NAME="37"></A>
+<A NAME="38"></A>    @EJB
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RPrivateEventLocal.java.html">RPrivateEventLocal</A> rPrivateEventLocal_;
+<A NAME="40"></A>
+<A NAME="41"></A>    @EJB
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CRUDTribeLocal.java.html">CRUDTribeLocal</A> crudTribeLocal_;
+<A NAME="43"></A>
+<A NAME="44"></A>    @EJB
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RHumanLocal.java.html">RHumanLocal</A> rHumanLocal_;
+<A NAME="46"></A>
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> REFRESH_SPEC_INIT = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"albumPhotos"</FONT>);
+<A NAME="49"></A>
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> CRUDAlbum() {
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CRUDAlbum.java.html">CRUDAlbum</A>.<FONT ID="Class">class</FONT>);
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="FormalComment">/**
+<A NAME="58"></A>     * Method for use with Albums where the album upload mode is shown to a privateevent owner who does direct uploads
+<A NAME="59"></A>     * to the album of the privateevent, instead of individually uploading them and assigning them to the album.
+<A NAME="60"></A>     * &lt;p/&gt;
+<A NAME="61"></A>     * &lt;p/&gt;
+<A NAME="62"></A>     * Adding a photo to an album actually consists of 2 steps which in the case, are done as 1.
+<A NAME="63"></A>     * &lt;p/&gt;
+<A NAME="64"></A>     * &lt;p/&gt;
+<A NAME="65"></A>     * Usually, a use is supposed to upload photos and then allocate it to an album.
+<A NAME="66"></A>     * 1. Upload photo.
+<A NAME="67"></A>     * 2. Assign it to album
+<A NAME="68"></A>     * &lt;p/&gt;
+<A NAME="69"></A>     * &lt;p/&gt;
+<A NAME="70"></A>     * Therefore,
+<A NAME="71"></A>     * &lt;p/&gt;
+<A NAME="72"></A>     * &lt;p/&gt;
+<A NAME="73"></A>     * 1. Add the photo as belonging to the user. i.e. HumansPrivatePhoto.
+<A NAME="74"></A>     * &lt;p/&gt;
+<A NAME="75"></A>     * 2. Add the photo to the album. This is a two sided wiring.
+<A NAME="76"></A>     *
+<A NAME="77"></A>     * @param privateEventId
+<A NAME="78"></A>     * @param humanId
+<A NAME="79"></A>     * @param photoUrl
+<A NAME="80"></A>     * @return
+<A NAME="81"></A>     * @throws DBDishonourCheckedException
+<A NAME="82"></A>     */</FONT>
+<A NAME="83"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="84"></A>    @Override
+<A NAME="85"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doUAlbumOfPrivateEventAddEntry(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId, <FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> String photoUrl) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="86"></A>
+<A NAME="87"></A>
+<A NAME="88"></A>        <FONT ID="FormalComment">/**
+<A NAME="89"></A>         * Adding photo to users
+<A NAME="90"></A>         */</FONT>
+<A NAME="91"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">PrivatePhoto</A> managedPrivatePhoto__ = cPrivatePhotoLocal_.doCPrivatePhotoLocal(humanId, photoUrl);
+<A NAME="92"></A>
+<A NAME="93"></A><FONT ID="SingleLineComment">//        final HumansPrivatePhoto MhumansPrivatePhoto__ = rHumanLocal_.doRHuman(humanId).getHumansPrivatePhoto();
+<A NAME="94"></A></FONT><FONT ID="SingleLineComment">//        final List&lt;PrivatePhoto&gt; MprivatePhotos__ = MhumansPrivatePhoto__.getPrivatePhotos();//Eager
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//        WiringBothSides:
+<A NAME="97"></A></FONT><FONT ID="SingleLineComment">//        {
+<A NAME="98"></A></FONT><FONT ID="SingleLineComment">//            MprivatePhotos__.add(managedPrivatePhoto__);
+<A NAME="99"></A></FONT><FONT ID="SingleLineComment">//            managedPrivatePhoto__.setHumansPrivatePhoto(MhumansPrivatePhoto__);
+<A NAME="100"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="101"></A></FONT>
+<A NAME="102"></A>        <FONT ID="SingleLineComment">////////////////////////////////////////////////////////
+<A NAME="103"></A></FONT>
+<A NAME="104"></A>        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> UalbumId__ = rPrivateEventLocal_.doRPrivateEventAsOwner(humanId, privateEventId).getPrivateEventAlbum().getAlbumId();
+<A NAME="105"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> Malbum__ = albumCrudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>.<FONT ID="Class">class</FONT>, UalbumId__);
+<A NAME="106"></A>        WiringBothSides:
+<A NAME="107"></A>        {
+<A NAME="108"></A>            Malbum__.getAlbumPhotos().add(managedPrivatePhoto__);
+<A NAME="109"></A>            managedPrivatePhoto__.getAlbums().add(Malbum__);
+<A NAME="110"></A>        }
+<A NAME="111"></A>        <FONT ID="Return">return</FONT> Malbum__;
+<A NAME="112"></A>
+<A NAME="113"></A>    }
+<A NAME="114"></A>
+<A NAME="115"></A>
+<A NAME="116"></A>    <FONT ID="FormalComment">/**
+<A NAME="117"></A>     * @param humanId
+<A NAME="118"></A>     * @param privateEventId by which to fetch the album
+<A NAME="119"></A>     * @param eager
+<A NAME="120"></A>     * @return
+<A NAME="121"></A>     * @throws DBDishonourCheckedException
+<A NAME="122"></A>     */</FONT>
+<A NAME="123"></A>    @Override
+<A NAME="124"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="125"></A>    @Deprecated
+<A NAME="126"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doRAlbumByPrivateEvent(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> eager) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="127"></A>        <FONT ID="Return">return</FONT> eager ?
+<A NAME="128"></A>                rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, <FONT ID="False">false</FONT>).getPrivateEventAlbum().refresh() :
+<A NAME="129"></A>                rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, <FONT ID="False">false</FONT>).getPrivateEventAlbum();
+<A NAME="130"></A>    }
+<A NAME="131"></A>
+<A NAME="132"></A>    <FONT ID="FormalComment">/**
+<A NAME="133"></A>     * @param humanId
+<A NAME="134"></A>     * @param privateEventId by which to fetch the album
+<A NAME="135"></A>     * @param refreshSpec
+<A NAME="136"></A>     * @return
+<A NAME="137"></A>     * @throws DBDishonourCheckedException
+<A NAME="138"></A>     */</FONT>
+<A NAME="139"></A>    @Override
+<A NAME="140"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="141"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doRAlbumByPrivateEvent(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="142"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="143"></A>            <FONT ID="Return">return</FONT> rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, <FONT ID="False">false</FONT>).getPrivateEventAlbum().refresh(refreshSpec);
+<A NAME="144"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> e) {
+<A NAME="145"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>(e);
+<A NAME="146"></A>        }
+<A NAME="147"></A>    }
+<A NAME="148"></A>
+<A NAME="149"></A>
+<A NAME="150"></A>    <FONT ID="FormalComment">/**
+<A NAME="151"></A>     * Method for use with Albums where the album upload mode is shown to a privateevent owner who does direct uploads
+<A NAME="152"></A>     * to the album of the privateevent, instead of individually uploading them and assigning them to the album.
+<A NAME="153"></A>     * &lt;p/&gt;
+<A NAME="154"></A>     * &lt;p/&gt;
+<A NAME="155"></A>     * Adding a photo to an album actually consists of 2 steps which in the case, are done as 1.
+<A NAME="156"></A>     * &lt;p/&gt;
+<A NAME="157"></A>     * &lt;p/&gt;
+<A NAME="158"></A>     * Usually, a use is supposed to upload photos and then allocate it to an album.
+<A NAME="159"></A>     * 1. Upload photo.
+<A NAME="160"></A>     * 2. Assign it to album
+<A NAME="161"></A>     * &lt;p/&gt;
+<A NAME="162"></A>     * &lt;p/&gt;
+<A NAME="163"></A>     * Therefore,
+<A NAME="164"></A>     * &lt;p/&gt;
+<A NAME="165"></A>     * &lt;p/&gt;
+<A NAME="166"></A>     * 1. Add the photo as belonging to the user. i.e. HumansPrivatePhoto.
+<A NAME="167"></A>     * &lt;p/&gt;
+<A NAME="168"></A>     * 2. Add the photo to the album. This is a two sided wiring.
+<A NAME="169"></A>     *
+<A NAME="170"></A>     * @param tribeId
+<A NAME="171"></A>     * @param humanId
+<A NAME="172"></A>     * @param photoUrl
+<A NAME="173"></A>     * @return
+<A NAME="174"></A>     * @throws DBDishonourCheckedException
+<A NAME="175"></A>     */</FONT>
+<A NAME="176"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="177"></A>    @Override
+<A NAME="178"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doUAlbumOfTribeAddEntry(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> tribeId, <FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> String photoUrl) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>, <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> {
+<A NAME="179"></A>
+<A NAME="180"></A>
+<A NAME="181"></A>        <FONT ID="FormalComment">/**
+<A NAME="182"></A>         * Adding photo to users
+<A NAME="183"></A>         */</FONT>
+<A NAME="184"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">PrivatePhoto</A> managedPrivatePhoto__ = cPrivatePhotoLocal_.doCPrivatePhotoLocal(humanId, photoUrl);
+<A NAME="185"></A>
+<A NAME="186"></A>
+<A NAME="187"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> Malbum__ = crudTribeLocal_.rTribeReadAlbum(humanId, tribeId, REFRESH_SPEC_INIT);
+<A NAME="188"></A>        WiringBothSides:
+<A NAME="189"></A>        {
+<A NAME="190"></A>            Malbum__.getAlbumPhotos().add(managedPrivatePhoto__);
+<A NAME="191"></A>            managedPrivatePhoto__.getAlbums().add(Malbum__);
+<A NAME="192"></A>        }
+<A NAME="193"></A>        <FONT ID="Return">return</FONT> Malbum__;
+<A NAME="194"></A>
+<A NAME="195"></A>    }
+<A NAME="196"></A>
+<A NAME="197"></A>
+<A NAME="198"></A>    <FONT ID="FormalComment">/**
+<A NAME="199"></A>     * @param humanId
+<A NAME="200"></A>     * @param tribeId     by which to fetch the album
+<A NAME="201"></A>     * @param refreshSpec
+<A NAME="202"></A>     * @return
+<A NAME="203"></A>     * @throws DBDishonourCheckedException
+<A NAME="204"></A>     */</FONT>
+<A NAME="205"></A>    @Override
+<A NAME="206"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="207"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> doRAlbumByTribe(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> tribeId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="208"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="209"></A>            <FONT ID="Return">return</FONT> crudTribeLocal_.rTribeReadAlbum(humanId, tribeId, REFRESH_SPEC_INIT);
+<A NAME="210"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> e) {
+<A NAME="211"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>(e);
+<A NAME="212"></A>        }
+<A NAME="213"></A>    }
+<A NAME="214"></A>}</pre>
+</BODY>
+</HTML>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.people.People (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">People.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets.people;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.DOCUMENTATION;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/HumanIdFace.java.html">ai.ilikeplaces.entities.HumanIdFace</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">ai.ilikeplaces.entities.PrivatePhoto</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">ai.ilikeplaces.logic.Listeners.widgets.UserProperty</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">ai.ilikeplaces.util.AbstractWidgetListener</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="FormalComment">/**
+<A NAME="17"></A> * Created by IntelliJ IDEA.
+<A NAME="18"></A> * User: Ravindranath Akila
+<A NAME="19"></A> * Date: 1/1/12
+<A NAME="20"></A> * Time: 12:21 PM
+<A NAME="21"></A> */</FONT>
+<A NAME="22"></A>@DOCUMENTATION(
+<A NAME="23"></A>        NOTE = @NOTE(
+<A NAME="24"></A>                <FONT ID="StringLiteral">"A People cannot exist without an album since it does not know what to show."</FONT>
+<A NAME="25"></A>        )
+<A NAME="26"></A>)
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> People <FONT ID="Extends">extends</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">AbstractWidgetListener</A>&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/PeopleCriteria.java.html">PeopleCriteria</A>&gt; {
+<A NAME="28"></A>
+<A NAME="29"></A>
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum PeopleIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="31"></A>        PeopleImages
+<A NAME="32"></A>    }
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="FormalComment">/**
+<A NAME="35"></A>     * @param request__
+<A NAME="36"></A>     * @param appendToElement__
+<A NAME="37"></A>     */</FONT>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> People(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/PeopleCriteria.java.html">PeopleCriteria</A> peopleCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="39"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.People, peopleCriteria, appendToElement__);
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="FormalComment">/**
+<A NAME="43"></A>     * @param peopleCriteria
+<A NAME="44"></A>     */</FONT>
+<A NAME="45"></A>    @Override
+<A NAME="46"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/PeopleCriteria.java.html">PeopleCriteria</A> peopleCriteria) {
+<A NAME="47"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/entities/HumanIdFace.java.html">HumanIdFace</A> humanId : peopleCriteria.getPeople()) {
+<A NAME="48"></A>            People.<FONT ID="This">this</FONT>.fetchToEmail = People.<FONT ID="This">this</FONT>.fetchToEmail + <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/PeopleThumb.java.html">PeopleThumb</A>(
+<A NAME="49"></A>                    request,
+<A NAME="50"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/PeopleThumbCriteria.java.html">PeopleThumbCriteria</A>()
+<A NAME="51"></A>                            .setProfilePhoto(UserProperty.HUMANS_IDENTITY_CACHE.get(humanId.getHumanId(), <FONT ID="StringLiteral">""</FONT>).getHumansIdentityProfilePhoto()),
+<A NAME="52"></A>                    $$(PeopleIds.PeopleImages)).fetchToEmail;
+<A NAME="53"></A>        }
+<A NAME="54"></A>    }
+<A NAME="55"></A>
+<A NAME="56"></A>    <FONT ID="FormalComment">/**
+<A NAME="57"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="58"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="59"></A>     * automatically called by the constructor
+<A NAME="60"></A>     *
+<A NAME="61"></A>     * @param itsNatHTMLDocument_
+<A NAME="62"></A>     * @param hTMLDocument_
+<A NAME="63"></A>     */</FONT>
+<A NAME="64"></A>    @Override
+<A NAME="65"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="66"></A>    }
+<A NAME="67"></A>
+<A NAME="68"></A>}
+<A NAME="69"></A></pre>
+</BODY>
+</HTML>

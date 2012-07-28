@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.cdn.CDNProfilePhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CDNProfilePhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.cdn;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">ai.ilikeplaces.entities.HumansIdentity</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/DBOperationException.java.html">ai.ilikeplaces.exception.DBOperationException</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">ai.ilikeplaces.logic.Listeners.widgets.UserProperty</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/ServletLogin.java.html">ai.ilikeplaces.servlets.ServletLogin</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> com.rackspacecloud.client.cloudfiles.FilesConstants;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.annotation.PostConstruct;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.imageio.ImageIO;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.awt.*;
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.awt.image.BufferedImage;
+<A NAME="22"></A><FONT ID="Import">import</FONT> java.awt.image.BufferedImageOp;
+<A NAME="23"></A><FONT ID="Import">import</FONT> java.awt.image.LookupOp;
+<A NAME="24"></A><FONT ID="Import">import</FONT> java.awt.image.ShortLookupTable;
+<A NAME="25"></A><FONT ID="Import">import</FONT> java.io.File;
+<A NAME="26"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="27"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="28"></A>
+<A NAME="29"></A><FONT ID="FormalComment">/**
+<A NAME="30"></A> * Okay, this class is supposed to do the following.
+<A NAME="31"></A> * 1. Upload the users profile photo
+<A NAME="32"></A> * 2. Ignore the fact that multiple threads upload photos for the same user
+<A NAME="33"></A> * 3. As in point 2, the contract is that there is only one profile photo shareable across the internet
+<A NAME="34"></A> * 4. If a photo exists on the cdn, override it.
+<A NAME="35"></A> * 5. The photo name will be email@example.org
+<A NAME="36"></A> * &lt;p/&gt;
+<A NAME="37"></A> * Created by IntelliJ IDEA.
+<A NAME="38"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="39"></A> * Date: Apr 29, 2010
+<A NAME="40"></A> * Time: 4:10:12 PM
+<A NAME="41"></A> */</FONT>
+<A NAME="42"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="43"></A>@Stateless
+<A NAME="44"></A>@Interceptors({ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>})
+<A NAME="45"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> CDNProfilePhoto <FONT ID="Extends">extends</FONT> <A HREF="../../../../ai/ilikeplaces/logic/cdn/CDN.java.html">CDN</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/cdn/CDNProfilePhotoLocal.java.html">CDNProfilePhotoLocal</A> {
+<A NAME="46"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="47"></A></FONT>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CONTAINER = <FONT ID="StringLiteral">"PROFILE_PHOTOS"</FONT>;
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NAMING_EXCEPTION = <FONT ID="StringLiteral">"Naming Exception"</FONT>;
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETING_OLD_PROFILE_IMAGE = <FONT ID="StringLiteral">"Deleting Old Profile Image"</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETING_OLD_PROFILE_IMAGE_FAILED_BUT_PROCEEDING_REASON_FOR_FAILURE = <FONT ID="StringLiteral">"Deleting Old Profile Image Failed, But Proceeding. Reason for Failure:"</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOADING_IMAGE_AS_BUFFERED_IMAGE = <FONT ID="StringLiteral">"Loading Image As Buffered Image"</FONT>;
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOGIN_FAILED_DESTROYING_SESSION_BEAN = <FONT ID="StringLiteral">"Login Failed. Destroying Session Bean!"</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOGIN_TO_RACKSPACE_CLOUD = <FONT ID="StringLiteral">"Login to rackspace cloud"</FONT>;
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NO_LOGIN = <FONT ID="StringLiteral">"No Login!"</FONT>;
+<A NAME="56"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PLEASE_LOGIN = <FONT ID="StringLiteral">"Please login!"</FONT>;
+<A NAME="57"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String POSTERIZING = <FONT ID="StringLiteral">"Posterizing"</FONT>;
+<A NAME="58"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_UPLOAD_FAILED = <FONT ID="StringLiteral">"Profile Photo Upload Failed!"</FONT>;
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_CACHING_ISSUES = <FONT ID="StringLiteral">"Profile Photo Upload Failed Due To Caching Issues!"</FONT>;
+<A NAME="60"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES = <FONT ID="StringLiteral">"Profile Photo Upload Failed Due To I/O Issues!"</FONT>;
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES = <FONT ID="StringLiteral">"Profile Photo Upload Failed Due To Image Manipulation Issues!"</FONT>;
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_RENAMING_ISSUES = <FONT ID="StringLiteral">"Profile Photo Upload Failed Due To Renaming Issues!"</FONT>;
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_UPLOAD_SUCCESSFUL = <FONT ID="StringLiteral">"Profile Photo Upload Successful."</FONT>;
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RENAME_ERROR = <FONT ID="StringLiteral">"Rename Error"</FONT>;
+<A NAME="65"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SAVING_POSTERIZED_IMAGE = <FONT ID="StringLiteral">"Saving Posterized Image"</FONT>;
+<A NAME="66"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SAVING_SCALED_IMAGE = <FONT ID="StringLiteral">"Saving Scaled Image"</FONT>;
+<A NAME="67"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SCALING_IMAGE = <FONT ID="StringLiteral">"Scaling Image"</FONT>;
+<A NAME="68"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPLOADING_IMAGE = <FONT ID="StringLiteral">"Uploading Image"</FONT>;
+<A NAME="69"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPLOADING_PROFILE_PHOTO = <FONT ID="StringLiteral">"Uploading Profile Photo"</FONT>;
+<A NAME="70"></A>
+<A NAME="71"></A><FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="72"></A></FONT>
+<A NAME="73"></A>
+<A NAME="74"></A><FONT ID="SingleLineComment">// --------------------- Interface FileUploadListenerFace ---------------------
+<A NAME="75"></A></FONT>
+<A NAME="76"></A>    @Override
+<A NAME="77"></A>    <FONT ID="Public">public</FONT> Return&lt;File&gt; run(File file, <FONT ID="Final">final</FONT> Map parameterMap, <FONT ID="Final">final</FONT> String userFileExtension, <FONT ID="Final">final</FONT> HttpSession session) {
+<A NAME="78"></A>        <FONT ID="Final">final</FONT> SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, UPLOADING_PROFILE_PHOTO, <FONT ID="IntegerLiteral">120000</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="79"></A>        Return&lt;File&gt; r;
+<A NAME="80"></A>        <FONT ID="FormalComment">/**
+<A NAME="81"></A>         * Renaming the file to contain extension for image manipulation flexibility
+<A NAME="82"></A>         */</FONT>
+<A NAME="83"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="84"></A>            File newFile = <FONT ID="New">new</FONT> File(file.getCanonicalPath() + <FONT ID="StringLiteral">"."</FONT> + userFileExtension);
+<A NAME="85"></A>            <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> rename = file.renameTo(newFile);
+<A NAME="86"></A>
+<A NAME="87"></A>            <FONT ID="If">if</FONT> (!rename) {
+<A NAME="88"></A>                sl.complete(RENAME_ERROR);
+<A NAME="89"></A>                <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(<FONT ID="New">new</FONT> RuntimeException(RENAME_ERROR), RENAME_ERROR, <FONT ID="True">true</FONT>);
+<A NAME="90"></A>            }
+<A NAME="91"></A>
+<A NAME="92"></A>
+<A NAME="93"></A>            <FONT ID="Final">final</FONT> SessionBoundBadRefWrapper&lt;<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt; s = (SessionBoundBadRefWrapper&lt;<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;) session.getAttribute(ServletLogin.HumanUser);
+<A NAME="94"></A>
+<A NAME="95"></A>            <FONT ID="If">if</FONT> (!s.isAlive()) {
+<A NAME="96"></A>                sl.complete(NO_LOGIN);
+<A NAME="97"></A>                r = <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(ExceptionCache.NO_LOGIN, PLEASE_LOGIN, <FONT ID="True">true</FONT>);
+<A NAME="98"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="99"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(s.getBoundInstance().getHumanUserId());
+<A NAME="100"></A>
+<A NAME="101"></A>                <FONT ID="Try">try</FONT> {
+<A NAME="102"></A>                    sl.appendToLogMSG(LOADING_IMAGE_AS_BUFFERED_IMAGE);
+<A NAME="103"></A>                    BufferedImage bi = loadImage(newFile);
+<A NAME="104"></A>
+<A NAME="105"></A>                    sl.appendToLogMSG(SCALING_IMAGE);
+<A NAME="106"></A>                    bi = scaleImage(bi, <FONT ID="IntegerLiteral">300</FONT>); <FONT ID="SingleLineComment">//Reducing size of image to blueprintcss span-5 just to save bandwidth for the user.
+<A NAME="107"></A></FONT>
+<A NAME="108"></A>                    sl.appendToLogMSG(SAVING_SCALED_IMAGE);
+<A NAME="109"></A>                    saveImage(bi, newFile);
+<A NAME="110"></A>
+<A NAME="111"></A>                    <FONT ID="MultiLineComment">/*sl.appendToLogMSG(POSTERIZING);
+<A NAME="112"></A>                    bi = new Sampler().run(newFile.getCanonicalPath());
+<A NAME="113"></A>
+<A NAME="114"></A>                    sl.appendToLogMSG(SAVING_POSTERIZED_IMAGE);
+<A NAME="115"></A>                    saveImage(bi, newFile);*/</FONT>
+<A NAME="116"></A>
+<A NAME="117"></A>                    <FONT ID="Try">try</FONT> {
+<A NAME="118"></A>                        <FONT ID="Final">final</FONT> String cdnFileName = newFile.getName();
+<A NAME="119"></A>                        sl.appendToLogMSG(UPLOADING_IMAGE);
+<A NAME="120"></A>                        <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> uploaded = client.storeObjectAs(CONTAINER, newFile, FilesConstants.getMimetype(userFileExtension), cdnFileName);
+<A NAME="121"></A>                        sl.appendToLogMSG(DELETING_OLD_PROFILE_IMAGE);
+<A NAME="122"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="123"></A>                            client.deleteObject(CONTAINER, DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansProfilePhoto(humanId).returnValueBadly());
+<A NAME="124"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/DBOperationException.java.html">Exception</A> e) {
+<A NAME="125"></A>                            sl.appendToLogMSG(DELETING_OLD_PROFILE_IMAGE_FAILED_BUT_PROCEEDING_REASON_FOR_FAILURE + e.getMessage());
+<A NAME="126"></A>                        }
+<A NAME="127"></A>                        <FONT ID="If">if</FONT> (uploaded) {
+<A NAME="128"></A>                            <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> deleted = newFile.delete();
+<A NAME="129"></A>                            <FONT ID="If">if</FONT> (!deleted) {
+<A NAME="130"></A>                                r = <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(ExceptionCache.FILE_DELETE_FAILED, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_CACHING_ISSUES, <FONT ID="True">true</FONT>);
+<A NAME="131"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="132"></A>                                <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>&gt; dbr = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doUHumansProfilePhoto(humanId, cdnFileName);
+<A NAME="133"></A>                                r = dbr.returnStatus() == <FONT ID="IntegerLiteral">0</FONT> ?
+<A NAME="134"></A>                                        <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(newFile, PROFILE_PHOTO_UPLOAD_SUCCESSFUL)
+<A NAME="135"></A>                                        : <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/exception/DBOperationException.java.html">DBOperationException</A>(dbr.returnError()), PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, <FONT ID="True">true</FONT>);
+<A NAME="136"></A>
+<A NAME="137"></A>                                <FONT ID="If">if</FONT> (dbr.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="138"></A>                                    UserProperty.HUMANS_IDENTITY_CACHE.MAP.put(<FONT ID="New">new</FONT> String(dbr.returnValue().getHumanId()), dbr.returnValue());
+<A NAME="139"></A>                                }
+<A NAME="140"></A>                            }
+<A NAME="141"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="142"></A>                            r = <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(ExceptionCache.CDN_FILE_UPLOAD_FAILED, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, <FONT ID="True">true</FONT>);
+<A NAME="143"></A>                        }
+<A NAME="144"></A>                    } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="145"></A>                        r = <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_I_O_ISSUES, <FONT ID="True">true</FONT>);
+<A NAME="146"></A>                    }
+<A NAME="147"></A>                } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> RuntimeException e) {<FONT ID="SingleLineComment">//This is for the deleteObject's returnBadly from DB return
+<A NAME="148"></A></FONT>                    r = <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(e, PROFILE_PHOTO_UPLOAD_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="149"></A>                } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/DBOperationException.java.html">Exception</A> e) {
+<A NAME="150"></A>                    r = <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_IMAGE_MANIPULATION_ISSUES, <FONT ID="True">true</FONT>);
+<A NAME="151"></A>                }
+<A NAME="152"></A>            }
+<A NAME="153"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="154"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(e, PROFILE_PHOTO_UPLOAD_FAILED_DUE_TO_RENAMING_ISSUES, <FONT ID="True">true</FONT>);
+<A NAME="155"></A>        }
+<A NAME="156"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="157"></A>    }
+<A NAME="158"></A>
+<A NAME="159"></A><FONT ID="SingleLineComment">// ------------------------ CANONICAL METHODS ------------------------
+<A NAME="160"></A></FONT>
+<A NAME="161"></A>
+<A NAME="162"></A><FONT ID="SingleLineComment">// -------------------------- STATIC METHODS --------------------------
+<A NAME="163"></A></FONT>
+<A NAME="164"></A>    <FONT ID="FormalComment">/**
+<A NAME="165"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="166"></A>     *
+<A NAME="167"></A>     * @param img
+<A NAME="168"></A>     * @param newW
+<A NAME="169"></A>     * @param newH
+<A NAME="170"></A>     * @return
+<A NAME="171"></A>     */</FONT>
+<A NAME="172"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> BufferedImage resizeImage(BufferedImage img, <FONT ID="Int">int</FONT> newW, <FONT ID="Int">int</FONT> newH) {
+<A NAME="173"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> w = img.getWidth();
+<A NAME="174"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> h = img.getHeight();
+<A NAME="175"></A>        BufferedImage dimg = <FONT ID="New">new</FONT> BufferedImage(newW, newH, img.getType());
+<A NAME="176"></A>        Graphics2D g = dimg.createGraphics();
+<A NAME="177"></A>        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+<A NAME="178"></A>        g.drawImage(img, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, newW, newH, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, w, h, <FONT ID="Null">null</FONT>);
+<A NAME="179"></A>        g.dispose();
+<A NAME="180"></A>        <FONT ID="Return">return</FONT> dimg;
+<A NAME="181"></A>    }
+<A NAME="182"></A>
+<A NAME="183"></A>    <FONT ID="FormalComment">/**
+<A NAME="184"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="185"></A>     * &lt;p/&gt;
+<A NAME="186"></A>     * modified by me to scale image as per web page requirement of 190px of width. Thats it.
+<A NAME="187"></A>     * Hence, this accepts only the width parameter and will scale the hight proportaionaltely
+<A NAME="188"></A>     *
+<A NAME="189"></A>     * @param img
+<A NAME="190"></A>     * @param newWidth
+<A NAME="191"></A>     * @return
+<A NAME="192"></A>     */</FONT>
+<A NAME="193"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> BufferedImage scaleImage(<FONT ID="Final">final</FONT> BufferedImage img, <FONT ID="Int">int</FONT> newWidth) {
+<A NAME="194"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> oldWidth = img.getWidth();
+<A NAME="195"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> oldHeight = img.getHeight();
+<A NAME="196"></A>
+<A NAME="197"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> newHeight = (<FONT ID="Int">int</FONT>) Math.round(((<FONT ID="Double">double</FONT>) newWidth / (<FONT ID="Double">double</FONT>) oldWidth) * (<FONT ID="Double">double</FONT>) oldHeight);
+<A NAME="198"></A>
+<A NAME="199"></A>        <FONT ID="Final">final</FONT> BufferedImage dimg = <FONT ID="New">new</FONT> BufferedImage(newWidth, newHeight, img.getType());
+<A NAME="200"></A>        <FONT ID="Final">final</FONT> Graphics2D g = dimg.createGraphics();
+<A NAME="201"></A>        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+<A NAME="202"></A>        g.drawImage(img, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, newWidth, newHeight, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, oldWidth, oldHeight, <FONT ID="Null">null</FONT>);
+<A NAME="203"></A>        g.dispose();
+<A NAME="204"></A>        <FONT ID="Return">return</FONT> dimg;
+<A NAME="205"></A>    }
+<A NAME="206"></A>
+<A NAME="207"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/cdn/CDNProfilePhotoLocal.java.html">CDNProfilePhotoLocal</A> getProfilePhotoCDNLocal() {
+<A NAME="208"></A>        isOK();
+<A NAME="209"></A>        <A HREF="../../../../ai/ilikeplaces/logic/cdn/CDNProfilePhotoLocal.java.html">CDNProfilePhotoLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="210"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="211"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/cdn/CDNProfilePhotoLocal.java.html">CDNProfilePhotoLocal</A>) Context_.lookup(CDNProfilePhotoLocal.NAME);
+<A NAME="212"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="213"></A>            Loggers.EXCEPTION.error(NAMING_EXCEPTION, ex);
+<A NAME="214"></A>        }
+<A NAME="215"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/cdn/CDNProfilePhotoLocal.java.html">CDNProfilePhotoLocal</A>) LogNull.logThrow();
+<A NAME="216"></A>    }
+<A NAME="217"></A>
+<A NAME="218"></A>    <FONT ID="FormalComment">/**
+<A NAME="219"></A>     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="220"></A>     * &lt;p/&gt;
+<A NAME="221"></A>     * Saves a BufferedImage to the given file, pathname must not have any
+<A NAME="222"></A>     * periods "." in it except for the one before the format, i.e. C:/images/fooimage.png
+<A NAME="223"></A>     * &lt;p/&gt;
+<A NAME="224"></A>     *
+<A NAME="225"></A>     * @param img
+<A NAME="226"></A>     * @param ref
+<A NAME="227"></A>     */</FONT>
+<A NAME="228"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> saveImage(<FONT ID="Final">final</FONT> BufferedImage img, <FONT ID="Final">final</FONT> File ref) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="229"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="230"></A>            <FONT ID="SingleLineComment">//final String format = (ref.endsWith(".png")) ? "png" : "jpg";
+<A NAME="231"></A></FONT>            <FONT ID="SingleLineComment">//ImageIO.write(img, format, new File(ref));
+<A NAME="232"></A></FONT>            ImageIO.write(img, ref.getName().substring(ref.getName().lastIndexOf(<FONT ID="StringLiteral">"."</FONT>) + <FONT ID="IntegerLiteral">1</FONT>), ref);
+<A NAME="233"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="234"></A>            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+<A NAME="235"></A>            <FONT ID="Throw">throw</FONT> e;
+<A NAME="236"></A>        }
+<A NAME="237"></A>    }
+<A NAME="238"></A>
+<A NAME="239"></A><FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="240"></A></FONT>
+<A NAME="241"></A>    <FONT ID="SingleLineComment">//Use the LookupOp class from the Java 2D API along
+<A NAME="242"></A></FONT>    <FONT ID="SingleLineComment">// with three separate data arrays to process the
+<A NAME="243"></A></FONT>    <FONT ID="SingleLineComment">// color values in the selected color bands.  The
+<A NAME="244"></A></FONT>    <FONT ID="SingleLineComment">// alpha value is not modified.  This is a common method
+<A NAME="245"></A></FONT>    <FONT ID="SingleLineComment">// that is called by the code that processes each
+<A NAME="246"></A></FONT>    <FONT ID="SingleLineComment">// individual page in the tabbed pane.
+<A NAME="247"></A></FONT>
+<A NAME="248"></A>    BufferedImage processImageForThePage(
+<A NAME="249"></A>            BufferedImage theImage,
+<A NAME="250"></A>            <FONT ID="Short">short</FONT>[] red,
+<A NAME="251"></A>            <FONT ID="Short">short</FONT>[] green,
+<A NAME="252"></A>            <FONT ID="Short">short</FONT>[] blue) {
+<A NAME="253"></A>        <FONT ID="SingleLineComment">//Create and populate a 2D array with data for the
+<A NAME="254"></A></FONT>        <FONT ID="SingleLineComment">// lookup table.  Note that this is a 2D array, rather
+<A NAME="255"></A></FONT>        <FONT ID="SingleLineComment">// than a 1D array, which is the case when a single
+<A NAME="256"></A></FONT>        <FONT ID="SingleLineComment">// data array is used to process all three color bands.
+<A NAME="257"></A></FONT>        <FONT ID="Short">short</FONT>[][] lookupData = <FONT ID="New">new</FONT> <FONT ID="Short">short</FONT>[][]{red, green, blue};
+<A NAME="258"></A>
+<A NAME="259"></A>        <FONT ID="SingleLineComment">//Create the lookup table.  The first parameter is an
+<A NAME="260"></A></FONT>        <FONT ID="SingleLineComment">// offset for extracting data from the array object.
+<A NAME="261"></A></FONT>        <FONT ID="SingleLineComment">//In this case, all of the data is extracted from the
+<A NAME="262"></A></FONT>        <FONT ID="SingleLineComment">// array object beginning at an index of 0.
+<A NAME="263"></A></FONT>        ShortLookupTable lookupTable =
+<A NAME="264"></A>                <FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, lookupData);
+<A NAME="265"></A>
+<A NAME="266"></A>        <FONT ID="SingleLineComment">//Create the filter object. The second parameter
+<A NAME="267"></A></FONT>        <FONT ID="SingleLineComment">// provides the opportunity to use RenderingHints.
+<A NAME="268"></A></FONT>        BufferedImageOp filterObject =
+<A NAME="269"></A>                <FONT ID="New">new</FONT> LookupOp(lookupTable, <FONT ID="Null">null</FONT>);
+<A NAME="270"></A>
+<A NAME="271"></A>
+<A NAME="272"></A>        <FONT ID="SingleLineComment">//Apply the filter to the incoming image and return
+<A NAME="273"></A></FONT>        <FONT ID="SingleLineComment">// a reference to the resulting BufferedImage object.
+<A NAME="274"></A></FONT>        <FONT ID="SingleLineComment">// The second parameter can optionally specify an
+<A NAME="275"></A></FONT>        <FONT ID="SingleLineComment">// existing BufferedImage object to serve as a
+<A NAME="276"></A></FONT>        <FONT ID="SingleLineComment">// destination for the processed image.
+<A NAME="277"></A></FONT>        <FONT ID="Return">return</FONT> filterObject.filter(theImage, <FONT ID="Null">null</FONT>);
+<A NAME="278"></A>    }<FONT ID="SingleLineComment">//end processImageForThePage
+<A NAME="279"></A></FONT>
+<A NAME="280"></A>    @PostConstruct
+<A NAME="281"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> postConstruct() {
+<A NAME="282"></A>        <FONT ID="Final">final</FONT> SmartLogger sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, LOGIN_TO_RACKSPACE_CLOUD, <FONT ID="IntegerLiteral">60000</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="283"></A>        <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> status = doLogin();
+<A NAME="284"></A>        <FONT ID="If">if</FONT> (status) {
+<A NAME="285"></A>            sl.complete(Loggers.DONE);
+<A NAME="286"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="287"></A>            sl.appendToLogMSG(LOGIN_FAILED_DESTROYING_SESSION_BEAN);
+<A NAME="288"></A>            sl.complete(Loggers.FAILED);
+<A NAME="289"></A>            <FONT ID="Throw">throw</FONT> LOGIN_EXCEPTION;
+<A NAME="290"></A>        }
+<A NAME="291"></A>    }
+<A NAME="292"></A>
+<A NAME="293"></A>    <FONT ID="SingleLineComment">//-----------------------------------------------------//
+<A NAME="294"></A></FONT>
+<A NAME="295"></A>
+<A NAME="296"></A><FONT ID="SingleLineComment">//    /**
+<A NAME="297"></A></FONT><FONT ID="SingleLineComment">//     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="298"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="299"></A></FONT><FONT ID="SingleLineComment">//     * @param ref
+<A NAME="300"></A></FONT><FONT ID="SingleLineComment">//     * @return null or buffered image
+<A NAME="301"></A></FONT><FONT ID="SingleLineComment">//     * @throws Exception
+<A NAME="302"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="303"></A></FONT><FONT ID="SingleLineComment">//    public static BufferedImage loadImage(final File ref) throws Exception {
+<A NAME="304"></A></FONT><FONT ID="SingleLineComment">//        try {
+<A NAME="305"></A></FONT><FONT ID="SingleLineComment">//            Loggers.DEBUG.debug("Loading Image From:" + ref.getCanonicalPath());
+<A NAME="306"></A></FONT><FONT ID="SingleLineComment">//            return ImageIO.read(ref);
+<A NAME="307"></A></FONT><FONT ID="SingleLineComment">//        } catch (final Exception e) {
+<A NAME="308"></A></FONT><FONT ID="SingleLineComment">//            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+<A NAME="309"></A></FONT><FONT ID="SingleLineComment">//            throw e;
+<A NAME="310"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="311"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="312"></A></FONT>
+<A NAME="313"></A>
+<A NAME="314"></A><FONT ID="SingleLineComment">//    /**
+<A NAME="315"></A></FONT><FONT ID="SingleLineComment">//     * http://www.javalobby.org/articles/ultimate-image/
+<A NAME="316"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="317"></A></FONT><FONT ID="SingleLineComment">//     * @param ref
+<A NAME="318"></A></FONT><FONT ID="SingleLineComment">//     * @param img
+<A NAME="319"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="320"></A></FONT><FONT ID="SingleLineComment">//    public static void saveOldWay(final String ref, final BufferedImage img) {
+<A NAME="321"></A></FONT><FONT ID="SingleLineComment">//        BufferedOutputStream out;
+<A NAME="322"></A></FONT><FONT ID="SingleLineComment">//        try {
+<A NAME="323"></A></FONT><FONT ID="SingleLineComment">//            out = new BufferedOutputStream(new FileOutputStream(ref));
+<A NAME="324"></A></FONT><FONT ID="SingleLineComment">//            JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+<A NAME="325"></A></FONT><FONT ID="SingleLineComment">//            JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(img);
+<A NAME="326"></A></FONT><FONT ID="SingleLineComment">//            int quality = 5;
+<A NAME="327"></A></FONT><FONT ID="SingleLineComment">//            quality = Math.max(0, Math.min(quality, 100));
+<A NAME="328"></A></FONT><FONT ID="SingleLineComment">//            param.setQuality((float) quality / 100.0f, false);
+<A NAME="329"></A></FONT><FONT ID="SingleLineComment">//            encoder.setJPEGEncodeParam(param);
+<A NAME="330"></A></FONT><FONT ID="SingleLineComment">//            encoder.encode(img);
+<A NAME="331"></A></FONT><FONT ID="SingleLineComment">//            out.close();
+<A NAME="332"></A></FONT><FONT ID="SingleLineComment">//        } catch (final Exception e) {
+<A NAME="333"></A></FONT><FONT ID="SingleLineComment">//            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+<A NAME="334"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="335"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="336"></A></FONT>}</pre>
+</BODY>
+</HTML>

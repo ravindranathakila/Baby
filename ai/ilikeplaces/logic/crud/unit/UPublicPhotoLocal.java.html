@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.UPublicPhotoLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">UPublicPhotoLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * @author Ravindranath Akila
+<A NAME="9"></A> */</FONT>
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="12"></A></FONT>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="13"></A>@Local
+<A NAME="14"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> UPublicPhotoLocal {
+<A NAME="15"></A>
+<A NAME="16"></A>    <FONT ID="FormalComment">/**
+<A NAME="17"></A>     * @param publicPhotoId
+<A NAME="18"></A>     * @param publicPhotoDescription
+<A NAME="19"></A>     * @return
+<A NAME="20"></A>     */</FONT>
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doNTxUPublicPhotoDescriptionLocal(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId, <FONT ID="Final">final</FONT> String publicPhotoDescription);
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="FormalComment">/**
+<A NAME="24"></A>     * @param publicPhotoId
+<A NAME="25"></A>     * @param publicPhotoDescription
+<A NAME="26"></A>     * @return
+<A NAME="27"></A>     */</FONT>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doUPublicPhotoDescriptionLocal(<FONT ID="Long">long</FONT> publicPhotoId, <FONT ID="Final">final</FONT> String publicPhotoDescription);
+<A NAME="29"></A>
+<A NAME="30"></A>    <FONT ID="FormalComment">/**
+<A NAME="31"></A>     * @param publicPhotoId
+<A NAME="32"></A>     * @param publicPhotoDescription
+<A NAME="33"></A>     * @return
+<A NAME="34"></A>     */</FONT>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doDirtyUPublicPhotoDescriptionLocal(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId, <FONT ID="Final">final</FONT> String publicPhotoDescription);
+<A NAME="36"></A>}
+<A NAME="37"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,638 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.security.com.josephoconnell.html.HTMLInputFilter (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HTMLInputFilter.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.security.com.josephoconnell.html;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="4"></A><FONT ID="Import">import</FONT> java.util.HashMap;
+<A NAME="5"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.util.regex.Matcher;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.util.regex.Pattern;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="SingleLineComment">//import junit.framework.Assert;
+<A NAME="11"></A></FONT><FONT ID="SingleLineComment">//import junit.framework.TestCase;
+<A NAME="12"></A></FONT>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * 
+<A NAME="15"></A> * HTML filtering utility for protecting against XSS (Cross Site Scripting).
+<A NAME="16"></A> *
+<A NAME="17"></A> * This code is licensed under a Creative Commons Attribution-ShareAlike 2.5 License
+<A NAME="18"></A> * http://creativecommons.org/licenses/by-sa/2.5/
+<A NAME="19"></A> * 
+<A NAME="20"></A> * This code is a Java port of the original work in PHP by Cal Hendersen.
+<A NAME="21"></A> * http://code.iamcal.com/php/lib_filter/
+<A NAME="22"></A> *
+<A NAME="23"></A> * The trickiest part of the translation was handling the differences in regex handling
+<A NAME="24"></A> * between PHP and Java.  These resources were helpful in the process:
+<A NAME="25"></A> * 
+<A NAME="26"></A> * http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html
+<A NAME="27"></A> * http://us2.php.net/manual/en/reference.pcre.pattern.modifiers.php
+<A NAME="28"></A> * http://www.regular-expressions.info/modifiers.html
+<A NAME="29"></A> * 
+<A NAME="30"></A> * A note on naming conventions: instance variables are prefixed with a "impl"; global
+<A NAME="31"></A> * constants are in all caps.
+<A NAME="32"></A> * 
+<A NAME="33"></A> * Sample use:
+<A NAME="34"></A> * String input = ...
+<A NAME="35"></A> * String clean = new HTMLInputFilter().filter( input );
+<A NAME="36"></A> * 
+<A NAME="37"></A> * If you find bugs or have suggestions on improvement (especially regarding 
+<A NAME="38"></A> * perfomance), please contact me at the email below.  The latest version of this
+<A NAME="39"></A> * source can be found at
+<A NAME="40"></A> * 
+<A NAME="41"></A> * http://josephoconnell.com/java/xss-html-filter/
+<A NAME="42"></A> *
+<A NAME="43"></A> * @author Joseph O'Connell &lt;joe.oconnell at gmail dot com&gt;
+<A NAME="44"></A> * @version 1.0 
+<A NAME="45"></A> */</FONT>
+<A NAME="46"></A>
+<A NAME="47"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="48"></A></FONT><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HTMLInputFilter
+<A NAME="49"></A>{   
+<A NAME="50"></A>    <FONT ID="FormalComment">/** 
+<A NAME="51"></A>     * flag determining whether to try to make tags when presented with "unbalanced"
+<A NAME="52"></A>     * angle brackets (e.g. "&lt;b text &lt;/b&gt;" becomes "&lt;b&gt; text &lt;/b&gt;").  If set to false,
+<A NAME="53"></A>     * unbalanced angle brackets will be html escaped.
+<A NAME="54"></A>     */</FONT>
+<A NAME="55"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> ALWAYS_MAKE_TAGS = <FONT ID="True">true</FONT>;
+<A NAME="56"></A>    
+<A NAME="57"></A>    <FONT ID="FormalComment">/**
+<A NAME="58"></A>     * flag determing whether comments are allowed in input String.
+<A NAME="59"></A>     */</FONT>
+<A NAME="60"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> STRIP_COMMENTS = <FONT ID="True">true</FONT>;
+<A NAME="61"></A>    
+<A NAME="62"></A>    <FONT ID="FormalComment">/** regex flag union representing /si modifiers in php **/</FONT>
+<A NAME="63"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> REGEX_FLAGS_SI = Pattern.CASE_INSENSITIVE | Pattern.DOTALL;
+<A NAME="64"></A>    
+<A NAME="65"></A>    <FONT ID="FormalComment">/** set of allowed html elements, along with allowed attributes for each element **/</FONT>
+<A NAME="66"></A>    <FONT ID="Protected">protected</FONT> Map&lt;String,List&lt;String&gt;&gt; vAllowed;
+<A NAME="67"></A>    
+<A NAME="68"></A>    <FONT ID="FormalComment">/** counts of open tags for each (allowable) html element **/</FONT>
+<A NAME="69"></A>    <FONT ID="Protected">protected</FONT> Map&lt;String,Integer&gt; vTagCounts;
+<A NAME="70"></A>    
+<A NAME="71"></A>    <FONT ID="FormalComment">/** html elements which must always be self-closing (e.g. "&lt;img /&gt;") **/</FONT>
+<A NAME="72"></A>    <FONT ID="Protected">protected</FONT> String[] vSelfClosingTags;
+<A NAME="73"></A>    
+<A NAME="74"></A>    <FONT ID="FormalComment">/** html elements which must always have separate opening and closing tags (e.g. "&lt;b&gt;&lt;/b&gt;") **/</FONT>
+<A NAME="75"></A>    <FONT ID="Protected">protected</FONT> String[] vNeedClosingTags;
+<A NAME="76"></A>    
+<A NAME="77"></A>    <FONT ID="FormalComment">/** attributes which should be checked for valid protocols **/</FONT>
+<A NAME="78"></A>    <FONT ID="Protected">protected</FONT> String[] vProtocolAtts;
+<A NAME="79"></A>    
+<A NAME="80"></A>    <FONT ID="FormalComment">/** allowed protocols **/</FONT>
+<A NAME="81"></A>    <FONT ID="Protected">protected</FONT> String[] vAllowedProtocols;
+<A NAME="82"></A>    
+<A NAME="83"></A>    <FONT ID="FormalComment">/** tags which should be removed if they contain no content (e.g. "&lt;b&gt;&lt;/b&gt;" or "&lt;b /&gt;") **/</FONT>
+<A NAME="84"></A>    <FONT ID="Protected">protected</FONT> String[] vRemoveBlanks;
+<A NAME="85"></A>    
+<A NAME="86"></A>    <FONT ID="FormalComment">/** entities allowed within html markup **/</FONT>
+<A NAME="87"></A>    <FONT ID="Protected">protected</FONT> String[] vAllowedEntities;
+<A NAME="88"></A>    
+<A NAME="89"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Boolean">boolean</FONT> vDebug;
+<A NAME="90"></A>    
+<A NAME="91"></A>    <FONT ID="Public">public</FONT> HTMLInputFilter()
+<A NAME="92"></A>    {
+<A NAME="93"></A>        <FONT ID="This">this</FONT>(<FONT ID="False">false</FONT>);
+<A NAME="94"></A>    }
+<A NAME="95"></A>    
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> HTMLInputFilter( <FONT ID="Boolean">boolean</FONT> debug )
+<A NAME="97"></A>    {
+<A NAME="98"></A>        vDebug = debug;
+<A NAME="99"></A>        
+<A NAME="100"></A>        vAllowed = <FONT ID="New">new</FONT> HashMap&lt;String,List&lt;String&gt;&gt;();
+<A NAME="101"></A>        vTagCounts = <FONT ID="New">new</FONT> HashMap&lt;String,Integer&gt;();
+<A NAME="102"></A>        
+<A NAME="103"></A>        ArrayList&lt;String&gt; a_atts = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();
+<A NAME="104"></A>        a_atts.add( <FONT ID="StringLiteral">"href"</FONT> );
+<A NAME="105"></A>        a_atts.add( <FONT ID="StringLiteral">"target"</FONT> );
+<A NAME="106"></A>        vAllowed.put( <FONT ID="StringLiteral">"a"</FONT>, a_atts );
+<A NAME="107"></A>        
+<A NAME="108"></A>        ArrayList&lt;String&gt; img_atts = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();
+<A NAME="109"></A>        img_atts.add( <FONT ID="StringLiteral">"src"</FONT> );
+<A NAME="110"></A>        img_atts.add( <FONT ID="StringLiteral">"width"</FONT> );
+<A NAME="111"></A>        img_atts.add( <FONT ID="StringLiteral">"height"</FONT> );
+<A NAME="112"></A>        img_atts.add( <FONT ID="StringLiteral">"alt"</FONT> );
+<A NAME="113"></A>        vAllowed.put( <FONT ID="StringLiteral">"img"</FONT>, img_atts );
+<A NAME="114"></A>        
+<A NAME="115"></A>        ArrayList&lt;String&gt; no_atts = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();
+<A NAME="116"></A>        vAllowed.put( <FONT ID="StringLiteral">"b"</FONT>, no_atts );
+<A NAME="117"></A>        vAllowed.put( <FONT ID="StringLiteral">"strong"</FONT>, no_atts );
+<A NAME="118"></A>        vAllowed.put( <FONT ID="StringLiteral">"i"</FONT>, no_atts );
+<A NAME="119"></A>        vAllowed.put( <FONT ID="StringLiteral">"em"</FONT>, no_atts );
+<A NAME="120"></A>        
+<A NAME="121"></A>        vSelfClosingTags = <FONT ID="New">new</FONT> String[] { <FONT ID="StringLiteral">"img"</FONT> };
+<A NAME="122"></A>        vNeedClosingTags = <FONT ID="New">new</FONT> String[] { <FONT ID="StringLiteral">"a"</FONT>, <FONT ID="StringLiteral">"b"</FONT>, <FONT ID="StringLiteral">"strong"</FONT>, <FONT ID="StringLiteral">"i"</FONT>, <FONT ID="StringLiteral">"em"</FONT> };
+<A NAME="123"></A>        vAllowedProtocols = <FONT ID="New">new</FONT> String[] { <FONT ID="StringLiteral">"http"</FONT>, <FONT ID="StringLiteral">"mailto"</FONT> }; <FONT ID="SingleLineComment">// no ftp.
+<A NAME="124"></A></FONT>        vProtocolAtts = <FONT ID="New">new</FONT> String[] { <FONT ID="StringLiteral">"src"</FONT>, <FONT ID="StringLiteral">"href"</FONT> };
+<A NAME="125"></A>        vRemoveBlanks = <FONT ID="New">new</FONT> String[] { <FONT ID="StringLiteral">"a"</FONT>, <FONT ID="StringLiteral">"b"</FONT>, <FONT ID="StringLiteral">"strong"</FONT>, <FONT ID="StringLiteral">"i"</FONT>, <FONT ID="StringLiteral">"em"</FONT> };
+<A NAME="126"></A>        vAllowedEntities = <FONT ID="New">new</FONT> String[] { <FONT ID="StringLiteral">"amp"</FONT>, <FONT ID="StringLiteral">"gt"</FONT>, <FONT ID="StringLiteral">"lt"</FONT>, <FONT ID="StringLiteral">"quot"</FONT> };
+<A NAME="127"></A>    }
+<A NAME="128"></A>    
+<A NAME="129"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> reset()
+<A NAME="130"></A>    {
+<A NAME="131"></A>        vTagCounts = <FONT ID="New">new</FONT> HashMap&lt;String,Integer&gt;();
+<A NAME="132"></A>    }
+<A NAME="133"></A>    
+<A NAME="134"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> debug( String msg )
+<A NAME="135"></A>    {
+<A NAME="136"></A>        <FONT ID="If">if</FONT> (vDebug)
+<A NAME="137"></A>            System.out.println( msg );
+<A NAME="138"></A>    }
+<A NAME="139"></A>    
+<A NAME="140"></A>    <FONT ID="SingleLineComment">//---------------------------------------------------------------
+<A NAME="141"></A></FONT>    <FONT ID="SingleLineComment">// my versions of some PHP library functions
+<A NAME="142"></A></FONT>    
+<A NAME="143"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String chr( <FONT ID="Int">int</FONT> decimal )
+<A NAME="144"></A>    {
+<A NAME="145"></A>        <FONT ID="Return">return</FONT> String.valueOf( (<FONT ID="Char">char</FONT>) decimal );
+<A NAME="146"></A>    }
+<A NAME="147"></A>    
+<A NAME="148"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String htmlSpecialChars( String s )
+<A NAME="149"></A>    {
+<A NAME="150"></A>        s = s.replaceAll( <FONT ID="StringLiteral">"&amp;"</FONT>, <FONT ID="StringLiteral">"&amp;amp;"</FONT> );
+<A NAME="151"></A>        s = s.replaceAll( <FONT ID="StringLiteral">"\""</FONT>, <FONT ID="StringLiteral">"&amp;quot;"</FONT> );
+<A NAME="152"></A>        s = s.replaceAll( <FONT ID="StringLiteral">"&lt;"</FONT>, <FONT ID="StringLiteral">"&amp;lt;"</FONT> );
+<A NAME="153"></A>        s = s.replaceAll( <FONT ID="StringLiteral">"&gt;"</FONT>, <FONT ID="StringLiteral">"&amp;gt;"</FONT> );
+<A NAME="154"></A>        <FONT ID="Return">return</FONT> s;
+<A NAME="155"></A>    }
+<A NAME="156"></A>    
+<A NAME="157"></A>    <FONT ID="SingleLineComment">//---------------------------------------------------------------
+<A NAME="158"></A></FONT>    
+<A NAME="159"></A>    <FONT ID="FormalComment">/**
+<A NAME="160"></A>     * given a user submitted input String, filter out any invalid or restricted
+<A NAME="161"></A>     * html.
+<A NAME="162"></A>     * 
+<A NAME="163"></A>     * @param input text (i.e. submitted by a user) than may contain html
+<A NAME="164"></A>     * @return "clean" version of input, with only valid, whitelisted html elements allowed
+<A NAME="165"></A>     */</FONT>
+<A NAME="166"></A>    <FONT ID="Public">public</FONT> <FONT ID="Synchronized">synchronized</FONT> String filter( String input )
+<A NAME="167"></A>    {
+<A NAME="168"></A>        reset();
+<A NAME="169"></A>        String s = input;
+<A NAME="170"></A>        
+<A NAME="171"></A>        debug( <FONT ID="StringLiteral">"************************************************"</FONT> );
+<A NAME="172"></A>        debug( <FONT ID="StringLiteral">"              INPUT: "</FONT> + input );
+<A NAME="173"></A>        
+<A NAME="174"></A>        s = escapeComments(s);
+<A NAME="175"></A>        debug( <FONT ID="StringLiteral">"     escapeComments: "</FONT> + s );
+<A NAME="176"></A>        
+<A NAME="177"></A>        s = balanceHTML(s);
+<A NAME="178"></A>        debug( <FONT ID="StringLiteral">"        balanceHTML: "</FONT> + s );
+<A NAME="179"></A>        
+<A NAME="180"></A>        s = checkTags(s);
+<A NAME="181"></A>        debug( <FONT ID="StringLiteral">"          checkTags: "</FONT> + s );
+<A NAME="182"></A>        
+<A NAME="183"></A>        s = processRemoveBlanks(s);
+<A NAME="184"></A>        debug( <FONT ID="StringLiteral">"processRemoveBlanks: "</FONT> + s );
+<A NAME="185"></A>        
+<A NAME="186"></A>        s = validateEntities(s);
+<A NAME="187"></A>        debug( <FONT ID="StringLiteral">"    validateEntites: "</FONT> + s );
+<A NAME="188"></A>        
+<A NAME="189"></A>        debug( <FONT ID="StringLiteral">"************************************************\n\n"</FONT> );
+<A NAME="190"></A>        <FONT ID="Return">return</FONT> s;
+<A NAME="191"></A>    }
+<A NAME="192"></A>    
+<A NAME="193"></A>    <FONT ID="Protected">protected</FONT> String escapeComments( String s )
+<A NAME="194"></A>    {
+<A NAME="195"></A>        Pattern p = Pattern.compile( <FONT ID="StringLiteral">"&lt;!--(.*?)--&gt;"</FONT>, Pattern.DOTALL );
+<A NAME="196"></A>        Matcher m = p.matcher( s );
+<A NAME="197"></A>        StringBuffer buf = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="198"></A>        <FONT ID="If">if</FONT> (m.find()) {
+<A NAME="199"></A>            String match = m.group( <FONT ID="IntegerLiteral">1</FONT> ); <FONT ID="SingleLineComment">//(.*?)
+<A NAME="200"></A></FONT>            m.appendReplacement( buf, <FONT ID="StringLiteral">"&lt;!--"</FONT> + htmlSpecialChars( match ) + <FONT ID="StringLiteral">"--&gt;"</FONT> );
+<A NAME="201"></A>        }
+<A NAME="202"></A>        m.appendTail( buf );
+<A NAME="203"></A>        
+<A NAME="204"></A>        <FONT ID="Return">return</FONT> buf.toString();
+<A NAME="205"></A>    }
+<A NAME="206"></A>    
+<A NAME="207"></A>    <FONT ID="Protected">protected</FONT> String balanceHTML( String s )
+<A NAME="208"></A>    {
+<A NAME="209"></A>        <FONT ID="If">if</FONT> (ALWAYS_MAKE_TAGS) 
+<A NAME="210"></A>        {
+<A NAME="211"></A>            <FONT ID="SingleLineComment">//
+<A NAME="212"></A></FONT>            <FONT ID="SingleLineComment">// try and form html
+<A NAME="213"></A></FONT>            <FONT ID="SingleLineComment">//
+<A NAME="214"></A></FONT>            s = regexReplace(<FONT ID="StringLiteral">"^&gt;"</FONT>, <FONT ID="StringLiteral">""</FONT>, s);
+<A NAME="215"></A>            s = regexReplace(<FONT ID="StringLiteral">"&lt;([^&gt;]*?)(?=&lt;|$)"</FONT>, <FONT ID="StringLiteral">"&lt;$1&gt;"</FONT>, s);
+<A NAME="216"></A>            s = regexReplace(<FONT ID="StringLiteral">"(^|&gt;)([^&lt;]*?)(?=&gt;)"</FONT>, <FONT ID="StringLiteral">"$1&lt;$2"</FONT>, s);
+<A NAME="217"></A>            
+<A NAME="218"></A>        } 
+<A NAME="219"></A>        <FONT ID="Else">else</FONT>
+<A NAME="220"></A>        {
+<A NAME="221"></A>            <FONT ID="SingleLineComment">//
+<A NAME="222"></A></FONT>            <FONT ID="SingleLineComment">// escape stray brackets
+<A NAME="223"></A></FONT>            <FONT ID="SingleLineComment">//
+<A NAME="224"></A></FONT>            s = regexReplace(<FONT ID="StringLiteral">"&lt;([^&gt;]*?)(?=&lt;|$)"</FONT>, <FONT ID="StringLiteral">"&amp;lt;$1"</FONT>, s);
+<A NAME="225"></A>            s = regexReplace(<FONT ID="StringLiteral">"(^|&gt;)([^&lt;]*?)(?=&gt;)"</FONT>, <FONT ID="StringLiteral">"$1$2&amp;gt;&lt;"</FONT>, s);
+<A NAME="226"></A>            
+<A NAME="227"></A>            <FONT ID="SingleLineComment">//
+<A NAME="228"></A></FONT>            <FONT ID="SingleLineComment">// the last regexp causes '&lt;&gt;' entities to appear
+<A NAME="229"></A></FONT>            <FONT ID="SingleLineComment">// (we need to do a lookahead assertion so that the last bracket can
+<A NAME="230"></A></FONT>            <FONT ID="SingleLineComment">// be used in the next pass of the regexp)
+<A NAME="231"></A></FONT>            <FONT ID="SingleLineComment">//
+<A NAME="232"></A></FONT>            s = s.replaceAll(<FONT ID="StringLiteral">"&lt;&gt;"</FONT>, <FONT ID="StringLiteral">""</FONT>);
+<A NAME="233"></A>        }
+<A NAME="234"></A>        
+<A NAME="235"></A>        <FONT ID="Return">return</FONT> s;
+<A NAME="236"></A>    }
+<A NAME="237"></A>    
+<A NAME="238"></A>    <FONT ID="Protected">protected</FONT> String checkTags( String s )
+<A NAME="239"></A>    {       
+<A NAME="240"></A>        Pattern p = Pattern.compile( <FONT ID="StringLiteral">"&lt;(.*?)&gt;"</FONT>, Pattern.DOTALL );
+<A NAME="241"></A>        Matcher m = p.matcher( s );
+<A NAME="242"></A>        
+<A NAME="243"></A>        StringBuffer buf = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="244"></A>        <FONT ID="While">while</FONT> (m.find()) {
+<A NAME="245"></A>            String replaceStr = m.group( <FONT ID="IntegerLiteral">1</FONT> );
+<A NAME="246"></A>            replaceStr = processTag( replaceStr );
+<A NAME="247"></A>            m.appendReplacement(buf, replaceStr);
+<A NAME="248"></A>        }
+<A NAME="249"></A>        m.appendTail(buf);
+<A NAME="250"></A>        
+<A NAME="251"></A>        s = buf.toString();
+<A NAME="252"></A>        
+<A NAME="253"></A>        <FONT ID="SingleLineComment">// these get tallied in processTag
+<A NAME="254"></A></FONT>        <FONT ID="SingleLineComment">// (remember to reset before subsequent calls to filter method)
+<A NAME="255"></A></FONT>        <FONT ID="For">for</FONT>( String key : vTagCounts.keySet())
+<A NAME="256"></A>        {
+<A NAME="257"></A>            <FONT ID="For">for</FONT>(<FONT ID="Int">int</FONT> ii=<FONT ID="IntegerLiteral">0</FONT>; ii&lt;vTagCounts.get(key); ii++) {
+<A NAME="258"></A>                s += <FONT ID="StringLiteral">"&lt;/"</FONT> + key + <FONT ID="StringLiteral">"&gt;"</FONT>;
+<A NAME="259"></A>            }
+<A NAME="260"></A>        }
+<A NAME="261"></A>        
+<A NAME="262"></A>        <FONT ID="Return">return</FONT> s;
+<A NAME="263"></A>    }
+<A NAME="264"></A>    
+<A NAME="265"></A>    <FONT ID="Protected">protected</FONT> String processRemoveBlanks( String s )
+<A NAME="266"></A>    {
+<A NAME="267"></A>        <FONT ID="For">for</FONT>( String tag : vRemoveBlanks )
+<A NAME="268"></A>        {
+<A NAME="269"></A>            s = regexReplace( <FONT ID="StringLiteral">"&lt;"</FONT> + tag + <FONT ID="StringLiteral">"(\\s[^&gt;]*)?&gt;&lt;/"</FONT> + tag + <FONT ID="StringLiteral">"&gt;"</FONT>, <FONT ID="StringLiteral">""</FONT>, s );
+<A NAME="270"></A>            s = regexReplace( <FONT ID="StringLiteral">"&lt;"</FONT> + tag + <FONT ID="StringLiteral">"(\\s[^&gt;]*)?/&gt;"</FONT>, <FONT ID="StringLiteral">""</FONT>, s );
+<A NAME="271"></A>        }
+<A NAME="272"></A>        
+<A NAME="273"></A>        <FONT ID="Return">return</FONT> s;
+<A NAME="274"></A>    }
+<A NAME="275"></A>    
+<A NAME="276"></A>    <FONT ID="Protected">protected</FONT> String regexReplace( String regex_pattern, String replacement, String s )
+<A NAME="277"></A>    {
+<A NAME="278"></A>        Pattern p = Pattern.compile( regex_pattern );
+<A NAME="279"></A>        Matcher m = p.matcher( s );
+<A NAME="280"></A>        <FONT ID="Return">return</FONT> m.replaceAll( replacement );
+<A NAME="281"></A>    }
+<A NAME="282"></A>    
+<A NAME="283"></A>    <FONT ID="Protected">protected</FONT> String processTag( String s )
+<A NAME="284"></A>    {       
+<A NAME="285"></A>        <FONT ID="SingleLineComment">// ending tags
+<A NAME="286"></A></FONT>        Pattern p = Pattern.compile( <FONT ID="StringLiteral">"^/([a-z0-9]+)"</FONT>, REGEX_FLAGS_SI );
+<A NAME="287"></A>        Matcher m = p.matcher( s );
+<A NAME="288"></A>        <FONT ID="If">if</FONT> (m.find()) {
+<A NAME="289"></A>            String name = m.group(<FONT ID="IntegerLiteral">1</FONT>).toLowerCase();
+<A NAME="290"></A>            <FONT ID="If">if</FONT> (vAllowed.containsKey( name )) {
+<A NAME="291"></A>                <FONT ID="If">if</FONT> (!inArray(name, vSelfClosingTags)) {
+<A NAME="292"></A>                    <FONT ID="If">if</FONT> (vTagCounts.containsKey( name )) {
+<A NAME="293"></A>                        vTagCounts.put(name, vTagCounts.get(name)-<FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="294"></A>                        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"&lt;/"</FONT> + name + <FONT ID="StringLiteral">"&gt;"</FONT>;
+<A NAME="295"></A>                    }
+<A NAME="296"></A>                }
+<A NAME="297"></A>            }
+<A NAME="298"></A>        }
+<A NAME="299"></A>        
+<A NAME="300"></A>        <FONT ID="SingleLineComment">// starting tags
+<A NAME="301"></A></FONT>        p = Pattern.compile(<FONT ID="StringLiteral">"^([a-z0-9]+)(.*?)(/?)$"</FONT>, REGEX_FLAGS_SI);
+<A NAME="302"></A>        m = p.matcher( s );
+<A NAME="303"></A>        <FONT ID="If">if</FONT> (m.find()) {
+<A NAME="304"></A>            String name = m.group(<FONT ID="IntegerLiteral">1</FONT>).toLowerCase();
+<A NAME="305"></A>            String body = m.group(<FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="306"></A>            String ending = m.group(<FONT ID="IntegerLiteral">3</FONT>);
+<A NAME="307"></A>            
+<A NAME="308"></A>            <FONT ID="SingleLineComment">//debug( "in a starting tag, name='" + name + "'; body='" + body + "'; ending='" + ending + "'" );
+<A NAME="309"></A></FONT>            <FONT ID="If">if</FONT> (vAllowed.containsKey( name )) {
+<A NAME="310"></A>                String params = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="311"></A>                
+<A NAME="312"></A>                Pattern p2 = Pattern.compile(<FONT ID="StringLiteral">"([a-z0-9]+)=([\"'])(.*?)\\2"</FONT>, REGEX_FLAGS_SI);
+<A NAME="313"></A>                Pattern p3 = Pattern.compile(<FONT ID="StringLiteral">"([a-z0-9]+)(=)([^\"\\s']+)"</FONT>, REGEX_FLAGS_SI);
+<A NAME="314"></A>                Matcher m2 = p2.matcher( body );
+<A NAME="315"></A>                Matcher m3 = p3.matcher( body );
+<A NAME="316"></A>                List&lt;String&gt; paramNames = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();
+<A NAME="317"></A>                List&lt;String&gt; paramValues = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();
+<A NAME="318"></A>                <FONT ID="While">while</FONT> (m2.find()) {
+<A NAME="319"></A>                    paramNames.add(m2.group(<FONT ID="IntegerLiteral">1</FONT>)); <FONT ID="SingleLineComment">//([a-z0-9]+)
+<A NAME="320"></A></FONT>                    paramValues.add(m2.group(<FONT ID="IntegerLiteral">3</FONT>)); <FONT ID="SingleLineComment">//(.*?)
+<A NAME="321"></A></FONT>                }
+<A NAME="322"></A>                <FONT ID="While">while</FONT> (m3.find()) {
+<A NAME="323"></A>                    paramNames.add(m3.group(<FONT ID="IntegerLiteral">1</FONT>)); <FONT ID="SingleLineComment">//([a-z0-9]+)
+<A NAME="324"></A></FONT>                    paramValues.add(m3.group(<FONT ID="IntegerLiteral">3</FONT>)); <FONT ID="SingleLineComment">//([^\"\\s']+)
+<A NAME="325"></A></FONT>                }
+<A NAME="326"></A>                
+<A NAME="327"></A>                String paramName, paramValue;
+<A NAME="328"></A>                <FONT ID="For">for</FONT>( <FONT ID="Int">int</FONT> ii=<FONT ID="IntegerLiteral">0</FONT>; ii&lt;paramNames.size(); ii++ ) {
+<A NAME="329"></A>                    paramName = paramNames.get(ii).toLowerCase();
+<A NAME="330"></A>                    paramValue = paramValues.get(ii);
+<A NAME="331"></A>                    
+<A NAME="332"></A>                    <FONT ID="SingleLineComment">//debug( "paramName='" + paramName + "'" );
+<A NAME="333"></A></FONT>                    <FONT ID="SingleLineComment">//debug( "paramValue='" + paramValue + "'" );
+<A NAME="334"></A></FONT>                    <FONT ID="SingleLineComment">//debug( "allowed? " + vAllowed.get( name ).contains( paramName ) );
+<A NAME="335"></A></FONT>                    
+<A NAME="336"></A>                    <FONT ID="If">if</FONT> (vAllowed.get( name ).contains( paramName )) {
+<A NAME="337"></A>                        <FONT ID="If">if</FONT> (inArray( paramName, vProtocolAtts )) {
+<A NAME="338"></A>                            paramValue = processParamProtocol( paramValue );
+<A NAME="339"></A>                        }
+<A NAME="340"></A>                        params += <FONT ID="StringLiteral">" "</FONT> + paramName + <FONT ID="StringLiteral">"=\""</FONT> + paramValue + <FONT ID="StringLiteral">"\""</FONT>;
+<A NAME="341"></A>                    }
+<A NAME="342"></A>                }
+<A NAME="343"></A>                
+<A NAME="344"></A>                <FONT ID="If">if</FONT> (inArray( name, vSelfClosingTags )) {
+<A NAME="345"></A>                    ending = <FONT ID="StringLiteral">" /"</FONT>;
+<A NAME="346"></A>                }
+<A NAME="347"></A>                
+<A NAME="348"></A>                <FONT ID="If">if</FONT> (inArray( name, vNeedClosingTags )) {
+<A NAME="349"></A>                    ending = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="350"></A>                }
+<A NAME="351"></A>                
+<A NAME="352"></A>                <FONT ID="If">if</FONT> (ending == <FONT ID="Null">null</FONT> || ending.length() &lt; <FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="353"></A>                    <FONT ID="If">if</FONT> (vTagCounts.containsKey( name )) {
+<A NAME="354"></A>                        vTagCounts.put( name, vTagCounts.get(name)+<FONT ID="IntegerLiteral">1</FONT> );
+<A NAME="355"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="356"></A>                        vTagCounts.put( name, <FONT ID="IntegerLiteral">1</FONT> );
+<A NAME="357"></A>                    }
+<A NAME="358"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="359"></A>                    ending = <FONT ID="StringLiteral">" /"</FONT>;
+<A NAME="360"></A>                }
+<A NAME="361"></A>                <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"&lt;"</FONT> + name + params + ending + <FONT ID="StringLiteral">"&gt;"</FONT>;
+<A NAME="362"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="363"></A>                <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">""</FONT>;
+<A NAME="364"></A>            }
+<A NAME="365"></A>        }
+<A NAME="366"></A>        
+<A NAME="367"></A>        <FONT ID="SingleLineComment">// comments
+<A NAME="368"></A></FONT>        p = Pattern.compile( <FONT ID="StringLiteral">"^!--(.*)--$"</FONT>, REGEX_FLAGS_SI );
+<A NAME="369"></A>        m = p.matcher( s );
+<A NAME="370"></A>        <FONT ID="If">if</FONT> (m.find()) {
+<A NAME="371"></A>            String comment = m.group();
+<A NAME="372"></A>            <FONT ID="If">if</FONT> (STRIP_COMMENTS) {
+<A NAME="373"></A>                <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">""</FONT>;
+<A NAME="374"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="375"></A>                <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"&lt;"</FONT> + comment + <FONT ID="StringLiteral">"&gt;"</FONT>; 
+<A NAME="376"></A>            }
+<A NAME="377"></A>        }
+<A NAME="378"></A>        
+<A NAME="379"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">""</FONT>;
+<A NAME="380"></A>    }
+<A NAME="381"></A>    
+<A NAME="382"></A>    <FONT ID="Protected">protected</FONT> String processParamProtocol( String s )
+<A NAME="383"></A>    {
+<A NAME="384"></A>        s = decodeEntities( s );
+<A NAME="385"></A>        Pattern p = Pattern.compile( <FONT ID="StringLiteral">"^([^:]+):"</FONT>, REGEX_FLAGS_SI );
+<A NAME="386"></A>        Matcher m = p.matcher( s );
+<A NAME="387"></A>        <FONT ID="If">if</FONT> (m.find()) {
+<A NAME="388"></A>            String protocol = m.group(<FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="389"></A>            <FONT ID="If">if</FONT> (!inArray( protocol, vAllowedProtocols )) {
+<A NAME="390"></A>                <FONT ID="SingleLineComment">// bad protocol, turn into local anchor link instead
+<A NAME="391"></A></FONT>                s = <FONT ID="StringLiteral">"#"</FONT> + s.substring( protocol.length()+<FONT ID="IntegerLiteral">1</FONT>, s.length() );
+<A NAME="392"></A>                <FONT ID="If">if</FONT> (s.startsWith(<FONT ID="StringLiteral">"#//"</FONT>)) s = <FONT ID="StringLiteral">"#"</FONT> + s.substring( <FONT ID="IntegerLiteral">3</FONT>, s.length() );
+<A NAME="393"></A>            }
+<A NAME="394"></A>        }
+<A NAME="395"></A>        
+<A NAME="396"></A>        <FONT ID="Return">return</FONT> s;
+<A NAME="397"></A>    }
+<A NAME="398"></A>    
+<A NAME="399"></A>    <FONT ID="Protected">protected</FONT> String decodeEntities( String s )
+<A NAME="400"></A>    {
+<A NAME="401"></A>        StringBuffer buf = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="402"></A>        
+<A NAME="403"></A>        Pattern p = Pattern.compile( <FONT ID="StringLiteral">"&amp;#(\\d+);?"</FONT> );
+<A NAME="404"></A>        Matcher m = p.matcher( s );
+<A NAME="405"></A>        <FONT ID="While">while</FONT> (m.find()) {
+<A NAME="406"></A>            String match = m.group( <FONT ID="IntegerLiteral">1</FONT> );
+<A NAME="407"></A>            <FONT ID="Int">int</FONT> decimal = Integer.decode( match ).intValue();
+<A NAME="408"></A>            m.appendReplacement( buf, chr( decimal ) );
+<A NAME="409"></A>        }
+<A NAME="410"></A>        m.appendTail( buf );
+<A NAME="411"></A>        s = buf.toString();
+<A NAME="412"></A>        
+<A NAME="413"></A>        buf = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="414"></A>        p = Pattern.compile( <FONT ID="StringLiteral">"&amp;#x([0-9a-f]+);?"</FONT>);
+<A NAME="415"></A>        m = p.matcher( s );
+<A NAME="416"></A>        <FONT ID="While">while</FONT> (m.find()) {
+<A NAME="417"></A>            String match = m.group( <FONT ID="IntegerLiteral">1</FONT> );
+<A NAME="418"></A>            <FONT ID="Int">int</FONT> decimal = Integer.decode( match ).intValue();
+<A NAME="419"></A>            m.appendReplacement( buf, chr( decimal ) );
+<A NAME="420"></A>        }
+<A NAME="421"></A>        m.appendTail( buf );
+<A NAME="422"></A>        s = buf.toString();
+<A NAME="423"></A>        
+<A NAME="424"></A>        buf = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="425"></A>        p = Pattern.compile( <FONT ID="StringLiteral">"%([0-9a-f]{2});?"</FONT>);
+<A NAME="426"></A>        m = p.matcher( s );
+<A NAME="427"></A>        <FONT ID="While">while</FONT> (m.find()) {
+<A NAME="428"></A>            String match = m.group( <FONT ID="IntegerLiteral">1</FONT> );
+<A NAME="429"></A>            <FONT ID="Int">int</FONT> decimal = Integer.decode( match ).intValue();
+<A NAME="430"></A>            m.appendReplacement( buf, chr( decimal ) );
+<A NAME="431"></A>        }
+<A NAME="432"></A>        m.appendTail( buf );
+<A NAME="433"></A>        s = buf.toString();
+<A NAME="434"></A>        
+<A NAME="435"></A>        s = validateEntities( s );
+<A NAME="436"></A>        <FONT ID="Return">return</FONT> s;
+<A NAME="437"></A>    }
+<A NAME="438"></A>    
+<A NAME="439"></A>    <FONT ID="Protected">protected</FONT> String validateEntities( String s )
+<A NAME="440"></A>    {
+<A NAME="441"></A>        <FONT ID="SingleLineComment">// validate entities throughout the string
+<A NAME="442"></A></FONT>        Pattern p = Pattern.compile( <FONT ID="StringLiteral">"&amp;([^&amp;;]*)(?=(;|&amp;|$))"</FONT> );
+<A NAME="443"></A>        Matcher m = p.matcher( s );
+<A NAME="444"></A>        <FONT ID="If">if</FONT> (m.find()) {
+<A NAME="445"></A>            String one = m.group( <FONT ID="IntegerLiteral">1</FONT> ); <FONT ID="SingleLineComment">//([^&amp;;]*) 
+<A NAME="446"></A></FONT>            String two = m.group( <FONT ID="IntegerLiteral">2</FONT> ); <FONT ID="SingleLineComment">//(?=(;|&amp;|$))
+<A NAME="447"></A></FONT>            s = checkEntity( one, two );
+<A NAME="448"></A>        }
+<A NAME="449"></A>        
+<A NAME="450"></A>        <FONT ID="SingleLineComment">// validate quotes outside of tags
+<A NAME="451"></A></FONT>        p = Pattern.compile( <FONT ID="StringLiteral">"(&gt;|^)([^&lt;]+?)(&lt;|$)"</FONT>, Pattern.DOTALL );
+<A NAME="452"></A>        m = p.matcher( s );
+<A NAME="453"></A>        StringBuffer buf = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="454"></A>        <FONT ID="If">if</FONT> (m.find()) {
+<A NAME="455"></A>            String one = m.group( <FONT ID="IntegerLiteral">1</FONT> ); <FONT ID="SingleLineComment">//(&gt;|^) 
+<A NAME="456"></A></FONT>            String two = m.group( <FONT ID="IntegerLiteral">2</FONT> ); <FONT ID="SingleLineComment">//([^&lt;]+?) 
+<A NAME="457"></A></FONT>            String three = m.group( <FONT ID="IntegerLiteral">3</FONT> ); <FONT ID="SingleLineComment">//(&lt;|$) 
+<A NAME="458"></A></FONT>            m.appendReplacement( buf, one + two.replaceAll( <FONT ID="StringLiteral">"\""</FONT>, <FONT ID="StringLiteral">"&amp;quot;"</FONT> ) + three);
+<A NAME="459"></A>        }
+<A NAME="460"></A>        m.appendTail( buf );
+<A NAME="461"></A>        
+<A NAME="462"></A>        <FONT ID="Return">return</FONT> s;
+<A NAME="463"></A>    }
+<A NAME="464"></A>    
+<A NAME="465"></A>    <FONT ID="Protected">protected</FONT> String checkEntity( String preamble, String term )
+<A NAME="466"></A>    {
+<A NAME="467"></A>        <FONT ID="If">if</FONT> (!term.equals(<FONT ID="StringLiteral">";"</FONT>)) {
+<A NAME="468"></A>            <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"&amp;amp;"</FONT> + preamble;
+<A NAME="469"></A>        }
+<A NAME="470"></A>        
+<A NAME="471"></A>        <FONT ID="If">if</FONT> ( isValidEntity( preamble ) ) {
+<A NAME="472"></A>            <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"&amp;"</FONT> + preamble;
+<A NAME="473"></A>        }
+<A NAME="474"></A>        
+<A NAME="475"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"&amp;amp;"</FONT> + preamble;
+<A NAME="476"></A>    }
+<A NAME="477"></A>    
+<A NAME="478"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Boolean">boolean</FONT> isValidEntity( String entity )
+<A NAME="479"></A>    {
+<A NAME="480"></A>        <FONT ID="Return">return</FONT> inArray( entity, vAllowedEntities );
+<A NAME="481"></A>    }
+<A NAME="482"></A>    
+<A NAME="483"></A>    <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> inArray( String s, String[] array )
+<A NAME="484"></A>    {
+<A NAME="485"></A>        <FONT ID="For">for</FONT> (String item : array)
+<A NAME="486"></A>            <FONT ID="If">if</FONT> (item != <FONT ID="Null">null</FONT> &amp;&amp; item.equals(s))
+<A NAME="487"></A>                <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="488"></A>        
+<A NAME="489"></A>        <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="490"></A>    }
+<A NAME="491"></A>    
+<A NAME="492"></A>    <FONT ID="SingleLineComment">// ============================================ START-UNIT-TEST =========================================
+<A NAME="493"></A></FONT><FONT ID="SingleLineComment">//  public static class Test extends TestCase
+<A NAME="494"></A></FONT><FONT ID="SingleLineComment">//  {
+<A NAME="495"></A></FONT><FONT ID="SingleLineComment">//      protected HTMLInputFilter vFilter;
+<A NAME="496"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="497"></A></FONT><FONT ID="SingleLineComment">//      protected void setUp()
+<A NAME="498"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="499"></A></FONT><FONT ID="SingleLineComment">//          vFilter = new HTMLInputFilter( true );
+<A NAME="500"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="501"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="502"></A></FONT><FONT ID="SingleLineComment">//      protected void tearDown()
+<A NAME="503"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="504"></A></FONT><FONT ID="SingleLineComment">//          vFilter = null;
+<A NAME="505"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="506"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="507"></A></FONT><FONT ID="SingleLineComment">//      private void t( String input, String result )
+<A NAME="508"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="509"></A></FONT><FONT ID="SingleLineComment">//          Assert.assertEquals( result, vFilter.filter(input) );
+<A NAME="510"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="511"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="512"></A></FONT><FONT ID="SingleLineComment">//      public void test_basics()
+<A NAME="513"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="514"></A></FONT><FONT ID="SingleLineComment">//          t( "", "" );
+<A NAME="515"></A></FONT><FONT ID="SingleLineComment">//          t( "hello", "hello" );
+<A NAME="516"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="517"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="518"></A></FONT><FONT ID="SingleLineComment">//      public void test_balancing_tags()
+<A NAME="519"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="520"></A></FONT><FONT ID="SingleLineComment">//          t( "&lt;b&gt;hello", "&lt;b&gt;hello&lt;/b&gt;" );
+<A NAME="521"></A></FONT><FONT ID="SingleLineComment">//          t( "&lt;b&gt;hello", "&lt;b&gt;hello&lt;/b&gt;" );
+<A NAME="522"></A></FONT><FONT ID="SingleLineComment">//          t( "hello&lt;b&gt;", "hello" );
+<A NAME="523"></A></FONT><FONT ID="SingleLineComment">//          t( "hello&lt;/b&gt;", "hello" );
+<A NAME="524"></A></FONT><FONT ID="SingleLineComment">//          t( "hello&lt;b/&gt;", "hello" );
+<A NAME="525"></A></FONT><FONT ID="SingleLineComment">//          t( "&lt;b&gt;&lt;b&gt;&lt;b&gt;hello", "&lt;b&gt;&lt;b&gt;&lt;b&gt;hello&lt;/b&gt;&lt;/b&gt;&lt;/b&gt;" );
+<A NAME="526"></A></FONT><FONT ID="SingleLineComment">//          t( "&lt;/b&gt;&lt;b&gt;", "" );
+<A NAME="527"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="528"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="529"></A></FONT><FONT ID="SingleLineComment">//      public void test_end_slashes()
+<A NAME="530"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="531"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;img&gt;","&lt;img /&gt;");
+<A NAME="532"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;img/&gt;","&lt;img /&gt;");
+<A NAME="533"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;b/&gt;&lt;/b&gt;","");
+<A NAME="534"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="535"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="536"></A></FONT><FONT ID="SingleLineComment">//      public void test_balancing_angle_brackets()
+<A NAME="537"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="538"></A></FONT><FONT ID="SingleLineComment">//          if (ALWAYS_MAKE_TAGS) {
+<A NAME="539"></A></FONT><FONT ID="SingleLineComment">//              t("&lt;img src=\"foo\"","&lt;img src=\"foo\" /&gt;");
+<A NAME="540"></A></FONT><FONT ID="SingleLineComment">//              t("i&gt;","");
+<A NAME="541"></A></FONT><FONT ID="SingleLineComment">//              t("&lt;img src=\"foo\"/","&lt;img src=\"foo\" /&gt;");
+<A NAME="542"></A></FONT><FONT ID="SingleLineComment">//              t("&gt;","");
+<A NAME="543"></A></FONT><FONT ID="SingleLineComment">//              t("foo&lt;b","foo");
+<A NAME="544"></A></FONT><FONT ID="SingleLineComment">//              t("b&gt;foo","&lt;b&gt;foo&lt;/b&gt;");
+<A NAME="545"></A></FONT><FONT ID="SingleLineComment">//              t("&gt;&lt;b","");
+<A NAME="546"></A></FONT><FONT ID="SingleLineComment">//              t("b&gt;&lt;","");
+<A NAME="547"></A></FONT><FONT ID="SingleLineComment">//              t("&gt;&lt;b&gt;","");
+<A NAME="548"></A></FONT><FONT ID="SingleLineComment">//          } else {
+<A NAME="549"></A></FONT><FONT ID="SingleLineComment">//              t("&lt;img src=\"foo\"","&amp;lt;img src=\"foo\"");
+<A NAME="550"></A></FONT><FONT ID="SingleLineComment">//              t("b&gt;","b&amp;gt;");
+<A NAME="551"></A></FONT><FONT ID="SingleLineComment">//              t("&lt;img src=\"foo\"/","&amp;lt;img src=\"foo\"/");
+<A NAME="552"></A></FONT><FONT ID="SingleLineComment">//              t("&gt;","&amp;gt;");
+<A NAME="553"></A></FONT><FONT ID="SingleLineComment">//              t("foo&lt;b","foo&amp;lt;b");
+<A NAME="554"></A></FONT><FONT ID="SingleLineComment">//              t("b&gt;foo","b&amp;gt;foo");
+<A NAME="555"></A></FONT><FONT ID="SingleLineComment">//              t("&gt;&lt;b","&amp;gt;&amp;lt;b");
+<A NAME="556"></A></FONT><FONT ID="SingleLineComment">//              t("b&gt;&lt;","b&amp;gt;&amp;lt;");
+<A NAME="557"></A></FONT><FONT ID="SingleLineComment">//              t("&gt;&lt;b&gt;","&amp;gt;");
+<A NAME="558"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="559"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="560"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="561"></A></FONT><FONT ID="SingleLineComment">//      public void test_attributes()
+<A NAME="562"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="563"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;img src=foo&gt;","&lt;img src=\"foo\" /&gt;");
+<A NAME="564"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;img asrc=foo&gt;","&lt;img /&gt;");
+<A NAME="565"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;img src=test test&gt;","&lt;img src=\"test\" /&gt;");
+<A NAME="566"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="567"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="568"></A></FONT><FONT ID="SingleLineComment">//      public void test_disallow_script_tags()
+<A NAME="569"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="570"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;script&gt;","");
+<A NAME="571"></A></FONT><FONT ID="SingleLineComment">//          if (ALWAYS_MAKE_TAGS) { t("&lt;script","");  } else { t("&lt;script","&amp;lt;script"); }
+<A NAME="572"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;script/&gt;","");
+<A NAME="573"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;/script&gt;","");
+<A NAME="574"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;script woo=yay&gt;","");
+<A NAME="575"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;script woo=\"yay\"&gt;","");
+<A NAME="576"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;script woo=\"yay&gt;","");
+<A NAME="577"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;script woo=\"yay&lt;b&gt;","");
+<A NAME="578"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;script&lt;script&gt;&gt;","");
+<A NAME="579"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;&lt;script&gt;script&lt;script&gt;&gt;","script");
+<A NAME="580"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;&lt;script&gt;&lt;script&gt;&gt;","");
+<A NAME="581"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;&lt;script&gt;script&gt;&gt;","");
+<A NAME="582"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;&lt;script&lt;script&gt;&gt;","");
+<A NAME="583"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="584"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="585"></A></FONT><FONT ID="SingleLineComment">//      public void test_protocols()
+<A NAME="586"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="587"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"http://foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"http://foo\"&gt;bar&lt;/a&gt;");
+<A NAME="588"></A></FONT><FONT ID="SingleLineComment">//          // we don't allow ftp. t("&lt;a href=\"ftp://foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"ftp://foo\"&gt;bar&lt;/a&gt;");
+<A NAME="589"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"mailto:foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"mailto:foo\"&gt;bar&lt;/a&gt;");
+<A NAME="590"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"javascript:foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"#foo\"&gt;bar&lt;/a&gt;");
+<A NAME="591"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"java script:foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"#foo\"&gt;bar&lt;/a&gt;");
+<A NAME="592"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"java\tscript:foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"#foo\"&gt;bar&lt;/a&gt;");
+<A NAME="593"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"java\nscript:foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"#foo\"&gt;bar&lt;/a&gt;");
+<A NAME="594"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"java" + chr(1) + "script:foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"#foo\"&gt;bar&lt;/a&gt;");
+<A NAME="595"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"jscript:foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"#foo\"&gt;bar&lt;/a&gt;");
+<A NAME="596"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"vbscript:foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"#foo\"&gt;bar&lt;/a&gt;");
+<A NAME="597"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;a href=\"view-source:foo\"&gt;bar&lt;/a&gt;", "&lt;a href=\"#foo\"&gt;bar&lt;/a&gt;");
+<A NAME="598"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="599"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="600"></A></FONT><FONT ID="SingleLineComment">//      public void test_self_closing_tags()
+<A NAME="601"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="602"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;img src=\"a\"&gt;","&lt;img src=\"a\" /&gt;");
+<A NAME="603"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;img src=\"a\"&gt;foo&lt;/img&gt;", "&lt;img src=\"a\" /&gt;foo");
+<A NAME="604"></A></FONT><FONT ID="SingleLineComment">//          t("&lt;/img&gt;", "");
+<A NAME="605"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="606"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="607"></A></FONT><FONT ID="SingleLineComment">//      public void test_comments()
+<A NAME="608"></A></FONT><FONT ID="SingleLineComment">//      {
+<A NAME="609"></A></FONT><FONT ID="SingleLineComment">//          if (STRIP_COMMENTS) {
+<A NAME="610"></A></FONT><FONT ID="SingleLineComment">//              t("&lt;!-- a&lt;b ---&gt;", "");
+<A NAME="611"></A></FONT><FONT ID="SingleLineComment">//          } else {
+<A NAME="612"></A></FONT><FONT ID="SingleLineComment">//              t("&lt;!-- a&lt;b ---&gt;", "&lt;!-- a&amp;lt;b ---&gt;");
+<A NAME="613"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="614"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="615"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="616"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="617"></A></FONT>    <FONT ID="SingleLineComment">// ============================================ END-UNIT-TEST ===========================================
+<A NAME="618"></A></FONT>}
+<A NAME="619"></A></pre>
+</BODY>
+</HTML>

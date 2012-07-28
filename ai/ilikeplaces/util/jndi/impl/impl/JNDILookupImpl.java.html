@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.jndi.impl.impl.JNDILookupImpl (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">JNDILookupImpl.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.jndi.impl.impl;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/jndi/impl/JNDILookup.java.html">ai.ilikeplaces.util.jndi.impl.JNDILookup</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> com.google.inject.Inject;
+<A NAME="5"></A><FONT ID="Import">import</FONT> com.google.inject.assistedinject.Assisted;
+<A NAME="6"></A><FONT ID="Import">import</FONT> com.google.inject.name.Named;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.naming.Context;
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.naming.InitialContext;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.Properties;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * Created by IntelliJ IDEA.
+<A NAME="15"></A> * User: Ravindranath Akila
+<A NAME="16"></A> * Date: 12/19/10
+<A NAME="17"></A> * Time: 7:25 AM
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> JNDILookupImpl <FONT ID="Implements">implements</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/jndi/impl/JNDILookup.java.html">JNDILookup</A>{
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Properties properties_;
+<A NAME="22"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Context context_;
+<A NAME="23"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> String lookupValue_;
+<A NAME="24"></A>
+<A NAME="25"></A>    @Inject
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> JNDILookupImpl(@Named(value = Context.INITIAL_CONTEXT_FACTORY) <FONT ID="Final">final</FONT> String initialContextFactory, @Assisted String lookupValue) <FONT ID="Throws">throws</FONT> NamingException {
+<A NAME="27"></A>        properties_ = <FONT ID="New">new</FONT> Properties();
+<A NAME="28"></A>        properties_.put(Context.INITIAL_CONTEXT_FACTORY, initialContextFactory);
+<A NAME="29"></A>        context_ = <FONT ID="New">new</FONT> InitialContext(properties_);
+<A NAME="30"></A>        <FONT ID="This">this</FONT>.lookupValue_ = lookupValue;
+<A NAME="31"></A>    }
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> Object lookup() <FONT ID="Throws">throws</FONT> NamingException {
+<A NAME="34"></A>        <FONT ID="Return">return</FONT>  context_.lookup(lookupValue_);
+<A NAME="35"></A>    }
+<A NAME="36"></A>}
+<A NAME="37"></A></pre>
+</BODY>
+</HTML>

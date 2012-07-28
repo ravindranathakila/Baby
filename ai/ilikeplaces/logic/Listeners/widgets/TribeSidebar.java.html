@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.TribeSidebar (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TribeSidebar.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">ai.ilikeplaces.entities.Msg</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">ai.ilikeplaces.entities.Tribe</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">ai.ilikeplaces.logic.validators.unit.VLong</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache3.java.html">ai.ilikeplaces.util.cache.SmartCache3</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="22"></A>
+<A NAME="23"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="24"></A>
+<A NAME="25"></A>
+<A NAME="26"></A><FONT ID="FormalComment">/**
+<A NAME="27"></A> * @author Ravindranath Akila
+<A NAME="28"></A> */</FONT>
+<A NAME="29"></A>
+<A NAME="30"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="31"></A>@OK
+<A NAME="32"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TribeSidebar <FONT ID="Extends">extends</FONT> AbstractWidgetListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeSidebarCriteria.java.html">TribeSidebarCriteria</A>&gt; {
+<A NAME="33"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="34"></A></FONT>
+<A NAME="35"></A>
+<A NAME="36"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS STATIC --------------------------
+<A NAME="37"></A></FONT>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache3.java.html">SmartCache3</A>&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>, <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>, <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>&gt; TRIBE_BASIC_INFO_CACHE = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache3.java.html">SmartCache3</A>&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>, <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>, <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>&gt;(
+<A NAME="39"></A>            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache3.java.html">SmartCache3.RecoverWith</A>&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A>, <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>, <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>&gt;() {
+<A NAME="40"></A>                @Override
+<A NAME="41"></A>                <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> getValue(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">Long</A> tribeId, <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="42"></A>
+<A NAME="43"></A>                    <FONT ID="Return">return</FONT> DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).getTribe(humanId, <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>(tribeId));
+<A NAME="44"></A>                }
+<A NAME="45"></A>            }
+<A NAME="46"></A>    );
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_MORE = <FONT ID="StringLiteral">"read.more"</FONT>;
+<A NAME="49"></A>
+<A NAME="50"></A>    <FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="51"></A></FONT>    <FONT ID="Public">public</FONT> TribeSidebar(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeSidebarCriteria.java.html">TribeSidebarCriteria</A> tribeSidebarCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="52"></A>
+<A NAME="53"></A>        <FONT ID="Super">super</FONT>(request__, Page.TribeSidebar, tribeSidebarCriteria, appendToElement__);
+<A NAME="54"></A>    }
+<A NAME="55"></A>
+<A NAME="56"></A><FONT ID="SingleLineComment">// ------------------------ OVERRIDING METHODS ------------------------
+<A NAME="57"></A></FONT>
+<A NAME="58"></A>    <FONT ID="FormalComment">/**
+<A NAME="59"></A>     * @param tribeSidebarCriteria
+<A NAME="60"></A>     */</FONT>
+<A NAME="61"></A>    @Override
+<A NAME="62"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeSidebarCriteria.java.html">TribeSidebarCriteria</A> tribeSidebarCriteria) {
+<A NAME="63"></A>
+<A NAME="64"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(tribeSidebarCriteria.getHumanId());
+<A NAME="65"></A>        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> tribeId = tribeSidebarCriteria.getTribeId();
+<A NAME="66"></A>
+<A NAME="67"></A>
+<A NAME="68"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> tribe = TRIBE_BASIC_INFO_CACHE.get(tribeId, humanId);
+<A NAME="69"></A>
+<A NAME="70"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> lastWallEntry = WallWidgetTribe.LAST_WALL_ENTRY.get(tribe.getTribeWall().getWallId(), humanId.getHumanId());
+<A NAME="71"></A>
+<A NAME="72"></A>        <FONT ID="Final">final</FONT> String href = <FONT ID="New">new</FONT> Parameter(Tribes.getURL())
+<A NAME="73"></A>                .append(DocTribesMode, DocTribesModeView, <FONT ID="True">true</FONT>)
+<A NAME="74"></A>                .append(DocTribesWhich, tribe.getTribeId())
+<A NAME="75"></A>                .get();
+<A NAME="76"></A>
+<A NAME="77"></A>        $$(Page.tribe_sidebar_name).setTextContent(tribe.getTribeName());
+<A NAME="78"></A>
+<A NAME="79"></A>        <FONT ID="SingleLineComment">//$$(Page.tribe_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(),"Tribe Photo Url");
+<A NAME="80"></A></FONT>
+<A NAME="81"></A>        <FONT ID="If">if</FONT> (lastWallEntry != <FONT ID="Null">null</FONT>) {
+<A NAME="82"></A>            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserPropertySidebar.java.html">UserPropertySidebar</A>(
+<A NAME="83"></A>                    request,
+<A NAME="84"></A>                    $$(Page.tribe_sidebar_content),
+<A NAME="85"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(lastWallEntry.getMsgMetadata()),
+<A NAME="86"></A>                    lastWallEntry,
+<A NAME="87"></A>                    href) {
+<A NAME="88"></A>                <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> mylastWallEntry;
+<A NAME="89"></A>                <FONT ID="Private">private</FONT> String myhref;
+<A NAME="90"></A>
+<A NAME="91"></A>                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="92"></A>
+<A NAME="93"></A>                    mylastWallEntry = (<A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>) ((Object[]) initArgs[<FONT ID="IntegerLiteral">1</FONT>])[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="94"></A>                    myhref = (String) ((Object[]) initArgs[<FONT ID="IntegerLiteral">1</FONT>])[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="95"></A>
+<A NAME="96"></A>                    $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
+<A NAME="97"></A>                    $$displayNone($$(UserPropertySidebarIds.user_property_sidebar_name_section));
+<A NAME="98"></A>
+<A NAME="99"></A>
+<A NAME="100"></A>                    String msgContent = lastWallEntry.getMsgContent();
+<A NAME="101"></A>
+<A NAME="102"></A>                    TrimMessageContentForReadabilityOnSidebar:
+<A NAME="103"></A>                    {
+<A NAME="104"></A>                        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> length = msgContent.length();
+<A NAME="105"></A>                        <FONT ID="If">if</FONT> (<FONT ID="IntegerLiteral">40</FONT> &lt; length) {
+<A NAME="106"></A>                            msgContent = msgContent.substring(<FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">40</FONT>) + RBGet.gui().getString(READ_MORE);
+<A NAME="107"></A>                        }
+<A NAME="108"></A>                    }
+<A NAME="109"></A>
+<A NAME="110"></A>                    Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(msgContent).$ElementSetHref(myhref).get();
+<A NAME="111"></A>                    $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
+<A NAME="112"></A>                }
+<A NAME="113"></A>
+<A NAME="114"></A>                @Override
+<A NAME="115"></A>                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="116"></A>
+<A NAME="117"></A>                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_engage), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="118"></A>                        @Override
+<A NAME="119"></A>                        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="120"></A>
+<A NAME="121"></A>                            $$sendJS(JSCodeToSend.redirectPageWithURL(myhref));
+<A NAME="122"></A>                        }
+<A NAME="123"></A>                    }, <FONT ID="False">false</FONT>);
+<A NAME="124"></A>                }
+<A NAME="125"></A>            };
+<A NAME="126"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="127"></A>            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserPropertySidebar.java.html">UserPropertySidebar</A>(
+<A NAME="128"></A>                    request,
+<A NAME="129"></A>                    $$(Page.tribe_sidebar_content),
+<A NAME="130"></A>                    humanId,
+<A NAME="131"></A>                    <FONT ID="StringLiteral">""</FONT>,
+<A NAME="132"></A>                    href) {
+<A NAME="133"></A>                <FONT ID="Private">private</FONT> String myhref;
+<A NAME="134"></A>
+<A NAME="135"></A>                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="136"></A>
+<A NAME="137"></A>                    myhref = (String) ((Object[]) initArgs[<FONT ID="IntegerLiteral">1</FONT>])[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="138"></A>
+<A NAME="139"></A>                    $$displayBlock($$(UserPropertySidebarIds.user_property_sidebar_talk));
+<A NAME="140"></A>                    $$displayNone($$(UserPropertySidebarIds.user_property_sidebar_name_section));
+<A NAME="141"></A>
+<A NAME="142"></A>                    Element commentHref = ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(<FONT ID="StringLiteral">""</FONT>).$ElementSetHref(myhref).get();
+<A NAME="143"></A>                    $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(commentHref);
+<A NAME="144"></A>                }
+<A NAME="145"></A>
+<A NAME="146"></A>                @Override
+<A NAME="147"></A>                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="148"></A>
+<A NAME="149"></A>                    itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertySidebarIds.user_property_sidebar_engage), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="150"></A>                        @Override
+<A NAME="151"></A>                        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="152"></A>
+<A NAME="153"></A>                            $$sendJS(JSCodeToSend.redirectPageWithURL(myhref));
+<A NAME="154"></A>                        }
+<A NAME="155"></A>                    }, <FONT ID="False">false</FONT>);
+<A NAME="156"></A>                }
+<A NAME="157"></A>            };
+<A NAME="158"></A>        }
+<A NAME="159"></A>    }
+<A NAME="160"></A>
+<A NAME="161"></A>    @Override
+<A NAME="162"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="163"></A>
+<A NAME="164"></A>    }
+<A NAME="165"></A>}
+<A NAME="166"></A></pre>
+</BODY>
+</HTML>

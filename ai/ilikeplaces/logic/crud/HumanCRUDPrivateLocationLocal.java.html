@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDPrivateLocationLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDPrivateLocationLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">ai.ilikeplaces.entities.HumansFriend</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">ai.ilikeplaces.logic.validators.unit.GeoCoord</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VDouble.java.html">ai.ilikeplaces.logic.validators.unit.VDouble</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> com.google.gdata.data.geo.impl.W3CPoint;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.Remote;
+<A NAME="14"></A>
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="FormalComment">/**
+<A NAME="17"></A> * Created by IntelliJ IDEA.
+<A NAME="18"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="19"></A> * Date: Jan 13, 2010
+<A NAME="20"></A> * Time: 2:41:13 PM
+<A NAME="21"></A> */</FONT>
+<A NAME="22"></A>
+<A NAME="23"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="24"></A>@Remote
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> HumanCRUDPrivateLocationLocal {
+<A NAME="26"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String NAME = <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A>.<FONT ID="Class">class</FONT>.getSimpleName();
+<A NAME="27"></A>
+<A NAME="28"></A><FONT ID="SingleLineComment">//    @Deprecated
+<A NAME="29"></A></FONT><FONT ID="SingleLineComment">//    public Return&lt;PrivateLocation&gt; cPrivateLocation(final RefObj&lt;String&gt; humanId, final String privateLocationName, final String privateLocationInfo);
+<A NAME="30"></A></FONT>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; cPrivateLocation(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; privateLocationName, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; privateLocationInfo, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VDouble.java.html">VDouble</A> latitude, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/VDouble.java.html">VDouble</A> longitude);
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; dirtyRPrivateLocationAsAny(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId);
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; dirtyRPrivateLocationAsOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId);
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; dirtyRPrivateLocationAsViewer(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId);
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; dirtyRPrivateLocationIsOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId, <FONT ID="Final">final</FONT> Long privateLocationId);
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; dirtyRPrivateLocationIsViewer(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId, <FONT ID="Final">final</FONT> Long privateLocationId);
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; uPrivateLocationAddOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; uPrivateLocationAddVisitor(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; uPrivateLocationRemoveOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; uPrivateLocationRemoveVisitor(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; dPrivateLocation(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId);
+<A NAME="52"></A>}
+<A NAME="53"></A></pre>
+</BODY>
+</HTML>

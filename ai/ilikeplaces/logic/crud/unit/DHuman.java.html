@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.DHuman (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DHuman.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * @author Ravindranath Akila
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A>
+<A NAME="19"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="20"></A>@Stateless
+<A NAME="21"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DHuman <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/DHumanLocal.java.html">DHumanLocal</A> {
+<A NAME="22"></A>
+<A NAME="23"></A>    @EJB
+<A NAME="24"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>&gt; crudServiceLocal_;
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> DHuman() {
+<A NAME="27"></A>    }
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/DHuman.java.html">DHuman</A>.<FONT ID="Class">class</FONT>);
+<A NAME="30"></A>
+<A NAME="31"></A>    @Override
+<A NAME="32"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doDHuman(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="34"></A>        crudServiceLocal_.delete(<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="35"></A>    }
+<A NAME="36"></A>}</pre>
+</BODY>
+</HTML>

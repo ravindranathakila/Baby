@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.modules.GooglePlacesAPIClientModule (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">GooglePlacesAPIClientModule.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.modules;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> com.google.places.api.conf.AbstractGooglePlacesAPIClientModule;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="FormalComment">/**
+<A NAME="6"></A> * Created by IntelliJ IDEA.
+<A NAME="7"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="8"></A> * Date: 5/2/11
+<A NAME="9"></A> * Time: 8:32 AM
+<A NAME="10"></A> */</FONT>
+<A NAME="11"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> GooglePlacesAPIClientModule <FONT ID="Extends">extends</FONT> AbstractGooglePlacesAPIClientModule {
+<A NAME="12"></A>
+<A NAME="13"></A>    <FONT ID="FormalComment">/**
+<A NAME="14"></A>     * Override this method and return yor GooglePlaces App ID
+<A NAME="15"></A>     *
+<A NAME="16"></A>     * @return GooglePlaces App ID
+<A NAME="17"></A>     */</FONT>
+<A NAME="18"></A>    @Override
+<A NAME="19"></A>    <FONT ID="Protected">protected</FONT> String appKey() {
+<A NAME="20"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"AIzaSyB6PCBGVcAjf9-OrZnUjSzx5lAfPxavvew"</FONT>;
+<A NAME="21"></A>    }
+<A NAME="22"></A>}
+<A NAME="23"></A>
+<A NAME="24"></A>
+<A NAME="25"></A><FONT ID="MultiLineComment">/*
+<A NAME="26"></A>
+<A NAME="27"></A>     public static void main(final String[] args) throws JSONException {
+<A NAME="28"></A>        final Injector injector = Guice.createInjector(new GooglePlacesAPIClientModule());
+<A NAME="29"></A>        final ClientFactory clientFactory = injector.getInstance(ClientFactory.class);
+<A NAME="30"></A>        final Client places = clientFactory.getInstance("https://maps.googleapis.com/maps/api/place/search/json");
+<A NAME="31"></A>
+<A NAME="32"></A>         final Map&lt;String, String&gt; params = new HashMap&lt;String,String&gt;();
+<A NAME="33"></A>         params.put("location", "-33.8670522,151.1957362");
+<A NAME="34"></A>         params.put("radius", "500");
+<A NAME="35"></A>         params.put("types", "airport%7Camusement_park%7Caquarium%7Cart_gallery%7Catm%7Cbakery%7Cbank%7Cbar%7Cbeauty_salon%7Cbook_store%7Cbowling_alley%7Cbus_station%7Ccafe%7Ccampground%7Ccar_rental%7Ccasino%7Cchurch%7Ccity_hall%7Cclothing_store%7Cembassy%7Cfire_station%7Cflorist%7Cfood%7Cgas_station%7Cgym%7Chair_care%7Chindu_temple%7Cjewelry_store%7Clibrary%7Clodging%7Cmeal_delivery%7Cmeal_takeaway%7Cmosque%7Cmovie_rental%7Cmovie_theater%7Cmuseum%7Cnight_club%7Cpark%7Cparking%7Cpet_store%7Cplace_of_worship%7Cpolice%7Crestaurant%7Crv_park%7Cschool%7Cshoe_store%7Cshopping_mall%7Cspa%7Cstadium%7Csubway_station%7Csynagogue%7Ctaxi_stand%7Ctrain_station%7Ctravel_agency%7Cuniversity%7Czoo");
+<A NAME="36"></A>         params.put("sensor", "true");
+<A NAME="37"></A>         final JSONObject placesJSONObject = places.get("", params);
+<A NAME="38"></A>         System.out.println(placesJSONObject);
+<A NAME="39"></A>
+<A NAME="40"></A>     }
+<A NAME="41"></A>
+<A NAME="42"></A>
+<A NAME="43"></A> */</FONT></pre>
+</BODY>
+</HTML>

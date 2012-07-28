@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.ExceptionCache (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ExceptionCache.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/PendingEqualsMethodException.java.html">ai.ilikeplaces.exception.PendingEqualsMethodException</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A> * Reusable exceptions
+<A NAME="8"></A> * &lt;p/&gt;
+<A NAME="9"></A> * The displayed line numbers might be confusing for static exceptions.
+<A NAME="10"></A> * &lt;p/&gt;
+<A NAME="11"></A> * Created by IntelliJ IDEA.
+<A NAME="12"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="13"></A> * Date: Mar 8, 2010
+<A NAME="14"></A> * Time: 3:47:30 PM
+<A NAME="15"></A> */</FONT>
+<A NAME="16"></A>
+<A NAME="17"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="18"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ExceptionCache {
+<A NAME="19"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"SORRY! THIS OPERATION IS NOT SUPPORTED YET."</FONT>);
+<A NAME="20"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> UnsupportedOperationException UNSUPPORTED_SWITCH = <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"SORRY! THIS CASE IS NOT SUPPORTED YET."</FONT>);
+<A NAME="21"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> UnsupportedOperationException STATIC_USAGE_ONLY_EXCEPTION = <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"SORRY! THIS CLASS IS DESIGNED FOR STATIC USAGE ONLY."</FONT>);
+<A NAME="22"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/exception/PendingEqualsMethodException.java.html">PendingEqualsMethodException</A> NO_EQUALS_METHOD_EXCEPTION = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/PendingEqualsMethodException.java.html">PendingEqualsMethodException</A>();
+<A NAME="23"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> UnsupportedOperationException METHOD_NOT_IMPLEMENTED = <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"SORRY! THIS METHOD IS NOT IMPLEMENTED YET"</FONT>);
+<A NAME="24"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> IllegalStateException NO_LOGIN = <FONT ID="New">new</FONT> IllegalStateException(<FONT ID="StringLiteral">"SORRY! PLEASE LOG-IN TO PERFORM THIS OPERATION.\n"</FONT> +
+<A NAME="25"></A>            <FONT ID="StringLiteral">"If you are a developer and would like to help out in doing so, please consult I LIKE PLACES via the blog or any other means you know of."</FONT>);
+<A NAME="26"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> RuntimeException FILE_DELETE_FAILED = <FONT ID="New">new</FONT> RuntimeException(<FONT ID="StringLiteral">"SORRY! FILE DELETION FROM PATH FAILED."</FONT>);
+<A NAME="27"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> RuntimeException FILE_RENAME_FAILED = <FONT ID="New">new</FONT> RuntimeException(<FONT ID="StringLiteral">"SORRY! FILE RENAME FAILED."</FONT>);
+<A NAME="28"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> RuntimeException CDN_FILE_UPLOAD_FAILED = <FONT ID="New">new</FONT> RuntimeException(<FONT ID="StringLiteral">"SORRY! FILE UPLOAD TO CDN FAILED."</FONT>);
+<A NAME="29"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> RuntimeException FILE_SIZE_EXCEPTION = <FONT ID="New">new</FONT> RuntimeException(<FONT ID="StringLiteral">"SORRY! FILE SIZE TOO BIG."</FONT>);
+<A NAME="30"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> IllegalAccessError MULTIPLE_INITS = <FONT ID="New">new</FONT> IllegalAccessError(<FONT ID="StringLiteral">"MULTIPLE INITIALIZATIONS DETECTED."</FONT>);
+<A NAME="31"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> IllegalAccessError ILLEGAL_ACCESS_ERROR = <FONT ID="New">new</FONT> IllegalAccessError(<FONT ID="StringLiteral">"ILLEGAL ACCESS DETECTED."</FONT>);
+<A NAME="32"></A>}
+<A NAME="33"></A></pre>
+</BODY>
+</HTML>

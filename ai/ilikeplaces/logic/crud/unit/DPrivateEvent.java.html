@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.DPrivateEvent (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DPrivateEvent.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.EXPECTNULL;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FORGETNULL;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">ai.ilikeplaces.entities.HumansPrivateEvent</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/NoPrivilegesException.java.html">ai.ilikeplaces.exception.NoPrivilegesException</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="18"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="FormalComment">/**
+<A NAME="21"></A> * Created by IntelliJ IDEA.
+<A NAME="22"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="23"></A> * Date: Jan 14, 2010
+<A NAME="24"></A> * Time: 11:53:11 PM
+<A NAME="25"></A> */</FONT>
+<A NAME="26"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="27"></A>@Stateless
+<A NAME="28"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DPrivateEvent <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/DPrivateEventLocal.java.html">DPrivateEventLocal</A> {
+<A NAME="29"></A>
+<A NAME="30"></A>    @EJB
+<A NAME="31"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>&gt; privateEventCrudServiceLocal_;
+<A NAME="32"></A>
+<A NAME="33"></A>
+<A NAME="34"></A>    @EJB
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>&gt; humansPrivateEventCrudServiceLocal;
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DELETE_THIS_EVENT = <FONT ID="StringLiteral">"delete this event. Reason: Neither a Owner of Viewer. Probable cause is that the visual representation of Owners or Viewers are wrong!"</FONT>;
+<A NAME="38"></A>
+<A NAME="39"></A>    @Override
+<A NAME="40"></A>    @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doNTxDPrivateEvent(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/NoPrivilegesException.java.html">NoPrivilegesException</A> {
+<A NAME="42"></A>
+<A NAME="43"></A>        <FONT ID="Boolean">boolean</FONT> returnVal = <FONT ID="False">false</FONT>;
+<A NAME="44"></A>
+<A NAME="45"></A>        checkIfOwner:
+<A NAME="46"></A>        {
+<A NAME="47"></A>            @FORGETNULL
+<A NAME="48"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A> humansPrivateEvent = humansPrivateEventCrudServiceLocal.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="49"></A>
+<A NAME="50"></A>            @EXPECTNULL
+<A NAME="51"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A> privateEvent = privateEventCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEventId);
+<A NAME="52"></A>
+<A NAME="53"></A>            <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>&gt; privateEventOwners = privateEvent.getPrivateEventOwners();
+<A NAME="54"></A>
+<A NAME="55"></A>            <FONT ID="If">if</FONT> (privateEventOwners.contains(humansPrivateEvent)) {
+<A NAME="56"></A>                <FONT ID="If">if</FONT> (privateEventOwners.size() == <FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="57"></A>                    privateEventCrudServiceLocal_.delete(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>, privateEvent.getPrivateEventId());
+<A NAME="58"></A>                    returnVal = <FONT ID="True">true</FONT>;
+<A NAME="59"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="60"></A>                    privateEventOwners.remove(humansPrivateEvent);
+<A NAME="61"></A>
+<A NAME="62"></A>                    <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>&gt; privateEventViewers = privateEvent.getPrivateEventViewers();
+<A NAME="63"></A>                    <FONT ID="If">if</FONT> (privateEventViewers.contains(humansPrivateEvent)) {
+<A NAME="64"></A>                        privateEventViewers.remove(humansPrivateEvent);
+<A NAME="65"></A>                    }
+<A NAME="66"></A>
+<A NAME="67"></A>                    <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>&gt; privateEventInvites = privateEvent.getPrivateEventInvites();
+<A NAME="68"></A>                    <FONT ID="If">if</FONT> (privateEventInvites.contains(humansPrivateEvent)) {
+<A NAME="69"></A>                        privateEventInvites.remove(humansPrivateEvent);
+<A NAME="70"></A>                    }
+<A NAME="71"></A>                }
+<A NAME="72"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="73"></A>                <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivateEvent.java.html">HumansPrivateEvent</A>&gt; privateEventViewers = privateEvent.getPrivateEventViewers();
+<A NAME="74"></A>                <FONT ID="If">if</FONT>(privateEventViewers.contains(humansPrivateEvent)){
+<A NAME="75"></A>                    privateEventViewers.remove(humansPrivateEvent);
+<A NAME="76"></A>                }<FONT ID="Else">else</FONT>{
+<A NAME="77"></A>                    <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/NoPrivilegesException.java.html">NoPrivilegesException</A>(humanId, DELETE_THIS_EVENT);
+<A NAME="78"></A>                }
+<A NAME="79"></A>            }
+<A NAME="80"></A>        }
+<A NAME="81"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="82"></A>    }
+<A NAME="83"></A>}
+<A NAME="84"></A></pre>
+</BODY>
+</HTML>

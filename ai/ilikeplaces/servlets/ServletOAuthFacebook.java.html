@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.ServletOAuthFacebook (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ServletOAuthFacebook.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/ConstructorInvokationException.java.html">ai.ilikeplaces.exception.ConstructorInvokationException</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/Listeners/widgets/Bate.java.html">ai.ilikeplaces.logic.Listeners.widgets.Bate</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUser.java.html">ai.ilikeplaces.logic.role.HumanUser</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">ai.ilikeplaces.logic.validators.unit.Password</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">ai.ilikeplaces.security.face.SingletonHashingRemote</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.json.JSONException;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.json.JSONObject;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.naming.Context;
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.naming.InitialContext;
+<A NAME="22"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="23"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="24"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="25"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="26"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="27"></A><FONT ID="Import">import</FONT> java.util.HashMap;
+<A NAME="28"></A><FONT ID="Import">import</FONT> java.util.Properties;
+<A NAME="29"></A>
+<A NAME="30"></A><FONT ID="FormalComment">/**
+<A NAME="31"></A> * Created by IntelliJ IDEA.
+<A NAME="32"></A> * User: Ravindranath Akila
+<A NAME="33"></A> * Date: 1/7/12
+<A NAME="34"></A> * Time: 12:22 PM
+<A NAME="35"></A> */</FONT>
+<A NAME="36"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ServletOAuthFacebook <FONT ID="Extends">extends</FONT> <A HREF="../../../ai/ilikeplaces/servlets/AbstractOAuth.java.html">AbstractOAuth</A> {
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> RuntimeException JSONERROR = <FONT ID="New">new</FONT> RuntimeException(<FONT ID="StringLiteral">"ERROR IN GETTING EMAIL FROM JSON OBJECT."</FONT>);
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String JSON_ERROR = <FONT ID="StringLiteral">"JSON ERROR"</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NAMING_ERROR = <FONT ID="StringLiteral">"NAMING ERROR"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IO_ERROR = <FONT ID="StringLiteral">"IO ERROR"</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DB_ERROR = <FONT ID="StringLiteral">"DB ERROR"</FONT>;
+<A NAME="42"></A>    <FONT ID="SingleLineComment">// ------------------------ CANONICAL METHODS ------------------------
+<A NAME="43"></A></FONT>
+<A NAME="44"></A>    @Override
+<A NAME="45"></A>    OAuthProvider oAuthProvider() {
+<A NAME="46"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> OAuthProvider(
+<A NAME="47"></A>                <FONT ID="StringLiteral">"https://www.facebook.com/dialog/oauth"</FONT>,
+<A NAME="48"></A>                <FONT ID="StringLiteral">"https://graph.facebook.com/oauth/access_token"</FONT>,
+<A NAME="49"></A>                <FONT ID="New">new</FONT> OAuthAuthorizationRequest(
+<A NAME="50"></A>                        <FONT ID="StringLiteral">"code"</FONT>,
+<A NAME="51"></A>                        <FONT ID="StringLiteral">"139373316127498"</FONT>,
+<A NAME="52"></A>                        <FONT ID="StringLiteral">"http://www.ilikeplaces.com/oauth2fb"</FONT>,
+<A NAME="53"></A>                        <FONT ID="StringLiteral">"email"</FONT>,
+<A NAME="54"></A>                        <FONT ID="Null">null</FONT>
+<A NAME="55"></A>                ));
+<A NAME="56"></A>    }
+<A NAME="57"></A>
+<A NAME="58"></A>
+<A NAME="59"></A>    <FONT ID="Final">final</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/servlets/ServletLogin.java.html">ServletLogin</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="60"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Properties p_ = <FONT ID="New">new</FONT> Properties();
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> Context context = <FONT ID="Null">null</FONT>;
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A> singletonHashingRemote = <FONT ID="Null">null</FONT>;
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HEADER_REFERER = <FONT ID="StringLiteral">"Referer"</FONT>;
+<A NAME="64"></A>
+<A NAME="65"></A>    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/servlets/PageFace.java.html">PageFace</A> home = Controller.Page.home;
+<A NAME="66"></A>
+<A NAME="67"></A>    @Override
+<A NAME="68"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="69"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init() {
+<A NAME="70"></A>        <FONT ID="Boolean">boolean</FONT> initializeFailed = <FONT ID="True">true</FONT>;
+<A NAME="71"></A>        <FONT ID="Final">final</FONT> StringBuilder log = <FONT ID="New">new</FONT> StringBuilder();
+<A NAME="72"></A>        init:
+<A NAME="73"></A>        {
+<A NAME="74"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="75"></A>                p_.put(Context.INITIAL_CONTEXT_FACTORY, RBGet.globalConfig.getString(<FONT ID="StringLiteral">"oejb.RICF"</FONT>));
+<A NAME="76"></A>                p_.put(Context.PROVIDER_URL, RBGet.globalConfig.getString(<FONT ID="StringLiteral">"RICF_LOCATION"</FONT>));
+<A NAME="77"></A>
+<A NAME="78"></A>                context = <FONT ID="New">new</FONT> InitialContext(p_);
+<A NAME="79"></A>
+<A NAME="80"></A>                singletonHashingRemote = (<A HREF="../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A>) context.lookup(SingletonHashingRemote.NAME);
+<A NAME="81"></A>                <FONT ID="If">if</FONT> (singletonHashingRemote == <FONT ID="Null">null</FONT>) {
+<A NAME="82"></A>                    log.append(<FONT ID="StringLiteral">"\nVARIABLE singletonHashingRemote IS NULL! "</FONT>);
+<A NAME="83"></A>                    log.append(singletonHashingRemote);
+<A NAME="84"></A>                    <FONT ID="Break">break</FONT> init;
+<A NAME="85"></A>                }
+<A NAME="86"></A>            } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="87"></A>                log.append(<FONT ID="StringLiteral">"\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!"</FONT>);
+<A NAME="88"></A>                logger.info(<FONT ID="StringLiteral">"\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!"</FONT>, ex);
+<A NAME="89"></A>                <FONT ID="Break">break</FONT> init;
+<A NAME="90"></A>            }
+<A NAME="91"></A>
+<A NAME="92"></A>            <FONT ID="FormalComment">/**
+<A NAME="93"></A>             *
+<A NAME="94"></A>             * break. Do not let this statement be reachable if initialization
+<A NAME="95"></A>             * failed. Instead, break immediately where initialization failed.
+<A NAME="96"></A>             * At this point, we set the initializeFailed to false and thereby,
+<A NAME="97"></A>             * allow initialization of an instance
+<A NAME="98"></A>             */</FONT>
+<A NAME="99"></A>            initializeFailed = <FONT ID="False">false</FONT>;
+<A NAME="100"></A>        }
+<A NAME="101"></A>        <FONT ID="If">if</FONT> (initializeFailed) {
+<A NAME="102"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/ConstructorInvokationException.java.html">ConstructorInvokationException</A>(log.toString());
+<A NAME="103"></A>        }
+<A NAME="104"></A>    }
+<A NAME="105"></A>
+<A NAME="106"></A>    <FONT ID="FormalComment">/**
+<A NAME="107"></A>     * &lt;b&gt;code&lt;/b&gt;
+<A NAME="108"></A>     * &lt;p/&gt;
+<A NAME="109"></A>     * REQUIRED.  The authorization code generated by the
+<A NAME="110"></A>     * authorization server.  The authorization code MUST expire
+<A NAME="111"></A>     * shortly after it is issued to mitigate the risk of leaks.  A
+<A NAME="112"></A>     * maximum authorization code lifetime of 10 minutes is
+<A NAME="113"></A>     * RECOMMENDED.  The client MUST NOT use the authorization code
+<A NAME="114"></A>     * more than once.  If an authorization code is used more than
+<A NAME="115"></A>     * once, the authorization server MUST deny the request and SHOULD
+<A NAME="116"></A>     * attempt to revoke all tokens previously issued based on that
+<A NAME="117"></A>     * authorization code.  The authorization code is bound to the
+<A NAME="118"></A>     * client identifier and redirection URI.
+<A NAME="119"></A>     * &lt;p/&gt;
+<A NAME="120"></A>     * &lt;b&gt;state&lt;/b&gt;
+<A NAME="121"></A>     * &lt;p/&gt;
+<A NAME="122"></A>     * REQUIRED if the "state" parameter was present in the client
+<A NAME="123"></A>     * authorization request.  The exact value received from the
+<A NAME="124"></A>     *
+<A NAME="125"></A>     * @param request
+<A NAME="126"></A>     * @param response
+<A NAME="127"></A>     */</FONT>
+<A NAME="128"></A>    @Override
+<A NAME="129"></A>    <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> HttpServletRequest request, <FONT ID="Final">final</FONT> HttpServletResponse response) {
+<A NAME="130"></A>        <FONT ID="Final">final</FONT> OAuthAuthorizationResponse oAuthAuthorizationResponse = <FONT ID="Super">super</FONT>.getOAuthAuthorizationResponse(request, response);
+<A NAME="131"></A>        <FONT ID="If">if</FONT> (oAuthAuthorizationResponse != <FONT ID="Null">null</FONT>) {
+<A NAME="132"></A>            Loggers.debug(oAuthAuthorizationResponse.toString());
+<A NAME="133"></A>
+<A NAME="134"></A>            <FONT ID="Final">final</FONT> OAuthAccessTokenResponse oAuthAccessTokenResponse = <FONT ID="Super">super</FONT>.getOAuthAccessTokenResponse(oAuthAuthorizationResponse,
+<A NAME="135"></A>                    <FONT ID="New">new</FONT> ClientAuthentication(<FONT ID="StringLiteral">"139373316127498"</FONT>, <FONT ID="StringLiteral">"56a2340af5eb11db36258f9f7a07b2b9"</FONT>, <FONT ID="StringLiteral">"http://www.ilikeplaces.com/oauth2fb"</FONT>));
+<A NAME="136"></A>
+<A NAME="137"></A>            Loggers.debug(oAuthAccessTokenResponse.toString());
+<A NAME="138"></A>
+<A NAME="139"></A>            <FONT ID="SingleLineComment">//https://graph.facebook.com/me
+<A NAME="140"></A></FONT>
+<A NAME="141"></A>            <FONT ID="Final">final</FONT> JSONObject profileDataOfUser = getHttpContentAsJson(<FONT ID="StringLiteral">"https://graph.facebook.com/me"</FONT>,
+<A NAME="142"></A>                    <FONT ID="New">new</FONT> HashMap&lt;String, String&gt;() {
+<A NAME="143"></A>                        {
+<A NAME="144"></A>                            put(access_token, oAuthAccessTokenResponse.access_token);
+<A NAME="145"></A>                        }
+<A NAME="146"></A>                    }
+<A NAME="147"></A>            );
+<A NAME="148"></A>
+<A NAME="149"></A>            Loggers.debug(profileDataOfUser.toString());
+<A NAME="150"></A>
+<A NAME="151"></A>            <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> existingUser = <FONT ID="Null">null</FONT>;
+<A NAME="152"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="153"></A>                <FONT ID="Final">final</FONT> String email = profileDataOfUser.getString(<FONT ID="StringLiteral">"email"</FONT>);
+<A NAME="154"></A>
+<A NAME="155"></A>                Loggers.debug(email);
+<A NAME="156"></A>
+<A NAME="157"></A>                existingUser = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(email);
+<A NAME="158"></A>
+<A NAME="159"></A>                <FONT ID="If">if</FONT> (existingUser != <FONT ID="Null">null</FONT>) {
+<A NAME="160"></A>
+<A NAME="161"></A>                    ActivateAccountAsFBWouldHaveVerifiedUser:
+<A NAME="162"></A>                    {
+<A NAME="163"></A>                        <FONT ID="If">if</FONT> (!existingUser.getHumanAlive()) {
+<A NAME="164"></A>                            Loggers.debug(<FONT ID="StringLiteral">"Activating User"</FONT>);
+<A NAME="165"></A>                            DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doUActivateHuman(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(existingUser.getHumanId()).getSelfAsValid());
+<A NAME="166"></A>                        }
+<A NAME="167"></A>                    }
+<A NAME="168"></A>
+<A NAME="169"></A>                    loginUser(request, response, existingUser);
+<A NAME="170"></A>
+<A NAME="171"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="172"></A>                    Loggers.debug(<FONT ID="StringLiteral">"Creating New User"</FONT>);
+<A NAME="173"></A>
+<A NAME="174"></A>                    <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; humanCreateReturn = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(
+<A NAME="175"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>().setObjAsValid(email),
+<A NAME="176"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A>(Bate.getRandomPassword()),
+<A NAME="177"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(email));
+<A NAME="178"></A>
+<A NAME="179"></A>                    <FONT ID="If">if</FONT> (humanCreateReturn.valid()) {
+<A NAME="180"></A>                        loginUser(request, response, DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(email));
+<A NAME="181"></A>                    }<FONT ID="Else">else</FONT>{
+<A NAME="182"></A>                        <FONT ID="SingleLineComment">//Hmmm. Backend would've logged this. We need to notify the user however.
+<A NAME="183"></A></FONT>                    }
+<A NAME="184"></A>                }
+<A NAME="185"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> JSONException e) {
+<A NAME="186"></A>                Loggers.error(JSON_ERROR, e);
+<A NAME="187"></A>                <FONT ID="Throw">throw</FONT> JSONERROR;
+<A NAME="188"></A>            } <FONT ID="Catch">catch</FONT> (NamingException e) {
+<A NAME="189"></A>                Loggers.error(NAMING_ERROR, e);
+<A NAME="190"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="191"></A>            } <FONT ID="Catch">catch</FONT> (IOException e) {
+<A NAME="192"></A>                Loggers.error(IO_ERROR, e);
+<A NAME="193"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="194"></A>            }
+<A NAME="195"></A>
+<A NAME="196"></A>
+<A NAME="197"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="198"></A>            <FONT ID="SingleLineComment">// we ignore since a redirect will happen
+<A NAME="199"></A></FONT>        }
+<A NAME="200"></A>    }
+<A NAME="201"></A>
+<A NAME="202"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> loginUser(HttpServletRequest request, HttpServletResponse response, <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> existingUser) <FONT ID="Throws">throws</FONT> NamingException, IOException {
+<A NAME="203"></A>        LoginTheUser:
+<A NAME="204"></A>        {
+<A NAME="205"></A>
+<A NAME="206"></A>            Loggers.debug(<FONT ID="StringLiteral">"Logging in User"</FONT>);
+<A NAME="207"></A>
+<A NAME="208"></A>            <FONT ID="Final">final</FONT> String ilp_destination = (String) request.getSession(<FONT ID="True">true</FONT>).getAttribute(ILP_DESTINATION);
+<A NAME="209"></A>
+<A NAME="210"></A>            <FONT ID="Final">final</FONT> HttpSession userSession_;
+<A NAME="211"></A>            handleHttpSession:
+<A NAME="212"></A>            {
+<A NAME="213"></A>
+<A NAME="214"></A>                <FONT ID="FormalComment">/**
+<A NAME="215"></A>                 * Remove any redundant session. Though above session is created, leave this anyway;
+<A NAME="216"></A>                 */</FONT>
+<A NAME="217"></A>                <FONT ID="If">if</FONT> (request.getSession(<FONT ID="False">false</FONT>) != <FONT ID="Null">null</FONT>) {
+<A NAME="218"></A>                    request.getSession(<FONT ID="False">false</FONT>).invalidate();
+<A NAME="219"></A>                }
+<A NAME="220"></A>
+<A NAME="221"></A>                <FONT ID="FormalComment">/**
+<A NAME="222"></A>                 * Make user session anyway as he came to log in
+<A NAME="223"></A>                 */</FONT>
+<A NAME="224"></A>                userSession_ = request.getSession();
+<A NAME="225"></A>
+<A NAME="226"></A>                <FONT ID="FormalComment">/**
+<A NAME="227"></A>                 * Set a timeout compatible with the stateful session bean handling user
+<A NAME="228"></A>                 */</FONT>
+<A NAME="229"></A>                userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"UserSessionIdleInterval"</FONT>)));
+<A NAME="230"></A>            }
+<A NAME="231"></A>
+<A NAME="232"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> humanUserLocal =  HumanUser.getHumanUserLocal(<FONT ID="True">true</FONT>);
+<A NAME="233"></A>            humanUserLocal.setHumanUserId(existingUser.getHumanId());
+<A NAME="234"></A>            userSession_.setAttribute(ServletLogin.HumanUser, (<FONT ID="New">new</FONT> SessionBoundBadRefWrapper&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;(humanUserLocal, userSession_)));
+<A NAME="235"></A>
+<A NAME="236"></A>            response.sendRedirect(ilp_destination);
+<A NAME="237"></A>        }
+<A NAME="238"></A>    }
+<A NAME="239"></A>}
+<A NAME="240"></A>
+<A NAME="241"></A><FONT ID="MultiLineComment">/*
+<A NAME="242"></A>
+<A NAME="243"></A>https://www.facebook.com/dialog/oauth?client_id=139373316127498&amp;redirect_uri=http://WWW.ilikeplaces.com/oauth2&amp;scope=email
+<A NAME="244"></A>
+<A NAME="245"></A>http://www.ilikeplaces.com/oauth2?code=AQAGQa3sr_AolE2ocDLLnq0NYDgJ8TYcATJpwHnC6XKQfDPbxBoxr0lfE9TO4V2l7YXXy35bY3pVmV69F5vM3bWROEyIPD6F5QNPptb2tLTPdQHZFiAEiUOwsrs3hgJDxStOhLRwFRslgRfhj8NZdIVYvZVGYs7w9yT06w6KoNaNIDwS0e2an9tp86QV5eh1mV8#_=_
+<A NAME="246"></A>
+<A NAME="247"></A>
+<A NAME="248"></A>https://graph.facebook.com/oauth/access_token?client_id=139373316127498&amp;redirect_uri=http://WWW.ilikeplaces.com/oauth2&amp;client_secret=56a2340af5eb11db36258f9f7a07b2b9&amp;code=AQAGQa3sr_AolE2ocDLLnq0NYDgJ8TYcATJpwHnC6XKQfDPbxBoxr0lfE9TO4V2l7YXXy35bY3pVmV69F5vM3bWROEyIPD6F5QNPptb2tLTPdQHZFiAEiUOwsrs3hgJDxStOhLRwFRslgRfhj8NZdIVYvZVGYs7w9yT06w6KoNaNIDwS0e2an9tp86QV5eh1mV8#_=_
+<A NAME="249"></A>
+<A NAME="250"></A>
+<A NAME="251"></A>Without logging in, calling the above url gives
+<A NAME="252"></A>
+<A NAME="253"></A>access_token=AAABZBwmDZCuwoBAEtNOfOITUpi0oJFCZAHD0KHOPNiyBErPMhu1k3eXa7RGrrPy789r4OgoZCqST53T9cJKIZBPDhb4yJj2NrSpbb8VbeTwZDZD&amp;expires=4051
+<A NAME="254"></A>
+<A NAME="255"></A>Without logging in means calling it from a cookieless session, like the server
+<A NAME="256"></A>
+<A NAME="257"></A>
+<A NAME="258"></A>
+<A NAME="259"></A>Running this :
+<A NAME="260"></A>https://graph.facebook.com/me?access_token=AAABZBwmDZCuwoBAEtNOfOITUpi0oJFCZAHD0KHOPNiyBErPMhu1k3eXa7RGrrPy789r4OgoZCqST53T9cJKIZBPDhb4yJj2NrSpbb8VbeTwZDZD
+<A NAME="261"></A>
+<A NAME="262"></A>
+<A NAME="263"></A>Returns:
+<A NAME="264"></A>
+<A NAME="265"></A>
+<A NAME="266"></A>{
+<A NAME="267"></A>   "id": "726280855",
+<A NAME="268"></A>   "name": "Ravindranath Akila",
+<A NAME="269"></A>   "first_name": "Ravindranath",
+<A NAME="270"></A>   "last_name": "Akila",
+<A NAME="271"></A>   "link": "http://www.facebook.com/ravindranathakila",
+<A NAME="272"></A>   "username": "ravindranathakila",
+<A NAME="273"></A>   "location": {
+<A NAME="274"></A>      "id": "",
+<A NAME="275"></A>      "name": null
+<A NAME="276"></A>   },
+<A NAME="277"></A>   "gender": "male",
+<A NAME="278"></A>   "email": "ravindranathakila@gmail.com",
+<A NAME="279"></A>   "timezone": 5.5,
+<A NAME="280"></A>   "locale": "en_US",
+<A NAME="281"></A>   "verified": true,
+<A NAME="282"></A>   "updated_time": "2011-12-24T13:54:01+0000"
+<A NAME="283"></A>}
+<A NAME="284"></A>
+<A NAME="285"></A>
+<A NAME="286"></A>
+<A NAME="287"></A>https://graph.facebook.com/ravindranathakila
+<A NAME="288"></A>
+<A NAME="289"></A>{
+<A NAME="290"></A>   "id": "726280855",
+<A NAME="291"></A>   "name": "Ravindranath Akila",
+<A NAME="292"></A>   "first_name": "Ravindranath",
+<A NAME="293"></A>   "last_name": "Akila",
+<A NAME="294"></A>   "username": "ravindranathakila",
+<A NAME="295"></A>   "gender": "male",
+<A NAME="296"></A>   "locale": "en_US"
+<A NAME="297"></A>}
+<A NAME="298"></A>
+<A NAME="299"></A>
+<A NAME="300"></A>
+<A NAME="301"></A>
+<A NAME="302"></A>*/</FONT>
+<A NAME="303"></A>
+<A NAME="304"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,378 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.SmartLogger (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SmartLogger.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> java.io.PrintWriter;
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.io.StringWriter;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers.LEVEL</A>;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> * Lets try make a smart logger.
+<A NAME="12"></A> * &lt;p/&gt;
+<A NAME="13"></A> * Intention:
+<A NAME="14"></A> * Get a start message such as "Shutting down system"
+<A NAME="15"></A> * Wait for a confirmation such as "Done"
+<A NAME="16"></A> * If no confirmation within a specific time(sent with the message) print "Possible failure, See logs".
+<A NAME="17"></A> * &lt;p/&gt;
+<A NAME="18"></A> * Requirements:
+<A NAME="19"></A> * Accept a logger
+<A NAME="20"></A> * Accept a logger severity
+<A NAME="21"></A> * &lt;p/&gt;
+<A NAME="22"></A> * if you find any bugs, please notify somebody at ilikeplaces.com
+<A NAME="23"></A> * &lt;p/&gt;
+<A NAME="24"></A> * I did this for fun when noticing how Mandriva Linux(then again all linux) was shutting down.
+<A NAME="25"></A> * The status messages goes as "Stopping SASL.... [FAILED]"... "Stopping MySQL... [done]".
+<A NAME="26"></A> * This got me thinking, logging is not about just notifying. It is about reporting a process.
+<A NAME="27"></A> * Hence, this smart logger is to facilitate a start and time out, completion or delayed completion
+<A NAME="28"></A> * of a process *
+<A NAME="29"></A> * Created by IntelliJ IDEA.
+<A NAME="30"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="31"></A> * Date: May 29, 2010
+<A NAME="32"></A> * Time: 8:28:17 PM
+<A NAME="33"></A> */</FONT>
+<A NAME="34"></A>
+<A NAME="35"></A>
+<A NAME="36"></A>@DOCUMENTATION(
+<A NAME="37"></A>        LOGIC = @LOGIC(
+<A NAME="38"></A>                @NOTE(
+<A NAME="39"></A>                        {
+<A NAME="40"></A>                                <FONT ID="StringLiteral">"scenario 1: no timeout. normal complete&gt; sleep 0 , status false"</FONT>,
+<A NAME="41"></A>                                <FONT ID="StringLiteral">"scenario 2: no timeout, 2 normal completes&gt; sleep 0, status true"</FONT>,
+<A NAME="42"></A>
+<A NAME="43"></A>                                <FONT ID="StringLiteral">"scenario 3: with timeout, normal complete&gt; sleep +ve, status false"</FONT>,
+<A NAME="44"></A>                                <FONT ID="StringLiteral">"scenario 4: with timeout, 2 normal completes&gt; sleep +ve, status true"</FONT>,
+<A NAME="45"></A>                                <FONT ID="StringLiteral">"scenario 4: with timeout, recovered complete&gt; sleep +ve, status true"</FONT>,
+<A NAME="46"></A>                                <FONT ID="StringLiteral">"scenario 4: with timeout, 2 recovered completes&gt; sleep +ve, status true"</FONT>,
+<A NAME="47"></A>
+<A NAME="48"></A>                                <FONT ID="StringLiteral">"summary 1: scenario 1 and 2 can be tracked by, sleep always 0, and if staus is true, throw an exception."</FONT>,
+<A NAME="49"></A>                                <FONT ID="StringLiteral">"summary 2:"</FONT>
+<A NAME="50"></A>                        }
+<A NAME="51"></A>                )
+<A NAME="52"></A>        ),
+<A NAME="53"></A>        TODO = @TODO(task = <FONT ID="StringLiteral">"Well there is something I noticed recently. Unless something goes wrong, logs are useful only for analytics. "</FONT> +
+<A NAME="54"></A>                <FONT ID="StringLiteral">"Hence, if we could implement a logger that logs an entire sequence of monitored events upon an exception, that'd be really cool! "</FONT> +
+<A NAME="55"></A>                <FONT ID="StringLiteral">"FOr example, a user logs in and does A, and B, and while doing C, he gets a server error/or not. "</FONT> +
+<A NAME="56"></A>                <FONT ID="StringLiteral">"If C threw an exception, both A and B get logged. If C didn't, nothing gets logged. "</FONT> +
+<A NAME="57"></A>                <FONT ID="StringLiteral">"This approach will dramatically reduce log entries. It has a memory penalty. "</FONT> +
+<A NAME="58"></A>                <FONT ID="StringLiteral">"But then again, this already can be done by a new complete method. Lets see. "</FONT> +
+<A NAME="59"></A>                <FONT ID="StringLiteral">"Hmmm.... Logging levels can be tuned to gain this feature so maybe this TODO is absurd! :D "</FONT> +
+<A NAME="60"></A>                <FONT ID="StringLiteral">"Yes, it is!"</FONT>),
+<A NAME="61"></A>        WARNING = @WARNING(<FONT ID="StringLiteral">"Do not user any java.lang.Objects classes. The SmartLogger should be extremely memory efficient."</FONT>)
+<A NAME="62"></A>)
+<A NAME="63"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="64"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SmartLogger <FONT ID="Extends">extends</FONT> Thread {
+<A NAME="65"></A>
+<A NAME="66"></A>    <FONT ID="SingleLineComment">//Let's experiment with ThreadLocal :-P
+<A NAME="67"></A></FONT>
+<A NAME="68"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> ThreadLocal&lt;<A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A>&gt; smartLoggerThreadLocal = <FONT ID="New">new</FONT> ThreadLocal&lt;<A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A>&gt;() {
+<A NAME="69"></A>        <FONT ID="FormalComment">/**
+<A NAME="70"></A>         * Returns the current thread's "initial value" for this
+<A NAME="71"></A>         * thread-local variable.  This method will be invoked the first
+<A NAME="72"></A>         * time a thread accesses the variable with the {@link #get}
+<A NAME="73"></A>         * method, unless the thread previously invoked the {@link #set}
+<A NAME="74"></A>         * method, in which case the &lt;tt&gt;initialValue&lt;/tt&gt; method will not
+<A NAME="75"></A>         * be invoked for the thread.  Normally, this method is invoked at
+<A NAME="76"></A>         * most once per thread, but it may be invoked again in case of
+<A NAME="77"></A>         * subsequent invocations of {@link #remove} followed by {@link #get}.
+<A NAME="78"></A>         * &lt;p/&gt;
+<A NAME="79"></A>         * &lt;p&gt;This implementation simply returns &lt;tt&gt;null&lt;/tt&gt;; if the
+<A NAME="80"></A>         * programmer desires thread-local variables to have an initial
+<A NAME="81"></A>         * value other than &lt;tt&gt;null&lt;/tt&gt;, &lt;tt&gt;ThreadLocal&lt;/tt&gt; must be
+<A NAME="82"></A>         * subclassed, and this method overridden.  Typically, an
+<A NAME="83"></A>         * anonymous inner class will be used.
+<A NAME="84"></A>         *
+<A NAME="85"></A>         * @return the initial value for this thread-local
+<A NAME="86"></A>         */</FONT>
+<A NAME="87"></A>        @Override
+<A NAME="88"></A>        <FONT ID="Protected">protected</FONT> <FONT ID="Synchronized">synchronized</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> initialValue() {
+<A NAME="89"></A>            <FONT ID="Return">return</FONT> SmartLogger.start(LEVEL.INFO, <FONT ID="StringLiteral">"SL STARTING FOR THREAD ID:"</FONT> + Thread.currentThread().getId(), <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="Null">null</FONT>);
+<A NAME="90"></A>        }
+<A NAME="91"></A>
+<A NAME="92"></A>        <FONT ID="FormalComment">/**
+<A NAME="93"></A>         * Returns the value in the current thread's copy of this
+<A NAME="94"></A>         * thread-local variable.  If the variable has no value for the
+<A NAME="95"></A>         * current thread, it is first initialized to the value returned
+<A NAME="96"></A>         * by an invocation of the {@link #initialValue} method.
+<A NAME="97"></A>         *
+<A NAME="98"></A>         * @return the current thread's value of this thread-local
+<A NAME="99"></A>         */</FONT>
+<A NAME="100"></A>        @Override
+<A NAME="101"></A>        <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> get() {
+<A NAME="102"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> smartLogger = <FONT ID="Super">super</FONT>.get();
+<A NAME="103"></A>            <FONT ID="If">if</FONT> (smartLogger.hasCompleted()) {
+<A NAME="104"></A>                remove();
+<A NAME="105"></A>            }
+<A NAME="106"></A>            <FONT ID="Return">return</FONT> <FONT ID="Super">super</FONT>.get();
+<A NAME="107"></A>        }
+<A NAME="108"></A>    };
+<A NAME="109"></A>
+<A NAME="110"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> g() {
+<A NAME="111"></A>        <FONT ID="Return">return</FONT> smartLoggerThreadLocal.get();
+<A NAME="112"></A>    }
+<A NAME="113"></A>
+<A NAME="114"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOGGER_HAS_ALREADY_BEEN_COMPLETED = <FONT ID="StringLiteral">"Logger has already been completed!"</FONT>;
+<A NAME="115"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOGGER_HAS_ALREADY_BEEN_COMPLETED_UNDER_TIMEOUT_LOGGING = <FONT ID="StringLiteral">"Logger has already been completed under timeout logging."</FONT>;
+<A NAME="116"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SORRY_I_POSSIBLY_FAILED_TO_LOG = <FONT ID="StringLiteral">"SORRY! I POSSIBLY FAILED TO LOG:"</FONT>;
+<A NAME="117"></A>    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/Loggers.java.html">Loggers.LEVEL</A> level;
+<A NAME="118"></A>    <FONT ID="Boolean">boolean</FONT> recordedAtLeastOneError = <FONT ID="False">false</FONT>;
+<A NAME="119"></A>    String logmsg;
+<A NAME="120"></A>    <FONT ID="Long">long</FONT> sleep;
+<A NAME="121"></A>    <FONT ID="Long">long</FONT> starTime = -<FONT ID="IntegerLiteral">1</FONT>;<FONT ID="SingleLineComment">//WARNING: DO NOT change this default value as it is used in IF/TERNARY conditions.
+<A NAME="122"></A></FONT>
+<A NAME="123"></A>    <FONT ID="Boolean">boolean</FONT> logged = <FONT ID="False">false</FONT>;
+<A NAME="124"></A>
+<A NAME="125"></A>    <FONT ID="MultiLineComment">/*The following string constants might look odd but we do not want any delays in a logger. Macro optimization!!*/</FONT>
+<A NAME="126"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CAUSE_UNRESPONSIVE_IN_MILLIS = <FONT ID="StringLiteral">"{} &lt;= cause UNRESPONSIVE in millis:"</FONT>;
+<A NAME="127"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SORRY_I_FAILED_TO_LOG_THIS_MESSAGE = <FONT ID="StringLiteral">"SORRY! I FAILED TO LOG THIS MESSAGE:"</FONT>;
+<A NAME="128"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CAUSE_RECOVERED_WITH_STATUS = <FONT ID="StringLiteral">" &lt;= cause RECOVERED with status:"</FONT>;
+<A NAME="129"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TIME_TAKEN = <FONT ID="StringLiteral">"[Time Taken:"</FONT>;
+<A NAME="130"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CLOSE_SQUARE_BRACKET = <FONT ID="StringLiteral">"]"</FONT>;
+<A NAME="131"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COLON = <FONT ID="StringLiteral">":"</FONT>;
+<A NAME="132"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EMPTY = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="133"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PIPE = <FONT ID="StringLiteral">"|"</FONT>;
+<A NAME="134"></A>
+<A NAME="135"></A>    <FONT ID="FormalComment">/**
+<A NAME="136"></A>     * Leaving optional parameters as null will simply ignore them.
+<A NAME="137"></A>     * You can specify any number of optinal parameters as indicated by the underscore.
+<A NAME="138"></A>     * At the time of commenting, the optional value startMsg_calcExecTime means,
+<A NAME="139"></A>     * you can give a startMsg(you guessed right, a string) and a calcExecTime(boolean).
+<A NAME="140"></A>     * Leaving any null will make the program simply ignore the value.
+<A NAME="141"></A>     *
+<A NAME="142"></A>     * @param logLevel
+<A NAME="143"></A>     * @param logMessage
+<A NAME="144"></A>     * @param timeout
+<A NAME="145"></A>     * @param startMsg_calcExecTime
+<A NAME="146"></A>     */</FONT>
+<A NAME="147"></A>    <FONT ID="Private">private</FONT> SmartLogger(<FONT ID="Final">final</FONT> LEVEL logLevel, <FONT ID="Final">final</FONT> String logMessage, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> timeout, <FONT ID="Final">final</FONT> Object... startMsg_calcExecTime) {
+<A NAME="148"></A>        <FONT ID="If">if</FONT> (startMsg_calcExecTime.length == <FONT ID="IntegerLiteral">2</FONT>) {  <FONT ID="SingleLineComment">//Placing this IF above as we need to log time asap.
+<A NAME="149"></A></FONT>            <FONT ID="If">if</FONT> (startMsg_calcExecTime[<FONT ID="IntegerLiteral">1</FONT>] != <FONT ID="Null">null</FONT>) {
+<A NAME="150"></A>                <FONT ID="If">if</FONT> ((Boolean) startMsg_calcExecTime[<FONT ID="IntegerLiteral">1</FONT>]) {
+<A NAME="151"></A>                    starTime = System.currentTimeMillis();
+<A NAME="152"></A>                }
+<A NAME="153"></A>            }
+<A NAME="154"></A>            <FONT ID="If">if</FONT> (startMsg_calcExecTime[<FONT ID="IntegerLiteral">0</FONT>] != <FONT ID="Null">null</FONT>) {
+<A NAME="155"></A>                Loggers.log(logLevel, Loggers.EMBED, startMsg_calcExecTime[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="156"></A>            }
+<A NAME="157"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (startMsg_calcExecTime.length == <FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="158"></A>            <FONT ID="If">if</FONT> (startMsg_calcExecTime[<FONT ID="IntegerLiteral">0</FONT>] != <FONT ID="Null">null</FONT>) {
+<A NAME="159"></A>                Loggers.log(logLevel, Loggers.EMBED, startMsg_calcExecTime[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="160"></A>            }
+<A NAME="161"></A>        }
+<A NAME="162"></A>
+<A NAME="163"></A>        <FONT ID="This">this</FONT>.logmsg = logMessage != <FONT ID="Null">null</FONT> ? logMessage : EMPTY;<FONT ID="SingleLineComment">//I think this is cool, especially since null caused a bug which delayed a release by one day and...
+<A NAME="164"></A></FONT>        <FONT ID="This">this</FONT>.sleep = timeout;
+<A NAME="165"></A>        <FONT ID="This">this</FONT>.level = logLevel;
+<A NAME="166"></A>
+<A NAME="167"></A>        <FONT ID="This">this</FONT>.setUncaughtExceptionHandler(<FONT ID="New">new</FONT> UncaughtExceptionHandler() {
+<A NAME="168"></A>
+<A NAME="169"></A>            @Override
+<A NAME="170"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> uncaughtException(Thread t, Throwable e) {
+<A NAME="171"></A>                Loggers.log(LEVEL.ERROR, SORRY_I_POSSIBLY_FAILED_TO_LOG + logMessage, e);
+<A NAME="172"></A>            }
+<A NAME="173"></A>        });
+<A NAME="174"></A>
+<A NAME="175"></A>        start();
+<A NAME="176"></A>        setPriority(Thread.NORM_PRIORITY);<FONT ID="SingleLineComment">//Should we set this to Min? Hmmm.. then all method calls should be checked for asynchronosity
+<A NAME="177"></A></FONT>    }
+<A NAME="178"></A>
+<A NAME="179"></A>    @Override
+<A NAME="180"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="181"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="182"></A>            <FONT ID="If">if</FONT> (sleep != <FONT ID="IntegerLiteral">0</FONT>) {<FONT ID="SingleLineComment">//Sleep 0 avoids timeout. This is when this object will wait till task "complete"
+<A NAME="183"></A></FONT>                Thread.sleep(sleep);
+<A NAME="184"></A>                <FONT ID="If">if</FONT> (!status()) {
+<A NAME="185"></A>                    Loggers.log(level, CAUSE_UNRESPONSIVE_IN_MILLIS + sleep, logmsg);
+<A NAME="186"></A>                    sleep = -<FONT ID="IntegerLiteral">1</FONT>;<FONT ID="SingleLineComment">//To track that sleep value was consumed once
+<A NAME="187"></A></FONT>                }
+<A NAME="188"></A>            }
+<A NAME="189"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> InterruptedException e) {
+<A NAME="190"></A>            Loggers.log(LEVEL.ERROR, SORRY_I_FAILED_TO_LOG_THIS_MESSAGE + logmsg, e);
+<A NAME="191"></A>        }
+<A NAME="192"></A>    }
+<A NAME="193"></A>
+<A NAME="194"></A>    <FONT ID="FormalComment">/**
+<A NAME="195"></A>     *
+<A NAME="196"></A>     * @return Updates and returns log status to be false if no logging was done before. Subsequent calls will return true;
+<A NAME="197"></A>     */</FONT>
+<A NAME="198"></A>    <FONT ID="Private">private</FONT> <FONT ID="Synchronized">synchronized</FONT> <FONT ID="Boolean">boolean</FONT> status() {
+<A NAME="199"></A>        <FONT ID="Return">return</FONT> !logged ? !(logged = <FONT ID="True">true</FONT>) : !logged;<FONT ID="SingleLineComment">//hehe, tricky. :D
+<A NAME="200"></A></FONT>    }
+<A NAME="201"></A>
+<A NAME="202"></A>    <FONT ID="FormalComment">/**
+<A NAME="203"></A>     * Returns the time taken to execute task, or empty string, if calculations disabled
+<A NAME="204"></A>     *
+<A NAME="205"></A>     * @return
+<A NAME="206"></A>     */</FONT>
+<A NAME="207"></A>    <FONT ID="Private">private</FONT> String timeTaken() {
+<A NAME="208"></A>        <FONT ID="Return">return</FONT> (starTime == -<FONT ID="IntegerLiteral">1</FONT>) ? EMPTY : TIME_TAKEN + (System.currentTimeMillis() - starTime + CLOSE_SQUARE_BRACKET);
+<A NAME="209"></A>    }
+<A NAME="210"></A>
+<A NAME="211"></A>    <FONT ID="FormalComment">/**
+<A NAME="212"></A>     * Leaving optional parameters as null will simply ignore them.
+<A NAME="213"></A>     * You can specify any number of optinal parameters as indicated by the underscore.
+<A NAME="214"></A>     * At the time of commenting, the optional value startMsg_calcExecTime means,
+<A NAME="215"></A>     * you can give a startMsg(you guessed right, a string) and a calcExecTime(boolean).
+<A NAME="216"></A>     * Leaving any null will make the program simply ignore the value.
+<A NAME="217"></A>     *
+<A NAME="218"></A>     * @param logLevel
+<A NAME="219"></A>     * @param logMessage
+<A NAME="220"></A>     * @param timeout
+<A NAME="221"></A>     * @param startMsg_calcExecTime calcExecTime is of unit milliseconds
+<A NAME="222"></A>     * @return
+<A NAME="223"></A>     */</FONT>
+<A NAME="224"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> start(<FONT ID="Final">final</FONT> LEVEL logLevel, <FONT ID="Final">final</FONT> String logMessage, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> timeout, <FONT ID="Final">final</FONT> Object... startMsg_calcExecTime) {
+<A NAME="225"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A>(logLevel, logMessage, timeout, startMsg_calcExecTime);
+<A NAME="226"></A>    }
+<A NAME="227"></A>
+<A NAME="228"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> appendToLogMSG(<FONT ID="Final">final</FONT> String stringToBeAppended) {
+<A NAME="229"></A>        logmsg += PIPE + stringToBeAppended;
+<A NAME="230"></A>    }
+<A NAME="231"></A>
+<A NAME="232"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> appendToLogMSG(<FONT ID="Final">final</FONT> String errorDescription, <FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="233"></A>        logmsg += PIPE + errorDescription;
+<A NAME="234"></A>        StringWriter sw = <FONT ID="New">new</FONT> StringWriter();
+<A NAME="235"></A>        PrintWriter pw = <FONT ID="New">new</FONT> PrintWriter(sw);
+<A NAME="236"></A>        t.printStackTrace(pw);
+<A NAME="237"></A>        pw.flush();
+<A NAME="238"></A>        sw.flush();
+<A NAME="239"></A>        sw.toString();
+<A NAME="240"></A>        logmsg += PIPE + sw;
+<A NAME="241"></A>        recordedAtLeastOneError = <FONT ID="True">true</FONT>;
+<A NAME="242"></A>    }
+<A NAME="243"></A>
+<A NAME="244"></A>    <FONT ID="FormalComment">/**
+<A NAME="245"></A>     * @param stringToBeAppended
+<A NAME="246"></A>     */</FONT>
+<A NAME="247"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> l(<FONT ID="Final">final</FONT> String stringToBeAppended) {
+<A NAME="248"></A>        appendToLogMSG(stringToBeAppended);
+<A NAME="249"></A>    }
+<A NAME="250"></A>
+<A NAME="251"></A>    <FONT ID="FormalComment">/**
+<A NAME="252"></A>     * @param objectWithToStringOverridden
+<A NAME="253"></A>     */</FONT>
+<A NAME="254"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> l(<FONT ID="Final">final</FONT> Object objectWithToStringOverridden) {
+<A NAME="255"></A>        appendToLogMSG(objectWithToStringOverridden.toString());
+<A NAME="256"></A>    }
+<A NAME="257"></A>
+<A NAME="258"></A>    <FONT ID="FormalComment">/**
+<A NAME="259"></A>     * @param errorDescription
+<A NAME="260"></A>     * @param throwableErrorToBeLogged
+<A NAME="261"></A>     */</FONT>
+<A NAME="262"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> l(<FONT ID="Final">final</FONT> String errorDescription, <FONT ID="Final">final</FONT> Throwable throwableErrorToBeLogged) {
+<A NAME="263"></A>        appendToLogMSG(errorDescription, throwableErrorToBeLogged);
+<A NAME="264"></A>    }
+<A NAME="265"></A>
+<A NAME="266"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> complete(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> smartLogger, <FONT ID="Final">final</FONT> LEVEL completeLevel, <FONT ID="Final">final</FONT> String completeStatus) {
+<A NAME="267"></A>        smartLogger.complete(completeLevel, completeStatus);
+<A NAME="268"></A>    }
+<A NAME="269"></A>
+<A NAME="270"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> complete(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> smartLogger, <FONT ID="Final">final</FONT> String completeStatus) {
+<A NAME="271"></A>        smartLogger.complete(completeStatus);
+<A NAME="272"></A>    }
+<A NAME="273"></A>
+<A NAME="274"></A>    <FONT ID="FormalComment">/**
+<A NAME="275"></A>     * @param completeLevel  Log Level
+<A NAME="276"></A>     * @param completeStatus Throwable type needed in case of ERROR
+<A NAME="277"></A>     */</FONT>
+<A NAME="278"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> complete(<FONT ID="Final">final</FONT> LEVEL completeLevel, <FONT ID="Final">final</FONT> Object completeStatus) {
+<A NAME="279"></A>        <FONT ID="If">if</FONT> (sleep == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="280"></A>            <FONT ID="If">if</FONT> (!status()) {
+<A NAME="281"></A>                Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="282"></A>                <FONT ID="If">if</FONT> (recordedAtLeastOneError) {
+<A NAME="283"></A>                    Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="284"></A>                }
+<A NAME="285"></A>            } <FONT ID="Else">else</FONT> { <FONT ID="SingleLineComment">//this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+<A NAME="286"></A></FONT>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
+<A NAME="287"></A>            }
+<A NAME="288"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (sleep == -<FONT ID="IntegerLiteral">1</FONT>) {<FONT ID="SingleLineComment">//timeout happened //need to track if logging happens twice... or not... since this condition is triggered by us inside the new thread
+<A NAME="289"></A></FONT>            Loggers.log(completeLevel, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="290"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="291"></A>            <FONT ID="If">if</FONT> (!status()) {
+<A NAME="292"></A>                Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="293"></A>                <FONT ID="If">if</FONT> (recordedAtLeastOneError) {
+<A NAME="294"></A>                    Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="295"></A>                }
+<A NAME="296"></A>            } <FONT ID="Else">else</FONT> { <FONT ID="SingleLineComment">//this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+<A NAME="297"></A></FONT>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
+<A NAME="298"></A>            }
+<A NAME="299"></A>        }
+<A NAME="300"></A>    }
+<A NAME="301"></A>
+<A NAME="302"></A>    <FONT ID="FormalComment">/**
+<A NAME="303"></A>     * @param completeLevels
+<A NAME="304"></A>     * @param completeStatus
+<A NAME="305"></A>     */</FONT>
+<A NAME="306"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> multiComplete(<FONT ID="Final">final</FONT> LEVEL[] completeLevels, Object completeStatus) {
+<A NAME="307"></A>        completeStatus = completeStatus != <FONT ID="Null">null</FONT> ? completeStatus : <FONT ID="StringLiteral">""</FONT>;
+<A NAME="308"></A>        <FONT ID="If">if</FONT> (sleep == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="309"></A>            <FONT ID="If">if</FONT> (!status()) {
+<A NAME="310"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> LEVEL completeLevel : completeLevels) {
+<A NAME="311"></A>                    Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="312"></A>                    <FONT ID="If">if</FONT> (recordedAtLeastOneError) {
+<A NAME="313"></A>                        Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="314"></A>                    }
+<A NAME="315"></A>                }
+<A NAME="316"></A>            } <FONT ID="Else">else</FONT> { <FONT ID="SingleLineComment">//this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+<A NAME="317"></A></FONT>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
+<A NAME="318"></A>            }
+<A NAME="319"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (sleep == -<FONT ID="IntegerLiteral">1</FONT>) {<FONT ID="SingleLineComment">//timeout happened //need to track if logging happens twice... or not... since this condition is triggered by us inside the new thread
+<A NAME="320"></A></FONT>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> LEVEL completeLevel : completeLevels) {
+<A NAME="321"></A>                Loggers.log(completeLevel, Loggers.EMBED + CAUSE_RECOVERED_WITH_STATUS + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="322"></A>                <FONT ID="If">if</FONT> (recordedAtLeastOneError) {
+<A NAME="323"></A>                    Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="324"></A>                }
+<A NAME="325"></A>            }
+<A NAME="326"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="327"></A>            <FONT ID="If">if</FONT> (!status()) {
+<A NAME="328"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> LEVEL completeLevel : completeLevels) {
+<A NAME="329"></A>                    Loggers.log(completeLevel, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="330"></A>                    <FONT ID="If">if</FONT> (recordedAtLeastOneError) {
+<A NAME="331"></A>                        Loggers.log(LEVEL.ERROR, Loggers.EMBED + COLON + completeStatus + timeTaken(), logmsg);
+<A NAME="332"></A>                    }
+<A NAME="333"></A>                }
+<A NAME="334"></A>            } <FONT ID="Else">else</FONT> { <FONT ID="SingleLineComment">//this means with no timeout, the logger also was completed once. i.e. status=true. Hence error.
+<A NAME="335"></A></FONT>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(LOGGER_HAS_ALREADY_BEEN_COMPLETED);
+<A NAME="336"></A>            }
+<A NAME="337"></A>        }
+<A NAME="338"></A>    }
+<A NAME="339"></A>
+<A NAME="340"></A>    <FONT ID="FormalComment">/**
+<A NAME="341"></A>     * @param completeStatus Complete status or null if you want to drop all further logging
+<A NAME="342"></A>     */</FONT>
+<A NAME="343"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> complete(<FONT ID="Final">final</FONT> String completeStatus) {
+<A NAME="344"></A>        complete(level, completeStatus);
+<A NAME="345"></A>    }
+<A NAME="346"></A>
+<A NAME="347"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> isTimed() {
+<A NAME="348"></A>        <FONT ID="Return">return</FONT> sleep &gt; <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="349"></A>    }
+<A NAME="350"></A>
+<A NAME="351"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> hasTimedOut() {
+<A NAME="352"></A>        <FONT ID="Return">return</FONT> sleep == -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="353"></A>    }
+<A NAME="354"></A>
+<A NAME="355"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> hasCompleted() {
+<A NAME="356"></A>        <FONT ID="Return">return</FONT> logged;
+<A NAME="357"></A>    }
+<A NAME="358"></A>}
+<A NAME="359"></A></pre>
+</BODY>
+</HTML>

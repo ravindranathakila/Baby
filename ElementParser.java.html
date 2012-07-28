@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ElementParser (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ElementParser.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="SingleLineComment">///* Copyright (c) 2008 Google Inc.
+<A NAME="2"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="3"></A></FONT><FONT ID="SingleLineComment">// * Licensed under the Apache License, Version 2.0 (the "License");
+<A NAME="4"></A></FONT><FONT ID="SingleLineComment">// * you may not use this file except in compliance with the License.
+<A NAME="5"></A></FONT><FONT ID="SingleLineComment">// * You may obtain a copy of the License at
+<A NAME="6"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="7"></A></FONT><FONT ID="SingleLineComment">// *     http://www.apache.org/licenses/LICENSE-2.0
+<A NAME="8"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="9"></A></FONT><FONT ID="SingleLineComment">// * Unless required by applicable law or agreed to in writing, software
+<A NAME="10"></A></FONT><FONT ID="SingleLineComment">// * distributed under the License is distributed on an "AS IS" BASIS,
+<A NAME="11"></A></FONT><FONT ID="SingleLineComment">// * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<A NAME="12"></A></FONT><FONT ID="SingleLineComment">// * See the License for the specific language governing permissions and
+<A NAME="13"></A></FONT><FONT ID="SingleLineComment">// * limitations under the License.
+<A NAME="14"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="15"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="16"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="17"></A></FONT><FONT ID="SingleLineComment">//package ai.ilikeplaces.logic.contactimports.google;
+<A NAME="18"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="19"></A></FONT><FONT ID="SingleLineComment">//import java.util.EnumMap;
+<A NAME="20"></A></FONT><FONT ID="SingleLineComment">//import java.util.Map;
+<A NAME="21"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="22"></A></FONT><FONT ID="SingleLineComment">///**
+<A NAME="23"></A></FONT><FONT ID="SingleLineComment">// * Parser to tokenize element descriptions.
+<A NAME="24"></A></FONT><FONT ID="SingleLineComment">// * The general format of an element specification looks like:
+<A NAME="25"></A></FONT><FONT ID="SingleLineComment">// * [&lt;value&gt;]|[&lt;name_1&gt;:&lt;value_1&gt;][,&lt;name_2&gt;:&lt;value_2&gt;]...[,&lt;name_n&gt;:&lt;value_n&gt;]
+<A NAME="26"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="27"></A></FONT><FONT ID="SingleLineComment">// * For convenience a single unnamed value can be specified. It is treated as
+<A NAME="28"></A></FONT><FONT ID="SingleLineComment">// * "value:&lt;value&gt;", and the parsed value can be accessed with the VALUE key.
+<A NAME="29"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="30"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="31"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="32"></A></FONT><FONT ID="SingleLineComment">//class ElementParser {
+<A NAME="33"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="34"></A></FONT><FONT ID="SingleLineComment">//  // Map of parsed property names and values.
+<A NAME="35"></A></FONT><FONT ID="SingleLineComment">//  private Map&lt;PropertyName, String&gt; propertyMap;
+<A NAME="36"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="37"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="38"></A></FONT><FONT ID="SingleLineComment">//   * Constructor.
+<A NAME="39"></A></FONT><FONT ID="SingleLineComment">//   * Parses the element description, and fills the propertyMap.
+<A NAME="40"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="41"></A></FONT><FONT ID="SingleLineComment">//   * @param elementDesc the element description.
+<A NAME="42"></A></FONT><FONT ID="SingleLineComment">//   * @throws IllegalArgumentException on badly formated element description.
+<A NAME="43"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="44"></A></FONT><FONT ID="SingleLineComment">//  ElementParser(String elementDesc) throws IllegalArgumentException {
+<A NAME="45"></A></FONT><FONT ID="SingleLineComment">//    propertyMap = new EnumMap&lt;PropertyName, String&gt;(PropertyName.class);
+<A NAME="46"></A></FONT><FONT ID="SingleLineComment">//    for (String propertyDesc : elementDesc.split(",")) {
+<A NAME="47"></A></FONT><FONT ID="SingleLineComment">//      String nameValuePair[] = propertyDesc.split(":", 2);
+<A NAME="48"></A></FONT><FONT ID="SingleLineComment">//      if (nameValuePair.length == 1) {
+<A NAME="49"></A></FONT><FONT ID="SingleLineComment">//        propertyMap.put(PropertyName.VALUE, propertyDesc);
+<A NAME="50"></A></FONT><FONT ID="SingleLineComment">//      } else if (nameValuePair.length == 2){
+<A NAME="51"></A></FONT><FONT ID="SingleLineComment">//        propertyMap.put(
+<A NAME="52"></A></FONT><FONT ID="SingleLineComment">//            PropertyName.valueOf(nameValuePair[0].toUpperCase()),
+<A NAME="53"></A></FONT><FONT ID="SingleLineComment">//            nameValuePair[1]);
+<A NAME="54"></A></FONT><FONT ID="SingleLineComment">//      } else {
+<A NAME="55"></A></FONT><FONT ID="SingleLineComment">//        throw new IllegalArgumentException("Badly formated property:"
+<A NAME="56"></A></FONT><FONT ID="SingleLineComment">//            + propertyDesc);
+<A NAME="57"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="58"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="59"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="60"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="61"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="62"></A></FONT><FONT ID="SingleLineComment">//   * Checks if the given property has a parsed in value.
+<A NAME="63"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="64"></A></FONT><FONT ID="SingleLineComment">//   * @param property the property.
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//   * @return {@code true} if the given property has a parsed in value,
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//   *         otherwise {@code false}
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="68"></A></FONT><FONT ID="SingleLineComment">//  boolean has(PropertyName property) {
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//    return propertyMap.containsKey(property);
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="71"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="72"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//   * Retrieves the parsed in value for the given property.
+<A NAME="74"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="75"></A></FONT><FONT ID="SingleLineComment">//   * @param property the property.
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">//   * @return the parsed in value for the given property, or {@code null} if
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//   *         the given property was not specified in the element description
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//   *         string.
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//  String get(PropertyName property) {
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//    return propertyMap.get(property);
+<A NAME="82"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="83"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="84"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="85"></A></FONT><FONT ID="SingleLineComment">//   * Convenience method to check the value of a boolean property.
+<A NAME="86"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="87"></A></FONT><FONT ID="SingleLineComment">//   * @param property the property.
+<A NAME="88"></A></FONT><FONT ID="SingleLineComment">//   * @return {@code true} if the parsed in value of the given property is "true"
+<A NAME="89"></A></FONT><FONT ID="SingleLineComment">//   *         {@code false} in any other cases.
+<A NAME="90"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="91"></A></FONT><FONT ID="SingleLineComment">//  boolean is(PropertyName property) {
+<A NAME="92"></A></FONT><FONT ID="SingleLineComment">//    String value = propertyMap.get(property);
+<A NAME="93"></A></FONT><FONT ID="SingleLineComment">//    return (value != null) &amp;&amp; (value.toLowerCase().equals("true"));
+<A NAME="94"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//}
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="97"></A></FONT></pre>
+</BODY>
+</HTML>

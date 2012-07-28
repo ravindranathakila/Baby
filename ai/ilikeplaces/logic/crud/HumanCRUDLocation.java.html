@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDLocation (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDLocation.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationException</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/RLocationLocal.java.html">ai.ilikeplaces.logic.crud.unit.RLocationLocal</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/ULocationLocal.java.html">ai.ilikeplaces.logic.crud.unit.ULocationLocal</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="FormalComment">/**
+<A NAME="20"></A> * @author Ravindranath Akila
+<A NAME="21"></A> */</FONT>
+<A NAME="22"></A>
+<A NAME="23"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="24"></A>@Stateless
+<A NAME="25"></A>@Interceptors({ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>, RuntimeExceptionWrapper.<FONT ID="Class">class</FONT>})
+<A NAME="26"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanCRUDLocation <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A> {
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FIND_LOCATION_BY_LOCATION_ID_SUCCESSFUL = <FONT ID="StringLiteral">"Find location by location Id Successful!"</FONT>;
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FETCH_LOCATION_BY_ID_AND_REFRESH_SPEC_FAILED = <FONT ID="StringLiteral">"Fetch location by Id and RefreshSpec FAILED!"</FONT>;
+<A NAME="30"></A>    @EJB
+<A NAME="31"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/RLocationLocal.java.html">RLocationLocal</A> rLocationLocal_;
+<A NAME="32"></A>
+<A NAME="33"></A>    @EJB
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/unit/ULocationLocal.java.html">ULocationLocal</A> uLocationLocal_;
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> HumanCRUDLocation() {
+<A NAME="37"></A>    }
+<A NAME="38"></A>
+<A NAME="39"></A>    @Override
+<A NAME="40"></A>    @TransactionAttribute(value = TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; dirtyRLocation(<FONT ID="Final">final</FONT> String locationName, <FONT ID="Final">final</FONT> String superLocationName) {
+<A NAME="42"></A>
+<A NAME="43"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; r;
+<A NAME="44"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;(rLocationLocal_.doDirtyRLocation(locationName, superLocationName), <FONT ID="StringLiteral">"Find location by location and super location names Successful!"</FONT>);
+<A NAME="45"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="46"></A>    }
+<A NAME="47"></A>
+<A NAME="48"></A>    @Override
+<A NAME="49"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; dirtyRLocation(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId) {
+<A NAME="51"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; r;
+<A NAME="52"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;(rLocationLocal_.doDirtyRLocation(locationId), <FONT ID="StringLiteral">"Find location by location id Successful!"</FONT>);
+<A NAME="53"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="54"></A>    }
+<A NAME="55"></A>
+<A NAME="56"></A>    @Override
+<A NAME="57"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; doRLocation(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) {
+<A NAME="59"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; r;
+<A NAME="60"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="61"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;(rLocationLocal_.doRLocation(locationId, refreshSpec), FIND_LOCATION_BY_LOCATION_ID_SUCCESSFUL);
+<A NAME="62"></A>            <FONT ID="Return">return</FONT> r;
+<A NAME="63"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="64"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;(t, FETCH_LOCATION_BY_ID_AND_REFRESH_SPEC_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="65"></A>        }
+<A NAME="66"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>    <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; doULocationComments(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId, <FONT ID="Final">final</FONT> Map&lt;String, String&gt; posts, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) {
+<A NAME="70"></A>        Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; r;
+<A NAME="71"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="72"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;(uLocationLocal_.doULocationPosts(locationId, posts, refreshSpec), <FONT ID="StringLiteral">"Update Location Posts Successful!"</FONT>);
+<A NAME="73"></A>            <FONT ID="Return">return</FONT> r;
+<A NAME="74"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="75"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;(t, <FONT ID="StringLiteral">"Update Location Posts FAILED!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="76"></A>        }
+<A NAME="77"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="78"></A>    }
+<A NAME="79"></A>
+<A NAME="80"></A>    @Override
+<A NAME="81"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> List&lt;String&gt; dirtyRLikeLocationNames(<FONT ID="Final">final</FONT> String likeLocationName) {
+<A NAME="83"></A>        <FONT ID="Return">return</FONT> rLocationLocal_.doDirtyRLikeLocationNames(likeLocationName);
+<A NAME="84"></A>    }
+<A NAME="85"></A>
+<A NAME="86"></A>    @Override
+<A NAME="87"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="88"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; dirtyRLikeLocations(<FONT ID="Final">final</FONT> String likeLocationName) {
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> rLocationLocal_.doDirtyRLikeLocations(likeLocationName);
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    @Override
+<A NAME="93"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="94"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; doDirtyRLocationsBySuperLocation(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> locationSuperset) {
+<A NAME="95"></A>        <FONT ID="Return">return</FONT> rLocationLocal_.doNTxRLocationsBySuperLocation(locationSuperset);
+<A NAME="96"></A>    }
+<A NAME="97"></A>
+<A NAME="98"></A>    @Override
+<A NAME="99"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="100"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> doULocationLatLng(<FONT ID="Final">final</FONT> RefObj&lt;Long&gt; locationId, <FONT ID="Final">final</FONT> RefObj&lt;Double&gt; latitude, <FONT ID="Final">final</FONT> RefObj&lt;Double&gt; longitude) {
+<A NAME="101"></A>        <FONT ID="Return">return</FONT> uLocationLocal_.doULocationLatLng(locationId.getObjectAsValid(), latitude.getObjectAsValid(), longitude.getObjectAsValid());
+<A NAME="102"></A>    }
+<A NAME="103"></A>
+<A NAME="104"></A>}
+<A NAME="105"></A></pre>
+</BODY>
+</HTML>

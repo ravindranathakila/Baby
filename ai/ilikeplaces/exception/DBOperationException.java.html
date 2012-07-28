@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.exception.DBOperationException (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DBOperationException.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.exception;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="FormalComment">/**
+<A NAME="6"></A> * Throw this exception if the DB is being dishonored by callers
+<A NAME="7"></A> *
+<A NAME="8"></A> * @author Ravindranath Akila
+<A NAME="9"></A> */</FONT>
+<A NAME="10"></A>
+<A NAME="11"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="12"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DBOperationException <FONT ID="Extends">extends</FONT> RuntimeException {
+<A NAME="13"></A>
+<A NAME="14"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String MSG = <FONT ID="StringLiteral">"SORRY! I ENCOUNTERED AN ERROR DURING OPERATION WITH THE DB. THE SOURCES SHOULD REFLECT THIS WHERE THE EXCEPTION WAS THROWN. SEE BELOW FOR MORE DETAILS.\n"</FONT>;
+<A NAME="15"></A>
+<A NAME="16"></A>    <FONT ID="FormalComment">/**
+<A NAME="17"></A>     * @param message
+<A NAME="18"></A>     */</FONT>
+<A NAME="19"></A>    <FONT ID="Public">public</FONT> DBOperationException(<FONT ID="Final">final</FONT> String message) {
+<A NAME="20"></A>        <FONT ID="Super">super</FONT>(MSG + message);
+<A NAME="21"></A>    }
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="FormalComment">/**
+<A NAME="24"></A>     *
+<A NAME="25"></A>     * @param t
+<A NAME="26"></A>     */</FONT>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> DBOperationException(<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="28"></A>        <FONT ID="Super">super</FONT>(t);
+<A NAME="29"></A>    }
+<A NAME="30"></A>}</pre>
+</BODY>
+</HTML>

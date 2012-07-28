@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.jpa.Main (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Main.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.jpa;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">ai.ilikeplaces.util.jpa.RefreshException</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * Created by IntelliJ IDEA.
+<A NAME="11"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="12"></A> * Date: 2/6/11
+<A NAME="13"></A> * Time: 9:45 PM
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Main {
+<A NAME="16"></A>
+<A NAME="17"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(<FONT ID="Final">final</FONT> String args[]) <FONT ID="Throws">throws</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> {
+<A NAME="18"></A>
+<A NAME="19"></A>        <FONT ID="SingleLineComment">//Lets try the normal way
+<A NAME="20"></A></FONT>        <FONT ID="Try">try</FONT> {
+<A NAME="21"></A>
+<A NAME="22"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"testCollection"</FONT>);
+<A NAME="23"></A>
+<A NAME="24"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A> testBean = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A>();
+<A NAME="25"></A>
+<A NAME="26"></A>            <FONT ID="Final">final</FONT> List&lt;String&gt; testCollection = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;(<FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="27"></A>
+<A NAME="28"></A>            testCollection.add(<FONT ID="StringLiteral">"sam"</FONT>);
+<A NAME="29"></A>            testCollection.add(<FONT ID="StringLiteral">"walter"</FONT>);
+<A NAME="30"></A>
+<A NAME="31"></A>            testBean.setTestCollection(testCollection);
+<A NAME="32"></A>            testBean.setTestSameAnnotatedValueCollection(testCollection);
+<A NAME="33"></A>
+<A NAME="34"></A>            testBean.refresh(refreshSpec);
+<A NAME="35"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="36"></A>            t.printStackTrace(System.err);
+<A NAME="37"></A>        }
+<A NAME="38"></A>
+<A NAME="39"></A>        <FONT ID="SingleLineComment">//Lets try a wrong name
+<A NAME="40"></A></FONT>        <FONT ID="Try">try</FONT> {
+<A NAME="41"></A>
+<A NAME="42"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"testCollectio_wrong_name"</FONT>);
+<A NAME="43"></A>
+<A NAME="44"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A> testBean = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A>();
+<A NAME="45"></A>
+<A NAME="46"></A>            <FONT ID="Final">final</FONT> List&lt;String&gt; testCollection = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;(<FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="47"></A>
+<A NAME="48"></A>            testCollection.add(<FONT ID="StringLiteral">"sam"</FONT>);
+<A NAME="49"></A>            testCollection.add(<FONT ID="StringLiteral">"walter"</FONT>);
+<A NAME="50"></A>
+<A NAME="51"></A>            testBean.setTestCollection(testCollection);
+<A NAME="52"></A>            testBean.setTestSameAnnotatedValueCollection(testCollection);
+<A NAME="53"></A>
+<A NAME="54"></A>            testBean.refresh(refreshSpec);
+<A NAME="55"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="56"></A>            t.printStackTrace(System.err);
+<A NAME="57"></A>        }
+<A NAME="58"></A>
+<A NAME="59"></A>        <FONT ID="SingleLineComment">//Lets try a non collection
+<A NAME="60"></A></FONT>        <FONT ID="Try">try</FONT> {
+<A NAME="61"></A>
+<A NAME="62"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"testCollection"</FONT>, <FONT ID="StringLiteral">"nonCollection"</FONT>);
+<A NAME="63"></A>
+<A NAME="64"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A> testBean = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/jpa/TestBean.java.html">TestBean</A>();
+<A NAME="65"></A>
+<A NAME="66"></A>            <FONT ID="Final">final</FONT> List&lt;String&gt; testCollection = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;(<FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="67"></A>
+<A NAME="68"></A>            testCollection.add(<FONT ID="StringLiteral">"sam"</FONT>);
+<A NAME="69"></A>            testCollection.add(<FONT ID="StringLiteral">"walter"</FONT>);
+<A NAME="70"></A>
+<A NAME="71"></A>            testBean.setTestCollection(testCollection);
+<A NAME="72"></A>            testBean.setTestSameAnnotatedValueCollection(testCollection);
+<A NAME="73"></A>
+<A NAME="74"></A>            testBean.refresh(refreshSpec);
+<A NAME="75"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="76"></A>            t.printStackTrace(System.err);
+<A NAME="77"></A>        }
+<A NAME="78"></A>
+<A NAME="79"></A>
+<A NAME="80"></A>    }
+<A NAME="81"></A>}
+<A NAME="82"></A></pre>
+</BODY>
+</HTML>

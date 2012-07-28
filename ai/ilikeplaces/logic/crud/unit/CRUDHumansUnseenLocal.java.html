@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CRUDHumansUnseenLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CRUDHumansUnseenLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">ai.ilikeplaces.entities.Album</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansUnseen.java.html">ai.ilikeplaces.entities.HumansUnseen</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="14"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="15"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="16"></A>
+<A NAME="17"></A><FONT ID="FormalComment">/**
+<A NAME="18"></A> * @author Ravindranath Akila
+<A NAME="19"></A> */</FONT>
+<A NAME="20"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="21"></A>@Local
+<A NAME="22"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> CRUDHumansUnseenLocal {
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntry(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long wallId);
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntry(<FONT ID="Final">final</FONT> List&lt;String&gt; humanIds, <FONT ID="Final">final</FONT> Long wallId);
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> removeEntry(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long wallId);
+<A NAME="29"></A>
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; readEntries(<FONT ID="Final">final</FONT> String humanId);
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansUnseen.java.html">HumansUnseen</A> doRHumansUnseenBadly(<FONT ID="Final">final</FONT> String humanId);
+<A NAME="33"></A>
+<A NAME="34"></A>}</pre>
+</BODY>
+</HTML>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.Obj (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Obj.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="5"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.IsInvariant;
+<A NAME="6"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotNull;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="FormalComment">/**
+<A NAME="9"></A> * Created by IntelliJ IDEA.
+<A NAME="10"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="11"></A> * Date: Jan 24, 2010
+<A NAME="12"></A> * Time: 1:35:10 AM
+<A NAME="13"></A> */</FONT>
+<A NAME="14"></A>
+<A NAME="15"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Obj&lt;T&gt; <FONT ID="Extends">extends</FONT> <A HREF="../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;T&gt; {
+<A NAME="17"></A>    <FONT ID="Public">public</FONT> Obj() {
+<A NAME="18"></A>    }
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> Obj(<FONT ID="Final">final</FONT> T t) {
+<A NAME="21"></A>        obj = t;
+<A NAME="22"></A>    }
+<A NAME="23"></A>
+<A NAME="24"></A>    @IsInvariant
+<A NAME="25"></A>    @NotNull
+<A NAME="26"></A>    @Override
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> T getObj() {
+<A NAME="28"></A>        <FONT ID="Return">return</FONT> obj;
+<A NAME="29"></A>    }
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;T&gt; getSelfAsValid(<FONT ID="Final">final</FONT> Validator... validator) {
+<A NAME="32"></A>        <FONT ID="Return">return</FONT>  <FONT ID="Super">super</FONT>.getSelfAsValid(validator);
+<A NAME="33"></A>    }
+<A NAME="34"></A>}
+<A NAME="35"></A></pre>
+</BODY>
+</HTML>

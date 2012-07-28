@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDPrivateEventLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDPrivateEventLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">ai.ilikeplaces.entities.Album</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">ai.ilikeplaces.entities.HumansFriend</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">ai.ilikeplaces.entities.Msg</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Obj.java.html">ai.ilikeplaces.util.Obj</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.Remote;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="FormalComment">/**
+<A NAME="19"></A> * Created by IntelliJ IDEA.
+<A NAME="20"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="21"></A> * Date: Jan 13, 2010
+<A NAME="22"></A> * Time: 2:41:45 PM
+<A NAME="23"></A> */</FONT>
+<A NAME="24"></A>
+<A NAME="25"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="26"></A>@Remote
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> HumanCRUDPrivateEventLocal <FONT ID="Extends">extends</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/GeneralCRUDWall.java.html">GeneralCRUDWall</A> {
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NAME = <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A>.<FONT ID="Class">class</FONT>.getSimpleName();
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="FormalComment">/**
+<A NAME="32"></A>     * @param humanId
+<A NAME="33"></A>     * @param privateLocationId
+<A NAME="34"></A>     * @param privateEventName
+<A NAME="35"></A>     * @param privateEventInfo
+<A NAME="36"></A>     * @param startDate
+<A NAME="37"></A>     * @param endDate
+<A NAME="38"></A>     * @return
+<A NAME="39"></A>     */</FONT>
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; cPrivateEvent(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId, <FONT ID="Final">final</FONT> String privateEventName, <FONT ID="Final">final</FONT> String privateEventInfo, <FONT ID="Final">final</FONT> String startDate, <FONT ID="Final">final</FONT> String endDate);
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="FormalComment">/**
+<A NAME="43"></A>     * @param humanId
+<A NAME="44"></A>     * @param privateEventId
+<A NAME="45"></A>     * @return
+<A NAME="46"></A>     */</FONT>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; dirtyRPrivateEventAsAny(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId);
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="FormalComment">/**
+<A NAME="50"></A>     * @param humanId
+<A NAME="51"></A>     * @param privateEventId
+<A NAME="52"></A>     * @return
+<A NAME="53"></A>     */</FONT>
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; dirtyRPrivateEventInfoAsAny(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId);
+<A NAME="55"></A>
+<A NAME="56"></A>    <FONT ID="FormalComment">/**
+<A NAME="57"></A>     * @param humanId
+<A NAME="58"></A>     * @param privateEventId
+<A NAME="59"></A>     * @return
+<A NAME="60"></A>     */</FONT>
+<A NAME="61"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; dirtyRPrivateEventIsOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> Long privateEventId);
+<A NAME="62"></A>
+<A NAME="63"></A>    <FONT ID="FormalComment">/**
+<A NAME="64"></A>     * @param humanId
+<A NAME="65"></A>     * @param privateEventId
+<A NAME="66"></A>     * @return
+<A NAME="67"></A>     */</FONT>
+<A NAME="68"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; dirtyRPrivateEventIsViewer(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> Long privateEventId);
+<A NAME="69"></A>
+<A NAME="70"></A>    <FONT ID="FormalComment">/**
+<A NAME="71"></A>     * @param friend__
+<A NAME="72"></A>     * @param privateEventId__
+<A NAME="73"></A>     * @param owner
+<A NAME="74"></A>     * @return
+<A NAME="75"></A>     */</FONT>
+<A NAME="76"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventAddOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="77"></A>
+<A NAME="78"></A>    <FONT ID="FormalComment">/**
+<A NAME="79"></A>     * @param owner__
+<A NAME="80"></A>     * @param privateEventId__
+<A NAME="81"></A>     * @param friend__
+<A NAME="82"></A>     * @param privateLocationId__
+<A NAME="83"></A>     * @return
+<A NAME="84"></A>     */</FONT>
+<A NAME="85"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventAddOwnerWithPrivateLocationCheck(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> owner__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__);
+<A NAME="86"></A>
+<A NAME="87"></A>    <FONT ID="FormalComment">/**
+<A NAME="88"></A>     * @param friend__
+<A NAME="89"></A>     * @param privateEventId__
+<A NAME="90"></A>     * @param owner
+<A NAME="91"></A>     * @return
+<A NAME="92"></A>     */</FONT>
+<A NAME="93"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventRemoveOwner(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="94"></A>
+<A NAME="95"></A>    <FONT ID="FormalComment">/**
+<A NAME="96"></A>     * @param friend__
+<A NAME="97"></A>     * @param privateEventId__
+<A NAME="98"></A>     * @param owner
+<A NAME="99"></A>     * @return
+<A NAME="100"></A>     */</FONT>
+<A NAME="101"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventAddVisitor(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="102"></A>
+<A NAME="103"></A>    <FONT ID="FormalComment">/**
+<A NAME="104"></A>     * @param owner__
+<A NAME="105"></A>     * @param privateEventId__
+<A NAME="106"></A>     * @param friend__
+<A NAME="107"></A>     * @param privateLocationId__
+<A NAME="108"></A>     * @return
+<A NAME="109"></A>     */</FONT>
+<A NAME="110"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventAddVisitorWithPrivateLocationCheck(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> owner__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__);
+<A NAME="111"></A>
+<A NAME="112"></A>    <FONT ID="FormalComment">/**
+<A NAME="113"></A>     * @param friend__
+<A NAME="114"></A>     * @param privateEventId__
+<A NAME="115"></A>     * @param owner
+<A NAME="116"></A>     * @return
+<A NAME="117"></A>     */</FONT>
+<A NAME="118"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventRemoveVisitor(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="119"></A>
+<A NAME="120"></A>    <FONT ID="FormalComment">/**
+<A NAME="121"></A>     * @param friend__
+<A NAME="122"></A>     * @param privateEventId__
+<A NAME="123"></A>     * @param owner
+<A NAME="124"></A>     * @return
+<A NAME="125"></A>     */</FONT>
+<A NAME="126"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventAddInvite(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="127"></A>
+<A NAME="128"></A>    <FONT ID="FormalComment">/**
+<A NAME="129"></A>     * @param owner__
+<A NAME="130"></A>     * @param privateEventId__
+<A NAME="131"></A>     * @param friend__
+<A NAME="132"></A>     * @param privateLocationId__
+<A NAME="133"></A>     * @return
+<A NAME="134"></A>     */</FONT>
+<A NAME="135"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventAddInviteWithPrivateLocationCheck(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> owner__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__);
+<A NAME="136"></A>
+<A NAME="137"></A>    <FONT ID="FormalComment">/**
+<A NAME="138"></A>     * @param friend__
+<A NAME="139"></A>     * @param privateEventId__
+<A NAME="140"></A>     * @param owner
+<A NAME="141"></A>     * @return
+<A NAME="142"></A>     */</FONT>
+<A NAME="143"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventRemoveInvite(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="144"></A>
+<A NAME="145"></A>    <FONT ID="FormalComment">/**
+<A NAME="146"></A>     * @param friend__
+<A NAME="147"></A>     * @param privateEventId__
+<A NAME="148"></A>     * @param owner
+<A NAME="149"></A>     * @return
+<A NAME="150"></A>     */</FONT>
+<A NAME="151"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventAddReject(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="152"></A>
+<A NAME="153"></A>    <FONT ID="FormalComment">/**
+<A NAME="154"></A>     * @param friend__
+<A NAME="155"></A>     * @param privateEventId__
+<A NAME="156"></A>     * @param owner
+<A NAME="157"></A>     * @return
+<A NAME="158"></A>     */</FONT>
+<A NAME="159"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; uPrivateEventRemoveReject(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> friend__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> owner);
+<A NAME="160"></A>
+<A NAME="161"></A>    <FONT ID="FormalComment">/**
+<A NAME="162"></A>     * Removes the {@link ai.ilikeplaces.entities.HumansPrivateEvent caller} from {@link PrivateEvent event} if is not the last {@link ai.ilikeplaces.entities.HumansPrivateEvent owner}.
+<A NAME="163"></A>     * Does not delete the {@link PrivateEvent event}.
+<A NAME="164"></A>     * &lt;br/&gt;
+<A NAME="165"></A>     * &lt;br/&gt;
+<A NAME="166"></A>     * Deletes the {@link PrivateEvent event} if the caller is last {@link ai.ilikeplaces.entities.HumansPrivateEvent Owner} .
+<A NAME="167"></A>     * &lt;br/&gt;
+<A NAME="168"></A>     * &lt;br/&gt;
+<A NAME="169"></A>     * Removes the {@link ai.ilikeplaces.entities.HumansPrivateEvent caller} from {@link PrivateEvent event}.
+<A NAME="170"></A>     * &lt;br/&gt;
+<A NAME="171"></A>     * @param operator__
+<A NAME="172"></A>     * @param privateEventId__
+<A NAME="173"></A>     * @return
+<A NAME="174"></A>     */</FONT>
+<A NAME="175"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; dPrivateEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__);
+<A NAME="176"></A>
+<A NAME="177"></A>
+<A NAME="178"></A>    <FONT ID="FormalComment">/**
+<A NAME="179"></A>     * @param operator__
+<A NAME="180"></A>     * @param privateEventId__
+<A NAME="181"></A>     * @return
+<A NAME="182"></A>     */</FONT>
+<A NAME="183"></A>    @Deprecated
+<A NAME="184"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; rPrivateEventReadAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__);
+<A NAME="185"></A>
+<A NAME="186"></A>    <FONT ID="FormalComment">/**
+<A NAME="187"></A>     *
+<A NAME="188"></A>     * @param operator__
+<A NAME="189"></A>     * @param privateEventId__
+<A NAME="190"></A>     * @param refreshSpec
+<A NAME="191"></A>     * @return
+<A NAME="192"></A>     */</FONT>
+<A NAME="193"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; rPrivateEventReadAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec);
+<A NAME="194"></A>
+<A NAME="195"></A>    <FONT ID="FormalComment">/**
+<A NAME="196"></A>     * @param operator__
+<A NAME="197"></A>     * @param privateEventId__
+<A NAME="198"></A>     * @param cdnFileName
+<A NAME="199"></A>     * @return
+<A NAME="200"></A>     */</FONT>
+<A NAME="201"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; uPrivateEventAddEntryToAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; cdnFileName);
+<A NAME="202"></A>
+<A NAME="203"></A>    <FONT ID="FormalComment">/**
+<A NAME="204"></A>     * @param operator__
+<A NAME="205"></A>     * @param privateEventId__
+<A NAME="206"></A>     * @return
+<A NAME="207"></A>     */</FONT>
+<A NAME="208"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; uPrivateEventRemoveEntryFromAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__);
+<A NAME="209"></A>
+<A NAME="210"></A>
+<A NAME="211"></A>    <FONT ID="FormalComment">/**
+<A NAME="212"></A>     * @param operator__    operator__
+<A NAME="213"></A>     * @param latitudeSouth horizontal bottom of bounding box
+<A NAME="214"></A>     * @param latitudeNorth horizontal up of bounding box
+<A NAME="215"></A>     * @param longitudeWest vertical left of bounding box
+<A NAME="216"></A>     * @param longitudeEast vertical right of bounding box
+<A NAME="217"></A>     * @return the list of private events inside a specific bounding box
+<A NAME="218"></A>     */</FONT>
+<A NAME="219"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt;&gt; doRPrivateEventsByBounds(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator__, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitudeSouth, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitudeNorth, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitudeWest, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitudeEast);
+<A NAME="220"></A>
+<A NAME="221"></A>    <FONT ID="FormalComment">/**
+<A NAME="222"></A>     * @param latitudeSouth horizontal bottom of bounding box
+<A NAME="223"></A>     * @param latitudeNorth horizontal up of bounding box
+<A NAME="224"></A>     * @param longitudeWest vertical left of bounding box
+<A NAME="225"></A>     * @param longitudeEast vertical right of bounding box
+<A NAME="226"></A>     * @return the list of private events inside a specific bounding box
+<A NAME="227"></A>     */</FONT>
+<A NAME="228"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt;&gt; doRPrivateEventsByBoundsAsSystem(<FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitudeSouth, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitudeNorth, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitudeWest, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitudeEast);
+<A NAME="229"></A>
+<A NAME="230"></A>
+<A NAME="231"></A>
+<A NAME="232"></A>    <FONT ID="FormalComment">/**
+<A NAME="233"></A>     * @param wallId
+<A NAME="234"></A>     * @param numberOfEntriesToFetch
+<A NAME="235"></A>     * @return
+<A NAME="236"></A>     */</FONT>
+<A NAME="237"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt;&gt; readWallLastEntries(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/Obj.java.html">Obj</A>&lt;Long&gt; wallId, <FONT ID="Final">final</FONT> Integer numberOfEntriesToFetch, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec__);
+<A NAME="238"></A>
+<A NAME="239"></A>    <FONT ID="FormalComment">/**
+<A NAME="240"></A>     *
+<A NAME="241"></A>     * @param humanId
+<A NAME="242"></A>     * @return
+<A NAME="243"></A>     */</FONT>
+<A NAME="244"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt;&gt; doDirtyRPrivateEventsOfHuman(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId);
+<A NAME="245"></A>
+<A NAME="246"></A>}
+<A NAME="247"></A></pre>
+</BODY>
+</HTML>

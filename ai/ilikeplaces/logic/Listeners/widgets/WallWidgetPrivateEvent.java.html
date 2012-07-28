@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">WallWidgetPrivateEvent.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.SEE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/People.java.html">ai.ilikeplaces.logic.Listeners.widgets.people.People</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/PeopleCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventDelete.java.html">ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventView.java.html">ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/WallEntry.java.html">ai.ilikeplaces.logic.validators.unit.WallEntry</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="18"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache3.java.html">ai.ilikeplaces.util.cache.SmartCache3</A>;
+<A NAME="19"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.w3c.dom.Document;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="25"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="26"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="27"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="28"></A><FONT ID="Import">import</FONT> org.xml.sax.SAXException;
+<A NAME="29"></A>
+<A NAME="30"></A><FONT ID="Import">import</FONT> javax.xml.transform.TransformerException;
+<A NAME="31"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="32"></A><FONT ID="Import">import</FONT> java.text.MessageFormat;
+<A NAME="33"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="34"></A><FONT ID="Import">import</FONT> java.util.HashSet;
+<A NAME="35"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="36"></A>
+<A NAME="37"></A><FONT ID="FormalComment">/**
+<A NAME="38"></A> * Created by IntelliJ IDEA.
+<A NAME="39"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="40"></A> * Date: Jun 17, 2010
+<A NAME="41"></A> * Time: 12:17:36 AM
+<A NAME="42"></A> */</FONT>
+<A NAME="43"></A>
+<A NAME="44"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="45"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> WallWidgetPrivateEvent <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/WallWidget.java.html">WallWidget</A> {
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WALL_SUBIT_FROM_EMAIL = <FONT ID="StringLiteral">"ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml"</FONT>;
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> REFRESH_SPEC = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"wallMsgs"</FONT>, <FONT ID="StringLiteral">"wallMutes"</FONT>);
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TALK_AT_0 = <FONT ID="StringLiteral">"talk.at.0"</FONT>;
+<A NAME="50"></A>
+<A NAME="51"></A>    <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId;
+<A NAME="52"></A>    Long privateEventId = <FONT ID="Null">null</FONT>;
+<A NAME="53"></A>    Long wallId = <FONT ID="Null">null</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WALL_ENTRY_CONSUMED_STATUES = <FONT ID="StringLiteral">"&amp;wall_entry_consumed=true"</FONT>;
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WALL_ENTRY_CONSUMED = <FONT ID="StringLiteral">"wall_entry_consumed"</FONT>;
+<A NAME="56"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TRUE = <FONT ID="StringLiteral">"true"</FONT>;
+<A NAME="57"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NULL = <FONT ID="StringLiteral">"null"</FONT>;
+<A NAME="58"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WALL_ENTRY = <FONT ID="StringLiteral">"wall_entry="</FONT>;
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WALL_ENTRY_FROM_EMAIL_RECEIVED = <FONT ID="StringLiteral">"Wall entry from email received!"</FONT>;
+<A NAME="60"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DERIVED_FROM_EMAIL = <FONT ID="StringLiteral">"DERIVED FROM EMAIL:{}"</FONT>;
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ENTERS_TEXT = <FONT ID="StringLiteral">" enters text:"</FONT>;
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CATEGORY = <FONT ID="StringLiteral">"category"</FONT>;
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOCATION = <FONT ID="StringLiteral">"location"</FONT>;
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EVENT = <FONT ID="StringLiteral">"event"</FONT>;
+<A NAME="65"></A>
+<A NAME="66"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache3.java.html">SmartCache3</A>&lt;Long, Msg, String&gt; LAST_WALL_ENTRY = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache3.java.html">SmartCache3</A>&lt;Long, Msg, String&gt;(
+<A NAME="67"></A>            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache3.java.html">SmartCache3.RecoverWith</A>&lt;Long, Msg, String&gt;() {
+<A NAME="68"></A>
+<A NAME="69"></A>                @Override
+<A NAME="70"></A>                <FONT ID="Public">public</FONT> Msg getValue(<FONT ID="Final">final</FONT> Long whichWall, <FONT ID="Final">final</FONT> String requester) {
+<A NAME="71"></A>                    <FONT ID="Final">final</FONT> List&lt;Msg&gt; msgs = DB.getHumanCrudPrivateEventLocal(<FONT ID="False">false</FONT>).readWallLastEntries(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(requester), <FONT ID="New">new</FONT> Obj&lt;Long&gt;(whichWall), <FONT ID="IntegerLiteral">1</FONT>, <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>()).returnValue();
+<A NAME="72"></A>                    <FONT ID="Final">final</FONT> Msg returnVal;
+<A NAME="73"></A>                    <FONT ID="If">if</FONT> (msgs.isEmpty()) {
+<A NAME="74"></A>                        returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="75"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="76"></A>                        returnVal = msgs.get(<FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="77"></A>                    }
+<A NAME="78"></A>                    <FONT ID="Return">return</FONT> returnVal;
+<A NAME="79"></A>                }
+<A NAME="80"></A>            }
+<A NAME="81"></A>    );
+<A NAME="82"></A>
+<A NAME="83"></A>    <FONT ID="Public">public</FONT> WallWidgetPrivateEvent(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__) {
+<A NAME="84"></A>        <FONT ID="Super">super</FONT>(request__, appendToElement__, humanId, privateEventId__);
+<A NAME="85"></A>    }
+<A NAME="86"></A>
+<A NAME="87"></A>    <FONT ID="FormalComment">/**
+<A NAME="88"></A>     *
+<A NAME="89"></A>     */</FONT>
+<A NAME="90"></A>    @Override
+<A NAME="91"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="92"></A>        <FONT ID="This">this</FONT>.humanId = ((<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) initArgs[<FONT ID="IntegerLiteral">0</FONT>]).getSelfAsValid();
+<A NAME="93"></A>        <FONT ID="This">this</FONT>.privateEventId = (Long) initArgs[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="94"></A>
+<A NAME="95"></A>        <FONT ID="Final">final</FONT> PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).dirtyRPrivateEventAsAny(humanId.getObjectAsValid(), privateEventId).returnValueBadly();
+<A NAME="96"></A>
+<A NAME="97"></A>        <FONT ID="This">this</FONT>.wallId = pe.getPrivateEventWall().getWallId();
+<A NAME="98"></A>
+<A NAME="99"></A>        fetchToEmail(pe.getPrivateLocation().getPrivateLocationId(),
+<A NAME="100"></A>                pe.getPrivateEventId());
+<A NAME="101"></A>
+<A NAME="102"></A>        <FONT ID="Final">final</FONT> String wall_entry = request.getServletRequest().getParameter(WallWidget.PARAM_WALL_ENTRY);
+<A NAME="103"></A>        <FONT ID="Final">final</FONT> String wall_entry_consumed = request.getServletRequest().getParameter(WALL_ENTRY_CONSUMED);
+<A NAME="104"></A>        Loggers.DEBUG.debug(WALL_ENTRY + (wall_entry != <FONT ID="Null">null</FONT> ? wall_entry : NULL));
+<A NAME="105"></A>
+<A NAME="106"></A>
+<A NAME="107"></A>        <FONT ID="Final">final</FONT> Return&lt;Wall&gt; aReturn = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).
+<A NAME="108"></A>                readWall(humanId, <FONT ID="New">new</FONT> Obj&lt;Long&gt;(privateEventId), REFRESH_SPEC);
+<A NAME="109"></A>
+<A NAME="110"></A>        UCHidingWallIfEmptyToShowInviteWidgetOnTop:
+<A NAME="111"></A>        {
+<A NAME="112"></A>            <FONT ID="If">if</FONT> (pe.getPrivateEventOwners().size() + pe.getPrivateEventViewers().size() == <FONT ID="IntegerLiteral">2</FONT>) {
+<A NAME="113"></A>                $$displayNone(WallWidgetIds.wallWidget);
+<A NAME="114"></A>            }
+<A NAME="115"></A>        }
+<A NAME="116"></A>
+<A NAME="117"></A>        <FONT ID="FormalComment">/**
+<A NAME="118"></A>         * If null, this means we have to check on if the wall entry parameter is available and update.
+<A NAME="119"></A>         * If not null, this means the wall entry has been consumed(we set it to true)
+<A NAME="120"></A>         */</FONT>
+<A NAME="121"></A>        <FONT ID="If">if</FONT> ((wall_entry_consumed == <FONT ID="Null">null</FONT> || !wall_entry_consumed.equals(TRUE)) &amp;&amp; wall_entry != <FONT ID="Null">null</FONT>) {<FONT ID="SingleLineComment">//This will refresh or close the page after actions
+<A NAME="122"></A></FONT>            Loggers.DEBUG.debug(WALL_ENTRY_FROM_EMAIL_RECEIVED);
+<A NAME="123"></A>            <FONT ID="Final">final</FONT> Return&lt;Wall&gt; r = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).addEntryToWall(<FONT ID="This">this</FONT>.humanId,
+<A NAME="124"></A>                    <FONT ID="This">this</FONT>.humanId,
+<A NAME="125"></A>                    <FONT ID="New">new</FONT> Obj&lt;Long&gt;(<FONT ID="This">this</FONT>.privateEventId),
+<A NAME="126"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/WallEntry.java.html">WallEntry</A>().setObjAsValid(wall_entry).getObj());<FONT ID="SingleLineComment">//Use of class scoped wall entry is not possible as it isn't initialized yet
+<A NAME="127"></A></FONT>            Loggers.log(Loggers.LEVEL.DEBUG, DERIVED_FROM_EMAIL, r.returnMsg());
+<A NAME="128"></A>            <FONT ID="Final">final</FONT> StringBuilder b = <FONT ID="New">new</FONT> StringBuilder(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="129"></A>
+<A NAME="130"></A>
+<A NAME="131"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Msg msg : aReturn.returnValueBadly().getWallMsgs()) {<FONT ID="SingleLineComment">//For the purpose of emailing the users the update
+<A NAME="132"></A></FONT>                b.append(
+<A NAME="133"></A>                        <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">UserProperty</A>(
+<A NAME="134"></A>                                request,
+<A NAME="135"></A>                                $$(WallWidgetIds.wallContent),
+<A NAME="136"></A>                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
+<A NAME="137"></A>                                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(msg.getMsgMetadata())) {
+<A NAME="138"></A>                        }.fetchToEmail
+<A NAME="139"></A>                );
+<A NAME="140"></A>            }
+<A NAME="141"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
+<A NAME="142"></A>                <FONT ID="If">if</FONT> (!hpe.getHumanId().equals(humanId.getObj())) {
+<A NAME="143"></A>                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(hpe.getHumanId(), pe.getPrivateEventName(), fetchToEmail + b.toString());
+<A NAME="144"></A>                    DB.getHumanCRUDHumansUnseenLocal(<FONT ID="False">false</FONT>).addEntry(hpe.getHumanId(), aReturn.returnValue().getWallId());
+<A NAME="145"></A>                }
+<A NAME="146"></A>            }
+<A NAME="147"></A>
+<A NAME="148"></A>            <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> loadWallPageAfterAnEmailWallSubmit = <FONT ID="False">false</FONT>;
+<A NAME="149"></A>
+<A NAME="150"></A>            <FONT ID="If">if</FONT> (loadWallPageAfterAnEmailWallSubmit) {
+<A NAME="151"></A>                itsNatDocument_.addCodeToSend(JSCodeToSend.refreshPageWith(WALL_ENTRY_CONSUMED_STATUES));<FONT ID="SingleLineComment">//
+<A NAME="152"></A></FONT>            } <FONT ID="Else">else</FONT> {
+<A NAME="153"></A>                itsNatDocument_.addCodeToSend(JSCodeToSend.ClosePageOrRefresh);<FONT ID="SingleLineComment">//
+<A NAME="154"></A></FONT>            }
+<A NAME="155"></A>
+<A NAME="156"></A>        } <FONT ID="Else">else</FONT> {<FONT ID="SingleLineComment">//Moves on with the wall without refresh
+<A NAME="157"></A></FONT>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Msg msg : aReturn.returnValueBadly().getWallMsgs()) {
+<A NAME="158"></A>                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">UserProperty</A>(request, $$(WallWidgetIds.wallContent), <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(msg.getMsgMetadata())) {
+<A NAME="159"></A>                    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="160"></A>                        $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
+<A NAME="161"></A>                    }
+<A NAME="162"></A>                };<FONT ID="SingleLineComment">//No use of fetching email content or initializing it
+<A NAME="163"></A></FONT>            }
+<A NAME="164"></A>        }
+<A NAME="165"></A>
+<A NAME="166"></A>        DB.getHumanCRUDHumansUnseenLocal(<FONT ID="False">false</FONT>).removeEntry(humanId.getObjectAsValid(), aReturn.returnValue().getWallId());
+<A NAME="167"></A>
+<A NAME="168"></A>
+<A NAME="169"></A>        <FONT ID="Final">final</FONT> HumansIdentity currUserAsVisitorHI = UserProperty.HUMANS_IDENTITY_CACHE.get((humanId.getHumanId()), <FONT ID="StringLiteral">""</FONT>);
+<A NAME="170"></A>
+<A NAME="171"></A>        <FONT ID="Super">super</FONT>.setWallProfileName(currUserAsVisitorHI.getHuman().getDisplayName());
+<A NAME="172"></A>        <FONT ID="Super">super</FONT>.setWallProfilePhoto(UserProperty.formatProfilePhotoUrl(currUserAsVisitorHI.getHumansIdentityProfilePhoto()));
+<A NAME="173"></A>        <FONT ID="SingleLineComment">//Change property key please super.setWallTitle(MessageFormat.format(RBGet.gui().getString(TALK_AT_0), pe.getPrivateEventName()));
+<A NAME="174"></A></FONT>
+<A NAME="175"></A>        $$displayWallAsMuted($$(WallWidgetIds.wallMute), aReturn.returnValueBadly().getWallMutes().contains(humanId));
+<A NAME="176"></A>
+<A NAME="177"></A>        UCFiltering:
+<A NAME="178"></A>        {
+<A NAME="179"></A>            @SEE(seeClasses = {
+<A NAME="180"></A>                    <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/WallWidgetHumansWall.java.html">WallWidgetHumansWall</A>.<FONT ID="Class">class</FONT>,
+<A NAME="181"></A>                    <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventDelete.java.html">PrivateEventDelete</A>.<FONT ID="Class">class</FONT>,
+<A NAME="182"></A>                    <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventView.java.html">PrivateEventView</A>.<FONT ID="Class">class</FONT>,
+<A NAME="183"></A>                    Tribe.<FONT ID="Class">class</FONT>
+<A NAME="184"></A>            })
+<A NAME="185"></A>            <FONT ID="Final">final</FONT> String peopleFetchToEmail1 = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/People.java.html">People</A>(request, <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/PeopleCriteria.java.html">PeopleCriteria</A>().setPeople((List&lt;HumanIdFace&gt;) (List&lt;?&gt;)
+<A NAME="186"></A>                    <FONT ID="New">new</FONT> ArrayList&lt;HumansPrivateEvent&gt;(<FONT ID="New">new</FONT> HashSet&lt;HumansPrivateEvent&gt;() {
+<A NAME="187"></A>                        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="188"></A>
+<A NAME="189"></A>                        {
+<A NAME="190"></A>                            pe.getPrivateEventOwners().remove(myhumanId);
+<A NAME="191"></A>                            pe.getPrivateEventViewers().remove(myhumanId);
+<A NAME="192"></A>                            addAll(pe.getPrivateEventOwners());
+<A NAME="193"></A>                            addAll(pe.getPrivateEventViewers());
+<A NAME="194"></A>                        }
+<A NAME="195"></A>                    })
+<A NAME="196"></A>            ), $(Controller.Page.Skeleton_left_column)).fetchToEmail;
+<A NAME="197"></A>
+<A NAME="198"></A>            Loggers.debug(<FONT ID="StringLiteral">"PEOPLE FETCH TO EMAIL CONTENT:"</FONT> + peopleFetchToEmail1);
+<A NAME="199"></A>
+<A NAME="200"></A>            fetchToEmailSetLeftSidebar(peopleFetchToEmail1);
+<A NAME="201"></A>            fetchToEmailSetRightSidebar(<FONT ID="StringLiteral">"&amp;nbsp;"</FONT>);
+<A NAME="202"></A>
+<A NAME="203"></A>        }
+<A NAME="204"></A>    }
+<A NAME="205"></A>
+<A NAME="206"></A>
+<A NAME="207"></A>    <FONT ID="FormalComment">/**
+<A NAME="208"></A>     * @param args
+<A NAME="209"></A>     */</FONT>
+<A NAME="210"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> fetchToEmail(<FONT ID="Final">final</FONT> Object... args) {
+<A NAME="211"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="212"></A>            <FONT ID="Final">final</FONT> Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + WALL_SUBIT_FROM_EMAIL);
+<A NAME="213"></A>
+<A NAME="214"></A>            displayBlock($$(ORGANIZE_SECTION, document));
+<A NAME="215"></A>
+<A NAME="216"></A>
+<A NAME="217"></A>            $$(CATEGORY, document).setAttribute(MarkupTag.INPUT.value(), Integer.toString(Controller.Page.DocOrganizeModeEvent));
+<A NAME="218"></A>            $$(LOCATION, document).setAttribute(MarkupTag.INPUT.value(), args[<FONT ID="IntegerLiteral">0</FONT>].toString());
+<A NAME="219"></A>            $$(EVENT, document).setAttribute(MarkupTag.INPUT.value(), args[<FONT ID="IntegerLiteral">1</FONT>].toString());
+<A NAME="220"></A>
+<A NAME="221"></A>
+<A NAME="222"></A>            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(WALL_SUBMIT_WIDGET, document));
+<A NAME="223"></A>
+<A NAME="224"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> TransformerException e) {
+<A NAME="225"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, e);
+<A NAME="226"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> SAXException e) {
+<A NAME="227"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, e);
+<A NAME="228"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="229"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, e);
+<A NAME="230"></A>        }
+<A NAME="231"></A>    }
+<A NAME="232"></A>
+<A NAME="233"></A>    @Override
+<A NAME="234"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__) {
+<A NAME="235"></A>
+<A NAME="236"></A>
+<A NAME="237"></A>        itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallSubmit), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="238"></A>
+<A NAME="239"></A>            <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="240"></A>            <FONT ID="Private">private</FONT> Long myprivateEventId = privateEventId;
+<A NAME="241"></A>            <FONT ID="Private">private</FONT> Long mywallId = wallId;
+<A NAME="242"></A>
+<A NAME="243"></A>            @Override
+<A NAME="244"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="245"></A>
+<A NAME="246"></A>                Loggers.USER.info(myhumanId.getObj() + ENTERS_TEXT + wallAppend.getObj());
+<A NAME="247"></A>                <FONT ID="If">if</FONT> (wallAppend.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="248"></A>                    <FONT ID="If">if</FONT> (!wallAppend.getObj().equals(<FONT ID="StringLiteral">""</FONT>)) {
+<A NAME="249"></A>
+<A NAME="250"></A>                        Loggers.USER.info(myhumanId.getObj() + ENTERS_TEXT + wallAppend.getObj());
+<A NAME="251"></A>
+<A NAME="252"></A>
+<A NAME="253"></A>                        <FONT ID="Final">final</FONT> Return&lt;Wall&gt; r = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).addEntryToWall(myhumanId,
+<A NAME="254"></A>                                myhumanId,
+<A NAME="255"></A>                                <FONT ID="New">new</FONT> Obj&lt;Long&gt;(myprivateEventId),
+<A NAME="256"></A>                                wallAppend.getObj());
+<A NAME="257"></A>
+<A NAME="258"></A>
+<A NAME="259"></A>                        <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="260"></A>                            $$(WallWidgetIds.wallAppend).setAttribute(MarkupTag.TEXTAREA.value(), <FONT ID="StringLiteral">""</FONT>);
+<A NAME="261"></A>                            wallAppend.setObj(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="262"></A>
+<A NAME="263"></A>                            LAST_WALL_ENTRY.MAP.put(mywallId, <FONT ID="Null">null</FONT>);
+<A NAME="264"></A>
+<A NAME="265"></A>                            clear($$(WallWidgetIds.wallContent));
+<A NAME="266"></A>                            <FONT ID="Final">final</FONT> Wall wall = (DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).readWall(myhumanId, <FONT ID="New">new</FONT> Obj&lt;Long&gt;(myprivateEventId), REFRESH_SPEC).returnValueBadly());
+<A NAME="267"></A>                            <FONT ID="Final">final</FONT> StringBuilder b = <FONT ID="New">new</FONT> StringBuilder(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="268"></A>                            List&lt;Msg&gt; wallMsgs = wall.getWallMsgs();
+<A NAME="269"></A>                            <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>, wallMsgsSize = wallMsgs.size(); i &lt; wallMsgsSize &amp;&amp; i &lt; <FONT ID="IntegerLiteral">25</FONT>; i++) {
+<A NAME="270"></A>                                Msg msg = wallMsgs.get(i);
+<A NAME="271"></A>                                b.append(
+<A NAME="272"></A>                                        <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">UserProperty</A>(
+<A NAME="273"></A>                                                request,
+<A NAME="274"></A>                                                $$(WallWidgetIds.wallContent),
+<A NAME="275"></A>                                                ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(msg.getMsgContent()).get(),
+<A NAME="276"></A>                                                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(msg.getMsgMetadata())) {
+<A NAME="277"></A>                                        }.fetchToEmail
+<A NAME="278"></A>                                );
+<A NAME="279"></A>                            }
+<A NAME="280"></A>                            <FONT ID="Final">final</FONT> PrivateEvent pe = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).dirtyRPrivateEventAsAny(myhumanId.getObj(), myprivateEventId).returnValue();
+<A NAME="281"></A>                            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent hpe : pe.getPrivateEventViewers()) {
+<A NAME="282"></A>                                <FONT ID="If">if</FONT> (!wall.getWallMutes().contains(hpe) &amp;&amp; !hpe.getHumanId().equals(myhumanId.getObj())) {
+<A NAME="283"></A>                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+<A NAME="284"></A>                                            hpe.getHumanId(),
+<A NAME="285"></A>                                            pe.getPrivateEventName(),
+<A NAME="286"></A>                                            fetchToEmailSetCenter(b.toString(), fetchToEmail)
+<A NAME="287"></A>                                    );
+<A NAME="288"></A>                                    DB.getHumanCRUDHumansUnseenLocal(<FONT ID="False">false</FONT>).addEntry(hpe.getHumanId(), wall.getWallId());
+<A NAME="289"></A>                                }
+<A NAME="290"></A>                            }
+<A NAME="291"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="292"></A>                            $$(WallWidgetIds.wallNotice).setTextContent(r.returnMsg());
+<A NAME="293"></A>                        }
+<A NAME="294"></A>                        $$sendJS(JSCodeToSend.UpdateDocument);
+<A NAME="295"></A>                    }
+<A NAME="296"></A>                }
+<A NAME="297"></A>            }
+<A NAME="298"></A>
+<A NAME="299"></A>        }, <FONT ID="False">false</FONT>);
+<A NAME="300"></A>
+<A NAME="301"></A>
+<A NAME="302"></A>        itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallMute), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="303"></A>
+<A NAME="304"></A>            <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="305"></A>            <FONT ID="Private">private</FONT> Long myprivateEventId = privateEventId;
+<A NAME="306"></A>
+<A NAME="307"></A>            @Override
+<A NAME="308"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="309"></A>
+<A NAME="310"></A>                <FONT ID="If">if</FONT> (DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).readWall(myhumanId, <FONT ID="New">new</FONT> Obj&lt;Long&gt;(myprivateEventId), REFRESH_SPEC).returnValueBadly().getWallMutes().contains(myhumanId)) {
+<A NAME="311"></A>                    DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).unmuteWall(myhumanId, myhumanId, <FONT ID="New">new</FONT> Obj&lt;Long&gt;(myprivateEventId));
+<A NAME="312"></A>                    $$displayWallAsMuted(evt_, <FONT ID="False">false</FONT>);
+<A NAME="313"></A>
+<A NAME="314"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="315"></A>                    DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).muteWall(myhumanId, myhumanId, <FONT ID="New">new</FONT> Obj&lt;Long&gt;(myprivateEventId));
+<A NAME="316"></A>                    $$displayWallAsMuted(evt_, <FONT ID="True">true</FONT>);
+<A NAME="317"></A>                }
+<A NAME="318"></A>            }
+<A NAME="319"></A>
+<A NAME="320"></A>        }, <FONT ID="False">false</FONT>);
+<A NAME="321"></A>
+<A NAME="322"></A>    }
+<A NAME="323"></A>
+<A NAME="324"></A>}
+<A NAME="325"></A></pre>
+</BODY>
+</HTML>

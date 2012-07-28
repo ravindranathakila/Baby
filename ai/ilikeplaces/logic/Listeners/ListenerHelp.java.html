@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerHelp (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerHelp.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/Help.java.html">ai.ilikeplaces.logic.Listeners.widgets.Help</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/HelpCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.HelpCriteria</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * Created by IntelliJ IDEA.
+<A NAME="15"></A> * User: Ravindranath Akila
+<A NAME="16"></A> * Date: 10/22/11
+<A NAME="17"></A> * Time: 10:09 AM
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerHelp <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="20"></A><FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="21"></A></FONT>
+<A NAME="22"></A>
+<A NAME="23"></A><FONT ID="SingleLineComment">// --------------------- Interface ItsNatServletRequestListener ---------------------
+<A NAME="24"></A></FONT>
+<A NAME="25"></A>    @Override
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest request, <FONT ID="Final">final</FONT> ItsNatServletResponse response__) {
+<A NAME="27"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/AbstractSkeletonListener.java.html">AbstractSkeletonListener</A>(request, response__) {
+<A NAME="28"></A>            @Override
+<A NAME="29"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(ItsNatHTMLDocument itsNatHTMLDocument__, HTMLDocument hTMLDocument__, ItsNatDocument itsNatDocument__, Object... initArgs) {
+<A NAME="30"></A>                <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/Help.java.html">Help</A>(request, <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/HelpCriteria.java.html">HelpCriteria</A>(), $(Controller.Page.Skeleton_center_content));
+<A NAME="31"></A>            }
+<A NAME="32"></A>        };
+<A NAME="33"></A>    }
+<A NAME="34"></A>}
+<A NAME="35"></A></pre>
+</BODY>
+</HTML>

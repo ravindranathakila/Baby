@@ -1,0 +1,288 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.management.MemorySafe (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">MemorySafe.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.management;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * A class having static methods and static variables.
+<A NAME="9"></A> * These variables will contain memory slots to be freed upon high memory consumption.
+<A NAME="10"></A> * Used in conjunction with the MemoryManagementSystem
+<A NAME="11"></A> * &lt;p/&gt;
+<A NAME="12"></A> * Created by IntelliJ IDEA.
+<A NAME="13"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="14"></A> * Date: Jun 2, 2010
+<A NAME="15"></A> * Time: 12:03:02 AM
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>
+<A NAME="18"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="19"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> MemorySafe {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> Runtime R = Runtime.getRuntime();
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> MB = <FONT ID="IntegerLiteral">1024</FONT> * <FONT ID="IntegerLiteral">1024</FONT>;<FONT ID="SingleLineComment">//1 megabytes
+<A NAME="24"></A></FONT>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_01 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];
+<A NAME="26"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_02 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];
+<A NAME="27"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_03 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];
+<A NAME="28"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_04 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];
+<A NAME="29"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_05 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];
+<A NAME="30"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_06 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];
+<A NAME="31"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_07 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];
+<A NAME="32"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_08 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];
+<A NAME="33"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_09 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];;
+<A NAME="34"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] memlock_10 = <FONT ID="Null">null</FONT>;<FONT ID="SingleLineComment">//new byte[MB_10];
+<A NAME="35"></A></FONT>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> RuntimeException ALLOCATION_ON_LOW_MEMORY = <FONT ID="New">new</FONT> RuntimeException(<FONT ID="StringLiteral">"SORRY! IGNORING MEMORY SAFE ALLOCATION ON LOW MEMORY!"</FONT>);
+<A NAME="36"></A>
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_01(<FONT ID="Byte">byte</FONT>[] memlock_01) {
+<A NAME="39"></A>        MemorySafe.memlock_01 = memlock_01;
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_02(<FONT ID="Byte">byte</FONT>[] memlock_02) {
+<A NAME="43"></A>        MemorySafe.memlock_02 = memlock_02;
+<A NAME="44"></A>    }
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_03(<FONT ID="Byte">byte</FONT>[] memlock_03) {
+<A NAME="47"></A>        MemorySafe.memlock_03 = memlock_03;
+<A NAME="48"></A>    }
+<A NAME="49"></A>
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_04(<FONT ID="Byte">byte</FONT>[] memlock_04) {
+<A NAME="51"></A>        MemorySafe.memlock_04 = memlock_04;
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_05(<FONT ID="Byte">byte</FONT>[] memlock_05) {
+<A NAME="55"></A>        MemorySafe.memlock_05 = memlock_05;
+<A NAME="56"></A>    }
+<A NAME="57"></A>
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_06(<FONT ID="Byte">byte</FONT>[] memlock_06) {
+<A NAME="59"></A>        MemorySafe.memlock_06 = memlock_06;
+<A NAME="60"></A>    }
+<A NAME="61"></A>
+<A NAME="62"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_07(<FONT ID="Byte">byte</FONT>[] memlock_07) {
+<A NAME="63"></A>        MemorySafe.memlock_07 = memlock_07;
+<A NAME="64"></A>    }
+<A NAME="65"></A>
+<A NAME="66"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_08(<FONT ID="Byte">byte</FONT>[] memlock_08) {
+<A NAME="67"></A>        MemorySafe.memlock_08 = memlock_08;
+<A NAME="68"></A>    }
+<A NAME="69"></A>
+<A NAME="70"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_09(<FONT ID="Byte">byte</FONT>[] memlock_09) {
+<A NAME="71"></A>        MemorySafe.memlock_09 = memlock_09;
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> setMemlock_10(<FONT ID="Byte">byte</FONT>[] memlock_10) {
+<A NAME="75"></A>        MemorySafe.memlock_10 = memlock_10;
+<A NAME="76"></A>    }
+<A NAME="77"></A>
+<A NAME="78"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_01() {
+<A NAME="79"></A>        <FONT ID="Return">return</FONT> memlock_01;
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_02() {
+<A NAME="83"></A>        <FONT ID="Return">return</FONT> memlock_02;
+<A NAME="84"></A>    }
+<A NAME="85"></A>
+<A NAME="86"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_03() {
+<A NAME="87"></A>        <FONT ID="Return">return</FONT> memlock_03;
+<A NAME="88"></A>    }
+<A NAME="89"></A>
+<A NAME="90"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_04() {
+<A NAME="91"></A>        <FONT ID="Return">return</FONT> memlock_04;
+<A NAME="92"></A>    }
+<A NAME="93"></A>
+<A NAME="94"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_05() {
+<A NAME="95"></A>        <FONT ID="Return">return</FONT> memlock_05;
+<A NAME="96"></A>    }
+<A NAME="97"></A>
+<A NAME="98"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_06() {
+<A NAME="99"></A>        <FONT ID="Return">return</FONT> memlock_06;
+<A NAME="100"></A>    }
+<A NAME="101"></A>
+<A NAME="102"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_07() {
+<A NAME="103"></A>        <FONT ID="Return">return</FONT> memlock_07;
+<A NAME="104"></A>    }
+<A NAME="105"></A>
+<A NAME="106"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_08() {
+<A NAME="107"></A>        <FONT ID="Return">return</FONT> memlock_08;
+<A NAME="108"></A>    }
+<A NAME="109"></A>
+<A NAME="110"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_09() {
+<A NAME="111"></A>        <FONT ID="Return">return</FONT> memlock_09;
+<A NAME="112"></A>    }
+<A NAME="113"></A>
+<A NAME="114"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] getMemlock_10() {
+<A NAME="115"></A>        <FONT ID="Return">return</FONT> memlock_10;
+<A NAME="116"></A>    }
+<A NAME="117"></A>
+<A NAME="118"></A>
+<A NAME="119"></A>    <FONT ID="Private">private</FONT> MemorySafe() {
+<A NAME="120"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"This class is not designed for construction of objects. It is static."</FONT>);
+<A NAME="121"></A>    }
+<A NAME="122"></A>
+<A NAME="123"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> deallocate() {
+<A NAME="124"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, <FONT ID="StringLiteral">"FREEING MEMORY AND PERFORMING GC AT MEMORY(MB):"</FONT> + (<FONT ID="Double">double</FONT>) Runtime.getRuntime().freeMemory() / MemorySafe.MB, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="125"></A>        setMemlock_01(<FONT ID="Null">null</FONT>);
+<A NAME="126"></A>        setMemlock_03(<FONT ID="Null">null</FONT>);
+<A NAME="127"></A>        setMemlock_03(<FONT ID="Null">null</FONT>);
+<A NAME="128"></A>        setMemlock_04(<FONT ID="Null">null</FONT>);
+<A NAME="129"></A>        setMemlock_05(<FONT ID="Null">null</FONT>);
+<A NAME="130"></A>        setMemlock_06(<FONT ID="Null">null</FONT>);
+<A NAME="131"></A>        setMemlock_07(<FONT ID="Null">null</FONT>);
+<A NAME="132"></A>        setMemlock_08(<FONT ID="Null">null</FONT>);
+<A NAME="133"></A>        setMemlock_09(<FONT ID="Null">null</FONT>);
+<A NAME="134"></A>        setMemlock_10(<FONT ID="Null">null</FONT>);
+<A NAME="135"></A>        System.gc();
+<A NAME="136"></A>        sl.complete(Loggers.DONE + <FONT ID="StringLiteral">" NOW FREE(MB):"</FONT> + (<FONT ID="Double">double</FONT>) Runtime.getRuntime().freeMemory() / MemorySafe.MB);
+<A NAME="137"></A>    }
+<A NAME="138"></A>
+<A NAME="139"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> allocate(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> free) {
+<A NAME="140"></A>        <FONT ID="FormalComment">/**
+<A NAME="141"></A>         * 2 a magic number where we decide to reduce the threshold from free and divide it by two, to use it as buffer
+<A NAME="142"></A>         * 10 is the number of chunks.
+<A NAME="143"></A>         *
+<A NAME="144"></A>         * Remember that during startup, if this method is called manually(not listener) AND the memory is also above threshold,
+<A NAME="145"></A>         * then the chunkSize will get negative.
+<A NAME="146"></A>         *
+<A NAME="147"></A>         */</FONT>
+<A NAME="148"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> chunkSize = (<FONT ID="Int">int</FONT>) (((free - (<FONT ID="Long">long</FONT>) (R.totalMemory() * (<FONT ID="IntegerLiteral">1</FONT> - MemoryWarningSystem.MemoryThreshold))) / <FONT ID="IntegerLiteral">2</FONT>) / <FONT ID="IntegerLiteral">10</FONT>);
+<A NAME="149"></A>
+<A NAME="150"></A>        Loggers.DEBUG.debug(<FONT ID="StringLiteral">"MEMORY SAFE FREE SIZE:"</FONT> + free);
+<A NAME="151"></A>        Loggers.DEBUG.debug(<FONT ID="StringLiteral">"MEMORY SAFE TOTAL SIZE:"</FONT> + R.totalMemory());
+<A NAME="152"></A>        Loggers.DEBUG.debug(<FONT ID="StringLiteral">"MEMORY SAFE THRESHOLD SIZE:"</FONT> + MemoryWarningSystem.MemoryThreshold);
+<A NAME="153"></A>        Loggers.DEBUG.debug(<FONT ID="StringLiteral">"MEMORY SAFE CHUNK SIZE:"</FONT> + chunkSize);
+<A NAME="154"></A>
+<A NAME="155"></A>        <FONT ID="If">if</FONT> (chunkSize &lt; <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="156"></A>            <FONT ID="Throw">throw</FONT> ALLOCATION_ON_LOW_MEMORY;
+<A NAME="157"></A>        }
+<A NAME="158"></A>
+<A NAME="159"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, <FONT ID="StringLiteral">"STARTING TO BUFFER "</FONT> + chunkSize * <FONT ID="IntegerLiteral">10</FONT> / MB + <FONT ID="StringLiteral">"MB OF MEMORY AT MEMORY(MB):"</FONT> + (<FONT ID="Double">double</FONT>) Runtime.getRuntime().freeMemory() / MemorySafe.MB, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="160"></A>
+<A NAME="161"></A>        fillUpTenTimes(chunkSize);
+<A NAME="162"></A>
+<A NAME="163"></A>        sl.complete(<FONT ID="StringLiteral">"NOW FREE(MB):"</FONT> + (<FONT ID="Double">double</FONT>) Runtime.getRuntime().freeMemory() / MemorySafe.MB);
+<A NAME="164"></A>    }
+<A NAME="165"></A>
+<A NAME="166"></A>
+<A NAME="167"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> fillUpTenTimes(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> chunkSize) {
+<A NAME="168"></A>        setMemlock_01(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="169"></A>        setMemlock_03(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="170"></A>        setMemlock_03(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="171"></A>        setMemlock_04(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="172"></A>        setMemlock_05(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="173"></A>        setMemlock_06(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="174"></A>        setMemlock_07(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="175"></A>        setMemlock_08(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="176"></A>        setMemlock_09(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="177"></A>        setMemlock_10(<FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[chunkSize]);
+<A NAME="178"></A>    }
+<A NAME="179"></A>}
+<A NAME="180"></A>
+<A NAME="181"></A><FONT ID="SingleLineComment">//        int null_count = 0;
+<A NAME="182"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="183"></A></FONT><FONT ID="SingleLineComment">//        null_count += getMemlock_01() == null? 0 : 1;
+<A NAME="184"></A></FONT><FONT ID="SingleLineComment">//        null_count += getMemlock_02() == null? 0 : 1;
+<A NAME="185"></A></FONT><FONT ID="SingleLineComment">//        null_count += getMemlock_03() == null? 0 : 1;
+<A NAME="186"></A></FONT><FONT ID="SingleLineComment">//        null_count += getMemlock_04() == null? 0 : 1;
+<A NAME="187"></A></FONT><FONT ID="SingleLineComment">//        null_count += getMemlock_05() == null? 0 : 1;
+<A NAME="188"></A></FONT><FONT ID="SingleLineComment">//        null_count += getMemlock_06() == null? 0 : 1;
+<A NAME="189"></A></FONT><FONT ID="SingleLineComment">//        null_count += getMemlock_07() == null? 0 : 1;
+<A NAME="190"></A></FONT><FONT ID="SingleLineComment">//        null_count += getMemlock_09() == null? 0 : 1;
+<A NAME="191"></A></FONT><FONT ID="SingleLineComment">//        null_count += getMemlock_10() == null? 0 : 1;
+<A NAME="192"></A></FONT>
+<A NAME="193"></A><FONT ID="SingleLineComment">//        switch (10) {//New implementation uses all ten slots
+<A NAME="194"></A></FONT><FONT ID="SingleLineComment">//            case 1:
+<A NAME="195"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="196"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="197"></A></FONT><FONT ID="SingleLineComment">//            case 2:
+<A NAME="198"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="199"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_02(new byte[chunkSize]);
+<A NAME="200"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="201"></A></FONT><FONT ID="SingleLineComment">//            case 3:
+<A NAME="202"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="203"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="204"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="205"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="206"></A></FONT><FONT ID="SingleLineComment">//            case 4:
+<A NAME="207"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="208"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="209"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="210"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_04(new byte[chunkSize]);
+<A NAME="211"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="212"></A></FONT><FONT ID="SingleLineComment">//            case 5:
+<A NAME="213"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="214"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="215"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="216"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_04(new byte[chunkSize]);
+<A NAME="217"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_05(new byte[chunkSize]);
+<A NAME="218"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="219"></A></FONT><FONT ID="SingleLineComment">//            case 6:
+<A NAME="220"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="221"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="222"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="223"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_04(new byte[chunkSize]);
+<A NAME="224"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_05(new byte[chunkSize]);
+<A NAME="225"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_06(new byte[chunkSize]);
+<A NAME="226"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="227"></A></FONT><FONT ID="SingleLineComment">//            case 7:
+<A NAME="228"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="229"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="230"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="231"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_04(new byte[chunkSize]);
+<A NAME="232"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_05(new byte[chunkSize]);
+<A NAME="233"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_06(new byte[chunkSize]);
+<A NAME="234"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_07(new byte[chunkSize]);
+<A NAME="235"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="236"></A></FONT><FONT ID="SingleLineComment">//            case 8:
+<A NAME="237"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="238"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="239"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="240"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_04(new byte[chunkSize]);
+<A NAME="241"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_05(new byte[chunkSize]);
+<A NAME="242"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_06(new byte[chunkSize]);
+<A NAME="243"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_07(new byte[chunkSize]);
+<A NAME="244"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_08(new byte[chunkSize]);
+<A NAME="245"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="246"></A></FONT><FONT ID="SingleLineComment">//            case 9:
+<A NAME="247"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="248"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="249"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="250"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_04(new byte[chunkSize]);
+<A NAME="251"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_05(new byte[chunkSize]);
+<A NAME="252"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_06(new byte[chunkSize]);
+<A NAME="253"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_07(new byte[chunkSize]);
+<A NAME="254"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_08(new byte[chunkSize]);
+<A NAME="255"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_09(new byte[chunkSize]);
+<A NAME="256"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="257"></A></FONT><FONT ID="SingleLineComment">//            default:
+<A NAME="258"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_01(new byte[chunkSize]);
+<A NAME="259"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="260"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_03(new byte[chunkSize]);
+<A NAME="261"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_04(new byte[chunkSize]);
+<A NAME="262"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_05(new byte[chunkSize]);
+<A NAME="263"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_06(new byte[chunkSize]);
+<A NAME="264"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_07(new byte[chunkSize]);
+<A NAME="265"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_08(new byte[chunkSize]);
+<A NAME="266"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_09(new byte[chunkSize]);
+<A NAME="267"></A></FONT><FONT ID="SingleLineComment">//                setMemlock_10(new byte[chunkSize]);
+<A NAME="268"></A></FONT><FONT ID="SingleLineComment">//                break;
+<A NAME="269"></A></FONT><FONT ID="SingleLineComment">//        }</FONT></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.Tribe (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Tribe.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/ExceptionCache.java.html">ai.ilikeplaces.util.ExceptionCache</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/Refresh.java.html">ai.ilikeplaces.util.jpa.Refresh</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">ai.ilikeplaces.util.jpa.RefreshException</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/Refreshable.java.html">ai.ilikeplaces.util.jpa.Refreshable</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="15"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="FormalComment">/**
+<A NAME="20"></A> * Always think of a {@link Tribe} as a VIEW on users. A way of looking at how user groups are handled.
+<A NAME="21"></A> * &lt;p/&gt;
+<A NAME="22"></A> * Album and wall are just additional attributes/features of a tribe.
+<A NAME="23"></A> * &lt;p/&gt;
+<A NAME="24"></A> * A Tribe is just a View. Making this otherwise makes interweaving with {@link PrivateLocation} and {@link PrivateEvent}
+<A NAME="25"></A> * extremely difficult. This is why tribe's should not be assigned members with roles as Leader and Tribal.
+<A NAME="26"></A> * &lt;p/&gt;
+<A NAME="27"></A> * Given the fact that any tribal lady can conceive a child, enrolling a member to a {@link Tribe} can be a responsibility taken up by anyone.
+<A NAME="28"></A> * &lt;p/&gt;
+<A NAME="29"></A> * Removing members hence, should happen properly without leaving ACID issues.
+<A NAME="30"></A> * &lt;p/&gt;
+<A NAME="31"></A> * &lt;p/&gt;
+<A NAME="32"></A> * So, when a person is removed from a tribe, he can still visit old private locations and events he was added since Tribe is just a VIEW.
+<A NAME="33"></A> * VIEW now does not have the humanId, but is nevertheless present in the users data.
+<A NAME="34"></A> * &lt;p/&gt;
+<A NAME="35"></A> * &lt;p/&gt;
+<A NAME="36"></A> * &lt;p/&gt;
+<A NAME="37"></A> * &lt;b&gt;Tribes were introduces because of a few reasons:&lt;/b&gt;
+<A NAME="38"></A> * &lt;p/&gt;
+<A NAME="39"></A> * Asking the user to just invite friends looked lame, old and boring
+<A NAME="40"></A> * &lt;p/&gt;
+<A NAME="41"></A> * People have clicks they hang around with
+<A NAME="42"></A> * &lt;p/&gt;
+<A NAME="43"></A> * People need a story/cause to act on as a group
+<A NAME="44"></A> * &lt;p/&gt;
+<A NAME="45"></A> * People need a clear connection between each other and the leaders to proceed
+<A NAME="46"></A> * &lt;p/&gt;
+<A NAME="47"></A> * People need a proper actionable path to proceed
+<A NAME="48"></A> * &lt;p/&gt;
+<A NAME="49"></A> * &lt;p/&gt;
+<A NAME="50"></A> * &lt;b&gt;This class should facilitate mainly:&lt;/b&gt;
+<A NAME="51"></A> * &lt;p/&gt;
+<A NAME="52"></A> * Adding/inviting friends through interacting with this entity (invitations will happen through this entity only in future)
+<A NAME="53"></A> * &lt;p/&gt;
+<A NAME="54"></A> * Interacting with friends of a tribe through its wall, included in this entity.
+<A NAME="55"></A> * &lt;p/&gt;
+<A NAME="56"></A> * This entity should know which places and moments it belongs to. This implies careful wiring. Adding a tribe to a moment should update this. Removing should update this. Same goes for places
+<A NAME="57"></A> * &lt;p/&gt;
+<A NAME="58"></A> * We will also provide an album to upload cause photos, and photo's that don't belong to any moment.
+<A NAME="59"></A> * &lt;p/&gt;
+<A NAME="60"></A> * A tribes leaders will be a place's and moment's leaders
+<A NAME="61"></A> * &lt;p/&gt;
+<A NAME="62"></A> * A tribes members will be a place's and moment's members
+<A NAME="63"></A> *
+<A NAME="64"></A> * @author Ravindranath Akila
+<A NAME="65"></A> */</FONT>
+<A NAME="66"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="67"></A>@OK
+<A NAME="68"></A>@Entity
+<A NAME="69"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="70"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Tribe <FONT ID="Implements">implements</FONT> Serializable, <A HREF="../../../ai/ilikeplaces/util/jpa/Refreshable.java.html">Refreshable</A>&lt;<A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;, <A HREF="../../../ai/ilikeplaces/entities/RefreshData.java.html">RefreshData</A>&lt;<A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt;, Comparable&lt;<A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; {
+<A NAME="71"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="72"></A></FONT>
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> Long tribeId;
+<A NAME="74"></A>
+<A NAME="75"></A>    <FONT ID="Public">public</FONT> String tribeName;
+<A NAME="76"></A>    <FONT ID="Public">public</FONT> String tribeStory;
+<A NAME="77"></A>
+<A NAME="78"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> tribeWall;
+<A NAME="79"></A>
+<A NAME="80"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A> tribeAlbum;
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> Set&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A>&gt; tribeMembers;
+<A NAME="83"></A>
+<A NAME="84"></A><FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="85"></A></FONT>
+<A NAME="86"></A>    @UNIDIRECTIONAL
+<A NAME="87"></A>    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+<A NAME="88"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A> getTribeAlbum() {
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> tribeAlbum;
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTribeAlbum(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A> tribeAlbum) {
+<A NAME="93"></A>        <FONT ID="This">this</FONT>.tribeAlbum = tribeAlbum;
+<A NAME="94"></A>    }
+<A NAME="95"></A>
+<A NAME="96"></A>
+<A NAME="97"></A>    @Transient
+<A NAME="98"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> setTribeAlbumR(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Album.java.html">Album</A> tribeAlbum) {
+<A NAME="99"></A>        <FONT ID="This">this</FONT>.tribeAlbum = tribeAlbum;
+<A NAME="100"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="101"></A>    }
+<A NAME="102"></A>
+<A NAME="103"></A>    @Id
+<A NAME="104"></A>    @GeneratedValue(strategy = GenerationType.AUTO)
+<A NAME="105"></A>    <FONT ID="Public">public</FONT> Long getTribeId() {
+<A NAME="106"></A>        <FONT ID="Return">return</FONT> tribeId;
+<A NAME="107"></A>    }
+<A NAME="108"></A>
+<A NAME="109"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTribeId(<FONT ID="Final">final</FONT> Long tribeId) {
+<A NAME="110"></A>        <FONT ID="This">this</FONT>.tribeId = tribeId;
+<A NAME="111"></A>    }
+<A NAME="112"></A>
+<A NAME="113"></A>    @WARNING(warning = <FONT ID="StringLiteral">"Owner because once an tribe needs to be deleted, deleting this tribe is easier if owner."</FONT> +
+<A NAME="114"></A>            <FONT ID="StringLiteral">"If this tribe is not the owner, individual owner viewer accepteee rejectee will have to delete their tribes individually."</FONT>)
+<A NAME="115"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+<A NAME="116"></A>    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+<A NAME="117"></A>    <FONT ID="Public">public</FONT> Set&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A>&gt; getTribeMembers() {
+<A NAME="118"></A>        <FONT ID="Return">return</FONT> tribeMembers;
+<A NAME="119"></A>    }
+<A NAME="120"></A>
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTribeMembers(<FONT ID="Final">final</FONT> Set&lt;<A HREF="../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A>&gt; tribeMembers) {
+<A NAME="122"></A>        <FONT ID="This">this</FONT>.tribeMembers = tribeMembers;
+<A NAME="123"></A>    }
+<A NAME="124"></A>
+<A NAME="125"></A>    @Column(nullable = <FONT ID="False">false</FONT>, length = <FONT ID="IntegerLiteral">255</FONT>)
+<A NAME="126"></A>    <FONT ID="Public">public</FONT> String getTribeName() {
+<A NAME="127"></A>        <FONT ID="Return">return</FONT> tribeName;
+<A NAME="128"></A>    }
+<A NAME="129"></A>
+<A NAME="130"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTribeName(String tribeName) {
+<A NAME="131"></A>        <FONT ID="This">this</FONT>.tribeName = tribeName;
+<A NAME="132"></A>    }
+<A NAME="133"></A>
+<A NAME="134"></A>    @Transient
+<A NAME="135"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> setTribeNameR(String tribeName) {
+<A NAME="136"></A>        <FONT ID="This">this</FONT>.tribeName = tribeName;
+<A NAME="137"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="138"></A>    }
+<A NAME="139"></A>
+<A NAME="140"></A>    @Column(nullable = <FONT ID="False">false</FONT>, length = <FONT ID="IntegerLiteral">1000</FONT>)
+<A NAME="141"></A>    <FONT ID="Public">public</FONT> String getTribeStory() {
+<A NAME="142"></A>        <FONT ID="Return">return</FONT> tribeStory;
+<A NAME="143"></A>    }
+<A NAME="144"></A>
+<A NAME="145"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTribeStory(<FONT ID="Final">final</FONT> String tribeStory) {
+<A NAME="146"></A>        <FONT ID="This">this</FONT>.tribeStory = tribeStory;
+<A NAME="147"></A>    }
+<A NAME="148"></A>
+<A NAME="149"></A>    @Transient
+<A NAME="150"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> setTribeStoryR(<FONT ID="Final">final</FONT> String tribeStory) {
+<A NAME="151"></A>        <FONT ID="This">this</FONT>.tribeStory = tribeStory;
+<A NAME="152"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="153"></A>    }
+<A NAME="154"></A>
+<A NAME="155"></A>    @UNIDIRECTIONAL
+<A NAME="156"></A>    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+<A NAME="157"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> getTribeWall() {
+<A NAME="158"></A>        <FONT ID="Return">return</FONT> tribeWall;
+<A NAME="159"></A>    }
+<A NAME="160"></A>
+<A NAME="161"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTribeWall(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> tribeWall) {
+<A NAME="162"></A>        <FONT ID="This">this</FONT>.tribeWall = tribeWall;
+<A NAME="163"></A>    }
+<A NAME="164"></A>
+<A NAME="165"></A>    @Transient
+<A NAME="166"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> setTribeWallR(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> tribeWall) {
+<A NAME="167"></A>        <FONT ID="This">this</FONT>.tribeWall = tribeWall;
+<A NAME="168"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="169"></A>    }
+<A NAME="170"></A>
+<A NAME="171"></A><FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="172"></A></FONT>
+<A NAME="173"></A>
+<A NAME="174"></A><FONT ID="SingleLineComment">// --------------------- Interface Refreshable ---------------------
+<A NAME="175"></A></FONT>
+<A NAME="176"></A>    @Override
+<A NAME="177"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> refresh(<A HREF="../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> {
+<A NAME="178"></A>        <FONT ID="Throw">throw</FONT> ExceptionCache.METHOD_NOT_IMPLEMENTED;
+<A NAME="179"></A>    }
+<A NAME="180"></A>
+<A NAME="181"></A>    <FONT ID="FormalComment">/**
+<A NAME="182"></A>     * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
+<A NAME="183"></A>     *
+<A NAME="184"></A>     * @return T
+<A NAME="185"></A>     * @throws ai.ilikeplaces.exception.DBFetchDataException
+<A NAME="186"></A>     *          in case the entity fails to refresh something inside it
+<A NAME="187"></A>     */</FONT>
+<A NAME="188"></A>    @Override
+<A NAME="189"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> refresh() <FONT ID="Throws">throws</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="190"></A>        <FONT ID="This">this</FONT>.getTribeMembers().size();
+<A NAME="191"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="192"></A>    }
+<A NAME="193"></A>
+<A NAME="194"></A>    @Override
+<A NAME="195"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="196"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"Tribe{"</FONT> +
+<A NAME="197"></A>                <FONT ID="StringLiteral">"tribeId="</FONT> + tribeId +
+<A NAME="198"></A>                <FONT ID="StringLiteral">", tribeName='"</FONT> + tribeName + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="199"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="200"></A>    }
+<A NAME="201"></A>
+<A NAME="202"></A>
+<A NAME="203"></A>    @Override
+<A NAME="204"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> compareTo(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A> o) {
+<A NAME="205"></A>        <FONT ID="Return">return</FONT> (<FONT ID="Int">int</FONT>) (<FONT ID="This">this</FONT>.tribeId - o.tribeId);
+<A NAME="206"></A>    }
+<A NAME="207"></A>}
+<A NAME="208"></A>
+<A NAME="209"></A></pre>
+</BODY>
+</HTML>

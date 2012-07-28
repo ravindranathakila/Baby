@@ -1,0 +1,682 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.apache.StringEscapeUtils (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">StringEscapeUtils.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="MultiLineComment">/*
+<A NAME="2"></A> * Licensed to the Apache Software Foundation (ASF) under one or more
+<A NAME="3"></A> * contributor license agreements.  See the NOTICE file distributed with
+<A NAME="4"></A> * this work for additional information regarding copyright ownership.
+<A NAME="5"></A> * The ASF licenses this file to You under the Apache License, Version 2.0
+<A NAME="6"></A> * (the "License"); you may not use this file except in compliance with
+<A NAME="7"></A> * the License.  You may obtain a copy of the License at
+<A NAME="8"></A> *
+<A NAME="9"></A> *      http://www.apache.org/licenses/LICENSE-2.0
+<A NAME="10"></A> *
+<A NAME="11"></A> * Unless required by applicable law or agreed to in writing, software
+<A NAME="12"></A> * distributed under the License is distributed on an "AS IS" BASIS,
+<A NAME="13"></A> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<A NAME="14"></A> * See the License for the specific language governing permissions and
+<A NAME="15"></A> * limitations under the License.
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.apache;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.io.StringWriter;
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.io.Writer;
+<A NAME="22"></A>
+<A NAME="23"></A><FONT ID="FormalComment">/**
+<A NAME="24"></A> * &lt;p&gt;Escapes and unescapes &lt;code&gt;String&lt;/code&gt;s for
+<A NAME="25"></A> * Java, Java Script, HTML, XML, and SQL.&lt;/p&gt;
+<A NAME="26"></A> *
+<A NAME="27"></A> * @author Apache Jakarta Turbine
+<A NAME="28"></A> * @author GenerationJavaCore library
+<A NAME="29"></A> * @author Purple Technology
+<A NAME="30"></A> * @author &lt;a href="mailto:bayard@generationjava.com"&gt;Henri Yandell&lt;/a&gt;
+<A NAME="31"></A> * @author &lt;a href="mailto:alex@purpletech.com"&gt;Alexander Day Chaffee&lt;/a&gt;
+<A NAME="32"></A> * @author Antony Riley
+<A NAME="33"></A> * @author Helge Tesgaard
+<A NAME="34"></A> * @author &lt;a href="sean@boohai.com"&gt;Sean Brown&lt;/a&gt;
+<A NAME="35"></A> * @author &lt;a href="mailto:ggregory@seagullsw.com"&gt;Gary Gregory&lt;/a&gt;
+<A NAME="36"></A> * @author Phil Steitz
+<A NAME="37"></A> * @author Pete Gieser
+<A NAME="38"></A> * @since 2.0
+<A NAME="39"></A> * @version $Id: StringEscapeUtils.java,v 1.1 2010-03-25 18:53:51 vergy Exp $
+<A NAME="40"></A> */</FONT>
+<A NAME="41"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> StringEscapeUtils {
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="FormalComment">/**
+<A NAME="44"></A>     * &lt;p&gt;&lt;code&gt;StringEscapeUtils&lt;/code&gt; instances should NOT be constructed in
+<A NAME="45"></A>     * standard programming.&lt;/p&gt;
+<A NAME="46"></A>     *
+<A NAME="47"></A>     * &lt;p&gt;Instead, the class should be used as:
+<A NAME="48"></A>     * &lt;pre&gt;StringEscapeUtils.escapeJava("foo");&lt;/pre&gt;&lt;/p&gt;
+<A NAME="49"></A>     *
+<A NAME="50"></A>     * &lt;p&gt;This constructor is public to permit tools that require a JavaBean
+<A NAME="51"></A>     * instance to operate.&lt;/p&gt;
+<A NAME="52"></A>     */</FONT>
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> StringEscapeUtils() {
+<A NAME="54"></A>      <FONT ID="Super">super</FONT>();
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="SingleLineComment">// Java and JavaScript
+<A NAME="58"></A></FONT>    <FONT ID="SingleLineComment">//--------------------------------------------------------------------------
+<A NAME="59"></A></FONT>    <FONT ID="FormalComment">/**
+<A NAME="60"></A>     * &lt;p&gt;Escapes the characters in a &lt;code&gt;String&lt;/code&gt; using Java String rules.&lt;/p&gt;
+<A NAME="61"></A>     *
+<A NAME="62"></A>     * &lt;p&gt;Deals correctly with quotes and control-chars (tab, backslash, cr, ff, etc.) &lt;/p&gt;
+<A NAME="63"></A>     *
+<A NAME="64"></A>     * &lt;p&gt;So a tab becomes the characters &lt;code&gt;'\\'&lt;/code&gt; and
+<A NAME="65"></A>     * &lt;code&gt;'t'&lt;/code&gt;.&lt;/p&gt;
+<A NAME="66"></A>     *
+<A NAME="67"></A>     * &lt;p&gt;The only difference between Java strings and JavaScript strings
+<A NAME="68"></A>     * is that in JavaScript, a single quote must be escaped.&lt;/p&gt;
+<A NAME="69"></A>     *
+<A NAME="70"></A>     * &lt;p&gt;Example:
+<A NAME="71"></A>     * &lt;pre&gt;
+<A NAME="72"></A>     * input string: He didn't say, "Stop!"
+<A NAME="73"></A>     * output string: He didn't say, \"Stop!\"
+<A NAME="74"></A>     * &lt;/pre&gt;
+<A NAME="75"></A>     * &lt;/p&gt;
+<A NAME="76"></A>     *
+<A NAME="77"></A>     * @param str  String to escape values in, may be null
+<A NAME="78"></A>     * @return String with escaped values, &lt;code&gt;null&lt;/code&gt; if null string input
+<A NAME="79"></A>     */</FONT>
+<A NAME="80"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String escapeJava(String str) {
+<A NAME="81"></A>        <FONT ID="Return">return</FONT> escapeJavaStyleString(str, <FONT ID="False">false</FONT>);
+<A NAME="82"></A>    }
+<A NAME="83"></A>
+<A NAME="84"></A>    <FONT ID="FormalComment">/**
+<A NAME="85"></A>     * &lt;p&gt;Escapes the characters in a &lt;code&gt;String&lt;/code&gt; using Java String rules to
+<A NAME="86"></A>     * a &lt;code&gt;Writer&lt;/code&gt;.&lt;/p&gt;
+<A NAME="87"></A>     *
+<A NAME="88"></A>     * &lt;p&gt;A &lt;code&gt;null&lt;/code&gt; string input has no effect.&lt;/p&gt;
+<A NAME="89"></A>     *
+<A NAME="90"></A>     * @see #escapeJava(java.lang.String)
+<A NAME="91"></A>     * @param out  Writer to write escaped string into
+<A NAME="92"></A>     * @param str  String to escape values in, may be null
+<A NAME="93"></A>     * @throws IllegalArgumentException if the Writer is &lt;code&gt;null&lt;/code&gt;
+<A NAME="94"></A>     * @throws IOException if error occurs on underlying Writer
+<A NAME="95"></A>     */</FONT>
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> escapeJava(Writer out, String str) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="97"></A>        escapeJavaStyleString(out, str, <FONT ID="False">false</FONT>);
+<A NAME="98"></A>    }
+<A NAME="99"></A>
+<A NAME="100"></A>    <FONT ID="FormalComment">/**
+<A NAME="101"></A>     * &lt;p&gt;Escapes the characters in a &lt;code&gt;String&lt;/code&gt; using JavaScript String rules.&lt;/p&gt;
+<A NAME="102"></A>     * &lt;p&gt;Escapes any values it finds into their JavaScript String form.
+<A NAME="103"></A>     * Deals correctly with quotes and control-chars (tab, backslash, cr, ff, etc.) &lt;/p&gt;
+<A NAME="104"></A>     *
+<A NAME="105"></A>     * &lt;p&gt;So a tab becomes the characters &lt;code&gt;'\\'&lt;/code&gt; and
+<A NAME="106"></A>     * &lt;code&gt;'t'&lt;/code&gt;.&lt;/p&gt;
+<A NAME="107"></A>     *
+<A NAME="108"></A>     * &lt;p&gt;The only difference between Java strings and JavaScript strings
+<A NAME="109"></A>     * is that in JavaScript, a single quote must be escaped.&lt;/p&gt;
+<A NAME="110"></A>     *
+<A NAME="111"></A>     * &lt;p&gt;Example:
+<A NAME="112"></A>     * &lt;pre&gt;
+<A NAME="113"></A>     * input string: He didn't say, "Stop!"
+<A NAME="114"></A>     * output string: He didn\'t say, \"Stop!\"
+<A NAME="115"></A>     * &lt;/pre&gt;
+<A NAME="116"></A>     * &lt;/p&gt;
+<A NAME="117"></A>     *
+<A NAME="118"></A>     * @param str  String to escape values in, may be null
+<A NAME="119"></A>     * @return String with escaped values, &lt;code&gt;null&lt;/code&gt; if null string input
+<A NAME="120"></A>     */</FONT>
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String escapeJavaScript(String str) {
+<A NAME="122"></A>        <FONT ID="Return">return</FONT> escapeJavaStyleString(str, <FONT ID="True">true</FONT>);
+<A NAME="123"></A>    }
+<A NAME="124"></A>
+<A NAME="125"></A>    <FONT ID="FormalComment">/**
+<A NAME="126"></A>     * &lt;p&gt;Escapes the characters in a &lt;code&gt;String&lt;/code&gt; using JavaScript String rules
+<A NAME="127"></A>     * to a &lt;code&gt;Writer&lt;/code&gt;.&lt;/p&gt;
+<A NAME="128"></A>     *
+<A NAME="129"></A>     * &lt;p&gt;A &lt;code&gt;null&lt;/code&gt; string input has no effect.&lt;/p&gt;
+<A NAME="130"></A>     *
+<A NAME="131"></A>     * @see #escapeJavaScript(java.lang.String)
+<A NAME="132"></A>     * @param out  Writer to write escaped string into
+<A NAME="133"></A>     * @param str  String to escape values in, may be null
+<A NAME="134"></A>     * @throws IllegalArgumentException if the Writer is &lt;code&gt;null&lt;/code&gt;
+<A NAME="135"></A>     * @throws IOException if error occurs on underlying Writer
+<A NAME="136"></A>     **/</FONT>
+<A NAME="137"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> escapeJavaScript(Writer out, String str) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="138"></A>        escapeJavaStyleString(out, str, <FONT ID="True">true</FONT>);
+<A NAME="139"></A>    }
+<A NAME="140"></A>
+<A NAME="141"></A>    <FONT ID="FormalComment">/**
+<A NAME="142"></A>     * &lt;p&gt;Worker method for the {@link #escapeJavaScript(String)} method.&lt;/p&gt;
+<A NAME="143"></A>     *
+<A NAME="144"></A>     * @param str String to escape values in, may be null
+<A NAME="145"></A>     * @param escapeSingleQuotes escapes single quotes if &lt;code&gt;true&lt;/code&gt;
+<A NAME="146"></A>     * @return the escaped string
+<A NAME="147"></A>     */</FONT>
+<A NAME="148"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> String escapeJavaStyleString(String str, <FONT ID="Boolean">boolean</FONT> escapeSingleQuotes) {
+<A NAME="149"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="150"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="151"></A>        }
+<A NAME="152"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="153"></A>            StringWriter writer = <FONT ID="New">new</FONT> StringWriter(str.length() * <FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="154"></A>            escapeJavaStyleString(writer, str, escapeSingleQuotes);
+<A NAME="155"></A>            <FONT ID="Return">return</FONT> writer.toString();
+<A NAME="156"></A>        } <FONT ID="Catch">catch</FONT> (IOException ioe) {
+<A NAME="157"></A>            <FONT ID="SingleLineComment">// this should never ever happen while writing to a StringWriter
+<A NAME="158"></A></FONT>            ioe.printStackTrace();
+<A NAME="159"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="160"></A>        }
+<A NAME="161"></A>    }
+<A NAME="162"></A>
+<A NAME="163"></A>    <FONT ID="FormalComment">/**
+<A NAME="164"></A>     * &lt;p&gt;Worker method for the {@link #escapeJavaScript(String)} method.&lt;/p&gt;
+<A NAME="165"></A>     *
+<A NAME="166"></A>     * @param out write to receieve the escaped string
+<A NAME="167"></A>     * @param str String to escape values in, may be null
+<A NAME="168"></A>     * @param escapeSingleQuote escapes single quotes if &lt;code&gt;true&lt;/code&gt;
+<A NAME="169"></A>     * @throws IOException if an IOException occurs
+<A NAME="170"></A>     */</FONT>
+<A NAME="171"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> escapeJavaStyleString(Writer out, String str, <FONT ID="Boolean">boolean</FONT> escapeSingleQuote) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="172"></A>        <FONT ID="If">if</FONT> (out == <FONT ID="Null">null</FONT>) {
+<A NAME="173"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException(<FONT ID="StringLiteral">"The Writer must not be null"</FONT>);
+<A NAME="174"></A>        }
+<A NAME="175"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="176"></A>            <FONT ID="Return">return</FONT>;
+<A NAME="177"></A>        }
+<A NAME="178"></A>        <FONT ID="Int">int</FONT> sz;
+<A NAME="179"></A>        sz = str.length();
+<A NAME="180"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; sz; i++) {
+<A NAME="181"></A>            <FONT ID="Char">char</FONT> ch = str.charAt(i);
+<A NAME="182"></A>
+<A NAME="183"></A>            <FONT ID="SingleLineComment">// handle unicode
+<A NAME="184"></A></FONT>            <FONT ID="If">if</FONT> (ch &gt; <FONT ID="IntegerLiteral">0xfff</FONT>) {
+<A NAME="185"></A>                out.write(<FONT ID="StringLiteral">"\\u"</FONT> + hex(ch));
+<A NAME="186"></A>            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (ch &gt; <FONT ID="IntegerLiteral">0xff</FONT>) {
+<A NAME="187"></A>                out.write(<FONT ID="StringLiteral">"\\u0"</FONT> + hex(ch));
+<A NAME="188"></A>            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (ch &gt; <FONT ID="IntegerLiteral">0x7f</FONT>) {
+<A NAME="189"></A>                out.write(<FONT ID="StringLiteral">"\\u00"</FONT> + hex(ch));
+<A NAME="190"></A>            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (ch &lt; <FONT ID="IntegerLiteral">32</FONT>) {
+<A NAME="191"></A>                <FONT ID="Switch">switch</FONT> (ch) {
+<A NAME="192"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\b'</FONT>:
+<A NAME="193"></A>                        out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="194"></A>                        out.write(<FONT ID="CharacerLiteral">'b'</FONT>);
+<A NAME="195"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="196"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\n'</FONT>:
+<A NAME="197"></A>                        out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="198"></A>                        out.write(<FONT ID="CharacerLiteral">'n'</FONT>);
+<A NAME="199"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="200"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\t'</FONT>:
+<A NAME="201"></A>                        out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="202"></A>                        out.write(<FONT ID="CharacerLiteral">'t'</FONT>);
+<A NAME="203"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="204"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\f'</FONT>:
+<A NAME="205"></A>                        out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="206"></A>                        out.write(<FONT ID="CharacerLiteral">'f'</FONT>);
+<A NAME="207"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="208"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\r'</FONT>:
+<A NAME="209"></A>                        out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="210"></A>                        out.write(<FONT ID="CharacerLiteral">'r'</FONT>);
+<A NAME="211"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="212"></A>                    <FONT ID="Default">default</FONT> :
+<A NAME="213"></A>                        <FONT ID="If">if</FONT> (ch &gt; <FONT ID="IntegerLiteral">0xf</FONT>) {
+<A NAME="214"></A>                            out.write(<FONT ID="StringLiteral">"\\u00"</FONT> + hex(ch));
+<A NAME="215"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="216"></A>                            out.write(<FONT ID="StringLiteral">"\\u000"</FONT> + hex(ch));
+<A NAME="217"></A>                        }
+<A NAME="218"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="219"></A>                }
+<A NAME="220"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="221"></A>                <FONT ID="Switch">switch</FONT> (ch) {
+<A NAME="222"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\''</FONT>:
+<A NAME="223"></A>                        <FONT ID="If">if</FONT> (escapeSingleQuote) {
+<A NAME="224"></A>                          out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="225"></A>                        }
+<A NAME="226"></A>                        out.write(<FONT ID="CharacerLiteral">'\''</FONT>);
+<A NAME="227"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="228"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'"'</FONT>:
+<A NAME="229"></A>                        out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="230"></A>                        out.write(<FONT ID="CharacerLiteral">'"'</FONT>);
+<A NAME="231"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="232"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\\'</FONT>:
+<A NAME="233"></A>                        out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="234"></A>                        out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="235"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="236"></A>                    <FONT ID="Default">default</FONT> :
+<A NAME="237"></A>                        out.write(ch);
+<A NAME="238"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="239"></A>                }
+<A NAME="240"></A>            }
+<A NAME="241"></A>        }
+<A NAME="242"></A>    }
+<A NAME="243"></A>
+<A NAME="244"></A>    <FONT ID="FormalComment">/**
+<A NAME="245"></A>     * &lt;p&gt;Returns an upper case hexadecimal &lt;code&gt;String&lt;/code&gt; for the given
+<A NAME="246"></A>     * character.&lt;/p&gt;
+<A NAME="247"></A>     *
+<A NAME="248"></A>     * @param ch The character to convert.
+<A NAME="249"></A>     * @return An upper case hexadecimal &lt;code&gt;String&lt;/code&gt;
+<A NAME="250"></A>     */</FONT>
+<A NAME="251"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> String hex(<FONT ID="Char">char</FONT> ch) {
+<A NAME="252"></A>        <FONT ID="Return">return</FONT> Integer.toHexString(ch).toUpperCase();
+<A NAME="253"></A>    }
+<A NAME="254"></A>
+<A NAME="255"></A>    <FONT ID="FormalComment">/**
+<A NAME="256"></A>     * &lt;p&gt;Unescapes any Java literals found in the &lt;code&gt;String&lt;/code&gt;.
+<A NAME="257"></A>     * For example, it will turn a sequence of &lt;code&gt;'\'&lt;/code&gt; and
+<A NAME="258"></A>     * &lt;code&gt;'n'&lt;/code&gt; into a newline character, unless the &lt;code&gt;'\'&lt;/code&gt;
+<A NAME="259"></A>     * is preceded by another &lt;code&gt;'\'&lt;/code&gt;.&lt;/p&gt;
+<A NAME="260"></A>     *
+<A NAME="261"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to unescape, may be null
+<A NAME="262"></A>     * @return a new unescaped &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;null&lt;/code&gt; if null string input
+<A NAME="263"></A>     */</FONT>
+<A NAME="264"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String unescapeJava(String str) {
+<A NAME="265"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="266"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="267"></A>        }
+<A NAME="268"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="269"></A>            StringWriter writer = <FONT ID="New">new</FONT> StringWriter(str.length());
+<A NAME="270"></A>            unescapeJava(writer, str);
+<A NAME="271"></A>            <FONT ID="Return">return</FONT> writer.toString();
+<A NAME="272"></A>        } <FONT ID="Catch">catch</FONT> (IOException ioe) {
+<A NAME="273"></A>            <FONT ID="SingleLineComment">// this should never ever happen while writing to a StringWriter
+<A NAME="274"></A></FONT>            ioe.printStackTrace();
+<A NAME="275"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="276"></A>        }
+<A NAME="277"></A>    }
+<A NAME="278"></A>
+<A NAME="279"></A>    <FONT ID="FormalComment">/**
+<A NAME="280"></A>     * &lt;p&gt;Unescapes any Java literals found in the &lt;code&gt;String&lt;/code&gt; to a
+<A NAME="281"></A>     * &lt;code&gt;Writer&lt;/code&gt;.&lt;/p&gt;
+<A NAME="282"></A>     *
+<A NAME="283"></A>     * &lt;p&gt;For example, it will turn a sequence of &lt;code&gt;'\'&lt;/code&gt; and
+<A NAME="284"></A>     * &lt;code&gt;'n'&lt;/code&gt; into a newline character, unless the &lt;code&gt;'\'&lt;/code&gt;
+<A NAME="285"></A>     * is preceded by another &lt;code&gt;'\'&lt;/code&gt;.&lt;/p&gt;
+<A NAME="286"></A>     *
+<A NAME="287"></A>     * &lt;p&gt;A &lt;code&gt;null&lt;/code&gt; string input has no effect.&lt;/p&gt;
+<A NAME="288"></A>     *
+<A NAME="289"></A>     * @param out  the &lt;code&gt;Writer&lt;/code&gt; used to output unescaped characters
+<A NAME="290"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to unescape, may be null
+<A NAME="291"></A>     * @throws IllegalArgumentException if the Writer is &lt;code&gt;null&lt;/code&gt;
+<A NAME="292"></A>     * @throws IOException if error occurs on underlying Writer
+<A NAME="293"></A>     */</FONT>
+<A NAME="294"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> unescapeJava(Writer out, String str) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="295"></A>        <FONT ID="If">if</FONT> (out == <FONT ID="Null">null</FONT>) {
+<A NAME="296"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException(<FONT ID="StringLiteral">"The Writer must not be null"</FONT>);
+<A NAME="297"></A>        }
+<A NAME="298"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="299"></A>            <FONT ID="Return">return</FONT>;
+<A NAME="300"></A>        }
+<A NAME="301"></A>        <FONT ID="Int">int</FONT> sz = str.length();
+<A NAME="302"></A>        StringBuffer unicode = <FONT ID="New">new</FONT> StringBuffer(<FONT ID="IntegerLiteral">4</FONT>);
+<A NAME="303"></A>        <FONT ID="Boolean">boolean</FONT> hadSlash = <FONT ID="False">false</FONT>;
+<A NAME="304"></A>        <FONT ID="Boolean">boolean</FONT> inUnicode = <FONT ID="False">false</FONT>;
+<A NAME="305"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; sz; i++) {
+<A NAME="306"></A>            <FONT ID="Char">char</FONT> ch = str.charAt(i);
+<A NAME="307"></A>            <FONT ID="If">if</FONT> (inUnicode) {
+<A NAME="308"></A>                <FONT ID="SingleLineComment">// if in unicode, then we're reading unicode
+<A NAME="309"></A></FONT>                <FONT ID="SingleLineComment">// values in somehow
+<A NAME="310"></A></FONT>                unicode.append(ch);
+<A NAME="311"></A>                <FONT ID="If">if</FONT> (unicode.length() == <FONT ID="IntegerLiteral">4</FONT>) {
+<A NAME="312"></A>                    <FONT ID="SingleLineComment">// unicode now contains the four hex digits
+<A NAME="313"></A></FONT>                    <FONT ID="SingleLineComment">// which represents our unicode character
+<A NAME="314"></A></FONT>                    <FONT ID="Try">try</FONT> {
+<A NAME="315"></A>                        <FONT ID="Int">int</FONT> value = Integer.parseInt(unicode.toString(), <FONT ID="IntegerLiteral">16</FONT>);
+<A NAME="316"></A>                        out.write((<FONT ID="Char">char</FONT>) value);
+<A NAME="317"></A>                        unicode.setLength(<FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="318"></A>                        inUnicode = <FONT ID="False">false</FONT>;
+<A NAME="319"></A>                        hadSlash = <FONT ID="False">false</FONT>;
+<A NAME="320"></A>                    } <FONT ID="Catch">catch</FONT> (NumberFormatException nfe) {
+<A NAME="321"></A>                        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(<FONT ID="StringLiteral">"Unable to parse unicode value: "</FONT> + unicode, nfe);
+<A NAME="322"></A>                    }
+<A NAME="323"></A>                }
+<A NAME="324"></A>                <FONT ID="Continue">continue</FONT>;
+<A NAME="325"></A>            }
+<A NAME="326"></A>            <FONT ID="If">if</FONT> (hadSlash) {
+<A NAME="327"></A>                <FONT ID="SingleLineComment">// handle an escaped value
+<A NAME="328"></A></FONT>                hadSlash = <FONT ID="False">false</FONT>;
+<A NAME="329"></A>                <FONT ID="Switch">switch</FONT> (ch) {
+<A NAME="330"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\\'</FONT>:
+<A NAME="331"></A>                        out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="332"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="333"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\''</FONT>:
+<A NAME="334"></A>                        out.write(<FONT ID="CharacerLiteral">'\''</FONT>);
+<A NAME="335"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="336"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'\"'</FONT>:
+<A NAME="337"></A>                        out.write(<FONT ID="CharacerLiteral">'"'</FONT>);
+<A NAME="338"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="339"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'r'</FONT>:
+<A NAME="340"></A>                        out.write(<FONT ID="CharacerLiteral">'\r'</FONT>);
+<A NAME="341"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="342"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'f'</FONT>:
+<A NAME="343"></A>                        out.write(<FONT ID="CharacerLiteral">'\f'</FONT>);
+<A NAME="344"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="345"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'t'</FONT>:
+<A NAME="346"></A>                        out.write(<FONT ID="CharacerLiteral">'\t'</FONT>);
+<A NAME="347"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="348"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'n'</FONT>:
+<A NAME="349"></A>                        out.write(<FONT ID="CharacerLiteral">'\n'</FONT>);
+<A NAME="350"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="351"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'b'</FONT>:
+<A NAME="352"></A>                        out.write(<FONT ID="CharacerLiteral">'\b'</FONT>);
+<A NAME="353"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="354"></A>                    <FONT ID="Case">case</FONT> <FONT ID="CharacerLiteral">'u'</FONT>:
+<A NAME="355"></A>                        {
+<A NAME="356"></A>                            <FONT ID="SingleLineComment">// uh-oh, we're in unicode country....
+<A NAME="357"></A></FONT>                            inUnicode = <FONT ID="True">true</FONT>;
+<A NAME="358"></A>                            <FONT ID="Break">break</FONT>;
+<A NAME="359"></A>                        }
+<A NAME="360"></A>                    <FONT ID="Default">default</FONT> :
+<A NAME="361"></A>                        out.write(ch);
+<A NAME="362"></A>                        <FONT ID="Break">break</FONT>;
+<A NAME="363"></A>                }
+<A NAME="364"></A>                <FONT ID="Continue">continue</FONT>;
+<A NAME="365"></A>            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (ch == <FONT ID="CharacerLiteral">'\\'</FONT>) {
+<A NAME="366"></A>                hadSlash = <FONT ID="True">true</FONT>;
+<A NAME="367"></A>                <FONT ID="Continue">continue</FONT>;
+<A NAME="368"></A>            }
+<A NAME="369"></A>            out.write(ch);
+<A NAME="370"></A>        }
+<A NAME="371"></A>        <FONT ID="If">if</FONT> (hadSlash) {
+<A NAME="372"></A>            <FONT ID="SingleLineComment">// then we're in the weird case of a \ at the end of the
+<A NAME="373"></A></FONT>            <FONT ID="SingleLineComment">// string, let's output it anyway.
+<A NAME="374"></A></FONT>            out.write(<FONT ID="CharacerLiteral">'\\'</FONT>);
+<A NAME="375"></A>        }
+<A NAME="376"></A>    }
+<A NAME="377"></A>
+<A NAME="378"></A>    <FONT ID="FormalComment">/**
+<A NAME="379"></A>     * &lt;p&gt;Unescapes any JavaScript literals found in the &lt;code&gt;String&lt;/code&gt;.&lt;/p&gt;
+<A NAME="380"></A>     *
+<A NAME="381"></A>     * &lt;p&gt;For example, it will turn a sequence of &lt;code&gt;'\'&lt;/code&gt; and &lt;code&gt;'n'&lt;/code&gt;
+<A NAME="382"></A>     * into a newline character, unless the &lt;code&gt;'\'&lt;/code&gt; is preceded by another
+<A NAME="383"></A>     * &lt;code&gt;'\'&lt;/code&gt;.&lt;/p&gt;
+<A NAME="384"></A>     *
+<A NAME="385"></A>     * @see #unescapeJava(String)
+<A NAME="386"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to unescape, may be null
+<A NAME="387"></A>     * @return A new unescaped &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;null&lt;/code&gt; if null string input
+<A NAME="388"></A>     */</FONT>
+<A NAME="389"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String unescapeJavaScript(String str) {
+<A NAME="390"></A>        <FONT ID="Return">return</FONT> unescapeJava(str);
+<A NAME="391"></A>    }
+<A NAME="392"></A>
+<A NAME="393"></A>    <FONT ID="FormalComment">/**
+<A NAME="394"></A>     * &lt;p&gt;Unescapes any JavaScript literals found in the &lt;code&gt;String&lt;/code&gt; to a
+<A NAME="395"></A>     * &lt;code&gt;Writer&lt;/code&gt;.&lt;/p&gt;
+<A NAME="396"></A>     *
+<A NAME="397"></A>     * &lt;p&gt;For example, it will turn a sequence of &lt;code&gt;'\'&lt;/code&gt; and &lt;code&gt;'n'&lt;/code&gt;
+<A NAME="398"></A>     * into a newline character, unless the &lt;code&gt;'\'&lt;/code&gt; is preceded by another
+<A NAME="399"></A>     * &lt;code&gt;'\'&lt;/code&gt;.&lt;/p&gt;
+<A NAME="400"></A>     *
+<A NAME="401"></A>     * &lt;p&gt;A &lt;code&gt;null&lt;/code&gt; string input has no effect.&lt;/p&gt;
+<A NAME="402"></A>     *
+<A NAME="403"></A>     * @see #unescapeJava(Writer,String)
+<A NAME="404"></A>     * @param out  the &lt;code&gt;Writer&lt;/code&gt; used to output unescaped characters
+<A NAME="405"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to unescape, may be null
+<A NAME="406"></A>     * @throws IllegalArgumentException if the Writer is &lt;code&gt;null&lt;/code&gt;
+<A NAME="407"></A>     * @throws IOException if error occurs on underlying Writer
+<A NAME="408"></A>     */</FONT>
+<A NAME="409"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> unescapeJavaScript(Writer out, String str) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="410"></A>        unescapeJava(out, str);
+<A NAME="411"></A>    }
+<A NAME="412"></A>
+<A NAME="413"></A>    <FONT ID="SingleLineComment">// HTML and XML
+<A NAME="414"></A></FONT>    <FONT ID="SingleLineComment">//--------------------------------------------------------------------------
+<A NAME="415"></A></FONT>    <FONT ID="FormalComment">/**
+<A NAME="416"></A>     * &lt;p&gt;Escapes the characters in a &lt;code&gt;String&lt;/code&gt; using HTML entities.&lt;/p&gt;
+<A NAME="417"></A>     *
+<A NAME="418"></A>     * &lt;p&gt;
+<A NAME="419"></A>     * For example:
+<A NAME="420"></A>     * &lt;/p&gt;
+<A NAME="421"></A>     * &lt;p&gt;&lt;code&gt;"bread" &amp; "butter"&lt;/code&gt;&lt;/p&gt;
+<A NAME="422"></A>     * becomes:
+<A NAME="423"></A>     * &lt;p&gt;
+<A NAME="424"></A>     * &lt;code&gt;&amp;amp;quot;bread&amp;amp;quot; &amp;amp;amp; &amp;amp;quot;butter&amp;amp;quot;&lt;/code&gt;.
+<A NAME="425"></A>     * &lt;/p&gt;
+<A NAME="426"></A>     *
+<A NAME="427"></A>     * &lt;p&gt;Supports all known HTML 4.0 entities, including funky accents.
+<A NAME="428"></A>     * Note that the commonly used apostrophe escape character (&amp;amp;apos;)
+<A NAME="429"></A>     * is not a legal entity and so is not supported). &lt;/p&gt;
+<A NAME="430"></A>     *
+<A NAME="431"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to escape, may be null
+<A NAME="432"></A>     * @return a new escaped &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;null&lt;/code&gt; if null string input
+<A NAME="433"></A>     *
+<A NAME="434"></A>     * @see #unescapeHtml(String)
+<A NAME="435"></A>     * @see &lt;a href="http://hotwired.lycos.com/webmonkey/reference/special_characters/"&gt;ISO Entities&lt;/a&gt;
+<A NAME="436"></A>     * @see &lt;a href="http://www.w3.org/TR/REC-html32#latin1"&gt;HTML 3.2 Character Entities for ISO Latin-1&lt;/a&gt;
+<A NAME="437"></A>     * @see &lt;a href="http://www.w3.org/TR/REC-html40/sgml/entities.html"&gt;HTML 4.0 Character entity references&lt;/a&gt;
+<A NAME="438"></A>     * @see &lt;a href="http://www.w3.org/TR/html401/charset.html#h-5.3"&gt;HTML 4.01 Character References&lt;/a&gt;
+<A NAME="439"></A>     * @see &lt;a href="http://www.w3.org/TR/html401/charset.html#code-position"&gt;HTML 4.01 Code positions&lt;/a&gt;
+<A NAME="440"></A>     */</FONT>
+<A NAME="441"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String escapeHtml(String str) {
+<A NAME="442"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="443"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="444"></A>        }
+<A NAME="445"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="446"></A>            StringWriter writer = <FONT ID="New">new</FONT> StringWriter ((<FONT ID="Int">int</FONT>)(str.length() * <FONT ID="FloatPointLiteral">1.5</FONT>));
+<A NAME="447"></A>            escapeHtml(writer, str);
+<A NAME="448"></A>            <FONT ID="Return">return</FONT> writer.toString();
+<A NAME="449"></A>        } <FONT ID="Catch">catch</FONT> (IOException e) {
+<A NAME="450"></A>            <FONT ID="SingleLineComment">//assert false;
+<A NAME="451"></A></FONT>            <FONT ID="SingleLineComment">//should be impossible
+<A NAME="452"></A></FONT>            e.printStackTrace();
+<A NAME="453"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="454"></A>        }
+<A NAME="455"></A>    }
+<A NAME="456"></A>
+<A NAME="457"></A>    <FONT ID="FormalComment">/**
+<A NAME="458"></A>     * &lt;p&gt;Escapes the characters in a &lt;code&gt;String&lt;/code&gt; using HTML entities and writes
+<A NAME="459"></A>     * them to a &lt;code&gt;Writer&lt;/code&gt;.&lt;/p&gt;
+<A NAME="460"></A>     *
+<A NAME="461"></A>     * &lt;p&gt;
+<A NAME="462"></A>     * For example:
+<A NAME="463"></A>     * &lt;/p&gt;
+<A NAME="464"></A>     * &lt;code&gt;"bread" &amp; "butter"&lt;/code&gt;
+<A NAME="465"></A>     * &lt;p&gt;becomes:&lt;/p&gt;
+<A NAME="466"></A>     * &lt;code&gt;&amp;amp;quot;bread&amp;amp;quot; &amp;amp;amp; &amp;amp;quot;butter&amp;amp;quot;&lt;/code&gt;.
+<A NAME="467"></A>     *
+<A NAME="468"></A>     * &lt;p&gt;Supports all known HTML 4.0 entities, including funky accents.
+<A NAME="469"></A>     * Note that the commonly used apostrophe escape character (&amp;amp;apos;)
+<A NAME="470"></A>     * is not a legal entity and so is not supported). &lt;/p&gt;
+<A NAME="471"></A>     *
+<A NAME="472"></A>     * @param writer  the writer receiving the escaped string, not null
+<A NAME="473"></A>     * @param string  the &lt;code&gt;String&lt;/code&gt; to escape, may be null
+<A NAME="474"></A>     * @throws IllegalArgumentException if the writer is null
+<A NAME="475"></A>     * @throws IOException when &lt;code&gt;Writer&lt;/code&gt; passed throws the exception from
+<A NAME="476"></A>     *                                       calls to the {@link Writer#write(int)} methods.
+<A NAME="477"></A>     *
+<A NAME="478"></A>     * @see #escapeHtml(String)
+<A NAME="479"></A>     * @see #unescapeHtml(String)
+<A NAME="480"></A>     * @see &lt;a href="http://hotwired.lycos.com/webmonkey/reference/special_characters/"&gt;ISO Entities&lt;/a&gt;
+<A NAME="481"></A>     * @see &lt;a href="http://www.w3.org/TR/REC-html32#latin1"&gt;HTML 3.2 Character Entities for ISO Latin-1&lt;/a&gt;
+<A NAME="482"></A>     * @see &lt;a href="http://www.w3.org/TR/REC-html40/sgml/entities.html"&gt;HTML 4.0 Character entity references&lt;/a&gt;
+<A NAME="483"></A>     * @see &lt;a href="http://www.w3.org/TR/html401/charset.html#h-5.3"&gt;HTML 4.01 Character References&lt;/a&gt;
+<A NAME="484"></A>     * @see &lt;a href="http://www.w3.org/TR/html401/charset.html#code-position"&gt;HTML 4.01 Code positions&lt;/a&gt;
+<A NAME="485"></A>     */</FONT>
+<A NAME="486"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> escapeHtml(Writer writer, String string) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="487"></A>        <FONT ID="If">if</FONT> (writer == <FONT ID="Null">null</FONT> ) {
+<A NAME="488"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"The Writer must not be null."</FONT>);
+<A NAME="489"></A>        }
+<A NAME="490"></A>        <FONT ID="If">if</FONT> (string == <FONT ID="Null">null</FONT>) {
+<A NAME="491"></A>            <FONT ID="Return">return</FONT>;
+<A NAME="492"></A>        }
+<A NAME="493"></A>        Entities.HTML40.escape(writer, string);
+<A NAME="494"></A>    }
+<A NAME="495"></A>
+<A NAME="496"></A>    <FONT ID="SingleLineComment">//-----------------------------------------------------------------------
+<A NAME="497"></A></FONT>    <FONT ID="FormalComment">/**
+<A NAME="498"></A>     * &lt;p&gt;Unescapes a string containing entity escapes to a string
+<A NAME="499"></A>     * containing the actual Unicode characters corresponding to the
+<A NAME="500"></A>     * escapes. Supports HTML 4.0 entities.&lt;/p&gt;
+<A NAME="501"></A>     *
+<A NAME="502"></A>     * &lt;p&gt;For example, the string "&amp;amp;lt;Fran&amp;amp;ccedil;ais&amp;amp;gt;"
+<A NAME="503"></A>     * will become "&amp;lt;Fran&amp;ccedil;ais&amp;gt;"&lt;/p&gt;
+<A NAME="504"></A>     *
+<A NAME="505"></A>     * &lt;p&gt;If an entity is unrecognized, it is left alone, and inserted
+<A NAME="506"></A>     * verbatim into the result string. e.g. "&amp;amp;gt;&amp;amp;zzzz;x" will
+<A NAME="507"></A>     * become "&amp;gt;&amp;amp;zzzz;x".&lt;/p&gt;
+<A NAME="508"></A>     *
+<A NAME="509"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to unescape, may be null
+<A NAME="510"></A>     * @return a new unescaped &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;null&lt;/code&gt; if null string input
+<A NAME="511"></A>     * @see #escapeHtml(Writer, String)
+<A NAME="512"></A>     */</FONT>
+<A NAME="513"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String unescapeHtml(String str) {
+<A NAME="514"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="515"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="516"></A>        }
+<A NAME="517"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="518"></A>            StringWriter writer = <FONT ID="New">new</FONT> StringWriter ((<FONT ID="Int">int</FONT>)(str.length() * <FONT ID="FloatPointLiteral">1.5</FONT>));
+<A NAME="519"></A>            unescapeHtml(writer, str);
+<A NAME="520"></A>            <FONT ID="Return">return</FONT> writer.toString();
+<A NAME="521"></A>        } <FONT ID="Catch">catch</FONT> (IOException e) {
+<A NAME="522"></A>            <FONT ID="SingleLineComment">//assert false;
+<A NAME="523"></A></FONT>            <FONT ID="SingleLineComment">//should be impossible
+<A NAME="524"></A></FONT>            e.printStackTrace();
+<A NAME="525"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="526"></A>        }
+<A NAME="527"></A>    }
+<A NAME="528"></A>
+<A NAME="529"></A>    <FONT ID="FormalComment">/**
+<A NAME="530"></A>     * &lt;p&gt;Unescapes a string containing entity escapes to a string
+<A NAME="531"></A>     * containing the actual Unicode characters corresponding to the
+<A NAME="532"></A>     * escapes. Supports HTML 4.0 entities.&lt;/p&gt;
+<A NAME="533"></A>     *
+<A NAME="534"></A>     * &lt;p&gt;For example, the string "&amp;amp;lt;Fran&amp;amp;ccedil;ais&amp;amp;gt;"
+<A NAME="535"></A>     * will become "&amp;lt;Fran&amp;ccedil;ais&amp;gt;"&lt;/p&gt;
+<A NAME="536"></A>     *
+<A NAME="537"></A>     * &lt;p&gt;If an entity is unrecognized, it is left alone, and inserted
+<A NAME="538"></A>     * verbatim into the result string. e.g. "&amp;amp;gt;&amp;amp;zzzz;x" will
+<A NAME="539"></A>     * become "&amp;gt;&amp;amp;zzzz;x".&lt;/p&gt;
+<A NAME="540"></A>     *
+<A NAME="541"></A>     * @param writer  the writer receiving the unescaped string, not null
+<A NAME="542"></A>     * @param string  the &lt;code&gt;String&lt;/code&gt; to unescape, may be null
+<A NAME="543"></A>     * @throws IllegalArgumentException if the writer is null
+<A NAME="544"></A>     * @throws IOException if an IOException occurs
+<A NAME="545"></A>     * @see #escapeHtml(String)
+<A NAME="546"></A>     */</FONT>
+<A NAME="547"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> unescapeHtml(Writer writer, String string) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="548"></A>        <FONT ID="If">if</FONT> (writer == <FONT ID="Null">null</FONT> ) {
+<A NAME="549"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"The Writer must not be null."</FONT>);
+<A NAME="550"></A>        }
+<A NAME="551"></A>        <FONT ID="If">if</FONT> (string == <FONT ID="Null">null</FONT>) {
+<A NAME="552"></A>            <FONT ID="Return">return</FONT>;
+<A NAME="553"></A>        }
+<A NAME="554"></A>        Entities.HTML40.unescape(writer, string);
+<A NAME="555"></A>    }
+<A NAME="556"></A>
+<A NAME="557"></A>    <FONT ID="SingleLineComment">//-----------------------------------------------------------------------
+<A NAME="558"></A></FONT>    <FONT ID="FormalComment">/**
+<A NAME="559"></A>     * &lt;p&gt;Escapes the characters in a &lt;code&gt;String&lt;/code&gt; using XML entities.&lt;/p&gt;
+<A NAME="560"></A>     *
+<A NAME="561"></A>     * &lt;p&gt;For example: &lt;tt&gt;"bread" &amp; "butter"&lt;/tt&gt; =&gt;
+<A NAME="562"></A>     * &lt;tt&gt;&amp;amp;quot;bread&amp;amp;quot; &amp;amp;amp; &amp;amp;quot;butter&amp;amp;quot;&lt;/tt&gt;.
+<A NAME="563"></A>     * &lt;/p&gt;
+<A NAME="564"></A>     *
+<A NAME="565"></A>     * &lt;p&gt;Supports only the five basic XML entities (gt, lt, quot, amp, apos).
+<A NAME="566"></A>     * Does not support DTDs or external entities.&lt;/p&gt;
+<A NAME="567"></A>     *
+<A NAME="568"></A>     * &lt;p&gt;Note that unicode characters greater than 0x7f are currently escaped to
+<A NAME="569"></A>     *    their numerical \\u equivalent. This may change in future releases. &lt;/p&gt;
+<A NAME="570"></A>     *
+<A NAME="571"></A>     * @param writer  the writer receiving the unescaped string, not null
+<A NAME="572"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to escape, may be null
+<A NAME="573"></A>     * @throws IllegalArgumentException if the writer is null
+<A NAME="574"></A>     * @throws IOException if there is a problem writing
+<A NAME="575"></A>     * @see #unescapeXml(java.lang.String)
+<A NAME="576"></A>     */</FONT>
+<A NAME="577"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> escapeXml(Writer writer, String str) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="578"></A>        <FONT ID="If">if</FONT> (writer == <FONT ID="Null">null</FONT> ) {
+<A NAME="579"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"The Writer must not be null."</FONT>);
+<A NAME="580"></A>        }
+<A NAME="581"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="582"></A>            <FONT ID="Return">return</FONT>;
+<A NAME="583"></A>        }
+<A NAME="584"></A>        Entities.XML.escape(writer, str);
+<A NAME="585"></A>    }
+<A NAME="586"></A>
+<A NAME="587"></A>    <FONT ID="FormalComment">/**
+<A NAME="588"></A>     * &lt;p&gt;Escapes the characters in a &lt;code&gt;String&lt;/code&gt; using XML entities.&lt;/p&gt;
+<A NAME="589"></A>     *
+<A NAME="590"></A>     * &lt;p&gt;For example: &lt;tt&gt;"bread" &amp; "butter"&lt;/tt&gt; =&gt;
+<A NAME="591"></A>     * &lt;tt&gt;&amp;amp;quot;bread&amp;amp;quot; &amp;amp;amp; &amp;amp;quot;butter&amp;amp;quot;&lt;/tt&gt;.
+<A NAME="592"></A>     * &lt;/p&gt;
+<A NAME="593"></A>     *
+<A NAME="594"></A>     * &lt;p&gt;Supports only the five basic XML entities (gt, lt, quot, amp, apos).
+<A NAME="595"></A>     * Does not support DTDs or external entities.&lt;/p&gt;
+<A NAME="596"></A>     *
+<A NAME="597"></A>     * &lt;p&gt;Note that unicode characters greater than 0x7f are currently escaped to
+<A NAME="598"></A>     *    their numerical \\u equivalent. This may change in future releases. &lt;/p&gt;
+<A NAME="599"></A>     *
+<A NAME="600"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to escape, may be null
+<A NAME="601"></A>     * @return a new escaped &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;null&lt;/code&gt; if null string input
+<A NAME="602"></A>     * @see #unescapeXml(java.lang.String)
+<A NAME="603"></A>     */</FONT>
+<A NAME="604"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String escapeXml(String str) {
+<A NAME="605"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="606"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="607"></A>        }
+<A NAME="608"></A>        <FONT ID="Return">return</FONT> Entities.XML.escape(str);
+<A NAME="609"></A>    }
+<A NAME="610"></A>
+<A NAME="611"></A>    <FONT ID="SingleLineComment">//-----------------------------------------------------------------------
+<A NAME="612"></A></FONT>    <FONT ID="FormalComment">/**
+<A NAME="613"></A>     * &lt;p&gt;Unescapes a string containing XML entity escapes to a string
+<A NAME="614"></A>     * containing the actual Unicode characters corresponding to the
+<A NAME="615"></A>     * escapes.&lt;/p&gt;
+<A NAME="616"></A>     *
+<A NAME="617"></A>     * &lt;p&gt;Supports only the five basic XML entities (gt, lt, quot, amp, apos).
+<A NAME="618"></A>     * Does not support DTDs or external entities.&lt;/p&gt;
+<A NAME="619"></A>     *
+<A NAME="620"></A>     * &lt;p&gt;Note that numerical \\u unicode codes are unescaped to their respective
+<A NAME="621"></A>     *    unicode characters. This may change in future releases. &lt;/p&gt;
+<A NAME="622"></A>     *
+<A NAME="623"></A>     * @param writer  the writer receiving the unescaped string, not null
+<A NAME="624"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to unescape, may be null
+<A NAME="625"></A>     * @throws IllegalArgumentException if the writer is null
+<A NAME="626"></A>     * @throws IOException if there is a problem writing
+<A NAME="627"></A>     * @see #escapeXml(String)
+<A NAME="628"></A>     */</FONT>
+<A NAME="629"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> unescapeXml(Writer writer, String str) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="630"></A>        <FONT ID="If">if</FONT> (writer == <FONT ID="Null">null</FONT> ) {
+<A NAME="631"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"The Writer must not be null."</FONT>);
+<A NAME="632"></A>        }
+<A NAME="633"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="634"></A>            <FONT ID="Return">return</FONT>;
+<A NAME="635"></A>        }
+<A NAME="636"></A>        Entities.XML.unescape(writer, str);
+<A NAME="637"></A>    }
+<A NAME="638"></A>
+<A NAME="639"></A>    <FONT ID="FormalComment">/**
+<A NAME="640"></A>     * &lt;p&gt;Unescapes a string containing XML entity escapes to a string
+<A NAME="641"></A>     * containing the actual Unicode characters corresponding to the
+<A NAME="642"></A>     * escapes.&lt;/p&gt;
+<A NAME="643"></A>     *
+<A NAME="644"></A>     * &lt;p&gt;Supports only the five basic XML entities (gt, lt, quot, amp, apos).
+<A NAME="645"></A>     * Does not support DTDs or external entities.&lt;/p&gt;
+<A NAME="646"></A>     *
+<A NAME="647"></A>     * &lt;p&gt;Note that numerical \\u unicode codes are unescaped to their respective
+<A NAME="648"></A>     *    unicode characters. This may change in future releases. &lt;/p&gt;
+<A NAME="649"></A>     *
+<A NAME="650"></A>     * @param str  the &lt;code&gt;String&lt;/code&gt; to unescape, may be null
+<A NAME="651"></A>     * @return a new unescaped &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;null&lt;/code&gt; if null string input
+<A NAME="652"></A>     * @see #escapeXml(String)
+<A NAME="653"></A>     */</FONT>
+<A NAME="654"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String unescapeXml(String str) {
+<A NAME="655"></A>        <FONT ID="If">if</FONT> (str == <FONT ID="Null">null</FONT>) {
+<A NAME="656"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="657"></A>        }
+<A NAME="658"></A>        <FONT ID="Return">return</FONT> Entities.XML.unescape(str);
+<A NAME="659"></A>    }
+<A NAME="660"></A>
+<A NAME="661"></A><FONT ID="SingleLineComment">//Removed method for compatibility from Original apache code
+<A NAME="662"></A></FONT>
+<A NAME="663"></A>}</pre>
+</BODY>
+</HTML>

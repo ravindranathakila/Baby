@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.AdaptableSignupCriteria (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AdaptableSignupCriteria.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * Created by IntelliJ IDEA.
+<A NAME="9"></A> * User: Ravindranath Akila
+<A NAME="10"></A> * Date: 3/23/12
+<A NAME="11"></A> * Time: 9:54 PM
+<A NAME="12"></A> */</FONT>
+<A NAME="13"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> AdaptableSignupCriteria&lt;T <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/AdaptableSignupCallback.java.html">AdaptableSignupCallback</A>&gt; {
+<A NAME="14"></A>
+<A NAME="15"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId;
+<A NAME="16"></A>    <FONT ID="Private">private</FONT> InviteData inviteData;
+<A NAME="17"></A>    <FONT ID="Private">private</FONT> String widgetTitle;
+<A NAME="18"></A>
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Private">private</FONT> T adaptableSignupCallback;
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> getHumanId() {
+<A NAME="23"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="24"></A>    }
+<A NAME="25"></A>
+<A NAME="26"></A><FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="27"></A></FONT>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> InviteData getInviteData() {
+<A NAME="29"></A>        <FONT ID="Return">return</FONT> inviteData == <FONT ID="Null">null</FONT> ? (inviteData = <FONT ID="New">new</FONT> InviteData()) : inviteData;
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/AdaptableSignupCriteria.java.html">AdaptableSignupCriteria</A> setHumanId(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="34"></A>        <FONT ID="This">this</FONT>.humanId = humanId;
+<A NAME="35"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> T getAdaptableSignupCallback() {
+<A NAME="40"></A>        <FONT ID="Return">return</FONT> adaptableSignupCallback;
+<A NAME="41"></A>    }
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/AdaptableSignupCriteria.java.html">AdaptableSignupCriteria</A> setAdaptableSignupCallback(<FONT ID="Final">final</FONT> T adaptableSignupCallback) {
+<A NAME="44"></A>        <FONT ID="This">this</FONT>.adaptableSignupCallback = adaptableSignupCallback;
+<A NAME="45"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="46"></A>    }
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> String getWidgetTitle() {
+<A NAME="49"></A>        <FONT ID="Return">return</FONT> widgetTitle != <FONT ID="Null">null</FONT> ? widgetTitle : <FONT ID="StringLiteral">""</FONT>;
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/AdaptableSignupCriteria.java.html">AdaptableSignupCriteria</A> setWidgetTitle(<FONT ID="Final">final</FONT> String widgetTitle) {
+<A NAME="53"></A>        <FONT ID="This">this</FONT>.widgetTitle = widgetTitle;
+<A NAME="54"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="SingleLineComment">// -------------------------- INNER CLASSES --------------------------
+<A NAME="58"></A></FONT>
+<A NAME="59"></A>    <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> InviteData {
+<A NAME="60"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="61"></A></FONT>
+<A NAME="62"></A>        <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email;
+<A NAME="63"></A>
+<A NAME="64"></A><FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="65"></A></FONT>
+<A NAME="66"></A>        <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> getEmail() {
+<A NAME="67"></A>            <FONT ID="Return">return</FONT> email;
+<A NAME="68"></A>        }
+<A NAME="69"></A>
+<A NAME="70"></A>        <FONT ID="Public">public</FONT> InviteData setEmail(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email) {
+<A NAME="71"></A>            <FONT ID="This">this</FONT>.email = email;
+<A NAME="72"></A>            <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="73"></A>        }
+<A NAME="74"></A>    }
+<A NAME="75"></A>}
+<A NAME="76"></A></pre>
+</BODY>
+</HTML>

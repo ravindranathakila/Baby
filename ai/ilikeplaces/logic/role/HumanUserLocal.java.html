@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.role.HumanUserLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanUserLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.role;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/DelegatedObservable.java.html">ai.ilikeplaces.util.DelegatedObservable</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">ai.ilikeplaces.util.cache.SmartCache</A>;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.ejb.Remote;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSessionBindingListener;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="12"></A>
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * @author Ravindranath Akila
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>
+<A NAME="18"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="19"></A>@Local
+<A NAME="20"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> HumanUserLocal <FONT ID="Extends">extends</FONT> HttpSessionBindingListener, Serializable {
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String NAME = <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>.<FONT ID="Class">class</FONT>.getSimpleName();
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> enum CACHE_KEY {
+<A NAME="25"></A>        BE_FRIENDS,
+<A NAME="26"></A>    }
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> enum STORE_KEY {
+<A NAME="29"></A>        AUTOPLAY_STATE,
+<A NAME="30"></A>        USER_LOCATION_TYPE, USER_LOCATION_DETAILS, USER_LOCATION_PRIVATE_PHOTOS
+<A NAME="31"></A>    }
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> getHumanUserLocal();
+<A NAME="34"></A>
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="FormalComment">/**
+<A NAME="37"></A>     * @return
+<A NAME="38"></A>     */</FONT>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> String getHumanUserId();
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="FormalComment">/**
+<A NAME="42"></A>     * @return
+<A NAME="43"></A>     */</FONT>
+<A NAME="44"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> getHumanId();
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="FormalComment">/**
+<A NAME="47"></A>     * @param loggedOnUserId
+<A NAME="48"></A>     */</FONT>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> setHumanUserId(String loggedOnUserId);
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> Object cache(<FONT ID="Final">final</FONT> String key, <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache.java.html">SmartCache.RecoverWith</A>&lt;String, Object&gt; recoverWith);
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="FormalComment">/**
+<A NAME="54"></A>     * Updates the cache and returns the old value
+<A NAME="55"></A>     *
+<A NAME="56"></A>     * @param key
+<A NAME="57"></A>     * @param valueToUpdateWith
+<A NAME="58"></A>     * @return old value
+<A NAME="59"></A>     */</FONT>
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> Object cacheAndUpdateWith(<FONT ID="Final">final</FONT> CACHE_KEY key, <FONT ID="Final">final</FONT> Object valueToUpdateWith);
+<A NAME="61"></A>
+<A NAME="62"></A>
+<A NAME="63"></A>    <FONT ID="FormalComment">/**
+<A NAME="64"></A>     * Updates the cache(if value is not null) and returns the old value.
+<A NAME="65"></A>     * Returns value if value is null
+<A NAME="66"></A>     *
+<A NAME="67"></A>     * @param key
+<A NAME="68"></A>     * @param valueToUpdateWith
+<A NAME="69"></A>     * @return old value
+<A NAME="70"></A>     *         &lt;p/&gt;
+<A NAME="71"></A>     * @see {@link #cache(String, ai.ilikeplaces.util.cache.SmartCache.RecoverWith)}
+<A NAME="72"></A>     */</FONT>
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> Object storeAndUpdateWith(<FONT ID="Final">final</FONT> STORE_KEY key, <FONT ID="Final">final</FONT> Object valueToUpdateWith);
+<A NAME="74"></A>
+<A NAME="75"></A>}
+<A NAME="76"></A></pre>
+</BODY>
+</HTML>

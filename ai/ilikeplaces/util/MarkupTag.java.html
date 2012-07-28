@@ -1,0 +1,385 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.MarkupTag (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">MarkupTag.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="FormalComment">/**
+<A NAME="9"></A> * We cannot except all tags to implement all abstract methods and throw
+<A NAME="10"></A> * unsupportedness so we throw it by default. Overriding is the tags
+<A NAME="11"></A> * responsibility.
+<A NAME="12"></A> *
+<A NAME="13"></A> * @author Ravindranath Akila
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A>
+<A NAME="16"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="17"></A>@FIXME(issue = <FONT ID="StringLiteral">"Each tag can be exposed through an interface to ensure type "</FONT> +
+<A NAME="18"></A>        <FONT ID="StringLiteral">"safety and also, proper method calls. Current approach is simpler to use. "</FONT> +
+<A NAME="19"></A>        <FONT ID="StringLiteral">"Using an interface based approach is easy to make changes to"</FONT>)
+<A NAME="20"></A><FONT ID="Public">public</FONT> enum MarkupTag <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/util/MarkupTagFace.java.html">MarkupTagFace</A> {
+<A NAME="21"></A>
+<A NAME="22"></A>    BODY() {
+<A NAME="23"></A>        @Override
+<A NAME="24"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="25"></A>            <FONT ID="Return">return</FONT> BODY_TAG;
+<A NAME="26"></A>        }
+<A NAME="27"></A>
+<A NAME="28"></A>    },
+<A NAME="29"></A>    P() {
+<A NAME="30"></A>        @Override
+<A NAME="31"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="32"></A>            <FONT ID="Return">return</FONT> P_TAG;
+<A NAME="33"></A>        }
+<A NAME="34"></A>
+<A NAME="35"></A>    },
+<A NAME="36"></A>    INPUT() {
+<A NAME="37"></A>        @Override
+<A NAME="38"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="39"></A>            <FONT ID="Return">return</FONT> INPUT_TAG;
+<A NAME="40"></A>        }
+<A NAME="41"></A>
+<A NAME="42"></A>
+<A NAME="43"></A>        @Override
+<A NAME="44"></A>        <FONT ID="Public">public</FONT> String value() {
+<A NAME="45"></A>            <FONT ID="Return">return</FONT> VALUE;
+<A NAME="46"></A>        }
+<A NAME="47"></A>
+<A NAME="48"></A>        @Override
+<A NAME="49"></A>        <FONT ID="Public">public</FONT> String type() {
+<A NAME="50"></A>            <FONT ID="Return">return</FONT> TYPE;
+<A NAME="51"></A>        }
+<A NAME="52"></A>
+<A NAME="53"></A>        @Override
+<A NAME="54"></A>        <FONT ID="Public">public</FONT> String typeValueText() {
+<A NAME="55"></A>            <FONT ID="Return">return</FONT> TEXT;
+<A NAME="56"></A>        }
+<A NAME="57"></A>
+<A NAME="58"></A>        @Override
+<A NAME="59"></A>        <FONT ID="Public">public</FONT> String typeValueSelect() {
+<A NAME="60"></A>            <FONT ID="Return">return</FONT> SELECT;
+<A NAME="61"></A>        }
+<A NAME="62"></A>
+<A NAME="63"></A>        @Override
+<A NAME="64"></A>        <FONT ID="Public">public</FONT> String typeValueHidden() {
+<A NAME="65"></A>            <FONT ID="Return">return</FONT> HIDDEN;
+<A NAME="66"></A>        }
+<A NAME="67"></A>    },
+<A NAME="68"></A>
+<A NAME="69"></A>    TEXTAREA() {
+<A NAME="70"></A>        @Override
+<A NAME="71"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="72"></A>            <FONT ID="Return">return</FONT> TEXTAREA_TAG;
+<A NAME="73"></A>        }
+<A NAME="74"></A>
+<A NAME="75"></A>
+<A NAME="76"></A>        @Override
+<A NAME="77"></A>        <FONT ID="Public">public</FONT> String value() {
+<A NAME="78"></A>            <FONT ID="Return">return</FONT> VALUE;
+<A NAME="79"></A>        }
+<A NAME="80"></A>
+<A NAME="81"></A>    },
+<A NAME="82"></A>
+<A NAME="83"></A>    A() {
+<A NAME="84"></A>        @Override
+<A NAME="85"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="86"></A>            <FONT ID="Return">return</FONT> A_TAG;
+<A NAME="87"></A>        }
+<A NAME="88"></A>
+<A NAME="89"></A>        @Override
+<A NAME="90"></A>        <FONT ID="Public">public</FONT> String href() {
+<A NAME="91"></A>            <FONT ID="Return">return</FONT> HREF;
+<A NAME="92"></A>        }
+<A NAME="93"></A>
+<A NAME="94"></A>        @Override
+<A NAME="95"></A>        <FONT ID="Public">public</FONT> String alt() {
+<A NAME="96"></A>            <FONT ID="Return">return</FONT> ALT;
+<A NAME="97"></A>        }
+<A NAME="98"></A>
+<A NAME="99"></A>        @Override
+<A NAME="100"></A>        <FONT ID="Public">public</FONT> String src() {
+<A NAME="101"></A>            <FONT ID="Return">return</FONT> SRC;
+<A NAME="102"></A>        }
+<A NAME="103"></A>    },
+<A NAME="104"></A>    IMG() {
+<A NAME="105"></A>        @Override
+<A NAME="106"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="107"></A>            <FONT ID="Return">return</FONT> IMG_TAG;
+<A NAME="108"></A>        }
+<A NAME="109"></A>
+<A NAME="110"></A>        @Override
+<A NAME="111"></A>        <FONT ID="Public">public</FONT> String alt() {
+<A NAME="112"></A>            <FONT ID="Return">return</FONT> ALT;
+<A NAME="113"></A>        }
+<A NAME="114"></A>
+<A NAME="115"></A>        @Override
+<A NAME="116"></A>        <FONT ID="Public">public</FONT> String src() {
+<A NAME="117"></A>            <FONT ID="Return">return</FONT> SRC;
+<A NAME="118"></A>        }
+<A NAME="119"></A>    },
+<A NAME="120"></A>
+<A NAME="121"></A>    UL() {
+<A NAME="122"></A>        @Override
+<A NAME="123"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="124"></A>            <FONT ID="Return">return</FONT> UL_TAG;
+<A NAME="125"></A>        }
+<A NAME="126"></A>    },
+<A NAME="127"></A>
+<A NAME="128"></A>    LI() {
+<A NAME="129"></A>        @Override
+<A NAME="130"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="131"></A>            <FONT ID="Return">return</FONT> LI_TAG;
+<A NAME="132"></A>        }
+<A NAME="133"></A>
+<A NAME="134"></A>        @Override
+<A NAME="135"></A>        <FONT ID="Public">public</FONT> String ul() {
+<A NAME="136"></A>            <FONT ID="Return">return</FONT> UL_TAG;
+<A NAME="137"></A>        }
+<A NAME="138"></A>
+<A NAME="139"></A>        @Override
+<A NAME="140"></A>        <FONT ID="Public">public</FONT> String ol() {
+<A NAME="141"></A>            <FONT ID="Return">return</FONT> OL;
+<A NAME="142"></A>        }
+<A NAME="143"></A>    },
+<A NAME="144"></A>
+<A NAME="145"></A>    DIV() {
+<A NAME="146"></A>        @Override
+<A NAME="147"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="148"></A>            <FONT ID="Return">return</FONT> DIV_TAG;
+<A NAME="149"></A>        }
+<A NAME="150"></A>
+<A NAME="151"></A>    },
+<A NAME="152"></A>
+<A NAME="153"></A>
+<A NAME="154"></A>    SPAN() {
+<A NAME="155"></A>        @Override
+<A NAME="156"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="157"></A>            <FONT ID="Return">return</FONT> SPAN_TAG;
+<A NAME="158"></A>        }
+<A NAME="159"></A>
+<A NAME="160"></A>    },
+<A NAME="161"></A>
+<A NAME="162"></A>    BR() {
+<A NAME="163"></A>        @Override
+<A NAME="164"></A>        <FONT ID="Public">public</FONT> String toString() {
+<A NAME="165"></A>            <FONT ID="Return">return</FONT> BR_TAG;
+<A NAME="166"></A>        }
+<A NAME="167"></A>    },
+<A NAME="168"></A>    META() {
+<A NAME="169"></A>        @Override
+<A NAME="170"></A>        <FONT ID="Public">public</FONT> String namee() {
+<A NAME="171"></A>            <FONT ID="Return">return</FONT> NAME;
+<A NAME="172"></A>        }
+<A NAME="173"></A>
+<A NAME="174"></A>        @Override
+<A NAME="175"></A>        <FONT ID="Public">public</FONT> String content() {
+<A NAME="176"></A>            <FONT ID="Return">return</FONT> CONTENT;
+<A NAME="177"></A>        }
+<A NAME="178"></A>    },
+<A NAME="179"></A>
+<A NAME="180"></A>    GENERIC() {
+<A NAME="181"></A>        @Override
+<A NAME="182"></A>        <FONT ID="Public">public</FONT> String value() {
+<A NAME="183"></A>            <FONT ID="Return">return</FONT> VALUE;
+<A NAME="184"></A>        }
+<A NAME="185"></A>
+<A NAME="186"></A>        @Override
+<A NAME="187"></A>        <FONT ID="Public">public</FONT> String type() {
+<A NAME="188"></A>            <FONT ID="Return">return</FONT> TYPE;
+<A NAME="189"></A>        }
+<A NAME="190"></A>
+<A NAME="191"></A>        @Override
+<A NAME="192"></A>        <FONT ID="Public">public</FONT> String typeValueText() {
+<A NAME="193"></A>            <FONT ID="Return">return</FONT> TEXT;
+<A NAME="194"></A>        }
+<A NAME="195"></A>
+<A NAME="196"></A>        @Override
+<A NAME="197"></A>        <FONT ID="Public">public</FONT> String typeValueSelect() {
+<A NAME="198"></A>            <FONT ID="Return">return</FONT> SELECT;
+<A NAME="199"></A>        }
+<A NAME="200"></A>
+<A NAME="201"></A>        @Override
+<A NAME="202"></A>        <FONT ID="Public">public</FONT> String typeValueHidden() {
+<A NAME="203"></A>            <FONT ID="Return">return</FONT> HIDDEN;
+<A NAME="204"></A>        }
+<A NAME="205"></A>
+<A NAME="206"></A>        @Override
+<A NAME="207"></A>        <FONT ID="Public">public</FONT> String href() {
+<A NAME="208"></A>            <FONT ID="Return">return</FONT> HREF;
+<A NAME="209"></A>        }
+<A NAME="210"></A>
+<A NAME="211"></A>        @Override
+<A NAME="212"></A>        <FONT ID="Public">public</FONT> String alt() {
+<A NAME="213"></A>            <FONT ID="Return">return</FONT> ALT;
+<A NAME="214"></A>        }
+<A NAME="215"></A>
+<A NAME="216"></A>        @Override
+<A NAME="217"></A>        <FONT ID="Public">public</FONT> String src() {
+<A NAME="218"></A>            <FONT ID="Return">return</FONT> SRC;
+<A NAME="219"></A>        }
+<A NAME="220"></A>
+<A NAME="221"></A>        @Override
+<A NAME="222"></A>        <FONT ID="Public">public</FONT> String ul() {
+<A NAME="223"></A>            <FONT ID="Return">return</FONT> UL_TAG;
+<A NAME="224"></A>        }
+<A NAME="225"></A>
+<A NAME="226"></A>        @Override
+<A NAME="227"></A>        <FONT ID="Public">public</FONT> String ol() {
+<A NAME="228"></A>            <FONT ID="Return">return</FONT> OL;
+<A NAME="229"></A>        }
+<A NAME="230"></A>
+<A NAME="231"></A>        @Override
+<A NAME="232"></A>        <FONT ID="Public">public</FONT> String classs() {
+<A NAME="233"></A>            <FONT ID="Return">return</FONT> CLASS;
+<A NAME="234"></A>        }
+<A NAME="235"></A>
+<A NAME="236"></A>        @Override
+<A NAME="237"></A>        <FONT ID="Public">public</FONT> String onclick() {
+<A NAME="238"></A>            <FONT ID="Return">return</FONT> ONCLICK;
+<A NAME="239"></A>        }
+<A NAME="240"></A>    };
+<A NAME="241"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BODY_TAG = <FONT ID="StringLiteral">"BODY"</FONT>;
+<A NAME="242"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ONCLICK = <FONT ID="StringLiteral">"onclick"</FONT>;
+<A NAME="243"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SPAN_TAG = <FONT ID="StringLiteral">"SPAN"</FONT>;
+<A NAME="244"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CONTENT = <FONT ID="StringLiteral">"content"</FONT>;
+<A NAME="245"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NAME = <FONT ID="StringLiteral">"name"</FONT>;
+<A NAME="246"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UL_TAG = <FONT ID="StringLiteral">"UL"</FONT>;
+<A NAME="247"></A>
+<A NAME="248"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BR_TAG = <FONT ID="StringLiteral">"BR"</FONT>;
+<A NAME="249"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String INPUT_TAG = <FONT ID="StringLiteral">"INPUT"</FONT>;
+<A NAME="250"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String P_TAG = <FONT ID="StringLiteral">"P"</FONT>;
+<A NAME="251"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String VALUE = <FONT ID="StringLiteral">"value"</FONT>;
+<A NAME="252"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TYPE = <FONT ID="StringLiteral">"type"</FONT>;
+<A NAME="253"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TEXT = <FONT ID="StringLiteral">"text"</FONT>;
+<A NAME="254"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SELECT = <FONT ID="StringLiteral">"select"</FONT>;
+<A NAME="255"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HIDDEN = <FONT ID="StringLiteral">"hidden"</FONT>;
+<A NAME="256"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TEXTAREA_TAG = <FONT ID="StringLiteral">"TEXTAREA"</FONT>;
+<A NAME="257"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DIV_TAG = <FONT ID="StringLiteral">"DIV"</FONT>;
+<A NAME="258"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String OL = <FONT ID="StringLiteral">"OL"</FONT>;
+<A NAME="259"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LI_TAG = <FONT ID="StringLiteral">"LI"</FONT>;
+<A NAME="260"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String A_TAG = <FONT ID="StringLiteral">"A"</FONT>;
+<A NAME="261"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IMG_TAG = <FONT ID="StringLiteral">"IMG"</FONT>;
+<A NAME="262"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HREF = <FONT ID="StringLiteral">"href"</FONT>;
+<A NAME="263"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SRC = <FONT ID="StringLiteral">"src"</FONT>;
+<A NAME="264"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ALT = <FONT ID="StringLiteral">"alt"</FONT>;
+<A NAME="265"></A>
+<A NAME="266"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/util/MarkupTag.java.html">MarkupTag</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="267"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> String ExceptionMsg = <FONT ID="StringLiteral">"SORRY! I RECEIVED A CALL ON NON OVERRIDDEN ATTRIBUTE. PROBABLY THIS ATTRIBUTE IS NOT RELEVANT TO THIS ELEMENT TYPE, OR IT WAS NOT IMPLEMENTED."</FONT>;
+<A NAME="268"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String STYLE = <FONT ID="StringLiteral">"style"</FONT>;
+<A NAME="269"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ID = <FONT ID="StringLiteral">"id"</FONT>;
+<A NAME="270"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CLASS = <FONT ID="StringLiteral">"class"</FONT>;
+<A NAME="271"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TITLE_ATTR = <FONT ID="StringLiteral">"title"</FONT>;
+<A NAME="272"></A>
+<A NAME="273"></A>    @Override
+<A NAME="274"></A>    <FONT ID="Public">public</FONT> String id() {
+<A NAME="275"></A>        <FONT ID="Return">return</FONT> ID;
+<A NAME="276"></A>    }
+<A NAME="277"></A>
+<A NAME="278"></A>    @Override
+<A NAME="279"></A>    <FONT ID="Public">public</FONT> String style() {
+<A NAME="280"></A>        <FONT ID="Return">return</FONT> STYLE;
+<A NAME="281"></A>    }
+<A NAME="282"></A>
+<A NAME="283"></A>    @Override
+<A NAME="284"></A>    <FONT ID="Public">public</FONT> String value() {
+<A NAME="285"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="286"></A>    }
+<A NAME="287"></A>
+<A NAME="288"></A>    @Override
+<A NAME="289"></A>    <FONT ID="Public">public</FONT> String type() {
+<A NAME="290"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="291"></A>    }
+<A NAME="292"></A>
+<A NAME="293"></A>    @Override
+<A NAME="294"></A>    <FONT ID="Public">public</FONT> String typeValueText() {
+<A NAME="295"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="296"></A>    }
+<A NAME="297"></A>
+<A NAME="298"></A>    @Override
+<A NAME="299"></A>    <FONT ID="Public">public</FONT> String typeValueSelect() {
+<A NAME="300"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="301"></A>    }
+<A NAME="302"></A>
+<A NAME="303"></A>    @Override
+<A NAME="304"></A>    <FONT ID="Public">public</FONT> String typeValueHidden() {
+<A NAME="305"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="306"></A>    }
+<A NAME="307"></A>
+<A NAME="308"></A>    @Override
+<A NAME="309"></A>    <FONT ID="Public">public</FONT> String href() {
+<A NAME="310"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="311"></A>    }
+<A NAME="312"></A>
+<A NAME="313"></A>    @Override
+<A NAME="314"></A>    <FONT ID="Public">public</FONT> String alt() {
+<A NAME="315"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="316"></A>    }
+<A NAME="317"></A>
+<A NAME="318"></A>    @Override
+<A NAME="319"></A>    <FONT ID="Public">public</FONT> String title() {
+<A NAME="320"></A>        <FONT ID="Return">return</FONT> TITLE_ATTR;
+<A NAME="321"></A>    }
+<A NAME="322"></A>
+<A NAME="323"></A>    @Override
+<A NAME="324"></A>    <FONT ID="Public">public</FONT> String src() {
+<A NAME="325"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="326"></A>    }
+<A NAME="327"></A>
+<A NAME="328"></A>    @Override
+<A NAME="329"></A>    <FONT ID="Public">public</FONT> String tag() {
+<A NAME="330"></A>        <FONT ID="Return">return</FONT> toString();
+<A NAME="331"></A>    }
+<A NAME="332"></A>
+<A NAME="333"></A>    @Override
+<A NAME="334"></A>    <FONT ID="Public">public</FONT> String ul() {
+<A NAME="335"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="336"></A>    }
+<A NAME="337"></A>
+<A NAME="338"></A>    @Override
+<A NAME="339"></A>    <FONT ID="Public">public</FONT> String ol() {
+<A NAME="340"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="341"></A>    }
+<A NAME="342"></A>
+<A NAME="343"></A>    @Override
+<A NAME="344"></A>    <FONT ID="Public">public</FONT> String classs() {
+<A NAME="345"></A>        <FONT ID="Return">return</FONT> CLASS;
+<A NAME="346"></A>    }
+<A NAME="347"></A>
+<A NAME="348"></A>    @Override
+<A NAME="349"></A>    <FONT ID="Public">public</FONT> String namee() {
+<A NAME="350"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="351"></A>    }
+<A NAME="352"></A>
+<A NAME="353"></A>    @Override
+<A NAME="354"></A>    <FONT ID="Public">public</FONT> String content() {
+<A NAME="355"></A>        <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> UnsupportedOperationException(ExceptionMsg);
+<A NAME="356"></A>    }
+<A NAME="357"></A>
+<A NAME="358"></A>
+<A NAME="359"></A>    @Override
+<A NAME="360"></A>    <FONT ID="Public">public</FONT> String onclick() {
+<A NAME="361"></A>        <FONT ID="Return">return</FONT> ONCLICK;
+<A NAME="362"></A>    }
+<A NAME="363"></A>
+<A NAME="364"></A>}
+<A NAME="365"></A>
+<A NAME="366"></A></pre>
+</BODY>
+</HTML>

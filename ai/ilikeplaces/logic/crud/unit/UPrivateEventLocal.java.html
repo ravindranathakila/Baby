@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.UPrivateEventLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">UPrivateEventLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">ai.ilikeplaces.entities.HumansFriend</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/NoPrivilegesException.java.html">ai.ilikeplaces.exception.NoPrivilegesException</A>;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * Created by IntelliJ IDEA.
+<A NAME="14"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="15"></A> * Date: Jan 12, 2010
+<A NAME="16"></A> * Time: 10:31:21 PM
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A>
+<A NAME="19"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="20"></A>@Local
+<A NAME="21"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> UPrivateEventLocal {
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> doUPrivateEventData(<FONT ID="Final">final</FONT> String humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> String privateEventName__, <FONT ID="Final">final</FONT> String privateEventInfo__, <FONT ID="Final">final</FONT> String privateEventStartDate__, <FONT ID="Final">final</FONT> String privateEventE) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> doUPrivateEventAddOwner(<FONT ID="Final">final</FONT> String adder__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee__) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> doUPrivateEventRemoveOwner(<FONT ID="Final">final</FONT> String remover__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removeee__) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> doUPrivateEventAddViewer(<FONT ID="Final">final</FONT> String adder__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee__) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> doUPrivateEventRemoveViewer(<FONT ID="Final">final</FONT> String remover__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removeee__) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> doUPrivateEventAddInvite(<FONT ID="Final">final</FONT> String adder__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee__) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/NoPrivilegesException.java.html">NoPrivilegesException</A>;
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> doUPrivateEventRemoveInvite(<FONT ID="Final">final</FONT> String remover__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removeee__) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> doUPrivateEventAddReject(<FONT ID="Final">final</FONT> String adder__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> addeee__) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> doUPrivateEventRemoveReject(<FONT ID="Final">final</FONT> String remover__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> removeee__) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="40"></A>
+<A NAME="41"></A>}</pre>
+</BODY>
+</HTML>

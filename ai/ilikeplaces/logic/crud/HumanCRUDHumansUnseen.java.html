@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDHumansUnseen (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDHumansUnseen.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.crud.unit.*;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * @author Ravindranath Akila
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A>
+<A NAME="19"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="20"></A>@Stateless
+<A NAME="21"></A>@Interceptors({ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>, RuntimeExceptionWrapper.<FONT ID="Class">class</FONT>})
+<A NAME="22"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanCRUDHumansUnseen <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A> {
+<A NAME="23"></A>
+<A NAME="24"></A>
+<A NAME="25"></A>    @EJB
+<A NAME="26"></A>    <FONT ID="Private">private</FONT> CRUDHumansUnseenLocal crudHumansUnseenLocal_;
+<A NAME="27"></A>
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> HumanCRUDHumansUnseen() {
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A>
+<A NAME="33"></A>    @Override
+<A NAME="34"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntry(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long wallId) {
+<A NAME="36"></A>        crudHumansUnseenLocal_.addEntry(humanId, wallId);
+<A NAME="37"></A>    }
+<A NAME="38"></A>
+<A NAME="39"></A>    @Override
+<A NAME="40"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntry(<FONT ID="Final">final</FONT> List&lt;String&gt; humanIds, <FONT ID="Final">final</FONT> Long wallId) {
+<A NAME="42"></A>        crudHumansUnseenLocal_.addEntry(humanIds, wallId);
+<A NAME="43"></A>    }
+<A NAME="44"></A>
+<A NAME="45"></A>    @Override
+<A NAME="46"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> removeEntry(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long wallId) {
+<A NAME="48"></A>           crudHumansUnseenLocal_.removeEntry(humanId,wallId);
+<A NAME="49"></A>    }
+<A NAME="50"></A>
+<A NAME="51"></A>    @Override
+<A NAME="52"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> List&lt;Wall&gt; readEntries(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="54"></A>        <FONT ID="Return">return</FONT> crudHumansUnseenLocal_.readEntries(humanId);
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    @Override
+<A NAME="58"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="59"></A>    <FONT ID="Public">public</FONT> HumansUnseen getHumansUnseen(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="60"></A>        <FONT ID="Return">return</FONT> crudHumansUnseenLocal_.doRHumansUnseenBadly(humanId);
+<A NAME="61"></A>    }
+<A NAME="62"></A>}
+<A NAME="63"></A></pre>
+</BODY>
+</HTML>

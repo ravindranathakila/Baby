@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.JSCodeToSend (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">JSCodeToSend.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/ExceptionCache.java.html">ai.ilikeplaces.util.ExceptionCache</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A> * @author Ravindranath Akila
+<A NAME="8"></A> */</FONT>
+<A NAME="9"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="10"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> JSCodeToSend {
+<A NAME="11"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="12"></A></FONT>
+<A NAME="13"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FnEventMonitor = <FONT ID="StringLiteral">"\ndocument.monitor = new EventMonitor();document.getItsNatDoc().addEventMonitor(document.monitor);"</FONT>;
+<A NAME="14"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String LocationId = <FONT ID="StringLiteral">"locationId"</FONT>;
+<A NAME="15"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FnLocationId = <FONT ID="StringLiteral">"\ngetLocationId = function(){return document.getElementById('"</FONT> + LocationId + <FONT ID="StringLiteral">"').value;}\n"</FONT>;
+<A NAME="16"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String LocationName = <FONT ID="StringLiteral">"locationName"</FONT>;
+<A NAME="17"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FnLocationName = <FONT ID="StringLiteral">"\ngetLocationName = function(){return document.getElementById('"</FONT> + LocationName + <FONT ID="StringLiteral">"').value;}\n"</FONT>;
+<A NAME="18"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FnSetTitle = <FONT ID="StringLiteral">"\ndocument.title=\"Escape to \"+getLocationName()+\"!\";\n"</FONT>;
+<A NAME="19"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String RefreshPage = <FONT ID="StringLiteral">"\nwindow.location.reload(true);\n"</FONT>;
+<A NAME="20"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String ClosePage = <FONT ID="StringLiteral">"\nif(confirm('Done! Close page?')){window.close();}\n"</FONT>;
+<A NAME="21"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String ClosePageOrRefresh = <FONT ID="StringLiteral">"\nif(confirm('Done! Close page?')){window.close();}else{window.location.href = window.location.href;}\n"</FONT>;
+<A NAME="22"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String UpdateDocument = <FONT ID="StringLiteral">"\nJUpdateDocument();\n"</FONT>;
+<A NAME="23"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String STRING = <FONT ID="StringLiteral">"#"</FONT>;
+<A NAME="24"></A>
+<A NAME="25"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="26"></A></FONT>
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> JSCodeToSend() <FONT ID="Throws">throws</FONT> IllegalAccessException {
+<A NAME="28"></A>        <FONT ID="Throw">throw</FONT> ExceptionCache.STATIC_USAGE_ONLY_EXCEPTION;
+<A NAME="29"></A>    }
+<A NAME="30"></A>
+<A NAME="31"></A><FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="32"></A></FONT>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String clearContent(<FONT ID="Final">final</FONT> String elementId, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> timeout) {
+<A NAME="34"></A>        <FONT ID="Final">final</FONT> String statement = <FONT ID="StringLiteral">"$(\\'#"</FONT> + elementId + <FONT ID="StringLiteral">"\\').empty().text(\\' \\');"</FONT>;
+<A NAME="35"></A>        <FONT ID="Return">return</FONT> embedThisInTimeout(statement, timeout);
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String embedThisInTimeout(<FONT ID="Final">final</FONT> String statement, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> timeout) {
+<A NAME="39"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"setTimeout('"</FONT> + statement + <FONT ID="StringLiteral">"'"</FONT> + <FONT ID="StringLiteral">","</FONT> + timeout + <FONT ID="StringLiteral">");\n"</FONT>;
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String jqueryHide(<FONT ID="Final">final</FONT> String elementToAnimateHide) {
+<A NAME="43"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"\n$('#"</FONT> + elementToAnimateHide + <FONT ID="StringLiteral">"').hide('slow');\n"</FONT>;
+<A NAME="44"></A>    }
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="FormalComment">/**
+<A NAME="47"></A>     * Uses window.location.href = 'urlTobeRedirectedTo';
+<A NAME="48"></A>     * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
+<A NAME="49"></A>     *
+<A NAME="50"></A>     * @param urlTobeRedirectedTo
+<A NAME="51"></A>     * @return
+<A NAME="52"></A>     */</FONT>
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String redirectPageWithURL(<FONT ID="Final">final</FONT> String urlTobeRedirectedTo) {
+<A NAME="54"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"\nwindow.location.href = '"</FONT> + urlTobeRedirectedTo + <FONT ID="StringLiteral">"';\n"</FONT>;
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="FormalComment">/**
+<A NAME="58"></A>     * Uses window.location.href = window.location.href + 'stringToBeAppended' after the given timeout.
+<A NAME="59"></A>     * Uses setTimeout to timeout.
+<A NAME="60"></A>     * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
+<A NAME="61"></A>     *
+<A NAME="62"></A>     * @param timeout
+<A NAME="63"></A>     * @return
+<A NAME="64"></A>     */</FONT>
+<A NAME="65"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String refreshPageIn(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> timeout) {
+<A NAME="66"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"setTimeout('"</FONT> + <FONT ID="StringLiteral">"window.location.reload(true)'"</FONT> + <FONT ID="StringLiteral">","</FONT> + timeout + <FONT ID="StringLiteral">");\n"</FONT>;
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>    <FONT ID="FormalComment">/**
+<A NAME="70"></A>     * Uses window.location.href = window.location.href + 'stringToBeAppended'
+<A NAME="71"></A>     * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
+<A NAME="72"></A>     *
+<A NAME="73"></A>     * @param stringToBeAppended
+<A NAME="74"></A>     * @return
+<A NAME="75"></A>     */</FONT>
+<A NAME="76"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String refreshPageWith(<FONT ID="Final">final</FONT> String stringToBeAppended) {
+<A NAME="77"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"window.location.href=window.location.href"</FONT> + <FONT ID="StringLiteral">"+"</FONT> + <FONT ID="StringLiteral">"'"</FONT> + stringToBeAppended + <FONT ID="StringLiteral">"';\n"</FONT>;
+<A NAME="78"></A>    }
+<A NAME="79"></A>
+<A NAME="80"></A>    <FONT ID="FormalComment">/**
+<A NAME="81"></A>     * Uses window.location.hash = 'stringToBeAppended'
+<A NAME="82"></A>     * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
+<A NAME="83"></A>     *
+<A NAME="84"></A>     * @param stringToBeAppended
+<A NAME="85"></A>     * @return
+<A NAME="86"></A>     */</FONT>
+<A NAME="87"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String updateHashWith(<FONT ID="Final">final</FONT> String stringToBeAppended) {
+<A NAME="88"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"window.location.hash="</FONT> + <FONT ID="StringLiteral">"'"</FONT> + stringToBeAppended + <FONT ID="StringLiteral">"';\n"</FONT>;
+<A NAME="89"></A>    }
+<A NAME="90"></A>
+<A NAME="91"></A>    <FONT ID="FormalComment">/**
+<A NAME="92"></A>     * Uses window.location.hash = 'stringToBeAppended'; prior to that, sets hash to #
+<A NAME="93"></A>     * Might turn out to be buggy if there are outer quotes. Verify with firebug for safety.
+<A NAME="94"></A>     *
+<A NAME="95"></A>     * @param stringToBeAppended
+<A NAME="96"></A>     * @return
+<A NAME="97"></A>     */</FONT>
+<A NAME="98"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String resetHashWith(<FONT ID="Final">final</FONT> String stringToBeAppended) {
+<A NAME="99"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"window.location.hash="</FONT> + <FONT ID="StringLiteral">"'#'"</FONT> + <FONT ID="StringLiteral">";"</FONT>
+<A NAME="100"></A>                + <FONT ID="StringLiteral">"window.location.hash="</FONT> + <FONT ID="StringLiteral">"'"</FONT> + stringToBeAppended + <FONT ID="StringLiteral">"';\n"</FONT>;
+<A NAME="101"></A>    }
+<A NAME="102"></A>
+<A NAME="103"></A>}
+<A NAME="104"></A></pre>
+</BODY>
+</HTML>

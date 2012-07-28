@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.PublicPhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">PublicPhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.util.Date;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.UUID;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> * @author Ravindranath Akila
+<A NAME="13"></A> */</FONT>
+<A NAME="14"></A>
+<A NAME="15"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="16"></A>@Entity
+<A NAME="17"></A>@OK
+<A NAME="18"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> PublicPhoto <FONT ID="Implements">implements</FONT> Serializable {
+<A NAME="20"></A>
+<A NAME="21"></A>    @NOTE(note = <FONT ID="StringLiteral">"Pre persisted entities will have null ids. hence using pre persisted ids is not practical."</FONT>)
+<A NAME="22"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> UUID uUID = UUID.randomUUID();
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> serialVersionUID = <FONT ID="IntegerLiteral">1L</FONT>;
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> Long publicPhotoId = <FONT ID="Null">null</FONT>;
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> String publicPhotoFilePath;
+<A NAME="29"></A>
+<A NAME="30"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"The path should be very random as it will be exposed to the www."</FONT> +
+<A NAME="31"></A>            <FONT ID="StringLiteral">"Also make sure this supports good SEO."</FONT>)
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> String publicPhotoURLPath;
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> String publicPhotoName;
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> String publicPhotoDescription;
+<A NAME="37"></A>
+<A NAME="38"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"Required to calculate ranking"</FONT>)
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> Date publicPhotoUploadDate;
+<A NAME="40"></A>
+<A NAME="41"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"Required to calculate rank position"</FONT>)
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> Date publicPhotoTakenDate;
+<A NAME="43"></A>
+<A NAME="44"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"Required to calculate rank position"</FONT>)
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> Long publicPhotoRankUnits;
+<A NAME="46"></A>
+<A NAME="47"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"Required to calculate rank position"</FONT>)
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> Long publicPhotoRankTurns;
+<A NAME="49"></A>
+<A NAME="50"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"Required when rebuilding a database from scratch someday."</FONT> +
+<A NAME="51"></A>            <FONT ID="StringLiteral">"Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important."</FONT>)
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location;
+<A NAME="53"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String locationCOL = <FONT ID="StringLiteral">"location"</FONT>;
+<A NAME="54"></A>
+<A NAME="55"></A>    @FieldPreamble(description = <FONT ID="StringLiteral">"Who uploaded this image? Will he request to delete it?"</FONT>)
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">HumansPublicPhoto</A> humansPublicPhoto;
+<A NAME="57"></A>
+<A NAME="58"></A>    @Id
+<A NAME="59"></A>    @GeneratedValue(strategy = GenerationType.AUTO)
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> Long getPublicPhotoId() {
+<A NAME="61"></A>        <FONT ID="Return">return</FONT> publicPhotoId;
+<A NAME="62"></A>    }
+<A NAME="63"></A>
+<A NAME="64"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotoId(Long publicPhotoId) {
+<A NAME="65"></A>        <FONT ID="This">this</FONT>.publicPhotoId = publicPhotoId;
+<A NAME="66"></A>    }
+<A NAME="67"></A>
+<A NAME="68"></A>    <FONT ID="Public">public</FONT> String getPublicPhotoFilePath() {
+<A NAME="69"></A>        <FONT ID="Return">return</FONT> publicPhotoFilePath;
+<A NAME="70"></A>    }
+<A NAME="71"></A>
+<A NAME="72"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotoFilePath(String publicPhotoFilePath) {
+<A NAME="73"></A>        <FONT ID="This">this</FONT>.publicPhotoFilePath = publicPhotoFilePath;
+<A NAME="74"></A>    }
+<A NAME="75"></A>
+<A NAME="76"></A>    <FONT ID="Public">public</FONT> String getPublicPhotoName() {
+<A NAME="77"></A>        <FONT ID="Return">return</FONT> publicPhotoName;
+<A NAME="78"></A>    }
+<A NAME="79"></A>
+<A NAME="80"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotoName(String publicPhotoName) {
+<A NAME="81"></A>        <FONT ID="This">this</FONT>.publicPhotoName = publicPhotoName;
+<A NAME="82"></A>    }
+<A NAME="83"></A>
+<A NAME="84"></A>    @Column(length = <FONT ID="IntegerLiteral">1000</FONT>)
+<A NAME="85"></A>    <FONT ID="Public">public</FONT> String getPublicPhotoDescription() {
+<A NAME="86"></A>        <FONT ID="Return">return</FONT> publicPhotoDescription;
+<A NAME="87"></A>    }
+<A NAME="88"></A>
+<A NAME="89"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotoDescription(<FONT ID="Final">final</FONT> String publicPhotoDescription) {
+<A NAME="90"></A>        <FONT ID="This">this</FONT>.publicPhotoDescription = publicPhotoDescription;
+<A NAME="91"></A>    }
+<A NAME="92"></A>
+<A NAME="93"></A>    @WARNING(warning = <FONT ID="StringLiteral">"The cascade types of HumansPublicPhoto, Location and this method, are very CascadeType sensitive. Any mistake will trigger rollbacks."</FONT>)
+<A NAME="94"></A>    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+<A NAME="95"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">HumansPublicPhoto</A> getHumansPublicPhoto() {
+<A NAME="96"></A>        <FONT ID="Return">return</FONT> humansPublicPhoto;
+<A NAME="97"></A>    }
+<A NAME="98"></A>
+<A NAME="99"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumansPublicPhoto(<A HREF="../../../ai/ilikeplaces/entities/HumansPublicPhoto.java.html">HumansPublicPhoto</A> humansPublicPhoto) {
+<A NAME="100"></A>        <FONT ID="This">this</FONT>.humansPublicPhoto = humansPublicPhoto;
+<A NAME="101"></A>    }
+<A NAME="102"></A>
+<A NAME="103"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+<A NAME="104"></A>    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+<A NAME="105"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> getLocation() {
+<A NAME="106"></A>        <FONT ID="Return">return</FONT> location;
+<A NAME="107"></A>    }
+<A NAME="108"></A>
+<A NAME="109"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setLocation(<A HREF="../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location) {
+<A NAME="110"></A>        <FONT ID="This">this</FONT>.location = location;
+<A NAME="111"></A>    }
+<A NAME="112"></A>
+<A NAME="113"></A>    <FONT ID="Public">public</FONT> Long getPublicPhotoRankTurns() {
+<A NAME="114"></A>        <FONT ID="Return">return</FONT> publicPhotoRankTurns;
+<A NAME="115"></A>    }
+<A NAME="116"></A>
+<A NAME="117"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotoRankTurns(Long publicPhotoRankTurns) {
+<A NAME="118"></A>        <FONT ID="This">this</FONT>.publicPhotoRankTurns = publicPhotoRankTurns;
+<A NAME="119"></A>    }
+<A NAME="120"></A>
+<A NAME="121"></A>    <FONT ID="Public">public</FONT> Long getPublicPhotoRankUnits() {
+<A NAME="122"></A>        <FONT ID="Return">return</FONT> publicPhotoRankUnits;
+<A NAME="123"></A>    }
+<A NAME="124"></A>
+<A NAME="125"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotoRankUnits(Long publicPhotoRankUnits) {
+<A NAME="126"></A>        <FONT ID="This">this</FONT>.publicPhotoRankUnits = publicPhotoRankUnits;
+<A NAME="127"></A>    }
+<A NAME="128"></A>
+<A NAME="129"></A>    @Temporal(javax.persistence.TemporalType.DATE)
+<A NAME="130"></A>    <FONT ID="Public">public</FONT> Date getPublicPhotoTakenDate() {
+<A NAME="131"></A>        <FONT ID="Return">return</FONT> publicPhotoTakenDate;
+<A NAME="132"></A>    }
+<A NAME="133"></A>
+<A NAME="134"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotoTakenDate(Date publicPhotoTakenDate) {
+<A NAME="135"></A>        <FONT ID="This">this</FONT>.publicPhotoTakenDate = publicPhotoTakenDate;
+<A NAME="136"></A>    }
+<A NAME="137"></A>
+<A NAME="138"></A>    <FONT ID="Public">public</FONT> String getPublicPhotoURLPath() {
+<A NAME="139"></A>        <FONT ID="Return">return</FONT> publicPhotoURLPath;
+<A NAME="140"></A>    }
+<A NAME="141"></A>
+<A NAME="142"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotoURLPath(String publicPhotoURLPath) {
+<A NAME="143"></A>        <FONT ID="This">this</FONT>.publicPhotoURLPath = publicPhotoURLPath;
+<A NAME="144"></A>    }
+<A NAME="145"></A>
+<A NAME="146"></A>    @Temporal(javax.persistence.TemporalType.DATE)
+<A NAME="147"></A>    <FONT ID="Public">public</FONT> Date getPublicPhotoUploadDate() {
+<A NAME="148"></A>        <FONT ID="Return">return</FONT> publicPhotoUploadDate;
+<A NAME="149"></A>    }
+<A NAME="150"></A>
+<A NAME="151"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotoUploadDate(Date publicPhotoUploadDate) {
+<A NAME="152"></A>        <FONT ID="This">this</FONT>.publicPhotoUploadDate = publicPhotoUploadDate;
+<A NAME="153"></A>    }
+<A NAME="154"></A>
+<A NAME="155"></A>    @Override
+<A NAME="156"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> hashCode() {
+<A NAME="157"></A>        <FONT ID="Return">return</FONT> (<FONT ID="Int">int</FONT>) (<FONT ID="This">this</FONT>.getPublicPhotoId() != <FONT ID="Null">null</FONT> ? <FONT ID="This">this</FONT>.getPublicPhotoId() : uUID.hashCode());
+<A NAME="158"></A>    }
+<A NAME="159"></A>
+<A NAME="160"></A>    @Override
+<A NAME="161"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(Object obj) {
+<A NAME="162"></A>        <FONT ID="Boolean">boolean</FONT> returnVal = <FONT ID="False">false</FONT>;
+<A NAME="163"></A>        equals:
+<A NAME="164"></A>        {
+<A NAME="165"></A>            <FONT ID="If">if</FONT> (obj == <FONT ID="Null">null</FONT>) {
+<A NAME="166"></A>                returnVal = <FONT ID="False">false</FONT>;
+<A NAME="167"></A>                <FONT ID="Break">break</FONT> equals;
+<A NAME="168"></A>            }
+<A NAME="169"></A>            <FONT ID="If">if</FONT> (getClass() != obj.getClass()) {
+<A NAME="170"></A>                returnVal = <FONT ID="False">false</FONT>;
+<A NAME="171"></A>                <FONT ID="Break">break</FONT> equals;
+<A NAME="172"></A>            }
+<A NAME="173"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A> other = (<A HREF="../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>) obj;
+<A NAME="174"></A>            <FONT ID="MultiLineComment">/*Are both not null?*/</FONT>
+<A NAME="175"></A>            <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.getPublicPhotoId() != <FONT ID="Null">null</FONT> &amp;&amp; other.getPublicPhotoId() != <FONT ID="Null">null</FONT>) {
+<A NAME="176"></A>                <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.getPublicPhotoId().equals(other.getPublicPhotoId())) {
+<A NAME="177"></A>                    returnVal = <FONT ID="True">true</FONT>;
+<A NAME="178"></A>                    <FONT ID="Break">break</FONT> equals;
+<A NAME="179"></A>                }
+<A NAME="180"></A>            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.getPublicPhotoId() == <FONT ID="Null">null</FONT> &amp;&amp; other.getPublicPhotoId() == <FONT ID="Null">null</FONT>) {<FONT ID="MultiLineComment">/*Are both null?*/</FONT>
+<A NAME="181"></A>                <FONT ID="MultiLineComment">/*i.e. Still not persisted. Lets compare UUIDs*/</FONT>
+<A NAME="182"></A>                <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.uUID.equals(other.uUID)) {
+<A NAME="183"></A>                    returnVal = <FONT ID="True">true</FONT>;
+<A NAME="184"></A>                    <FONT ID="Break">break</FONT> equals;
+<A NAME="185"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="186"></A>                    returnVal = <FONT ID="False">false</FONT>;
+<A NAME="187"></A>                    <FONT ID="Break">break</FONT> equals;
+<A NAME="188"></A>                }
+<A NAME="189"></A>            } <FONT ID="Else">else</FONT> {<FONT ID="MultiLineComment">/*Only one is null*/</FONT>
+<A NAME="190"></A>                returnVal = <FONT ID="False">false</FONT>;
+<A NAME="191"></A>                <FONT ID="Break">break</FONT> equals;
+<A NAME="192"></A>            }
+<A NAME="193"></A>
+<A NAME="194"></A>        }
+<A NAME="195"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="196"></A>    }
+<A NAME="197"></A>
+<A NAME="198"></A>    <FONT ID="FormalComment">/**
+<A NAME="199"></A>     * @return
+<A NAME="200"></A>     */</FONT>
+<A NAME="201"></A>    @Override
+<A NAME="202"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="203"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"PublicPhoto{"</FONT> +
+<A NAME="204"></A>                <FONT ID="StringLiteral">", publicPhotoId="</FONT> + publicPhotoId +
+<A NAME="205"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="206"></A>    }
+<A NAME="207"></A>
+<A NAME="208"></A>}
+<A NAME="209"></A></pre>
+</BODY>
+</HTML>

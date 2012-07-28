@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CRUDHumansWallLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansWall.java.html">ai.ilikeplaces.entities.HumansWall</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">ai.ilikeplaces.entities.Msg</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * @author Ravindranath Akila
+<A NAME="15"></A> */</FONT>
+<A NAME="16"></A>
+<A NAME="17"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="18"></A>@Local
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> CRUDHumansWallLocal {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="FormalComment">/**
+<A NAME="22"></A>     * Warning: lazy initialized fields ignored
+<A NAME="23"></A>     *
+<A NAME="24"></A>     * @param humanId
+<A NAME="25"></A>     * @return
+<A NAME="26"></A>     */</FONT>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansWall.java.html">HumansWall</A> doDirtyRHumansWall(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> wallRefreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansWall.java.html">HumansWall</A> doRHumansWallRefreshed(<FONT ID="Final">final</FONT> String humanId);
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt; doRHumansWallLastEntries(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Integer numberOfEntriesToFetch);
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> Long doDirtyRHumansWallID(<FONT ID="Final">final</FONT> String humanId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansWall.java.html">HumansWall</A> doRHumansWall(String humanId);
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doUpdateMetadata(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> String key, <FONT ID="Final">final</FONT> String value);
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> doUHumansWallMsgs(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> msg);
+<A NAME="40"></A>}</pre>
+</BODY>
+</HTML>

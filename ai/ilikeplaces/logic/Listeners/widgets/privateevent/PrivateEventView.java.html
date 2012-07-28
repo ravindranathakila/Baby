@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">PrivateEventView.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets.privateevent;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.SEE;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="7"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.Listeners.widgets.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/People.java.html">ai.ilikeplaces.logic.Listeners.widgets.people.People</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/people/PeopleCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">ai.ilikeplaces.logic.validators.unit.GeoCoord</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/filters/ProfileRedirect.java.html">ai.ilikeplaces.servlets.filters.ProfileRedirect</A>;
+<A NAME="19"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="25"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="26"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="27"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="28"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="29"></A>
+<A NAME="30"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="31"></A><FONT ID="Import">import</FONT> java.util.HashSet;
+<A NAME="32"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="33"></A>
+<A NAME="34"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="35"></A>
+<A NAME="36"></A>
+<A NAME="37"></A><FONT ID="FormalComment">/**
+<A NAME="38"></A> * @author Ravindranath Akila
+<A NAME="39"></A> */</FONT>
+<A NAME="40"></A>
+<A NAME="41"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="42"></A>@OK
+<A NAME="43"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> PrivateEventView <FONT ID="Extends">extends</FONT> AbstractWidgetListener {
+<A NAME="44"></A>
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventView.java.html">PrivateEventView</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="47"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ARROW_RIGHT_GIF = <FONT ID="StringLiteral">"arrow-right.gif"</FONT>;
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String OWNER = <FONT ID="StringLiteral">"Owner"</FONT>;
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String VISITOR = <FONT ID="StringLiteral">"Visitor"</FONT>;
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String INVITEE = <FONT ID="StringLiteral">"Invitee"</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TALK = <FONT ID="StringLiteral">"Get in touch"</FONT>;
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId = <FONT ID="Null">null</FONT>;
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> Long privateEventId = <FONT ID="Null">null</FONT>;
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum PrivateEventViewIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="58"></A>        privateEventViewNotice,
+<A NAME="59"></A>        privateEventViewName,
+<A NAME="60"></A>        privateEventViewInfo,
+<A NAME="61"></A>        privateEventViewDelete,
+<A NAME="62"></A>        privateEventViewOwners,
+<A NAME="63"></A>        privateEventViewVisitors,
+<A NAME="64"></A>        privateEventViewInvites,
+<A NAME="65"></A>        privateEventViewLink,
+<A NAME="66"></A>        privateEventViewWall,
+<A NAME="67"></A>        privateEventViewAlbum,
+<A NAME="68"></A>        privateEventViewLocationMap,
+<A NAME="69"></A>    }
+<A NAME="70"></A>
+<A NAME="71"></A>    <FONT ID="FormalComment">/**
+<A NAME="72"></A>     * @param request__
+<A NAME="73"></A>     * @param appendToElement__
+<A NAME="74"></A>     * @param humanId__
+<A NAME="75"></A>     * @param privateEventId__
+<A NAME="76"></A>     * @param detailedMode__
+<A NAME="77"></A>     */</FONT>
+<A NAME="78"></A>    <FONT ID="Public">public</FONT> PrivateEventView(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> String humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateEventId__, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> detailedMode__) {
+<A NAME="79"></A>        <FONT ID="Super">super</FONT>(request__, Page.PrivateEventView, appendToElement__, humanId__, privateEventId__, detailedMode__);
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="FormalComment">/**
+<A NAME="83"></A>     *
+<A NAME="84"></A>     */</FONT>
+<A NAME="85"></A>    @Override
+<A NAME="86"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="87"></A>        humanId = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>((String) initArgs[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="88"></A>        privateEventId = (Long) initArgs[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="89"></A>
+<A NAME="90"></A>        @WARNING(<FONT ID="StringLiteral">"Underlying widgets expect a fully refreshed PrivateEvent with respect to owners, visitors and viewers"</FONT>)
+<A NAME="91"></A>        <FONT ID="Final">final</FONT> Return&lt;PrivateEvent&gt; r = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).dirtyRPrivateEventAsAny(humanId.getObjectAsValid(), privateEventId);
+<A NAME="92"></A>
+<A NAME="93"></A>
+<A NAME="94"></A>        LoggerFactory.getLogger(<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventView.java.html">PrivateEventView</A>.<FONT ID="Class">class</FONT>.getName()).debug(r.toString());
+<A NAME="95"></A>
+<A NAME="96"></A>        <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="97"></A>            $$(PrivateEventViewIds.privateEventViewName).setTextContent(r.returnValue().getPrivateEventName());
+<A NAME="98"></A>            $$(PrivateEventViewIds.privateEventViewInfo).setTextContent(r.returnValue().getPrivateEventInfo());
+<A NAME="99"></A>            <FONT ID="New">new</FONT> Button(request, $$(PrivateEventViewIds.privateEventViewLink), <FONT ID="StringLiteral">"Link to "</FONT> + r.returnValue().getPrivateEventName(), <FONT ID="False">false</FONT>, r.returnValue()) {
+<A NAME="100"></A>                PrivateEvent privateEvent = <FONT ID="Null">null</FONT>;
+<A NAME="101"></A>
+<A NAME="102"></A>                @Override
+<A NAME="103"></A>                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="104"></A>                    privateEvent = (PrivateEvent) (((Object[]) initArgs[<FONT ID="IntegerLiteral">2</FONT>])[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="105"></A>                    SetLocationLink:
+<A NAME="106"></A>                    {
+<A NAME="107"></A>                        setLink:
+<A NAME="108"></A>                        {
+<A NAME="109"></A>                            $$(GenericButtonLink).setAttribute(MarkupTag.A.href(),
+<A NAME="110"></A>                                    <FONT ID="New">new</FONT> Parameter(Organize.getURL())
+<A NAME="111"></A>                                            .append(DocOrganizeCategory, DocOrganizeModeEvent, <FONT ID="True">true</FONT>)
+<A NAME="112"></A>                                            .append(DocOrganizeLocation, r.returnValue().getPrivateLocation().getPrivateLocationId())
+<A NAME="113"></A>                                            .append(DocOrganizeEvent, privateEvent.getPrivateEventId())
+<A NAME="114"></A>                                            .get()
+<A NAME="115"></A>                            );
+<A NAME="116"></A>                        }
+<A NAME="117"></A>                        setImage:
+<A NAME="118"></A>                        {
+<A NAME="119"></A>                            $$(GenericButtonImage).setAttribute(MarkupTag.IMG.src(), RBGet.globalConfig.getString(RBGet.url_CDN_STATIC) + ARROW_RIGHT_GIF);
+<A NAME="120"></A>                        }
+<A NAME="121"></A>                    }
+<A NAME="122"></A>                }
+<A NAME="123"></A>            };
+<A NAME="124"></A>            <FONT ID="If">if</FONT> ((Boolean) initArgs[<FONT ID="IntegerLiteral">2</FONT>]) {
+<A NAME="125"></A>                <FONT ID="New">new</FONT> WallWidgetPrivateEvent(request, $$(PrivateEventViewIds.privateEventViewWall), humanId, r.returnValue().getPrivateEventId());
+<A NAME="126"></A>                <FONT ID="New">new</FONT> AlbumManager(request, $$(PrivateEventViewIds.privateEventViewAlbum), humanId, r.returnValue());
+<A NAME="127"></A>
+<A NAME="128"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A> gc = <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>();
+<A NAME="129"></A>                gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() , r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
+<A NAME="130"></A>                gc.validateThrow();
+<A NAME="131"></A>
+<A NAME="132"></A>                $$(PrivateEventViewIds.privateEventViewLocationMap).setAttribute(MarkupTag.IMG.src(),
+<A NAME="133"></A>                        <FONT ID="New">new</FONT> Parameter(<FONT ID="StringLiteral">"http://maps.google.com/maps/api/staticmap"</FONT>)
+<A NAME="134"></A>                                .append(<FONT ID="StringLiteral">"sensor"</FONT>, <FONT ID="StringLiteral">"false"</FONT>, <FONT ID="True">true</FONT>)
+<A NAME="135"></A>                                .append(<FONT ID="StringLiteral">"center"</FONT>, gc.toString())
+<A NAME="136"></A>                                .append(<FONT ID="StringLiteral">"zoom"</FONT>, <FONT ID="StringLiteral">"14"</FONT>)
+<A NAME="137"></A>                                .append(<FONT ID="StringLiteral">"size"</FONT>, <FONT ID="StringLiteral">"150x150"</FONT>)
+<A NAME="138"></A>                                .append(<FONT ID="StringLiteral">"format"</FONT>, <FONT ID="StringLiteral">"jpg"</FONT>)
+<A NAME="139"></A>                                .append(<FONT ID="StringLiteral">"markers"</FONT>, <FONT ID="StringLiteral">"color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"</FONT>
+<A NAME="140"></A>                                        + gc.toString())
+<A NAME="141"></A>                                .get());
+<A NAME="142"></A>            }
+<A NAME="143"></A>
+<A NAME="144"></A>            <FONT ID="Final">final</FONT> List&lt;HumansPrivateEvent&gt; privateEventOwners = r.returnValue().getPrivateEventOwners();
+<A NAME="145"></A>            UCShowOwners:
+<A NAME="146"></A>            {
+<A NAME="147"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent hpe : privateEventOwners) {
+<A NAME="148"></A>                    <FONT ID="New">new</FONT> UserProperty(request, $$(PrivateEventViewIds.privateEventViewOwners), <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(hpe.getHumanId())) {
+<A NAME="149"></A>                        <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="150"></A>                            $$(Controller.Page.user_property_content).appendChild(
+<A NAME="151"></A>                                    ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + hpe.getHumanId()).get()
+<A NAME="152"></A>                            );
+<A NAME="153"></A>                        }
+<A NAME="154"></A>                    };
+<A NAME="155"></A>                }
+<A NAME="156"></A>            }
+<A NAME="157"></A>
+<A NAME="158"></A>            <FONT ID="Final">final</FONT> List&lt;HumansPrivateEvent&gt; privateEventViewers = r.returnValue().getPrivateEventViewers();
+<A NAME="159"></A>            UCShowViewers:
+<A NAME="160"></A>            {
+<A NAME="161"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent hpe : privateEventViewers) {
+<A NAME="162"></A>                    <FONT ID="New">new</FONT> UserProperty(request, $$(PrivateEventViewIds.privateEventViewVisitors), <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(hpe.getHumanId())) {
+<A NAME="163"></A>                        <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="164"></A>                            $$(Page.user_property_content).appendChild(
+<A NAME="165"></A>                                    ElementComposer.compose($$(MarkupTag.A)).$ElementSetText(TALK).$ElementSetHref(ProfileRedirect.PROFILE_URL + hpe.getHumanId()).get()
+<A NAME="166"></A>                            );
+<A NAME="167"></A>                        }
+<A NAME="168"></A>                    };
+<A NAME="169"></A>                }
+<A NAME="170"></A>            }
+<A NAME="171"></A>
+<A NAME="172"></A>            UCShowInvites:
+<A NAME="173"></A>            {
+<A NAME="174"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> HumansPrivateEvent hpe : r.returnValue().getPrivateEventInvites()) {
+<A NAME="175"></A>                    <FONT ID="New">new</FONT> UserProperty(request, $$(PrivateEventViewIds.privateEventViewInvites), <FONT ID="New">new</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(hpe.getHumanId())) {
+<A NAME="176"></A>                        <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="177"></A>                            $$(Controller.Page.user_property_content).setTextContent(INVITEE);
+<A NAME="178"></A>                        }
+<A NAME="179"></A>                    };
+<A NAME="180"></A>                }
+<A NAME="181"></A>            }
+<A NAME="182"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="183"></A>            $$(PrivateEventViewIds.privateEventViewNotice).setTextContent(r.returnMsg());
+<A NAME="184"></A>        }
+<A NAME="185"></A>
+<A NAME="186"></A>    }
+<A NAME="187"></A>
+<A NAME="188"></A>    @Override
+<A NAME="189"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__) {
+<A NAME="190"></A>
+<A NAME="191"></A>        delete:
+<A NAME="192"></A>        {
+<A NAME="193"></A>            itsNatHTMLDocument__.addEventListener((EventTarget) $$(PrivateEventViewIds.privateEventViewDelete), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="194"></A>
+<A NAME="195"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="196"></A>                <FONT ID="Final">final</FONT> Long myprivateEventId = privateEventId;
+<A NAME="197"></A>                <FONT ID="Final">final</FONT> Obj&lt;Boolean&gt; alertedUserWithConfirm = (Obj&lt;Boolean&gt;) <FONT ID="New">new</FONT> Obj&lt;Boolean&gt;().setObjAsValid(<FONT ID="False">false</FONT>);
+<A NAME="198"></A>
+<A NAME="199"></A>                @Override
+<A NAME="200"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="201"></A>                    <FONT ID="If">if</FONT> (!alertedUserWithConfirm.getObj()) {
+<A NAME="202"></A>                        Loggers.USER.info(myhumanId.getObj() + <FONT ID="StringLiteral">" clicked delete for private event "</FONT> + myprivateEventId);
+<A NAME="203"></A>                        alertedUserWithConfirm.setObjAsValid(<FONT ID="True">true</FONT>);
+<A NAME="204"></A>                        $$(evt_).setAttribute(MarkupTag.IMG.src(),
+<A NAME="205"></A>                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace(<FONT ID="StringLiteral">"JDelete.png"</FONT>, <FONT ID="StringLiteral">"JConfirm.png"</FONT>)
+<A NAME="206"></A>                        );
+<A NAME="207"></A>                        <FONT ID="SingleLineComment">//$$(evt_).setTextContent("Confirm Delete!");
+<A NAME="208"></A></FONT>                    } <FONT ID="Else">else</FONT> {
+<A NAME="209"></A>                        Loggers.USER.info(myhumanId.getObj() + <FONT ID="StringLiteral">" clicked delete after confirmation for private event "</FONT> + myprivateEventId);
+<A NAME="210"></A>                        alertedUserWithConfirm.setObjAsValid(<FONT ID="False">false</FONT>); <FONT ID="SingleLineComment">//needed because chrome or itsnat seems to be resending the event.
+<A NAME="211"></A></FONT>                        <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; r = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).dPrivateEvent(myhumanId, myprivateEventId);
+<A NAME="212"></A>                        <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="213"></A>                            Loggers.USER.info(myhumanId.getObj() + <FONT ID="StringLiteral">" deleted private event "</FONT> + r.returnValue());
+<A NAME="214"></A>                            remove(evt_.getTarget(), EventType.CLICK, <FONT ID="This">this</FONT>, <FONT ID="False">false</FONT>);
+<A NAME="215"></A>                            $$sendJS(
+<A NAME="216"></A>                                    JSCodeToSend.redirectPageWithURL(<FONT ID="StringLiteral">"/page/_org"</FONT>)
+<A NAME="217"></A>                            );
+<A NAME="218"></A>                            <FONT ID="SingleLineComment">//clear($$(privateEventDeleteNotice));
+<A NAME="219"></A></FONT>                        } <FONT ID="Else">else</FONT> {
+<A NAME="220"></A>                            $$(PrivateEventViewIds.privateEventViewNotice).setTextContent(r.returnMsg());
+<A NAME="221"></A>                        }
+<A NAME="222"></A>                    }
+<A NAME="223"></A>
+<A NAME="224"></A>
+<A NAME="225"></A>                }
+<A NAME="226"></A>
+<A NAME="227"></A>            }, <FONT ID="False">false</FONT>);
+<A NAME="228"></A>        }
+<A NAME="229"></A>    }
+<A NAME="230"></A>
+<A NAME="231"></A>}</pre>
+</BODY>
+</HTML>

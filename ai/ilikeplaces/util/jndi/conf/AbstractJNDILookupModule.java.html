@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.jndi.conf.AbstractJNDILookupModule (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AbstractJNDILookupModule.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.jndi.conf;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jndi/impl/JNDILookupFactory.java.html">ai.ilikeplaces.util.jndi.impl.JNDILookupFactory</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jndi/impl/impl/JNDILookupImpl.java.html">ai.ilikeplaces.util.jndi.impl.impl.JNDILookupImpl</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> com.google.inject.AbstractModule;
+<A NAME="6"></A><FONT ID="Import">import</FONT> com.google.inject.Provides;
+<A NAME="7"></A><FONT ID="Import">import</FONT> com.google.inject.assistedinject.FactoryProvider;
+<A NAME="8"></A><FONT ID="Import">import</FONT> com.google.inject.name.Named;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.naming.Context;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * Created by IntelliJ IDEA.
+<A NAME="14"></A> * User: Ravindranath Akila
+<A NAME="15"></A> * Date: 12/19/10
+<A NAME="16"></A> * Time: 7:41 AM
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> AbstractJNDILookupModule <FONT ID="Extends">extends</FONT> AbstractModule {
+<A NAME="19"></A>    @Override
+<A NAME="20"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> configure() {
+<A NAME="21"></A>        bind(<A HREF="../../../../../ai/ilikeplaces/util/jndi/impl/JNDILookupFactory.java.html">JNDILookupFactory</A>.<FONT ID="Class">class</FONT>).toProvider(FactoryProvider.newFactory(<A HREF="../../../../../ai/ilikeplaces/util/jndi/impl/JNDILookupFactory.java.html">JNDILookupFactory</A>.<FONT ID="Class">class</FONT>, <A HREF="../../../../../ai/ilikeplaces/util/jndi/impl/impl/JNDILookupImpl.java.html">JNDILookupImpl</A>.<FONT ID="Class">class</FONT>));
+<A NAME="22"></A>    }
+<A NAME="23"></A>
+<A NAME="24"></A>
+<A NAME="25"></A>    @Provides
+<A NAME="26"></A>    @Named(value = Context.INITIAL_CONTEXT_FACTORY)
+<A NAME="27"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Abstract">abstract</FONT> String initialContextFactoryNameProvider();
+<A NAME="28"></A>}
+<A NAME="29"></A></pre>
+</BODY>
+</HTML>

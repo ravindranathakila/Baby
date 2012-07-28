@@ -1,0 +1,413 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.AbstractListener (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AbstractListener.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUser.java.html">ai.ilikeplaces.logic.role.HumanUser</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/servlets/ServletLogin.java.html">ai.ilikeplaces.servlets.ServletLogin</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServlet;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatEvent;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.http.ItsNatHttpSession;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.itsnat.core.tmpl.ItsNatHTMLDocFragmentTemplate;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.w3c.dom.DocumentFragment;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.w3c.dom.Node;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.w3c.dom.NodeList;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="25"></A>
+<A NAME="26"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="27"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="28"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="29"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="30"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="31"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="32"></A><FONT ID="Import">import</FONT> java.util.ResourceBundle;
+<A NAME="33"></A>
+<A NAME="34"></A><FONT ID="FormalComment">/**
+<A NAME="35"></A> * @author Ravindranath Akila
+<A NAME="36"></A> */</FONT>
+<A NAME="37"></A>
+<A NAME="38"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="39"></A><FONT ID="Public">public</FONT> <FONT ID="Abstract">abstract</FONT> <FONT ID="Class">class</FONT>
+<A NAME="40"></A>        AbstractListener {
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="FormalComment">/**
+<A NAME="43"></A>     * Use this ItsNatDocument in your code for handling the page
+<A NAME="44"></A>     */</FONT>
+<A NAME="45"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> ItsNatDocument itsNatDocument;
+<A NAME="46"></A>    <FONT ID="FormalComment">/**
+<A NAME="47"></A>     *
+<A NAME="48"></A>     */</FONT>
+<A NAME="49"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> ItsNatHTMLDocument itsNatHTMLDocument_;
+<A NAME="50"></A>    <FONT ID="FormalComment">/**
+<A NAME="51"></A>     *
+<A NAME="52"></A>     */</FONT>
+<A NAME="53"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> HTMLDocument hTMLDocument_;
+<A NAME="54"></A>    <FONT ID="FormalComment">/**
+<A NAME="55"></A>     *
+<A NAME="56"></A>     */</FONT>
+<A NAME="57"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> ItsNatServlet itsNatServlet_;
+<A NAME="58"></A>    <FONT ID="FormalComment">/**
+<A NAME="59"></A>     *
+<A NAME="60"></A>     */</FONT>
+<A NAME="61"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> ItsNatHttpSession itsNatHttpSession;
+<A NAME="62"></A>
+<A NAME="63"></A>    <FONT ID="FormalComment">/**
+<A NAME="64"></A>     *
+<A NAME="65"></A>     */</FONT>
+<A NAME="66"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Protected">protected</FONT> String Click = <FONT ID="StringLiteral">"click"</FONT>;
+<A NAME="67"></A>
+<A NAME="68"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> <A HREF="../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">SessionBoundBadRefWrapper</A>&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt; sessionBoundBadRefWrapper;
+<A NAME="69"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> IllegalArgumentException ILLEGAL_ARGUMENT_EXCEPTION = <FONT ID="New">new</FONT> IllegalArgumentException(<FONT ID="StringLiteral">"SORRY! I RECEIVED A NUMBER OF PARAMETERS WHICH I CANNOT HANDLE."</FONT>);
+<A NAME="70"></A>
+<A NAME="71"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> sl;
+<A NAME="72"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String INITIALIZING_LISTENER = <FONT ID="StringLiteral">"Initializing page"</FONT>;
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="FormalComment">/**
+<A NAME="75"></A>     * @param request_
+<A NAME="76"></A>     */</FONT>
+<A NAME="77"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="78"></A>    <FONT ID="Public">public</FONT> AbstractListener(<FONT ID="Final">final</FONT> ItsNatServletRequest request_, <FONT ID="Final">final</FONT> ItsNatServletResponse response_, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="79"></A>        <FONT ID="SingleLineComment">//sl = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, INITIALIZING_LISTENER, 10000, null, true);
+<A NAME="80"></A></FONT>        sl = SmartLogger.g();
+<A NAME="81"></A>        <FONT ID="This">this</FONT>.itsNatDocument = request_.getItsNatDocument();
+<A NAME="82"></A>
+<A NAME="83"></A>        itsNatDocument.addEventListener(<FONT ID="New">new</FONT> EventListener() {
+<A NAME="84"></A>            @Override
+<A NAME="85"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(Event evt) {
+<A NAME="86"></A>                <FONT ID="MultiLineComment">/*itsNatDocument_.addCodeToSend("\n" + "alert("
+<A NAME="87"></A>                        + "'"
+<A NAME="88"></A>                        + itsNatDocument_.getItsNatDocumentTemplate().getName()
+<A NAME="89"></A>                        + ","
+<A NAME="90"></A>                        + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll("\\d*$", "")
+<A NAME="91"></A>                        + ","
+<A NAME="92"></A>                        + evt.getType()
+<A NAME="93"></A>                        + "'"
+<A NAME="94"></A>                        + ");" + "\n");*/</FONT>
+<A NAME="95"></A>
+<A NAME="96"></A>                <FONT ID="If">if</FONT> (evt.getCurrentTarget() <FONT ID="InstanceOf">instanceof</FONT> Element) {
+<A NAME="97"></A>                    itsNatDocument.addCodeToSend(<FONT ID="StringLiteral">"_gaq.push(['_trackEvent', '"</FONT> + ((ItsNatEvent) evt).getItsNatDocument().getItsNatDocumentTemplate().getName() + <FONT ID="StringLiteral">"', '"</FONT> + evt.getType() + <FONT ID="StringLiteral">"', '"</FONT> + ((Element) evt.getCurrentTarget()).getAttribute(MarkupTag.GENERIC.id()).replaceAll(<FONT ID="StringLiteral">"\\d*$"</FONT>, <FONT ID="StringLiteral">""</FONT>) + <FONT ID="StringLiteral">"']);"</FONT>);
+<A NAME="98"></A>                }
+<A NAME="99"></A>            }
+<A NAME="100"></A>        });
+<A NAME="101"></A>
+<A NAME="102"></A>        <FONT ID="This">this</FONT>.itsNatHTMLDocument_ = (ItsNatHTMLDocument) itsNatDocument;
+<A NAME="103"></A>        <FONT ID="This">this</FONT>.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
+<A NAME="104"></A>        <FONT ID="This">this</FONT>.itsNatServlet_ = itsNatDocument.getItsNatDocumentTemplate().getItsNatServlet();
+<A NAME="105"></A>        <FONT ID="This">this</FONT>.itsNatHttpSession = (ItsNatHttpSession) request_.getItsNatSession();
+<A NAME="106"></A>        <FONT ID="Final">final</FONT> Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
+<A NAME="107"></A>        <FONT ID="This">this</FONT>.sessionBoundBadRefWrapper =
+<A NAME="108"></A>                attribute__ == <FONT ID="Null">null</FONT> ?
+<A NAME="109"></A>                        <FONT ID="Null">null</FONT> : (!((<A HREF="../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">SessionBoundBadRefWrapper</A>&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;) attribute__).isAlive() ?
+<A NAME="110"></A>                        <FONT ID="Null">null</FONT> : ((<A HREF="../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">SessionBoundBadRefWrapper</A>&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;) attribute__));
+<A NAME="111"></A>
+<A NAME="112"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="113"></A>            init(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument, initArgs);
+<A NAME="114"></A>
+<A NAME="115"></A>            registerEventListeners(itsNatHTMLDocument_, hTMLDocument_, itsNatDocument);
+<A NAME="116"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable re) {
+<A NAME="117"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="118"></A>                <FONT ID="If">if</FONT> (Loggers.DEBUG.isDebugEnabled()) {
+<A NAME="119"></A>                    Loggers.error(<FONT ID="StringLiteral">"SORRY! ERROR FOUND IN "</FONT> + <FONT ID="This">this</FONT>.getClass().getName() + <FONT ID="StringLiteral">" IMPLEMENTATION. "</FONT> +
+<A NAME="120"></A>                            <FONT ID="StringLiteral">"YOU SHOULD DO YOUR OWN LOGGING. "</FONT> +
+<A NAME="121"></A>                            <FONT ID="StringLiteral">"SINCE DEBUG IS ENABLED, LOGGING ERROR DETAILS TO ERROR LOGGER AS FOLLOWS. "</FONT>,
+<A NAME="122"></A>                            re);
+<A NAME="123"></A>                }
+<A NAME="124"></A>                ((HttpServletResponse) response_.getServletResponse()).sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+<A NAME="125"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="126"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e.getMessage());
+<A NAME="127"></A>            }
+<A NAME="128"></A>        }
+<A NAME="129"></A>
+<A NAME="130"></A>    }
+<A NAME="131"></A>
+<A NAME="132"></A>    <FONT ID="FormalComment">/**
+<A NAME="133"></A>     * Initialize your document here by appending fragments
+<A NAME="134"></A>     *
+<A NAME="135"></A>     * @param itsNatHTMLDocument__
+<A NAME="136"></A>     * @param hTMLDocument__
+<A NAME="137"></A>     * @param itsNatDocument__
+<A NAME="138"></A>     * @param initArgs
+<A NAME="139"></A>     */</FONT>
+<A NAME="140"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Abstract">abstract</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__, <FONT ID="Final">final</FONT> Object... initArgs);
+<A NAME="141"></A>
+<A NAME="142"></A>    <FONT ID="FormalComment">/**
+<A NAME="143"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="144"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="145"></A>     * automatically called by the constructor
+<A NAME="146"></A>     *
+<A NAME="147"></A>     * @param itsNatHTMLDocument_
+<A NAME="148"></A>     * @param itsNatDocument__
+<A NAME="149"></A>     * @param hTMLDocument_
+<A NAME="150"></A>     */</FONT>
+<A NAME="151"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Abstract">abstract</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__);
+<A NAME="152"></A>
+<A NAME="153"></A>    <FONT ID="FormalComment">/**
+<A NAME="154"></A>     * In general, avoid registering the same template again to avoid element
+<A NAME="155"></A>     * Id conflicts
+<A NAME="156"></A>     *
+<A NAME="157"></A>     * @param page_
+<A NAME="158"></A>     * @return DocumentFragment
+<A NAME="159"></A>     */</FONT>
+<A NAME="160"></A>    <FONT ID="Protected">protected</FONT> DocumentFragment registerFragmentHead(<FONT ID="Final">final</FONT> String page_) {
+<A NAME="161"></A>        <FONT ID="Return">return</FONT> ((ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page_)).loadDocumentFragmentHead(itsNatDocument);
+<A NAME="162"></A>    }
+<A NAME="163"></A>
+<A NAME="164"></A>    <FONT ID="FormalComment">/**
+<A NAME="165"></A>     * In general, avoid registering the same template again to avoid element
+<A NAME="166"></A>     * Id conflicts
+<A NAME="167"></A>     *
+<A NAME="168"></A>     * @param page_
+<A NAME="169"></A>     * @return DocumentFragment
+<A NAME="170"></A>     */</FONT>
+<A NAME="171"></A>    <FONT ID="Protected">protected</FONT> DocumentFragment registerFragmentBody(<FONT ID="Final">final</FONT> String page_) {
+<A NAME="172"></A>        <FONT ID="Return">return</FONT> ((ItsNatHTMLDocFragmentTemplate) itsNatServlet_.getItsNatDocFragmentTemplate(page_)).loadDocumentFragmentBody(itsNatDocument);
+<A NAME="173"></A>    }
+<A NAME="174"></A>
+<A NAME="175"></A>    <FONT ID="FormalComment">/**
+<A NAME="176"></A>     * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
+<A NAME="177"></A>     */</FONT>
+<A NAME="178"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Protected">protected</FONT> Map&lt;String, String&gt; GlobalHTMLIdRegistry_ = Controller.GlobalHTMLIdRegistry;
+<A NAME="179"></A>
+<A NAME="180"></A>    <FONT ID="FormalComment">/**
+<A NAME="181"></A>     * Id registry should be globally visible to callers
+<A NAME="182"></A>     * Wrapper to getElementById
+<A NAME="183"></A>     *
+<A NAME="184"></A>     * @param iDOfElementRequired__
+<A NAME="185"></A>     * @return Element
+<A NAME="186"></A>     */</FONT>
+<A NAME="187"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> Element $(<FONT ID="Final">final</FONT> String iDOfElementRequired__) {
+<A NAME="188"></A>        <FONT ID="Return">return</FONT> getElementById(iDOfElementRequired__);
+<A NAME="189"></A>    }
+<A NAME="190"></A>
+<A NAME="191"></A>    <FONT ID="FormalComment">/**
+<A NAME="192"></A>     * Get a link element with given attributes
+<A NAME="193"></A>     *
+<A NAME="194"></A>     * @param displayText       displayText
+<A NAME="195"></A>     * @param url               URL
+<A NAME="196"></A>     * @param alt_title_classes alt attribute title of element, and space separated classes
+<A NAME="197"></A>     * @return Link Element
+<A NAME="198"></A>     */</FONT>
+<A NAME="199"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> Element $A(<FONT ID="Final">final</FONT> String displayText, <FONT ID="Final">final</FONT> String url, <FONT ID="Final">final</FONT> String... alt_title_classes) {
+<A NAME="200"></A>        <FONT ID="Final">final</FONT> Element link = $(MarkupTag.A);
+<A NAME="201"></A>        link.setTextContent(displayText);
+<A NAME="202"></A>        ElementComposer.$ElementSetHref(link, url);
+<A NAME="203"></A>        <FONT ID="If">if</FONT> (alt_title_classes != <FONT ID="Null">null</FONT>) {
+<A NAME="204"></A>            <FONT ID="Switch">switch</FONT> (alt_title_classes.length) {
+<A NAME="205"></A>                <FONT ID="Case">case</FONT> <FONT ID="IntegerLiteral">1</FONT>:
+<A NAME="206"></A>                    ElementComposer.compose(link)
+<A NAME="207"></A>                            .$ElementSetAlt(alt_title_classes[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="208"></A>                    <FONT ID="Break">break</FONT>;
+<A NAME="209"></A>                <FONT ID="Case">case</FONT> <FONT ID="IntegerLiteral">2</FONT>:
+<A NAME="210"></A>                    ElementComposer.compose(link)
+<A NAME="211"></A>                            .$ElementSetAlt(alt_title_classes[<FONT ID="IntegerLiteral">0</FONT>])
+<A NAME="212"></A>                            .$ElementSetTitle(alt_title_classes[<FONT ID="IntegerLiteral">1</FONT>]);
+<A NAME="213"></A>                    <FONT ID="Break">break</FONT>;
+<A NAME="214"></A>                <FONT ID="Case">case</FONT> <FONT ID="IntegerLiteral">3</FONT>:
+<A NAME="215"></A>                    ElementComposer.compose(link)
+<A NAME="216"></A>                            .$ElementSetAlt(alt_title_classes[<FONT ID="IntegerLiteral">0</FONT>])
+<A NAME="217"></A>                            .$ElementSetTitle(alt_title_classes[<FONT ID="IntegerLiteral">1</FONT>])
+<A NAME="218"></A>                            .$ElementSetClasses(alt_title_classes[<FONT ID="IntegerLiteral">2</FONT>]);
+<A NAME="219"></A>                    <FONT ID="Break">break</FONT>;
+<A NAME="220"></A>                <FONT ID="Default">default</FONT>:
+<A NAME="221"></A>                    <FONT ID="Throw">throw</FONT> ILLEGAL_ARGUMENT_EXCEPTION;
+<A NAME="222"></A>            }
+<A NAME="223"></A>        }
+<A NAME="224"></A>        <FONT ID="Return">return</FONT> link;
+<A NAME="225"></A>    }
+<A NAME="226"></A>
+<A NAME="227"></A>
+<A NAME="228"></A>    <FONT ID="Private">private</FONT> Element getElementById(<FONT ID="Final">final</FONT> String key__) {
+<A NAME="229"></A>        <FONT ID="Final">final</FONT> String elementId__ = GlobalHTMLIdRegistry_.get(key__);
+<A NAME="230"></A>        <FONT ID="If">if</FONT> (elementId__ == <FONT ID="Null">null</FONT>) {
+<A NAME="231"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NullPointerException(
+<A NAME="232"></A>                    RBGet.expMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.util.AbstractListener.0001.1"</FONT>)
+<A NAME="233"></A>                            + key__
+<A NAME="234"></A>                            + RBGet.expMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.util.AbstractListener.0001.2"</FONT>));
+<A NAME="235"></A>        }
+<A NAME="236"></A>        <FONT ID="Final">final</FONT> Element element__ = hTMLDocument_.getElementById(elementId__);
+<A NAME="237"></A>        <FONT ID="Return">return</FONT> element__ != <FONT ID="Null">null</FONT> ? element__ : (Element) LogNull.logThrow();
+<A NAME="238"></A>    }
+<A NAME="239"></A>
+<A NAME="240"></A>
+<A NAME="241"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> List&lt;Node&gt; $getElementsByName(<FONT ID="Final">final</FONT> String name) {
+<A NAME="242"></A>        <FONT ID="Final">final</FONT> NodeList nodes = (NodeList) LogNull.logThrow(hTMLDocument_.getElementsByName(name));
+<A NAME="243"></A>        <FONT ID="Final">final</FONT> List&lt;Node&gt; nodeList = <FONT ID="New">new</FONT> ArrayList&lt;Node&gt;(nodes.getLength());
+<A NAME="244"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; nodes.getLength(); i++) {
+<A NAME="245"></A>            nodeList.add(nodes.item(i));
+<A NAME="246"></A>        }
+<A NAME="247"></A>        <FONT ID="Return">return</FONT> nodeList;
+<A NAME="248"></A>    }
+<A NAME="249"></A>
+<A NAME="250"></A>    <FONT ID="FormalComment">/**
+<A NAME="251"></A>     * Supports "i18n" selector.
+<A NAME="252"></A>     *
+<A NAME="253"></A>     * @param name              name as defined in the tag(s). e.g. ' div name="example" ' would require "example".
+<A NAME="254"></A>     * @param textToReplaceWith Text To Replace With
+<A NAME="255"></A>     * @return The Modified Node List
+<A NAME="256"></A>     */</FONT>
+<A NAME="257"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> List&lt;Node&gt; $i18nize(<FONT ID="Final">final</FONT> String name, <FONT ID="Final">final</FONT> String textToReplaceWith) {
+<A NAME="258"></A>        <FONT ID="Final">final</FONT> List&lt;Node&gt; nodeList = $getElementsByName(name);
+<A NAME="259"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Node node : nodeList) {
+<A NAME="260"></A>            <FONT ID="If">if</FONT> (node.getTextContent().contains(<FONT ID="StringLiteral">"#i18n"</FONT>)) {
+<A NAME="261"></A>                node.setTextContent(node.getTextContent().replaceAll(<FONT ID="StringLiteral">"#i18n"</FONT>, textToReplaceWith));
+<A NAME="262"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="263"></A>                node.setTextContent(textToReplaceWith);
+<A NAME="264"></A>            }
+<A NAME="265"></A>        }
+<A NAME="266"></A>        <FONT ID="Return">return</FONT> nodeList;
+<A NAME="267"></A>    }
+<A NAME="268"></A>
+<A NAME="269"></A>    <FONT ID="FormalComment">/**
+<A NAME="270"></A>     * @param name           name as defined in the tag(s). e.g. ' div name="example" ' would require "example".
+<A NAME="271"></A>     * @param resourceBundle resourceBundle from which to fetch the value of key, key being the text content of the node
+<A NAME="272"></A>     * @return The Modified Node List
+<A NAME="273"></A>     */</FONT>
+<A NAME="274"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> List&lt;Node&gt; $i18nize(<FONT ID="Final">final</FONT> String name, <FONT ID="Final">final</FONT> ResourceBundle resourceBundle) {
+<A NAME="275"></A>        <FONT ID="Final">final</FONT> List&lt;Node&gt; nodeList = $getElementsByName(name);
+<A NAME="276"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Node node : nodeList) {
+<A NAME="277"></A>            node.setTextContent(resourceBundle.getString(node.getTextContent()));
+<A NAME="278"></A>        }
+<A NAME="279"></A>        <FONT ID="Return">return</FONT> nodeList;
+<A NAME="280"></A>    }
+<A NAME="281"></A>
+<A NAME="282"></A>    <FONT ID="FormalComment">/**
+<A NAME="283"></A>     * @param names          names as defined in the tag(s). e.g. ' div name="example" ' would require "example".
+<A NAME="284"></A>     * @param resourceBundle resourceBundle from which to fetch the value of key, key being the text content of the node
+<A NAME="285"></A>     * @return The Modified Node List
+<A NAME="286"></A>     */</FONT>
+<A NAME="287"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> List&lt;Node&gt; $i18nize(<FONT ID="Final">final</FONT> List&lt;String&gt; names, <FONT ID="Final">final</FONT> ResourceBundle resourceBundle) {
+<A NAME="288"></A>        <FONT ID="Final">final</FONT> List&lt;Node&gt; allNodes = <FONT ID="New">new</FONT> ArrayList&lt;Node&gt;();
+<A NAME="289"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> String name : names) {
+<A NAME="290"></A>            <FONT ID="Final">final</FONT> List&lt;Node&gt; nodeList = $getElementsByName(name);
+<A NAME="291"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Node node : nodeList) {
+<A NAME="292"></A>                node.setTextContent(resourceBundle.getString(node.getTextContent()));
+<A NAME="293"></A>            }
+<A NAME="294"></A>            allNodes.addAll(nodeList);
+<A NAME="295"></A>        }
+<A NAME="296"></A>        <FONT ID="Return">return</FONT> allNodes;
+<A NAME="297"></A>    }
+<A NAME="298"></A>
+<A NAME="299"></A>    <FONT ID="FormalComment">/**
+<A NAME="300"></A>     * @param name         name as defined in the tag(s). e.g. ' div name="example" ' would require "example".
+<A NAME="301"></A>     * @param i18nValueMap map from which to fetch the value of key, key being the text content of the node
+<A NAME="302"></A>     * @return The Modified Node List
+<A NAME="303"></A>     */</FONT>
+<A NAME="304"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> List&lt;Node&gt; $i18nize(<FONT ID="Final">final</FONT> String name, <FONT ID="Final">final</FONT> Map&lt;String, Object&gt; i18nValueMap) {
+<A NAME="305"></A>        <FONT ID="Final">final</FONT> List&lt;Node&gt; nodeList = $getElementsByName(name);
+<A NAME="306"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Node node : nodeList) {
+<A NAME="307"></A>            node.setTextContent(i18nValueMap.get(node.getTextContent()).toString());
+<A NAME="308"></A>        }
+<A NAME="309"></A>        <FONT ID="Return">return</FONT> nodeList;
+<A NAME="310"></A>    }
+<A NAME="311"></A>
+<A NAME="312"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> displayBlock(<FONT ID="Final">final</FONT> Element element__) {
+<A NAME="313"></A>        element__.setAttribute(<FONT ID="StringLiteral">"style"</FONT>, <FONT ID="StringLiteral">"display:block;"</FONT>);
+<A NAME="314"></A>    }
+<A NAME="315"></A>
+<A NAME="316"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> displayNone(<FONT ID="Final">final</FONT> Element element__) {
+<A NAME="317"></A>        element__.setAttribute(<FONT ID="StringLiteral">"style"</FONT>, <FONT ID="StringLiteral">"display:none;"</FONT>);
+<A NAME="318"></A>    }
+<A NAME="319"></A>
+<A NAME="320"></A>    <FONT ID="FormalComment">/**
+<A NAME="321"></A>     * @param tagNameInAllCaps
+<A NAME="322"></A>     * @return Element
+<A NAME="323"></A>     */</FONT>
+<A NAME="324"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> Element $(<A HREF="../../../ai/ilikeplaces/util/MarkupTagFace.java.html">MarkupTagFace</A> tagNameInAllCaps) {
+<A NAME="325"></A>        <FONT ID="Return">return</FONT> hTMLDocument_.createElement(tagNameInAllCaps.toString());
+<A NAME="326"></A>    }
+<A NAME="327"></A>
+<A NAME="328"></A>    <FONT ID="FormalComment">/**
+<A NAME="329"></A>     * Get the Username of the Logged in user, and null, if not logged in
+<A NAME="330"></A>     *
+<A NAME="331"></A>     * @return The Username of the Logged in user, and null, if not logged in
+<A NAME="332"></A>     */</FONT>
+<A NAME="333"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> String getUsername() {
+<A NAME="334"></A>        <FONT ID="Return">return</FONT> sessionBoundBadRefWrapper != <FONT ID="Null">null</FONT> ?
+<A NAME="335"></A>                (sessionBoundBadRefWrapper.isAlive() ?
+<A NAME="336"></A>                        sessionBoundBadRefWrapper.getBoundInstance().getHumanUserId() : <FONT ID="Null">null</FONT>) : <FONT ID="Null">null</FONT>;
+<A NAME="337"></A>    }
+<A NAME="338"></A>
+<A NAME="339"></A>    <FONT ID="FormalComment">/**
+<A NAME="340"></A>     * Get the Username of the Logged in user, or throw exception.
+<A NAME="341"></A>     * This is a call by prevention where the calls will be made to this method after one
+<A NAME="342"></A>     * validation that the user is logged in. This is the safe approach to code that assumes logged in.
+<A NAME="343"></A>     * When code gets bulky, at times calls to just getUserName might trigger null if not used in this form.
+<A NAME="344"></A>     * With this approach, we expect to throw an exception immediately instead of late discovery.
+<A NAME="345"></A>     *
+<A NAME="346"></A>     * @return The Username of the Logged in user, and null, if not logged in
+<A NAME="347"></A>     */</FONT>
+<A NAME="348"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> String getUsernameAsValid() {
+<A NAME="349"></A>        <FONT ID="If">if</FONT> (sessionBoundBadRefWrapper == <FONT ID="Null">null</FONT>) {
+<A NAME="350"></A>            <FONT ID="Throw">throw</FONT> HumanUser.ILLEGAL_STATE_EXCEPTION;
+<A NAME="351"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (!sessionBoundBadRefWrapper.isAlive()) {<FONT ID="SingleLineComment">//(Defensive)This is checked in the constructor of this class
+<A NAME="352"></A></FONT>            <FONT ID="Throw">throw</FONT> HumanUser.ILLEGAL_STATE_EXCEPTION;
+<A NAME="353"></A>        }
+<A NAME="354"></A>        <FONT ID="Return">return</FONT> sessionBoundBadRefWrapper.getBoundInstance().getHumanUserId();
+<A NAME="355"></A>    }
+<A NAME="356"></A>
+<A NAME="357"></A>    <FONT ID="FormalComment">/**
+<A NAME="358"></A>     * Get the Username of the Logged in user, or throw exception.
+<A NAME="359"></A>     * This is a call by prevention where the calls will be made to this method after one
+<A NAME="360"></A>     * validation that the user is logged in. This is the safe approach to code that assumes logged in.
+<A NAME="361"></A>     * When code gets bulky, at times calls to just getUserName might trigger null if not used in this form.
+<A NAME="362"></A>     * With this approach, we expect to throw an exception immediately instead of late discovery.
+<A NAME="363"></A>     *
+<A NAME="364"></A>     * @return The Username of the Logged in user, and null, if not logged in
+<A NAME="365"></A>     */</FONT>
+<A NAME="366"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> geHumanIdAsValid() {
+<A NAME="367"></A>        <FONT ID="If">if</FONT> (sessionBoundBadRefWrapper == <FONT ID="Null">null</FONT>) {
+<A NAME="368"></A>            <FONT ID="Throw">throw</FONT> HumanUser.ILLEGAL_STATE_EXCEPTION;
+<A NAME="369"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (!sessionBoundBadRefWrapper.isAlive()) {<FONT ID="SingleLineComment">//(Defensive)This is checked in the constructor of this class
+<A NAME="370"></A></FONT>            <FONT ID="Throw">throw</FONT> HumanUser.ILLEGAL_STATE_EXCEPTION;
+<A NAME="371"></A>        }
+<A NAME="372"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(sessionBoundBadRefWrapper.getBoundInstance().getHumanUserId());
+<A NAME="373"></A>    }
+<A NAME="374"></A>
+<A NAME="375"></A>    <FONT ID="FormalComment">/**
+<A NAME="376"></A>     * Non-static wrapper for {@link ai.ilikeplaces.logic.role.HumanUser#getHumanUserAsValid(SessionBoundBadRefWrapper)}
+<A NAME="377"></A>     * &lt;p/&gt;
+<A NAME="378"></A>     * The contents of this method were moved to the static method to make the static method avaiable globally.
+<A NAME="379"></A>     * This should later be shifted to most relevantly to {@link ai.ilikeplaces.logic.role.HumanUser}
+<A NAME="380"></A>     * &lt;p/&gt;
+<A NAME="381"></A>     * Get the Username of the Logged in user, or throw exception.
+<A NAME="382"></A>     * This is a call by prevention where the calls will be made to this method after one
+<A NAME="383"></A>     * validation that the user is logged in. This is the safe approach to code that assumes logged in.
+<A NAME="384"></A>     * When code gets bulky, at times calls to just getUserName might trigger null if not used in this form.
+<A NAME="385"></A>     * With this approach, we expect to throw an exception immediately instead of late discovery.
+<A NAME="386"></A>     *
+<A NAME="387"></A>     * @return The HumanUserLocal of the Logged in user or throws an exception if null or not logged in
+<A NAME="388"></A>     */</FONT>
+<A NAME="389"></A>    <FONT ID="Final">final</FONT> <FONT ID="Protected">protected</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> getHumanUserAsValid() {
+<A NAME="390"></A>        <FONT ID="Return">return</FONT> HumanUser.getHumanUserAsValid(sessionBoundBadRefWrapper);
+<A NAME="391"></A>    }
+<A NAME="392"></A>
+<A NAME="393"></A>}
+<A NAME="394"></A></pre>
+</BODY>
+</HTML>

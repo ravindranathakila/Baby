@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.DPublicPhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DPublicPhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">ai.ilikeplaces.entities.PublicPhoto</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="16"></A>
+<A NAME="17"></A><FONT ID="FormalComment">/**
+<A NAME="18"></A> *
+<A NAME="19"></A> * @author Ravindranath Akila
+<A NAME="20"></A> */</FONT>
+<A NAME="21"></A>
+<A NAME="22"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="23"></A></FONT>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="24"></A>@Stateless
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DPublicPhoto <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/DPublicPhotoLocal.java.html">DPublicPhotoLocal</A> {
+<A NAME="26"></A>
+<A NAME="27"></A>    @EJB
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A>&gt; crudServiceHuman_;
+<A NAME="29"></A>    @EJB
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; crudServiceLocation_;
+<A NAME="31"></A>    @EJB
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; CrudServicePublicPhoto_;
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> DPublicPhoto() {
+<A NAME="35"></A>    }
+<A NAME="36"></A>
+<A NAME="37"></A>    @Override
+<A NAME="38"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doNTxDPublicPhotoLocal(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> publicPhotoId) {
+<A NAME="40"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A> publicPhoto = CrudServicePublicPhoto_.find(<A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>.<FONT ID="Class">class</FONT>, publicPhotoId);
+<A NAME="41"></A>
+<A NAME="42"></A>        <FONT ID="If">if</FONT> (!publicPhoto.getHumansPublicPhoto().getPublicPhotos().remove(publicPhoto)) {
+<A NAME="43"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(<FONT ID="StringLiteral">"SORRY, I FIND NO SUCH VALUE."</FONT>);
+<A NAME="44"></A>        }
+<A NAME="45"></A>        
+<A NAME="46"></A>        <FONT ID="If">if</FONT> (!publicPhoto.getLocation().getPublicPhotos().remove(publicPhoto)) {
+<A NAME="47"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(<FONT ID="StringLiteral">"SORRY, I FIND NO SUCH VALUE."</FONT>);
+<A NAME="48"></A>        }
+<A NAME="49"></A>
+<A NAME="50"></A>        CrudServicePublicPhoto_.delete(<A HREF="../../../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>.<FONT ID="Class">class</FONT>, publicPhoto.getPublicPhotoId());
+<A NAME="51"></A>
+<A NAME="52"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="53"></A>    }
+<A NAME="54"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/DPublicPhoto.java.html">DPublicPhoto</A>.<FONT ID="Class">class</FONT>);
+<A NAME="55"></A>}
+<A NAME="56"></A></pre>
+</BODY>
+</HTML>

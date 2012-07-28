@@ -1,0 +1,538 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerMain (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerMain.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/LongMsg.java.html">ai.ilikeplaces.entities.LongMsg</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOn.java.html">ai.ilikeplaces.logic.Listeners.widgets.SignInOn</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">ai.ilikeplaces.logic.Listeners.widgets.UserProperty</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.Listeners.widgets.schema.thing.*;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/modules/Modules.java.html">ai.ilikeplaces.logic.modules.Modules</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.ygp.impl.Client;
+<A NAME="19"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.ygp.impl.ClientFactory;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="25"></A><FONT ID="Import">import</FONT> org.json.JSONArray;
+<A NAME="26"></A><FONT ID="Import">import</FONT> org.json.JSONException;
+<A NAME="27"></A><FONT ID="Import">import</FONT> org.json.JSONObject;
+<A NAME="28"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="29"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.*;
+<A NAME="30"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="31"></A><FONT ID="Import">import</FONT> twitter4j.*;
+<A NAME="32"></A><FONT ID="Import">import</FONT> where.yahooapis.com.v1.Place;
+<A NAME="33"></A>
+<A NAME="34"></A><FONT ID="Import">import</FONT> java.text.MessageFormat;
+<A NAME="35"></A><FONT ID="Import">import</FONT> java.util.*;
+<A NAME="36"></A>
+<A NAME="37"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="38"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/MarkupTag.java.html">ai.ilikeplaces.util.MarkupTag</A>.*;
+<A NAME="39"></A>
+<A NAME="40"></A><FONT ID="FormalComment">/**
+<A NAME="41"></A> * @author Ravindranath Akila
+<A NAME="42"></A> */</FONT>
+<A NAME="43"></A>
+<A NAME="44"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="45"></A>@TODO(task = <FONT ID="StringLiteral">"RENAME TO LISTENERLOCATION. DO A STRING SEARCH ON LISTENERMAIN TO FIND USAGE FIRST. CURRENT SEARCH SHOWS NO ISSUES. REFAC DELAYED TILL NEXT CHECK"</FONT>)
+<A NAME="46"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerMain <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="47"></A>
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Protected">protected</FONT> String LocationId = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"LOCATIONID"</FONT>);
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RETURNING_LOCATION = <FONT ID="StringLiteral">"Returning location "</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TO_USER = <FONT ID="StringLiteral">" to user"</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WRONG_WOEID_FORMAT = <FONT ID="StringLiteral">"SORRY! WRONG WOEID FORMAT"</FONT>;
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NUMBER_OF_PHOTOS_FOR = <FONT ID="StringLiteral">"Number of photos for "</FONT>;
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COLON = <FONT ID="StringLiteral">":"</FONT>;
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HTTP_SESSION_ATTR_LOCATION = <FONT ID="StringLiteral">"HttpSessionAttr.location"</FONT>;
+<A NAME="56"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = <FONT ID="StringLiteral">"ai.ilikeplaces.logic.Listeners.ListenerMain.0004"</FONT>;
+<A NAME="57"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0005 = <FONT ID="StringLiteral">"ai.ilikeplaces.logic.Listeners.ListenerMain.0005"</FONT>;
+<A NAME="58"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String POST_ID = <FONT ID="StringLiteral">"id"</FONT>;
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY = <FONT ID="StringLiteral">"http://travel.ilikeplaces.com/index.jsp?c"</FONT> + POST_ID + <FONT ID="StringLiteral">"=317285&amp;pageName=hotSearch&amp;submitted=true&amp;validateCity=true&amp;city="</FONT>;
+<A NAME="60"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String QUERIES_FOR_LOCATION = <FONT ID="StringLiteral">" queries for location "</FONT>;
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String OF = <FONT ID="StringLiteral">" of "</FONT>;
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String AI_ILIKEPLACES_RBS_GUI = <FONT ID="StringLiteral">"ai.ilikeplaces.rbs.GUI"</FONT>;
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTOS = <FONT ID="StringLiteral">"PROFILE_PHOTOS"</FONT>;
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String THIS_IS = <FONT ID="StringLiteral">"This is "</FONT>;
+<A NAME="65"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BACK_TO = <FONT ID="StringLiteral">"Back to"</FONT>;
+<A NAME="66"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String AT = <FONT ID="StringLiteral">"At "</FONT>;
+<A NAME="67"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String YOU_CAN_VISIT = <FONT ID="StringLiteral">" you can visit"</FONT>;
+<A NAME="68"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SPACE = <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="69"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PLACE_LIST = <FONT ID="StringLiteral">"place_list"</FONT>;
+<A NAME="70"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TRAVEL_TO = <FONT ID="StringLiteral">"Travel to "</FONT>;
+<A NAME="71"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PAGE = <FONT ID="StringLiteral">"/page/"</FONT>;
+<A NAME="72"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String _OF_ = <FONT ID="StringLiteral">"_of_"</FONT>;
+<A NAME="73"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CLICK_TO_EXPLORE = <FONT ID="StringLiteral">"Click to explore "</FONT>;
+<A NAME="74"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String VTIP = <FONT ID="StringLiteral">"vtip"</FONT>;
+<A NAME="75"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WIDTH = <FONT ID="StringLiteral">"w"</FONT> + POST_ID + <FONT ID="StringLiteral">"th"</FONT>;
+<A NAME="76"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PX = <FONT ID="StringLiteral">"110px;"</FONT>;
+<A NAME="77"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UNLOADING_BODY_TIME_SPENT = <FONT ID="StringLiteral">"Unloading body. Time spent:"</FONT>;
+<A NAME="78"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WOEIDPAGE_TITLE = <FONT ID="StringLiteral">"woe"</FONT> + POST_ID + <FONT ID="StringLiteral">"page.title"</FONT>;
+<A NAME="79"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WOEIDPAGE_DESC = <FONT ID="StringLiteral">"woe"</FONT> + POST_ID + <FONT ID="StringLiteral">"page.desc"</FONT>;
+<A NAME="80"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COMMA = <FONT ID="StringLiteral">","</FONT>;
+<A NAME="81"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> ClientFactory YAHOO_GEO_PLANET_FACTORY = Modules.getModules().getYahooGeoPlanetFactory();
+<A NAME="82"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> com.disqus.api.impl.ClientFactory DISQUS_API_FACTORY = Modules.getModules().getDisqusAPIFactory();
+<A NAME="83"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HTTP_DISQUS_COM_API_3_0_THREADS = <FONT ID="StringLiteral">"http://disqus.com/api/3.0/threads/"</FONT>;
+<A NAME="84"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HTTP_DISQUS_COM_API_3_0_POSTS = <FONT ID="StringLiteral">"http://disqus.com/api/3.0/posts/"</FONT>;
+<A NAME="85"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IDENT_WOEID = POST_ID + <FONT ID="StringLiteral">"ent:WOEID="</FONT>;
+<A NAME="86"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String THREAD = <FONT ID="StringLiteral">"thread"</FONT>;
+<A NAME="87"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LIST = <FONT ID="StringLiteral">"list"</FONT>;
+<A NAME="88"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RESPONSE = <FONT ID="StringLiteral">"response"</FONT>;
+<A NAME="89"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ID = POST_ID;
+<A NAME="90"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NUMBER_OF_ITEMS_AT_DISQUS_IN_THREAD = <FONT ID="StringLiteral">"Number of Items At Disqus in Thread:"</FONT>;
+<A NAME="91"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RAW__MESSAGE = <FONT ID="StringLiteral">"raw_message"</FONT>;
+<A NAME="92"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_DISQUS = <FONT ID="StringLiteral">"Error in UC DISQUS"</FONT>;
+<A NAME="93"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_SET_LOGIN_WIDGET = <FONT ID="StringLiteral">"Error in UC setLoginW"</FONT> + POST_ID + <FONT ID="StringLiteral">"get"</FONT>;
+<A NAME="94"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_SEO = <FONT ID="StringLiteral">"Error in UC SEO"</FONT>;
+<A NAME="95"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_SIGN_ON_DISPLAY_LINK = <FONT ID="StringLiteral">"Error in UC signOnDisplayLink"</FONT>;
+<A NAME="96"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_SET_PROFILE_PHOTO_LINK = <FONT ID="StringLiteral">"Error in UC setProfilePhotoLink"</FONT>;
+<A NAME="97"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_SET_LOCATION_ID_FOR_JSREFERENCE = <FONT ID="StringLiteral">"Error in UC setLocationIdForJSReference"</FONT>;
+<A NAME="98"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_SHOW_UPLOAD_FILE_LINK = <FONT ID="StringLiteral">"Error in UC showUploadFileLink"</FONT>;
+<A NAME="99"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_SET_LOCATION_NAME_FOR_JSREFERENCE = <FONT ID="StringLiteral">"Error in UC setLocationNameForJSReference"</FONT>;
+<A NAME="100"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_SET_LOCATION_AS_PAGE_TOPIC = <FONT ID="StringLiteral">"Error in UC setLocationAsPageTopic"</FONT>;
+<A NAME="101"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_NO_SUPPORT_FOR_NEW_LOCATIONS = <FONT ID="StringLiteral">"Error in UC noSupportForNewLocations"</FONT>;
+<A NAME="102"></A>
+<A NAME="103"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> REFRESH_SPEC = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A>(<FONT ID="StringLiteral">"longMsgs"</FONT>);
+<A NAME="104"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CREATED_AT = <FONT ID="StringLiteral">"createdAt"</FONT>;
+<A NAME="105"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ERROR_IN_UC_SET_PROFILE_LINK = <FONT ID="StringLiteral">"Error in UC setProfileLink"</FONT>;
+<A NAME="106"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PIPE = <FONT ID="StringLiteral">"|"</FONT>;
+<A NAME="107"></A>
+<A NAME="108"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Twitter TWITTER = <FONT ID="New">new</FONT> TwitterFactory().getInstance();
+<A NAME="109"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Query QUERY = <FONT ID="New">new</FONT> Query(<FONT ID="StringLiteral">"fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)"</FONT>);
+<A NAME="110"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String AT_SIGN = <FONT ID="StringLiteral">"@"</FONT>;
+<A NAME="111"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EMPTY = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="112"></A>
+<A NAME="113"></A>    <FONT ID="FormalComment">/**
+<A NAME="114"></A>     * @param request__
+<A NAME="115"></A>     * @param response__
+<A NAME="116"></A>     */</FONT>
+<A NAME="117"></A>    @Override
+<A NAME="118"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> ItsNatServletResponse response__) {
+<A NAME="119"></A>
+<A NAME="120"></A>        <FONT ID="New">new</FONT> AbstractListener(request__, response__) {
+<A NAME="121"></A>
+<A NAME="122"></A>            <FONT ID="Protected">protected</FONT> String location;
+<A NAME="123"></A>
+<A NAME="124"></A>            <FONT ID="Protected">protected</FONT> String superLocation;
+<A NAME="125"></A>
+<A NAME="126"></A>            <FONT ID="Protected">protected</FONT> Long WOEID;
+<A NAME="127"></A>
+<A NAME="128"></A>            <FONT ID="FormalComment">/**
+<A NAME="129"></A>             * Initialize your document here by appending fragments
+<A NAME="130"></A>             */</FONT>
+<A NAME="131"></A>            @Override
+<A NAME="132"></A>            @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="133"></A>            @TODO(task = <FONT ID="StringLiteral">"If location is not available, it should be added through a w"</FONT> + POST_ID + <FONT ID="StringLiteral">"get(or fragment maybe?)"</FONT>)
+<A NAME="134"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="135"></A>
+<A NAME="136"></A>                <FONT ID="Final">final</FONT> SmartLogger sl = SmartLogger.start(
+<A NAME="137"></A>                        Loggers.LEVEL.DEBUG,
+<A NAME="138"></A>                        <FONT ID="StringLiteral">"Location Page."</FONT>,
+<A NAME="139"></A>                        <FONT ID="IntegerLiteral">60000</FONT>,
+<A NAME="140"></A>                        <FONT ID="Null">null</FONT>,
+<A NAME="141"></A>                        <FONT ID="True">true</FONT>
+<A NAME="142"></A>                );
+<A NAME="143"></A>
+<A NAME="144"></A>
+<A NAME="145"></A>                <FONT ID="SingleLineComment">//this.location = (String) request_.getServletRequest().getAttribute(RBGet.config.getString("HttpSessionAttr.location"));
+<A NAME="146"></A></FONT>                getLocationSuperLocation:
+<A NAME="147"></A>                {
+<A NAME="148"></A>                    <FONT ID="Final">final</FONT> String[] attr = ((String) request__.getServletRequest().getAttribute(RBGet.globalConfig.getString(HTTP_SESSION_ATTR_LOCATION))).split(<FONT ID="StringLiteral">"_"</FONT>);
+<A NAME="149"></A>                    location = attr[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="150"></A>                    <FONT ID="If">if</FONT> (attr.length == <FONT ID="IntegerLiteral">3</FONT>) {
+<A NAME="151"></A>                        superLocation = attr[<FONT ID="IntegerLiteral">2</FONT>];
+<A NAME="152"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="153"></A>                        superLocation = EMPTY;
+<A NAME="154"></A>                    }
+<A NAME="155"></A>                    tryLocationId:
+<A NAME="156"></A>                    {
+<A NAME="157"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="158"></A>                            <FONT ID="Final">final</FONT> String w = request__.getServletRequest().getParameter(Location.WOEID);
+<A NAME="159"></A>                            <FONT ID="If">if</FONT> (w != <FONT ID="Null">null</FONT>) {
+<A NAME="160"></A>                                WOEID = Long.parseLong(request__.getServletRequest().getParameter(Location.WOEID));
+<A NAME="161"></A>                            }
+<A NAME="162"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NumberFormatException e) {
+<A NAME="163"></A>                            Loggers.USER_EXCEPTION.error(WRONG_WOEID_FORMAT, e);
+<A NAME="164"></A>                        }
+<A NAME="165"></A>                    }
+<A NAME="166"></A>                }
+<A NAME="167"></A>
+<A NAME="168"></A>                sl.appendToLogMSG(RETURNING_LOCATION + location + TO_USER);
+<A NAME="169"></A>
+<A NAME="170"></A>                <FONT ID="Final">final</FONT> ResourceBundle gUI = ResourceBundle.getBundle(AI_ILIKEPLACES_RBS_GUI);
+<A NAME="171"></A>
+<A NAME="172"></A>
+<A NAME="173"></A>                layoutNeededForAllPages:
+<A NAME="174"></A>                {
+<A NAME="175"></A>                    setLoginWidget:
+<A NAME="176"></A>                    {
+<A NAME="177"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="178"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOn.java.html">SignInOn</A>(request__, $(Main_login_widget),
+<A NAME="179"></A>                                    <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">SignInOnCriteria</A>()
+<A NAME="180"></A>                                            .setHumanId(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsername()))
+<A NAME="181"></A>                                            .setSignInOnDisplayComponent(SignInOnCriteria.SignInOnDisplayComponent.MOMENTS)) {
+<A NAME="182"></A>                            };
+<A NAME="183"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="184"></A>                            sl.l(ERROR_IN_UC_SET_LOGIN_WIDGET, t);
+<A NAME="185"></A>                        }
+<A NAME="186"></A>                    }
+<A NAME="187"></A>
+<A NAME="188"></A>                    SEO:
+<A NAME="189"></A>                    {
+<A NAME="190"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="191"></A>                            setMainTitle:
+<A NAME="192"></A>                            {
+<A NAME="193"></A>                                $(mainTitle).setTextContent(MessageFormat.format(gUI.getString(WOEIDPAGE_TITLE), location));
+<A NAME="194"></A>
+<A NAME="195"></A>                            }
+<A NAME="196"></A>                            setMetaDescription:
+<A NAME="197"></A>                            {
+<A NAME="198"></A>                                $(mainMetaDesc).setAttribute(MarkupTag.META.content(), MessageFormat.format(gUI.getString(WOEIDPAGE_DESC), location));
+<A NAME="199"></A>                            }
+<A NAME="200"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="201"></A>                            sl.l(ERROR_IN_UC_SEO, t);
+<A NAME="202"></A>                        }
+<A NAME="203"></A>                    }
+<A NAME="204"></A>                    signOnDisplayLink:
+<A NAME="205"></A>                    {
+<A NAME="206"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="207"></A>                            <FONT ID="If">if</FONT> (getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="208"></A>                                $(Main_othersidebar_identity).setTextContent(gUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004) + getUsernameAsValid());
+<A NAME="209"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="210"></A>                                $(Main_othersidebar_identity).setTextContent(gUI.getString(AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0005) + location);
+<A NAME="211"></A>                            }
+<A NAME="212"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="213"></A>                            sl.l(ERROR_IN_UC_SIGN_ON_DISPLAY_LINK, t);
+<A NAME="214"></A>                        }
+<A NAME="215"></A>
+<A NAME="216"></A>                    }
+<A NAME="217"></A>                    setProfileLink:
+<A NAME="218"></A>                    {
+<A NAME="219"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="220"></A>                            <FONT ID="If">if</FONT> (getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="221"></A>                                $(Main_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.Profile.getURL());
+<A NAME="222"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="223"></A>                                $(Main_othersidebar_profile_link).setAttribute(MarkupTag.A.href(), Controller.Page.signup.getURL());
+<A NAME="224"></A>                            }
+<A NAME="225"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="226"></A>                            sl.l(ERROR_IN_UC_SET_PROFILE_LINK, t);
+<A NAME="227"></A>                        }
+<A NAME="228"></A>                    }
+<A NAME="229"></A>                    setProfilePhotoLink:
+<A NAME="230"></A>                    {
+<A NAME="231"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="232"></A>                            <FONT ID="If">if</FONT> (getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="233"></A>                                <FONT ID="FormalComment">/**
+<A NAME="234"></A>                                 * TODO check for db failure
+<A NAME="235"></A>                                 */</FONT>
+<A NAME="236"></A>                                String url = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansProfilePhoto(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid())).returnValueBadly();
+<A NAME="237"></A>                                url = url == <FONT ID="Null">null</FONT> ? <FONT ID="Null">null</FONT> : RBGet.globalConfig.getString(PROFILE_PHOTOS) + url;
+<A NAME="238"></A>                                <FONT ID="If">if</FONT> (url != <FONT ID="Null">null</FONT>) {
+<A NAME="239"></A>                                    $(Main_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
+<A NAME="240"></A>                                    <FONT ID="SingleLineComment">//displayBlock($(Main_profile_photo));
+<A NAME="241"></A></FONT>                                } <FONT ID="Else">else</FONT> {
+<A NAME="242"></A>                                    <FONT ID="SingleLineComment">//displayNone($(Main_profile_photo));
+<A NAME="243"></A></FONT>                                }
+<A NAME="244"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="245"></A>                                <FONT ID="SingleLineComment">//displayNone($(Main_profile_photo));
+<A NAME="246"></A></FONT>                            }
+<A NAME="247"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="248"></A>                            sl.l(ERROR_IN_UC_SET_PROFILE_PHOTO_LINK, t);
+<A NAME="249"></A>
+<A NAME="250"></A>                        }
+<A NAME="251"></A>                    }
+<A NAME="252"></A>                }
+<A NAME="253"></A>
+<A NAME="254"></A>                <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; r;
+<A NAME="255"></A>                <FONT ID="If">if</FONT> (WOEID != <FONT ID="Null">null</FONT>) {
+<A NAME="256"></A>                    r = DB.getHumanCRUDLocationLocal(<FONT ID="True">true</FONT>).doRLocation(WOEID, REFRESH_SPEC);
+<A NAME="257"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="258"></A>                    r = <FONT ID="New">new</FONT> ReturnImpl&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;(ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION, <FONT ID="StringLiteral">"Search Unavailable"</FONT>, <FONT ID="False">false</FONT>);
+<A NAME="259"></A>                    <FONT ID="SingleLineComment">//r = DB.getHumanCRUDLocationLocal(true).dirtyRLocation(location, superLocation);
+<A NAME="260"></A></FONT>                }
+<A NAME="261"></A>
+<A NAME="262"></A>
+<A NAME="263"></A>                <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; r.returnValue() != <FONT ID="Null">null</FONT>) {
+<A NAME="264"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> existingLocation_ = r.returnValue();
+<A NAME="265"></A>
+<A NAME="266"></A>                    GEO:
+<A NAME="267"></A>                    {
+<A NAME="268"></A>                        <FONT ID="If">if</FONT> (existingLocation_.getLocationGeo1() == <FONT ID="Null">null</FONT> || existingLocation_.getLocationGeo2() == <FONT ID="Null">null</FONT>) {
+<A NAME="269"></A>                            <FONT ID="Final">final</FONT> Client ygpClient = YAHOO_GEO_PLANET_FACTORY.getInstance(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"where.yahooapis.com.v1.place"</FONT>));
+<A NAME="270"></A>                            <FONT ID="Final">final</FONT> Place place = ygpClient.getPlace(existingLocation_.getLocationId().toString());
+<A NAME="271"></A>                            existingLocation_.setLocationGeo1(Double.toString(place.getCoordinates().getY()));
+<A NAME="272"></A>                            existingLocation_.setLocationGeo2(Double.toString(place.getCoordinates().getX()));
+<A NAME="273"></A>
+<A NAME="274"></A>                            <FONT ID="New">new</FONT> Thread(<FONT ID="New">new</FONT> Runnable() {
+<A NAME="275"></A>
+<A NAME="276"></A>                                @Override
+<A NAME="277"></A>                                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="278"></A>                                    DB.getHumanCRUDLocationLocal(<FONT ID="True">true</FONT>).doULocationLatLng(
+<A NAME="279"></A>                                            <FONT ID="New">new</FONT> Obj&lt;Long&gt;(existingLocation_.getLocationId()),
+<A NAME="280"></A>                                            <FONT ID="New">new</FONT> Obj&lt;Double&gt;(place.getCoordinates().getY()),
+<A NAME="281"></A>                                            <FONT ID="New">new</FONT> Obj&lt;Double&gt;(place.getCoordinates().getX()));
+<A NAME="282"></A>                                }
+<A NAME="283"></A>                            }).run();
+<A NAME="284"></A>                        }
+<A NAME="285"></A>                    }
+<A NAME="286"></A>
+<A NAME="287"></A>
+<A NAME="288"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> locationSuperSet = existingLocation_.getLocationSuperSet();
+<A NAME="289"></A>                    GEO_WIDGET:
+<A NAME="290"></A>                    {
+<A NAME="291"></A>
+<A NAME="292"></A>                        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/schema/thing/Comment.java.html">ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Comment</A>(request__, <FONT ID="New">new</FONT> CommentCriteria(), $(Controller.Page.Main_right_column)) {
+<A NAME="293"></A>
+<A NAME="294"></A>                            @Override
+<A NAME="295"></A>                            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(CommentCriteria commentCriteria) {
+<A NAME="296"></A>                                <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/schema/thing/Place.java.html">ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place</A>(request__,
+<A NAME="297"></A>                                        <FONT ID="New">new</FONT> PlaceCriteria()
+<A NAME="298"></A>                                                <FONT ID="SingleLineComment">//This Place
+<A NAME="299"></A></FONT>                                                .setPlaceName(existingLocation_.getLocationName())
+<A NAME="300"></A>                                                .setPlaceLat(existingLocation_.getLocationGeo1())
+<A NAME="301"></A>                                                .setPlaceLng(existingLocation_.getLocationGeo2())
+<A NAME="302"></A>                                                        <FONT ID="SingleLineComment">//Parent Place
+<A NAME="303"></A></FONT>                                                .setPlaceSuperName(locationSuperSet.getLocationName())
+<A NAME="304"></A>                                                .setPlaceSuperLat(locationSuperSet.getLocationGeo1())
+<A NAME="305"></A>                                                .setPlaceSuperLng(locationSuperSet.getLocationGeo2())
+<A NAME="306"></A>                                                        <FONT ID="SingleLineComment">//Parent WOEID
+<A NAME="307"></A></FONT>                                                .setPlaceSuperWOEID(locationSuperSet.getWOEID().toString())
+<A NAME="308"></A>                                        ,
+<A NAME="309"></A>                                        $$(CommentIds.commentPerson));
+<A NAME="310"></A>                            }
+<A NAME="311"></A>                        };
+<A NAME="312"></A>
+<A NAME="313"></A>
+<A NAME="314"></A>                    }
+<A NAME="315"></A>
+<A NAME="316"></A>
+<A NAME="317"></A>                    SEO:
+<A NAME="318"></A>                    {
+<A NAME="319"></A>                        setMetaGEOData:
+<A NAME="320"></A>                        {
+<A NAME="321"></A>                            $(Main_ICBM).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationGeo1() + COMMA + existingLocation_.getLocationGeo2());
+<A NAME="322"></A>                            $(Main_geoposition).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationGeo1() + COMMA + existingLocation_.getLocationGeo2());
+<A NAME="323"></A>                            $(Main_geoplacename).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationName());
+<A NAME="324"></A>                            $(Main_georegion).setAttribute(MarkupTag.META.content(), locationSuperSet.getLocationName());
+<A NAME="325"></A>                        }
+<A NAME="326"></A>                        setTwitterData:
+<A NAME="327"></A>                        {
+<A NAME="328"></A>                            <FONT ID="Try">try</FONT> {
+<A NAME="329"></A>                                <FONT ID="Final">final</FONT> QueryResult result = TWITTER.search(QUERY.geoCode(<FONT ID="New">new</FONT> GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), <FONT ID="IntegerLiteral">160</FONT>, Query.MILES));
+<A NAME="330"></A>                                <FONT ID="For">for</FONT> (Tweet tweet : result.getTweets()) {
+<A NAME="331"></A>                                    <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/schema/thing/Person.java.html">ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person</A>(
+<A NAME="332"></A>                                            request__,
+<A NAME="333"></A>                                            <FONT ID="New">new</FONT> PersonCriteria()
+<A NAME="334"></A>                                                    .setPersonName(tweet.getFromUser())
+<A NAME="335"></A>                                                    .setPersonPhoto(tweet.getProfileImageUrl())
+<A NAME="336"></A>                                                    .setPersonData(tweet.getText()),
+<A NAME="337"></A>                                            $(Main_right_column)
+<A NAME="338"></A>                                    );
+<A NAME="339"></A>                                }
+<A NAME="340"></A>                                <FONT ID="If">if</FONT> (result.getTweets().size() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="341"></A>                                    sl.l(<FONT ID="StringLiteral">"No twitter results found"</FONT>);
+<A NAME="342"></A>                                }
+<A NAME="343"></A>                            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="344"></A>                                sl.l(<FONT ID="StringLiteral">"An error occurred during twitter fetch:"</FONT> + t.getMessage(), t);
+<A NAME="345"></A>                            }
+<A NAME="346"></A>                        }
+<A NAME="347"></A>                    }
+<A NAME="348"></A>
+<A NAME="349"></A>                    setLocationIdForJSReference:
+<A NAME="350"></A>                    {
+<A NAME="351"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="352"></A>                            <FONT ID="Final">final</FONT> Element hiddenLocationIdInputTag = $(INPUT);
+<A NAME="353"></A>                            hiddenLocationIdInputTag.setAttribute(INPUT.type(), INPUT.typeValueHidden());
+<A NAME="354"></A>                            hiddenLocationIdInputTag.setAttribute(INPUT.id(), JSCodeToSend.LocationId);
+<A NAME="355"></A>                            hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationId().toString());
+<A NAME="356"></A>                            hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
+<A NAME="357"></A>
+<A NAME="358"></A>                            $(Main_location_name).setAttribute(INPUT.value(), existingLocation_.getLocationName() + <FONT ID="StringLiteral">""</FONT>);
+<A NAME="359"></A>                            $(Main_super_location_name).setAttribute(INPUT.value(), locationSuperSet.getLocationName() + <FONT ID="StringLiteral">""</FONT>);
+<A NAME="360"></A>
+<A NAME="361"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="362"></A>                            sl.l(ERROR_IN_UC_SET_LOCATION_ID_FOR_JSREFERENCE, t);
+<A NAME="363"></A>                        }
+<A NAME="364"></A>                    }
+<A NAME="365"></A>
+<A NAME="366"></A>                    setLocationNameForJSReference:
+<A NAME="367"></A>                    {
+<A NAME="368"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="369"></A>                            <FONT ID="Final">final</FONT> Element hiddenLocationIdInputTag = $(INPUT);
+<A NAME="370"></A>                            hiddenLocationIdInputTag.setAttribute(INPUT.type(), INPUT.typeValueHidden());
+<A NAME="371"></A>                            hiddenLocationIdInputTag.setAttribute(INPUT.id(), JSCodeToSend.LocationName);
+<A NAME="372"></A>                            hiddenLocationIdInputTag.setAttribute(INPUT.value(), existingLocation_.getLocationName() + OF + locationSuperSet.getLocationName());
+<A NAME="373"></A>                            hTMLDocument__.getBody().appendChild(hiddenLocationIdInputTag);
+<A NAME="374"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="375"></A>                            sl.l(ERROR_IN_UC_SET_LOCATION_NAME_FOR_JSREFERENCE, t);
+<A NAME="376"></A>                        }
+<A NAME="377"></A>                    }
+<A NAME="378"></A>
+<A NAME="379"></A>
+<A NAME="380"></A>                    setLocationAsPageTopic:
+<A NAME="381"></A>                    {
+<A NAME="382"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="383"></A>                            $(Main_center_main_location_title).setTextContent(THIS_IS + existingLocation_.getLocationName() + OF + locationSuperSet);
+<A NAME="384"></A>                            $(Main_center_content).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(AT + existingLocation_.getLocationName() + YOU_CAN_VISIT + COLON + SPACE))));
+<A NAME="385"></A>
+<A NAME="386"></A>
+<A NAME="387"></A>                            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(<FONT ID="True">true</FONT>).doDirtyRLocationsBySuperLocation(existingLocation_))) {
+<A NAME="388"></A>                                $(Main_location_list).appendChild(element);
+<A NAME="389"></A>                                displayBlock($(Main_notice_sh));
+<A NAME="390"></A>                            }
+<A NAME="391"></A>
+<A NAME="392"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="393"></A>                            sl.l(ERROR_IN_UC_SET_LOCATION_AS_PAGE_TOPIC, t);
+<A NAME="394"></A>                        }
+<A NAME="395"></A>
+<A NAME="396"></A>                    }
+<A NAME="397"></A>
+<A NAME="398"></A>
+<A NAME="399"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="400"></A>                    noSupportForNewLocations:
+<A NAME="401"></A>                    {
+<A NAME="402"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="403"></A><FONT ID="SingleLineComment">//                            $(Main_notice).appendChild(($(P).appendChild(
+<A NAME="404"></A></FONT><FONT ID="SingleLineComment">//                                    hTMLDocument__.createTextNode(RBGet.logMsgs.getString("CANT_FIND_LOCATION")
+<A NAME="405"></A></FONT><FONT ID="SingleLineComment">//                                            + " Were you looking for "
+<A NAME="406"></A></FONT><FONT ID="SingleLineComment">//                                    ))));
+<A NAME="407"></A></FONT><FONT ID="SingleLineComment">//                            for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).dirtyRLikeLocations(location))) {
+<A NAME="408"></A></FONT><FONT ID="SingleLineComment">//                                $(Main_notice).appendChild(element);
+<A NAME="409"></A></FONT><FONT ID="SingleLineComment">//                                displayBlock($(Main_notice_sh));
+<A NAME="410"></A></FONT><FONT ID="SingleLineComment">//                            }
+<A NAME="411"></A></FONT>                            NotSupportingLikeSearchTooForNow:
+<A NAME="412"></A>                            {
+<A NAME="413"></A>                                $(Main_notice).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"CANT_FIND_LOCATION"</FONT>)))));
+<A NAME="414"></A>                            }
+<A NAME="415"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="416"></A>                            sl.l(ERROR_IN_UC_NO_SUPPORT_FOR_NEW_LOCATIONS, t);
+<A NAME="417"></A>                        }
+<A NAME="418"></A>                    }
+<A NAME="419"></A>                }
+<A NAME="420"></A>                sl.complete(Loggers.LEVEL.SERVER_STATUS, Loggers.DONE);
+<A NAME="421"></A>            }
+<A NAME="422"></A>
+<A NAME="423"></A>            <FONT ID="FormalComment">/**
+<A NAME="424"></A>             * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="425"></A>             */</FONT>
+<A NAME="426"></A>            @Override
+<A NAME="427"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(
+<A NAME="428"></A>                    <FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__,
+<A NAME="429"></A>                    <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__,
+<A NAME="430"></A>                    <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__) {
+<A NAME="431"></A>            }
+<A NAME="432"></A>
+<A NAME="433"></A>            <FONT ID="Private">private</FONT> List&lt;Element&gt; generateLocationLinks(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; locationList) {
+<A NAME="434"></A>
+<A NAME="435"></A>                <FONT ID="Final">final</FONT> ElementComposer UList = ElementComposer.compose($(UL)).$ElementSetAttribute(MarkupTag.UL.id(), PLACE_LIST);
+<A NAME="436"></A>
+<A NAME="437"></A>                <FONT ID="For">for</FONT> (<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location : locationList) {
+<A NAME="438"></A>                    <FONT ID="Final">final</FONT> Element link = $(A);
+<A NAME="439"></A>
+<A NAME="440"></A>                    link.setTextContent(TRAVEL_TO + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
+<A NAME="441"></A>
+<A NAME="442"></A>                    link.setAttribute(A.href(),
+<A NAME="443"></A>                            PAGE
+<A NAME="444"></A>                                    + location.getLocationName()
+<A NAME="445"></A>                                    + _OF_
+<A NAME="446"></A>                                    + location.getLocationSuperSet().getLocationName()
+<A NAME="447"></A>                                    + Parameter.get(Location.WOEID, location.getWOEID().toString(), <FONT ID="True">true</FONT>));
+<A NAME="448"></A>
+<A NAME="449"></A>                    link.setAttribute(A.alt(),
+<A NAME="450"></A>                            PAGE + location.getLocationName() + _OF_ + location.getLocationSuperSet().getLocationName());
+<A NAME="451"></A>
+<A NAME="452"></A>                    link.setAttribute(A.title(),
+<A NAME="453"></A>                            CLICK_TO_EXPLORE + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
+<A NAME="454"></A>
+<A NAME="455"></A>                    link.setAttribute(A.classs(), VTIP);
+<A NAME="456"></A>
+<A NAME="457"></A>
+<A NAME="458"></A>                    <FONT ID="Final">final</FONT> Element linkDiv = $(DIV);
+<A NAME="459"></A>
+<A NAME="460"></A>
+<A NAME="461"></A>                    linkDiv.appendChild(link);
+<A NAME="462"></A>
+<A NAME="463"></A>                    UList.wrapThis(
+<A NAME="464"></A>                            ElementComposer.compose($(LI)).wrapThis(linkDiv).get()
+<A NAME="465"></A>                    );
+<A NAME="466"></A>                }
+<A NAME="467"></A>
+<A NAME="468"></A>                <FONT ID="Final">final</FONT> List&lt;Element&gt; elements = <FONT ID="New">new</FONT> ArrayList&lt;Element&gt;();
+<A NAME="469"></A>                elements.add(UList.get());
+<A NAME="470"></A>                <FONT ID="Return">return</FONT> elements;
+<A NAME="471"></A>
+<A NAME="472"></A>            }
+<A NAME="473"></A>
+<A NAME="474"></A>            <FONT ID="Private">private</FONT> Element generateLocationLink(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location) {
+<A NAME="475"></A>                <FONT ID="Final">final</FONT> Element link = $(A);
+<A NAME="476"></A>                link.setTextContent(TRAVEL_TO + location.getLocationName() + OF + location.getLocationSuperSet().getLocationName());
+<A NAME="477"></A>                link.setAttribute(A.href(),
+<A NAME="478"></A>                        PAGE
+<A NAME="479"></A>                                + location.getLocationName()
+<A NAME="480"></A>                                + _OF_
+<A NAME="481"></A>                                + location.getLocationSuperSet().getLocationName()
+<A NAME="482"></A>                                + Parameter.get(Location.WOEID, location.getWOEID().toString(), <FONT ID="True">true</FONT>));
+<A NAME="483"></A>
+<A NAME="484"></A>                link.setAttribute(A.alt(),
+<A NAME="485"></A>                        PAGE + location.getLocationName() + _OF_ + location.getLocationSuperSet().getLocationName());
+<A NAME="486"></A>                <FONT ID="Return">return</FONT> link;
+<A NAME="487"></A>            }
+<A NAME="488"></A>
+<A NAME="489"></A>            <FONT ID="Private">private</FONT> Element generateSimpleLocationLink(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location) {
+<A NAME="490"></A>                <FONT ID="Final">final</FONT> Element link = $(A);
+<A NAME="491"></A>                link.setTextContent(location.getLocationName());
+<A NAME="492"></A>                link.setAttribute(A.href(),
+<A NAME="493"></A>                        PAGE
+<A NAME="494"></A>                                + location.getLocationName()
+<A NAME="495"></A>                                + Parameter.get(Location.WOEID, location.getWOEID().toString(), <FONT ID="True">true</FONT>));
+<A NAME="496"></A>
+<A NAME="497"></A>                link.setAttribute(A.alt(),
+<A NAME="498"></A>                        PAGE + location.getLocationName());
+<A NAME="499"></A>                <FONT ID="Return">return</FONT> link;
+<A NAME="500"></A>            }
+<A NAME="501"></A>        };<FONT ID="SingleLineComment">//Listener
+<A NAME="502"></A></FONT>    }
+<A NAME="503"></A>
+<A NAME="504"></A>    <FONT ID="Private">private</FONT> JSONObject getDisqusPosts(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> WOEID) <FONT ID="Throws">throws</FONT> JSONException {
+<A NAME="505"></A>        <FONT ID="Final">final</FONT> com.disqus.api.impl.Client threads = DISQUS_API_FACTORY.getInstance(HTTP_DISQUS_COM_API_3_0_THREADS);
+<A NAME="506"></A>        <FONT ID="Final">final</FONT> com.disqus.api.impl.Client posts = DISQUS_API_FACTORY.getInstance(HTTP_DISQUS_COM_API_3_0_POSTS);
+<A NAME="507"></A>
+<A NAME="508"></A>        <FONT ID="Final">final</FONT> Map&lt;String, String&gt; threadParams = <FONT ID="New">new</FONT> HashMap&lt;String, String&gt;();
+<A NAME="509"></A>        threadParams.put(THREAD, IDENT_WOEID + WOEID);
+<A NAME="510"></A>        <FONT ID="Final">final</FONT> JSONObject threadJsonObject = threads.get(LIST, threadParams);
+<A NAME="511"></A>
+<A NAME="512"></A>        <FONT ID="Final">final</FONT> Map&lt;String, String&gt; postParams = <FONT ID="New">new</FONT> HashMap&lt;String, String&gt;();
+<A NAME="513"></A>        postParams.put(THREAD, threadJsonObject.getJSONArray(RESPONSE).getJSONObject(<FONT ID="IntegerLiteral">0</FONT>).get(ID).toString());
+<A NAME="514"></A>        <FONT ID="Final">final</FONT> JSONObject postJsonObject = posts.get(LIST, postParams);
+<A NAME="515"></A>        <FONT ID="Return">return</FONT> postJsonObject;
+<A NAME="516"></A>    }
+<A NAME="517"></A>}
+<A NAME="518"></A>
+<A NAME="519"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.HumansPublicPhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumansPublicPhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> *
+<A NAME="13"></A> * @author Ravindranath Akila
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A>
+<A NAME="16"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="17"></A>@Entity
+<A NAME="18"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumansPublicPhoto <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanIdFace.java.html">HumanIdFace</A>, Serializable {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> serialVersionUID = <FONT ID="IntegerLiteral">1L</FONT>;
+<A NAME="22"></A>    <FONT ID="Public">public</FONT> String humanId;
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> human;
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; publicPhotos;
+<A NAME="25"></A>
+<A NAME="26"></A>    @Id
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> String getHumanId() {
+<A NAME="28"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="29"></A>    }
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumanId(<FONT ID="Final">final</FONT> String humanId__) {
+<A NAME="32"></A>        <FONT ID="This">this</FONT>.humanId = humanId__;
+<A NAME="33"></A>    }
+<A NAME="34"></A>
+<A NAME="35"></A>    @OneToOne(cascade = CascadeType.ALL)
+<A NAME="36"></A>    @PrimaryKeyJoinColumn
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> getHuman() {
+<A NAME="38"></A>        <FONT ID="Return">return</FONT> human;
+<A NAME="39"></A>    }
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHuman(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> human) {
+<A NAME="42"></A>        <FONT ID="This">this</FONT>.human = human;
+<A NAME="43"></A>    }
+<A NAME="44"></A>
+<A NAME="45"></A>    @FIXME(issue=<FONT ID="StringLiteral">"Fetch type should be lazy, check if callers can do list.size() to refresh list."</FONT> +
+<A NAME="46"></A>    <FONT ID="StringLiteral">"The List of photos can be huge so eager isn't practical"</FONT>)
+<A NAME="47"></A>    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; getPublicPhotos() {
+<A NAME="49"></A>        <FONT ID="Return">return</FONT> publicPhotos;
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setPublicPhotos(List&lt;<A HREF="../../../ai/ilikeplaces/entities/PublicPhoto.java.html">PublicPhoto</A>&gt; publicPhotos) {
+<A NAME="53"></A>        <FONT ID="This">this</FONT>.publicPhotos = publicPhotos;
+<A NAME="54"></A>    }
+<A NAME="55"></A>
+<A NAME="56"></A>    @Override
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="58"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"HumansPublicPhoto{"</FONT> +
+<A NAME="59"></A>                <FONT ID="StringLiteral">"humanId='"</FONT> + humanId + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="60"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="61"></A>    }
+<A NAME="62"></A>}
+<A NAME="63"></A></pre>
+</BODY>
+</HTML>

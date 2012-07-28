@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.RuntimeExceptionWrapper (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">RuntimeExceptionWrapper.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/AbstractEjbApplicationRuntimeException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.interceptor.AroundInvoke;
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.interceptor.InvocationContext;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * Created by IntelliJ IDEA.
+<A NAME="11"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="12"></A> * Date: Jan 15, 2010
+<A NAME="13"></A> * Time: 1:14:18 AM
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> RuntimeExceptionWrapper {
+<A NAME="17"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DUE_TO_INTERNAL_ERROR_S_THE_OPERATION_FAILED = <FONT ID="StringLiteral">"Due to Internal Error(s) The Operation FAILED!"</FONT>;
+<A NAME="18"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DUE_TO_CRITICAL_INTERNAL_ERROR_S_THE_OPERATION_FAILED = <FONT ID="StringLiteral">"Due to CRITICAL Internal Error(s) The Operation FAILED!"</FONT>;
+<A NAME="19"></A>
+<A NAME="20"></A>    @AroundInvoke
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> Object wrap(InvocationContext invocation) <FONT ID="Throws">throws</FONT> <A HREF="../../../ai/ilikeplaces/exception/AbstractEjbApplicationRuntimeException.java.html">Exception</A> {
+<A NAME="22"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="23"></A>            <FONT ID="Return">return</FONT> invocation.proceed();
+<A NAME="24"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/exception/AbstractEjbApplicationRuntimeException.java.html">AbstractEjbApplicationRuntimeException</A> e) {
+<A NAME="25"></A>            <FONT ID="If">if</FONT> (invocation.getMethod().getReturnType().isAssignableFrom(<A HREF="../../../ai/ilikeplaces/util/ReturnImpl.java.html">ReturnImpl</A>.<FONT ID="Class">class</FONT>)) {
+<A NAME="26"></A>                <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/ReturnImpl.java.html">ReturnImpl</A>&lt;Object&gt;(e, DUE_TO_INTERNAL_ERROR_S_THE_OPERATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="27"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="28"></A>                <FONT ID="Throw">throw</FONT> e;
+<A NAME="29"></A>            }
+<A NAME="30"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/exception/AbstractEjbApplicationRuntimeException.java.html">RuntimeException</A> e) {<FONT ID="SingleLineComment">//If this interceptor is used, this indicates that any checked exceptions have been ignored by the logic.
+<A NAME="31"></A></FONT>            <FONT ID="If">if</FONT> (invocation.getMethod().getReturnType().isAssignableFrom(<A HREF="../../../ai/ilikeplaces/util/ReturnImpl.java.html">ReturnImpl</A>.<FONT ID="Class">class</FONT>)) {
+<A NAME="32"></A>                <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/ReturnImpl.java.html">ReturnImpl</A>&lt;Object&gt;(e, DUE_TO_INTERNAL_ERROR_S_THE_OPERATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="33"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="34"></A>                <FONT ID="Throw">throw</FONT> e;
+<A NAME="35"></A>            }
+<A NAME="36"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable e) {<FONT ID="SingleLineComment">//If this interceptor is used, this indicates that any checked exceptions have been ignored by the logic.
+<A NAME="37"></A></FONT>            <FONT ID="If">if</FONT> (invocation.getMethod().getReturnType().isAssignableFrom(<A HREF="../../../ai/ilikeplaces/util/ReturnImpl.java.html">ReturnImpl</A>.<FONT ID="Class">class</FONT>)) {
+<A NAME="38"></A>                <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/ReturnImpl.java.html">ReturnImpl</A>&lt;Object&gt;(e, DUE_TO_CRITICAL_INTERNAL_ERROR_S_THE_OPERATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="39"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="40"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/AbstractEjbApplicationRuntimeException.java.html">RuntimeException</A>(e);
+<A NAME="41"></A>            }
+<A NAME="42"></A>        }
+<A NAME="43"></A>    }
+<A NAME="44"></A>}</pre>
+</BODY>
+</HTML>

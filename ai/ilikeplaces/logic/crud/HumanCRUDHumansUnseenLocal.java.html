@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDHumansUnseenLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDHumansUnseenLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">ai.ilikeplaces.logic.validators.unit.DisplayNameString</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">ai.ilikeplaces.logic.validators.unit.Password</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/verify/util/Verify.java.html">ai.ilikeplaces.logic.verify.util.Verify</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.Remote;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="18"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="FormalComment">/**
+<A NAME="21"></A> * @author Ravindranath Akila
+<A NAME="22"></A> */</FONT>
+<A NAME="23"></A>
+<A NAME="24"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="25"></A>@Remote
+<A NAME="26"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> HumanCRUDHumansUnseenLocal {
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> NAME = <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A>.<FONT ID="Class">class</FONT>.getSimpleName();
+<A NAME="29"></A>
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntry(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> humanId, <FONT ID="Final">final</FONT> Long wallId);
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> addEntry(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A>&gt; humanIds, <FONT ID="Final">final</FONT> Long wallId);
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> removeEntry(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> humanId, <FONT ID="Final">final</FONT> Long wallId);
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> List&lt;Wall&gt; readEntries(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> humanId);
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> HumansUnseen getHumansUnseen(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/DisplayNameString.java.html">String</A> humanId);
+<A NAME="39"></A>}
+<A NAME="40"></A>
+<A NAME="41"></A></pre>
+</BODY>
+</HTML>

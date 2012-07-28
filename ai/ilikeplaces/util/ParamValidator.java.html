@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.ParamValidator (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ParamValidator.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="6"></A><FONT ID="Import">import</FONT> net.sf.oval.ConstraintViolation;
+<A NAME="7"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="8"></A><FONT ID="Import">import</FONT> net.sf.oval.exception.ConstraintsViolatedException;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.interceptor.AroundInvoke;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.interceptor.InvocationContext;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.util.*;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * Made only to support simple param validations. Later on, add complex parameter validations.
+<A NAME="16"></A> * A null anyyway should throw an exception
+<A NAME="17"></A> * &lt;p/&gt;
+<A NAME="18"></A> * Created by IntelliJ IDEA.
+<A NAME="19"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="20"></A> * Date: Jan 15, 2010
+<A NAME="21"></A> * Time: 1:14:18 AM
+<A NAME="22"></A> */</FONT>
+<A NAME="23"></A>
+<A NAME="24"></A>@TODO(task = <FONT ID="StringLiteral">"IMPLEMENT RECURRSSIVE VALIDATOR. NOW ITS COMMENTED."</FONT>)
+<A NAME="25"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="26"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ParamValidator {
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PARAMETER_VALIDATION_ERROR_MESSAGE = <FONT ID="StringLiteral">"SORRY! I ENCOUNTERED AN EXCEPTION WITHIN THE PARAMETER VALIDATION INTERCEPTOR. DETAILS ARE AS FOLLOWS. "</FONT>;
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SORRY_PARAMETER_POSITION_NUMBER_GUESSED = <FONT ID="StringLiteral">"SORRY! PARAMETER WITH POSITION NUMBER(GUESSED) "</FONT>;
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_NULL = <FONT ID="StringLiteral">" IS NULL"</FONT>;
+<A NAME="30"></A>
+<A NAME="31"></A>    @AroundInvoke
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> Object validate(<FONT ID="Final">final</FONT> InvocationContext invocation) <FONT ID="Throws">throws</FONT> Exception {
+<A NAME="33"></A>        <FONT ID="Final">final</FONT> Object[] args = invocation.getParameters();
+<A NAME="34"></A>        <FONT ID="Final">final</FONT> List&lt;ConstraintViolation&gt; violations = <FONT ID="New">new</FONT> ArrayList&lt;ConstraintViolation&gt;();
+<A NAME="35"></A>        <FONT ID="Final">final</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="36"></A>
+<A NAME="37"></A>        Object param = <FONT ID="Null">null</FONT>;
+<A NAME="38"></A>
+<A NAME="39"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; args.length; i++) {
+<A NAME="40"></A>            param = args[i];
+<A NAME="41"></A>            <FONT ID="SingleLineComment">//violations.addAll(recursiveCollectionValidator(param, v));
+<A NAME="42"></A></FONT>            <FONT ID="If">if</FONT> (param == <FONT ID="Null">null</FONT>) {
+<A NAME="43"></A>                Loggers.EXCEPTION.error(PARAMETER_VALIDATION_ERROR_MESSAGE + SORRY_PARAMETER_POSITION_NUMBER_GUESSED + (i + <FONT ID="IntegerLiteral">1</FONT>) + IS_NULL);
+<A NAME="44"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NullPointerException((SORRY_PARAMETER_POSITION_NUMBER_GUESSED + (i + <FONT ID="IntegerLiteral">1</FONT>) + IS_NULL));
+<A NAME="45"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="46"></A>                violations.addAll(v.validate(param));
+<A NAME="47"></A>            }
+<A NAME="48"></A>        }
+<A NAME="49"></A>
+<A NAME="50"></A>
+<A NAME="51"></A>        <FONT ID="If">if</FONT> (violations.size() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="52"></A>            Loggers.EXCEPTION.error(PARAMETER_VALIDATION_ERROR_MESSAGE + RefObj.validationMessages(violations));
+<A NAME="53"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(violations);
+<A NAME="54"></A>        }
+<A NAME="55"></A>        <FONT ID="Return">return</FONT> invocation.proceed();
+<A NAME="56"></A>    }
+<A NAME="57"></A>
+<A NAME="58"></A>    @NOTE(note = <FONT ID="StringLiteral">"This could be possibly simplified"</FONT>)
+<A NAME="59"></A>    <FONT ID="Private">private</FONT> List&lt;ConstraintViolation&gt; recursiveCollectionValidator(<FONT ID="Final">final</FONT> Object object, <FONT ID="Final">final</FONT> Validator v) {
+<A NAME="60"></A>        <FONT ID="If">if</FONT> (object <FONT ID="InstanceOf">instanceof</FONT> Collections) {
+<A NAME="61"></A>            <FONT ID="Final">final</FONT> List&lt;ConstraintViolation&gt; violations = <FONT ID="New">new</FONT> ArrayList&lt;ConstraintViolation&gt;();
+<A NAME="62"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Object obj : (Collection) object) {
+<A NAME="63"></A>                violations.addAll(obj <FONT ID="InstanceOf">instanceof</FONT> Collections
+<A NAME="64"></A>                        ? recursiveCollectionValidator(obj, v)
+<A NAME="65"></A>                        : obj <FONT ID="InstanceOf">instanceof</FONT> Arrays
+<A NAME="66"></A>                        ? recurrsiveArrayValidator(obj, v)
+<A NAME="67"></A>                        : v.validate(obj));
+<A NAME="68"></A>            }
+<A NAME="69"></A>            <FONT ID="Return">return</FONT> violations;
+<A NAME="70"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (object <FONT ID="InstanceOf">instanceof</FONT> Arrays) {
+<A NAME="71"></A>            <FONT ID="Return">return</FONT> recurrsiveArrayValidator(object, v);
+<A NAME="72"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="73"></A>            <FONT ID="Return">return</FONT> v.validate(object);
+<A NAME="74"></A>        }
+<A NAME="75"></A>    }
+<A NAME="76"></A>
+<A NAME="77"></A>    @NOTE(note = <FONT ID="StringLiteral">"This could be possibly simplified"</FONT>)
+<A NAME="78"></A>    <FONT ID="Private">private</FONT> List&lt;ConstraintViolation&gt; recurrsiveArrayValidator(<FONT ID="Final">final</FONT> Object object, <FONT ID="Final">final</FONT> Validator v) {
+<A NAME="79"></A>        <FONT ID="If">if</FONT> (object <FONT ID="InstanceOf">instanceof</FONT> Arrays) {
+<A NAME="80"></A>            <FONT ID="Final">final</FONT> List&lt;ConstraintViolation&gt; violations = <FONT ID="New">new</FONT> ArrayList&lt;ConstraintViolation&gt;();
+<A NAME="81"></A>            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> Object obj : (Object[]) object) {
+<A NAME="82"></A>                violations.addAll(obj <FONT ID="InstanceOf">instanceof</FONT> Arrays
+<A NAME="83"></A>                        ? recurrsiveArrayValidator(obj, v)
+<A NAME="84"></A>                        : obj <FONT ID="InstanceOf">instanceof</FONT> Collections
+<A NAME="85"></A>                        ? recursiveCollectionValidator(obj, v)
+<A NAME="86"></A>                        : v.validate(obj));
+<A NAME="87"></A>            }
+<A NAME="88"></A>            <FONT ID="Return">return</FONT> violations;
+<A NAME="89"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (object <FONT ID="InstanceOf">instanceof</FONT> Collections) {
+<A NAME="90"></A>            <FONT ID="Return">return</FONT> recurrsiveArrayValidator(object, v);
+<A NAME="91"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="92"></A>            <FONT ID="Return">return</FONT> v.validate(object);
+<A NAME="93"></A>        }
+<A NAME="94"></A>
+<A NAME="95"></A>    }
+<A NAME="96"></A>
+<A NAME="97"></A>
+<A NAME="98"></A>}</pre>
+</BODY>
+</HTML>

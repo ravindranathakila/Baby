@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.hazelcast.HazelcastPrivateEventMapStore (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HazelcastPrivateEventMapStore.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.hazelcast;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/AbstractHCMapStore.java.html">ai.ilikeplaces.util.cache.AbstractHCMapStore</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A> * Created by IntelliJ IDEA.
+<A NAME="8"></A> * User: ravindranathakila
+<A NAME="9"></A> * Date: 7/3/12
+<A NAME="10"></A> * Time: 10:40 PM
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HazelcastPrivateEventMapStore <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/AbstractHCMapStore.java.html">AbstractHCMapStore</A> {
+<A NAME="13"></A>
+<A NAME="14"></A>    <FONT ID="Private">private</FONT> Class&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; type = <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>.<FONT ID="Class">class</FONT>;
+<A NAME="15"></A>    ;
+<A NAME="16"></A>
+<A NAME="17"></A>    @Override
+<A NAME="18"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> store(Object o, Object o1) {
+<A NAME="19"></A>
+<A NAME="20"></A>        <FONT ID="Super">super</FONT>.store(o, o1, type);
+<A NAME="21"></A>    }
+<A NAME="22"></A>
+<A NAME="23"></A>    @Override
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> delete(Object o) {
+<A NAME="25"></A>        <FONT ID="Super">super</FONT>.delete(o, type);
+<A NAME="26"></A>    }
+<A NAME="27"></A>
+<A NAME="28"></A>
+<A NAME="29"></A>    @Override
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> Object load(Object o) {
+<A NAME="31"></A>        <FONT ID="Return">return</FONT> <FONT ID="Super">super</FONT>.load(o, type);
+<A NAME="32"></A>    }
+<A NAME="33"></A>
+<A NAME="34"></A>
+<A NAME="35"></A>}
+<A NAME="36"></A></pre>
+</BODY>
+</HTML>

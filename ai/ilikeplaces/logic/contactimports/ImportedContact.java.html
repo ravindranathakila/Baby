@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.contactimports.ImportedContact (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ImportedContact.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.contactimports;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumanEquals.java.html">ai.ilikeplaces.entities.HumanEquals</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * Created by IntelliJ IDEA.
+<A NAME="9"></A> * User: Ravindranath Akila
+<A NAME="10"></A> * Date: 8/17/11
+<A NAME="11"></A> * Time: 10:09 PM
+<A NAME="12"></A> */</FONT>
+<A NAME="13"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ImportedContact <FONT ID="Extends">extends</FONT> <A HREF="../../../../ai/ilikeplaces/entities/HumanEquals.java.html">HumanEquals</A> {
+<A NAME="14"></A>
+<A NAME="15"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EMPTY = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="16"></A>    String email;
+<A NAME="17"></A>
+<A NAME="18"></A>    String fullName;
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> String getEmail() {
+<A NAME="21"></A>        <FONT ID="Return">return</FONT> email;
+<A NAME="22"></A>    }
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> setEmail(<FONT ID="Final">final</FONT> String email) {
+<A NAME="25"></A>        <FONT ID="This">this</FONT>.email = email;
+<A NAME="26"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="27"></A>    }
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> setEmailR(<FONT ID="Final">final</FONT> String email) {
+<A NAME="29"></A>        <FONT ID="This">this</FONT>.email = email;
+<A NAME="30"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="31"></A>    }
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> String getFullName() {
+<A NAME="34"></A>        <FONT ID="Return">return</FONT> fullName;
+<A NAME="35"></A>    }
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> String getFullNameAsEmptyIfNull() {
+<A NAME="38"></A>        <FONT ID="Return">return</FONT> fullName != <FONT ID="Null">null</FONT> ? fullName : EMPTY;
+<A NAME="39"></A>    }
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> setFullName(<FONT ID="Final">final</FONT> String fullName) {
+<A NAME="42"></A>        <FONT ID="This">this</FONT>.fullName = fullName;
+<A NAME="43"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="44"></A>    }
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A> setFullNameR(<FONT ID="Final">final</FONT> String fullName) {
+<A NAME="46"></A>        <FONT ID="This">this</FONT>.fullName = fullName;
+<A NAME="47"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="48"></A>    }
+<A NAME="49"></A>
+<A NAME="50"></A>    @Override
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> String getHumanId() {
+<A NAME="52"></A>        <FONT ID="Return">return</FONT> email;
+<A NAME="53"></A>    }
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> getAsHumanId() {
+<A NAME="56"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(email);
+<A NAME="57"></A>    }
+<A NAME="58"></A>}
+<A NAME="59"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,324 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.ServletLogin (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ServletLogin.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">ai.ilikeplaces.entities.HumansAuthentication</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/ConstructorInvokationException.java.html">ai.ilikeplaces.exception.ConstructorInvokationException</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">ai.ilikeplaces.logic.validators.unit.Password</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/security/SingletonHashing.java.html">ai.ilikeplaces.security.SingletonHashing</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">ai.ilikeplaces.security.face.SingletonHashingRemote</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="19"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">ai.ilikeplaces.util.SessionBoundBadRefWrapper</A>;
+<A NAME="20"></A><FONT ID="Import">import</FONT> net.sf.oval.exception.ConstraintsViolatedException;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="23"></A>
+<A NAME="24"></A><FONT ID="Import">import</FONT> javax.naming.Context;
+<A NAME="25"></A><FONT ID="Import">import</FONT> javax.naming.InitialContext;
+<A NAME="26"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="27"></A><FONT ID="Import">import</FONT> javax.servlet.ServletException;
+<A NAME="28"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServlet;
+<A NAME="29"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="30"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="31"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="32"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="33"></A><FONT ID="Import">import</FONT> java.util.Enumeration;
+<A NAME="34"></A><FONT ID="Import">import</FONT> java.util.Properties;
+<A NAME="35"></A>
+<A NAME="36"></A><FONT ID="FormalComment">/**
+<A NAME="37"></A> * @author Ravindranath Akila
+<A NAME="38"></A> */</FONT>
+<A NAME="39"></A>
+<A NAME="40"></A>@FIXME(issue = <FONT ID="StringLiteral">"XSS"</FONT>)
+<A NAME="41"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="42"></A>@TODO(task = <FONT ID="StringLiteral">"USE A STATIC METHOD TO GET THE LOGGED ON USER INSTANCE."</FONT>)
+<A NAME="43"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ServletLogin <FONT ID="Extends">extends</FONT> HttpServlet {
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="FormalComment">/**
+<A NAME="46"></A>     * Stateful Session Bean Containing User Data
+<A NAME="47"></A>     */</FONT>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> String HumanUser = HumanUserLocal.NAME;
+<A NAME="49"></A>    <FONT ID="FormalComment">/**
+<A NAME="50"></A>     * Username, an email address to which the reset password link can be mailed
+<A NAME="51"></A>     */</FONT>
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> String Username = <FONT ID="StringLiteral">"Username"</FONT>;
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="FormalComment">/**
+<A NAME="55"></A>     * Password hash
+<A NAME="56"></A>     */</FONT>
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> String Password = <FONT ID="StringLiteral">"Password"</FONT>;
+<A NAME="58"></A>
+<A NAME="59"></A>    <FONT ID="Final">final</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/servlets/ServletLogin.java.html">ServletLogin</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="60"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Properties p_ = <FONT ID="New">new</FONT> Properties();
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> Context context = <FONT ID="Null">null</FONT>;
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A> singletonHashingRemote = <FONT ID="Null">null</FONT>;
+<A NAME="63"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HEADER_REFERER = <FONT ID="StringLiteral">"Referer"</FONT>;
+<A NAME="64"></A>
+<A NAME="65"></A>    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/servlets/PageFace.java.html">PageFace</A> home = Page.home;
+<A NAME="66"></A>    <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/servlets/PageFace.java.html">PageFace</A> signup = Page.signup;
+<A NAME="67"></A>
+<A NAME="68"></A>    @Override
+<A NAME="69"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="70"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init() {
+<A NAME="71"></A>        <FONT ID="Boolean">boolean</FONT> initializeFailed = <FONT ID="True">true</FONT>;
+<A NAME="72"></A>        <FONT ID="Final">final</FONT> StringBuilder log = <FONT ID="New">new</FONT> StringBuilder();
+<A NAME="73"></A>        init:
+<A NAME="74"></A>        {
+<A NAME="75"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="76"></A>                p_.put(Context.INITIAL_CONTEXT_FACTORY, <FONT ID="StringLiteral">"org.apache.openejb.client.LocalInitialContextFactory"</FONT>);
+<A NAME="77"></A>                context = <FONT ID="New">new</FONT> InitialContext(p_);
+<A NAME="78"></A>
+<A NAME="79"></A>                singletonHashingRemote = (<A HREF="../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A>) context.lookup(<FONT ID="StringLiteral">"SingletonHashingLocal"</FONT>);
+<A NAME="80"></A>                <FONT ID="If">if</FONT> (singletonHashingRemote == <FONT ID="Null">null</FONT>) {
+<A NAME="81"></A>                    log.append(<FONT ID="StringLiteral">"\nVARIABLE singletonHashingRemote IS NULL! "</FONT>);
+<A NAME="82"></A>                    log.append(singletonHashingRemote);
+<A NAME="83"></A>                    <FONT ID="Break">break</FONT> init;
+<A NAME="84"></A>                }
+<A NAME="85"></A>            } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="86"></A>                log.append(<FONT ID="StringLiteral">"\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!"</FONT>);
+<A NAME="87"></A>                logger.info(<FONT ID="StringLiteral">"\nCOULD NOT INITIALIZE SIGNUP SERVLET DUE TO A NAMING EXCEPTION!"</FONT>, ex);
+<A NAME="88"></A>                <FONT ID="Break">break</FONT> init;
+<A NAME="89"></A>            }
+<A NAME="90"></A>
+<A NAME="91"></A>            <FONT ID="FormalComment">/**
+<A NAME="92"></A>             *
+<A NAME="93"></A>             * break. Do not let this statement be reachable if initialization
+<A NAME="94"></A>             * failed. Instead, break immediately where initialization failed.
+<A NAME="95"></A>             * At this point, we set the initializeFailed to false and thereby,
+<A NAME="96"></A>             * allow initialization of an instance
+<A NAME="97"></A>             */</FONT>
+<A NAME="98"></A>            initializeFailed = <FONT ID="False">false</FONT>;
+<A NAME="99"></A>        }
+<A NAME="100"></A>        <FONT ID="If">if</FONT> (initializeFailed) {
+<A NAME="101"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/ConstructorInvokationException.java.html">ConstructorInvokationException</A>(log.toString());
+<A NAME="102"></A>        }
+<A NAME="103"></A>    }
+<A NAME="104"></A>
+<A NAME="105"></A>    <FONT ID="FormalComment">/**
+<A NAME="106"></A>     * Processes requests for both HTTP &lt;code&gt;GET&lt;/code&gt; and &lt;code&gt;POST&lt;/code&gt; methods.
+<A NAME="107"></A>     *
+<A NAME="108"></A>     * @param request__
+<A NAME="109"></A>     * @param response__
+<A NAME="110"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="111"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="112"></A>     */</FONT>
+<A NAME="113"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> HttpServletRequest request__, <FONT ID="Final">final</FONT> HttpServletResponse response__)
+<A NAME="114"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="115"></A>
+<A NAME="116"></A>        response__.setContentType(<FONT ID="StringLiteral">"text/html;charset=UTF-8"</FONT>);
+<A NAME="117"></A>
+<A NAME="118"></A>        <FONT ID="Final">final</FONT> HttpSession userSession_;
+<A NAME="119"></A>        handleHttpSession:
+<A NAME="120"></A>        {
+<A NAME="121"></A>            <FONT ID="FormalComment">/**
+<A NAME="122"></A>             * Remove any redundant session
+<A NAME="123"></A>             */</FONT>
+<A NAME="124"></A>            <FONT ID="If">if</FONT> (request__.getSession(<FONT ID="False">false</FONT>) != <FONT ID="Null">null</FONT>) {
+<A NAME="125"></A>                request__.getSession(<FONT ID="False">false</FONT>).invalidate();
+<A NAME="126"></A>            }
+<A NAME="127"></A>
+<A NAME="128"></A>            <FONT ID="FormalComment">/**
+<A NAME="129"></A>             * Make user session anyway as he came to log in
+<A NAME="130"></A>             */</FONT>
+<A NAME="131"></A>            userSession_ = request__.getSession();
+<A NAME="132"></A>
+<A NAME="133"></A>
+<A NAME="134"></A>            <FONT ID="FormalComment">/**
+<A NAME="135"></A>             * Set a timeout compatible with the stateful session bean handling user
+<A NAME="136"></A>             */</FONT>
+<A NAME="137"></A>            userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"UserSessionIdleInterval"</FONT>)));
+<A NAME="138"></A>        }
+<A NAME="139"></A>
+<A NAME="140"></A>
+<A NAME="141"></A>        <FONT ID="Final">final</FONT> Enumeration enumerated = request__.getParameterNames();
+<A NAME="142"></A>        logger.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletLogin.0006"</FONT>));
+<A NAME="143"></A>        <FONT ID="While">while</FONT> (enumerated.hasMoreElements()) {
+<A NAME="144"></A>            <FONT ID="Final">final</FONT> String param = (String) enumerated.nextElement();
+<A NAME="145"></A>            logger.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletLogin.0007"</FONT>), param);
+<A NAME="146"></A>            logger.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletLogin.0008"</FONT>), request__.getParameter(param).length());
+<A NAME="147"></A>        }
+<A NAME="148"></A>        doLogin:
+<A NAME="149"></A>        {
+<A NAME="150"></A>            <FONT ID="If">if</FONT> (!isSignOnPermitted()) {
+<A NAME="151"></A>                response__.sendRedirect(request__.getRequestURI());
+<A NAME="152"></A>                <FONT ID="Break">break</FONT> doLogin;
+<A NAME="153"></A>            }
+<A NAME="154"></A>            <FONT ID="If">if</FONT> (userSession_.getAttribute(HumanUser) == <FONT ID="Null">null</FONT>) {
+<A NAME="155"></A>                <FONT ID="MultiLineComment">/*Ok the session does not have the bean, initialize it with the user with email id and password*/</FONT>
+<A NAME="156"></A>                <FONT ID="If">if</FONT> (request__.getParameter(Username) != <FONT ID="Null">null</FONT> &amp;&amp; request__.getParameter(Password) != <FONT ID="Null">null</FONT>) {<FONT ID="MultiLineComment">/*We need both these to sign in a user*/</FONT>
+<A NAME="157"></A>                    <FONT ID="Try">try</FONT> {
+<A NAME="158"></A>                        <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">Human</A> existingUser = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(request__.getParameter(Username));
+<A NAME="159"></A>                        <FONT ID="If">if</FONT> (existingUser != <FONT ID="Null">null</FONT> &amp;&amp; existingUser.getHumanAlive()) {<FONT ID="MultiLineComment">/*Ok user name valid but now we check for password*/</FONT>
+<A NAME="160"></A>                            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">HumansAuthentication</A> humansAuthentications = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(request__.getParameter(Username))).returnValue();
+<A NAME="161"></A>
+<A NAME="162"></A>                            <FONT ID="If">if</FONT> (humansAuthentications.getHumanAuthenticationHash().equals(singletonHashingRemote.getHash(request__.getParameter(Password), humansAuthentications.getHumanAuthenticationSalt()))) {
+<A NAME="163"></A>                                <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> humanUserLocal = (<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>) context.lookup(HumanUserLocal.NAME);
+<A NAME="164"></A>                                humanUserLocal.setHumanUserId(request__.getParameter(Username));
+<A NAME="165"></A>                                userSession_.setAttribute(HumanUser, (<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">SessionBoundBadRefWrapper</A>&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;(humanUserLocal, userSession_)));
+<A NAME="166"></A>
+<A NAME="167"></A>                                logger.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletLogin.0001"</FONT>) + ((<A HREF="../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">SessionBoundBadRefWrapper</A>&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;) userSession_.getAttribute(HumanUser)).getBoundInstance().getHumanUserId());
+<A NAME="168"></A>
+<A NAME="169"></A>                                <FONT ID="Final">final</FONT> String referer = request__.getHeader(HEADER_REFERER);
+<A NAME="170"></A>                                response__.sendRedirect(!referer.contains(<FONT ID="StringLiteral">"signup"</FONT>) ? referer : home.getURL());
+<A NAME="171"></A>
+<A NAME="172"></A>                                <FONT ID="Break">break</FONT> doLogin;<FONT ID="MultiLineComment">/*This is unnecessary but lets not leave chance for introducing bugs*/</FONT>
+<A NAME="173"></A>                            } <FONT ID="Else">else</FONT> {<FONT ID="MultiLineComment">/*Ok password wrong or not activated. What do we do with this guy? First lets make his session object null*/</FONT>
+<A NAME="174"></A>                                userSession_.invalidate();
+<A NAME="175"></A>                                logger.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletLogin.0002"</FONT>));
+<A NAME="176"></A>                                Loggers.USER.info(existingUser.getHumanId() + <FONT ID="StringLiteral">" entered wrong password."</FONT>);
+<A NAME="177"></A>                                response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+<A NAME="178"></A>                                <FONT ID="Break">break</FONT> doLogin;
+<A NAME="179"></A>                            }
+<A NAME="180"></A>                        } <FONT ID="Else">else</FONT> {<FONT ID="MultiLineComment">/*There is no such user. Ask if he forgot username or whether to create a new account :)*/</FONT>
+<A NAME="181"></A>                            logger.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletLogin.0003"</FONT>));
+<A NAME="182"></A>                            response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+<A NAME="183"></A>                            <FONT ID="Break">break</FONT> doLogin;
+<A NAME="184"></A>                        }
+<A NAME="185"></A>
+<A NAME="186"></A>                    } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/exception/ConstructorInvokationException.java.html">Exception</A> ex) {
+<A NAME="187"></A>                        logger.error(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletLogin.0004"</FONT>), ex);
+<A NAME="188"></A>                        response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+<A NAME="189"></A>                        <FONT ID="Break">break</FONT> doLogin;
+<A NAME="190"></A>                    }
+<A NAME="191"></A>                } <FONT ID="Else">else</FONT> {<FONT ID="MultiLineComment">/*Why was the user sent here without either username or password or both(by the page)? Send him back!*/</FONT>
+<A NAME="192"></A>                    logger.warn(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletLogin.0009"</FONT>) + request__.getRequestURL().toString());
+<A NAME="193"></A>                    response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+<A NAME="194"></A>                    <FONT ID="Break">break</FONT> doLogin;
+<A NAME="195"></A>                }
+<A NAME="196"></A>
+<A NAME="197"></A>            } <FONT ID="Else">else</FONT> {<FONT ID="MultiLineComment">/*Why did the user come to this page if he was already logged on? Send him back!*/</FONT>
+<A NAME="198"></A>                logger.info(RBGet.logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletLogin.0005"</FONT>) + ((<A HREF="../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">SessionBoundBadRefWrapper</A>&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;) userSession_.getAttribute(HumanUser)).getBoundInstance().getHumanUserId());
+<A NAME="199"></A>                response__.sendRedirect(request__.getHeader(HEADER_REFERER));
+<A NAME="200"></A>            }
+<A NAME="201"></A>        }
+<A NAME="202"></A>    }
+<A NAME="203"></A>
+<A NAME="204"></A>    <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> isSignOnPermitted() {
+<A NAME="205"></A>        <FONT ID="Return">return</FONT> RBGet.getGlobalConfigKey(<FONT ID="StringLiteral">"signOnEnabled"</FONT>) != <FONT ID="Null">null</FONT> &amp;&amp; RBGet.getGlobalConfigKey(<FONT ID="StringLiteral">"signOnEnabled"</FONT>).equals(<FONT ID="StringLiteral">"true"</FONT>);
+<A NAME="206"></A>    }
+<A NAME="207"></A>
+<A NAME="208"></A>
+<A NAME="209"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> isCorrectPassword(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> String password) {
+<A NAME="210"></A>        <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isCorrect;
+<A NAME="211"></A>        <FONT ID="If">if</FONT> (humanId.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="212"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">HumansAuthentication</A> humansAuthentications = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(humanId).returnValue();
+<A NAME="213"></A>            isCorrect = humansAuthentications.getHumanAuthenticationHash().equals(DB.getSingletonHashingFaceLocal(<FONT ID="False">false</FONT>).getHash(password, humansAuthentications.getHumanAuthenticationSalt()));
+<A NAME="214"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="215"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(humanId.getViolations());
+<A NAME="216"></A>        }
+<A NAME="217"></A>        <FONT ID="Return">return</FONT> isCorrect;
+<A NAME="218"></A>    }
+<A NAME="219"></A>
+<A NAME="220"></A>
+<A NAME="221"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; changePassword(<FONT ID="Final">final</FONT> HttpSession httpSession, <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A> currentPass, <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A> newPass) {
+<A NAME="222"></A>        <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; returnVal;
+<A NAME="223"></A>        <FONT ID="If">if</FONT> (humanId.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="224"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(humanId.getViolations());
+<A NAME="225"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (currentPass.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="226"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(currentPass.getViolations());
+<A NAME="227"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (newPass.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="228"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(newPass.getViolations());
+<A NAME="229"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="230"></A>            returnVal = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doUHumanPassword(humanId, currentPass, newPass);
+<A NAME="231"></A>            <FONT ID="If">if</FONT> (returnVal.returnStatus() == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; returnVal.returnValue()) {
+<A NAME="232"></A>                Loggers.USER.info(<FONT ID="StringLiteral">"Password changed for user "</FONT> + humanId.getObj());
+<A NAME="233"></A>                {
+<A NAME="234"></A>                    Loggers.USER.info(<FONT ID="StringLiteral">"Attempting to invalidating session due to password change for user "</FONT> + humanId.getObj());
+<A NAME="235"></A>                    <FONT ID="If">if</FONT> (httpSession != <FONT ID="Null">null</FONT>) {
+<A NAME="236"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="237"></A>                            httpSession.invalidate();
+<A NAME="238"></A>                            Loggers.USER.info(<FONT ID="StringLiteral">"Successfully to invalidated session due to password change for user "</FONT> + humanId.getObj());
+<A NAME="239"></A>                        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/exception/ConstructorInvokationException.java.html">Exception</A> e) {
+<A NAME="240"></A>                            Loggers.USER.info(<FONT ID="StringLiteral">"FAILED to invalidated session due to password change for user "</FONT> + humanId.getObj());
+<A NAME="241"></A>                            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, e);
+<A NAME="242"></A>                        }
+<A NAME="243"></A>                    }
+<A NAME="244"></A>
+<A NAME="245"></A>                }
+<A NAME="246"></A>            }
+<A NAME="247"></A>        }
+<A NAME="248"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="249"></A>    }
+<A NAME="250"></A>
+<A NAME="251"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; changePassword(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A> newPass) {
+<A NAME="252"></A>        <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; returnVal;
+<A NAME="253"></A>        <FONT ID="If">if</FONT> (humanId.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="254"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(humanId.getViolations());
+<A NAME="255"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (newPass.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="256"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(newPass.getViolations());
+<A NAME="257"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="258"></A>            returnVal = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doUHumanPassword(humanId, newPass);
+<A NAME="259"></A>            <FONT ID="If">if</FONT> (returnVal.returnStatus() == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; returnVal.returnValue()) {
+<A NAME="260"></A>                Loggers.USER.info(<FONT ID="StringLiteral">"Password changed for user "</FONT> + humanId.getObj());
+<A NAME="261"></A>            }
+<A NAME="262"></A>        }
+<A NAME="263"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="264"></A>    }
+<A NAME="265"></A>
+<A NAME="266"></A>
+<A NAME="267"></A>    <FONT ID="FormalComment">/**
+<A NAME="268"></A>     * Handles the HTTP &lt;code&gt;GET&lt;/code&gt; method.
+<A NAME="269"></A>     *
+<A NAME="270"></A>     * @param request  servlet request
+<A NAME="271"></A>     * @param response servlet response
+<A NAME="272"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="273"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="274"></A>     */</FONT>
+<A NAME="275"></A>    @Override
+<A NAME="276"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> doGet(<FONT ID="Final">final</FONT> HttpServletRequest request, <FONT ID="Final">final</FONT> HttpServletResponse response)
+<A NAME="277"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="278"></A>        processRequest(request, response);
+<A NAME="279"></A>    }
+<A NAME="280"></A>
+<A NAME="281"></A>    <FONT ID="FormalComment">/**
+<A NAME="282"></A>     * Handles the HTTP &lt;code&gt;POST&lt;/code&gt; method.
+<A NAME="283"></A>     *
+<A NAME="284"></A>     * @param request  servlet request
+<A NAME="285"></A>     * @param response servlet response
+<A NAME="286"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="287"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="288"></A>     */</FONT>
+<A NAME="289"></A>    @Override
+<A NAME="290"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> doPost(<FONT ID="Final">final</FONT> HttpServletRequest request, <FONT ID="Final">final</FONT> HttpServletResponse response)
+<A NAME="291"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="292"></A>        processRequest(request, response);
+<A NAME="293"></A>    }
+<A NAME="294"></A>
+<A NAME="295"></A>    <FONT ID="FormalComment">/**
+<A NAME="296"></A>     * Returns a short description of the servlet.
+<A NAME="297"></A>     *
+<A NAME="298"></A>     * @return a String containing servlet description
+<A NAME="299"></A>     */</FONT>
+<A NAME="300"></A>    @Override
+<A NAME="301"></A>    <FONT ID="Public">public</FONT> String getServletInfo() {
+<A NAME="302"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"Nothing interesting here!"</FONT>;
+<A NAME="303"></A>    }<FONT ID="SingleLineComment">// &lt;/editor-fold&gt;
+<A NAME="304"></A></FONT>}
+<A NAME="305"></A></pre>
+</BODY>
+</HTML>

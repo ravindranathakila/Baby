@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.cache.SmartCache2 (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SmartCache2.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.cache;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="4"></A><FONT ID="Import">import</FONT> java.util.WeakHashMap;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A> * Created by IntelliJ IDEA.
+<A NAME="8"></A> * User: Ravindranath Akila
+<A NAME="9"></A> * Date: 10/9/11
+<A NAME="10"></A> * Time: 10:45 AM
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SmartCache2&lt;K, V, R&gt; {
+<A NAME="13"></A>
+<A NAME="14"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> IllegalAccessError ILLEGAL_ACCESS_ERROR = <FONT ID="New">new</FONT> IllegalAccessError(<FONT ID="StringLiteral">"RECOVERY MECHANISM NOT SPECIFIED!"</FONT>);
+<A NAME="15"></A>    <FONT ID="Public">public</FONT> Map&lt;K, V&gt; MAP = <FONT ID="New">new</FONT> WeakHashMap&lt;K, V&gt;();
+<A NAME="16"></A>
+<A NAME="17"></A>    <FONT ID="Private">private</FONT> RecoverWith&lt;K, V, R&gt; recoverWith = <FONT ID="Null">null</FONT>;
+<A NAME="18"></A>
+<A NAME="19"></A>    <FONT ID="Public">public</FONT> SmartCache2() {
+<A NAME="20"></A>    }
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="Public">public</FONT> SmartCache2(<FONT ID="Final">final</FONT> RecoverWith&lt;K, V, R&gt; recoverWith) {
+<A NAME="23"></A>        <FONT ID="This">this</FONT>.recoverWith = recoverWith;
+<A NAME="24"></A>    }
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> V get(<FONT ID="Final">final</FONT> K key, <FONT ID="Final">final</FONT> R runtimeArgument) {
+<A NAME="27"></A>        <FONT ID="If">if</FONT> (recoverWith == <FONT ID="Null">null</FONT>) {
+<A NAME="28"></A>            <FONT ID="Throw">throw</FONT> ILLEGAL_ACCESS_ERROR;
+<A NAME="29"></A>        }
+<A NAME="30"></A>        V returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="31"></A>
+<A NAME="32"></A>        <FONT ID="If">if</FONT> (MAP.containsKey(key) &amp;&amp; returnVal != <FONT ID="Null">null</FONT>) {
+<A NAME="33"></A>            <FONT ID="SingleLineComment">//Yeah, don't mes with this if-else. Beats the logic crap out of you
+<A NAME="34"></A></FONT>        } <FONT ID="Else">else</FONT> {
+<A NAME="35"></A>            MAP.put(key, recoverWith.getValue(key, runtimeArgument));
+<A NAME="36"></A>        }
+<A NAME="37"></A>
+<A NAME="38"></A>        returnVal = MAP.get(key);
+<A NAME="39"></A>
+<A NAME="40"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="41"></A>    }
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> V get(<FONT ID="Final">final</FONT> K key, <FONT ID="Final">final</FONT> RecoverWith&lt;K, V, R&gt; recoverWith) {
+<A NAME="44"></A>        V returnVal = MAP.get(key);
+<A NAME="45"></A>
+<A NAME="46"></A>        <FONT ID="If">if</FONT> (MAP.containsKey(key) &amp;&amp; returnVal != <FONT ID="Null">null</FONT>) {
+<A NAME="47"></A>            <FONT ID="SingleLineComment">//Yeah, don't mes with this if-else. Beats the logic crap out of you
+<A NAME="48"></A></FONT>        } <FONT ID="Else">else</FONT> {
+<A NAME="49"></A>            MAP.put(key, recoverWith.getValue(key, <FONT ID="Null">null</FONT>));
+<A NAME="50"></A>        }
+<A NAME="51"></A>
+<A NAME="52"></A>        returnVal = MAP.get(key);
+<A NAME="53"></A>
+<A NAME="54"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> invalidate(<FONT ID="Final">final</FONT> K key) {
+<A NAME="58"></A>        MAP.remove(key);
+<A NAME="59"></A>    }
+<A NAME="60"></A>
+<A NAME="61"></A>    <FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> RecoverWith&lt;K, V, R&gt; {
+<A NAME="62"></A>        <FONT ID="Public">public</FONT> V getValue(<FONT ID="Final">final</FONT> K k, <FONT ID="Final">final</FONT> R runtimeArgument);
+<A NAME="63"></A>    }
+<A NAME="64"></A>}
+<A NAME="65"></A></pre>
+</BODY>
+</HTML>

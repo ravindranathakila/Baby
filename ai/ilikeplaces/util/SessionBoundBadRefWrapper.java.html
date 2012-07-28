@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.SessionBoundBadRefWrapper (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SessionBoundBadRefWrapper.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.MethodPreamble;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/servlets/ServletLogin.java.html">ai.ilikeplaces.servlets.ServletLogin</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.ejb.NoSuchEJBException;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSessionBindingEvent;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSessionBindingListener;
+<A NAME="14"></A><FONT ID="Import">import</FONT> java.lang.reflect.InvocationTargetException;
+<A NAME="15"></A><FONT ID="Import">import</FONT> java.lang.reflect.Method;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.util.Observable;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.util.Observer;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="FormalComment">/**
+<A NAME="20"></A> * Initially this class was designed to help the nosuchejb exception bein thrown when the session
+<A NAME="21"></A> * bound variable is attempted to be removed, but has already been discarded by the container.
+<A NAME="22"></A> *
+<A NAME="23"></A> * Since the role of this class is confusing, and also hard to remember, they have been enlisted below.
+<A NAME="24"></A> *
+<A NAME="25"></A> * 1. Mainly, to maintain the EJB session with the client(http) session.
+<A NAME="26"></A> * 2. EJB can die or be disked out(passivated). HTTP session will be active due ot
+<A NAME="27"></A> *
+<A NAME="28"></A> * @author Ravindranath Akila
+<A NAME="29"></A> */</FONT>
+<A NAME="30"></A>
+<A NAME="31"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="32"></A>@FIXME(issue = <FONT ID="StringLiteral">"MANY"</FONT>,
+<A NAME="33"></A>        issues =
+<A NAME="34"></A>                {<FONT ID="StringLiteral">"This class can be broken in several. One for suppressing NoSuchEJBException, one for Notifications and one for httpsessionbinding. Kind of in the form of a pipeline. If this is Pipe and notification needy classes are A &amp; B, then Pipe pipelines notifications between A and B."</FONT>,
+<A NAME="35"></A>                        <FONT ID="StringLiteral">"i18n"</FONT>})
+<A NAME="36"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SessionBoundBadRefWrapper&lt;T&gt; <FONT ID="Implements">implements</FONT> HttpSessionBindingListener, Observer {
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> T boundInstance;
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> HttpSession bindingInstance;
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> isAlive = <FONT ID="False">false</FONT>;
+<A NAME="43"></A>
+<A NAME="44"></A>    @FIXME(issue = <FONT ID="StringLiteral">"You will have to verify what happens if a huge amount of session timeouts happen\n"</FONT> +
+<A NAME="45"></A>            <FONT ID="StringLiteral">"This was made static to avoid a huge amount of references. i.e. Reference per user!"</FONT>)
+<A NAME="46"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/util/SessionBoundBadRefWrapper.java.html">SessionBoundBadRefWrapper</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="47"></A>
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> SessionBoundBadRefWrapper(<FONT ID="Final">final</FONT> T theObjectWhichShouldBeBound__, <FONT ID="Final">final</FONT> HttpSession theObjectWhichIsBoundTo__) {
+<A NAME="50"></A>        <FONT ID="This">this</FONT>.boundInstance = theObjectWhichShouldBeBound__;
+<A NAME="51"></A>        <FONT ID="This">this</FONT>.bindingInstance = theObjectWhichIsBoundTo__;
+<A NAME="52"></A>        registerAsLiveStatusObserver();
+<A NAME="53"></A>        <FONT ID="This">this</FONT>.isAlive = <FONT ID="True">true</FONT>;
+<A NAME="54"></A>    }
+<A NAME="55"></A>
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> <FONT ID="Synchronized">synchronized</FONT> T getBoundInstance(){
+<A NAME="57"></A>        <FONT ID="Return">return</FONT> boundInstance;
+<A NAME="58"></A>    }
+<A NAME="59"></A>
+<A NAME="60"></A><FONT ID="SingleLineComment">//    @FIXME(issue = "isAlive",
+<A NAME="61"></A></FONT><FONT ID="SingleLineComment">//            issues = {"As the caller did not register as an observer, he has no right to call isAlive so we return false anyway. But what happens then?",
+<A NAME="62"></A></FONT><FONT ID="SingleLineComment">//                    "Could an enum be used?"})
+<A NAME="63"></A></FONT><FONT ID="SingleLineComment">//    public SessionBoundBadRefWrapper(final T theObjectWhichShouldBeBound__, final HttpSession theObjectWhichIsBoundTo__) {
+<A NAME="64"></A></FONT><FONT ID="SingleLineComment">//        this.boundInstance = theObjectWhichShouldBeBound__;
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//        this.bindingInstance = theObjectWhichIsBoundTo__;
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//        this.isAlive = false;
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="68"></A></FONT>
+<A NAME="69"></A>    @MethodPreamble(description = <FONT ID="StringLiteral">"This return will be a new reference so no risk of caller modifying live state"</FONT>, authors = {<FONT ID="StringLiteral">"Ravindranth Akila"</FONT>}, callBackModules = {})
+<A NAME="70"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> isAlive() {
+<A NAME="71"></A>        <FONT ID="Return">return</FONT> isAlive;
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    @Override
+<A NAME="75"></A>    @FIXME(issue = <FONT ID="StringLiteral">"This class should be a pipeline between the two objects expecting notification. Split split!!!"</FONT>)
+<A NAME="76"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> update(Observable o, Object dying) {
+<A NAME="77"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/SmartLogger.java.html">SmartLogger</A> smartLogger = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, <FONT ID="StringLiteral">"Update received on observable"</FONT>, <FONT ID="IntegerLiteral">60000</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="78"></A>        <FONT ID="If">if</FONT> (dying <FONT ID="InstanceOf">instanceof</FONT> Boolean &amp;&amp; (Boolean) dying) {
+<A NAME="79"></A>            <FONT ID="This">this</FONT>.isAlive = <FONT ID="False">false</FONT>;
+<A NAME="80"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="81"></A>                bindingInstance.removeAttribute(ServletLogin.HumanUser);<FONT ID="SingleLineComment">//To be safe since ItsNat session doesn't die;)
+<A NAME="82"></A></FONT>                bindingInstance.invalidate();
+<A NAME="83"></A>                smartLogger.complete(Loggers.LEVEL.USER, <FONT ID="StringLiteral">"Session Invalidated Successfully."</FONT>);
+<A NAME="84"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IllegalStateException e_) {
+<A NAME="85"></A>                smartLogger.complete(<FONT ID="StringLiteral">"Session Invalidated FAILED!"</FONT>);
+<A NAME="86"></A>                Loggers.EXCEPTION.debug(<FONT ID="StringLiteral">"HELLO, I JUST RECEIVED AN INVALIDATION CALL ON A ALREADY INVALIDATED SESSION. I CAUGHT AND IGNORED EXCEPTION."</FONT>);
+<A NAME="87"></A>                <FONT ID="SingleLineComment">//Already invalidated. So lets ignore this. This is the sole reason for this class.
+<A NAME="88"></A></FONT>            }
+<A NAME="89"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="90"></A>            smartLogger.complete(<FONT ID="StringLiteral">"Wrong Type"</FONT>);
+<A NAME="91"></A>        }
+<A NAME="92"></A>    }
+<A NAME="93"></A>
+<A NAME="94"></A>    <FONT ID="Void">void</FONT> registerAsLiveStatusObserver() {
+<A NAME="95"></A>        <FONT ID="Final">final</FONT> Method m;
+<A NAME="96"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="97"></A>            m = getBoundInstance().getClass().getMethod(<FONT ID="StringLiteral">"addObserver"</FONT>, <FONT ID="New">new</FONT> Class[]{Observer.<FONT ID="Class">class</FONT>});
+<A NAME="98"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="99"></A>                m.invoke(getBoundInstance(), <FONT ID="This">this</FONT>);
+<A NAME="100"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IllegalAccessException ex) {
+<A NAME="101"></A>                Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="102"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IllegalArgumentException ex) {
+<A NAME="103"></A>                Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="104"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> InvocationTargetException ex) {
+<A NAME="105"></A>                Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="106"></A>            }
+<A NAME="107"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NoSuchMethodException ex) {
+<A NAME="108"></A>            Loggers.EXCEPTION.info(<FONT ID="Null">null</FONT>, ex);
+<A NAME="109"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> SecurityException ex) {
+<A NAME="110"></A>            Loggers.EXCEPTION.info(<FONT ID="Null">null</FONT>, ex);
+<A NAME="111"></A>        }
+<A NAME="112"></A>    }
+<A NAME="113"></A>
+<A NAME="114"></A>    @Override
+<A NAME="115"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> valueBound(HttpSessionBindingEvent event) {
+<A NAME="116"></A>        <FONT ID="Final">final</FONT> Method m;
+<A NAME="117"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="118"></A>            m = getBoundInstance().getClass().getMethod(<FONT ID="StringLiteral">"valueBound"</FONT>, <FONT ID="New">new</FONT> Class[]{HttpSessionBindingEvent.<FONT ID="Class">class</FONT>});
+<A NAME="119"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="120"></A>                m.invoke(getBoundInstance(), event);
+<A NAME="121"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IllegalAccessException ex) {
+<A NAME="122"></A>                Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="123"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IllegalArgumentException ex) {
+<A NAME="124"></A>                Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="125"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> InvocationTargetException ex) {
+<A NAME="126"></A>                Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="127"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NoSuchEJBException ex__) {
+<A NAME="128"></A>                <FONT ID="MultiLineComment">/*This is the whole purpose of this wrapper. i.e. Ignore this exception*/</FONT>
+<A NAME="129"></A>                <FONT ID="MultiLineComment">/*If you have more specific exceptions which need logging, add them here*/</FONT>
+<A NAME="130"></A>                Loggers.EXCEPTION.error(<FONT ID="StringLiteral">"HELLO, NO SUCH EJB EXCEPTION JUST OCCURRED DUE TO A INVALIDATION OF REMOVED EJB."</FONT>);
+<A NAME="131"></A>            }
+<A NAME="132"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NoSuchMethodException ex) {
+<A NAME="133"></A>            Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="134"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> SecurityException ex) {
+<A NAME="135"></A>            Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="136"></A>        }
+<A NAME="137"></A>    }
+<A NAME="138"></A>
+<A NAME="139"></A>    @Override
+<A NAME="140"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> valueUnbound(HttpSessionBindingEvent event) {
+<A NAME="141"></A>        <FONT ID="Final">final</FONT> Method m;
+<A NAME="142"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="143"></A>            <FONT ID="This">this</FONT>.isAlive = <FONT ID="False">false</FONT>;
+<A NAME="144"></A>            m = getBoundInstance().getClass().getMethod(<FONT ID="StringLiteral">"valueUnbound"</FONT>, <FONT ID="New">new</FONT> Class[]{HttpSessionBindingEvent.<FONT ID="Class">class</FONT>});
+<A NAME="145"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="146"></A>                m.invoke(getBoundInstance(), event);
+<A NAME="147"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IllegalAccessException ex) {
+<A NAME="148"></A>                Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="149"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IllegalArgumentException ex) {
+<A NAME="150"></A>                Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="151"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> InvocationTargetException ex) {
+<A NAME="152"></A>                <FONT ID="MultiLineComment">/*This is the whole purpose of this wrapper. i.e. Ignore this exception*/</FONT>
+<A NAME="153"></A>                <FONT ID="MultiLineComment">/*If you have more specific exceptions which need logging, add them here*/</FONT>
+<A NAME="154"></A>                Loggers.EXCEPTION.info(<FONT ID="StringLiteral">"HELLO, NO SUCH EJB EXCEPTION JUST OCCURRED DUE TO A INVALIDATION OF REMOVED EJB."</FONT>);
+<A NAME="155"></A>            } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NoSuchEJBException ex__) {
+<A NAME="156"></A>                <FONT ID="FormalComment">/**
+<A NAME="157"></A>                 * According to invoke specs of method "InvocationTargetException - if the underlying method throws an exception." which means
+<A NAME="158"></A>                 *  any exception will be wrapped. Hence this might not be a valid catch
+<A NAME="159"></A>                 */</FONT>
+<A NAME="160"></A>                Loggers.EXCEPTION.info(<FONT ID="StringLiteral">"HELLO, NO SUCH EJB EXCEPTION JUST OCCURRED DUE TO A INVALIDATION OF REMOVED EJB."</FONT>);
+<A NAME="161"></A>            }
+<A NAME="162"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> NoSuchMethodException ex) {
+<A NAME="163"></A>            Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="164"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> SecurityException ex) {
+<A NAME="165"></A>            Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="166"></A>        }
+<A NAME="167"></A>    }
+<A NAME="168"></A>}
+<A NAME="169"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,413 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.cdn.SamplerOriginal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SamplerOriginal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.cdn;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> javax.swing.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> java.awt.*;
+<A NAME="5"></A><FONT ID="Import">import</FONT> java.awt.color.ColorSpace;
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.awt.event.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.awt.geom.AffineTransform;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.awt.geom.Line2D;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.awt.image.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.net.URL;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.Collections;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.util.Enumeration;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.util.Hashtable;
+<A NAME="14"></A><FONT ID="Import">import</FONT> java.util.Vector;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SamplerOriginal <FONT ID="Extends">extends</FONT> Frame {
+<A NAME="17"></A>    <FONT ID="Private">private</FONT> Frame mImageFrame;
+<A NAME="18"></A>
+<A NAME="19"></A>    <FONT ID="Private">private</FONT> SplitImageComponent mSplitImageComponent;
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Private">private</FONT> Hashtable mOps;
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(String[] args) {
+<A NAME="24"></A>        String imageFile = <FONT ID="StringLiteral">"C:\\posterize\\22036_330336595855_726280855_5172426_6354785_n.jpg"</FONT>;
+<A NAME="25"></A>        <FONT ID="If">if</FONT> (args.length &gt; <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="26"></A>            imageFile = args[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="27"></A>        }
+<A NAME="28"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/cdn/SamplerOriginal.java.html">SamplerOriginal</A>(imageFile);
+<A NAME="29"></A>    }
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> SamplerOriginal(String imageFile) {
+<A NAME="32"></A>        <FONT ID="Super">super</FONT>();
+<A NAME="33"></A>        createOps();
+<A NAME="34"></A>        createImageFrame(imageFile);
+<A NAME="35"></A>        createUI();
+<A NAME="36"></A>        setVisible(<FONT ID="True">true</FONT>);
+<A NAME="37"></A>    }
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createOps() {
+<A NAME="40"></A>        mOps = <FONT ID="New">new</FONT> Hashtable();
+<A NAME="41"></A>        createConvolutions();
+<A NAME="42"></A>        createTransformations();
+<A NAME="43"></A>        createLookups();
+<A NAME="44"></A>        createRescales();
+<A NAME="45"></A>        createColorOps();
+<A NAME="46"></A>    }
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createConvolutions() {
+<A NAME="49"></A>        <FONT ID="Float">float</FONT> ninth = <FONT ID="FloatPointLiteral">1.0f</FONT> / <FONT ID="FloatPointLiteral">9.0f</FONT>;
+<A NAME="50"></A>        <FONT ID="Float">float</FONT>[] blurKernel = {ninth, ninth, ninth, ninth, ninth, ninth, ninth,
+<A NAME="51"></A>                ninth, ninth};
+<A NAME="52"></A>        mOps.put(<FONT ID="StringLiteral">"Blur"</FONT>, <FONT ID="New">new</FONT> ConvolveOp(<FONT ID="New">new</FONT> Kernel(<FONT ID="IntegerLiteral">3</FONT>, <FONT ID="IntegerLiteral">3</FONT>, blurKernel),
+<A NAME="53"></A>                                        ConvolveOp.EDGE_NO_OP, <FONT ID="Null">null</FONT>));
+<A NAME="54"></A>
+<A NAME="55"></A>        <FONT ID="Float">float</FONT>[] edge = {<FONT ID="FloatPointLiteral">0f</FONT>, -<FONT ID="FloatPointLiteral">1f</FONT>, <FONT ID="FloatPointLiteral">0f</FONT>, -<FONT ID="FloatPointLiteral">1f</FONT>, <FONT ID="FloatPointLiteral">4f</FONT>, -<FONT ID="FloatPointLiteral">1f</FONT>, <FONT ID="FloatPointLiteral">0f</FONT>, -<FONT ID="FloatPointLiteral">1f</FONT>, <FONT ID="FloatPointLiteral">0f</FONT>};
+<A NAME="56"></A>        mOps.put(<FONT ID="StringLiteral">"Edge detector"</FONT>, <FONT ID="New">new</FONT> ConvolveOp(<FONT ID="New">new</FONT> Kernel(<FONT ID="IntegerLiteral">3</FONT>, <FONT ID="IntegerLiteral">3</FONT>, edge),
+<A NAME="57"></A>                                                 ConvolveOp.EDGE_NO_OP, <FONT ID="Null">null</FONT>));
+<A NAME="58"></A>
+<A NAME="59"></A>        <FONT ID="Float">float</FONT>[] sharp = {<FONT ID="FloatPointLiteral">0f</FONT>, -<FONT ID="FloatPointLiteral">1f</FONT>, <FONT ID="FloatPointLiteral">0f</FONT>, -<FONT ID="FloatPointLiteral">1f</FONT>, <FONT ID="FloatPointLiteral">5f</FONT>, -<FONT ID="FloatPointLiteral">1f</FONT>, <FONT ID="FloatPointLiteral">0f</FONT>, -<FONT ID="FloatPointLiteral">1f</FONT>, <FONT ID="FloatPointLiteral">0f</FONT>};
+<A NAME="60"></A>        mOps.put(<FONT ID="StringLiteral">"Sharpen"</FONT>, <FONT ID="New">new</FONT> ConvolveOp(<FONT ID="New">new</FONT> Kernel(<FONT ID="IntegerLiteral">3</FONT>, <FONT ID="IntegerLiteral">3</FONT>, sharp)));
+<A NAME="61"></A>    }
+<A NAME="62"></A>
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createTransformations() {
+<A NAME="64"></A>        AffineTransform at;
+<A NAME="65"></A>        at = AffineTransform.getRotateInstance(Math.PI / <FONT ID="IntegerLiteral">6</FONT>, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">285</FONT>);
+<A NAME="66"></A>        mOps.put(<FONT ID="StringLiteral">"Rotate nearest neighbor"</FONT>, <FONT ID="New">new</FONT> AffineTransformOp(at, <FONT ID="Null">null</FONT>));
+<A NAME="67"></A>
+<A NAME="68"></A>        RenderingHints rh = <FONT ID="New">new</FONT> RenderingHints(
+<A NAME="69"></A>                RenderingHints.KEY_INTERPOLATION,
+<A NAME="70"></A>                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+<A NAME="71"></A>        mOps.put(<FONT ID="StringLiteral">"Rotate bilinear"</FONT>, <FONT ID="New">new</FONT> AffineTransformOp(at, rh));
+<A NAME="72"></A>
+<A NAME="73"></A>        at = AffineTransform.getScaleInstance(<FONT ID="FloatPointLiteral">.5</FONT>, <FONT ID="FloatPointLiteral">.5</FONT>);
+<A NAME="74"></A>        mOps.put(<FONT ID="StringLiteral">"Scale .5, .5"</FONT>, <FONT ID="New">new</FONT> AffineTransformOp(at, <FONT ID="Null">null</FONT>));
+<A NAME="75"></A>
+<A NAME="76"></A>        at = AffineTransform.getRotateInstance(Math.PI / <FONT ID="IntegerLiteral">6</FONT>);
+<A NAME="77"></A>        mOps.put(<FONT ID="StringLiteral">"Rotate bilinear (origin)"</FONT>, <FONT ID="New">new</FONT> AffineTransformOp(at, rh));
+<A NAME="78"></A>    }
+<A NAME="79"></A>
+<A NAME="80"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createLookups() {
+<A NAME="81"></A>        <FONT ID="Short">short</FONT>[] brighten = <FONT ID="New">new</FONT> <FONT ID="Short">short</FONT>[<FONT ID="IntegerLiteral">256</FONT>];
+<A NAME="82"></A>        <FONT ID="Short">short</FONT>[] betterBrighten = <FONT ID="New">new</FONT> <FONT ID="Short">short</FONT>[<FONT ID="IntegerLiteral">256</FONT>];
+<A NAME="83"></A>        <FONT ID="Short">short</FONT>[] posterize = <FONT ID="New">new</FONT> <FONT ID="Short">short</FONT>[<FONT ID="IntegerLiteral">256</FONT>];
+<A NAME="84"></A>        <FONT ID="Short">short</FONT>[] invert = <FONT ID="New">new</FONT> <FONT ID="Short">short</FONT>[<FONT ID="IntegerLiteral">256</FONT>];
+<A NAME="85"></A>        <FONT ID="Short">short</FONT>[] straight = <FONT ID="New">new</FONT> <FONT ID="Short">short</FONT>[<FONT ID="IntegerLiteral">256</FONT>];
+<A NAME="86"></A>        <FONT ID="Short">short</FONT>[] zero = <FONT ID="New">new</FONT> <FONT ID="Short">short</FONT>[<FONT ID="IntegerLiteral">256</FONT>];
+<A NAME="87"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; <FONT ID="IntegerLiteral">256</FONT>; i++) {
+<A NAME="88"></A>            brighten[i] = (<FONT ID="Short">short</FONT>) (<FONT ID="IntegerLiteral">128</FONT> + i / <FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="89"></A>            betterBrighten[i] = (<FONT ID="Short">short</FONT>) (Math.sqrt((<FONT ID="Double">double</FONT>) i / <FONT ID="FloatPointLiteral">255.0</FONT>) * <FONT ID="FloatPointLiteral">255.0</FONT>);
+<A NAME="90"></A>            <FONT ID="SingleLineComment">//posterize[i] = (short) (i - (i % 32));
+<A NAME="91"></A></FONT>            posterize[i] = (<FONT ID="Short">short</FONT>) (i - (i % <FONT ID="IntegerLiteral">64</FONT>));
+<A NAME="92"></A>            invert[i] = (<FONT ID="Short">short</FONT>) (<FONT ID="IntegerLiteral">255</FONT> - i);
+<A NAME="93"></A>            straight[i] = (<FONT ID="Short">short</FONT>) i;
+<A NAME="94"></A>            zero[i] = (<FONT ID="Short">short</FONT>) <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="95"></A>        }
+<A NAME="96"></A>        mOps.put(<FONT ID="StringLiteral">"Brighten"</FONT>, <FONT ID="New">new</FONT> LookupOp(<FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, brighten),
+<A NAME="97"></A>                                          <FONT ID="Null">null</FONT>));
+<A NAME="98"></A>        mOps.put(<FONT ID="StringLiteral">"Better Brighten"</FONT>, <FONT ID="New">new</FONT> LookupOp(<FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>,
+<A NAME="99"></A>                                                                      betterBrighten), <FONT ID="Null">null</FONT>));
+<A NAME="100"></A>        mOps.put(<FONT ID="StringLiteral">"Posterize"</FONT>, <FONT ID="New">new</FONT> LookupOp(<FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, posterize),
+<A NAME="101"></A>                                           <FONT ID="Null">null</FONT>));
+<A NAME="102"></A>        mOps.put(<FONT ID="StringLiteral">"Invert"</FONT>, <FONT ID="New">new</FONT> LookupOp(<FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, invert), <FONT ID="Null">null</FONT>));
+<A NAME="103"></A>
+<A NAME="104"></A>        <FONT ID="Short">short</FONT>[][] redOnly = {invert, straight, straight};
+<A NAME="105"></A>        <FONT ID="Short">short</FONT>[][] greenOnly = {straight, invert, straight};
+<A NAME="106"></A>        <FONT ID="Short">short</FONT>[][] blueOnly = {straight, straight, invert};
+<A NAME="107"></A>        mOps.put(<FONT ID="StringLiteral">"Red invert"</FONT>, <FONT ID="New">new</FONT> LookupOp(<FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, redOnly),
+<A NAME="108"></A>                                            <FONT ID="Null">null</FONT>));
+<A NAME="109"></A>        mOps.put(<FONT ID="StringLiteral">"Green invert"</FONT>, <FONT ID="New">new</FONT> LookupOp(
+<A NAME="110"></A>                <FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, greenOnly), <FONT ID="Null">null</FONT>));
+<A NAME="111"></A>        mOps.put(<FONT ID="StringLiteral">"Blue invert"</FONT>, <FONT ID="New">new</FONT> LookupOp(<FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, blueOnly),
+<A NAME="112"></A>                                             <FONT ID="Null">null</FONT>));
+<A NAME="113"></A>
+<A NAME="114"></A>        <FONT ID="Short">short</FONT>[][] redRemove = {zero, straight, straight};
+<A NAME="115"></A>        <FONT ID="Short">short</FONT>[][] greenRemove = {straight, zero, straight};
+<A NAME="116"></A>        <FONT ID="Short">short</FONT>[][] blueRemove = {straight, straight, zero};
+<A NAME="117"></A>        mOps.put(<FONT ID="StringLiteral">"Red remove"</FONT>, <FONT ID="New">new</FONT> LookupOp(<FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, redRemove),
+<A NAME="118"></A>                                            <FONT ID="Null">null</FONT>));
+<A NAME="119"></A>        mOps.put(<FONT ID="StringLiteral">"Green remove"</FONT>, <FONT ID="New">new</FONT> LookupOp(<FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>,
+<A NAME="120"></A>                                                                   greenRemove), <FONT ID="Null">null</FONT>));
+<A NAME="121"></A>        mOps.put(<FONT ID="StringLiteral">"Blue remove"</FONT>, <FONT ID="New">new</FONT> LookupOp(
+<A NAME="122"></A>                <FONT ID="New">new</FONT> ShortLookupTable(<FONT ID="IntegerLiteral">0</FONT>, blueRemove), <FONT ID="Null">null</FONT>));
+<A NAME="123"></A>    }
+<A NAME="124"></A>
+<A NAME="125"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createRescales() {
+<A NAME="126"></A>        mOps.put(<FONT ID="StringLiteral">"Rescale .5, 0"</FONT>, <FONT ID="New">new</FONT> RescaleOp(<FONT ID="FloatPointLiteral">.5f</FONT>, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>));
+<A NAME="127"></A>        mOps.put(<FONT ID="StringLiteral">"Rescale .5, 64"</FONT>, <FONT ID="New">new</FONT> RescaleOp(<FONT ID="FloatPointLiteral">.5f</FONT>, <FONT ID="IntegerLiteral">64</FONT>, <FONT ID="Null">null</FONT>));
+<A NAME="128"></A>        mOps.put(<FONT ID="StringLiteral">"Rescale 1.2, 0"</FONT>, <FONT ID="New">new</FONT> RescaleOp(<FONT ID="FloatPointLiteral">1.2f</FONT>, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>));
+<A NAME="129"></A>        mOps.put(<FONT ID="StringLiteral">"Rescale 1.5, 0"</FONT>, <FONT ID="New">new</FONT> RescaleOp(<FONT ID="FloatPointLiteral">1.5f</FONT>, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>));
+<A NAME="130"></A>    }
+<A NAME="131"></A>
+<A NAME="132"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createColorOps() {
+<A NAME="133"></A>        mOps.put(<FONT ID="StringLiteral">"Grayscale"</FONT>, <FONT ID="New">new</FONT> ColorConvertOp(ColorSpace
+<A NAME="134"></A>                .getInstance(ColorSpace.CS_GRAY), <FONT ID="Null">null</FONT>));
+<A NAME="135"></A>    }
+<A NAME="136"></A>
+<A NAME="137"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createImageFrame(String imageFile) {
+<A NAME="138"></A>        <FONT ID="SingleLineComment">// Create the image frame.
+<A NAME="139"></A></FONT>        mSplitImageComponent = <FONT ID="New">new</FONT> SplitImageComponent(imageFile);
+<A NAME="140"></A>        mImageFrame = <FONT ID="New">new</FONT> Frame(imageFile);
+<A NAME="141"></A>        mImageFrame.setLayout(<FONT ID="New">new</FONT> BorderLayout());
+<A NAME="142"></A>        mImageFrame.add(mSplitImageComponent, BorderLayout.CENTER);
+<A NAME="143"></A><FONT ID="SingleLineComment">//    Utilities.sizeContainerToComponent(mImageFrame, mSplitImageComponent);
+<A NAME="144"></A></FONT>        <FONT ID="SingleLineComment">//  Utilities.centerFrame(mImageFrame);
+<A NAME="145"></A></FONT>        mImageFrame.setVisible(<FONT ID="True">true</FONT>);
+<A NAME="146"></A>    }
+<A NAME="147"></A>
+<A NAME="148"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createUI() {
+<A NAME="149"></A>        setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"Serif"</FONT>, Font.PLAIN, <FONT ID="IntegerLiteral">12</FONT>));
+<A NAME="150"></A>        setLayout(<FONT ID="New">new</FONT> BorderLayout());
+<A NAME="151"></A>        <FONT ID="SingleLineComment">// Set our location to the left of the image frame.
+<A NAME="152"></A></FONT>        setSize(<FONT ID="IntegerLiteral">200</FONT>, <FONT ID="IntegerLiteral">350</FONT>);
+<A NAME="153"></A>        Point pt = mImageFrame.getLocation();
+<A NAME="154"></A>        setLocation(pt.x - getSize().width, pt.y);
+<A NAME="155"></A>
+<A NAME="156"></A>        <FONT ID="Final">final</FONT> Checkbox accumulateCheckbox = <FONT ID="New">new</FONT> Checkbox(<FONT ID="StringLiteral">"Accumulate"</FONT>, <FONT ID="False">false</FONT>);
+<A NAME="157"></A>        <FONT ID="Final">final</FONT> Label statusLabel = <FONT ID="New">new</FONT> Label(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="158"></A>
+<A NAME="159"></A>        <FONT ID="SingleLineComment">// Make a sorted list of the operators.
+<A NAME="160"></A></FONT>        Enumeration e = mOps.keys();
+<A NAME="161"></A>        Vector names = <FONT ID="New">new</FONT> Vector();
+<A NAME="162"></A>        <FONT ID="While">while</FONT> (e.hasMoreElements()) {
+<A NAME="163"></A>            names.addElement(e.nextElement());
+<A NAME="164"></A>        }
+<A NAME="165"></A>        Collections.sort(names);
+<A NAME="166"></A>        <FONT ID="Final">final</FONT> java.awt.List list = <FONT ID="New">new</FONT> java.awt.List();
+<A NAME="167"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; names.size(); i++) {
+<A NAME="168"></A>            list.add((String) names.elementAt(i));
+<A NAME="169"></A>        }
+<A NAME="170"></A>        add(list, BorderLayout.CENTER);
+<A NAME="171"></A>
+<A NAME="172"></A>        <FONT ID="SingleLineComment">// When an item is selected, do the corresponding transformation.
+<A NAME="173"></A></FONT>        list.addItemListener(<FONT ID="New">new</FONT> ItemListener() {
+<A NAME="174"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> itemStateChanged(ItemEvent ie) {
+<A NAME="175"></A>                <FONT ID="If">if</FONT> (ie.getStateChange() != ItemEvent.SELECTED) {
+<A NAME="176"></A>                    <FONT ID="Return">return</FONT>;
+<A NAME="177"></A>                }
+<A NAME="178"></A>                String key = list.getSelectedItem();
+<A NAME="179"></A>                BufferedImageOp op = (BufferedImageOp) mOps.get(key);
+<A NAME="180"></A>                BufferedImage source = mSplitImageComponent.getSecondImage();
+<A NAME="181"></A>                <FONT ID="Boolean">boolean</FONT> accumulate = accumulateCheckbox.getState();
+<A NAME="182"></A>                <FONT ID="If">if</FONT> (source == <FONT ID="Null">null</FONT> || accumulate == <FONT ID="False">false</FONT>) {
+<A NAME="183"></A>                    source = mSplitImageComponent.getImage();
+<A NAME="184"></A>                }
+<A NAME="185"></A>                String previous = mImageFrame.getTitle() + <FONT ID="StringLiteral">" + "</FONT>;
+<A NAME="186"></A>                <FONT ID="If">if</FONT> (accumulate == <FONT ID="False">false</FONT>) {
+<A NAME="187"></A>                    previous = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="188"></A>                }
+<A NAME="189"></A>                mImageFrame.setTitle(previous + key);
+<A NAME="190"></A>                statusLabel.setText(<FONT ID="StringLiteral">"Performing "</FONT> + key + <FONT ID="StringLiteral">"..."</FONT>);
+<A NAME="191"></A>                list.setEnabled(<FONT ID="False">false</FONT>);
+<A NAME="192"></A>                accumulateCheckbox.setEnabled(<FONT ID="False">false</FONT>);
+<A NAME="193"></A>                BufferedImage destination = op.filter(source, <FONT ID="Null">null</FONT>);
+<A NAME="194"></A>                mSplitImageComponent.setSecondImage(destination);
+<A NAME="195"></A>                mSplitImageComponent.setSize(mSplitImageComponent
+<A NAME="196"></A>                        .getPreferredSize());
+<A NAME="197"></A>                mImageFrame.setSize(mImageFrame.getPreferredSize());
+<A NAME="198"></A>                list.setEnabled(<FONT ID="True">true</FONT>);
+<A NAME="199"></A>                accumulateCheckbox.setEnabled(<FONT ID="True">true</FONT>);
+<A NAME="200"></A>                statusLabel.setText(<FONT ID="StringLiteral">"Performing "</FONT> + key + <FONT ID="StringLiteral">"...done."</FONT>);
+<A NAME="201"></A>            }
+<A NAME="202"></A>        });
+<A NAME="203"></A>
+<A NAME="204"></A>        Button loadButton = <FONT ID="New">new</FONT> Button(<FONT ID="StringLiteral">"Load..."</FONT>);
+<A NAME="205"></A>        loadButton.addActionListener(<FONT ID="New">new</FONT> ActionListener() {
+<A NAME="206"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> actionPerformed(ActionEvent ae) {
+<A NAME="207"></A>                FileDialog fd = <FONT ID="New">new</FONT> FileDialog(SamplerOriginal.<FONT ID="This">this</FONT>);
+<A NAME="208"></A>                fd.show();
+<A NAME="209"></A>                <FONT ID="If">if</FONT> (fd.getFile() == <FONT ID="Null">null</FONT>) {
+<A NAME="210"></A>                    <FONT ID="Return">return</FONT>;
+<A NAME="211"></A>                }
+<A NAME="212"></A>                String path = fd.getDirectory() + fd.getFile();
+<A NAME="213"></A>                mSplitImageComponent.setImage(path);
+<A NAME="214"></A>                mSplitImageComponent.setSecondImage(<FONT ID="Null">null</FONT>);
+<A NAME="215"></A><FONT ID="SingleLineComment">//        Utilities.sizeContainerToComponent(mImageFrame,
+<A NAME="216"></A></FONT>                <FONT ID="SingleLineComment">//          mSplitImageComponent);
+<A NAME="217"></A></FONT>                mImageFrame.validate();
+<A NAME="218"></A>                mImageFrame.repaint();
+<A NAME="219"></A>            }
+<A NAME="220"></A>        });
+<A NAME="221"></A>
+<A NAME="222"></A>        Panel bottom = <FONT ID="New">new</FONT> Panel(<FONT ID="New">new</FONT> GridLayout(<FONT ID="IntegerLiteral">2</FONT>, <FONT ID="IntegerLiteral">1</FONT>));
+<A NAME="223"></A>        Panel topBottom = <FONT ID="New">new</FONT> Panel();
+<A NAME="224"></A>        topBottom.add(accumulateCheckbox);
+<A NAME="225"></A>        topBottom.add(loadButton);
+<A NAME="226"></A>        bottom.add(topBottom);
+<A NAME="227"></A>        bottom.add(statusLabel);
+<A NAME="228"></A>        add(bottom, BorderLayout.SOUTH);
+<A NAME="229"></A>
+<A NAME="230"></A>        addWindowListener(<FONT ID="New">new</FONT> WindowAdapter() {
+<A NAME="231"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> windowClosing(WindowEvent e) {
+<A NAME="232"></A>                mImageFrame.dispose();
+<A NAME="233"></A>                dispose();
+<A NAME="234"></A>                System.exit(<FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="235"></A>            }
+<A NAME="236"></A>        });
+<A NAME="237"></A>    }
+<A NAME="238"></A>
+<A NAME="239"></A>    <FONT ID="Class">class</FONT> SplitImageComponent <FONT ID="Extends">extends</FONT> JPanel {
+<A NAME="240"></A>        <FONT ID="Private">private</FONT> BufferedImage mImage;
+<A NAME="241"></A>
+<A NAME="242"></A>        <FONT ID="Private">private</FONT> BufferedImage mSecondImage;
+<A NAME="243"></A>
+<A NAME="244"></A>        <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> mSplitX;
+<A NAME="245"></A>
+<A NAME="246"></A>        <FONT ID="Public">public</FONT> SplitImageComponent(String path) {
+<A NAME="247"></A>            setImage(path);
+<A NAME="248"></A>            init();
+<A NAME="249"></A>        }
+<A NAME="250"></A>
+<A NAME="251"></A>        <FONT ID="Public">public</FONT> SplitImageComponent(BufferedImage image) {
+<A NAME="252"></A>            setImage(image);
+<A NAME="253"></A>            init();
+<A NAME="254"></A>        }
+<A NAME="255"></A>
+<A NAME="256"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setImage(String path) {
+<A NAME="257"></A>            Image image = blockingLoad(path);
+<A NAME="258"></A>            mImage = makeBufferedImage(image);
+<A NAME="259"></A>        }
+<A NAME="260"></A>
+<A NAME="261"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setImage(BufferedImage image) {
+<A NAME="262"></A>            mImage = image;
+<A NAME="263"></A>        }
+<A NAME="264"></A>
+<A NAME="265"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setSecondImage(BufferedImage image) {
+<A NAME="266"></A>            mSecondImage = image;
+<A NAME="267"></A>            repaint();
+<A NAME="268"></A>        }
+<A NAME="269"></A>
+<A NAME="270"></A>        <FONT ID="Public">public</FONT> BufferedImage getImage() {
+<A NAME="271"></A>            <FONT ID="Return">return</FONT> mImage;
+<A NAME="272"></A>        }
+<A NAME="273"></A>
+<A NAME="274"></A>        <FONT ID="Public">public</FONT> BufferedImage getSecondImage() {
+<A NAME="275"></A>            <FONT ID="Return">return</FONT> mSecondImage;
+<A NAME="276"></A>        }
+<A NAME="277"></A>
+<A NAME="278"></A>        <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> init() {
+<A NAME="279"></A>            setBackground(Color.white);
+<A NAME="280"></A>            addMouseListener(<FONT ID="New">new</FONT> MouseAdapter() {
+<A NAME="281"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> mousePressed(MouseEvent me) {
+<A NAME="282"></A>                    mSplitX = me.getX();
+<A NAME="283"></A>                    repaint();
+<A NAME="284"></A>                }
+<A NAME="285"></A>            });
+<A NAME="286"></A>            addMouseMotionListener(<FONT ID="New">new</FONT> MouseMotionAdapter() {
+<A NAME="287"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> mouseDragged(MouseEvent me) {
+<A NAME="288"></A>                    mSplitX = me.getX();
+<A NAME="289"></A>                    repaint();
+<A NAME="290"></A>                }
+<A NAME="291"></A>            });
+<A NAME="292"></A>        }
+<A NAME="293"></A>
+<A NAME="294"></A>        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> paint(Graphics g) {
+<A NAME="295"></A>            Graphics2D g2 = (Graphics2D) g;
+<A NAME="296"></A>            <FONT ID="Int">int</FONT> width = getSize().width;
+<A NAME="297"></A>            <FONT ID="Int">int</FONT> height = getSize().height;
+<A NAME="298"></A>
+<A NAME="299"></A>            <FONT ID="SingleLineComment">// Explicitly clear the window.
+<A NAME="300"></A></FONT>            Rectangle clear = <FONT ID="New">new</FONT> Rectangle(<FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, width, height);
+<A NAME="301"></A>            g2.setPaint(getBackground());
+<A NAME="302"></A>            g2.fill(clear);
+<A NAME="303"></A>            <FONT ID="SingleLineComment">// Clip the first image, if appropriate,
+<A NAME="304"></A></FONT>            <FONT ID="SingleLineComment">// to be on the right side of the split.
+<A NAME="305"></A></FONT>            <FONT ID="If">if</FONT> (mSplitX != <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; mSecondImage != <FONT ID="Null">null</FONT>) {
+<A NAME="306"></A>                Rectangle firstClip = <FONT ID="New">new</FONT> Rectangle(mSplitX, <FONT ID="IntegerLiteral">0</FONT>, width - mSplitX,
+<A NAME="307"></A>                                                    height);
+<A NAME="308"></A>                g2.setClip(firstClip);
+<A NAME="309"></A>            }
+<A NAME="310"></A>            g2.drawImage(getImage(), <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>);
+<A NAME="311"></A>
+<A NAME="312"></A>            <FONT ID="If">if</FONT> (mSplitX == <FONT ID="IntegerLiteral">0</FONT> || mSecondImage == <FONT ID="Null">null</FONT>) {
+<A NAME="313"></A>                <FONT ID="Return">return</FONT>;
+<A NAME="314"></A>            }
+<A NAME="315"></A>
+<A NAME="316"></A>            Rectangle secondClip = <FONT ID="New">new</FONT> Rectangle(<FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, mSplitX, height);
+<A NAME="317"></A>            g2.setClip(secondClip);
+<A NAME="318"></A>            g2.drawImage(mSecondImage, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>);
+<A NAME="319"></A>
+<A NAME="320"></A>            Line2D splitLine = <FONT ID="New">new</FONT> Line2D.Float(mSplitX, <FONT ID="IntegerLiteral">0</FONT>, mSplitX, height);
+<A NAME="321"></A>            g2.setClip(<FONT ID="Null">null</FONT>);
+<A NAME="322"></A>            g2.setColor(Color.white);
+<A NAME="323"></A>            g2.draw(splitLine);
+<A NAME="324"></A>        }
+<A NAME="325"></A>
+<A NAME="326"></A>        <FONT ID="Public">public</FONT> Dimension getPreferredSize() {
+<A NAME="327"></A>            <FONT ID="Int">int</FONT> width = getImage().getWidth();
+<A NAME="328"></A>            <FONT ID="Int">int</FONT> height = getImage().getHeight();
+<A NAME="329"></A>            <FONT ID="If">if</FONT> (mSecondImage != <FONT ID="Null">null</FONT>) {
+<A NAME="330"></A>                width = Math.max(width, mSecondImage.getWidth());
+<A NAME="331"></A>                height = Math.max(height, mSecondImage.getHeight());
+<A NAME="332"></A>            }
+<A NAME="333"></A>            <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> Dimension(width, height);
+<A NAME="334"></A>        }
+<A NAME="335"></A>    }
+<A NAME="336"></A>
+<A NAME="337"></A>    <FONT ID="Private">private</FONT> Component sComponent = <FONT ID="New">new</FONT> Component() {
+<A NAME="338"></A>    };
+<A NAME="339"></A>
+<A NAME="340"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> MediaTracker sTracker = <FONT ID="New">new</FONT> MediaTracker(sComponent);
+<A NAME="341"></A>
+<A NAME="342"></A>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> sID = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="343"></A>
+<A NAME="344"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> waitForImage(Image image) {
+<A NAME="345"></A>        <FONT ID="Int">int</FONT> id;
+<A NAME="346"></A>        <FONT ID="Synchronized">synchronized</FONT> (sComponent) {
+<A NAME="347"></A>            id = sID++;
+<A NAME="348"></A>        }
+<A NAME="349"></A>        sTracker.addImage(image, id);
+<A NAME="350"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="351"></A>            sTracker.waitForID(id);
+<A NAME="352"></A>        } <FONT ID="Catch">catch</FONT> (InterruptedException ie) {
+<A NAME="353"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="354"></A>        }
+<A NAME="355"></A>        <FONT ID="If">if</FONT> (sTracker.isErrorID(id)) {
+<A NAME="356"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="357"></A>        }
+<A NAME="358"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="359"></A>    }
+<A NAME="360"></A>
+<A NAME="361"></A>    <FONT ID="Public">public</FONT> Image blockingLoad(String path) {
+<A NAME="362"></A>        Image image = Toolkit.getDefaultToolkit().getImage(path);
+<A NAME="363"></A>        <FONT ID="If">if</FONT> (waitForImage(image) == <FONT ID="False">false</FONT>) {
+<A NAME="364"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="365"></A>        }
+<A NAME="366"></A>        <FONT ID="Return">return</FONT> image;
+<A NAME="367"></A>    }
+<A NAME="368"></A>
+<A NAME="369"></A>    <FONT ID="Public">public</FONT> Image blockingLoad(URL url) {
+<A NAME="370"></A>        Image image = Toolkit.getDefaultToolkit().getImage(url);
+<A NAME="371"></A>        <FONT ID="If">if</FONT> (waitForImage(image) == <FONT ID="False">false</FONT>) {
+<A NAME="372"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="373"></A>        }
+<A NAME="374"></A>        <FONT ID="Return">return</FONT> image;
+<A NAME="375"></A>    }
+<A NAME="376"></A>
+<A NAME="377"></A>    <FONT ID="Public">public</FONT> BufferedImage makeBufferedImage(Image image) {
+<A NAME="378"></A>        <FONT ID="Return">return</FONT> makeBufferedImage(image, BufferedImage.TYPE_INT_RGB);
+<A NAME="379"></A>    }
+<A NAME="380"></A>
+<A NAME="381"></A>    <FONT ID="Public">public</FONT> BufferedImage makeBufferedImage(Image image, <FONT ID="Int">int</FONT> imageType) {
+<A NAME="382"></A>        <FONT ID="If">if</FONT> (waitForImage(image) == <FONT ID="False">false</FONT>) {
+<A NAME="383"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<A NAME="384"></A>        }
+<A NAME="385"></A>
+<A NAME="386"></A>        BufferedImage bufferedImage = <FONT ID="New">new</FONT> BufferedImage(image.getWidth(<FONT ID="Null">null</FONT>),
+<A NAME="387"></A>                                                        image.getHeight(<FONT ID="Null">null</FONT>), imageType);
+<A NAME="388"></A>        Graphics2D g2 = bufferedImage.createGraphics();
+<A NAME="389"></A>        g2.drawImage(image, <FONT ID="Null">null</FONT>, <FONT ID="Null">null</FONT>);
+<A NAME="390"></A>        <FONT ID="Return">return</FONT> bufferedImage;
+<A NAME="391"></A>    }
+<A NAME="392"></A>
+<A NAME="393"></A>}
+<A NAME="394"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.jpa.Refreshable (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Refreshable.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.jpa;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="FormalComment">/**
+<A NAME="4"></A> *
+<A NAME="5"></A> * This interface is to be implemented by entities containing {@link java.util.Collection}s.
+<A NAME="6"></A> * The main purpose is to encourage lazy fetching into the persistence context, and refreshing ONLY required collections.
+<A NAME="7"></A> *
+<A NAME="8"></A> * For example an entity student may have Set&lt;Subject&gt; and Set&lt;ClassRoom&gt;.
+<A NAME="9"></A> * This interface promotes the fetc
+<A NAME="10"></A> *
+<A NAME="11"></A> * Created by IntelliJ IDEA.
+<A NAME="12"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="13"></A> * Date: 2/9/11
+<A NAME="14"></A> * Time: 6:43 PM
+<A NAME="15"></A> */</FONT>
+<A NAME="16"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> Refreshable&lt;T&gt; {
+<A NAME="17"></A>    <FONT ID="Public">public</FONT> T refresh(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A>;
+<A NAME="18"></A>}
+<A NAME="19"></A></pre>
+</BODY>
+</HTML>

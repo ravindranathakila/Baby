@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Place.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets.schema.thing;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">ai.ilikeplaces.util.AbstractWidgetListener</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../../ai/ilikeplaces/util/MarkupTag.java.html">ai.ilikeplaces.util.MarkupTag</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../../ai/ilikeplaces/util/Parameter.java.html">ai.ilikeplaces.util.Parameter</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="9"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * Created by IntelliJ IDEA.
+<A NAME="15"></A> * User: ravindranathakila
+<A NAME="16"></A> * Date: 6/3/12
+<A NAME="17"></A> * Time: 12:05 PM
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Place <FONT ID="Extends">extends</FONT> <A HREF="../../../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">AbstractWidgetListener</A>&lt;<A HREF="../../../../../../../ai/ilikeplaces/logic/Listeners/widgets/schema/thing/PlaceCriteria.java.html">PlaceCriteria</A>&gt; {
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PAGE = <FONT ID="StringLiteral">"/page/"</FONT>;
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum PlaceIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="24"></A>        <FONT ID="SingleLineComment">//Place
+<A NAME="25"></A></FONT>        placeNamePre,
+<A NAME="26"></A>        placeName,
+<A NAME="27"></A>        placeNamePost,
+<A NAME="28"></A>        placeLng,
+<A NAME="29"></A>        placeLat,
+<A NAME="30"></A>        <FONT ID="SingleLineComment">//Parent Place
+<A NAME="31"></A></FONT>        placeSuperNamePre,
+<A NAME="32"></A>        placeSuperName,
+<A NAME="33"></A>        placeSuperNamePost,
+<A NAME="34"></A>        placeSuperLng,
+<A NAME="35"></A>        placeSuperLat,
+<A NAME="36"></A>        <FONT ID="SingleLineComment">//Parent Place Link
+<A NAME="37"></A></FONT>        placeSuperLink
+<A NAME="38"></A>    }
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="FormalComment">/**
+<A NAME="41"></A>     * @param request__
+<A NAME="42"></A>     * @param page__
+<A NAME="43"></A>     * @param t
+<A NAME="44"></A>     * @param appendToElement__
+<A NAME="45"></A>     */</FONT>
+<A NAME="46"></A>    <FONT ID="Public">public</FONT> Place(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../../../ai/ilikeplaces/logic/Listeners/widgets/schema/thing/PlaceCriteria.java.html">PlaceCriteria</A> placeCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="47"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.Place, placeCriteria, appendToElement__);
+<A NAME="48"></A>
+<A NAME="49"></A>        UC_LOCATION:
+<A NAME="50"></A>        {
+<A NAME="51"></A>            $$(PlaceIds.placeNamePre).setTextContent(criteria.getPlaceNamePre());
+<A NAME="52"></A>            $$(PlaceIds.placeName).setTextContent(criteria.getPlaceName());
+<A NAME="53"></A>            $$(PlaceIds.placeNamePost).setTextContent(criteria.getPlaceNamePost());
+<A NAME="54"></A>
+<A NAME="55"></A>            $$(PlaceIds.placeLat).setAttribute(MarkupTag.META.content(), placeCriteria.getPlaceLat());
+<A NAME="56"></A>            $$(PlaceIds.placeLng).setAttribute(MarkupTag.META.content(), placeCriteria.getPlaceLng());
+<A NAME="57"></A>        }
+<A NAME="58"></A>
+<A NAME="59"></A>        UC_SUPER_LOCATION:
+<A NAME="60"></A>        {
+<A NAME="61"></A>            $$(PlaceIds.placeSuperNamePre).setTextContent(criteria.getPlaceSuperNamePre());
+<A NAME="62"></A>            $$(PlaceIds.placeSuperName).setTextContent(criteria.getPlaceSuperName());
+<A NAME="63"></A>            $$(PlaceIds.placeSuperNamePost).setTextContent(criteria.getPlaceSuperNamePost());
+<A NAME="64"></A>
+<A NAME="65"></A>            $$(PlaceIds.placeSuperLat).setAttribute(MarkupTag.META.content(), placeCriteria.getPlaceSuperLat());
+<A NAME="66"></A>            $$(PlaceIds.placeSuperLng).setAttribute(MarkupTag.META.content(), placeCriteria.getPlaceSuperLng());
+<A NAME="67"></A>        }
+<A NAME="68"></A>
+<A NAME="69"></A>        UC_SUPER_LOCATION_LINK:
+<A NAME="70"></A>        {
+<A NAME="71"></A>            $$(PlaceIds.placeSuperLink).setAttribute(MarkupTag.A.href(),
+<A NAME="72"></A>                    PAGE
+<A NAME="73"></A>                            + placeCriteria.getPlaceSuperName()
+<A NAME="74"></A>                            + Parameter.get(Location.WOEID, placeCriteria.getPlaceSuperWOEID(), <FONT ID="True">true</FONT>));
+<A NAME="75"></A>        }
+<A NAME="76"></A>    }
+<A NAME="77"></A>
+<A NAME="78"></A>    <FONT ID="FormalComment">/**
+<A NAME="79"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="80"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="81"></A>     * automatically called by the constructor
+<A NAME="82"></A>     *
+<A NAME="83"></A>     * @param itsNatHTMLDocument_
+<A NAME="84"></A>     * @param hTMLDocument_
+<A NAME="85"></A>     */</FONT>
+<A NAME="86"></A>    @Override
+<A NAME="87"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="88"></A>        <FONT ID="SingleLineComment">//To change body of implemented methods use File | Settings | File Templates.
+<A NAME="89"></A></FONT>    }
+<A NAME="90"></A>}
+<A NAME="91"></A></pre>
+</BODY>
+</HTML>

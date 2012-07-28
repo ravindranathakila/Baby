@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ListenerHuman (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerHuman.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="SingleLineComment">//package ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="3"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.doc.OK;
+<A NAME="5"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.doc.TODO;
+<A NAME="6"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.entities.PublicPhoto;
+<A NAME="7"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
+<A NAME="8"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.logic.crud.DB;
+<A NAME="9"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.logic.validators.unit.HumanId;
+<A NAME="10"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.rbs.RBGet;
+<A NAME="11"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.servlets.Controller;
+<A NAME="12"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.util.AbstractListener;
+<A NAME="13"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.util.Loggers;
+<A NAME="14"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.util.MarkupTag;
+<A NAME="15"></A></FONT><FONT ID="SingleLineComment">//import ai.ilikeplaces.util.Return;
+<A NAME="16"></A></FONT><FONT ID="SingleLineComment">//import org.itsnat.core.ItsNatDocument;
+<A NAME="17"></A></FONT><FONT ID="SingleLineComment">//import org.itsnat.core.ItsNatServletRequest;
+<A NAME="18"></A></FONT><FONT ID="SingleLineComment">//import org.itsnat.core.ItsNatServletResponse;
+<A NAME="19"></A></FONT><FONT ID="SingleLineComment">//import org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="20"></A></FONT><FONT ID="SingleLineComment">//import org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="21"></A></FONT><FONT ID="SingleLineComment">//import org.slf4j.Logger;
+<A NAME="22"></A></FONT><FONT ID="SingleLineComment">//import org.slf4j.LoggerFactory;
+<A NAME="23"></A></FONT><FONT ID="SingleLineComment">//import org.w3c.dom.Element;
+<A NAME="24"></A></FONT><FONT ID="SingleLineComment">//import org.w3c.dom.html.HTMLDocument;
+<A NAME="25"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="26"></A></FONT><FONT ID="SingleLineComment">//import java.util.List;
+<A NAME="27"></A></FONT><FONT ID="SingleLineComment">//import java.util.ResourceBundle;
+<A NAME="28"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="29"></A></FONT><FONT ID="SingleLineComment">//import static ai.ilikeplaces.servlets.Controller.Page.*;
+<A NAME="30"></A></FONT><FONT ID="SingleLineComment">//import static ai.ilikeplaces.util.Loggers.EXCEPTION;
+<A NAME="31"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="32"></A></FONT><FONT ID="SingleLineComment">///**
+<A NAME="33"></A></FONT><FONT ID="SingleLineComment">// * @author Ravindranath Akila
+<A NAME="34"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="35"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="36"></A></FONT><FONT ID="SingleLineComment">//// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="37"></A></FONT><FONT ID="SingleLineComment">//@OK
+<A NAME="38"></A></FONT><FONT ID="SingleLineComment">//@TODO(task = "try/catch all interface elements")
+<A NAME="39"></A></FONT><FONT ID="SingleLineComment">//public class ListenerHuman implements ItsNatServletRequestListener {
+<A NAME="40"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="41"></A></FONT><FONT ID="SingleLineComment">//    final private Logger logger = LoggerFactory.getLogger(ListenerHuman.class.getName());
+<A NAME="42"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="43"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="44"></A></FONT><FONT ID="SingleLineComment">//     * @param request__
+<A NAME="45"></A></FONT><FONT ID="SingleLineComment">//     * @param response__
+<A NAME="46"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="47"></A></FONT><FONT ID="SingleLineComment">//    @Override
+<A NAME="48"></A></FONT><FONT ID="SingleLineComment">//    public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
+<A NAME="49"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="50"></A></FONT><FONT ID="SingleLineComment">//        new AbstractListener(request__) {
+<A NAME="51"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="52"></A></FONT><FONT ID="SingleLineComment">//            /**
+<A NAME="53"></A></FONT><FONT ID="SingleLineComment">//             * Intialize your document here by appending fragments
+<A NAME="54"></A></FONT><FONT ID="SingleLineComment">//             */
+<A NAME="55"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="56"></A></FONT><FONT ID="SingleLineComment">//            @SuppressWarnings("unchecked")
+<A NAME="57"></A></FONT><FONT ID="SingleLineComment">//            protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
+<A NAME="58"></A></FONT><FONT ID="SingleLineComment">//                itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor + JSCodeToSend.FnLocationId);
+<A NAME="59"></A></FONT><FONT ID="SingleLineComment">//                final ResourceBundle gUI = ResourceBundle.getBundle("ai.ilikeplaces.rbs.GUI");
+<A NAME="60"></A></FONT><FONT ID="SingleLineComment">//                layoutNeededForAllPages:
+<A NAME="61"></A></FONT><FONT ID="SingleLineComment">//                {
+<A NAME="62"></A></FONT><FONT ID="SingleLineComment">//                    setLoginWidget:
+<A NAME="63"></A></FONT><FONT ID="SingleLineComment">//                    {
+<A NAME="64"></A></FONT><FONT ID="SingleLineComment">//                        new SignInOn(request__, $(Main_login_widget), new HumanId(getUsername()), request__.getServletRequest()) {
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//                        };
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="68"></A></FONT><FONT ID="SingleLineComment">//                    setMainTitle:
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//                    {
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//                        try {
+<A NAME="71"></A></FONT><FONT ID="SingleLineComment">//                            //$(mainTitle).setTextContent("Welcome to ilikeplaces!");
+<A NAME="72"></A></FONT><FONT ID="SingleLineComment">//                        } catch (
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//                                @FIXME(issue = "This is very important for SEO. Contact ItsNat and find out why exception always occurs here. It says element not found.")
+<A NAME="74"></A></FONT><FONT ID="SingleLineComment">//                                final Exception e__) {
+<A NAME="75"></A></FONT><FONT ID="SingleLineComment">//                            logger.debug(e__.getMessage());
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">//                        }
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//                    signOnDisplayLink:
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//                    {
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//                        if (getUsername() != null) {
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//                            final Element usersName = $(MarkupTag.P);
+<A NAME="82"></A></FONT><FONT ID="SingleLineComment">//                            usersName.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0004") + getUsernameAsValid());
+<A NAME="83"></A></FONT><FONT ID="SingleLineComment">//                            $(Main_othersidebar_identity).appendChild(usersName);
+<A NAME="84"></A></FONT><FONT ID="SingleLineComment">//                        } else {
+<A NAME="85"></A></FONT><FONT ID="SingleLineComment">//                            final Element locationElem = $(MarkupTag.P);
+<A NAME="86"></A></FONT><FONT ID="SingleLineComment">//                            //locationElem.setTextContent(gUI.getString("ai.ilikeplaces.logic.Listeners.ListenerMain.0005") + location);
+<A NAME="87"></A></FONT><FONT ID="SingleLineComment">//                            $(Main_othersidebar_identity).appendChild(locationElem);
+<A NAME="88"></A></FONT><FONT ID="SingleLineComment">//                        }
+<A NAME="89"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="90"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="91"></A></FONT><FONT ID="SingleLineComment">//                    setProfileLink:
+<A NAME="92"></A></FONT><FONT ID="SingleLineComment">//                    {
+<A NAME="93"></A></FONT><FONT ID="SingleLineComment">//                        try {
+<A NAME="94"></A></FONT><FONT ID="SingleLineComment">//                            if (getUsername() != null) {
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.home.getURL());
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//                            } else {
+<A NAME="97"></A></FONT><FONT ID="SingleLineComment">//                                $(Main_othersidebar_profile_link).setAttribute("href", Controller.Page.signup.getURL());
+<A NAME="98"></A></FONT><FONT ID="SingleLineComment">//                            }
+<A NAME="99"></A></FONT><FONT ID="SingleLineComment">//                        } catch (final Throwable t) {
+<A NAME="100"></A></FONT><FONT ID="SingleLineComment">//                            Loggers.EXCEPTION.error("", t);
+<A NAME="101"></A></FONT><FONT ID="SingleLineComment">//                        }
+<A NAME="102"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="103"></A></FONT><FONT ID="SingleLineComment">//                    setProfilePhotoLink:
+<A NAME="104"></A></FONT><FONT ID="SingleLineComment">//                    {
+<A NAME="105"></A></FONT><FONT ID="SingleLineComment">//                        try {
+<A NAME="106"></A></FONT><FONT ID="SingleLineComment">//                            if (getUsername() != null) {
+<A NAME="107"></A></FONT><FONT ID="SingleLineComment">//                                /**
+<A NAME="108"></A></FONT><FONT ID="SingleLineComment">//                                 * TODO check for db failure
+<A NAME="109"></A></FONT><FONT ID="SingleLineComment">//                                 */
+<A NAME="110"></A></FONT><FONT ID="SingleLineComment">//                                String url = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(new HumanId(getUsernameAsValid())).returnValueBadly();
+<A NAME="111"></A></FONT><FONT ID="SingleLineComment">//                                url = url == null ? null : RBGet.globalConfig.getString("PROFILE_PHOTOS") + url;
+<A NAME="112"></A></FONT><FONT ID="SingleLineComment">//                                if (url != null) {
+<A NAME="113"></A></FONT><FONT ID="SingleLineComment">//                                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(), url);
+<A NAME="114"></A></FONT><FONT ID="SingleLineComment">//                                }
+<A NAME="115"></A></FONT><FONT ID="SingleLineComment">//                            }
+<A NAME="116"></A></FONT><FONT ID="SingleLineComment">//                        } catch (final Throwable t) {
+<A NAME="117"></A></FONT><FONT ID="SingleLineComment">//                            EXCEPTION.error("{}", t);
+<A NAME="118"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="119"></A></FONT><FONT ID="SingleLineComment">//                        }
+<A NAME="120"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="121"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="122"></A></FONT><FONT ID="SingleLineComment">//                if (getUsername() != null) {
+<A NAME="123"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="124"></A></FONT><FONT ID="SingleLineComment">//                    Return&lt;List&lt;PublicPhoto&gt;&gt; r = DB.getHumanCRUDPublicPhotoLocal(true).rPublicPhoto(getUsernameAsValid());
+<A NAME="125"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="126"></A></FONT><FONT ID="SingleLineComment">//                    if (r.returnStatus() == 0) {
+<A NAME="127"></A></FONT><FONT ID="SingleLineComment">//                        for (final PublicPhoto publicPhoto : r.returnValue()) {
+<A NAME="128"></A></FONT><FONT ID="SingleLineComment">//                            new PhotoCRUD(request__, $(Controller.Page.Main_center_main), publicPhoto, getUsernameAsValid()) {
+<A NAME="129"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="130"></A></FONT><FONT ID="SingleLineComment">//                                @Override
+<A NAME="131"></A></FONT><FONT ID="SingleLineComment">//                                protected void init(final Object... initArgs) {
+<A NAME="132"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="133"></A></FONT><FONT ID="SingleLineComment">//                                    $$(pc_photo_permalink).setAttribute(MarkupTag.A.href(), "");
+<A NAME="134"></A></FONT><FONT ID="SingleLineComment">//                                    $$(pc_photo).setAttribute(MarkupTag.A.src(), publicPhoto.getPublicPhotoURLPath());
+<A NAME="135"></A></FONT><FONT ID="SingleLineComment">//                                    $$(pc_photo_description).setAttribute(MarkupTag.TEXTAREA.value(), publicPhoto.getPublicPhotoDescription());
+<A NAME="136"></A></FONT><FONT ID="SingleLineComment">//                                }
+<A NAME="137"></A></FONT><FONT ID="SingleLineComment">//                            };
+<A NAME="138"></A></FONT><FONT ID="SingleLineComment">//                        }
+<A NAME="139"></A></FONT><FONT ID="SingleLineComment">//                    } else {
+<A NAME="140"></A></FONT><FONT ID="SingleLineComment">//                        $(Main_notice).setTextContent(r.returnMsg());
+<A NAME="141"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="142"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="143"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="144"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="145"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="146"></A></FONT><FONT ID="SingleLineComment">//            /**
+<A NAME="147"></A></FONT><FONT ID="SingleLineComment">//             * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="148"></A></FONT><FONT ID="SingleLineComment">//             */
+<A NAME="149"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="150"></A></FONT><FONT ID="SingleLineComment">//            protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__) {
+<A NAME="151"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="152"></A></FONT><FONT ID="SingleLineComment">//        };
+<A NAME="153"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="154"></A></FONT><FONT ID="SingleLineComment">//}
+<A NAME="155"></A></FONT></pre>
+</BODY>
+</HTML>

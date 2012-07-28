@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>TestBCrypt (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TestBCrypt.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="SingleLineComment">//package ai.ilikeplaces.security.blowfish.jbcrypt;
+<A NAME="2"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="3"></A></FONT><FONT ID="SingleLineComment">//// Copyright (c) 2006 Damien Miller &lt;djm@mindrot.org&gt;
+<A NAME="4"></A></FONT><FONT ID="SingleLineComment">////
+<A NAME="5"></A></FONT><FONT ID="SingleLineComment">//// Permission to use, copy, modify, and distribute this software for any
+<A NAME="6"></A></FONT><FONT ID="SingleLineComment">//// purpose with or without fee is hereby granted, provided that the above
+<A NAME="7"></A></FONT><FONT ID="SingleLineComment">//// copyright notice and this permission notice appear in all copies.
+<A NAME="8"></A></FONT><FONT ID="SingleLineComment">////
+<A NAME="9"></A></FONT><FONT ID="SingleLineComment">//// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+<A NAME="10"></A></FONT><FONT ID="SingleLineComment">//// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+<A NAME="11"></A></FONT><FONT ID="SingleLineComment">//// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+<A NAME="12"></A></FONT><FONT ID="SingleLineComment">//// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+<A NAME="13"></A></FONT><FONT ID="SingleLineComment">//// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+<A NAME="14"></A></FONT><FONT ID="SingleLineComment">//// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+<A NAME="15"></A></FONT><FONT ID="SingleLineComment">//// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+<A NAME="16"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="17"></A></FONT><FONT ID="SingleLineComment">//import junit.framework.TestCase;
+<A NAME="18"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="19"></A></FONT><FONT ID="SingleLineComment">///**
+<A NAME="20"></A></FONT><FONT ID="SingleLineComment">// * JUnit unit tests for BCrypt routines
+<A NAME="21"></A></FONT><FONT ID="SingleLineComment">// * @author Damien Miller
+<A NAME="22"></A></FONT><FONT ID="SingleLineComment">// * @version 0.2
+<A NAME="23"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="24"></A></FONT><FONT ID="SingleLineComment">//public class TestBCrypt extends TestCase {
+<A NAME="25"></A></FONT><FONT ID="SingleLineComment">//  String test_vectors[][] = {
+<A NAME="26"></A></FONT><FONT ID="SingleLineComment">//          { "",
+<A NAME="27"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$DCq7YPn5Rq63x1Lad4cll.",
+<A NAME="28"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$DCq7YPn5Rq63x1Lad4cll.TV4S6ytwfsfvkgY8jIucDrjc8deX1s." },
+<A NAME="29"></A></FONT><FONT ID="SingleLineComment">//          { "",
+<A NAME="30"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$HqWuK6/Ng6sg9gQzbLrgb.",
+<A NAME="31"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$HqWuK6/Ng6sg9gQzbLrgb.Tl.ZHfXLhvt/SgVyWhQqgqcZ7ZuUtye" },
+<A NAME="32"></A></FONT><FONT ID="SingleLineComment">//          { "",
+<A NAME="33"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$k1wbIrmNyFAPwPVPSVa/ze",
+<A NAME="34"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$k1wbIrmNyFAPwPVPSVa/zecw2BCEnBwVS2GbrmgzxFUOqW9dk4TCW" },
+<A NAME="35"></A></FONT><FONT ID="SingleLineComment">//          { "",
+<A NAME="36"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$k42ZFHFWqBp3vWli.nIn8u",
+<A NAME="37"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$k42ZFHFWqBp3vWli.nIn8uYyIkbvYRvodzbfbK18SSsY.CsIQPlxO" },
+<A NAME="38"></A></FONT><FONT ID="SingleLineComment">//          { "a",
+<A NAME="39"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$m0CrhHm10qJ3lXRY.5zDGO",
+<A NAME="40"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$m0CrhHm10qJ3lXRY.5zDGO3rS2KdeeWLuGmsfGlMfOxih58VYVfxe" },
+<A NAME="41"></A></FONT><FONT ID="SingleLineComment">//          { "a",
+<A NAME="42"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$cfcvVd2aQ8CMvoMpP2EBfe",
+<A NAME="43"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$cfcvVd2aQ8CMvoMpP2EBfeodLEkkFJ9umNEfPD18.hUF62qqlC/V." },
+<A NAME="44"></A></FONT><FONT ID="SingleLineComment">//          { "a",
+<A NAME="45"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$k87L/MF28Q673VKh8/cPi.",
+<A NAME="46"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$k87L/MF28Q673VKh8/cPi.SUl7MU/rWuSiIDDFayrKk/1tBsSQu4u" },
+<A NAME="47"></A></FONT><FONT ID="SingleLineComment">//          { "a",
+<A NAME="48"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$8NJH3LsPrANStV6XtBakCe",
+<A NAME="49"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$8NJH3LsPrANStV6XtBakCez0cKHXVxmvxIlcz785vxAIZrihHZpeS" },
+<A NAME="50"></A></FONT><FONT ID="SingleLineComment">//          { "abc",
+<A NAME="51"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$If6bvum7DFjUnE9p2uDeDu",
+<A NAME="52"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$If6bvum7DFjUnE9p2uDeDu0YHzrHM6tf.iqN8.yx.jNN1ILEf7h0i" },
+<A NAME="53"></A></FONT><FONT ID="SingleLineComment">//          { "abc",
+<A NAME="54"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$Ro0CUfOqk6cXEKf3dyaM7O",
+<A NAME="55"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$Ro0CUfOqk6cXEKf3dyaM7OhSCvnwM9s4wIX9JeLapehKK5YdLxKcm" },
+<A NAME="56"></A></FONT><FONT ID="SingleLineComment">//          { "abc",
+<A NAME="57"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$WvvTPHKwdBJ3uk0Z37EMR.",
+<A NAME="58"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$WvvTPHKwdBJ3uk0Z37EMR.hLA2W6N9AEBhEgrAOljy2Ae5MtaSIUi" },
+<A NAME="59"></A></FONT><FONT ID="SingleLineComment">//          { "abc",
+<A NAME="60"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$EXRkfkdmXn2gzds2SSitu.",
+<A NAME="61"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$EXRkfkdmXn2gzds2SSitu.MW9.gAVqa9eLS1//RYtYCmB1eLHg.9q" },
+<A NAME="62"></A></FONT><FONT ID="SingleLineComment">//          { "abcdefghijklmnopqrstuvwxyz",
+<A NAME="63"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$.rCVZVOThsIa97pEDOxvGu",
+<A NAME="64"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$.rCVZVOThsIa97pEDOxvGuRRgzG64bvtJ0938xuqzv18d3ZpQhstC" },
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//          { "abcdefghijklmnopqrstuvwxyz",
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$aTsUwsyowQuzRrDqFflhge",
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$aTsUwsyowQuzRrDqFflhgekJ8d9/7Z3GV3UcgvzQW3J5zMyrTvlz." },
+<A NAME="68"></A></FONT><FONT ID="SingleLineComment">//          { "abcdefghijklmnopqrstuvwxyz",
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$fVH8e28OQRj9tqiDXs1e1u",
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$fVH8e28OQRj9tqiDXs1e1uxpsjN0c7II7YPKXua2NAKYvM6iQk7dq" },
+<A NAME="71"></A></FONT><FONT ID="SingleLineComment">//          { "abcdefghijklmnopqrstuvwxyz",
+<A NAME="72"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$D4G5f18o7aMMfwasBL7Gpu",
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$D4G5f18o7aMMfwasBL7GpuQWuP3pkrZrOAnqP.bmezbMng.QwJ/pG" },
+<A NAME="74"></A></FONT><FONT ID="SingleLineComment">//          { "~!@#$%^&amp;*()      ~!@#$%^&amp;*()PNBFRD",
+<A NAME="75"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$fPIsBO8qRqkjj273rfaOI.",
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">//          "$2a$06$fPIsBO8qRqkjj273rfaOI.HtSV9jLDpTbZn782DC6/t7qT67P6FfO" },
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//          { "~!@#$%^&amp;*()      ~!@#$%^&amp;*()PNBFRD",
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$Eq2r4G/76Wv39MzSX262hu",
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//          "$2a$08$Eq2r4G/76Wv39MzSX262huzPz612MZiYHVUJe/OcOql2jo4.9UxTW" },
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//          { "~!@#$%^&amp;*()      ~!@#$%^&amp;*()PNBFRD",
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$LgfYWkbzEvQ4JakH7rOvHe",
+<A NAME="82"></A></FONT><FONT ID="SingleLineComment">//          "$2a$10$LgfYWkbzEvQ4JakH7rOvHe0y8pHKF9OaFgwUZ2q7W2FFZmZzJYlfS" },
+<A NAME="83"></A></FONT><FONT ID="SingleLineComment">//          { "~!@#$%^&amp;*()      ~!@#$%^&amp;*()PNBFRD",
+<A NAME="84"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$WApznUOJfkEGSmYRfnkrPO",
+<A NAME="85"></A></FONT><FONT ID="SingleLineComment">//          "$2a$12$WApznUOJfkEGSmYRfnkrPOr466oFDCaj4b6HY3EXGvfxm43seyhgC" },
+<A NAME="86"></A></FONT><FONT ID="SingleLineComment">//      };
+<A NAME="87"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="88"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="89"></A></FONT><FONT ID="SingleLineComment">//   * Entry point for unit tests
+<A NAME="90"></A></FONT><FONT ID="SingleLineComment">//   * @param args unused
+<A NAME="91"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="92"></A></FONT><FONT ID="SingleLineComment">//  public static void LocationMain(String[] args) {
+<A NAME="93"></A></FONT><FONT ID="SingleLineComment">//      junit.textui.TestRunner.run(TestBCrypt.class);
+<A NAME="94"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="97"></A></FONT><FONT ID="SingleLineComment">//   * Test method for 'BCrypt.hashpw(String, String)'
+<A NAME="98"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="99"></A></FONT><FONT ID="SingleLineComment">//  public void testHashpw() {
+<A NAME="100"></A></FONT><FONT ID="SingleLineComment">//      System.out.print("BCrypt.hashpw(): ");
+<A NAME="101"></A></FONT><FONT ID="SingleLineComment">//      for (int i = 0; i &lt; test_vectors.length; i++) {
+<A NAME="102"></A></FONT><FONT ID="SingleLineComment">//          String plain = test_vectors[i][0];
+<A NAME="103"></A></FONT><FONT ID="SingleLineComment">//          String salt = test_vectors[i][1];
+<A NAME="104"></A></FONT><FONT ID="SingleLineComment">//          String expected = test_vectors[i][2];
+<A NAME="105"></A></FONT><FONT ID="SingleLineComment">//          String hashed = BCrypt.hashpw(plain, salt);
+<A NAME="106"></A></FONT><FONT ID="SingleLineComment">//          assertEquals(hashed, expected);
+<A NAME="107"></A></FONT><FONT ID="SingleLineComment">//          System.out.print(".");
+<A NAME="108"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="109"></A></FONT><FONT ID="SingleLineComment">//      System.out.println("");
+<A NAME="110"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="111"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="112"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="113"></A></FONT><FONT ID="SingleLineComment">//   * Test method for 'BCrypt.gensalt(int)'
+<A NAME="114"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="115"></A></FONT><FONT ID="SingleLineComment">//  public void testGensaltInt() {
+<A NAME="116"></A></FONT><FONT ID="SingleLineComment">//      System.out.print("BCrypt.gensalt(log_rounds):");
+<A NAME="117"></A></FONT><FONT ID="SingleLineComment">//      for (int i = 4; i &lt;= 12; i++) {
+<A NAME="118"></A></FONT><FONT ID="SingleLineComment">//          System.out.print(" " + Integer.toString(i) + ":");
+<A NAME="119"></A></FONT><FONT ID="SingleLineComment">//          for (int j = 0; j &lt; test_vectors.length; j += 4) {
+<A NAME="120"></A></FONT><FONT ID="SingleLineComment">//              String plain = test_vectors[j][0];
+<A NAME="121"></A></FONT><FONT ID="SingleLineComment">//              String salt = BCrypt.gensalt(i);
+<A NAME="122"></A></FONT><FONT ID="SingleLineComment">//              String hashed1 = BCrypt.hashpw(plain, salt);
+<A NAME="123"></A></FONT><FONT ID="SingleLineComment">//              String hashed2 = BCrypt.hashpw(plain, hashed1);
+<A NAME="124"></A></FONT><FONT ID="SingleLineComment">//              assertEquals(hashed1, hashed2);
+<A NAME="125"></A></FONT><FONT ID="SingleLineComment">//              System.out.print(".");
+<A NAME="126"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="127"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="128"></A></FONT><FONT ID="SingleLineComment">//      System.out.println("");
+<A NAME="129"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="130"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="131"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="132"></A></FONT><FONT ID="SingleLineComment">//   * Test method for 'BCrypt.gensalt()'
+<A NAME="133"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="134"></A></FONT><FONT ID="SingleLineComment">//  public void testGensalt() {
+<A NAME="135"></A></FONT><FONT ID="SingleLineComment">//      System.out.print("BCrypt.gensalt(): ");
+<A NAME="136"></A></FONT><FONT ID="SingleLineComment">//      for (int i = 0; i &lt; test_vectors.length; i += 4) {
+<A NAME="137"></A></FONT><FONT ID="SingleLineComment">//          String plain = test_vectors[i][0];
+<A NAME="138"></A></FONT><FONT ID="SingleLineComment">//          String salt = BCrypt.gensalt();
+<A NAME="139"></A></FONT><FONT ID="SingleLineComment">//          String hashed1 = BCrypt.hashpw(plain, salt);
+<A NAME="140"></A></FONT><FONT ID="SingleLineComment">//          String hashed2 = BCrypt.hashpw(plain, hashed1);
+<A NAME="141"></A></FONT><FONT ID="SingleLineComment">//          assertEquals(hashed1, hashed2);
+<A NAME="142"></A></FONT><FONT ID="SingleLineComment">//          System.out.print(".");
+<A NAME="143"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="144"></A></FONT><FONT ID="SingleLineComment">//      System.out.println("");
+<A NAME="145"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="146"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="147"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="148"></A></FONT><FONT ID="SingleLineComment">//   * Test method for 'BCrypt.checkpw(String, String)'
+<A NAME="149"></A></FONT><FONT ID="SingleLineComment">//   * expecting success
+<A NAME="150"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="151"></A></FONT><FONT ID="SingleLineComment">//  public void testCheckpw_success() {
+<A NAME="152"></A></FONT><FONT ID="SingleLineComment">//      System.out.print("BCrypt.checkpw w/ good passwords: ");
+<A NAME="153"></A></FONT><FONT ID="SingleLineComment">//      for (int i = 0; i &lt; test_vectors.length; i++) {
+<A NAME="154"></A></FONT><FONT ID="SingleLineComment">//          String plain = test_vectors[i][0];
+<A NAME="155"></A></FONT><FONT ID="SingleLineComment">//          String expected = test_vectors[i][2];
+<A NAME="156"></A></FONT><FONT ID="SingleLineComment">//          assertTrue(BCrypt.checkpw(plain, expected));
+<A NAME="157"></A></FONT><FONT ID="SingleLineComment">//          System.out.print(".");
+<A NAME="158"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="159"></A></FONT><FONT ID="SingleLineComment">//      System.out.println("");
+<A NAME="160"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="161"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="162"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="163"></A></FONT><FONT ID="SingleLineComment">//   * Test method for 'BCrypt.checkpw(String, String)'
+<A NAME="164"></A></FONT><FONT ID="SingleLineComment">//   * expecting failure
+<A NAME="165"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="166"></A></FONT><FONT ID="SingleLineComment">//  public void testCheckpw_failure() {
+<A NAME="167"></A></FONT><FONT ID="SingleLineComment">//      System.out.print("BCrypt.checkpw w/ bad passwords: ");
+<A NAME="168"></A></FONT><FONT ID="SingleLineComment">//      for (int i = 0; i &lt; test_vectors.length; i++) {
+<A NAME="169"></A></FONT><FONT ID="SingleLineComment">//          int broken_index = (i + 4) % test_vectors.length;
+<A NAME="170"></A></FONT><FONT ID="SingleLineComment">//          String plain = test_vectors[i][0];
+<A NAME="171"></A></FONT><FONT ID="SingleLineComment">//          String expected = test_vectors[broken_index][2];
+<A NAME="172"></A></FONT><FONT ID="SingleLineComment">//          assertFalse(BCrypt.checkpw(plain,expected));
+<A NAME="173"></A></FONT><FONT ID="SingleLineComment">//          System.out.print(".");
+<A NAME="174"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="175"></A></FONT><FONT ID="SingleLineComment">//      System.out.println("");
+<A NAME="176"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="177"></A></FONT><FONT ID="SingleLineComment">//}
+<A NAME="178"></A></FONT></pre>
+</BODY>
+</HTML>

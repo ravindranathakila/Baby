@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.validators.unit.BoundingBox (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">BoundingBox.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.validators.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> com.google.gdata.data.geo.impl.W3CPoint;
+<A NAME="6"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="7"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.IsInvariant;
+<A NAME="8"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.MaxSize;
+<A NAME="9"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.MinSize;
+<A NAME="10"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotNull;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * Created by IntelliJ IDEA.
+<A NAME="14"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="15"></A> * Date: Sep 12, 2010
+<A NAME="16"></A> * Time: 7:29:37 PM
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A>
+<A NAME="19"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="20"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> BoundingBox <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>[]&gt; {
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> BoundingBox() {
+<A NAME="22"></A>    }
+<A NAME="23"></A>
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="FormalComment">/**
+<A NAME="26"></A>     * @param commaSeparatedBoundingBox
+<A NAME="27"></A>     * @return
+<A NAME="28"></A>     */</FONT>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A> setObj(<FONT ID="Final">final</FONT> String commaSeparatedBoundingBox) {
+<A NAME="30"></A>        <FONT ID="Super">super</FONT>.setObj(getGeoCoordsByBounds(commaSeparatedBoundingBox));
+<A NAME="31"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="32"></A>    }
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="FormalComment">/**
+<A NAME="35"></A>     * @param swlatitude
+<A NAME="36"></A>     * @param swlongitude
+<A NAME="37"></A>     * @param nelatitude
+<A NAME="38"></A>     * @param nelongitude
+<A NAME="39"></A>     * @return
+<A NAME="40"></A>     */</FONT>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/BoundingBox.java.html">BoundingBox</A> setObj(<FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> swlatitude, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> swlongitude, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> nelatitude, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> nelongitude) {
+<A NAME="42"></A>        <FONT ID="Super">super</FONT>.setObj(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>[]{(
+<A NAME="43"></A>                <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>) <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>().setObj(swlatitude, swlongitude).getSelfAsValid(),
+<A NAME="44"></A>                (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>) <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>().setObj(nelatitude, nelongitude).getSelfAsValid()
+<A NAME="45"></A>        });
+<A NAME="46"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="47"></A>    }
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>[] getGeoCoordsByBounds(<FONT ID="Final">final</FONT> String commaSeparatedBoundingBox) {
+<A NAME="50"></A>        <FONT ID="Final">final</FONT> String[] vals = commaSeparatedBoundingBox.split(<FONT ID="StringLiteral">","</FONT>);
+<A NAME="51"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>[] bounds = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>[(<FONT ID="Int">int</FONT>) Math.ceil(vals.length / <FONT ID="IntegerLiteral">2</FONT>)];
+<A NAME="52"></A>
+<A NAME="53"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; vals.length; i += <FONT ID="IntegerLiteral">2</FONT>) {
+<A NAME="54"></A>            bounds[i == <FONT ID="IntegerLiteral">0</FONT> ? i : i / <FONT ID="IntegerLiteral">2</FONT>] = (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>) <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>().setObj(vals[i], vals[i + <FONT ID="IntegerLiteral">1</FONT>]).getSelfAsValid();
+<A NAME="55"></A>        }
+<A NAME="56"></A>        <FONT ID="Return">return</FONT> bounds;
+<A NAME="57"></A>    }
+<A NAME="58"></A>
+<A NAME="59"></A>
+<A NAME="60"></A>    @IsInvariant
+<A NAME="61"></A>    @NotNull(message = <FONT ID="StringLiteral">"Sorry! The given coordinates seem to be wrong!"</FONT>)
+<A NAME="62"></A>    @MaxSize(value = <FONT ID="IntegerLiteral">2</FONT>, message = <FONT ID="StringLiteral">"Sorry! Only two values supported"</FONT>)
+<A NAME="63"></A>    @MinSize(value = <FONT ID="IntegerLiteral">2</FONT>, message = <FONT ID="StringLiteral">"Sorry! Two values needed"</FONT>)
+<A NAME="64"></A>    @Override
+<A NAME="65"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>[] getObj() {
+<A NAME="66"></A>        <FONT ID="Return">return</FONT> obj;
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>
+<A NAME="70"></A>    <FONT ID="FormalComment">/**
+<A NAME="71"></A>     * @param w3CPointToBeCheckIfBounded W3CPoint To Be Check If Bounded
+<A NAME="72"></A>     * @return if the given coordinates are within the bounding box(includes if it is on South West Spreading Bounds and Excludes if it is on North East Spreading Bounds)
+<A NAME="73"></A>     */</FONT>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> bounds(<FONT ID="Final">final</FONT> W3CPoint w3CPointToBeCheckIfBounded) {
+<A NAME="75"></A>        <FONT ID="This">this</FONT>.validateThrow(<FONT ID="New">new</FONT> Validator());
+<A NAME="76"></A>
+<A NAME="77"></A>        <FONT ID="Final">final</FONT> W3CPoint is = w3CPointToBeCheckIfBounded;
+<A NAME="78"></A>
+<A NAME="79"></A>        obj[<FONT ID="IntegerLiteral">0</FONT>].validateThrow();
+<A NAME="80"></A>        obj[<FONT ID="IntegerLiteral">1</FONT>].validateThrow();
+<A NAME="81"></A>
+<A NAME="82"></A>        <FONT ID="Final">final</FONT> W3CPoint sw = obj[<FONT ID="IntegerLiteral">0</FONT>].getObjectAsValid();
+<A NAME="83"></A>        <FONT ID="Final">final</FONT> W3CPoint ne = obj[<FONT ID="IntegerLiteral">1</FONT>].getObjectAsValid();
+<A NAME="84"></A>
+<A NAME="85"></A>        <FONT ID="Return">return</FONT> ((sw.getLatitude() &lt;= is.getLatitude()) &amp;&amp; (ne.getLatitude() &gt; is.getLatitude())) &amp;&amp;
+<A NAME="86"></A>                ((sw.getLongitude() &lt;= is.getLongitude()) &amp;&amp; (ne.getLongitude() &gt; is.getLongitude()));
+<A NAME="87"></A>    }
+<A NAME="88"></A>
+<A NAME="89"></A>    <FONT ID="FormalComment">/**
+<A NAME="90"></A>     * @return 3.13343,23.23232 format lat,lng
+<A NAME="91"></A>     */</FONT>
+<A NAME="92"></A>    @Override
+<A NAME="93"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="94"></A>        <FONT ID="Return">return</FONT> getObjectAsValid()[<FONT ID="IntegerLiteral">0</FONT>].getObjectAsValid().getLatitude() + <FONT ID="StringLiteral">","</FONT> + getObjectAsValid()[<FONT ID="IntegerLiteral">0</FONT>].getObjectAsValid().getLongitude() +
+<A NAME="95"></A>                <FONT ID="StringLiteral">","</FONT> +
+<A NAME="96"></A>                getObjectAsValid()[<FONT ID="IntegerLiteral">1</FONT>].getObjectAsValid().getLatitude() + <FONT ID="StringLiteral">","</FONT> + getObjectAsValid()[<FONT ID="IntegerLiteral">1</FONT>].getObjectAsValid().getLongitude();
+<A NAME="97"></A>    }
+<A NAME="98"></A>}
+<A NAME="99"></A></pre>
+</BODY>
+</HTML>

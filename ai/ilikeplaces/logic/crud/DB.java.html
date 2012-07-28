@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.DB (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DB.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">ai.ilikeplaces.security.face.SingletonHashingRemote</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.Singleton;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.Startup;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.naming.Context;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.naming.InitialContext;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.util.Properties;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.util.ResourceBundle;
+<A NAME="21"></A>
+<A NAME="22"></A><FONT ID="FormalComment">/**
+<A NAME="23"></A> * @author Ravindranath Akila
+<A NAME="24"></A> */</FONT>
+<A NAME="25"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="26"></A>@Singleton
+<A NAME="27"></A>@NOTE(note = <FONT ID="StringLiteral">"MADE FINAL AS CONSTRUCTOR THROWS EXCEPTION TO PREVENT UNINITIALIZED VARIABLES. SUBCLASSING SINGLETON NO SENSE ANYWAY."</FONT>)
+<A NAME="28"></A>@FIXME(issue = <FONT ID="StringLiteral">"non injected call should be verified if a user sends false"</FONT>)
+<A NAME="29"></A>@Startup
+<A NAME="30"></A>@Interceptors({MethodTimer.<FONT ID="Class">class</FONT>})
+<A NAME="31"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DB <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A> {
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Properties REMOTE_PROPERTIES = <FONT ID="New">new</FONT> Properties();
+<A NAME="34"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Context REMOTE_CONTEXT = <FONT ID="Null">null</FONT>;
+<A NAME="35"></A>    
+<A NAME="36"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Properties LOCAL_PROPERTIES = <FONT ID="New">new</FONT> Properties();
+<A NAME="37"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Context LOCAL_CONTEXT = <FONT ID="Null">null</FONT>;
+<A NAME="38"></A>    
+<A NAME="39"></A>    
+<A NAME="40"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> OK_ = <FONT ID="False">false</FONT>;
+<A NAME="41"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> ResourceBundle exceptionMsgs = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.ExceptionMsgs"</FONT>);
+<A NAME="42"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">DB</A>.<FONT ID="Class">class</FONT>);
+<A NAME="43"></A>
+<A NAME="44"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NAMING_EXCEPTION = <FONT ID="StringLiteral">"SORRY! I ENCOUNTERED AN NAMING EXCEPTION WHILE DOING A CONTEXT OPERATION."</FONT>;
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="47"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="48"></A>            DB.REMOTE_PROPERTIES.put(Context.INITIAL_CONTEXT_FACTORY, RBGet.globalConfig.getString(<FONT ID="StringLiteral">"oejb.RICF"</FONT>));
+<A NAME="49"></A>            DB.REMOTE_PROPERTIES.put(Context.PROVIDER_URL, RBGet.globalConfig.getString(<FONT ID="StringLiteral">"RICF_LOCATION"</FONT>));
+<A NAME="50"></A>            DB.REMOTE_CONTEXT = <FONT ID="New">new</FONT> InitialContext(REMOTE_PROPERTIES);
+<A NAME="51"></A>            DB.OK_ = <FONT ID="True">true</FONT>;
+<A NAME="52"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="53"></A>            DB.OK_ = <FONT ID="False">false</FONT>;
+<A NAME="54"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="55"></A>        }
+<A NAME="56"></A>    } 
+<A NAME="57"></A>    
+<A NAME="58"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="59"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="60"></A>            DB.LOCAL_PROPERTIES.put(Context.INITIAL_CONTEXT_FACTORY, RBGet.globalConfig.getString(<FONT ID="StringLiteral">"oejb.LICF"</FONT>));
+<A NAME="61"></A>            DB.LOCAL_CONTEXT = <FONT ID="New">new</FONT> InitialContext(LOCAL_PROPERTIES);
+<A NAME="62"></A>            DB.OK_ = <FONT ID="True">true</FONT>;
+<A NAME="63"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="64"></A>            DB.OK_ = <FONT ID="False">false</FONT>;
+<A NAME="65"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="66"></A>        }
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>
+<A NAME="70"></A>
+<A NAME="71"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> isOK() {
+<A NAME="72"></A>        <FONT ID="If">if</FONT> (!OK_) {
+<A NAME="73"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalStateException(exceptionMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.static_initialization_failure"</FONT>));
+<A NAME="74"></A>        }
+<A NAME="75"></A>    }
+<A NAME="76"></A>
+<A NAME="77"></A>    <FONT ID="Public">public</FONT> DB() {
+<A NAME="78"></A>    }
+<A NAME="79"></A>
+<A NAME="80"></A>    @Override
+<A NAME="81"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A> getHumanCRUDPublicPhotoLocal() {
+<A NAME="82"></A>        isOK();
+<A NAME="83"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="84"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="85"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDPublicPhotoLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="86"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="87"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="88"></A>        }
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A>) LogNull.logThrow();
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A> getHumanCRUDPublicPhotoLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="93"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="94"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="95"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDPublicPhotoLocal();
+<A NAME="96"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="97"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="98"></A>        }
+<A NAME="99"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A>) LogNull.logThrow();
+<A NAME="100"></A>    }
+<A NAME="101"></A>
+<A NAME="102"></A>    @Override
+<A NAME="103"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhotoLocal.java.html">HumanCRUDPrivatePhotoLocal</A> getHumanCRUDPrivatePhotoLocal() {
+<A NAME="104"></A>        isOK();
+<A NAME="105"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhotoLocal.java.html">HumanCRUDPrivatePhotoLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="106"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="107"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhotoLocal.java.html">HumanCRUDPrivatePhotoLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDPrivatePhotoLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="108"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="109"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="110"></A>        }
+<A NAME="111"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhotoLocal.java.html">HumanCRUDPrivatePhotoLocal</A>) LogNull.logThrow();
+<A NAME="112"></A>    }
+<A NAME="113"></A>
+<A NAME="114"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhotoLocal.java.html">HumanCRUDPrivatePhotoLocal</A> getHumanCRUDPrivatePhotoLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="115"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhotoLocal.java.html">HumanCRUDPrivatePhotoLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="116"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="117"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDPrivatePhotoLocal();
+<A NAME="118"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="119"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="120"></A>        }
+<A NAME="121"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhotoLocal.java.html">HumanCRUDPrivatePhotoLocal</A>) LogNull.logThrow();
+<A NAME="122"></A>    }
+<A NAME="123"></A>
+<A NAME="124"></A>    @Override
+<A NAME="125"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A> getHumanCRUDHumanLocal() {
+<A NAME="126"></A>        isOK();
+<A NAME="127"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="128"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="129"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDHumanLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="130"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="131"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="132"></A>        }
+<A NAME="133"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A>) LogNull.logThrow();
+<A NAME="134"></A>    }
+<A NAME="135"></A>
+<A NAME="136"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A> getHumanCRUDHumanLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="137"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="138"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="139"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDHumanLocal();
+<A NAME="140"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="141"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="142"></A>        }
+<A NAME="143"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A>) LogNull.logThrow();
+<A NAME="144"></A>
+<A NAME="145"></A>    }
+<A NAME="146"></A>
+<A NAME="147"></A>    @Override
+<A NAME="148"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A> getHumanCRUDLocationLocal() {
+<A NAME="149"></A>        isOK();
+<A NAME="150"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="151"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="152"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDLocationLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="153"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="154"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="155"></A>        }
+<A NAME="156"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A>) LogNull.logThrow();
+<A NAME="157"></A>    }
+<A NAME="158"></A>
+<A NAME="159"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A> getHumanCRUDLocationLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="160"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="161"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="162"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDLocationLocal();
+<A NAME="163"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="164"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="165"></A>        }
+<A NAME="166"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A>) LogNull.logThrow();
+<A NAME="167"></A>
+<A NAME="168"></A>    }
+<A NAME="169"></A>
+<A NAME="170"></A>    @Override
+<A NAME="171"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDMapLocal.java.html">HumanCRUDMapLocal</A> getHumanCRUDMapLocal() {
+<A NAME="172"></A>        isOK();
+<A NAME="173"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDMapLocal.java.html">HumanCRUDMapLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="174"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="175"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDMapLocal.java.html">HumanCRUDMapLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDMapLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="176"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="177"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="178"></A>        }
+<A NAME="179"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDMapLocal.java.html">HumanCRUDMapLocal</A>) LogNull.logThrow();
+<A NAME="180"></A>    }
+<A NAME="181"></A>
+<A NAME="182"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDMapLocal.java.html">HumanCRUDMapLocal</A> getHumanCRUDMapLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="183"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDMapLocal.java.html">HumanCRUDMapLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="184"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="185"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDMapLocal();
+<A NAME="186"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="187"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="188"></A>        }
+<A NAME="189"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDMapLocal.java.html">HumanCRUDMapLocal</A>) LogNull.logThrow();
+<A NAME="190"></A>
+<A NAME="191"></A>    }
+<A NAME="192"></A>
+<A NAME="193"></A>    @Override
+<A NAME="194"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A> getHumanCrudPrivateEventLocal() {
+<A NAME="195"></A>        isOK();
+<A NAME="196"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="197"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="198"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDPrivateEventLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="199"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="200"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="201"></A>        }
+<A NAME="202"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A>) LogNull.logThrow();
+<A NAME="203"></A>    }
+<A NAME="204"></A>
+<A NAME="205"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A> getHumanCrudPrivateEventLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="206"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="207"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="208"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCrudPrivateEventLocal();
+<A NAME="209"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="210"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="211"></A>        }
+<A NAME="212"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A>) LogNull.logThrow();
+<A NAME="213"></A>    }
+<A NAME="214"></A>
+<A NAME="215"></A>
+<A NAME="216"></A>    @Override
+<A NAME="217"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A> getHumanCrudPrivateLocationLocal() {
+<A NAME="218"></A>        isOK();
+<A NAME="219"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="220"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="221"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDPrivateLocationLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="222"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="223"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="224"></A>        }
+<A NAME="225"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A>) LogNull.logThrow();
+<A NAME="226"></A>
+<A NAME="227"></A>    }
+<A NAME="228"></A>
+<A NAME="229"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A> getHumanCrudPrivateLocationLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="230"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="231"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="232"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCrudPrivateLocationLocal();
+<A NAME="233"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="234"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="235"></A>        }
+<A NAME="236"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A>) LogNull.logThrow();
+<A NAME="237"></A>
+<A NAME="238"></A>    }
+<A NAME="239"></A>
+<A NAME="240"></A>
+<A NAME="241"></A>    @Override
+<A NAME="242"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDWallLocal.java.html">HumanCRUDWallLocal</A> getHumanCrudWallLocal() {
+<A NAME="243"></A>        isOK();
+<A NAME="244"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDWallLocal.java.html">HumanCRUDWallLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="245"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="246"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDWallLocal.java.html">HumanCRUDWallLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDWallLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="247"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="248"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="249"></A>        }
+<A NAME="250"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDWallLocal.java.html">HumanCRUDWallLocal</A>) LogNull.logThrow();
+<A NAME="251"></A>
+<A NAME="252"></A>    }
+<A NAME="253"></A>
+<A NAME="254"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDWallLocal.java.html">HumanCRUDWallLocal</A> getHumanCrudWallLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="255"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDWallLocal.java.html">HumanCRUDWallLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="256"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="257"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCrudWallLocal();
+<A NAME="258"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="259"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="260"></A>        }
+<A NAME="261"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDWallLocal.java.html">HumanCRUDWallLocal</A>) LogNull.logThrow();
+<A NAME="262"></A>
+<A NAME="263"></A>    }
+<A NAME="264"></A>
+<A NAME="265"></A>    @Override
+<A NAME="266"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A> getSingletonHashingFaceLocal() {
+<A NAME="267"></A>        isOK();
+<A NAME="268"></A>        <A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="269"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="270"></A>            h = (<A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A>) REMOTE_CONTEXT.lookup(SingletonHashingRemote.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="271"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="272"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="273"></A>        }
+<A NAME="274"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A>) LogNull.logThrow();
+<A NAME="275"></A>
+<A NAME="276"></A>    }
+<A NAME="277"></A>
+<A NAME="278"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A> getSingletonHashingFaceLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="279"></A>        <A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="280"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="281"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getSingletonHashingFaceLocal();
+<A NAME="282"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="283"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="284"></A>        }
+<A NAME="285"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A>) LogNull.logThrow();
+<A NAME="286"></A>
+<A NAME="287"></A>    }
+<A NAME="288"></A>
+<A NAME="289"></A>    @Override
+<A NAME="290"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> getHumanUserLocal() {
+<A NAME="291"></A>        isOK();
+<A NAME="292"></A>        <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="293"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="294"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>) REMOTE_CONTEXT.lookup(HumanUserLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="295"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="296"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="297"></A>        }
+<A NAME="298"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>) LogNull.logThrow();
+<A NAME="299"></A>
+<A NAME="300"></A>    }
+<A NAME="301"></A>
+<A NAME="302"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> getHumanUserLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="303"></A>        <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="304"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="305"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanUserLocal();
+<A NAME="306"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="307"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="308"></A>        }
+<A NAME="309"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>) LogNull.logThrow();
+<A NAME="310"></A>
+<A NAME="311"></A>    }
+<A NAME="312"></A>
+<A NAME="313"></A>
+<A NAME="314"></A>    @Override
+<A NAME="315"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A> getHumanCRUDHumansUnseenLocal() {
+<A NAME="316"></A>        isOK();
+<A NAME="317"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="318"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="319"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDHumansUnseenLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="320"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="321"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="322"></A>        }
+<A NAME="323"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A>) LogNull.logThrow();
+<A NAME="324"></A>
+<A NAME="325"></A>    }
+<A NAME="326"></A>
+<A NAME="327"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A> getHumanCRUDHumansUnseenLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="328"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="329"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="330"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDHumansUnseenLocal();
+<A NAME="331"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="332"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="333"></A>        }
+<A NAME="334"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A>) LogNull.logThrow();
+<A NAME="335"></A>
+<A NAME="336"></A>    }
+<A NAME="337"></A>
+<A NAME="338"></A>    @Override
+<A NAME="339"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDTribeLocal.java.html">HumanCRUDTribeLocal</A> getHumanCRUDTribeLocal() {
+<A NAME="340"></A>        isOK();
+<A NAME="341"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDTribeLocal.java.html">HumanCRUDTribeLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="342"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="343"></A>            h = (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDTribeLocal.java.html">HumanCRUDTribeLocal</A>) REMOTE_CONTEXT.lookup(HumanCRUDTribeLocal.NAME.replace(<FONT ID="StringLiteral">"Local"</FONT>, <FONT ID="StringLiteral">"Remote"</FONT>));
+<A NAME="344"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="345"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="346"></A>        }
+<A NAME="347"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDTribeLocal.java.html">HumanCRUDTribeLocal</A>) LogNull.logThrow();
+<A NAME="348"></A>
+<A NAME="349"></A>    }
+<A NAME="350"></A>
+<A NAME="351"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDTribeLocal.java.html">HumanCRUDTribeLocal</A> getHumanCRUDTribeLocal(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> nonInjected) {
+<A NAME="352"></A>        <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDTribeLocal.java.html">HumanCRUDTribeLocal</A> h = <FONT ID="Null">null</FONT>;
+<A NAME="353"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="354"></A>            h = ((<A HREF="../../../../ai/ilikeplaces/logic/crud/DBLocal.java.html">DBLocal</A>) LOCAL_CONTEXT.lookup(DBLocal.NAME)).getHumanCRUDTribeLocal();
+<A NAME="355"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="356"></A>            logger.error(NAMING_EXCEPTION, ex);
+<A NAME="357"></A>        }
+<A NAME="358"></A>        <FONT ID="Return">return</FONT> h != <FONT ID="Null">null</FONT> ? h : (<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDTribeLocal.java.html">HumanCRUDTribeLocal</A>) LogNull.logThrow();
+<A NAME="359"></A>
+<A NAME="360"></A>    }
+<A NAME="361"></A>
+<A NAME="362"></A>}
+<A NAME="363"></A></pre>
+</BODY>
+</HTML>

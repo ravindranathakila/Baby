@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.RPrivatePhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">RPrivatePhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">ai.ilikeplaces.entities.Album</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">ai.ilikeplaces.entities.HumansPrivatePhoto</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">ai.ilikeplaces.entities.PrivatePhoto</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourException.java.html">ai.ilikeplaces.exception.DBDishonourException</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">ai.ilikeplaces.util.jpa.RefreshException</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="21"></A>
+<A NAME="22"></A><FONT ID="FormalComment">/**
+<A NAME="23"></A> * @author Ravindranath Akila
+<A NAME="24"></A> */</FONT>
+<A NAME="25"></A>
+<A NAME="26"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="27"></A>@Stateless
+<A NAME="28"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> RPrivatePhoto <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RPrivatePhotoLocal.java.html">RPrivatePhotoLocal</A> {
+<A NAME="29"></A>
+<A NAME="30"></A>    @EJB
+<A NAME="31"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">PrivatePhoto</A>&gt; privatePhotoCrudServiceLocal_;
+<A NAME="32"></A>    @EJB
+<A NAME="33"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>&gt; albumCrudServiceLocal_;
+<A NAME="34"></A>
+<A NAME="35"></A>    @EJB
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">HumansPrivatePhoto</A>&gt; humansPrivatePhotoCrudServiceLocal_;
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> RPrivatePhoto() {
+<A NAME="39"></A>    }
+<A NAME="40"></A>
+<A NAME="41"></A>    @Override
+<A NAME="42"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">PrivatePhoto</A>&gt; doDirtyRAllPrivatePhotos(<FONT ID="Final">final</FONT> String humanId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A> {
+<A NAME="44"></A>        <FONT ID="Return">return</FONT> humansPrivatePhotoCrudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">HumansPrivatePhoto</A>.<FONT ID="Class">class</FONT>, humanId).getPrivatePhotos();
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    @Override
+<A NAME="48"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">PrivatePhoto</A> doRPrivatePhoto(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long privatePhotoId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="50"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="51"></A>            <FONT ID="Return">return</FONT> privatePhotoCrudServiceLocal_.findBadly(<A HREF="../../../../../ai/ilikeplaces/entities/HumansPrivatePhoto.java.html">PrivatePhoto</A>.<FONT ID="Class">class</FONT>, privatePhotoId).refresh(refreshSpec);
+<A NAME="52"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> e) {
+<A NAME="53"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>(e);
+<A NAME="54"></A>        }
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RPrivatePhoto.java.html">RPrivatePhoto</A>.<FONT ID="Class">class</FONT>);
+<A NAME="58"></A>}</pre>
+</BODY>
+</HTML>

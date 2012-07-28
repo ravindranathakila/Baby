@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.verify.StartupILikePlaces (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">StartupILikePlaces.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.verify;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/MethodParams.java.html">ai.ilikeplaces.util.MethodParams</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/MethodTimer.java.html">ai.ilikeplaces.util.MethodTimer</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.ygp.impl.ClientFactory;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.annotation.PostConstruct;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.Singleton;
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.Startup;
+<A NAME="15"></A>
+<A NAME="16"></A><FONT ID="FormalComment">/**
+<A NAME="17"></A> * @author Ravindranath Akila
+<A NAME="18"></A> */</FONT>
+<A NAME="19"></A>
+<A NAME="20"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="21"></A>@Startup
+<A NAME="22"></A>@Singleton
+<A NAME="23"></A>@NOTE(note = <FONT ID="StringLiteral">"USE s.o.p FOR LOGGING AS LOGGER MIGHT FAIL TOO!"</FONT>)
+<A NAME="24"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> StartupILikePlaces <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/verify/StartupILikePlacesLocal.java.html">StartupILikePlacesLocal</A> {
+<A NAME="25"></A><FONT ID="SingleLineComment">//    @EJB
+<A NAME="26"></A></FONT><FONT ID="SingleLineComment">//    private HumanCRUDHumanLocal humanCRUDHumanLocal_;
+<A NAME="27"></A></FONT>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> ClientFactory ygdClientFactory;
+<A NAME="29"></A>
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> StartupILikePlaces() {
+<A NAME="31"></A>    }
+<A NAME="32"></A>
+<A NAME="33"></A>    @PostConstruct
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> postContruct() {
+<A NAME="35"></A>        System.out.println(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="36"></A>        System.out.println(<FONT ID="StringLiteral">"********* ********* ********* ********* *********"</FONT>);
+<A NAME="37"></A>        System.out.println(<FONT ID="StringLiteral">"********* START UP CHECK ILIKEPLACES"</FONT>);
+<A NAME="38"></A>        System.out.println(<FONT ID="StringLiteral">"********* The Worlds PlaYGrounD!"</FONT>);
+<A NAME="39"></A>        System.out.println(<FONT ID="StringLiteral">"********* ********* ********* ********* *********"</FONT>);
+<A NAME="40"></A>        System.out.println(<FONT ID="StringLiteral">"********* (logging startup-only via S.O.P)"</FONT>);
+<A NAME="41"></A>        System.out.println(<FONT ID="StringLiteral">"********* ********* ********* ********* *********"</FONT>);
+<A NAME="42"></A>        System.out.println(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="43"></A>        System.out.println(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"bn"</FONT>));
+<A NAME="44"></A>        System.out.println(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"codename"</FONT>));
+<A NAME="45"></A>        System.out.println(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="46"></A>        System.out.println(<FONT ID="StringLiteral">"PLEASE NOTE GENERAL SETUP"</FONT>);
+<A NAME="47"></A>        System.out.println(<FONT ID="StringLiteral">"1. Make sure openejb.log in shows no issues."</FONT>);
+<A NAME="48"></A>        System.out.println(<FONT ID="StringLiteral">"2. Configure datasource in openejb xml file."</FONT>);
+<A NAME="49"></A>        System.out.println(<FONT ID="StringLiteral">"3. Configure stateful and stateless in openejb xml file."</FONT>);
+<A NAME="50"></A>        System.out.println(<FONT ID="StringLiteral">"4. Configure cdn and filepath in Config.properties file."</FONT>);
+<A NAME="51"></A>        System.out.println(<FONT ID="StringLiteral">"5. Verify that classfiles also include .properties files in war."</FONT>);
+<A NAME="52"></A>        System.out.println(<FONT ID="StringLiteral">"6. Verify that derbyclient.lib is the same version of the derby you installed in the OS."</FONT>);
+<A NAME="53"></A>        System.out.println(<FONT ID="StringLiteral">"7. Verify that the first entry for location \"The Planet Earth\" was set"</FONT>);
+<A NAME="54"></A>        System.out.println(<FONT ID="StringLiteral">"8. Configure tomcat from localhost to domain name, www.ilikeplaces.com"</FONT>);
+<A NAME="55"></A>
+<A NAME="56"></A>        EntityLifeCycleListener.POST_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
+<A NAME="57"></A>        EntityLifeCycleListener.PRE_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
+<A NAME="58"></A>        MethodTimer.DO_LOG.setObj(Loggers.DEBUG.isDebugEnabled());
+<A NAME="59"></A>        MethodParams.DO_LOG.setObj(Loggers.DEBUG.isDebugEnabled());
+<A NAME="60"></A>
+<A NAME="61"></A>
+<A NAME="62"></A><FONT ID="MultiLineComment">/*        System.out.println("Disabling entity lifecycle listener logging");
+<A NAME="63"></A>        EntityLifeCycleListener.POST_ACTIONS.setObj(false);
+<A NAME="64"></A>        EntityLifeCycleListener.PRE_ACTIONS.setObj(false);
+<A NAME="65"></A>        MethodTimer.DO_LOG.setObj(false);
+<A NAME="66"></A>        MethodParams.DO_LOG.setObj(false);*/</FONT>
+<A NAME="67"></A>        System.out.println(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="68"></A><FONT ID="SingleLineComment">//        logger.debug(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0004"), System.getProperty("java.class.path"));
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//        System.out.println("STARTING TO VERIFY CLASSES");
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//        System.out.println("");
+<A NAME="71"></A></FONT>
+<A NAME="72"></A><FONT ID="SingleLineComment">//        try {
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//            try {
+<A NAME="74"></A></FONT><FONT ID="SingleLineComment">//                System.out.println("VERIFICATION OF " + humanCRUDHumanLocal_.getClass().getSimpleName() + ":" +
+<A NAME="75"></A></FONT><FONT ID="SingleLineComment">//                        humanCRUDHumanLocal_.getClass().getMethod("verify", new Class[]{}).invoke(humanCRUDHumanLocal_, new Object[]{}));
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">//            } catch (IllegalAccessException e) {
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//                logger.error("{}", e);
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//            } catch (InvocationTargetException e) {
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//                logger.error("{}", e);
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//            } catch (NoSuchMethodException e) {
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//                logger.error("{}", e);
+<A NAME="82"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="83"></A></FONT><FONT ID="SingleLineComment">//        } catch (final Exception e) {
+<A NAME="84"></A></FONT><FONT ID="SingleLineComment">//            e.printStackTrace(System.out);
+<A NAME="85"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="86"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="87"></A></FONT><FONT ID="SingleLineComment">//        @TODO(task = "LOAD FROM PROPERTIES FILE WHICH MAKES IT POSSIBLE TO DEPLOY ON ERRORS" +
+<A NAME="88"></A></FONT><FONT ID="SingleLineComment">//                "PROPERTIES FILE SHOULD BE EDITABLE, HENCE IN AN ACCESSIBLE PATH")
+<A NAME="89"></A></FONT><FONT ID="SingleLineComment">//        String[] verifyClasses = {RBGet.class.getName()};
+<A NAME="90"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="91"></A></FONT><FONT ID="SingleLineComment">//        for (final String verifyClass : verifyClasses) {
+<A NAME="92"></A></FONT><FONT ID="SingleLineComment">//            System.out.println("");
+<A NAME="93"></A></FONT><FONT ID="SingleLineComment">//            try {
+<A NAME="94"></A></FONT><FONT ID="SingleLineComment">//                try {
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//                    try {
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//                        final Method m = Class.forName(verifyClass).getMethod("verify", new Class[]{});
+<A NAME="97"></A></FONT><FONT ID="SingleLineComment">//                        if (Verify.class.isInstance(verifyClass)) {
+<A NAME="98"></A></FONT><FONT ID="SingleLineComment">//                            try {
+<A NAME="99"></A></FONT><FONT ID="SingleLineComment">//                                System.out.println("VERIFICATION OF " + verifyClass + ":" + m.invoke(Class.forName(verifyClass).newInstance(), new Object[]{}));
+<A NAME="100"></A></FONT><FONT ID="SingleLineComment">//                            } catch (final IllegalAccessException e) {
+<A NAME="101"></A></FONT><FONT ID="SingleLineComment">//                                e.printStackTrace(System.out);
+<A NAME="102"></A></FONT><FONT ID="SingleLineComment">//                            } catch (final InvocationTargetException e) {
+<A NAME="103"></A></FONT><FONT ID="SingleLineComment">//                                e.printStackTrace(System.out);
+<A NAME="104"></A></FONT><FONT ID="SingleLineComment">//                            } catch (final InstantiationException e) {
+<A NAME="105"></A></FONT><FONT ID="SingleLineComment">//                                e.printStackTrace(System.out);
+<A NAME="106"></A></FONT><FONT ID="SingleLineComment">//                            }
+<A NAME="107"></A></FONT><FONT ID="SingleLineComment">//                        } else {
+<A NAME="108"></A></FONT><FONT ID="SingleLineComment">//Assumed to be a static method, which cannot implement the interface
+<A NAME="109"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="110"></A></FONT><FONT ID="SingleLineComment">//                            try {
+<A NAME="111"></A></FONT><FONT ID="SingleLineComment">//                                System.out.println("VERIFICATION OF " + verifyClass + ":" + m.invoke(null, new Object[]{}));
+<A NAME="112"></A></FONT><FONT ID="SingleLineComment">//                            } catch (final IllegalAccessException e) {
+<A NAME="113"></A></FONT><FONT ID="SingleLineComment">//                                e.printStackTrace(System.out);
+<A NAME="114"></A></FONT><FONT ID="SingleLineComment">//                            } catch (final InvocationTargetException e) {
+<A NAME="115"></A></FONT><FONT ID="SingleLineComment">//                                e.printStackTrace(System.out);
+<A NAME="116"></A></FONT><FONT ID="SingleLineComment">//                            }
+<A NAME="117"></A></FONT><FONT ID="SingleLineComment">//                        }
+<A NAME="118"></A></FONT><FONT ID="SingleLineComment">//                    } catch (final NoSuchMethodException e) {
+<A NAME="119"></A></FONT><FONT ID="SingleLineComment">//                        e.printStackTrace(System.out);
+<A NAME="120"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="121"></A></FONT><FONT ID="SingleLineComment">//                } catch (final ClassNotFoundException e) {
+<A NAME="122"></A></FONT><FONT ID="SingleLineComment">//                    e.printStackTrace(System.out);
+<A NAME="123"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="124"></A></FONT><FONT ID="SingleLineComment">//            } catch (final Exception e) {
+<A NAME="125"></A></FONT><FONT ID="SingleLineComment">//                e.printStackTrace(System.out);
+<A NAME="126"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="127"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="128"></A></FONT>
+<A NAME="129"></A>        System.out.println(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="130"></A>        System.out.println(<FONT ID="StringLiteral">"SETTING PERSISTENCE LOGGING"</FONT>);
+<A NAME="131"></A>
+<A NAME="132"></A>        EntityLifeCycleListener.PRE_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
+<A NAME="133"></A>        EntityLifeCycleListener.POST_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
+<A NAME="134"></A>
+<A NAME="135"></A>        MethodTimer.DO_LOG.setObjAsValid(Boolean.getBoolean(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"PROFILE_METHODS"</FONT>)));
+<A NAME="136"></A>
+<A NAME="137"></A>        System.out.println(<FONT ID="StringLiteral">"DONE SETTING PERSISTENCE LOGGING"</FONT>);
+<A NAME="138"></A>
+<A NAME="139"></A>        System.out.println(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"bn"</FONT>));
+<A NAME="140"></A>        System.out.println(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"codename"</FONT>));
+<A NAME="141"></A>
+<A NAME="142"></A>        System.out.println(<FONT ID="StringLiteral">"********* ********* ********* ********* *********"</FONT>);
+<A NAME="143"></A>        System.out.println(<FONT ID="StringLiteral">"********* START UP CHECK DONE ILIKEPLACES"</FONT>);
+<A NAME="144"></A>        System.out.println(<FONT ID="StringLiteral">"********* ********* ********* ********* *********"</FONT>);
+<A NAME="145"></A>        System.out.println(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="146"></A>    }
+<A NAME="147"></A>}
+<A NAME="148"></A></pre>
+</BODY>
+</HTML>

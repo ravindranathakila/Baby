@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.gate.Horae (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Horae.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets.gate;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">ai.ilikeplaces.util.AbstractWidgetListener</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> * We have several approaches we can take on Horai.
+<A NAME="12"></A> * &lt;p/&gt;
+<A NAME="13"></A> * &lt;p/&gt;
+<A NAME="14"></A> * However, the requir
+<A NAME="15"></A> * ements that "might" spring up are as follows.
+<A NAME="16"></A> * &lt;p/&gt;
+<A NAME="17"></A> * 1. We might need to send JS to the client so extending {@link ai.ilikeplaces.util.AbstractWidgetListener} seems to be a wise thing to do
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * 2. Using a subscribe/un-subscribe or notification mechanism seems cool.
+<A NAME="20"></A> * &lt;p/&gt;
+<A NAME="21"></A> * 3. We might be able to delegate weight on the user's stateful session to this(but why would we do that?)
+<A NAME="22"></A> * &lt;p/&gt;
+<A NAME="23"></A> * 4. ON the contrary, keeping The Horae simple makes it more intuitive and manageable.
+<A NAME="24"></A> * &lt;p/&gt;
+<A NAME="25"></A> * 5. The Horae might be able to help us on spam.
+<A NAME="26"></A> * &lt;p/&gt;
+<A NAME="27"></A> * &lt;p/&gt;
+<A NAME="28"></A> * &lt;p/&gt;
+<A NAME="29"></A> * en.wikipedia.org/wiki/Horae
+<A NAME="30"></A> * &lt;p/&gt;
+<A NAME="31"></A> * Created by IntelliJ IDEA.
+<A NAME="32"></A> * User: Ravindranath Akila
+<A NAME="33"></A> * Date: 4/6/12
+<A NAME="34"></A> * Time: 10:13 AM
+<A NAME="35"></A> */</FONT>
+<A NAME="36"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Horae <FONT ID="Extends">extends</FONT> <A HREF="../../../../../../ai/ilikeplaces/util/AbstractWidgetListener.java.html">AbstractWidgetListener</A>&lt;<A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/gate/HoraeCriteria.java.html">HoraeCriteria</A>&gt; {
+<A NAME="37"></A>    <FONT ID="FormalComment">/**
+<A NAME="38"></A>     * @param request__
+<A NAME="39"></A>     * @param page__
+<A NAME="40"></A>     * @param horaeCriteria
+<A NAME="41"></A>     * @param appendToElement__
+<A NAME="42"></A>     */</FONT>
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> Horae(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/servlets/Controller.java.html">Controller.Page</A> page__, <FONT ID="Final">final</FONT> <A HREF="../../../../../../ai/ilikeplaces/logic/Listeners/widgets/gate/HoraeCriteria.java.html">HoraeCriteria</A> horaeCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="44"></A>        <FONT ID="Super">super</FONT>(request__, page__, horaeCriteria, appendToElement__);
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="FormalComment">/**
+<A NAME="48"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="49"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="50"></A>     * automatically called by the constructor
+<A NAME="51"></A>     *
+<A NAME="52"></A>     * @param itsNatHTMLDocument_
+<A NAME="53"></A>     * @param hTMLDocument_
+<A NAME="54"></A>     */</FONT>
+<A NAME="55"></A>    @Override
+<A NAME="56"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+<A NAME="57"></A>        <FONT ID="SingleLineComment">//To change body of implemented methods use File | Settings | File Templates.
+<A NAME="58"></A></FONT>    }
+<A NAME="59"></A>}
+<A NAME="60"></A></pre>
+</BODY>
+</HTML>

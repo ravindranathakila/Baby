@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.exception.AbstractEjbApplicationException (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AbstractEjbApplicationException.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.exception;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> javax.ejb.ApplicationException;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * This exception is the super class of all the checked application exceptions specific to I Like Places.
+<A NAME="9"></A> * &lt;p/&gt;
+<A NAME="10"></A> * This means, catching this exception as parent would be appropriate to catch all checked application exceptions.
+<A NAME="11"></A> * &lt;p/&gt;
+<A NAME="12"></A> * As implied, this means they will all be checked exceptions.
+<A NAME="13"></A> * &lt;p/&gt;
+<A NAME="14"></A> * &lt;p/&gt;
+<A NAME="15"></A> * Note that the rollback value, regardless of the default(false) is set to false.
+<A NAME="16"></A> * &lt;p/&gt;
+<A NAME="17"></A> * Implementing classes can fine tune this by setting @ApplicationException(rollback = true)
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * &lt;p/&gt;
+<A NAME="20"></A> * Created by IntelliJ IDEA.
+<A NAME="21"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="22"></A> * Date: Jun 17, 2010
+<A NAME="23"></A> * Time: 9:32:33 PM
+<A NAME="24"></A> */</FONT>
+<A NAME="25"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="26"></A>@ApplicationException(rollback = <FONT ID="False">false</FONT>)
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> AbstractEjbApplicationException <FONT ID="Extends">extends</FONT> Exception {
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> AbstractEjbApplicationException(<FONT ID="Final">final</FONT> String message) {
+<A NAME="29"></A>        <FONT ID="Super">super</FONT>(message);
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> AbstractEjbApplicationException() {
+<A NAME="33"></A>    }
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> AbstractEjbApplicationException(<FONT ID="Final">final</FONT> String message, <FONT ID="Final">final</FONT> Throwable cause) {
+<A NAME="36"></A>        <FONT ID="Super">super</FONT>(message, cause);
+<A NAME="37"></A>    }
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> AbstractEjbApplicationException(<FONT ID="Final">final</FONT> Throwable cause) {
+<A NAME="40"></A>        <FONT ID="Super">super</FONT>(cause);
+<A NAME="41"></A>    }
+<A NAME="42"></A>}
+<A NAME="43"></A></pre>
+</BODY>
+</HTML>

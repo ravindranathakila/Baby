@@ -1,0 +1,589 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDHuman (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDHuman.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationException</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationRuntimeException.java.html">ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.crud.unit.*;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.validators.unit.*;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/security/blowfish/jbcrypt/BCrypt.java.html">ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">ai.ilikeplaces.security.face.SingletonHashingRemote</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="15"></A><FONT ID="Import">import</FONT> net.sf.oval.exception.ConstraintsViolatedException;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="22"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="23"></A><FONT ID="Import">import</FONT> javax.interceptor.Interceptors;
+<A NAME="24"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="25"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="26"></A>
+<A NAME="27"></A><FONT ID="FormalComment">/**
+<A NAME="28"></A> * @author Ravindranath Akila
+<A NAME="29"></A> */</FONT>
+<A NAME="30"></A>
+<A NAME="31"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="32"></A>@Stateless
+<A NAME="33"></A>@Interceptors({ParamValidator.<FONT ID="Class">class</FONT>, MethodTimer.<FONT ID="Class">class</FONT>, MethodParams.<FONT ID="Class">class</FONT>, RuntimeExceptionWrapper.<FONT ID="Class">class</FONT>})
+<A NAME="34"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanCRUDHuman <FONT ID="Extends">extends</FONT> AbstractSLBCallbacks <FONT ID="Implements">implements</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A> {
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IDENTITY_READ_SUCCESSFUL = <FONT ID="StringLiteral">"Identity Read Successful."</FONT>;
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IDENTITY_READ_FAILED = <FONT ID="StringLiteral">"Identity Read FAILED!"</FONT>;
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_READ_FROM_URL_SUCCESSFUL = <FONT ID="StringLiteral">"Profile Read from URL Successful."</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String AI_ILIKEPLACES_LOGIC_CRUD_HUMAN_CRUDHUMAN_0001 = <FONT ID="StringLiteral">"ai.ilikeplaces.logic.crud.HumanCRUDHuman.0001"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_UPDATE_SUCCESSFUL = <FONT ID="StringLiteral">"Profile Photo Update Successful."</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_UPDATE_FAILED = <FONT ID="StringLiteral">"Profile Photo Update FAILED!"</FONT>;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_READ_SUCCESSFUL = <FONT ID="StringLiteral">"Profile Photo Read Successful."</FONT>;
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_PHOTO_READ_FAILED = <FONT ID="StringLiteral">"Profile Photo Read FAILED!"</FONT>;
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_URL_UPDATE_SUCCESSFUL = <FONT ID="StringLiteral">"Profile URL Update Successful."</FONT>;
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_URL_UPDATE_FAILED = <FONT ID="StringLiteral">"Profile URL Update FAILED!"</FONT>;
+<A NAME="46"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_URL_READ_SUCCESSFUL = <FONT ID="StringLiteral">"Profile URL Read Successful."</FONT>;
+<A NAME="47"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROFILE_URL_READ_FAILED = <FONT ID="StringLiteral">"Profile URL Read FAILED!"</FONT>;
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_HUMANS_BEFRIENDS_SUCCESSFUL = <FONT ID="StringLiteral">"Read Humans Befriends Successful!"</FONT>;
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_HUMANS_BEFRIENDS_FAILED = <FONT ID="StringLiteral">"Read Humans Befriends FAILED!"</FONT>;
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String EMAIL = <FONT ID="StringLiteral">"Email "</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_NOT_FROM_A_VALID_DOMAIN = <FONT ID="StringLiteral">" is not from a valid domain"</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ACTIVATE_PROFILE_SUCCESSFUL = <FONT ID="StringLiteral">"Activate Profile Successful."</FONT>;
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ACTIVATE_PROFILE_FAILED = <FONT ID="StringLiteral">"Activate Profile FAILED!"</FONT>;
+<A NAME="54"></A>    @EJB
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> RHumanLocal rHumanLocal_;
+<A NAME="56"></A>
+<A NAME="57"></A>    @EJB
+<A NAME="58"></A>    <FONT ID="Private">private</FONT> CHumanLocal cHumanLocal_;
+<A NAME="59"></A>
+<A NAME="60"></A>    @EJB
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> DHumanLocal dHumanLocal_;
+<A NAME="62"></A>
+<A NAME="63"></A>    @EJB
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> UHumanLocal uHumanLocal;
+<A NAME="65"></A>
+<A NAME="66"></A>    @EJB
+<A NAME="67"></A>    <FONT ID="Private">private</FONT> UHumansIdentityLocal uHumansIdentityLocal_;
+<A NAME="68"></A>
+<A NAME="69"></A>    @EJB
+<A NAME="70"></A>    <FONT ID="Private">private</FONT> UHumansNetPeopleLocal uHumansNetPeopleLocal_;
+<A NAME="71"></A>
+<A NAME="72"></A>    @EJB
+<A NAME="73"></A>    <FONT ID="Private">private</FONT> RHumansNetPeopleLocal rHumansNetPeopleLocal_;
+<A NAME="74"></A>
+<A NAME="75"></A>    @EJB
+<A NAME="76"></A>    <FONT ID="Private">private</FONT> RHumansIdentityLocal rHumansIdentityLocal_;
+<A NAME="77"></A>
+<A NAME="78"></A>    @EJB
+<A NAME="79"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A> singletonHashingRemote;
+<A NAME="80"></A>
+<A NAME="81"></A>    @EJB
+<A NAME="82"></A>    <FONT ID="Private">private</FONT> RHumansAuthenticationLocal rHumansAuthenticationLocal_;
+<A NAME="83"></A>
+<A NAME="84"></A>    @EJB
+<A NAME="85"></A>    <FONT ID="Private">private</FONT> UHumansAuthenticationLocal uHumansAuthenticationLocal;
+<A NAME="86"></A>
+<A NAME="87"></A>    @EJB
+<A NAME="88"></A>    <FONT ID="Private">private</FONT> RHumansPrivateLocationLocal rHumansPrivateLocation_;
+<A NAME="89"></A>
+<A NAME="90"></A>    @EJB
+<A NAME="91"></A>    <FONT ID="Private">private</FONT> RHumansPrivateEventLocal rHumansPrivateEvent_;
+<A NAME="92"></A>
+<A NAME="93"></A>    @EJB
+<A NAME="94"></A>    <FONT ID="Private">private</FONT> UHumansNetLocal uHumansNetLocal;
+<A NAME="95"></A>
+<A NAME="96"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SYMBOL_AT = <FONT ID="StringLiteral">"@"</FONT>;
+<A NAME="97"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_HUMANS_AUTHENTICATIONS_SUCCESSFUL = <FONT ID="StringLiteral">"Read Humans Authentications Successful!"</FONT>;
+<A NAME="98"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_HUMANS_AUTHENTICATIONS_FAILED = <FONT ID="StringLiteral">"Read Humans Authentications FAILED!"</FONT>;
+<A NAME="99"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_HUMANS_PRIVATE_LOCATION_SUCCESSFUL = <FONT ID="StringLiteral">"Read HumansPrivateLocation Successful!"</FONT>;
+<A NAME="100"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_HUMANS_PRIVATE_LOCATION_FAILED = <FONT ID="StringLiteral">"Read HumansPrivateLocation FAILED!"</FONT>;
+<A NAME="101"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_HUMANS_PRIVATE_EVENT_SUCCESSFUL = <FONT ID="StringLiteral">"Read HumansPrivateEvent Successful!"</FONT>;
+<A NAME="102"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_HUMANS_PRIVATE_EVENT_FAILED = <FONT ID="StringLiteral">"Read HumansPrivateEvent FAILED!"</FONT>;
+<A NAME="103"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_FRIEND_SUCCESSFUL = <FONT ID="StringLiteral">"Add friend Successful!"</FONT>;
+<A NAME="104"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_FRIEND_FAILED = <FONT ID="StringLiteral">"Add friend FAILED!"</FONT>;
+<A NAME="105"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String REMOVE_FRIEND_SUCCESSFUL = <FONT ID="StringLiteral">"Remove friend Successful!"</FONT>;
+<A NAME="106"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String REMOVE_FRIEND_FAILED = <FONT ID="StringLiteral">"Remove friend FAILED!"</FONT>;
+<A NAME="107"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_FRIEND_SUCCESSFUL = <FONT ID="StringLiteral">"Check friend Successful!"</FONT>;
+<A NAME="108"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CHECK_FRIEND_FAILED = <FONT ID="StringLiteral">"Check friend FAILED!"</FONT>;
+<A NAME="109"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_DISPLAY_NAME_SUCCESSFUL = <FONT ID="StringLiteral">"Update Display Name Successful!"</FONT>;
+<A NAME="110"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String UPDATE_DISPLAY_NAME_FAILED = <FONT ID="StringLiteral">"Update Display Name FAILED!"</FONT>;
+<A NAME="111"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_USER_SUCCESSFUL = <FONT ID="StringLiteral">"Add User Successful!"</FONT>;
+<A NAME="112"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ADD_USER_FAILED = <FONT ID="StringLiteral">"Add User FAILED!"</FONT>;
+<A NAME="113"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PASSWORD_UPDATE_SUCCESSFUL = <FONT ID="StringLiteral">"Password Update Successful!"</FONT>;
+<A NAME="114"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PASSWORD_UPDATE_FAILED = <FONT ID="StringLiteral">"Password Update FAILED!"</FONT>;
+<A NAME="115"></A>
+<A NAME="116"></A>
+<A NAME="117"></A>    <FONT ID="Public">public</FONT> HumanCRUDHuman() {
+<A NAME="118"></A>    }
+<A NAME="119"></A>
+<A NAME="120"></A>    @Override
+<A NAME="121"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="122"></A>    <FONT ID="Public">public</FONT> Human doDirtyRHuman(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="123"></A>        <FONT ID="Return">return</FONT> rHumanLocal_.doDirtyRHuman(humanId);
+<A NAME="124"></A>    }
+<A NAME="125"></A>
+<A NAME="126"></A>    @Override
+<A NAME="127"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="128"></A>    <FONT ID="Public">public</FONT> Human doDirtyRHuman(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="129"></A>        <FONT ID="Return">return</FONT>
+<A NAME="130"></A>                rHumanLocal_.doDirtyRHuman(humanId.getObj());
+<A NAME="131"></A>    }
+<A NAME="132"></A>
+<A NAME="133"></A>    @Override
+<A NAME="134"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="135"></A>    <FONT ID="Public">public</FONT> Return&lt;HumansAuthentication&gt; doDirtyRHumansAuthentication(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="136"></A>        Return&lt;HumansAuthentication&gt; r;
+<A NAME="137"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansAuthentication&gt;(rHumansAuthenticationLocal_.doDirtyRHumansAuthentication(humanId.getObj()), READ_HUMANS_AUTHENTICATIONS_SUCCESSFUL);
+<A NAME="138"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="139"></A>    }
+<A NAME="140"></A>
+<A NAME="141"></A>    @Override
+<A NAME="142"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="143"></A>    <FONT ID="Public">public</FONT> HumansNetPeople doDirtyRHumansNetPeople(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="144"></A>        <FONT ID="Return">return</FONT> rHumansNetPeopleLocal_.doDirtyRHumansNetPeople(humanId.getObj());
+<A NAME="145"></A>    }
+<A NAME="146"></A>
+<A NAME="147"></A>    @Override
+<A NAME="148"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="149"></A>    <FONT ID="Public">public</FONT> Return&lt;HumansPrivateLocation&gt; doDirtyRHumansPrivateLocation(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="150"></A>        Return&lt;HumansPrivateLocation&gt; r;
+<A NAME="151"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="152"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansPrivateLocation&gt;(rHumansPrivateLocation_.doNTxRHumansPrivateLocation(humanId.getObj()), READ_HUMANS_PRIVATE_LOCATION_SUCCESSFUL);
+<A NAME="153"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="154"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansPrivateLocation&gt;(t, READ_HUMANS_PRIVATE_LOCATION_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="155"></A>        }
+<A NAME="156"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="157"></A>    }
+<A NAME="158"></A>
+<A NAME="159"></A>    @Override
+<A NAME="160"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="161"></A>    <FONT ID="Public">public</FONT> Return&lt;HumansPrivateEvent&gt; doDirtyRHumansPrivateEvent(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="162"></A>        Return&lt;HumansPrivateEvent&gt; r;
+<A NAME="163"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="164"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansPrivateEvent&gt;(rHumansPrivateEvent_.doNTxRHumansPrivateEvent(humanId.getObj()), READ_HUMANS_PRIVATE_EVENT_SUCCESSFUL);
+<A NAME="165"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="166"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansPrivateEvent&gt;(t, READ_HUMANS_PRIVATE_EVENT_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="167"></A>        }
+<A NAME="168"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="169"></A>    }
+<A NAME="170"></A>
+<A NAME="171"></A>    @Override
+<A NAME="172"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="173"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doNTxAddHumansNetPeople(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; adderHumanId, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; addeeHumanId) {
+<A NAME="174"></A>        Return&lt;Boolean&gt; r;
+<A NAME="175"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="176"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(uHumansNetPeopleLocal_.doNTxAddHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), ADD_FRIEND_SUCCESSFUL);
+<A NAME="177"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="178"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, ADD_FRIEND_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="179"></A>        }
+<A NAME="180"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="181"></A>    }
+<A NAME="182"></A>
+<A NAME="183"></A>    @Override
+<A NAME="184"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="185"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doNTxRemoveHumansNetPeople(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; adderHumanId, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; addeeHumanId) {
+<A NAME="186"></A>        Return&lt;Boolean&gt; r;
+<A NAME="187"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="188"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(uHumansNetPeopleLocal_.doNTxRemoveHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), REMOVE_FRIEND_SUCCESSFUL);
+<A NAME="189"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="190"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, REMOVE_FRIEND_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="191"></A>        }
+<A NAME="192"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="193"></A>    }
+<A NAME="194"></A>
+<A NAME="195"></A>    @Override
+<A NAME="196"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="197"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doNTxIsHumansNetPeople(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; checkerHumanId, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; checkeeeHumanId) {
+<A NAME="198"></A>        Return&lt;Boolean&gt; r;
+<A NAME="199"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(uHumansNetPeopleLocal_.doNTxIsHumansNetPeople(checkerHumanId.getObj(), checkeeeHumanId.getObj()), CHECK_FRIEND_SUCCESSFUL);
+<A NAME="200"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="201"></A>    }
+<A NAME="202"></A>
+<A NAME="203"></A>    @Override
+<A NAME="204"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="205"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doNTxUDisplayName(<FONT ID="Final">final</FONT> HumanId humanId, DisplayNameString displayName) {
+<A NAME="206"></A>        Return&lt;Boolean&gt; r;
+<A NAME="207"></A>        uHumansNetLocal.doNTxUDisplayName(humanId, displayName.getObj());
+<A NAME="208"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(<FONT ID="True">true</FONT>, UPDATE_DISPLAY_NAME_SUCCESSFUL);
+<A NAME="209"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="210"></A>    }
+<A NAME="211"></A>
+<A NAME="212"></A>    @Override
+<A NAME="213"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="214"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doDirtyIsHumansNetPeople(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; adderHumanId, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; addeeHumanId) {
+<A NAME="215"></A>        Return&lt;Boolean&gt; r;
+<A NAME="216"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(uHumansNetPeopleLocal_.doDirtyIsHumansNetPeople(adderHumanId.getObj(), addeeHumanId.getObj()), CHECK_FRIEND_SUCCESSFUL);
+<A NAME="217"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="218"></A>    }
+<A NAME="219"></A>
+<A NAME="220"></A>    @Override
+<A NAME="221"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="222"></A>    @VERIFY(item = <FONT ID="StringLiteral">"Check if list email validation works"</FONT>, against = <FONT ID="StringLiteral">"MethodParams"</FONT>)
+<A NAME="223"></A>    <FONT ID="Public">public</FONT> List&lt;HumansIdentity&gt; doDirtyRHumansIdentitiesByEmails(<FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; emails) {
+<A NAME="224"></A>        List&lt;String&gt; emailList = <FONT ID="New">new</FONT> ArrayList&lt;String&gt;();
+<A NAME="225"></A>        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> RefObj&lt;String&gt; email : emails) {
+<A NAME="226"></A>            emailList.add(email.getObj());
+<A NAME="227"></A>        }
+<A NAME="228"></A>        <FONT ID="Return">return</FONT> rHumansIdentityLocal_.doDirtyRHumansIdentitiesByEmails(emailList);
+<A NAME="229"></A>    }
+<A NAME="230"></A>
+<A NAME="231"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="232"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> doNTxCHuman(<FONT ID="Final">final</FONT> Human human) {
+<A NAME="233"></A>        cHumanLocal_.doNTxCHuman(human);
+<A NAME="234"></A>    }
+<A NAME="235"></A>
+<A NAME="236"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="237"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doDirtyCheckHuman(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="238"></A>
+<A NAME="239"></A>        Return&lt;Boolean&gt; r;
+<A NAME="240"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(rHumanLocal_.doDirtyCheckHuman(humanId), <FONT ID="StringLiteral">"Check human Successful!"</FONT>);
+<A NAME="241"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="242"></A>    }
+<A NAME="243"></A>
+<A NAME="244"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="245"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doDHuman(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="246"></A>        dHumanLocal_.doDHuman(humanId.getObj());
+<A NAME="247"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="248"></A>    }
+<A NAME="249"></A>
+<A NAME="250"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="251"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doUHumanPassword(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> Password currentPassword, <FONT ID="Final">final</FONT> Password newPassword) {
+<A NAME="252"></A>        Return&lt;Boolean&gt; r;
+<A NAME="253"></A>
+<A NAME="254"></A>        <FONT ID="If">if</FONT> (humanId.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="255"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(humanId.getViolations());
+<A NAME="256"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (newPassword.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="257"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(newPassword.getViolations());
+<A NAME="258"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="259"></A>            <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> changed = uHumansAuthenticationLocal.doUHumansAuthentication(humanId.getObj(), currentPassword.getObj(), newPassword.getObj());
+<A NAME="260"></A>            <FONT ID="If">if</FONT> (changed) {
+<A NAME="261"></A>                SendMail.getSendMailLocal().sendAsSimpleText(humanId.getObj(),
+<A NAME="262"></A>                        <FONT ID="StringLiteral">"Password Changed for I Like Places"</FONT>,
+<A NAME="263"></A>                        <FONT ID="StringLiteral">"Hi,\n"</FONT> +
+<A NAME="264"></A>                                <FONT ID="StringLiteral">"You changed your password at I Like Places right? Hmmmm, just checking.\n"</FONT> +
+<A NAME="265"></A>                                <FONT ID="StringLiteral">"If it wasn't you, who was it?!! Well, you can always reset or change your password if you notice something suspicious."</FONT>);
+<A NAME="266"></A>            }
+<A NAME="267"></A>
+<A NAME="268"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(changed, PASSWORD_UPDATE_SUCCESSFUL);
+<A NAME="269"></A>        }
+<A NAME="270"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="271"></A>
+<A NAME="272"></A>    }
+<A NAME="273"></A>
+<A NAME="274"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="275"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doUHumanPassword(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> Password newPassword) {
+<A NAME="276"></A>        Return&lt;Boolean&gt; r;
+<A NAME="277"></A>
+<A NAME="278"></A>        <FONT ID="If">if</FONT> (humanId.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="279"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(humanId.getViolations());
+<A NAME="280"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (newPassword.validate() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="281"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ConstraintsViolatedException(newPassword.getViolations());
+<A NAME="282"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="283"></A>            <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> changed = uHumansAuthenticationLocal.doUHumansAuthentication(humanId.getObj(), newPassword.getObj());
+<A NAME="284"></A>            <FONT ID="If">if</FONT> (changed) {
+<A NAME="285"></A>                SendMail.getSendMailLocal().sendAsSimpleText(humanId.getObj(),
+<A NAME="286"></A>                        <FONT ID="StringLiteral">"Password Changed for I Like Places"</FONT>,
+<A NAME="287"></A>                        <FONT ID="StringLiteral">"Hi,\n"</FONT> +
+<A NAME="288"></A>                                <FONT ID="StringLiteral">"You changed your password at I Like Places right? Hmmmm, just checking.\n"</FONT> +
+<A NAME="289"></A>                                <FONT ID="StringLiteral">"If it wasn't you, who was it?!! Well, you can always reset or change your password if you notice something suspicious."</FONT>);
+<A NAME="290"></A>            }
+<A NAME="291"></A>
+<A NAME="292"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(changed, PASSWORD_UPDATE_SUCCESSFUL);
+<A NAME="293"></A>        }
+<A NAME="294"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="295"></A>
+<A NAME="296"></A>    }
+<A NAME="297"></A>
+<A NAME="298"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="299"></A>    <FONT ID="Public">public</FONT> Return&lt;HumansIdentity&gt; doUHumansProfilePhoto(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> String url) {
+<A NAME="300"></A>        Return&lt;HumansIdentity&gt; r;
+<A NAME="301"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="302"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansIdentity&gt;(uHumansIdentityLocal_.doUHumansProfilePhoto(humanId.getObj(), url), PROFILE_PHOTO_UPDATE_SUCCESSFUL);
+<A NAME="303"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="304"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansIdentity&gt;(t, PROFILE_PHOTO_UPDATE_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="305"></A>        }
+<A NAME="306"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="307"></A>
+<A NAME="308"></A>    }
+<A NAME="309"></A>
+<A NAME="310"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="311"></A>    <FONT ID="Public">public</FONT> Return&lt;String&gt; doDirtyRHumansProfilePhoto(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="312"></A>        Return&lt;String&gt; r;
+<A NAME="313"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="314"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;String&gt;(rHumansIdentityLocal_.doDirtyProfilePhoto(humanId.getObj()), PROFILE_PHOTO_READ_SUCCESSFUL);
+<A NAME="315"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="316"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;String&gt;(t, PROFILE_PHOTO_READ_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="317"></A>        }
+<A NAME="318"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="319"></A>
+<A NAME="320"></A>    }
+<A NAME="321"></A>
+<A NAME="322"></A>
+<A NAME="323"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="324"></A>    <FONT ID="Public">public</FONT> Return&lt;HumansIdentity&gt; doUHumansPublicURL(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> String url) {
+<A NAME="325"></A>        Return&lt;HumansIdentity&gt; r;
+<A NAME="326"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="327"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansIdentity&gt;(uHumansIdentityLocal_.doUHumansPublicURL(humanId.getObj(), url), PROFILE_URL_UPDATE_SUCCESSFUL);
+<A NAME="328"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="329"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansIdentity&gt;(t, PROFILE_URL_UPDATE_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="330"></A>        }
+<A NAME="331"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="332"></A>
+<A NAME="333"></A>    }
+<A NAME="334"></A>
+<A NAME="335"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="336"></A>    <FONT ID="Public">public</FONT> Return&lt;String&gt; doDirtyRHumansPublicURL(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="337"></A>        Return&lt;String&gt; r;
+<A NAME="338"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="339"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;String&gt;(rHumansIdentityLocal_.doDirtyPublicURL(humanId.getObj()), PROFILE_URL_READ_SUCCESSFUL);
+<A NAME="340"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="341"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;String&gt;(t, PROFILE_URL_READ_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="342"></A>        }
+<A NAME="343"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="344"></A>
+<A NAME="345"></A>    }
+<A NAME="346"></A>
+<A NAME="347"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="348"></A>    <FONT ID="Public">public</FONT> Return&lt;HumansIdentity&gt; doDirtyRHumansIdentity(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="349"></A>        Return&lt;HumansIdentity&gt; r;
+<A NAME="350"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="351"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansIdentity&gt;(rHumansIdentityLocal_.doDirtyRHumansIdentity(humanId.getObjectAsValid()), IDENTITY_READ_SUCCESSFUL);
+<A NAME="352"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationException.java.html">AbstractEjbApplicationException</A> t) {
+<A NAME="353"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;HumansIdentity&gt;(t, IDENTITY_READ_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="354"></A>        }
+<A NAME="355"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="356"></A>
+<A NAME="357"></A>    }
+<A NAME="358"></A>
+<A NAME="359"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="360"></A>    <FONT ID="Public">public</FONT> Return&lt;String&gt; doDirtyProfileFromURL(<FONT ID="Final">final</FONT> String url) {
+<A NAME="361"></A>        Return&lt;String&gt; r;
+<A NAME="362"></A>        r = <FONT ID="New">new</FONT> ReturnImpl&lt;String&gt;(rHumansIdentityLocal_.doDirtyProfileFromURL(url), PROFILE_READ_FROM_URL_SUCCESSFUL);
+<A NAME="363"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="364"></A>
+<A NAME="365"></A>    }
+<A NAME="366"></A>
+<A NAME="367"></A>    <FONT ID="MultiLineComment">/*BEGINNING OF PREPERATOR METHODS*/</FONT>
+<A NAME="368"></A>
+<A NAME="369"></A>    @TODO(task = <FONT ID="StringLiteral">"ADD HUMANSIDENTITY VALUES TAKE FROM THE SERVLETSIGNUP. CHANGE ALL NON_CRUDSERVICE CLASSES TO USE NON_TRANSACTIONAL AS REQUIRED"</FONT>)
+<A NAME="370"></A>    @Override
+<A NAME="371"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="372"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doCHuman(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; password, <FONT ID="Final">final</FONT> RefObj&lt;String&gt; email) {
+<A NAME="373"></A>        Return&lt;Boolean&gt; r;
+<A NAME="374"></A>
+<A NAME="375"></A>        <FONT ID="If">if</FONT> (doDirtyCheckHuman(humanId.getObjectAsValid()).returnValue()) {
+<A NAME="376"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(DBDishonourCheckedException.ADDING_AN_EXISTING_VALUE, HumanCRUDHuman.ADD_USER_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="377"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="378"></A>
+<A NAME="379"></A>            <FONT ID="If">if</FONT> (ai.ilikeplaces.util.email.Email.isAddressValidTolerant(humanId.getObjectAsValid())) {
+<A NAME="380"></A>
+<A NAME="381"></A>                <FONT ID="Final">final</FONT> Human newUser = <FONT ID="New">new</FONT> Human();
+<A NAME="382"></A>                newUser.setHumanId(humanId.getObjectAsValid());
+<A NAME="383"></A>                newUser.setHumanAlive(<FONT ID="False">false</FONT>);<FONT ID="SingleLineComment">//Wait for signup confirmation click by email
+<A NAME="384"></A></FONT>
+<A NAME="385"></A>                <FONT ID="Final">final</FONT> HumansAuthentication ha = <FONT ID="New">new</FONT> HumansAuthentication();
+<A NAME="386"></A>                ha.setHumanId(newUser.getHumanId());
+<A NAME="387"></A>                ha.setHumanAuthenticationSalt(BCrypt.gensalt());
+<A NAME="388"></A>                ha.setHumanAuthenticationHash(singletonHashingRemote.getHash(password.getObjectAsValid(), ha.getHumanAuthenticationSalt()));
+<A NAME="389"></A>                newUser.setHumansAuthentications(ha);
+<A NAME="390"></A>                newUser.setHumanAlive(<FONT ID="False">false</FONT>);
+<A NAME="391"></A>
+<A NAME="392"></A>                setHumansIdentityInfo:
+<A NAME="393"></A>                {
+<A NAME="394"></A>                    <FONT ID="Final">final</FONT> HumansIdentity hid = <FONT ID="New">new</FONT> HumansIdentity();
+<A NAME="395"></A>                    hid.setHumanId(newUser.getHumanId());
+<A NAME="396"></A>                    hid.setUrl(<FONT ID="New">new</FONT> Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));<FONT ID="SingleLineComment">//Yes, the default url is his/her email
+<A NAME="397"></A></FONT>
+<A NAME="398"></A>                    newUser.setHumansIdentity(hid);
+<A NAME="399"></A>                }
+<A NAME="400"></A>
+<A NAME="401"></A>                <FONT ID="SingleLineComment">//HumansNet has as many internal primarykeyjoin entities
+<A NAME="402"></A></FONT>                tricky:
+<A NAME="403"></A>                {
+<A NAME="404"></A>                    <FONT ID="Final">final</FONT> HumansNetPeople hnp = <FONT ID="New">new</FONT> HumansNetPeople();
+<A NAME="405"></A>                    hnp.setHumanId(newUser.getHumanId());
+<A NAME="406"></A>
+<A NAME="407"></A>                    <FONT ID="Final">final</FONT> HumansNet hn = <FONT ID="New">new</FONT> HumansNet();
+<A NAME="408"></A>                    hn.setDisplayName(newUser.getHumanId().split(SYMBOL_AT)[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="409"></A>                    hn.setHumanId(newUser.getHumanId());
+<A NAME="410"></A>
+<A NAME="411"></A>                    hn.setHumansNetPeople(hnp);
+<A NAME="412"></A>
+<A NAME="413"></A>                    newUser.setHumansNet(hn);
+<A NAME="414"></A>                }
+<A NAME="415"></A>
+<A NAME="416"></A>
+<A NAME="417"></A>                <FONT ID="Final">final</FONT> HumansPrivateLocation hpl = <FONT ID="New">new</FONT> HumansPrivateLocation();
+<A NAME="418"></A>                hpl.setHumanId(newUser.getHumanId());
+<A NAME="419"></A>                newUser.setHumansPrivateLocation(hpl);
+<A NAME="420"></A>
+<A NAME="421"></A>                <FONT ID="Final">final</FONT> HumansPrivateEvent hpe = <FONT ID="New">new</FONT> HumansPrivateEvent();
+<A NAME="422"></A>                hpe.setHumanId(newUser.getHumanId());
+<A NAME="423"></A>                newUser.setHumansPrivateEvent(hpe);
+<A NAME="424"></A>
+<A NAME="425"></A>                <FONT ID="Final">final</FONT> HumansAlbum hal = <FONT ID="New">new</FONT> HumansAlbum();
+<A NAME="426"></A>                hal.setHumanId(newUser.getHumanId());
+<A NAME="427"></A>                newUser.setHumansAlbum(hal);
+<A NAME="428"></A>
+<A NAME="429"></A>                <FONT ID="Final">final</FONT> HumansPrivatePhoto hprp = <FONT ID="New">new</FONT> HumansPrivatePhoto();
+<A NAME="430"></A>                hprp.setHumanId(newUser.getHumanId());
+<A NAME="431"></A>                newUser.setHumansPrivatePhoto(hprp);
+<A NAME="432"></A>
+<A NAME="433"></A>                <FONT ID="Final">final</FONT> HumansPublicPhoto hpup = <FONT ID="New">new</FONT> HumansPublicPhoto();
+<A NAME="434"></A>                hpup.setHumanId(newUser.getHumanId());
+<A NAME="435"></A>                newUser.setHumansPublicPhoto(hpup);
+<A NAME="436"></A>
+<A NAME="437"></A>                <FONT ID="Final">final</FONT> HumansWall hw = <FONT ID="New">new</FONT> HumansWall();
+<A NAME="438"></A>                hw.setHumanId(newUser.getHumanId());
+<A NAME="439"></A>                hw.setWall(<FONT ID="New">new</FONT> Wall().setWallTypeR(Wall.wallTypeHuman));
+<A NAME="440"></A>                newUser.setHumansWall(hw);
+<A NAME="441"></A>
+<A NAME="442"></A>                <FONT ID="Final">final</FONT> HumansAlbum halbum = <FONT ID="New">new</FONT> HumansAlbum();
+<A NAME="443"></A>                halbum.setHumanId(newUser.getHumanId());
+<A NAME="444"></A>                newUser.setHumansAlbum(halbum);
+<A NAME="445"></A>
+<A NAME="446"></A>                doNTxCHuman(newUser);
+<A NAME="447"></A>
+<A NAME="448"></A>                r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(<FONT ID="True">true</FONT>, ADD_USER_SUCCESSFUL);
+<A NAME="449"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="450"></A>                r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(<FONT ID="New">new</FONT> IllegalArgumentException(EMAIL + humanId.getObjectAsValid() + IS_NOT_FROM_A_VALID_DOMAIN), HumanCRUDHuman.ADD_USER_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="451"></A>            }
+<A NAME="452"></A>        }
+<A NAME="453"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="454"></A>    }
+<A NAME="455"></A>
+<A NAME="456"></A>
+<A NAME="457"></A>    <FONT ID="Public">public</FONT> Return&lt;Boolean&gt; doUActivateHuman(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; username) {
+<A NAME="458"></A>        Return&lt;Boolean&gt; r;
+<A NAME="459"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="460"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(uHumanLocal.doUActivateHuman(username.getObjectAsValid()), ACTIVATE_PROFILE_SUCCESSFUL);
+<A NAME="461"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="462"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;Boolean&gt;(t, ACTIVATE_PROFILE_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="463"></A>        }
+<A NAME="464"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="465"></A>    }
+<A NAME="466"></A>
+<A NAME="467"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="468"></A>    <FONT ID="Public">public</FONT> Return&lt;List&lt;HumansNetPeople&gt;&gt; doDirtyRHumansBefriends(<FONT ID="Final">final</FONT> RefObj&lt;String&gt; humanId) {
+<A NAME="469"></A>        Return&lt;List&lt;HumansNetPeople&gt;&gt; r;
+<A NAME="470"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="471"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;HumansNetPeople&gt;&gt;(rHumansNetPeopleLocal_.doDirtyRHumansBefriends(humanId.getObj()), READ_HUMANS_BEFRIENDS_SUCCESSFUL);
+<A NAME="472"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/exception/AbstractEjbApplicationRuntimeException.java.html">AbstractEjbApplicationRuntimeException</A> t) {
+<A NAME="473"></A>            r = <FONT ID="New">new</FONT> ReturnImpl&lt;List&lt;HumansNetPeople&gt;&gt;(t, READ_HUMANS_BEFRIENDS_FAILED, <FONT ID="True">true</FONT>);
+<A NAME="474"></A>        }
+<A NAME="475"></A>        <FONT ID="Return">return</FONT> r;
+<A NAME="476"></A>
+<A NAME="477"></A>    }
+<A NAME="478"></A>
+<A NAME="479"></A>    <FONT ID="MultiLineComment">/*END OF PREPERATOR METHODS*/</FONT>
+<A NAME="480"></A>
+<A NAME="481"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHuman.java.html">HumanCRUDHuman</A>.<FONT ID="Class">class</FONT>);
+<A NAME="482"></A>
+<A NAME="483"></A>    <FONT ID="FormalComment">/**
+<A NAME="484"></A>     * Do your verification inside this method. Try to encapsulate all exceptions within the method and provide
+<A NAME="485"></A>     * humanly readable debug messages.
+<A NAME="486"></A>     *
+<A NAME="487"></A>     * @return The Result Of Verification. e.g. Done, Error-Resource Down.
+<A NAME="488"></A>     */</FONT>
+<A NAME="489"></A>    @Override
+<A NAME="490"></A>    @Deprecated
+<A NAME="491"></A>    @NOTE(note = <FONT ID="StringLiteral">"Will be centralized"</FONT>, see = <FONT ID="StringLiteral">"IntegrityTester.class"</FONT>)
+<A NAME="492"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Throws exception for duplicate key. Check why."</FONT>)
+<A NAME="493"></A>    <FONT ID="Public">public</FONT> String verify() {
+<A NAME="494"></A>        <FONT ID="Final">final</FONT> String random = <FONT ID="This">this</FONT>.getClass().getSimpleName() + System.currentTimeMillis();
+<A NAME="495"></A>        DB.getHumanCRUDMapLocal(<FONT ID="True">true</FONT>).createEntry(<FONT ID="StringLiteral">"verify"</FONT>, random);
+<A NAME="496"></A>        String returnVal = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="497"></A>
+<A NAME="498"></A>        verifydoDirtyRHumansIdentitiesByEmails:
+<A NAME="499"></A>        {
+<A NAME="500"></A>            setUpSomeHumans:
+<A NAME="501"></A>            {
+<A NAME="502"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"1"</FONT>), <FONT ID="New">new</FONT> Password(random), <FONT ID="Null">null</FONT>);
+<A NAME="503"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"2"</FONT>), <FONT ID="New">new</FONT> Password(random), <FONT ID="Null">null</FONT>);
+<A NAME="504"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"3"</FONT>), <FONT ID="New">new</FONT> Password(random), <FONT ID="Null">null</FONT>);
+<A NAME="505"></A>            }
+<A NAME="506"></A>
+<A NAME="507"></A>            verify:
+<A NAME="508"></A>            {
+<A NAME="509"></A>                List&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt; emails = <FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>&gt;();
+<A NAME="510"></A>
+<A NAME="511"></A>                returnVal += <FONT ID="StringLiteral">"\nAdding email"</FONT>;
+<A NAME="512"></A>                emails.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(random + <FONT ID="StringLiteral">"1"</FONT> + <FONT ID="StringLiteral">"@example.com"</FONT>));
+<A NAME="513"></A>                returnVal += <FONT ID="StringLiteral">"\nExpecting true"</FONT> +
+<A NAME="514"></A>                        <FONT ID="StringLiteral">"\nSuccessful?"</FONT> + (DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansIdentitiesByEmails(emails).size() == <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="515"></A>
+<A NAME="516"></A>                returnVal += <FONT ID="StringLiteral">"\nAdding email"</FONT>;
+<A NAME="517"></A>                emails.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(random + <FONT ID="StringLiteral">"2"</FONT> + <FONT ID="StringLiteral">"@example.com"</FONT>));
+<A NAME="518"></A>                returnVal += <FONT ID="StringLiteral">"\nExpecting true"</FONT> +
+<A NAME="519"></A>                        <FONT ID="StringLiteral">"\nSuccessful?"</FONT> + (DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansIdentitiesByEmails(emails).size() == <FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="520"></A>
+<A NAME="521"></A>                returnVal += <FONT ID="StringLiteral">"\nAdding email"</FONT>;
+<A NAME="522"></A>                emails.add(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>(random + <FONT ID="StringLiteral">"3"</FONT> + <FONT ID="StringLiteral">"@example.com"</FONT>));
+<A NAME="523"></A>                returnVal += <FONT ID="StringLiteral">"\nExpecting true"</FONT> +
+<A NAME="524"></A>                        <FONT ID="StringLiteral">"\nSuccessful?"</FONT> + (DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansIdentitiesByEmails(emails).size() == <FONT ID="IntegerLiteral">3</FONT>);
+<A NAME="525"></A>            }
+<A NAME="526"></A>
+<A NAME="527"></A>            cleanup:
+<A NAME="528"></A>            {
+<A NAME="529"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDHuman(<FONT ID="New">new</FONT> SimpleString(random + <FONT ID="StringLiteral">"1"</FONT>));
+<A NAME="530"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDHuman(<FONT ID="New">new</FONT> SimpleString(random + <FONT ID="StringLiteral">"2"</FONT>));
+<A NAME="531"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDHuman(<FONT ID="New">new</FONT> SimpleString(random + <FONT ID="StringLiteral">"3"</FONT>));
+<A NAME="532"></A>            }
+<A NAME="533"></A>
+<A NAME="534"></A>        }
+<A NAME="535"></A>
+<A NAME="536"></A>        verifyAddRemoveFriends:
+<A NAME="537"></A>        {
+<A NAME="538"></A>            setUpSomeHumans:
+<A NAME="539"></A>            {
+<A NAME="540"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"1"</FONT>), <FONT ID="New">new</FONT> Password(random), <FONT ID="Null">null</FONT>);
+<A NAME="541"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"2"</FONT>), <FONT ID="New">new</FONT> Password(random), <FONT ID="Null">null</FONT>);
+<A NAME="542"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"3"</FONT>), <FONT ID="New">new</FONT> Password(random), <FONT ID="Null">null</FONT>);
+<A NAME="543"></A>            }
+<A NAME="544"></A>
+<A NAME="545"></A>            verify:
+<A NAME="546"></A>            {
+<A NAME="547"></A>                returnVal += <FONT ID="StringLiteral">"\nAdding a friend"</FONT>;
+<A NAME="548"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doNTxAddHumansNetPeople(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"1"</FONT>), <FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"2"</FONT>));
+<A NAME="549"></A>                returnVal += <FONT ID="StringLiteral">"\nExpecting true"</FONT>;
+<A NAME="550"></A>                returnVal += <FONT ID="StringLiteral">"\nResult:"</FONT> + (DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doNTxIsHumansNetPeople(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"1"</FONT>), <FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"2"</FONT>)));
+<A NAME="551"></A>
+<A NAME="552"></A>                returnVal += <FONT ID="StringLiteral">"\nRemoving a friend"</FONT>;
+<A NAME="553"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doNTxAddHumansNetPeople(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"1"</FONT>), <FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"2"</FONT>));
+<A NAME="554"></A>                returnVal += <FONT ID="StringLiteral">"\nExpecting false"</FONT>;
+<A NAME="555"></A>                returnVal += <FONT ID="StringLiteral">"\nResult:"</FONT> + (DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doNTxIsHumansNetPeople(<FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"1"</FONT>), <FONT ID="New">new</FONT> HumanId(random + <FONT ID="StringLiteral">"2"</FONT>)));
+<A NAME="556"></A>            }
+<A NAME="557"></A>
+<A NAME="558"></A>            cleanup:
+<A NAME="559"></A>            {
+<A NAME="560"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDHuman(<FONT ID="New">new</FONT> SimpleString(random + <FONT ID="StringLiteral">"1"</FONT>));
+<A NAME="561"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDHuman(<FONT ID="New">new</FONT> SimpleString(random + <FONT ID="StringLiteral">"2"</FONT>));
+<A NAME="562"></A>                DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDHuman(<FONT ID="New">new</FONT> SimpleString(random + <FONT ID="StringLiteral">"3"</FONT>));
+<A NAME="563"></A>            }
+<A NAME="564"></A>
+<A NAME="565"></A>        }
+<A NAME="566"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="567"></A>    }
+<A NAME="568"></A>
+<A NAME="569"></A>}
+<A NAME="570"></A></pre>
+</BODY>
+</HTML>

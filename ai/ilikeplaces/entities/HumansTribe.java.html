@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.HumansTribe (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumansTribe.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.BIDIRECTIONAL;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBException.java.html">ai.ilikeplaces.exception.DBException</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/Listeners/widgets/UserProperty.java.html">ai.ilikeplaces.logic.Listeners.widgets.UserProperty</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * Created by IntelliJ IDEA.
+<A NAME="17"></A> * User: Ravindranath Akila
+<A NAME="18"></A> * Date: 10/12/11
+<A NAME="19"></A> * Time: 7:47 PM
+<A NAME="20"></A> */</FONT>
+<A NAME="21"></A>@WARNING(<FONT ID="StringLiteral">"THIS ENTITY IS NOT GUARANTEED TO 'BE' EVEN THOUGH A HUMAN IS SIGNED UP. SO CREATE IT IF NOT PRESENT!"</FONT>)
+<A NAME="22"></A>@Entity
+<A NAME="23"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="24"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumansTribe <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A>, <A HREF="../../../ai/ilikeplaces/entities/HumanIdFace.java.html">HumanIdFace</A>, <A HREF="../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A> , Serializable {
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> String humanId;
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> Set&lt;<A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; tribes;
+<A NAME="28"></A>
+<A NAME="29"></A>    @Id
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> String getHumanId() {
+<A NAME="31"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="32"></A>    }
+<A NAME="33"></A>
+<A NAME="34"></A>    @Override
+<A NAME="35"></A>    @Transient
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> String getDisplayName() {
+<A NAME="37"></A>        <FONT ID="Return">return</FONT> UserProperty.HUMANS_IDENTITY_CACHE.get(getHumanId(), <FONT ID="StringLiteral">""</FONT>).getHuman().getDisplayName();
+<A NAME="38"></A>    }
+<A NAME="39"></A>
+<A NAME="40"></A>    @Override
+<A NAME="41"></A>    @Transient
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> ifFriend(<FONT ID="Final">final</FONT> String friendsHumanId) {
+<A NAME="43"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;Boolean&gt; r = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyIsHumansNetPeople(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>(<FONT ID="This">this</FONT>.humanId), <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>(friendsHumanId));
+<A NAME="44"></A>        <FONT ID="If">if</FONT> (r.returnStatus() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="45"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/exception/DBException.java.html">DBException</A>(r.returnError());
+<A NAME="46"></A>        }
+<A NAME="47"></A>        <FONT ID="Return">return</FONT> r.returnValue();
+<A NAME="48"></A>    }
+<A NAME="49"></A>
+<A NAME="50"></A>    @Override
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> notFriend(<FONT ID="Final">final</FONT> String friendsHumanId) {
+<A NAME="52"></A>        <FONT ID="Return">return</FONT> !ifFriend(friendsHumanId);
+<A NAME="53"></A>    }
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumanId(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="56"></A>        <FONT ID="This">this</FONT>.humanId = humanId;
+<A NAME="57"></A>    }
+<A NAME="58"></A>
+<A NAME="59"></A>    @Transient
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A> setHumanIdR(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="61"></A>        <FONT ID="This">this</FONT>.humanId = humanId;
+<A NAME="62"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="63"></A>    }
+<A NAME="64"></A>
+<A NAME="65"></A>    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
+<A NAME="66"></A>    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+<A NAME="67"></A>    <FONT ID="Public">public</FONT> Set&lt;<A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; getTribes() {
+<A NAME="68"></A>        <FONT ID="Return">return</FONT> tribes;
+<A NAME="69"></A>    }
+<A NAME="70"></A>
+<A NAME="71"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTribes(<FONT ID="Final">final</FONT> Set&lt;<A HREF="../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; tribes) {
+<A NAME="72"></A>        <FONT ID="This">this</FONT>.tribes = tribes;
+<A NAME="73"></A>    }
+<A NAME="74"></A>
+<A NAME="75"></A>    @Override
+<A NAME="76"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(<FONT ID="Final">final</FONT> Object o) {
+<A NAME="77"></A>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT> == o) {
+<A NAME="78"></A>            <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="79"></A>        }
+<A NAME="80"></A>
+<A NAME="81"></A>        <FONT ID="If">if</FONT> (o == <FONT ID="Null">null</FONT>) {
+<A NAME="82"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="83"></A>        }
+<A NAME="84"></A>
+<A NAME="85"></A>        <FONT ID="If">if</FONT> (getClass() == o.getClass()) {
+<A NAME="86"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A> that = (<A HREF="../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A>) o;
+<A NAME="87"></A>            <FONT ID="Return">return</FONT> !(<FONT ID="This">this</FONT>.getHumanId() == <FONT ID="Null">null</FONT> || that.getHumanId() == <FONT ID="Null">null</FONT>) &amp;&amp; <FONT ID="This">this</FONT>.getHumanId().equals(that.getHumanId());
+<A NAME="88"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="89"></A>            <FONT ID="Return">return</FONT> HumanEquals.staticMatchHumanId(<FONT ID="This">this</FONT>, o);
+<A NAME="90"></A>        }
+<A NAME="91"></A>    }
+<A NAME="92"></A>}
+<A NAME="93"></A>
+<A NAME="94"></A></pre>
+</BODY>
+</HTML>

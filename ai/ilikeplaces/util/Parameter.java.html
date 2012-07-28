@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.Parameter (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Parameter.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">ai.ilikeplaces.logic.validators.unit.SimpleString</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.apache.commons.httpclient.URI;
+<A NAME="7"></A>
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.net.MalformedURLException;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.net.URL;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.net.URLEncoder;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.util.Arrays;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * Created by IntelliJ IDEA.
+<A NAME="17"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="18"></A> * Date: Feb 23, 2010
+<A NAME="19"></A> * Time: 6:56:58 PM
+<A NAME="20"></A> */</FONT>
+<A NAME="21"></A>
+<A NAME="22"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="23"></A>@TODO(task = <FONT ID="StringLiteral">"Refactor to URLParameter"</FONT>)
+<A NAME="24"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Parameter {
+<A NAME="25"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> EQUALS = <FONT ID="StringLiteral">"="</FONT>;
+<A NAME="26"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> QMARK = <FONT ID="StringLiteral">"?"</FONT>;
+<A NAME="27"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> AMPERSAND = <FONT ID="StringLiteral">"&amp;"</FONT>;
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">SimpleString</A> parameterString = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">SimpleString</A>(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="30"></A>
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="FormalComment">/**
+<A NAME="33"></A>     * Warning: only first argument, which is the entire parameter string, will be taken, if given
+<A NAME="34"></A>     *
+<A NAME="35"></A>     * @param prependString
+<A NAME="36"></A>     */</FONT>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> Parameter(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A>... prependString) {
+<A NAME="38"></A>        <FONT ID="If">if</FONT> (prependString.length == <FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="39"></A>            parameterString.setObj(prependString[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="40"></A>        }
+<A NAME="41"></A>    }
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="FormalComment">/**
+<A NAME="44"></A>     * To be used in static context only. Do not use it even with this classes objects
+<A NAME="45"></A>     *
+<A NAME="46"></A>     * @param key
+<A NAME="47"></A>     * @param value   toString will be called on this object to obtain the required String which means passing a String is also valid
+<A NAME="48"></A>     * @param isFirst
+<A NAME="49"></A>     * @return
+<A NAME="50"></A>     */</FONT>
+<A NAME="51"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> get(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> key, <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> value, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT>... isFirst) {
+<A NAME="52"></A>        <FONT ID="Return">return</FONT> (isFirst.length == <FONT ID="IntegerLiteral">0</FONT> ? AMPERSAND : (isFirst[<FONT ID="IntegerLiteral">0</FONT>] ? QMARK : AMPERSAND)) + key + EQUALS + value;
+<A NAME="53"></A>    }
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="FormalComment">/**
+<A NAME="56"></A>     * To be used in non-static context only
+<A NAME="57"></A>     *
+<A NAME="58"></A>     * @param key
+<A NAME="59"></A>     * @param value
+<A NAME="60"></A>     * @param isFirst which if not present is taken as false
+<A NAME="61"></A>     * @return
+<A NAME="62"></A>     */</FONT>
+<A NAME="63"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/Parameter.java.html">Parameter</A> append(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> key, <FONT ID="Final">final</FONT> Object value, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT>... isFirst) {
+<A NAME="64"></A>        parameterString.setObj(
+<A NAME="65"></A>                parameterString.getObj() +
+<A NAME="66"></A>                        (
+<A NAME="67"></A>                                (isFirst.length == <FONT ID="IntegerLiteral">0</FONT> ? AMPERSAND : (isFirst[<FONT ID="IntegerLiteral">0</FONT>] ? QMARK : AMPERSAND)) + key + EQUALS + value.toString()
+<A NAME="68"></A>                        )
+<A NAME="69"></A>        );
+<A NAME="70"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="71"></A>    }
+<A NAME="72"></A>
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> get() {
+<A NAME="74"></A>        <FONT ID="Return">return</FONT> parameterString.getObj();
+<A NAME="75"></A>    }
+<A NAME="76"></A>
+<A NAME="77"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> toURL() {
+<A NAME="78"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="79"></A>            <FONT ID="Final">final</FONT> URL url = <FONT ID="New">new</FONT> URL(parameterString.getObjectAsValid());
+<A NAME="80"></A>            <FONT ID="Final">final</FONT> URI returnVal = <FONT ID="New">new</FONT> URI(url.getProtocol(), <FONT ID="Null">null</FONT>, url.getHost(), <FONT ID="IntegerLiteral">80</FONT>, url.getPath(), url.getQuery(), <FONT ID="Null">null</FONT>);
+<A NAME="81"></A>            <FONT ID="Return">return</FONT> returnVal.toString();
+<A NAME="82"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception e) {
+<A NAME="83"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(e);
+<A NAME="84"></A>        }
+<A NAME="85"></A>    }
+<A NAME="86"></A>}
+<A NAME="87"></A></pre>
+</BODY>
+</HTML>

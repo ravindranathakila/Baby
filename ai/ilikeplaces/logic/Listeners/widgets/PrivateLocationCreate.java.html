@@ -1,0 +1,327 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">PrivateLocationCreate.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.validators.unit.*;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Info.java.html">ai.ilikeplaces.logic.validators.unit.Info</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="13"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.NodePropertyTransport;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="24"></A>
+<A NAME="25"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="26"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="27"></A>
+<A NAME="28"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="29"></A>
+<A NAME="30"></A>
+<A NAME="31"></A><FONT ID="FormalComment">/**
+<A NAME="32"></A> * @author Ravindranath Akila
+<A NAME="33"></A> */</FONT>
+<A NAME="34"></A>
+<A NAME="35"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="36"></A>@OK
+<A NAME="37"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> PrivateLocationCreate <FONT ID="Extends">extends</FONT> AbstractWidgetListener {
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SAVING = <FONT ID="StringLiteral">"Saving..."</FONT>;
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PLACENAME = <FONT ID="StringLiteral">"placename"</FONT>;
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PLACEDETAILS = <FONT ID="StringLiteral">"placedetails"</FONT>;
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WOEHINT = <FONT ID="StringLiteral">"woehint"</FONT>;
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PRIVATE_EVENT_CREATE_ANCHOR = <FONT ID="StringLiteral">"#PrivateEventCreateAnchor"</FONT>;
+<A NAME="44"></A>    RefObj&lt;String&gt; privateLocationName = <FONT ID="Null">null</FONT>;
+<A NAME="45"></A>
+<A NAME="46"></A>    RefObj&lt;String&gt; privateLocationInfo = <FONT ID="Null">null</FONT>;
+<A NAME="47"></A>
+<A NAME="48"></A>    GeoCoord woeid = <FONT ID="Null">null</FONT>;
+<A NAME="49"></A>
+<A NAME="50"></A>    HumanId humanId = <FONT ID="Null">null</FONT>;
+<A NAME="51"></A>
+<A NAME="52"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/PrivateLocationCreate.java.html">PrivateLocationCreate</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SAVING_PRIVATE_LOCATION = <FONT ID="StringLiteral">"Saving private location"</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WAS_CREATED = <FONT ID="StringLiteral">" was created!"</FONT>;
+<A NAME="55"></A>
+<A NAME="56"></A><FONT ID="SingleLineComment">//    private static final String PRIVATE_LOCATION_CREATE_WOEIDUPDATE_TOKEN = "privateLocationCreateWOEIDUpdateToken";
+<A NAME="57"></A></FONT><FONT ID="SingleLineComment">//    private static final String privateLocationCreateWOEIDUpdate =
+<A NAME="58"></A></FONT><FONT ID="SingleLineComment">//            "\nprivateLocationCreateWOEIDUpdate = function(lat,lng){document.getElementById('" + PRIVATE_LOCATION_CREATE_WOEIDUPDATE_TOKEN + "').value = '' + lat + ',' + lng;}\n";
+<A NAME="59"></A></FONT>
+<A NAME="60"></A>    <FONT ID="FormalComment">/**
+<A NAME="61"></A>     * @param request__
+<A NAME="62"></A>     * @param appendToElement__
+<A NAME="63"></A>     * @param humanId__
+<A NAME="64"></A>     */</FONT>
+<A NAME="65"></A>    <FONT ID="Public">public</FONT> PrivateLocationCreate(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> String humanId__) {
+<A NAME="66"></A>        <FONT ID="Super">super</FONT>(request__, Page.PrivateLocationCreate, appendToElement__, humanId__);
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>    <FONT ID="FormalComment">/**
+<A NAME="70"></A>     *
+<A NAME="71"></A>     */</FONT>
+<A NAME="72"></A>    @Override
+<A NAME="73"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="74"></A>        <FONT ID="This">this</FONT>.humanId = <FONT ID="New">new</FONT> HumanId();
+<A NAME="75"></A>        <FONT ID="This">this</FONT>.woeid = <FONT ID="New">new</FONT> GeoCoord();
+<A NAME="76"></A>        humanId.setObjAsValid((String) initArgs[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="77"></A>
+<A NAME="78"></A>        <FONT ID="This">this</FONT>.privateLocationName = <FONT ID="New">new</FONT> SimpleName();
+<A NAME="79"></A>
+<A NAME="80"></A>        <FONT ID="This">this</FONT>.privateLocationInfo = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/Info.java.html">Info</A>();
+<A NAME="81"></A>
+<A NAME="82"></A>        Loggers.DEBUG.debug(((HttpServletRequest) request.getServletRequest()).getHeader(<FONT ID="StringLiteral">"Referer"</FONT>));
+<A NAME="83"></A>
+<A NAME="84"></A>        TryToAutoCreatePrivateLocationFromURL:
+<A NAME="85"></A>        {
+<A NAME="86"></A>            TryToGetPrivateLocationNameHintFromURL:
+<A NAME="87"></A>            {
+<A NAME="88"></A>                <FONT ID="Final">final</FONT> String placename = $$(request, PLACENAME);
+<A NAME="89"></A>                <FONT ID="If">if</FONT> (placename != <FONT ID="Null">null</FONT>) {
+<A NAME="90"></A>                    <FONT ID="This">this</FONT>.privateLocationName.setObj(placename);
+<A NAME="91"></A>                }
+<A NAME="92"></A>            }
+<A NAME="93"></A>
+<A NAME="94"></A>            TryToGetPrivateLocationDescriptionHintFromURL:
+<A NAME="95"></A>            {
+<A NAME="96"></A>                <FONT ID="Final">final</FONT> String placedetails = $$(request, PLACEDETAILS);
+<A NAME="97"></A>                <FONT ID="If">if</FONT> (placedetails != <FONT ID="Null">null</FONT>) {
+<A NAME="98"></A>                    <FONT ID="This">this</FONT>.privateLocationInfo.setObj(placedetails);
+<A NAME="99"></A>                }
+<A NAME="100"></A>            }
+<A NAME="101"></A>
+<A NAME="102"></A>            <FONT ID="Boolean">boolean</FONT> existingLocation = <FONT ID="False">false</FONT>;
+<A NAME="103"></A>
+<A NAME="104"></A>            TryToGetPrivateLocationPositionOnMapFromURL:
+<A NAME="105"></A>            {
+<A NAME="106"></A>                <FONT ID="If">if</FONT> ($$(request, WOEHINT) != <FONT ID="Null">null</FONT>) {
+<A NAME="107"></A>                    woeid = <FONT ID="New">new</FONT> GeoCoord().setObj($$(request, WOEHINT));
+<A NAME="108"></A>                    <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; privateLocations = DB.getHumanCRUDHumanLocal(<FONT ID="False">false</FONT>).doDirtyRHumansPrivateLocation(humanId).returnValue().getPrivateLocationsOwned();
+<A NAME="109"></A>
+<A NAME="110"></A>                    LogNull.logThrow(privateLocations);
+<A NAME="111"></A>
+<A NAME="112"></A>                    LogNull.logThrow(woeid.getObjectAsValid());
+<A NAME="113"></A>
+<A NAME="114"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> privateLocation : privateLocations) {
+<A NAME="115"></A>
+<A NAME="116"></A>                        Loggers.debug(privateLocation.toString());
+<A NAME="117"></A>                        Loggers.debug(woeid.toString());
+<A NAME="118"></A>
+<A NAME="119"></A>                        <FONT ID="If">if</FONT> (privateLocation.getPrivateLocationLatitude() - <FONT ID="FloatPointLiteral">0.000133145585763375</FONT> &lt; woeid.getObjectAsValid().getLatitude() &amp;&amp;
+<A NAME="120"></A>                                privateLocation.getPrivateLocationLatitude() + <FONT ID="FloatPointLiteral">0.000133145585763375</FONT> &gt; woeid.getObjectAsValid().getLatitude() &amp;&amp;
+<A NAME="121"></A>                                privateLocation.getPrivateLocationLongitude() - <FONT ID="FloatPointLiteral">0.000184401869775</FONT> &lt; woeid.getObjectAsValid().getLongitude() &amp;&amp;
+<A NAME="122"></A>                                privateLocation.getPrivateLocationLongitude() + <FONT ID="FloatPointLiteral">0.000184401869775</FONT> &gt; woeid.getObjectAsValid().getLongitude()) {<FONT ID="SingleLineComment">//Same place
+<A NAME="123"></A></FONT>
+<A NAME="124"></A>
+<A NAME="125"></A>                            itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
+<A NAME="126"></A>                                    <FONT ID="New">new</FONT> Parameter(Controller.Page.Organize.getURL())
+<A NAME="127"></A>                                            .append(Controller.Page.DocOrganizeCategory, <FONT ID="IntegerLiteral">2</FONT>, <FONT ID="True">true</FONT>)
+<A NAME="128"></A>                                            .append(Controller.Page.DocOrganizeLocation, privateLocation.getPrivateLocationId())
+<A NAME="129"></A>                                            .get()
+<A NAME="130"></A>                            ));
+<A NAME="131"></A>                            existingLocation = <FONT ID="True">true</FONT>;
+<A NAME="132"></A>                            <FONT ID="Break">break</FONT>;
+<A NAME="133"></A>                        }
+<A NAME="134"></A>                    }
+<A NAME="135"></A>
+<A NAME="136"></A>                }
+<A NAME="137"></A>            }
+<A NAME="138"></A>
+<A NAME="139"></A>            DoTheCreatingPartAfterValidationPrivateLocationsCriteria:
+<A NAME="140"></A>            {
+<A NAME="141"></A>                <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.privateLocationName.validate() == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; <FONT ID="This">this</FONT>.privateLocationInfo.validate() == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; <FONT ID="This">this</FONT>.woeid.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="142"></A>
+<A NAME="143"></A>                    <FONT ID="If">if</FONT> (!existingLocation) {
+<A NAME="144"></A>                        <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r = DB.getHumanCrudPrivateLocationLocal(<FONT ID="True">true</FONT>).cPrivateLocation(
+<A NAME="145"></A>                                humanId,
+<A NAME="146"></A>                                privateLocationName,
+<A NAME="147"></A>                                privateLocationInfo,
+<A NAME="148"></A>                                <FONT ID="New">new</FONT> VDouble(woeid.getObjectAsValid().getLatitude()),
+<A NAME="149"></A>                                <FONT ID="New">new</FONT> VDouble(woeid.getObjectAsValid().getLongitude()));
+<A NAME="150"></A>                        <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="151"></A>                            itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
+<A NAME="152"></A>                                    <FONT ID="New">new</FONT> Parameter(Controller.Page.Organize.getURL())
+<A NAME="153"></A>                                            .append(Controller.Page.DocOrganizeCategory, <FONT ID="IntegerLiteral">2</FONT>, <FONT ID="True">true</FONT>)
+<A NAME="154"></A>                                            .append(Controller.Page.DocOrganizeLocation, r.returnValue().getPrivateLocationId() + PRIVATE_EVENT_CREATE_ANCHOR)
+<A NAME="155"></A>                                            .get()
+<A NAME="156"></A>                            ));<FONT ID="SingleLineComment">//
+<A NAME="157"></A></FONT>                        } <FONT ID="Else">else</FONT> {
+<A NAME="158"></A>                            $$(PrivateLocationCreateCNotice).setTextContent(r.returnMsg());
+<A NAME="159"></A>                        }
+<A NAME="160"></A>                    }
+<A NAME="161"></A>                }
+<A NAME="162"></A>            }
+<A NAME="163"></A>        }
+<A NAME="164"></A>
+<A NAME="165"></A>
+<A NAME="166"></A>        RenderWOEIDGrabber:
+<A NAME="167"></A>        {
+<A NAME="168"></A>            <FONT ID="SingleLineComment">//new WOEIDGrabber(request, $$(privateLocationCreateWOEIDGrabber), $$(privateLocationCreateWOEID));
+<A NAME="169"></A></FONT>        }
+<A NAME="170"></A><FONT ID="SingleLineComment">//        itsNatDocument_.addCodeToSend(
+<A NAME="171"></A></FONT><FONT ID="SingleLineComment">//                privateLocationCreateWOEIDUpdate.replace(
+<A NAME="172"></A></FONT><FONT ID="SingleLineComment">//                        PRIVATE_LOCATION_CREATE_WOEIDUPDATE_TOKEN,
+<A NAME="173"></A></FONT><FONT ID="SingleLineComment">//                        $$(privateLocationCreateWOEID).getAttribute(MarkupTag.GENERIC.id()))
+<A NAME="174"></A></FONT><FONT ID="SingleLineComment">//        );
+<A NAME="175"></A></FONT>    }
+<A NAME="176"></A>
+<A NAME="177"></A>    @Override
+<A NAME="178"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__) {
+<A NAME="179"></A>
+<A NAME="180"></A><FONT ID="SingleLineComment">//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateName), EventType.BLUR.toString(), new EventListener() {
+<A NAME="181"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="182"></A></FONT><FONT ID="SingleLineComment">//            final RefObj&lt;String&gt; myprivateLocationName = privateLocationName;
+<A NAME="183"></A></FONT><FONT ID="SingleLineComment">//            final Validator v = new Validator();
+<A NAME="184"></A></FONT><FONT ID="SingleLineComment">//            RefObj&lt;String&gt; name;
+<A NAME="185"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="186"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="187"></A></FONT><FONT ID="SingleLineComment">//            public void handleEvent(final Event evt_) {
+<A NAME="188"></A></FONT><FONT ID="SingleLineComment">//                name = new SimpleName(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="189"></A></FONT><FONT ID="SingleLineComment">//                logger.debug("{}", name);
+<A NAME="190"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="191"></A></FONT><FONT ID="SingleLineComment">//                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="192"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="193"></A></FONT><FONT ID="SingleLineComment">//                if (name.validate(v) == 0) {
+<A NAME="194"></A></FONT><FONT ID="SingleLineComment">//                    myprivateLocationName.setObj(name.getObj());
+<A NAME="195"></A></FONT><FONT ID="SingleLineComment">//                    $$clear($$(PrivateLocationCreateCNotice));
+<A NAME="196"></A></FONT><FONT ID="SingleLineComment">//                } else {
+<A NAME="197"></A></FONT><FONT ID="SingleLineComment">//                    $$(PrivateLocationCreateCNotice).setTextContent(name.getViolationAsString());
+<A NAME="198"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="199"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="200"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="201"></A></FONT><FONT ID="SingleLineComment">//        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="202"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="203"></A></FONT><FONT ID="SingleLineComment">//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateInfo), EventType.BLUR.toString(), new EventListener() {
+<A NAME="204"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="205"></A></FONT><FONT ID="SingleLineComment">//            final RefObj&lt;String&gt; myprivateLocationInfo = privateLocationInfo;
+<A NAME="206"></A></FONT><FONT ID="SingleLineComment">//            final Validator v = new Validator();
+<A NAME="207"></A></FONT><FONT ID="SingleLineComment">//            RefObj&lt;String&gt; info;
+<A NAME="208"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="209"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="210"></A></FONT><FONT ID="SingleLineComment">//            public void handleEvent(final Event evt_) {
+<A NAME="211"></A></FONT><FONT ID="SingleLineComment">//                info = new Info(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="212"></A></FONT><FONT ID="SingleLineComment">//                logger.debug("{}", info);
+<A NAME="213"></A></FONT><FONT ID="SingleLineComment">//                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="214"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="215"></A></FONT><FONT ID="SingleLineComment">//                if (info.validate(v) == 0) {
+<A NAME="216"></A></FONT><FONT ID="SingleLineComment">//                    myprivateLocationInfo.setObj(info.getObj());
+<A NAME="217"></A></FONT><FONT ID="SingleLineComment">//                    clear($$(PrivateLocationCreateCNotice));
+<A NAME="218"></A></FONT><FONT ID="SingleLineComment">//                } else {
+<A NAME="219"></A></FONT><FONT ID="SingleLineComment">//                    $$(PrivateLocationCreateCNotice).setTextContent(info.getViolationAsString());
+<A NAME="220"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="221"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="222"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="223"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="224"></A></FONT><FONT ID="SingleLineComment">//        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="225"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="226"></A></FONT><FONT ID="SingleLineComment">////        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateWOEID), EventType.BLUR.toString(), new EventListener() {
+<A NAME="227"></A></FONT><FONT ID="SingleLineComment">////
+<A NAME="228"></A></FONT><FONT ID="SingleLineComment">////            final RefObj&lt;String&gt; myprivateLocationInfo = privateLocationInfo;
+<A NAME="229"></A></FONT><FONT ID="SingleLineComment">////            final Validator v = new Validator();
+<A NAME="230"></A></FONT><FONT ID="SingleLineComment">////            RefObj&lt;String&gt; info;
+<A NAME="231"></A></FONT><FONT ID="SingleLineComment">////
+<A NAME="232"></A></FONT><FONT ID="SingleLineComment">////            @Override
+<A NAME="233"></A></FONT><FONT ID="SingleLineComment">////            public void handleEvent(final Event evt_) {
+<A NAME="234"></A></FONT><FONT ID="SingleLineComment">////                info = new Info(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="235"></A></FONT><FONT ID="SingleLineComment">////                logger.debug("{}", info);
+<A NAME="236"></A></FONT><FONT ID="SingleLineComment">////                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="237"></A></FONT><FONT ID="SingleLineComment">////
+<A NAME="238"></A></FONT><FONT ID="SingleLineComment">////                if (info.validate(v) == 0) {
+<A NAME="239"></A></FONT><FONT ID="SingleLineComment">////                    myprivateLocationInfo.setObj(info.getObj());
+<A NAME="240"></A></FONT><FONT ID="SingleLineComment">////                    clear($$(PrivateLocationCreateCNotice));
+<A NAME="241"></A></FONT><FONT ID="SingleLineComment">////                } else {
+<A NAME="242"></A></FONT><FONT ID="SingleLineComment">////                    $$(PrivateLocationCreateCNotice).setTextContent(info.getViolationAsString());
+<A NAME="243"></A></FONT><FONT ID="SingleLineComment">////                }
+<A NAME="244"></A></FONT><FONT ID="SingleLineComment">////            }
+<A NAME="245"></A></FONT><FONT ID="SingleLineComment">////
+<A NAME="246"></A></FONT><FONT ID="SingleLineComment">////            @Override
+<A NAME="247"></A></FONT><FONT ID="SingleLineComment">////            public void finalize() throws Throwable {
+<A NAME="248"></A></FONT><FONT ID="SingleLineComment">////                Loggers.finalized(this.getClass().getName());
+<A NAME="249"></A></FONT><FONT ID="SingleLineComment">////                super.finalize();
+<A NAME="250"></A></FONT><FONT ID="SingleLineComment">////            }
+<A NAME="251"></A></FONT><FONT ID="SingleLineComment">////        }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="252"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="253"></A></FONT><FONT ID="SingleLineComment">//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
+<A NAME="254"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="255"></A></FONT><FONT ID="SingleLineComment">//            public void handleEvent(final Event evt_) {
+<A NAME="256"></A></FONT><FONT ID="SingleLineComment">//                $$(PrivateLocationCreateCNotice).setTextContent(SAVING);
+<A NAME="257"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="258"></A></FONT><FONT ID="SingleLineComment">//        }, false);
+<A NAME="259"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="260"></A></FONT><FONT ID="SingleLineComment">//        itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationCreateSave), EventType.CLICK.toString(), new EventListener() {
+<A NAME="261"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="262"></A></FONT><FONT ID="SingleLineComment">//            final HumanId myhumanId = humanId;
+<A NAME="263"></A></FONT><FONT ID="SingleLineComment">//            final RefObj&lt;String&gt; myprivateLocationName = privateLocationName;
+<A NAME="264"></A></FONT><FONT ID="SingleLineComment">//            final RefObj&lt;String&gt; myprivateLocationInfo = privateLocationInfo;
+<A NAME="265"></A></FONT><FONT ID="SingleLineComment">//            final Validator v = new Validator();
+<A NAME="266"></A></FONT><FONT ID="SingleLineComment">//            final GeoCoord mywoeid = woeid;
+<A NAME="267"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="268"></A></FONT><FONT ID="SingleLineComment">//            @Override
+<A NAME="269"></A></FONT><FONT ID="SingleLineComment">//            public void handleEvent(final Event evt_) {
+<A NAME="270"></A></FONT><FONT ID="SingleLineComment">//                final SmartLogger sl;
+<A NAME="271"></A></FONT><FONT ID="SingleLineComment">//                logger.debug("{}", $$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="272"></A></FONT><FONT ID="SingleLineComment">//                mywoeid.setObj($$(privateLocationCreateWOEID).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="273"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="274"></A></FONT><FONT ID="SingleLineComment">//                if (myprivateLocationName.validate(v) == 0 &amp;&amp; myprivateLocationInfo.validate(v) == 0 &amp;&amp; mywoeid.validate(v) == 0) {
+<A NAME="275"></A></FONT><FONT ID="SingleLineComment">//                    sl = SmartLogger.start(Loggers.LEVEL.DEBUG, SAVING_PRIVATE_LOCATION, 10000, null, true);
+<A NAME="276"></A></FONT><FONT ID="SingleLineComment">//                    final Return&lt;PrivateLocation&gt; r = DB.getHumanCrudPrivateLocationLocal(true).cPrivateLocation(
+<A NAME="277"></A></FONT><FONT ID="SingleLineComment">//                            myhumanId,
+<A NAME="278"></A></FONT><FONT ID="SingleLineComment">//                            myprivateLocationName,
+<A NAME="279"></A></FONT><FONT ID="SingleLineComment">//                            myprivateLocationInfo,
+<A NAME="280"></A></FONT><FONT ID="SingleLineComment">//                            mywoeid);
+<A NAME="281"></A></FONT><FONT ID="SingleLineComment">//                    if (r.returnStatus() == 0) {
+<A NAME="282"></A></FONT><FONT ID="SingleLineComment">//                        remove(evt_.getTarget(), EventType.CLICK, this);
+<A NAME="283"></A></FONT><FONT ID="SingleLineComment">//                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getObj() + WAS_CREATED);
+<A NAME="284"></A></FONT><FONT ID="SingleLineComment">//                        itsNatDocument_.addCodeToSend(JSCodeToSend.redirectPageWithURL(
+<A NAME="285"></A></FONT><FONT ID="SingleLineComment">//                                new Parameter(Controller.Page.Organize.getURL())
+<A NAME="286"></A></FONT><FONT ID="SingleLineComment">//                                        .append(Controller.Page.DocOrganizeCategory, 2, true)
+<A NAME="287"></A></FONT><FONT ID="SingleLineComment">//                                        .append(Controller.Page.DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+<A NAME="288"></A></FONT><FONT ID="SingleLineComment">//                                        .get()
+<A NAME="289"></A></FONT><FONT ID="SingleLineComment">//                        ));//
+<A NAME="290"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="291"></A></FONT><FONT ID="SingleLineComment">//                        sl.complete(Loggers.DONE + r.returnMsg());
+<A NAME="292"></A></FONT><FONT ID="SingleLineComment">//                    } else {
+<A NAME="293"></A></FONT><FONT ID="SingleLineComment">//                        $$(PrivateLocationCreateCNotice).setTextContent(r.returnMsg());
+<A NAME="294"></A></FONT><FONT ID="SingleLineComment">//                        sl.complete(r.returnMsg());
+<A NAME="295"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="296"></A></FONT><FONT ID="SingleLineComment">//                } else {
+<A NAME="297"></A></FONT><FONT ID="SingleLineComment">//                    if (myprivateLocationName.validate(v) != 0) {
+<A NAME="298"></A></FONT><FONT ID="SingleLineComment">//                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationName.getViolationAsString());
+<A NAME="299"></A></FONT><FONT ID="SingleLineComment">//                    } else if (myprivateLocationInfo.validate(v) != 0) {
+<A NAME="300"></A></FONT><FONT ID="SingleLineComment">//                        $$(PrivateLocationCreateCNotice).setTextContent(myprivateLocationInfo.getViolationAsString());
+<A NAME="301"></A></FONT><FONT ID="SingleLineComment">//                    } else if (mywoeid.validate(v) != 0) {
+<A NAME="302"></A></FONT><FONT ID="SingleLineComment">//                        $$(PrivateLocationCreateCNotice).setTextContent(mywoeid.getViolationAsString());
+<A NAME="303"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="304"></A></FONT><FONT ID="SingleLineComment">//                }
+<A NAME="305"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="306"></A></FONT><FONT ID="SingleLineComment">//        }, false);
+<A NAME="307"></A></FONT>    }
+<A NAME="308"></A>}</pre>
+</BODY>
+</HTML>

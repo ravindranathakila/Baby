@@ -1,0 +1,404 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.email.Email (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Email.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util.email;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">ai.ilikeplaces.util.cache.SmartCache2String</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.naming.NamingEnumeration;
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.naming.NamingException;
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.naming.directory.Attribute;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.naming.directory.Attributes;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.naming.directory.DirContext;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.naming.directory.InitialDirContext;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.io.*;
+<A NAME="14"></A><FONT ID="Import">import</FONT> java.net.Socket;
+<A NAME="15"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.util.HashMap;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.util.Hashtable;
+<A NAME="18"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="FormalComment">/**
+<A NAME="21"></A> * Created by IntelliJ IDEA.
+<A NAME="22"></A> * User: Ravindranath Akila
+<A NAME="23"></A> * Date: 11/5/11
+<A NAME="24"></A> * Time: 10:24 AM
+<A NAME="25"></A> *
+<A NAME="26"></A> * @see &lt;a href="http://www.rgagnon.com/javadetails/java-0452.html"&gt;
+<A NAME="27"></A> *      http://www.rgagnon.com/javadetails/java-0452.html
+<A NAME="28"></A> *      &lt;/a&gt;
+<A NAME="29"></A> * @see &lt;a href="http://www.ahfx.net/weblog/107"&gt;Yahoo Email Rejection 1&lt;/a&gt;
+<A NAME="30"></A> * @see &lt;a href="http://help.yahoo.com/l/us/yahoo/mail/postmaster/basics/postmaster-15.html;_ylt=AueFB6cUubaoB3dWcNvf0RoIJHdG"&gt;Yahoo Email Rejection 2&lt;/a&gt;
+<A NAME="31"></A> * @see &lt;a href="http://help.yahoo.com/l/us/yahoo/mail/postmaster/errors/postmaster-27.html;_ylt=AmZV.STJit58m4_SryYhoFYlJHdG"&gt;Yahoo Email Rejection With "554"&lt;/a&gt;
+<A NAME="32"></A> */</FONT>
+<A NAME="33"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Email {
+<A NAME="34"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="35"></A></FONT>
+<A NAME="36"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger L = LoggerFactory.getLogger(<FONT ID="StringLiteral">"EMAIL_VALIDATOR_LOGGER"</FONT>);
+<A NAME="37"></A>
+<A NAME="38"></A>
+<A NAME="39"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS STATIC --------------------------
+<A NAME="40"></A></FONT>
+<A NAME="41"></A>    <FONT ID="Static">static</FONT> Map&lt;<A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>, <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>&gt; CONFIRMED_EMAILS = <FONT ID="New">new</FONT> HashMap&lt;<A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>, <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>&gt;() {
+<A NAME="42"></A>        {
+<A NAME="43"></A>            put(<FONT ID="StringLiteral">"gmail.com"</FONT>, <FONT ID="StringLiteral">"ravindranathakila@gmail.com"</FONT>);
+<A NAME="44"></A>            put(<FONT ID="StringLiteral">"yahoo.com"</FONT>, <FONT ID="StringLiteral">"ravindranathakila@yahoo.com"</FONT>);
+<A NAME="45"></A>        }
+<A NAME="46"></A>    };
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">SmartCache2String</A>&lt;Boolean, <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>&gt; VALID_DOMAINS_WITH_VALID_EMAILS = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">SmartCache2String</A>&lt;Boolean, <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>&gt;(
+<A NAME="49"></A>            <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">SmartCache2String.RecoverWith</A>&lt;Boolean, <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>&gt;() {
+<A NAME="50"></A>                @Override
+<A NAME="51"></A>                <FONT ID="Public">public</FONT> Boolean getValue(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> k, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> runtimeArgument) {
+<A NAME="52"></A>
+<A NAME="53"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> confirmedEmail = CONFIRMED_EMAILS.get(k);
+<A NAME="54"></A>                    <FONT ID="If">if</FONT> (confirmedEmail == <FONT ID="Null">null</FONT>) {
+<A NAME="55"></A>                        <FONT ID="Return">return</FONT> runtimeArgument.endsWith(k) &amp;&amp; isAddressValid(runtimeArgument);
+<A NAME="56"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="57"></A>                        <FONT ID="Return">return</FONT> runtimeArgument.endsWith(k) &amp;&amp; isAddressValid(confirmedEmail);
+<A NAME="58"></A>                    }
+<A NAME="59"></A>                }
+<A NAME="60"></A>            }
+<A NAME="61"></A>    );
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> JAVA_NAMING_FACTORY_INITIAL = <FONT ID="StringLiteral">"java.naming.factory.initial"</FONT>;
+<A NAME="63"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> COM_SUN_JNDI_DNS_DNS_CONTEXT_FACTORY = <FONT ID="StringLiteral">"com.sun.jndi.dns.DnsContextFactory"</FONT>;
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> MX = <FONT ID="StringLiteral">"MX"</FONT>;
+<A NAME="65"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> NO_MATCH_FOR_NAME = <FONT ID="StringLiteral">"No match for name '"</FONT>;
+<A NAME="66"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> SINGLE_QUOTE = <FONT ID="StringLiteral">"'"</FONT>;
+<A NAME="67"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> INVALID_HEADER = <FONT ID="StringLiteral">"Invalid header"</FONT>;
+<A NAME="68"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> EHLO_WITH_DOMAIN = <FONT ID="StringLiteral">"EHLO ilikeplaces.com"</FONT>;
+<A NAME="69"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> NOT_ESMTP = <FONT ID="StringLiteral">"Not ESMTP"</FONT>;
+<A NAME="70"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> MAIL_FROM = <FONT ID="StringLiteral">"MAIL FROM: &lt;notifications@ilikeplaces.com&gt;"</FONT>;
+<A NAME="71"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> SENDER_REJECTED = <FONT ID="StringLiteral">"Sender rejected"</FONT>;
+<A NAME="72"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> RCPT_TO = <FONT ID="StringLiteral">"RCPT TO: &lt;"</FONT>;
+<A NAME="73"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> STRING = <FONT ID="StringLiteral">"&gt;"</FONT>;
+<A NAME="74"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> RSET = <FONT ID="StringLiteral">"RSET"</FONT>;
+<A NAME="75"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> QUIT = <FONT ID="StringLiteral">"QUIT"</FONT>;
+<A NAME="76"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> ADDRESS_IS_NOT_VALID = <FONT ID="StringLiteral">" is not valid!"</FONT>;
+<A NAME="77"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT> AT = <FONT ID="CharacerLiteral">'@'</FONT>;
+<A NAME="78"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> NEWLINE = <FONT ID="StringLiteral">"\r\n"</FONT>;
+<A NAME="79"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> SPACE = <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="80"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> PERIOD = <FONT ID="StringLiteral">"."</FONT>;
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="83"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Int">int</FONT> doLookup(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> hostName) <FONT ID="Throws">throws</FONT> NamingException {
+<A NAME="84"></A>
+<A NAME="85"></A>        Hashtable env = <FONT ID="New">new</FONT> Hashtable();
+<A NAME="86"></A>        env.put(JAVA_NAMING_FACTORY_INITIAL,
+<A NAME="87"></A>                COM_SUN_JNDI_DNS_DNS_CONTEXT_FACTORY);
+<A NAME="88"></A>        DirContext ictx = <FONT ID="New">new</FONT> InitialDirContext(env);
+<A NAME="89"></A>        Attributes attrs =
+<A NAME="90"></A>                ictx.getAttributes(hostName, <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>[]{MX});
+<A NAME="91"></A>        Attribute attr = attrs.get(MX);
+<A NAME="92"></A>        <FONT ID="If">if</FONT> (attr == <FONT ID="Null">null</FONT>) {
+<A NAME="93"></A>            <FONT ID="Return">return</FONT> (<FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="94"></A>        }
+<A NAME="95"></A>        <FONT ID="Return">return</FONT> (attr.size());
+<A NAME="96"></A>    }
+<A NAME="97"></A>
+<A NAME="98"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Boolean">boolean</FONT> isAddressValidTolerant(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> address) {
+<A NAME="99"></A>
+<A NAME="100"></A>        <FONT ID="SingleLineComment">// Find the separator for the domain name
+<A NAME="101"></A></FONT>        <FONT ID="Int">int</FONT> pos = address.indexOf(AT);
+<A NAME="102"></A>
+<A NAME="103"></A>        <FONT ID="SingleLineComment">// If the address does not contain an '@', it's not valid
+<A NAME="104"></A></FONT>        <FONT ID="If">if</FONT> (pos == -<FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="105"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="106"></A>        }
+<A NAME="107"></A>
+<A NAME="108"></A>        <FONT ID="SingleLineComment">// Isolate the domain/machine name and get a list of mail exchangers
+<A NAME="109"></A></FONT>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> domain = address.substring(++pos);
+<A NAME="110"></A>
+<A NAME="111"></A>        ArrayList mxList = <FONT ID="Null">null</FONT>;
+<A NAME="112"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="113"></A>            mxList = getMX(domain);
+<A NAME="114"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="115"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="116"></A>        }
+<A NAME="117"></A>
+<A NAME="118"></A>        <FONT ID="SingleLineComment">// Just because we can send mail to the domain, doesn't mean that the
+<A NAME="119"></A></FONT>        <FONT ID="SingleLineComment">// address is valid, but if we can't, it's a sure sign that it isn't
+<A NAME="120"></A></FONT>        <FONT ID="If">if</FONT> (mxList.size() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="121"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="122"></A>        }
+<A NAME="123"></A>
+<A NAME="124"></A>        <FONT ID="If">if</FONT> (VALID_DOMAINS_WITH_VALID_EMAILS.get(domain, address)) {
+<A NAME="125"></A>            <FONT ID="Return">return</FONT> isAddressValid(address);
+<A NAME="126"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="127"></A>            debug(<FONT ID="StringLiteral">"DEFAULTING:"</FONT> + address);
+<A NAME="128"></A>            <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="129"></A>        }
+<A NAME="130"></A>    }
+<A NAME="131"></A>
+<A NAME="132"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> ArrayList getMX(<A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> hostName)
+<A NAME="133"></A>            <FONT ID="Throws">throws</FONT> NamingException {
+<A NAME="134"></A>
+<A NAME="135"></A>        <FONT ID="SingleLineComment">// Perform a DNS lookup for MX records in the domain
+<A NAME="136"></A></FONT>        Hashtable env = <FONT ID="New">new</FONT> Hashtable();
+<A NAME="137"></A>        env.put(JAVA_NAMING_FACTORY_INITIAL,
+<A NAME="138"></A>                COM_SUN_JNDI_DNS_DNS_CONTEXT_FACTORY);
+<A NAME="139"></A>        DirContext ictx = <FONT ID="New">new</FONT> InitialDirContext(env);
+<A NAME="140"></A>        Attributes attrs = ictx.getAttributes
+<A NAME="141"></A>                (hostName, <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>[]{MX});
+<A NAME="142"></A>        Attribute attr = attrs.get(MX);
+<A NAME="143"></A>
+<A NAME="144"></A>        <FONT ID="SingleLineComment">// if we don't have an MX record, try the machine itself
+<A NAME="145"></A></FONT>        <FONT ID="If">if</FONT> ((attr == <FONT ID="Null">null</FONT>) || (attr.size() == <FONT ID="IntegerLiteral">0</FONT>)) {
+<A NAME="146"></A>            attrs = ictx.getAttributes(hostName, <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>[]{<FONT ID="StringLiteral">"A"</FONT>});
+<A NAME="147"></A>            attr = attrs.get(<FONT ID="StringLiteral">"A"</FONT>);
+<A NAME="148"></A>            <FONT ID="If">if</FONT> (attr == <FONT ID="Null">null</FONT>)
+<A NAME="149"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> NamingException
+<A NAME="150"></A>                        (NO_MATCH_FOR_NAME + hostName + SINGLE_QUOTE);
+<A NAME="151"></A>        }
+<A NAME="152"></A>        <FONT ID="SingleLineComment">// Huzzah! we have machines to try. Return them as an array list
+<A NAME="153"></A></FONT>        <FONT ID="SingleLineComment">// NOTE: We SHOULD take the preference into account to be absolutely
+<A NAME="154"></A></FONT>        <FONT ID="SingleLineComment">//   correct. This is left as an exercise for anyone who cares.
+<A NAME="155"></A></FONT>        ArrayList res = <FONT ID="New">new</FONT> ArrayList();
+<A NAME="156"></A>        NamingEnumeration en = attr.getAll();
+<A NAME="157"></A>
+<A NAME="158"></A>        <FONT ID="While">while</FONT> (en.hasMore()) {
+<A NAME="159"></A>            <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> mailhost;
+<A NAME="160"></A>            <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> x = (<A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>) en.next();
+<A NAME="161"></A>            <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> f[] = x.split(SPACE);
+<A NAME="162"></A>            <FONT ID="SingleLineComment">//  THE fix *************
+<A NAME="163"></A></FONT>            <FONT ID="If">if</FONT> (f.length == <FONT ID="IntegerLiteral">1</FONT>)
+<A NAME="164"></A>                mailhost = f[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="165"></A>            <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (f[<FONT ID="IntegerLiteral">1</FONT>].endsWith(PERIOD))
+<A NAME="166"></A>                mailhost = f[<FONT ID="IntegerLiteral">1</FONT>].substring(<FONT ID="IntegerLiteral">0</FONT>, (f[<FONT ID="IntegerLiteral">1</FONT>].length() - <FONT ID="IntegerLiteral">1</FONT>));
+<A NAME="167"></A>            <FONT ID="Else">else</FONT>
+<A NAME="168"></A>                mailhost = f[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="169"></A>            <FONT ID="SingleLineComment">//  THE fix *************
+<A NAME="170"></A></FONT>            res.add(mailhost);
+<A NAME="171"></A>        }
+<A NAME="172"></A>        <FONT ID="Return">return</FONT> res;
+<A NAME="173"></A>    }
+<A NAME="174"></A>
+<A NAME="175"></A>    <FONT ID="SingleLineComment">// --------------------------- main() method ---------------------------
+<A NAME="176"></A></FONT>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(<A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> args[]) {
+<A NAME="177"></A>
+<A NAME="178"></A>        <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> testData[] = {
+<A NAME="179"></A>                <FONT ID="StringLiteral">"real@rgagnon.com"</FONT>,
+<A NAME="180"></A>                <FONT ID="StringLiteral">"you@acquisto.net"</FONT>,
+<A NAME="181"></A>                <FONT ID="StringLiteral">"fail.me@nowhere.spam"</FONT>, <FONT ID="SingleLineComment">// Invalid domain name
+<A NAME="182"></A></FONT>                <FONT ID="StringLiteral">"arkham@bigmeanogre.net"</FONT>, <FONT ID="SingleLineComment">// Invalid address
+<A NAME="183"></A></FONT>                <FONT ID="StringLiteral">"nosuchaddress@yahoo.com"</FONT> <FONT ID="SingleLineComment">// Failure of this method
+<A NAME="184"></A></FONT>        };
+<A NAME="185"></A>
+<A NAME="186"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> ctr = <FONT ID="IntegerLiteral">0</FONT>; ctr &lt; testData.length; ctr++) {
+<A NAME="187"></A>            System.out.println(testData[ctr] + <FONT ID="StringLiteral">" is valid? "</FONT> +
+<A NAME="188"></A>                    isAddressValid(testData[ctr]));
+<A NAME="189"></A>        }
+<A NAME="190"></A>        <FONT ID="Return">return</FONT>;
+<A NAME="191"></A>    }
+<A NAME="192"></A>
+<A NAME="193"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Boolean">boolean</FONT> isAddressValid(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> address) {
+<A NAME="194"></A>
+<A NAME="195"></A>        <FONT ID="SingleLineComment">// Find the separator for the domain name
+<A NAME="196"></A></FONT>        <FONT ID="Int">int</FONT> pos = address.indexOf(AT);
+<A NAME="197"></A>
+<A NAME="198"></A>        <FONT ID="SingleLineComment">// If the address does not contain an '@', it's not valid
+<A NAME="199"></A></FONT>        <FONT ID="If">if</FONT> (pos == -<FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="200"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="201"></A>        }
+<A NAME="202"></A>
+<A NAME="203"></A>        <FONT ID="SingleLineComment">// Isolate the domain/machine name and get a list of mail exchangers
+<A NAME="204"></A></FONT>        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> domain = address.substring(++pos);
+<A NAME="205"></A>
+<A NAME="206"></A>
+<A NAME="207"></A>        ArrayList mxList = <FONT ID="Null">null</FONT>;
+<A NAME="208"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="209"></A>            mxList = getMX(domain);
+<A NAME="210"></A>        } <FONT ID="Catch">catch</FONT> (NamingException ex) {
+<A NAME="211"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="212"></A>        }
+<A NAME="213"></A>
+<A NAME="214"></A>        <FONT ID="SingleLineComment">// Just because we can send mail to the domain, doesn't mean that the
+<A NAME="215"></A></FONT>        <FONT ID="SingleLineComment">// address is valid, but if we can't, it's a sure sign that it isn't
+<A NAME="216"></A></FONT>        <FONT ID="If">if</FONT> (mxList.size() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="217"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="218"></A>        }
+<A NAME="219"></A>
+<A NAME="220"></A>
+<A NAME="221"></A><FONT ID="SingleLineComment">//        if (domain.equals("yahoo.com") &amp;&amp; !address.equals("ravindranathakila@yahoo.com")) {
+<A NAME="222"></A></FONT><FONT ID="SingleLineComment">//            if (isAddressValid("ravindranathakila@yahoo.com")) {
+<A NAME="223"></A></FONT><FONT ID="SingleLineComment">//                //This means yahoo checks work. So we allow the checks to proceed
+<A NAME="224"></A></FONT><FONT ID="SingleLineComment">//            } else {
+<A NAME="225"></A></FONT><FONT ID="SingleLineComment">//                //Yahoo checks do not work. We simply have to return true
+<A NAME="226"></A></FONT><FONT ID="SingleLineComment">//                System.out.println("DEFAULTED ON:" + address);
+<A NAME="227"></A></FONT><FONT ID="SingleLineComment">//                return true;
+<A NAME="228"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="229"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="230"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="231"></A></FONT><FONT ID="SingleLineComment">//        if (domain.equals("gmail.com") &amp;&amp; !address.equals("ravindranathakila@gmail.com")) {
+<A NAME="232"></A></FONT><FONT ID="SingleLineComment">//            if (isAddressValid("ravindranathakila@gmail.com")) {
+<A NAME="233"></A></FONT><FONT ID="SingleLineComment">//                //This means yahoo checks work. So we allow the checks to proceed
+<A NAME="234"></A></FONT><FONT ID="SingleLineComment">//            } else {
+<A NAME="235"></A></FONT><FONT ID="SingleLineComment">//                //Yahoo checks do not work. We simply have to return true
+<A NAME="236"></A></FONT><FONT ID="SingleLineComment">//                System.out.println("DEFAULTED ON:" + address);
+<A NAME="237"></A></FONT><FONT ID="SingleLineComment">//                return true;
+<A NAME="238"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="239"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="240"></A></FONT>
+<A NAME="241"></A>        <FONT ID="SingleLineComment">// Now, do the SMTP validation, try each mail exchanger until we get
+<A NAME="242"></A></FONT>        <FONT ID="SingleLineComment">// a positive acceptance. It *MAY* be possible for one MX to allow
+<A NAME="243"></A></FONT>        <FONT ID="SingleLineComment">// a message [store and forwarder for example] and another [like
+<A NAME="244"></A></FONT>        <FONT ID="SingleLineComment">// the actual mail server] to reject it. This is why we REALLY ought
+<A NAME="245"></A></FONT>        <FONT ID="SingleLineComment">// to take the preference into account.
+<A NAME="246"></A></FONT>        <FONT ID="For">for</FONT> (Object aMxList : mxList) {
+<A NAME="247"></A>            System.out.println(aMxList);
+<A NAME="248"></A>            <FONT ID="Boolean">boolean</FONT> valid = <FONT ID="False">false</FONT>;
+<A NAME="249"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="250"></A>                <FONT ID="Int">int</FONT> res;
+<A NAME="251"></A>                <FONT ID="SingleLineComment">//
+<A NAME="252"></A></FONT>                Socket skt = <FONT ID="New">new</FONT> Socket((<A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>) aMxList, <FONT ID="IntegerLiteral">25</FONT>);
+<A NAME="253"></A>                BufferedReader rdr = <FONT ID="New">new</FONT> BufferedReader
+<A NAME="254"></A>                        (<FONT ID="New">new</FONT> InputStreamReader(skt.getInputStream()));
+<A NAME="255"></A>                BufferedWriter wtr = <FONT ID="New">new</FONT> BufferedWriter
+<A NAME="256"></A>                        (<FONT ID="New">new</FONT> OutputStreamWriter(skt.getOutputStream()));
+<A NAME="257"></A>
+<A NAME="258"></A>                res = hear(rdr);
+<A NAME="259"></A>                <FONT ID="If">if</FONT> (res != <FONT ID="IntegerLiteral">220</FONT>) {<FONT ID="SingleLineComment">//Check if "220 &lt;domain&gt; Service ready"
+<A NAME="260"></A></FONT>                    debug(<FONT ID="StringLiteral">"554 Transaction failed  (Or, in the case of a connection-opening response, \"No SMTP service here\")"</FONT>);
+<A NAME="261"></A>                    <FONT ID="Continue">continue</FONT>;
+<A NAME="262"></A>                    <FONT ID="SingleLineComment">//throw new Exception(INVALID_HEADER); //Got "554 Transaction failed  (Or, in the case of a connection-opening response, "No SMTP service here")"
+<A NAME="263"></A></FONT>                }
+<A NAME="264"></A>                say(wtr, EHLO_WITH_DOMAIN);
+<A NAME="265"></A>
+<A NAME="266"></A>                res = hear(rdr);
+<A NAME="267"></A>                <FONT ID="If">if</FONT> (res != <FONT ID="IntegerLiteral">250</FONT>) {<FONT ID="SingleLineComment">//Check if "Requested mail action okay, completed"
+<A NAME="268"></A></FONT>                    <FONT ID="If">if</FONT> (res == <FONT ID="IntegerLiteral">504</FONT>) {
+<A NAME="269"></A>                        debug(<FONT ID="StringLiteral">"504 Command parameter not implemented"</FONT>);
+<A NAME="270"></A>                    }
+<A NAME="271"></A>                    <FONT ID="If">if</FONT> (res == <FONT ID="IntegerLiteral">550</FONT>) {
+<A NAME="272"></A>                        debug(<FONT ID="StringLiteral">"550 Requested action not taken: mailbox unavailable(e.g., mailbox not found, no access, or command rejected for policy reasons)"</FONT>);
+<A NAME="273"></A>                    }
+<A NAME="274"></A>                    <FONT ID="Continue">continue</FONT>;
+<A NAME="275"></A>                    <FONT ID="SingleLineComment">//throw new Exception(NOT_ESMTP);//Got "504 Command parameter not implemented" or "550 Requested action not taken: mailbox unavailable(e.g., mailbox not found, no access, or command rejected for policy reasons)"
+<A NAME="276"></A></FONT>                }
+<A NAME="277"></A>
+<A NAME="278"></A>                <FONT ID="SingleLineComment">// validate the sender address
+<A NAME="279"></A></FONT>                say(wtr, MAIL_FROM);
+<A NAME="280"></A>                res = hear(rdr);
+<A NAME="281"></A>                <FONT ID="If">if</FONT> (res != <FONT ID="IntegerLiteral">250</FONT>) {
+<A NAME="282"></A>                    debug(SENDER_REJECTED);
+<A NAME="283"></A>                    <FONT ID="Continue">continue</FONT>;
+<A NAME="284"></A>                    <FONT ID="SingleLineComment">//throw new Exception(SENDER_REJECTED);
+<A NAME="285"></A></FONT>                }
+<A NAME="286"></A>
+<A NAME="287"></A>                say(wtr, RCPT_TO + address + STRING);
+<A NAME="288"></A>                res = hear(rdr);
+<A NAME="289"></A>                <FONT ID="If">if</FONT> (res != <FONT ID="IntegerLiteral">250</FONT>) {
+<A NAME="290"></A>                    debug(address + ADDRESS_IS_NOT_VALID);
+<A NAME="291"></A>                    <FONT ID="Continue">continue</FONT>;
+<A NAME="292"></A>                    <FONT ID="SingleLineComment">//throw new Exception(address + ADDRESS_IS_NOT_VALID);
+<A NAME="293"></A></FONT>                }
+<A NAME="294"></A>
+<A NAME="295"></A>                <FONT ID="SingleLineComment">// be polite
+<A NAME="296"></A></FONT>                say(wtr, RSET);
+<A NAME="297"></A>                hear(rdr);
+<A NAME="298"></A>                say(wtr, QUIT);
+<A NAME="299"></A>                hear(rdr);
+<A NAME="300"></A>
+<A NAME="301"></A>                valid = <FONT ID="True">true</FONT>;
+<A NAME="302"></A>                rdr.close();
+<A NAME="303"></A>                wtr.close();
+<A NAME="304"></A>                skt.close();
+<A NAME="305"></A>            } <FONT ID="Catch">catch</FONT> (Exception ex) {
+<A NAME="306"></A>                <FONT ID="SingleLineComment">// Do nothing but try next host
+<A NAME="307"></A></FONT>                ex.printStackTrace();
+<A NAME="308"></A>            } <FONT ID="Finally">finally</FONT> {
+<A NAME="309"></A>                <FONT ID="If">if</FONT> (valid) {
+<A NAME="310"></A>                    <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="311"></A>                }
+<A NAME="312"></A>            }
+<A NAME="313"></A>        }
+<A NAME="314"></A>        <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="315"></A>    }
+<A NAME="316"></A>
+<A NAME="317"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> say(BufferedWriter wr, <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> text)
+<A NAME="318"></A>            <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="319"></A>
+<A NAME="320"></A>        wr.write(text + NEWLINE);
+<A NAME="321"></A>        wr.flush();
+<A NAME="322"></A>    }
+<A NAME="323"></A>
+<A NAME="324"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Int">int</FONT> hear(BufferedReader in) <FONT ID="Throws">throws</FONT> IOException {
+<A NAME="325"></A>
+<A NAME="326"></A>        <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> line = <FONT ID="Null">null</FONT>;
+<A NAME="327"></A>        <FONT ID="Int">int</FONT> res = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="328"></A>
+<A NAME="329"></A>        <FONT ID="While">while</FONT> ((line = in.readLine()) != <FONT ID="Null">null</FONT>) {
+<A NAME="330"></A>            <A HREF="../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> pfx = line.substring(<FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">3</FONT>);
+<A NAME="331"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="332"></A>                res = Integer.parseInt(pfx);
+<A NAME="333"></A>            } <FONT ID="Catch">catch</FONT> (Exception ex) {
+<A NAME="334"></A>                res = -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="335"></A>            }
+<A NAME="336"></A>            <FONT ID="If">if</FONT> (line.charAt(<FONT ID="IntegerLiteral">3</FONT>) != <FONT ID="CharacerLiteral">'-'</FONT>) {
+<A NAME="337"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="338"></A>            }
+<A NAME="339"></A>            System.out.println(line);
+<A NAME="340"></A>        }
+<A NAME="341"></A>
+<A NAME="342"></A>        System.out.println(res);
+<A NAME="343"></A>        <FONT ID="Return">return</FONT> res;
+<A NAME="344"></A>    }
+<A NAME="345"></A>
+<A NAME="346"></A>
+<A NAME="347"></A>    <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> debug(<FONT ID="Final">final</FONT> Object object) {
+<A NAME="348"></A>        <FONT ID="If">if</FONT> (L.isDebugEnabled()) {
+<A NAME="349"></A>            L.debug(object.toString());
+<A NAME="350"></A>        }
+<A NAME="351"></A>    }
+<A NAME="352"></A>}
+<A NAME="353"></A>
+<A NAME="354"></A><FONT ID="MultiLineComment">/*
+<A NAME="355"></A>
+<A NAME="356"></A>      220 &lt;domain&gt; Service ready
+<A NAME="357"></A>      221 &lt;domain&gt; Service closing transmission channel
+<A NAME="358"></A>      421 &lt;domain&gt; Service not available, closing transmission channel
+<A NAME="359"></A>         (This may be a reply to any command if the service knows it
+<A NAME="360"></A>         must shut down)
+<A NAME="361"></A>
+<A NAME="362"></A>      250 Requested mail action okay, completed
+<A NAME="363"></A>      251 User not local; will forward to &lt;forward-path&gt;
+<A NAME="364"></A>         (See section 3.4)
+<A NAME="365"></A>      252 Cannot VRFY user, but will accept message and attempt
+<A NAME="366"></A>          delivery
+<A NAME="367"></A>         (See section 3.5.3)
+<A NAME="368"></A>      450 Requested mail action not taken: mailbox unavailable
+<A NAME="369"></A>         (e.g., mailbox busy)
+<A NAME="370"></A>      550 Requested action not taken: mailbox unavailable
+<A NAME="371"></A>         (e.g., mailbox not found, no access, or command rejected
+<A NAME="372"></A>         for policy reasons)
+<A NAME="373"></A>      451 Requested action aborted: error in processing
+<A NAME="374"></A>      551 User not local; please try &lt;forward-path&gt;
+<A NAME="375"></A>         (See section 3.4)
+<A NAME="376"></A>      452 Requested action not taken: insufficient system storage
+<A NAME="377"></A>      552 Requested mail action aborted: exceeded storage allocation
+<A NAME="378"></A>      553 Requested action not taken: mailbox name not allowed
+<A NAME="379"></A>         (e.g., mailbox syntax incorrect)
+<A NAME="380"></A>      354 Start mail input; end with &lt;CRLF&gt;.&lt;CRLF&gt;
+<A NAME="381"></A>      554 Transaction failed (Or, in the case of a connection-opening
+<A NAME="382"></A>          response, "No SMTP service here")
+<A NAME="383"></A>
+<A NAME="384"></A>          */</FONT>
+<A NAME="385"></A></pre>
+</BODY>
+</HTML>

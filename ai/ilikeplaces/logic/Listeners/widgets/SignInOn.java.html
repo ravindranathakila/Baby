@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.SignInOn (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">SignInOn.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">ai.ilikeplaces.entities.HumansAuthentication</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">ai.ilikeplaces.entities.HumansIdentity</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.Listeners.widgets.autoplay.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUser.java.html">ai.ilikeplaces.logic.role.HumanUser</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">ai.ilikeplaces.logic.validators.unit.Password</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">ai.ilikeplaces.logic.validators.unit.SimpleString</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="19"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="20"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="21"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/ServletLogin.java.html">ai.ilikeplaces.servlets.ServletLogin</A>;
+<A NAME="22"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/filters/ProfileRedirect.java.html">ai.ilikeplaces.servlets.filters.ProfileRedirect</A>;
+<A NAME="23"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="25"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.NodePropertyTransport;
+<A NAME="26"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="27"></A><FONT ID="Import">import</FONT> org.itsnat.core.http.ItsNatHttpSession;
+<A NAME="28"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="29"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="30"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="31"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="32"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="33"></A>
+<A NAME="34"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="35"></A><FONT ID="Import">import</FONT> java.text.MessageFormat;
+<A NAME="36"></A>
+<A NAME="37"></A><FONT ID="FormalComment">/**
+<A NAME="38"></A> * @author Ravindranath Akila
+<A NAME="39"></A> */</FONT>
+<A NAME="40"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="41"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> SignInOn <FONT ID="Extends">extends</FONT> AbstractWidgetListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">SignInOnCriteria</A>&gt; {
+<A NAME="42"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="43"></A></FONT>
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> TRUE = <FONT ID="StringLiteral">"true"</FONT>;
+<A NAME="45"></A>
+<A NAME="46"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> ISSIGNUP = <FONT ID="StringLiteral">"issignup"</FONT>;
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> username = <FONT ID="Null">null</FONT>;
+<A NAME="49"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A> password = <FONT ID="Null">null</FONT>;
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">SimpleString</A> dbHash = <FONT ID="Null">null</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">SimpleString</A> dbSalt = <FONT ID="Null">null</FONT>;
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> Obj&lt;Boolean&gt; userOk = <FONT ID="Null">null</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> Obj&lt;Boolean&gt; existButNotActive = <FONT ID="Null">null</FONT>;
+<A NAME="55"></A>
+<A NAME="56"></A><FONT ID="SingleLineComment">// -------------------------- ENUMERATIONS --------------------------
+<A NAME="57"></A></FONT>
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum SignInOnIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="59"></A>        signinon_login,
+<A NAME="60"></A>        signinon_logon,
+<A NAME="61"></A>        signinonUsername,
+<A NAME="62"></A>        signinonPassword,
+<A NAME="63"></A>        signinonSubmit,
+<A NAME="64"></A>        signinonNotice,
+<A NAME="65"></A>        signinon_autoplay,
+<A NAME="66"></A>        Global_Profile_Link,
+<A NAME="67"></A>        signinonBG,
+<A NAME="68"></A>
+<A NAME="69"></A>        signinonFacebook,
+<A NAME="70"></A>        signinonGoogle
+<A NAME="71"></A>    }
+<A NAME="72"></A>
+<A NAME="73"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="74"></A></FONT>
+<A NAME="75"></A>    <FONT ID="FormalComment">/**
+<A NAME="76"></A>     * @param request__
+<A NAME="77"></A>     * @param signInOnCriteria__
+<A NAME="78"></A>     * @param appendToElement__
+<A NAME="79"></A>     */</FONT>
+<A NAME="80"></A>    <FONT ID="Public">public</FONT> SignInOn(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">SignInOnCriteria</A> signInOnCriteria__) {
+<A NAME="81"></A>        <FONT ID="Super">super</FONT>(request__, Page.SignInOn, signInOnCriteria__, appendToElement__);
+<A NAME="82"></A>    }
+<A NAME="83"></A>
+<A NAME="84"></A><FONT ID="SingleLineComment">// ------------------------ CANONICAL METHODS ------------------------
+<A NAME="85"></A></FONT>
+<A NAME="86"></A>    <FONT ID="SingleLineComment">// ------------------------ OVERRIDING METHODS ------------------------
+<A NAME="87"></A></FONT>    @WARNING(warning = <FONT ID="StringLiteral">"During work ont this class, from time to time you'll want to make it a WEB 2.0 login."</FONT> +
+<A NAME="88"></A>            <FONT ID="StringLiteral">"However, remember that having a login on a separate servlet is better for security.  HTTPS support."</FONT> +
+<A NAME="89"></A>            <FONT ID="StringLiteral">"Also, note that we have a policy of redirecting the user to the refer. "</FONT> +
+<A NAME="90"></A>            <FONT ID="StringLiteral">"You will also have to make sure both online and offline modes are available."</FONT>)
+<A NAME="91"></A>    @Override
+<A NAME="92"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">SignInOnCriteria</A> signInOnCriteria) {
+<A NAME="93"></A>        registerUserNotifier($$(SignInOnIds.signinonNotice));
+<A NAME="94"></A>
+<A NAME="95"></A>        criteria.username = signInOnCriteria.getHumanId();
+<A NAME="96"></A>        criteria.password = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Password.java.html">Password</A>();
+<A NAME="97"></A>        criteria.dbHash = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">SimpleString</A>(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="98"></A>        criteria.dbSalt = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">SimpleString</A>(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="99"></A>        criteria.userOk = <FONT ID="New">new</FONT> Obj&lt;Boolean&gt;(<FONT ID="False">false</FONT>);
+<A NAME="100"></A>        criteria.existButNotActive = <FONT ID="New">new</FONT> Obj&lt;Boolean&gt;(<FONT ID="False">false</FONT>);
+<A NAME="101"></A>
+<A NAME="102"></A>        UCSetCSSBasedOnURL:
+<A NAME="103"></A>        {
+<A NAME="104"></A>            $$setClass($$(SignInOnIds.signinonBG), criteria.getSignInOnDisplayComponent().toString(), <FONT ID="False">false</FONT>);
+<A NAME="105"></A>            $(Controller.Page.CPageType).setAttribute(MarkupTag.INPUT.value(), criteria.getSignInOnDisplayComponent().toString());
+<A NAME="106"></A>        }
+<A NAME="107"></A>
+<A NAME="108"></A>        <FONT ID="If">if</FONT> (criteria.username.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="109"></A>            UCSetGlobalProfileLink:
+<A NAME="110"></A>            {
+<A NAME="111"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> hi = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.username.getObjectAsValid(), <FONT ID="StringLiteral">""</FONT>);
+<A NAME="112"></A>
+<A NAME="113"></A>                $$(SignInOnIds.Global_Profile_Link).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+<A NAME="114"></A>            }
+<A NAME="115"></A>            UCShowHideWidgets:
+<A NAME="116"></A>            {
+<A NAME="117"></A>                $$displayBlock($$(SignInOnIds.signinon_logon));
+<A NAME="118"></A>                $$displayNone($$(SignInOnIds.signinon_login));
+<A NAME="119"></A>            }
+<A NAME="120"></A>
+<A NAME="121"></A>            UCAutoplay:
+<A NAME="122"></A>            {
+<A NAME="123"></A>                <FONT ID="New">new</FONT> AutoplayControls(request, <FONT ID="New">new</FONT> AutoplayControlsCriteria()
+<A NAME="124"></A>                        .setHumanId(criteria.username)
+<A NAME="125"></A>                        .setHumanUserLocal($$getHumanUserFromRequest(request))
+<A NAME="126"></A>                        , $$(SignInOnIds.signinon_autoplay));
+<A NAME="127"></A>            }
+<A NAME="128"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="129"></A>            UCShowHIdeWIdgets:
+<A NAME="130"></A>            {
+<A NAME="131"></A>                $$displayBlock($$(SignInOnIds.signinon_login));
+<A NAME="132"></A>                $$displayNone($$(SignInOnIds.signinon_logon));
+<A NAME="133"></A>            }
+<A NAME="134"></A>            UCShowPleaseLoginMessage:
+<A NAME="135"></A>            {
+<A NAME="136"></A>                $$(SignInOnIds.signinonNotice).setTextContent(RBGet.gui().getString(<FONT ID="StringLiteral">"not.logged.in"</FONT>));
+<A NAME="137"></A>            }
+<A NAME="138"></A>        }
+<A NAME="139"></A>    }
+<A NAME="140"></A>
+<A NAME="141"></A>    @Override
+<A NAME="142"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="143"></A>        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonUsername), EventType.CHANGE.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="144"></A>
+<A NAME="145"></A>            @Override
+<A NAME="146"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="147"></A>                <FONT ID="Synchronized">synchronized</FONT> (criteria) {
+<A NAME="148"></A>                    <FONT ID="SingleLineComment">//because the user might change this value once hash and everything is set. This is a critical bug fix. Remove only if you know what you are doing!
+<A NAME="149"></A></FONT>                    <FONT ID="If">if</FONT> (!criteria.userOk.getObj()) {
+<A NAME="150"></A>                        criteria.username.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="151"></A>                        <FONT ID="If">if</FONT> (criteria.username.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="152"></A>                            <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">Human</A> existingUser = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(criteria.username.getObjectAsValid());
+<A NAME="153"></A>                            <FONT ID="If">if</FONT> (existingUser != <FONT ID="Null">null</FONT>
+<A NAME="154"></A>                                    &amp;&amp; existingUser.getHumanAlive()
+<A NAME="155"></A>                                    ) {<FONT ID="MultiLineComment">/*Ok user name valid but now we check for criteria.password*/</FONT>
+<A NAME="156"></A>                                <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">HumansAuthentication</A> humansAuthentication = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(criteria.username).returnValue();
+<A NAME="157"></A>                                criteria.dbHash.setObj(humansAuthentication.getHumanAuthenticationHash());
+<A NAME="158"></A>                                criteria.dbSalt.setObj(humansAuthentication.getHumanAuthenticationSalt());
+<A NAME="159"></A>                                criteria.userOk.setObj(<FONT ID="True">true</FONT>);
+<A NAME="160"></A>                            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (existingUser != <FONT ID="Null">null</FONT> &amp;&amp; !existingUser.getHumanAlive()) {<FONT ID="MultiLineComment">/*Ok criteria.password wrong or not activated. What do we do with this guy? First lets make his session object null*/</FONT>
+<A NAME="161"></A>                                criteria.userOk.setObj(<FONT ID="False">false</FONT>);
+<A NAME="162"></A>                                criteria.existButNotActive.setObj(<FONT ID="True">true</FONT>);
+<A NAME="163"></A>                            }
+<A NAME="164"></A>                        }
+<A NAME="165"></A>                    }
+<A NAME="166"></A>                }
+<A NAME="167"></A>            }
+<A NAME="168"></A>        }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="169"></A>
+<A NAME="170"></A>        itsNatHTMLDocument_.addEventListener((EventTarget) $$(SignInOnIds.signinonPassword), EventType.CHANGE.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="171"></A>
+<A NAME="172"></A>            @Override
+<A NAME="173"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="174"></A>                <FONT ID="Synchronized">synchronized</FONT> (criteria) {
+<A NAME="175"></A>                    criteria.password.setObj($$(evt_).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="176"></A>                }
+<A NAME="177"></A>            }
+<A NAME="178"></A>        }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="179"></A>
+<A NAME="180"></A>
+<A NAME="181"></A>        <FONT ID="Super">super</FONT>.registerForClick(SignInOnIds.signinonSubmit, <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">SignInOnCriteria</A>&gt;(criteria) {
+<A NAME="182"></A>            @Override
+<A NAME="183"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="184"></A>                notifyUser(RBGet.gui().getString(<FONT ID="StringLiteral">"checking.credentials"</FONT>));
+<A NAME="185"></A>            }
+<A NAME="186"></A>        });
+<A NAME="187"></A>
+<A NAME="188"></A>
+<A NAME="189"></A>        <FONT ID="Super">super</FONT>.registerForClick(SignInOnIds.signinonSubmit,
+<A NAME="190"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">SignInOnCriteria</A>&gt;(criteria) {
+<A NAME="191"></A>
+<A NAME="192"></A>                    @Override
+<A NAME="193"></A>                    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> onFire(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="194"></A>
+<A NAME="195"></A>                        <FONT ID="Synchronized">synchronized</FONT> (criteria) {
+<A NAME="196"></A>                            <FONT ID="Final">final</FONT> HttpSession userSession_ = ((ItsNatHttpSession) request.getItsNatSession()).getHttpSession();
+<A NAME="197"></A>
+<A NAME="198"></A>                            <FONT ID="If">if</FONT> (criteria.username.validate() == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; criteria.password.validate() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="199"></A>                                <FONT ID="If">if</FONT> (userSession_.getAttribute(HumanUserLocal.NAME) == <FONT ID="Null">null</FONT>) {
+<A NAME="200"></A>                                    <FONT ID="MultiLineComment">/*Ok the session does not have the bean, initialize it with the user with email id and criteria.password*/</FONT>
+<A NAME="201"></A>                                    <FONT ID="If">if</FONT> (criteria.userOk.getObj()) {<FONT ID="MultiLineComment">/*Ok user name valid but now we check for criteria.password*/</FONT>
+<A NAME="202"></A>                                        <FONT ID="If">if</FONT> (criteria.dbHash.getObj().equals(DB.getSingletonHashingFaceLocal(<FONT ID="True">true</FONT>).getHash(criteria.password.getObjectAsValid(), criteria.dbSalt.getObj()))) {
+<A NAME="203"></A>                                            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> humanUserLocal = HumanUser.getHumanUserLocal(<FONT ID="True">true</FONT>);
+<A NAME="204"></A>
+<A NAME="205"></A>                                            humanUserLocal.setHumanUserId(criteria.username.getObjectAsValid());
+<A NAME="206"></A>
+<A NAME="207"></A>                                            userSession_.setAttribute(HumanUserLocal.NAME, (<FONT ID="New">new</FONT> SessionBoundBadRefWrapper&lt;<A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;(humanUserLocal, userSession_)));
+<A NAME="208"></A>
+<A NAME="209"></A>                                            userSession_.setAttribute(ServletLogin.Username, criteria.username.getHumanId());
+<A NAME="210"></A>
+<A NAME="211"></A>                                            notifyUser(RBGet.gui().getString(<FONT ID="StringLiteral">"logging.you.in"</FONT>));
+<A NAME="212"></A>
+<A NAME="213"></A>                                            <FONT ID="Switch">switch</FONT> (criteria.getSignInOnDisplayComponent()) {
+<A NAME="214"></A>                                                <FONT ID="Case">case</FONT> HOME: {
+<A NAME="215"></A>                                                    $$sendJS(JSCodeToSend.redirectPageWithURL(ProfileRedirect.PROFILE_URL
+<A NAME="216"></A>                                                            + ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.username.getObjectAsValid(), <FONT ID="StringLiteral">""</FONT>).getUrl().getUrl()));
+<A NAME="217"></A>                                                    <FONT ID="Break">break</FONT>;
+<A NAME="218"></A>                                                }
+<A NAME="219"></A>                                                <FONT ID="Default">default</FONT>: {
+<A NAME="220"></A>                                                    $$sendJS(JSCodeToSend.refreshPageIn(<FONT ID="IntegerLiteral">0</FONT>));
+<A NAME="221"></A>                                                }
+<A NAME="222"></A>                                            }
+<A NAME="223"></A>                                        } <FONT ID="Else">else</FONT> {<FONT ID="MultiLineComment">/*Ok criteria.password wrong or not activated. What do we do with this guy? First lets make his session object null*/</FONT>
+<A NAME="224"></A>                                            Loggers.log(Loggers.LEVEL.FAILED_LOGINS, criteria.username.getHumanId() + <FONT ID="StringLiteral">":"</FONT> + criteria.password.getObj());
+<A NAME="225"></A>                                            notifyUser(RBGet.gui().getString(<FONT ID="StringLiteral">"password.is.wrong"</FONT>));
+<A NAME="226"></A>                                        }
+<A NAME="227"></A>                                    } <FONT ID="Else">else</FONT> {<FONT ID="MultiLineComment">/*There is no such user. Ask if he forgot criteria.username or whether to create a new account :)*/</FONT>
+<A NAME="228"></A>                                        <FONT ID="If">if</FONT> (criteria.existButNotActive.getObj()) {
+<A NAME="229"></A>                                            $$sendJS(JSCodeToSend.redirectPageWithURL(Page.Profile.getURL()));
+<A NAME="230"></A>                                            notifyUser(RBGet.gui().getString(<FONT ID="StringLiteral">"activate.your.account"</FONT>));
+<A NAME="231"></A>                                        } <FONT ID="Else">else</FONT> {
+<A NAME="232"></A>
+<A NAME="233"></A>                                            <FONT ID="New">new</FONT> Thread(<FONT ID="New">new</FONT> Runnable() {
+<A NAME="234"></A>                                                @Override
+<A NAME="235"></A>                                                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> run() {
+<A NAME="236"></A>                                                    <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; returnVal = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(
+<A NAME="237"></A>                                                            criteria.username,
+<A NAME="238"></A>                                                            criteria.password,
+<A NAME="239"></A>                                                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>().setObjAsValid(criteria.username.getSelfAsValid().getHumanId()));
+<A NAME="240"></A>
+<A NAME="241"></A>                                                    <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> activationURL = <FONT ID="New">new</FONT> Parameter(<FONT ID="StringLiteral">"http://www.ilikeplaces.com/"</FONT> + <FONT ID="StringLiteral">"activate"</FONT>)
+<A NAME="242"></A>                                                            .append(ServletLogin.Username, criteria.username, <FONT ID="True">true</FONT>)
+<A NAME="243"></A>                                                            .append(ServletLogin.Password,
+<A NAME="244"></A>                                                                    DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(criteria.username)
+<A NAME="245"></A>                                                                            .returnValue()
+<A NAME="246"></A>                                                                            .getHumanAuthenticationHash())
+<A NAME="247"></A>                                                            .get();
+<A NAME="248"></A>                                                    <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">String</A> mail = MessageFormat.format(RBGet.gui().getString(<FONT ID="StringLiteral">"SIGNUP_BODY"</FONT>), RBGet.globalConfig.getString(<FONT ID="StringLiteral">"noti_mail"</FONT>))
+<A NAME="249"></A>                                                            .replace(<FONT ID="StringLiteral">"activationURL"</FONT>, <FONT ID="StringLiteral">"&lt;a href='"</FONT> +
+<A NAME="250"></A>                                                                    activationURL + <FONT ID="StringLiteral">"' &gt;"</FONT> + activationURL + <FONT ID="StringLiteral">"&lt;/a&gt;"</FONT>);
+<A NAME="251"></A>                                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+<A NAME="252"></A>                                                            criteria.username.getSelfAsValid().getHumanId(),
+<A NAME="253"></A>                                                            RBGet.gui().getString(<FONT ID="StringLiteral">"SIGNUP_HEADER"</FONT>),
+<A NAME="254"></A>                                                            mail);
+<A NAME="255"></A>                                                }
+<A NAME="256"></A>                                            }).start();
+<A NAME="257"></A>
+<A NAME="258"></A>                                            $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+<A NAME="259"></A>                                        }
+<A NAME="260"></A>                                    }
+<A NAME="261"></A>                                } <FONT ID="Else">else</FONT> {
+<A NAME="262"></A>                                    <FONT ID="SingleLineComment">//We just ignore since the form is not visible and this cannot happen, or a hacker is trying something ;)
+<A NAME="263"></A></FONT>                                }
+<A NAME="264"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="265"></A>                                notifyUser(RBGet.gui().getString(<FONT ID="StringLiteral">"login.failed.retry.or.recover"</FONT>));
+<A NAME="266"></A>                            }
+<A NAME="267"></A>                        }
+<A NAME="268"></A>                    }
+<A NAME="269"></A>                });
+<A NAME="270"></A>
+<A NAME="271"></A>        <FONT ID="Super">super</FONT>.registerForClick(SignInOnIds.signinonFacebook, <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">SignInOnCriteria</A>&gt;(criteria) {<FONT ID="SingleLineComment">//Google Analytics
+<A NAME="272"></A></FONT>            <FONT ID="FormalComment">/**
+<A NAME="273"></A>             * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="274"></A>             *
+<A NAME="275"></A>             * @param evt fired from client
+<A NAME="276"></A>             */</FONT>
+<A NAME="277"></A>            @Override
+<A NAME="278"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="279"></A>                $$sendJS(JSCodeToSend.redirectPageWithURL(<FONT ID="StringLiteral">"/oauth2fb"</FONT>));
+<A NAME="280"></A>            }
+<A NAME="281"></A>        });
+<A NAME="282"></A>
+<A NAME="283"></A>        <FONT ID="Super">super</FONT>.registerForClick(SignInOnIds.signinonGoogle, <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">SignInOnCriteria</A>&gt;(criteria) {<FONT ID="SingleLineComment">//Google Analytics
+<A NAME="284"></A></FONT>            <FONT ID="FormalComment">/**
+<A NAME="285"></A>             * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="286"></A>             *
+<A NAME="287"></A>             * @param evt fired from client
+<A NAME="288"></A>             */</FONT>
+<A NAME="289"></A>            @Override
+<A NAME="290"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="291"></A>                $$sendJS(JSCodeToSend.redirectPageWithURL(<FONT ID="StringLiteral">"/oauth2gg?state=login"</FONT>));
+<A NAME="292"></A>            }
+<A NAME="293"></A>        });
+<A NAME="294"></A>    }
+<A NAME="295"></A>}</pre>
+</BODY>
+</HTML>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.GeneralCRUDWall (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">GeneralCRUDWall.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Obj.java.html">ai.ilikeplaces.util.Obj</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * Created by IntelliJ IDEA.
+<A NAME="11"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="12"></A> * Date: 1/23/11
+<A NAME="13"></A> * Time: 10:26 PM
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> GeneralCRUDWall {
+<A NAME="16"></A>
+<A NAME="17"></A>    <FONT ID="FormalComment">/**
+<A NAME="18"></A>     *
+<A NAME="19"></A>     * @param whosWall
+<A NAME="20"></A>     * @param msgOwner__ The (usually non-living) entity which owns this wall.
+<A NAME="21"></A>     * It is usually something like a {@link ai.ilikeplaces.entities.PrivateEvent PrivateEvent}
+<A NAME="22"></A>     * @param wallReference
+<A NAME="23"></A>     * @param contentToBeAppended
+<A NAME="24"></A>     * @return
+<A NAME="25"></A>     */</FONT>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; addEntryToWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> msgOwner__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/Obj.java.html">Obj</A> wallReference, <FONT ID="Final">final</FONT> String contentToBeAppended);
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; muteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/Obj.java.html">Obj</A> wallReference);
+<A NAME="29"></A>
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; unmuteWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> operator, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mutee__, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/Obj.java.html">Obj</A> wallReference);
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>&gt; readWall(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> whosWall, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/Obj.java.html">Obj</A> requester, <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec__);
+<A NAME="33"></A>}
+<A NAME="34"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,421 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.StringBuilderHelper (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">StringBuilderHelper.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="FormalComment">/**
+<A NAME="6"></A> * Just a wrapper around StringBuilder, which gives 2 additional features.
+<A NAME="7"></A> * New line in HTML, and Java.
+<A NAME="8"></A> * &lt;p/&gt;
+<A NAME="9"></A> * &lt;p/&gt;
+<A NAME="10"></A> * Example Usage:
+<A NAME="11"></A> * &lt;p/&gt;
+<A NAME="12"></A> * &lt;code&gt;
+<A NAME="13"></A> * System.out.println(new StringBuilderHelper("HTML BR Test: Setting a BR after this").br().appendbr("There is a break BR this."));
+<A NAME="14"></A> * &lt;code/&gt;
+<A NAME="15"></A> * &lt;p/&gt;
+<A NAME="16"></A> * &lt;code&gt;
+<A NAME="17"></A> * System.out.println(new StringBuilderHelper("JAVA NEW LINE Test: Setting a NEW LINE after this").ln().appendbr("There is a NEW LINE before this."));
+<A NAME="18"></A> * &lt;/code&gt;
+<A NAME="19"></A> * &lt;p/&gt;
+<A NAME="20"></A> * &lt;p/&gt;
+<A NAME="21"></A> * &lt;p/&gt;
+<A NAME="22"></A> * Created by IntelliJ IDEA.
+<A NAME="23"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="24"></A> * Date: Nov 22, 2010
+<A NAME="25"></A> * Time: 7:24:00 PM
+<A NAME="26"></A> */</FONT>
+<A NAME="27"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under Apache License Version 2.0"</FONT>)
+<A NAME="28"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> StringBuilderHelper {
+<A NAME="29"></A>
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> StringBuilder s;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="FormalComment">/**
+<A NAME="33"></A>     * Constructs a string builder with no characters in it and an
+<A NAME="34"></A>     * initial capacity of 16 characters.
+<A NAME="35"></A>     */</FONT>
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> StringBuilderHelper() {
+<A NAME="37"></A>        s = <FONT ID="New">new</FONT> StringBuilder();
+<A NAME="38"></A>    }
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="FormalComment">/**
+<A NAME="41"></A>     * Constructs a string builder with no characters in it and an
+<A NAME="42"></A>     * initial capacity specified by the &lt;code&gt;capacity&lt;/code&gt; argument.
+<A NAME="43"></A>     *
+<A NAME="44"></A>     * @param capacity the initial capacity.
+<A NAME="45"></A>     * @throws NegativeArraySizeException if the &lt;code&gt;capacity&lt;/code&gt;
+<A NAME="46"></A>     *                                    argument is less than &lt;code&gt;0&lt;/code&gt;.
+<A NAME="47"></A>     */</FONT>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> StringBuilderHelper(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> capacity) {
+<A NAME="49"></A>        s = <FONT ID="New">new</FONT> StringBuilder(capacity);
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>    <FONT ID="FormalComment">/**
+<A NAME="53"></A>     * Constructs a string builder initialized to the contents of the
+<A NAME="54"></A>     * specified string. The initial capacity of the string builder is
+<A NAME="55"></A>     * &lt;code&gt;16&lt;/code&gt; plus the length of the string argument.
+<A NAME="56"></A>     *
+<A NAME="57"></A>     * @param str the initial contents of the buffer.
+<A NAME="58"></A>     * @throws NullPointerException if &lt;code&gt;str&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;
+<A NAME="59"></A>     */</FONT>
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> StringBuilderHelper(<FONT ID="Final">final</FONT> String str) {
+<A NAME="61"></A>        s = <FONT ID="New">new</FONT> StringBuilder(str);
+<A NAME="62"></A>    }
+<A NAME="63"></A>
+<A NAME="64"></A>    <FONT ID="FormalComment">/**
+<A NAME="65"></A>     * Constructs a string builder that contains the same characters
+<A NAME="66"></A>     * as the specified &lt;code&gt;CharSequence&lt;/code&gt;. The initial capacity of
+<A NAME="67"></A>     * the string builder is &lt;code&gt;16&lt;/code&gt; plus the length of the
+<A NAME="68"></A>     * &lt;code&gt;CharSequence&lt;/code&gt; argument.
+<A NAME="69"></A>     *
+<A NAME="70"></A>     * @param seq the sequence to copy.
+<A NAME="71"></A>     * @throws NullPointerException if &lt;code&gt;seq&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;
+<A NAME="72"></A>     */</FONT>
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> StringBuilderHelper(<FONT ID="Final">final</FONT> CharSequence seq) {
+<A NAME="74"></A>        s = <FONT ID="New">new</FONT> StringBuilder(seq);
+<A NAME="75"></A>    }
+<A NAME="76"></A>
+<A NAME="77"></A>    <FONT ID="FormalComment">/**
+<A NAME="78"></A>     * @see String#valueOf(Object)
+<A NAME="79"></A>     * @see #append(String)
+<A NAME="80"></A>     */</FONT>
+<A NAME="81"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> Object obj) {
+<A NAME="82"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(obj);
+<A NAME="83"></A>    }
+<A NAME="84"></A>
+<A NAME="85"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> String str) {
+<A NAME="86"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(str);
+<A NAME="87"></A>    }
+<A NAME="88"></A>
+<A NAME="89"></A>    <FONT ID="FormalComment">/**
+<A NAME="90"></A>     * Appends the specified &lt;tt&gt;StringBuffer&lt;/tt&gt; to this sequence.
+<A NAME="91"></A>     * &lt;p/&gt;
+<A NAME="92"></A>     * The characters of the &lt;tt&gt;StringBuffer&lt;/tt&gt; argument are appended,
+<A NAME="93"></A>     * in order, to this sequence, increasing the
+<A NAME="94"></A>     * length of this sequence by the length of the argument.
+<A NAME="95"></A>     * If &lt;tt&gt;sb&lt;/tt&gt; is &lt;tt&gt;null&lt;/tt&gt;, then the four characters
+<A NAME="96"></A>     * &lt;tt&gt;"null"&lt;/tt&gt; are appended to this sequence.
+<A NAME="97"></A>     * &lt;p/&gt;
+<A NAME="98"></A>     * Let &lt;i&gt;n&lt;/i&gt; be the length of this character sequence just prior to
+<A NAME="99"></A>     * execution of the &lt;tt&gt;append&lt;/tt&gt; method. Then the character at index
+<A NAME="100"></A>     * &lt;i&gt;k&lt;/i&gt; in the new character sequence is equal to the character at
+<A NAME="101"></A>     * index &lt;i&gt;k&lt;/i&gt; in the old character sequence, if &lt;i&gt;k&lt;/i&gt; is less than
+<A NAME="102"></A>     * &lt;i&gt;n&lt;/i&gt;; otherwise, it is equal to the character at index &lt;i&gt;k-n&lt;/i&gt;
+<A NAME="103"></A>     * in the argument &lt;code&gt;sb&lt;/code&gt;.
+<A NAME="104"></A>     *
+<A NAME="105"></A>     * @param sb the &lt;tt&gt;StringBuffer&lt;/tt&gt; to append.
+<A NAME="106"></A>     * @return a reference to this object.
+<A NAME="107"></A>     */</FONT>
+<A NAME="108"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> StringBuffer sb) {
+<A NAME="109"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(sb);
+<A NAME="110"></A>    }
+<A NAME="111"></A>
+<A NAME="112"></A>    <FONT ID="FormalComment">/**
+<A NAME="113"></A>     * @throws IndexOutOfBoundsException {@inheritDoc}
+<A NAME="114"></A>     */</FONT>
+<A NAME="115"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> CharSequence s) {
+<A NAME="116"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(s);
+<A NAME="117"></A>    }
+<A NAME="118"></A>
+<A NAME="119"></A>    <FONT ID="FormalComment">/**
+<A NAME="120"></A>     * @throws IndexOutOfBoundsException {@inheritDoc}
+<A NAME="121"></A>     */</FONT>
+<A NAME="122"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> CharSequence s, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> start, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> end) {
+<A NAME="123"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(s, start, end);
+<A NAME="124"></A>    }
+<A NAME="125"></A>
+<A NAME="126"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT>[] str) {
+<A NAME="127"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(str);
+<A NAME="128"></A>    }
+<A NAME="129"></A>
+<A NAME="130"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT>[] str, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> len) {
+<A NAME="131"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(str, offset, len);
+<A NAME="132"></A>    }
+<A NAME="133"></A>
+<A NAME="134"></A>    <FONT ID="FormalComment">/**
+<A NAME="135"></A>     * @see String#valueOf(boolean)
+<A NAME="136"></A>     * @see #append(String)
+<A NAME="137"></A>     */</FONT>
+<A NAME="138"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> b) {
+<A NAME="139"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(b);
+<A NAME="140"></A>    }
+<A NAME="141"></A>
+<A NAME="142"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT> c) {
+<A NAME="143"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(c);
+<A NAME="144"></A>    }
+<A NAME="145"></A>
+<A NAME="146"></A>    <FONT ID="FormalComment">/**
+<A NAME="147"></A>     * @see String#valueOf(int)
+<A NAME="148"></A>     * @see #append(String)
+<A NAME="149"></A>     */</FONT>
+<A NAME="150"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> i) {
+<A NAME="151"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(i);
+<A NAME="152"></A>    }
+<A NAME="153"></A>
+<A NAME="154"></A>    <FONT ID="FormalComment">/**
+<A NAME="155"></A>     * @see String#valueOf(long)
+<A NAME="156"></A>     * @see #append(String)
+<A NAME="157"></A>     */</FONT>
+<A NAME="158"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> lng) {
+<A NAME="159"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(lng);
+<A NAME="160"></A>    }
+<A NAME="161"></A>
+<A NAME="162"></A>    <FONT ID="FormalComment">/**
+<A NAME="163"></A>     * @see String#valueOf(float)
+<A NAME="164"></A>     * @see #append(String)
+<A NAME="165"></A>     */</FONT>
+<A NAME="166"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> <FONT ID="Float">float</FONT> f) {
+<A NAME="167"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(f);
+<A NAME="168"></A>    }
+<A NAME="169"></A>
+<A NAME="170"></A>    <FONT ID="FormalComment">/**
+<A NAME="171"></A>     * @see String#valueOf(double)
+<A NAME="172"></A>     * @see #append(String)
+<A NAME="173"></A>     */</FONT>
+<A NAME="174"></A>    <FONT ID="Public">public</FONT> StringBuilder append(<FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> d) {
+<A NAME="175"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.append(d);
+<A NAME="176"></A>    }
+<A NAME="177"></A>
+<A NAME="178"></A>    <FONT ID="FormalComment">/**
+<A NAME="179"></A>     * @since 1.5
+<A NAME="180"></A>     */</FONT>
+<A NAME="181"></A>    <FONT ID="Public">public</FONT> StringBuilder appendCodePoint(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> codePoint) {
+<A NAME="182"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.appendCodePoint(codePoint);
+<A NAME="183"></A>    }
+<A NAME="184"></A>
+<A NAME="185"></A>    <FONT ID="FormalComment">/**
+<A NAME="186"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="187"></A>     *          {@inheritDoc}
+<A NAME="188"></A>     */</FONT>
+<A NAME="189"></A>    <FONT ID="Public">public</FONT> StringBuilder delete(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> start, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> end) {
+<A NAME="190"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.delete(start, end);
+<A NAME="191"></A>    }
+<A NAME="192"></A>
+<A NAME="193"></A>    <FONT ID="FormalComment">/**
+<A NAME="194"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="195"></A>     *          {@inheritDoc}
+<A NAME="196"></A>     */</FONT>
+<A NAME="197"></A>    <FONT ID="Public">public</FONT> StringBuilder deleteCharAt(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> index) {
+<A NAME="198"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.deleteCharAt(index);
+<A NAME="199"></A>    }
+<A NAME="200"></A>
+<A NAME="201"></A>    <FONT ID="FormalComment">/**
+<A NAME="202"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="203"></A>     *          {@inheritDoc}
+<A NAME="204"></A>     */</FONT>
+<A NAME="205"></A>    <FONT ID="Public">public</FONT> StringBuilder replace(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> start, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> end, <FONT ID="Final">final</FONT> String str) {
+<A NAME="206"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.replace(start, end, str);
+<A NAME="207"></A>    }
+<A NAME="208"></A>
+<A NAME="209"></A>    <FONT ID="FormalComment">/**
+<A NAME="210"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="211"></A>     *          {@inheritDoc}
+<A NAME="212"></A>     */</FONT>
+<A NAME="213"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> index, <FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT>[] str, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> len) {
+<A NAME="214"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(index, str, offset, len);
+<A NAME="215"></A>    }
+<A NAME="216"></A>
+<A NAME="217"></A>    <FONT ID="FormalComment">/**
+<A NAME="218"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="219"></A>     *          {@inheritDoc}
+<A NAME="220"></A>     * @see String#valueOf(Object)
+<A NAME="221"></A>     * @see #insert(int, String)
+<A NAME="222"></A>     */</FONT>
+<A NAME="223"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> Object obj) {
+<A NAME="224"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(offset, obj);
+<A NAME="225"></A>    }
+<A NAME="226"></A>
+<A NAME="227"></A>    <FONT ID="FormalComment">/**
+<A NAME="228"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="229"></A>     *          {@inheritDoc}
+<A NAME="230"></A>     */</FONT>
+<A NAME="231"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> String str) {
+<A NAME="232"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(offset, str);
+<A NAME="233"></A>    }
+<A NAME="234"></A>
+<A NAME="235"></A>    <FONT ID="FormalComment">/**
+<A NAME="236"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="237"></A>     *          {@inheritDoc}
+<A NAME="238"></A>     */</FONT>
+<A NAME="239"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT>[] str) {
+<A NAME="240"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(offset, str);
+<A NAME="241"></A>    }
+<A NAME="242"></A>
+<A NAME="243"></A>    <FONT ID="FormalComment">/**
+<A NAME="244"></A>     * @throws IndexOutOfBoundsException {@inheritDoc}
+<A NAME="245"></A>     */</FONT>
+<A NAME="246"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> dstOffset, <FONT ID="Final">final</FONT> CharSequence s) {
+<A NAME="247"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(dstOffset, s);
+<A NAME="248"></A>    }
+<A NAME="249"></A>
+<A NAME="250"></A>    <FONT ID="FormalComment">/**
+<A NAME="251"></A>     * @throws IndexOutOfBoundsException {@inheritDoc}
+<A NAME="252"></A>     */</FONT>
+<A NAME="253"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> dstOffset, <FONT ID="Final">final</FONT> CharSequence s, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> start, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> end) {
+<A NAME="254"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(dstOffset, s, start, end);
+<A NAME="255"></A>    }
+<A NAME="256"></A>
+<A NAME="257"></A>    <FONT ID="FormalComment">/**
+<A NAME="258"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="259"></A>     *          {@inheritDoc}
+<A NAME="260"></A>     * @see String#valueOf(boolean)
+<A NAME="261"></A>     * @see #insert(int, String)
+<A NAME="262"></A>     */</FONT>
+<A NAME="263"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> b) {
+<A NAME="264"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(offset, b);
+<A NAME="265"></A>    }
+<A NAME="266"></A>
+<A NAME="267"></A>    <FONT ID="FormalComment">/**
+<A NAME="268"></A>     * @throws IndexOutOfBoundsException {@inheritDoc}
+<A NAME="269"></A>     */</FONT>
+<A NAME="270"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT> c) {
+<A NAME="271"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(offset, c);
+<A NAME="272"></A>    }
+<A NAME="273"></A>
+<A NAME="274"></A>    <FONT ID="FormalComment">/**
+<A NAME="275"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="276"></A>     *          {@inheritDoc}
+<A NAME="277"></A>     * @see String#valueOf(int)
+<A NAME="278"></A>     * @see #insert(int, String)
+<A NAME="279"></A>     */</FONT>
+<A NAME="280"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> i) {
+<A NAME="281"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(offset, i);
+<A NAME="282"></A>    }
+<A NAME="283"></A>
+<A NAME="284"></A>    <FONT ID="FormalComment">/**
+<A NAME="285"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="286"></A>     *          {@inheritDoc}
+<A NAME="287"></A>     * @see String#valueOf(long)
+<A NAME="288"></A>     * @see #insert(int, String)
+<A NAME="289"></A>     */</FONT>
+<A NAME="290"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> l) {
+<A NAME="291"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(offset, l);
+<A NAME="292"></A>    }
+<A NAME="293"></A>
+<A NAME="294"></A>    <FONT ID="FormalComment">/**
+<A NAME="295"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="296"></A>     *          {@inheritDoc}
+<A NAME="297"></A>     * @see String#valueOf(float)
+<A NAME="298"></A>     * @see #insert(int, String)
+<A NAME="299"></A>     */</FONT>
+<A NAME="300"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> <FONT ID="Float">float</FONT> f) {
+<A NAME="301"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(offset, f);
+<A NAME="302"></A>    }
+<A NAME="303"></A>
+<A NAME="304"></A>    <FONT ID="FormalComment">/**
+<A NAME="305"></A>     * @throws StringIndexOutOfBoundsException
+<A NAME="306"></A>     *          {@inheritDoc}
+<A NAME="307"></A>     * @see String#valueOf(double)
+<A NAME="308"></A>     * @see #insert(int, String)
+<A NAME="309"></A>     */</FONT>
+<A NAME="310"></A>    <FONT ID="Public">public</FONT> StringBuilder insert(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> offset, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> d) {
+<A NAME="311"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.insert(offset, d);
+<A NAME="312"></A>    }
+<A NAME="313"></A>
+<A NAME="314"></A>    <FONT ID="FormalComment">/**
+<A NAME="315"></A>     * @throws NullPointerException {@inheritDoc}
+<A NAME="316"></A>     */</FONT>
+<A NAME="317"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> indexOf(<FONT ID="Final">final</FONT> String str) {
+<A NAME="318"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.indexOf(str);
+<A NAME="319"></A>    }
+<A NAME="320"></A>
+<A NAME="321"></A>    <FONT ID="FormalComment">/**
+<A NAME="322"></A>     * @throws NullPointerException {@inheritDoc}
+<A NAME="323"></A>     */</FONT>
+<A NAME="324"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> indexOf(<FONT ID="Final">final</FONT> String str, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> fromIndex) {
+<A NAME="325"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.indexOf(str, fromIndex);
+<A NAME="326"></A>    }
+<A NAME="327"></A>
+<A NAME="328"></A>    <FONT ID="FormalComment">/**
+<A NAME="329"></A>     * @throws NullPointerException {@inheritDoc}
+<A NAME="330"></A>     */</FONT>
+<A NAME="331"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> lastIndexOf(<FONT ID="Final">final</FONT> String str) {
+<A NAME="332"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.lastIndexOf(str);
+<A NAME="333"></A>    }
+<A NAME="334"></A>
+<A NAME="335"></A>    <FONT ID="FormalComment">/**
+<A NAME="336"></A>     * @throws NullPointerException {@inheritDoc}
+<A NAME="337"></A>     */</FONT>
+<A NAME="338"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> lastIndexOf(<FONT ID="Final">final</FONT> String str, <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> fromIndex) {
+<A NAME="339"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.lastIndexOf(str, fromIndex);
+<A NAME="340"></A>    }
+<A NAME="341"></A>
+<A NAME="342"></A>    <FONT ID="Public">public</FONT> StringBuilder reverse() {
+<A NAME="343"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.reverse();
+<A NAME="344"></A>    }
+<A NAME="345"></A>
+<A NAME="346"></A>    @Override
+<A NAME="347"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="348"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.s.toString();
+<A NAME="349"></A>    }
+<A NAME="350"></A>
+<A NAME="351"></A>    <FONT ID="FormalComment">/**
+<A NAME="352"></A>     * Inserts java newline tag.
+<A NAME="353"></A>     *
+<A NAME="354"></A>     * @return this
+<A NAME="355"></A>     */</FONT>
+<A NAME="356"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/StringBuilderHelper.java.html">StringBuilderHelper</A> ln() {
+<A NAME="357"></A>        s.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="358"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="359"></A>    }
+<A NAME="360"></A>
+<A NAME="361"></A>    <FONT ID="FormalComment">/**
+<A NAME="362"></A>     * Inserts java newline and then the String To Be Appended
+<A NAME="363"></A>     *
+<A NAME="364"></A>     * @param stringToBeAppended String To Be Appended
+<A NAME="365"></A>     * @return this
+<A NAME="366"></A>     */</FONT>
+<A NAME="367"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/StringBuilderHelper.java.html">StringBuilderHelper</A> appendln(<FONT ID="Final">final</FONT> String stringToBeAppended) {
+<A NAME="368"></A>        <FONT ID="This">this</FONT>.append(stringToBeAppended);
+<A NAME="369"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="370"></A>    }
+<A NAME="371"></A>
+<A NAME="372"></A>    <FONT ID="FormalComment">/**
+<A NAME="373"></A>     * Inserts html BR tag.
+<A NAME="374"></A>     *
+<A NAME="375"></A>     * @return this
+<A NAME="376"></A>     */</FONT>
+<A NAME="377"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/StringBuilderHelper.java.html">StringBuilderHelper</A> br() {
+<A NAME="378"></A>        <FONT ID="This">this</FONT>.append(<FONT ID="StringLiteral">"&lt;br/&gt;"</FONT>);
+<A NAME="379"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="380"></A>    }
+<A NAME="381"></A>
+<A NAME="382"></A>    <FONT ID="FormalComment">/**
+<A NAME="383"></A>     * Inserts html BR tag and then the String To Be Appended
+<A NAME="384"></A>     *
+<A NAME="385"></A>     * @param stringToBeAppended String To Be Appended
+<A NAME="386"></A>     * @return this
+<A NAME="387"></A>     */</FONT>
+<A NAME="388"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/util/StringBuilderHelper.java.html">StringBuilderHelper</A> appendbr(<FONT ID="Final">final</FONT> String stringToBeAppended) {
+<A NAME="389"></A>        br().append(stringToBeAppended);
+<A NAME="390"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="391"></A>    }
+<A NAME="392"></A>
+<A NAME="393"></A>
+<A NAME="394"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> main(String args[]) {
+<A NAME="395"></A>
+<A NAME="396"></A>        System.out.println(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/StringBuilderHelper.java.html">StringBuilderHelper</A>(<FONT ID="StringLiteral">"HTML BR Test: Setting a BR after this"</FONT>).br().appendbr(<FONT ID="StringLiteral">"There is a break BR this."</FONT>));
+<A NAME="397"></A>
+<A NAME="398"></A>        System.out.println(<FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/StringBuilderHelper.java.html">StringBuilderHelper</A>(<FONT ID="StringLiteral">"JAVA NEW LINE Test: Setting a NEW LINE after this"</FONT>).ln().appendbr(<FONT ID="StringLiteral">"There is a NEW LINE before this."</FONT>));
+<A NAME="399"></A>
+<A NAME="400"></A>    }
+<A NAME="401"></A>}
+<A NAME="402"></A></pre>
+</BODY>
+</HTML>

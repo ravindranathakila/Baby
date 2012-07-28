@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.HumanEquals (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanEquals.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * This class is to be used with the equals method in objects.
+<A NAME="9"></A> * Objects conforming to this class should LASTLY rely on this getter,
+<A NAME="10"></A> * to check for equality.
+<A NAME="11"></A> * &lt;p/&gt;
+<A NAME="12"></A> * Remember that this class only compares Objects of different types for equality.
+<A NAME="13"></A> * Comparing objects of the same type with this approach is wrong.
+<A NAME="14"></A> * Therefore, use this if the objects are of different classes.
+<A NAME="15"></A> * &lt;p/&gt;
+<A NAME="16"></A> * &lt;p/&gt;
+<A NAME="17"></A> * Created by IntelliJ IDEA.
+<A NAME="18"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="19"></A> * Date: Jan 3, 2010
+<A NAME="20"></A> * Time: 4:15:31 PM
+<A NAME="21"></A> */</FONT>
+<A NAME="22"></A>
+<A NAME="23"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="24"></A><FONT ID="Public">public</FONT> <FONT ID="Abstract">abstract</FONT> <FONT ID="Class">class</FONT> HumanEquals <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A>{
+<A NAME="25"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"SORRY! YOU ARE COMPARING OBJECTS OF THE SAME CLASS IN THIS METHOD, WHICH IS NOT CORRECT."</FONT>);
+<A NAME="26"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> UnsupportedOperationException NOT_EXTEND = <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"SORRY! THE OTHER OBJECT DOES NOT EXTEND HumanEquals."</FONT>);
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> UnsupportedOperationException NOT_IMPLEMENTED = <FONT ID="New">new</FONT> UnsupportedOperationException(<FONT ID="StringLiteral">"SORRY! THE OTHER OBJECT DOES NOT IMPLEMENTED HumanEqualsFace."</FONT>);
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="FormalComment">/**
+<A NAME="30"></A>     * This method is advisable to be called upon falsified conditions in the equals method.
+<A NAME="31"></A>     * &lt;p/&gt;
+<A NAME="32"></A>     * First check if the entities are of the same class, if true, check internal params.
+<A NAME="33"></A>     * &lt;p/&gt;
+<A NAME="34"></A>     * If false, check with this method.
+<A NAME="35"></A>     * &lt;p/&gt;
+<A NAME="36"></A>     * Always use this convention. Otherwise you might introduce bugs
+<A NAME="37"></A>     *
+<A NAME="38"></A>     * @param other
+<A NAME="39"></A>     * @return if HumanIds of the two objects match
+<A NAME="40"></A>     */</FONT>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> matchHumanId(<FONT ID="Final">final</FONT> Object other) {
+<A NAME="42"></A>        <FONT ID="SingleLineComment">//Loggers.DEBUG.debug(this.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
+<A NAME="43"></A></FONT>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.getClass().equals(other.getClass())) {
+<A NAME="44"></A>            <FONT ID="Throw">throw</FONT> UNSUPPORTED_OPERATION_EXCEPTION;
+<A NAME="45"></A>        }
+<A NAME="46"></A>        <FONT ID="SingleLineComment">//Warning: added later. check for sanity with existing code
+<A NAME="47"></A></FONT>        <FONT ID="If">if</FONT> (!(other <FONT ID="InstanceOf">instanceof</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A>)) {
+<A NAME="48"></A>            <FONT ID="Throw">throw</FONT> NOT_IMPLEMENTED;
+<A NAME="49"></A>        }
+<A NAME="50"></A><FONT ID="SingleLineComment">//        return other instanceof HumanEquals &amp;&amp; this.getHumanId().equals(((HumanEquals) other).getHumanId());
+<A NAME="51"></A></FONT>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.getHumanId().equals(((<A HREF="../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A>) other).getHumanId());
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="FormalComment">/**
+<A NAME="55"></A>     * New approach on HumanEquals but not tested. Check intensively if you are using this static approach.
+<A NAME="56"></A>     * 
+<A NAME="57"></A>     * @param main
+<A NAME="58"></A>     * @param other
+<A NAME="59"></A>     * @return
+<A NAME="60"></A>     */</FONT>
+<A NAME="61"></A>    @Deprecated
+<A NAME="62"></A>    @NOTE(note = <FONT ID="StringLiteral">"Use an interface based equals matching approach if you are using this. Logic is"</FONT> +
+<A NAME="63"></A>            <FONT ID="StringLiteral">"If the two classes of of different types, but instanceof same interface, then match humanid."</FONT> +
+<A NAME="64"></A>            <FONT ID="StringLiteral">"This approach avoids necessity to extend a class."</FONT>)
+<A NAME="65"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> staticMatchHumanId(<FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A> main, <FONT ID="Final">final</FONT> Object other) {
+<A NAME="66"></A>        <FONT ID="SingleLineComment">//Loggers.DEBUG.debug(main.getClass().getSimpleName() + " " + other.getClass().getSimpleName());
+<A NAME="67"></A></FONT>        <FONT ID="If">if</FONT> (main.getClass().equals(other.getClass())) {
+<A NAME="68"></A>            <FONT ID="Throw">throw</FONT> UNSUPPORTED_OPERATION_EXCEPTION;
+<A NAME="69"></A>        }
+<A NAME="70"></A>        <FONT ID="If">if</FONT> (!(other <FONT ID="InstanceOf">instanceof</FONT> <A HREF="../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A>)) {
+<A NAME="71"></A>            <FONT ID="Throw">throw</FONT> NOT_IMPLEMENTED;
+<A NAME="72"></A>        }
+<A NAME="73"></A>        <FONT ID="Return">return</FONT> main.getHumanId().equals(((<A HREF="../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A>) other).getHumanId());
+<A NAME="74"></A>    }
+<A NAME="75"></A>
+<A NAME="76"></A>
+<A NAME="77"></A>}</pre>
+</BODY>
+</HTML>

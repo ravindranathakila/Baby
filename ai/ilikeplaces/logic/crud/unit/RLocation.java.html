@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.RLocation (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">RLocation.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/QueryParameter.java.html">ai.ilikeplaces.jpa.QueryParameter</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">ai.ilikeplaces.util.jpa.RefreshException</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="18"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.util.Collections;
+<A NAME="20"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="21"></A>
+<A NAME="22"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>.*;
+<A NAME="23"></A>
+<A NAME="24"></A><FONT ID="FormalComment">/**
+<A NAME="25"></A> * @author Ravindranath Akila
+<A NAME="26"></A> */</FONT>
+<A NAME="27"></A>
+<A NAME="28"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="29"></A>@Stateless
+<A NAME="30"></A>@TODO(task = <FONT ID="StringLiteral">"i18n"</FONT>)
+<A NAME="31"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> RLocation <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RLocationLocal.java.html">RLocationLocal</A> {
+<A NAME="32"></A>
+<A NAME="33"></A>    @EJB
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; crudServiceLocation_;
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> RLocation() {
+<A NAME="37"></A>    }
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="FormalComment">/**
+<A NAME="40"></A>     * Use if you are going to use this method, then you should be within a
+<A NAME="41"></A>     * transaction on which you will be doing some updates on this location. If
+<A NAME="42"></A>     * not, use the dirty read instead. Holding up a row in a long lived
+<A NAME="43"></A>     * transaction will be a huge bottleneck so dirty read is the best in most
+<A NAME="44"></A>     * cases.
+<A NAME="45"></A>     *
+<A NAME="46"></A>     * @param locationName
+<A NAME="47"></A>     * @param superLocationName
+<A NAME="48"></A>     * @return
+<A NAME="49"></A>     */</FONT>
+<A NAME="50"></A>    @Override
+<A NAME="51"></A>    @WARNING(warning = <FONT ID="StringLiteral">"SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER."</FONT>)
+<A NAME="52"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> doNTxRLocation(<FONT ID="Final">final</FONT> String locationName, <FONT ID="Final">final</FONT> String superLocationName) {
+<A NAME="54"></A>        <FONT ID="Return">return</FONT> doCommonRLocation(locationName, superLocationName);
+<A NAME="55"></A>    }
+<A NAME="56"></A>
+<A NAME="57"></A>    <FONT ID="FormalComment">/**
+<A NAME="58"></A>     * Use if you are going to use this method, then you should be within a
+<A NAME="59"></A>     * transaction on which you will be doing some updates on this location. If
+<A NAME="60"></A>     * not, use the dirty read instead. Holding up a row in a long lived
+<A NAME="61"></A>     * transaction will be a huge bottleneck so dirty read is the best in most
+<A NAME="62"></A>     * cases.
+<A NAME="63"></A>     *
+<A NAME="64"></A>     * @param locationName
+<A NAME="65"></A>     * @param superLocationName
+<A NAME="66"></A>     * @return
+<A NAME="67"></A>     */</FONT>
+<A NAME="68"></A>    @Override
+<A NAME="69"></A>    @WARNING(warning = <FONT ID="StringLiteral">"SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER."</FONT>)
+<A NAME="70"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="71"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> doRLocation(<FONT ID="Final">final</FONT> String locationName, <FONT ID="Final">final</FONT> String superLocationName) {
+<A NAME="72"></A>        <FONT ID="Return">return</FONT> doCommonRLocation(locationName, superLocationName);
+<A NAME="73"></A>    }
+<A NAME="74"></A>
+<A NAME="75"></A>    <FONT ID="FormalComment">/**
+<A NAME="76"></A>     * @param locationName
+<A NAME="77"></A>     * @param superLocationName
+<A NAME="78"></A>     * @return
+<A NAME="79"></A>     */</FONT>
+<A NAME="80"></A>    @Override
+<A NAME="81"></A>    @WARNING(warning = <FONT ID="StringLiteral">"SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER."</FONT>)
+<A NAME="82"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="83"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> doDirtyRLocation(<FONT ID="Final">final</FONT> String locationName, <FONT ID="Final">final</FONT> String superLocationName) {
+<A NAME="84"></A>        <FONT ID="Return">return</FONT> doCommonRLocation(locationName, superLocationName);
+<A NAME="85"></A>    }
+<A NAME="86"></A>
+<A NAME="87"></A>
+<A NAME="88"></A>    <FONT ID="FormalComment">/**
+<A NAME="89"></A>     * @param locationName
+<A NAME="90"></A>     * @param superLocationName
+<A NAME="91"></A>     * @return
+<A NAME="92"></A>     */</FONT>
+<A NAME="93"></A>    @WARNING(warning = <FONT ID="StringLiteral">"SUPER LOCATION CAN BE NULL(CALLER SENDS NULL OR DB HAS NULL). HENCE JUST FIND BY LOCATION. IF PLENTY(THEN SUPER IS DEFINITELY THERE, MATCH SUPER."</FONT>)
+<A NAME="94"></A>    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+<A NAME="95"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> doCommonRLocation(<FONT ID="Final">final</FONT> String locationName, <FONT ID="Final">final</FONT> String superLocationName) {
+<A NAME="96"></A>
+<A NAME="97"></A>        logger.debug(<FONT ID="StringLiteral">"HELLO, I AM QUERYING FOR A LOCATION {} OF WHICH SUPER LOCATION IS {}."</FONT>, locationName, superLocationName);
+<A NAME="98"></A>
+<A NAME="99"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> returnVal;
+<A NAME="100"></A>        @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="101"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; existingLocations = crudServiceLocation_.findWithNamedQuery(FindAllLocationsByName,
+<A NAME="102"></A>                QueryParameter.with(LocationName, locationName).parameters());
+<A NAME="103"></A>
+<A NAME="104"></A>        <FONT ID="If">if</FONT> (existingLocations.size() == <FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="105"></A>            returnVal = existingLocations.get(<FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="106"></A>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (existingLocations.size() &gt; <FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="107"></A>            <FONT ID="Boolean">boolean</FONT> found = <FONT ID="False">false</FONT>;
+<A NAME="108"></A>            <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> tempVal = <FONT ID="Null">null</FONT>;
+<A NAME="109"></A>            superLocationMatchLoop:
+<A NAME="110"></A>            {
+<A NAME="111"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> location : existingLocations) {
+<A NAME="112"></A>                    @NOTE(note = <FONT ID="StringLiteral">"THIS CAN NEVER BE NULL"</FONT>)
+<A NAME="113"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> superLocation = location.getLocationSuperSet();
+<A NAME="114"></A>                    <FONT ID="If">if</FONT> (superLocation.getLocationName().equals(superLocationName)) {
+<A NAME="115"></A>                        tempVal = location;
+<A NAME="116"></A>                        found = <FONT ID="True">true</FONT>;
+<A NAME="117"></A>                        <FONT ID="Break">break</FONT> superLocationMatchLoop;
+<A NAME="118"></A>                    }
+<A NAME="119"></A>                }
+<A NAME="120"></A>            }
+<A NAME="121"></A>            <FONT ID="If">if</FONT> (found) {
+<A NAME="122"></A>                returnVal = tempVal;
+<A NAME="123"></A>            } <FONT ID="Else">else</FONT> {
+<A NAME="124"></A>                logger.debug(<FONT ID="StringLiteral">"HELLO, NO SUCH LOCATION AS {} OF WHICH SUPER LOCATION IS {}."</FONT>, locationName, superLocationName);
+<A NAME="125"></A>                returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="126"></A>            }
+<A NAME="127"></A>
+<A NAME="128"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="129"></A>            logger.debug(<FONT ID="StringLiteral">"HELLO, NO SUCH LOCATION AS {}. I DID NOT COMPARE SUPER LOCATIONS AS LOCATIONS DID NOT MATCH."</FONT>, locationName, superLocationName);
+<A NAME="130"></A>            returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="131"></A>        }
+<A NAME="132"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="133"></A>    }
+<A NAME="134"></A>
+<A NAME="135"></A>    @Override
+<A NAME="136"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="137"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> doRLocation(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId) {
+<A NAME="138"></A>        <FONT ID="Return">return</FONT> crudServiceLocation_.find(<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>, locationId);
+<A NAME="139"></A>    }
+<A NAME="140"></A>
+<A NAME="141"></A>    @Override
+<A NAME="142"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="143"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> doDirtyRLocation(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId) {
+<A NAME="144"></A>        <FONT ID="Return">return</FONT> crudServiceLocation_.find(<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>.<FONT ID="Class">class</FONT>, locationId);
+<A NAME="145"></A>    }
+<A NAME="146"></A>
+<A NAME="147"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="148"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> doRLocation(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="149"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="150"></A>            <FONT ID="Return">return</FONT> doRLocation(locationId).refresh(refreshSpec);
+<A NAME="151"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> e) {
+<A NAME="152"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>(e);
+<A NAME="153"></A>        }
+<A NAME="154"></A>    }
+<A NAME="155"></A>
+<A NAME="156"></A>    @Override
+<A NAME="157"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="158"></A>    <FONT ID="Public">public</FONT> List&lt;String&gt; doDirtyRLikeLocationNames(<FONT ID="Final">final</FONT> String locationName) {
+<A NAME="159"></A>        <FONT ID="Return">return</FONT> crudServiceLocation_.findWithNamedQuery(FindAllLocationNamesByLikeName,
+<A NAME="160"></A>                QueryParameter.with(LocationName, locationName.toUpperCase() + <FONT ID="StringLiteral">"%"</FONT>).parameters());
+<A NAME="161"></A>    }
+<A NAME="162"></A>
+<A NAME="163"></A>    @Override
+<A NAME="164"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="165"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; doDirtyRLikeLocations(<FONT ID="Final">final</FONT> String locationName) {
+<A NAME="166"></A>        <FONT ID="Return">return</FONT> crudServiceLocation_.findWithNamedQuery(FindAllLocationsByLikeName,
+<A NAME="167"></A>                QueryParameter.with(LocationName, locationName.toUpperCase() + <FONT ID="StringLiteral">"%"</FONT>).parameters());
+<A NAME="168"></A>    }
+<A NAME="169"></A>
+<A NAME="170"></A>    @WARNING(warning = <FONT ID="StringLiteral">"We can receive a detached entity which JPA cannot use to query. It needs an attached entity."</FONT>)
+<A NAME="171"></A>    @Override
+<A NAME="172"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="173"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; doNTxRLocationsBySuperLocation(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> locationSuperset) {
+<A NAME="174"></A>        @FIXME(issue = <FONT ID="StringLiteral">"The list JPA returns in read only. Using orderby makes it a db ordering. This uses shallow copy"</FONT>)
+<A NAME="175"></A>        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; sort = <FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt;(crudServiceLocation_.findWithNamedQuery(FindAllLocationsBySuperLocation,
+<A NAME="176"></A>                QueryParameter.with(LocationSuperSet, doRLocation(locationSuperset.getLocationId())).parameters()));
+<A NAME="177"></A>        Collections.sort(sort);
+<A NAME="178"></A>        <FONT ID="Return">return</FONT> sort;
+<A NAME="179"></A>    }
+<A NAME="180"></A>
+<A NAME="181"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RLocation.java.html">RLocation</A>.<FONT ID="Class">class</FONT>);
+<A NAME="182"></A>}
+<A NAME="183"></A></pre>
+</BODY>
+</HTML>

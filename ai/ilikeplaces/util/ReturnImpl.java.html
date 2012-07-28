@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.ReturnImpl (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ReturnImpl.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * Created by IntelliJ IDEA.
+<A NAME="9"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="10"></A> * Date: Jan 1, 2010
+<A NAME="11"></A> * Time: 4:29:55 PM
+<A NAME="12"></A> */</FONT>
+<A NAME="13"></A>
+<A NAME="14"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="15"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ReturnImpl&lt;T&gt; <FONT ID="Implements">implements</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;T&gt;, Serializable {
+<A NAME="16"></A>
+<A NAME="17"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String logMsgBeginning = <FONT ID="StringLiteral">"SORRY! I ENCOUNTERED AN EXCEPTION! HOWEVER, THE APPLICATION SHOULD REMAIN INTACT. SEE BELOW FOR MORE DETAILS.\n\n"</FONT>;
+<A NAME="18"></A>
+<A NAME="19"></A>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Long">long</FONT> ERROR_SEQ_NUMBER = <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> returnStatus = <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Private">private</FONT> T returnValue = <FONT ID="Null">null</FONT>;
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Private">private</FONT> Throwable returnError = <FONT ID="Null">null</FONT>;
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> String returnMsg = <FONT ID="Null">null</FONT>;
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> ReturnImpl(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> returnStatus, <FONT ID="Final">final</FONT> T returnValue, <FONT ID="Final">final</FONT> Throwable returnError, <FONT ID="Final">final</FONT> String returnMsg) {
+<A NAME="30"></A>        <FONT ID="This">this</FONT>.returnStatus = returnStatus;
+<A NAME="31"></A>        <FONT ID="This">this</FONT>.returnValue = returnValue;
+<A NAME="32"></A>        <FONT ID="This">this</FONT>.returnError = returnError;
+<A NAME="33"></A>        <FONT ID="This">this</FONT>.returnMsg = returnMsg;
+<A NAME="34"></A>    }
+<A NAME="35"></A>
+<A NAME="36"></A>    <FONT ID="Public">public</FONT> ReturnImpl(<FONT ID="Final">final</FONT> T returnValue, <FONT ID="Final">final</FONT> String returnMsg) {
+<A NAME="37"></A>        <FONT ID="This">this</FONT>.returnStatus = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="38"></A>        <FONT ID="This">this</FONT>.returnValue = returnValue;
+<A NAME="39"></A>        <FONT ID="This">this</FONT>.returnMsg = returnMsg;
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> ReturnImpl(<FONT ID="Final">final</FONT> Throwable returnError, <FONT ID="Final">final</FONT> String returnMsg, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> shouldLog) {
+<A NAME="43"></A>        <FONT ID="If">if</FONT> (shouldLog) {
+<A NAME="44"></A>            Loggers.EXCEPTION.error(logMsgBeginning + returnMsg + <FONT ID="StringLiteral">"\n"</FONT>, returnError);
+<A NAME="45"></A>        }
+<A NAME="46"></A>        <FONT ID="This">this</FONT>.returnStatus = <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="47"></A>        <FONT ID="This">this</FONT>.returnError = returnError;
+<A NAME="48"></A>        <FONT ID="This">this</FONT>.returnMsg = returnMsg;
+<A NAME="49"></A>    }
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="FormalComment">/**
+<A NAME="52"></A>     * Returns 0 if no error occurred, or a unique error code specific only to this error. This code can be given to
+<A NAME="53"></A>     * the user and can be grepped or resolved in any manner you require, later.
+<A NAME="54"></A>     *
+<A NAME="55"></A>     * The current return implementation had to go by int and expects the system will not exeed integer range. To get
+<A NAME="56"></A>     * the exact error code, check if the return status is greater than zero and if so, get the code separately.
+<A NAME="57"></A>     *
+<A NAME="58"></A>     * @return
+<A NAME="59"></A>     */</FONT>
+<A NAME="60"></A>    @Override
+<A NAME="61"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> returnStatus() {
+<A NAME="62"></A>        <FONT ID="Return">return</FONT> returnStatus == <FONT ID="IntegerLiteral">0</FONT> ? returnStatus : (<FONT ID="Int">int</FONT>) ERROR_SEQ_NUMBER++;
+<A NAME="63"></A>    }
+<A NAME="64"></A>
+<A NAME="65"></A>    <FONT ID="FormalComment">/**
+<A NAME="66"></A>     * Returns a unique error code for this error, if any, or throws IllegalAccessError if otherwise.
+<A NAME="67"></A>     * @return Unique ERROR_SEQ_NUMBER
+<A NAME="68"></A>     */</FONT>
+<A NAME="69"></A>    @Override
+<A NAME="70"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Long">long</FONT> returnErrorSeqCode(){
+<A NAME="71"></A>        <FONT ID="If">if</FONT>(returnStatus == <FONT ID="IntegerLiteral">0</FONT>){
+<A NAME="72"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalAccessError(<FONT ID="StringLiteral">"SORRY! YOU CANNOT OBTAIN AN ERROR CODE WHEN THERE IS NO ERROR. PLEASE AVOID CALLING THIS METHOD IF NO ERROR IS FOUND."</FONT>);
+<A NAME="73"></A>        }
+<A NAME="74"></A>        <FONT ID="Return">return</FONT> ERROR_SEQ_NUMBER;
+<A NAME="75"></A>    }
+<A NAME="76"></A>
+<A NAME="77"></A>    @Override
+<A NAME="78"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> T returnValue() {
+<A NAME="79"></A>        <FONT ID="Return">return</FONT> returnValue;
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    @Override
+<A NAME="83"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> T returnValueBadly() {
+<A NAME="84"></A>        <FONT ID="If">if</FONT> (returnStatus() != <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="85"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> RuntimeException(returnError);
+<A NAME="86"></A>        }
+<A NAME="87"></A>        <FONT ID="Return">return</FONT> returnValue;
+<A NAME="88"></A>    }
+<A NAME="89"></A>
+<A NAME="90"></A>    @Override
+<A NAME="91"></A>    <FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> Throwable returnError() {
+<A NAME="92"></A>        <FONT ID="Return">return</FONT> returnError;
+<A NAME="93"></A>    }
+<A NAME="94"></A>
+<A NAME="95"></A>    @Override
+<A NAME="96"></A>    <FONT ID="Public">public</FONT> String returnMsg() {
+<A NAME="97"></A>        <FONT ID="Return">return</FONT> returnMsg;
+<A NAME="98"></A>    }
+<A NAME="99"></A>
+<A NAME="100"></A>    @Override
+<A NAME="101"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> valid(){
+<A NAME="102"></A>        <FONT ID="Return">return</FONT> returnStatus() == <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="103"></A>    }
+<A NAME="104"></A>
+<A NAME="105"></A>    @Override
+<A NAME="106"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="107"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"Return{"</FONT> +
+<A NAME="108"></A>                <FONT ID="StringLiteral">"returnStatus="</FONT> + returnStatus +
+<A NAME="109"></A>                <FONT ID="StringLiteral">", returnValue="</FONT> + (returnValue != <FONT ID="Null">null</FONT> ? returnValue.toString() : <FONT ID="StringLiteral">"null"</FONT>) +
+<A NAME="110"></A>                <FONT ID="StringLiteral">", returnError="</FONT> + (returnError != <FONT ID="Null">null</FONT> ? returnError.toString() : <FONT ID="StringLiteral">"null"</FONT>) +
+<A NAME="111"></A>                <FONT ID="StringLiteral">", returnMsg='"</FONT> + (returnMsg != <FONT ID="Null">null</FONT> ? returnMsg : <FONT ID="StringLiteral">""</FONT>) + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="112"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="113"></A>    }
+<A NAME="114"></A>}</pre>
+</BODY>
+</HTML>

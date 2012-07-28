@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.security.blowfish.jbcrypt.BlowFish (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">BlowFish.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.security.blowfish.jbcrypt;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/security/blowfish/BlowFishLocal.java.html">ai.ilikeplaces.security.blowfish.BlowFishLocal</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSNGLTNBCallbacks.java.html">ai.ilikeplaces.util.AbstractSNGLTNBCallbacks</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.ejb.Singleton;
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="9"></A><FONT ID="Import">import</FONT> java.security.SecureRandom;
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> *
+<A NAME="12"></A> * @author Ravindranath Akila
+<A NAME="13"></A> */</FONT>
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="16"></A></FONT>@Singleton
+<A NAME="17"></A>@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="18"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> BlowFish <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSNGLTNBCallbacks.java.html">AbstractSNGLTNBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/security/blowfish/BlowFishLocal.java.html">BlowFishLocal</A> {
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="FormalComment">/**
+<A NAME="21"></A>     * Hash a password using the OpenBSD bcrypt scheme
+<A NAME="22"></A>     * @param password  the password to hash
+<A NAME="23"></A>     * @param salt  the salt to hash with (perhaps generated
+<A NAME="24"></A>     * using BCrypt.gensalt)
+<A NAME="25"></A>     * @return  the hashed password
+<A NAME="26"></A>     */</FONT>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> String hashpw(<FONT ID="Final">final</FONT> String password, <FONT ID="Final">final</FONT> String salt) {
+<A NAME="28"></A>        <FONT ID="Return">return</FONT> BCrypt.hashpw(password, salt);
+<A NAME="29"></A>    }
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="FormalComment">/**
+<A NAME="32"></A>     * Generate a salt for use with the BCrypt.hashpw() method
+<A NAME="33"></A>     * @param log_rounds    the log2 of the number of rounds of
+<A NAME="34"></A>     * hashing to apply - the work factor therefore increases as
+<A NAME="35"></A>     * 2**log_rounds.
+<A NAME="36"></A>     * @param random        an instance of SecureRandom to use
+<A NAME="37"></A>     * @return  an encoded salt value
+<A NAME="38"></A>     */</FONT>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> String gensalt(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> log_rounds, <FONT ID="Final">final</FONT> SecureRandom random) {
+<A NAME="40"></A>        <FONT ID="Return">return</FONT> BCrypt.gensalt(log_rounds, random);
+<A NAME="41"></A>    }
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="FormalComment">/**
+<A NAME="44"></A>     * Generate a salt for use with the BCrypt.hashpw() method
+<A NAME="45"></A>     * @param log_rounds    the log2 of the number of rounds of
+<A NAME="46"></A>     * hashing to apply - the work factor therefore increases as
+<A NAME="47"></A>     * 2**log_rounds.
+<A NAME="48"></A>     * @return  an encoded salt     @Override value
+<A NAME="49"></A>     */</FONT>
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> String gensalt(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> log_rounds) {
+<A NAME="51"></A>        <FONT ID="Return">return</FONT> BCrypt.gensalt(log_rounds);
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="FormalComment">/**
+<A NAME="55"></A>     * Generate a salt for use with the BCrypt.hashpw() method,
+<A NAME="56"></A>     * selecting a reasonable default for the number of hashing
+<A NAME="57"></A>     * rounds to apply
+<A NAME="58"></A>     * @return  an encoded salt value
+<A NAME="59"></A>     */</FONT>
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> String gensalt() {
+<A NAME="61"></A>        <FONT ID="Return">return</FONT> BCrypt.gensalt();
+<A NAME="62"></A>    }
+<A NAME="63"></A>
+<A NAME="64"></A>    <FONT ID="FormalComment">/**
+<A NAME="65"></A>     * Check that a plaintext password matches a previously hashed
+<A NAME="66"></A>     * one
+<A NAME="67"></A>     * @param plaintext the plaintext password to verify
+<A NAME="68"></A>     * @param hashed    the previously-hashed password
+<A NAME="69"></A>     * @return  true if the passwords match, false otherwise
+<A NAME="70"></A>     */</FONT>
+<A NAME="71"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> checkpw(<FONT ID="Final">final</FONT> String plaintext, <FONT ID="Final">final</FONT> String hashed) {
+<A NAME="72"></A>        <FONT ID="Return">return</FONT> BCrypt.checkpw(plaintext, hashed);
+<A NAME="73"></A>    }
+<A NAME="74"></A>
+<A NAME="75"></A>    <FONT ID="FormalComment">/**
+<A NAME="76"></A>     * General Call on Any BlowFish library. Wrapper method.
+<A NAME="77"></A>     * @param passWord
+<A NAME="78"></A>     * @param salt 
+<A NAME="79"></A>     * @return
+<A NAME="80"></A>     */</FONT>
+<A NAME="81"></A>    @Override
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> String getHash(<FONT ID="Final">final</FONT> String passWord, <FONT ID="Final">final</FONT> String salt){
+<A NAME="83"></A>        <FONT ID="Final">final</FONT> String hash = <FONT ID="New">new</FONT> String(BCrypt.hashpw(<FONT ID="New">new</FONT> String(passWord), salt));
+<A NAME="84"></A>        <FONT ID="If">if</FONT>(!BCrypt.checkpw(<FONT ID="New">new</FONT> String(passWord), <FONT ID="New">new</FONT> String(hash))){
+<A NAME="85"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> java.lang.RuntimeException(<FONT ID="StringLiteral">"SORRY! I AM ENCOUNTERING A HASHING ERROR!"</FONT>);
+<A NAME="86"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="87"></A>            INFO.info(<FONT ID="StringLiteral">"HASH:"</FONT>+hash);
+<A NAME="88"></A>            INFO.info(<FONT ID="StringLiteral">"SALT:"</FONT>+salt);
+<A NAME="89"></A>        }
+<A NAME="90"></A>        <FONT ID="Return">return</FONT> hash;
+<A NAME="91"></A>    }
+<A NAME="92"></A>}
+<A NAME="93"></A></pre>
+</BODY>
+</HTML>

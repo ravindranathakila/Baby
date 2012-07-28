@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.validators.unit.HumanId (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanId.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.validators.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumanEquals.java.html">ai.ilikeplaces.entities.HumanEquals</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">ai.ilikeplaces.entities.HumanEqualsFace</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumanIdFace.java.html">ai.ilikeplaces.entities.HumanIdFace</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Mute.java.html">ai.ilikeplaces.entities.Mute</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="10"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.IsInvariant;
+<A NAME="11"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.Length;
+<A NAME="12"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotNull;
+<A NAME="13"></A><FONT ID="Import">import</FONT> net.sf.oval.exception.ConstraintsViolatedException;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * Created by IntelliJ IDEA.
+<A NAME="17"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="18"></A> * Date: Jan 22, 2010
+<A NAME="19"></A> * Time: 2:16:43 AM
+<A NAME="20"></A> */</FONT>
+<A NAME="21"></A>
+<A NAME="22"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="23"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> HumanId <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;String&gt; <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A>, <A HREF="../../../../../ai/ilikeplaces/entities/HumanIdFace.java.html">HumanIdFace</A> {
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> HumanId() {
+<A NAME="26"></A>    }
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Public">public</FONT> HumanId(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="29"></A>        obj = humanId;
+<A NAME="30"></A>    }
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Public">public</FONT> HumanId(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> doValidateAndThrow) {
+<A NAME="33"></A>        <FONT ID="If">if</FONT> (doValidateAndThrow) {
+<A NAME="34"></A>            <FONT ID="MultiLineComment">/*Threading issue possible here as the validator thread will accesses the object before creation finishes*/</FONT>
+<A NAME="35"></A>            setObjAsValid(humanId);
+<A NAME="36"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="37"></A>            obj = humanId;
+<A NAME="38"></A>        }
+<A NAME="39"></A>    }
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> getSelfAsValid(<FONT ID="Final">final</FONT> Validator... validator) {
+<A NAME="42"></A>        <FONT ID="Return">return</FONT> (<A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>) <FONT ID="Super">super</FONT>.getSelfAsValid(validator);
+<A NAME="43"></A>    }
+<A NAME="44"></A>
+<A NAME="45"></A>
+<A NAME="46"></A>    @IsInvariant
+<A NAME="47"></A>    @NotNull
+<A NAME="48"></A>    @net.sf.oval.constraint.Email(message = <FONT ID="StringLiteral">"SORRY! HUMAN ID SHOULD BE AN EMAIL ADDRESS."</FONT>)
+<A NAME="49"></A>    @Length(max = <FONT ID="IntegerLiteral">255</FONT>)
+<A NAME="50"></A>    @Override
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> String getObj() {
+<A NAME="52"></A>        <FONT ID="Return">return</FONT> obj;
+<A NAME="53"></A>    }
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="Public">public</FONT> String getHumanId() {
+<A NAME="56"></A>        <FONT ID="Return">return</FONT> getObjectAsValid();
+<A NAME="57"></A>    }
+<A NAME="58"></A>
+<A NAME="59"></A>    @Override
+<A NAME="60"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setHumanId(<FONT ID="Final">final</FONT> String humanId__) {
+<A NAME="61"></A>       <FONT ID="Super">super</FONT>.setObj(humanId__);
+<A NAME="62"></A>    }
+<A NAME="63"></A>
+<A NAME="64"></A>
+<A NAME="65"></A>    @Override
+<A NAME="66"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(<FONT ID="Final">final</FONT> Object o) {
+<A NAME="67"></A>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT> == o) {
+<A NAME="68"></A>            <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="69"></A>        }
+<A NAME="70"></A>
+<A NAME="71"></A>        <FONT ID="If">if</FONT> (o == <FONT ID="Null">null</FONT>) {
+<A NAME="72"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="73"></A>        }
+<A NAME="74"></A>
+<A NAME="75"></A>        <FONT ID="If">if</FONT> (getClass() == o.getClass()) {
+<A NAME="76"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A> that = (<A HREF="../../../../../ai/ilikeplaces/entities/HumanEqualsFace.java.html">HumanEqualsFace</A>) o;
+<A NAME="77"></A>            <FONT ID="Return">return</FONT> !(<FONT ID="This">this</FONT>.getHumanId() == <FONT ID="Null">null</FONT> || that.getHumanId() == <FONT ID="Null">null</FONT>) &amp;&amp; <FONT ID="This">this</FONT>.getHumanId().equals(that.getHumanId());
+<A NAME="78"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="79"></A>            <FONT ID="Return">return</FONT> HumanEquals.staticMatchHumanId(<FONT ID="This">this</FONT>,o);
+<A NAME="80"></A>        }
+<A NAME="81"></A>    }
+<A NAME="82"></A>}
+<A NAME="83"></A></pre>
+</BODY>
+</HTML>

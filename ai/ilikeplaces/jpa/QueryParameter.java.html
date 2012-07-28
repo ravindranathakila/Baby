@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.jpa.QueryParameter (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">QueryParameter.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.jpa;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> java.util.IdentityHashMap;
+<A NAME="7"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * @author Ravindranath Akila
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A>
+<A NAME="13"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="14"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> QueryParameter {
+<A NAME="15"></A>
+<A NAME="16"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> Map parameters_;
+<A NAME="17"></A>
+<A NAME="18"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="19"></A>    <FONT ID="Private">private</FONT> QueryParameter(<FONT ID="Final">final</FONT> String name__, <FONT ID="Final">final</FONT> Object value__) {
+<A NAME="20"></A>        <FONT ID="This">this</FONT>.parameters_ = <FONT ID="New">new</FONT> IdentityHashMap();
+<A NAME="21"></A>        <FONT ID="This">this</FONT>.parameters_.put(name__, value__);
+<A NAME="22"></A>    }
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Private">private</FONT> QueryParameter() {
+<A NAME="25"></A>        <FONT ID="This">this</FONT>.parameters_ = <FONT ID="New">new</FONT> IdentityHashMap();
+<A NAME="26"></A>    }
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="FormalComment">/**
+<A NAME="29"></A>     *
+<A NAME="30"></A>     * Use {@link #newInstance()} instead
+<A NAME="31"></A>     *
+<A NAME="32"></A>     * @param name__
+<A NAME="33"></A>     * @param value__
+<A NAME="34"></A>     * @return QueryParameter
+<A NAME="35"></A>     */</FONT>
+<A NAME="36"></A>    @Deprecated
+<A NAME="37"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Bug prone as a user might iteratively use with.with.with and forget he has to use and on consecutive calls. Use with() instead"</FONT>)
+<A NAME="38"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../ai/ilikeplaces/jpa/QueryParameter.java.html">QueryParameter</A> with(<FONT ID="Final">final</FONT> String name__, <FONT ID="Final">final</FONT> Object value__) {
+<A NAME="39"></A>        <FONT ID="Return">return</FONT> newInstance().and(name__, value__);
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="FormalComment">/**
+<A NAME="43"></A>     * @return QueryParameter
+<A NAME="44"></A>     */</FONT>
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../ai/ilikeplaces/jpa/QueryParameter.java.html">QueryParameter</A> newInstance() {
+<A NAME="46"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/jpa/QueryParameter.java.html">QueryParameter</A>();
+<A NAME="47"></A>    }
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="FormalComment">/**
+<A NAME="50"></A>     * Use {@link #add(String, Object)} instead
+<A NAME="51"></A>     * @param name__
+<A NAME="52"></A>     * @param value__
+<A NAME="53"></A>     * @return QueryParameter
+<A NAME="54"></A>     */</FONT>
+<A NAME="55"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="56"></A>    @Deprecated
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/jpa/QueryParameter.java.html">QueryParameter</A> and(<FONT ID="Final">final</FONT> String name__, <FONT ID="Final">final</FONT> Object value__) {
+<A NAME="58"></A>        <FONT ID="Return">return</FONT> add(name__, value__);
+<A NAME="59"></A>    }
+<A NAME="60"></A>
+<A NAME="61"></A>    <FONT ID="FormalComment">/**
+<A NAME="62"></A>     * @param name__
+<A NAME="63"></A>     * @param value__
+<A NAME="64"></A>     * @return QueryParameter
+<A NAME="65"></A>     */</FONT>
+<A NAME="66"></A>    @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="67"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/jpa/QueryParameter.java.html">QueryParameter</A> add(<FONT ID="Final">final</FONT> String name__, <FONT ID="Final">final</FONT> Object value__) {
+<A NAME="68"></A>        <FONT ID="This">this</FONT>.parameters_.put(name__, value__);
+<A NAME="69"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="70"></A>    }
+<A NAME="71"></A>
+<A NAME="72"></A>    <FONT ID="FormalComment">/**
+<A NAME="73"></A>     * @return parameters_
+<A NAME="74"></A>     */</FONT>
+<A NAME="75"></A>    <FONT ID="Public">public</FONT> Map parameters() {
+<A NAME="76"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>.parameters_;
+<A NAME="77"></A>    }
+<A NAME="78"></A>}
+<A NAME="79"></A>
+<A NAME="80"></A>
+<A NAME="81"></A></pre>
+</BODY>
+</HTML>

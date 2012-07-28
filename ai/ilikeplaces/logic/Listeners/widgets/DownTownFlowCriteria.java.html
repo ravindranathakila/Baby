@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DownTownFlowCriteria.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="FormalComment">/**
+<A NAME="8"></A> * Created by IntelliJ IDEA.
+<A NAME="9"></A> * User: Ravindranath Akila
+<A NAME="10"></A> * Date: 10/16/11
+<A NAME="11"></A> * Time: 2:46 PM
+<A NAME="12"></A> */</FONT>
+<A NAME="13"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DownTownFlowCriteria {
+<A NAME="14"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="15"></A></FONT>
+<A NAME="16"></A>    <FONT ID="Private">private</FONT> DownTownFlowDisplayComponent downTownFlowDisplayComponent;
+<A NAME="17"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId;
+<A NAME="18"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> humanUserLocal;
+<A NAME="19"></A>    <FONT ID="Private">private</FONT> InviteData inviteData;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="SingleLineComment">// -------------------------- ENUMERATIONS --------------------------
+<A NAME="22"></A></FONT>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> enum DownTownFlowDisplayComponent {
+<A NAME="24"></A>        TALKS,
+<A NAME="25"></A>        MOMENTS,
+<A NAME="26"></A>        TRIBES
+<A NAME="27"></A>    }
+<A NAME="28"></A>
+<A NAME="29"></A><FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="30"></A></FONT>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> DownTownFlowDisplayComponent getDownTownFlowDisplayComponent() {
+<A NAME="32"></A>        <FONT ID="Return">return</FONT> downTownFlowDisplayComponent;
+<A NAME="33"></A>    }
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> getHumanId() {
+<A NAME="36"></A>        <FONT ID="Return">return</FONT> humanId;
+<A NAME="37"></A>    }
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> getHumanUserLocal() {
+<A NAME="40"></A>        <FONT ID="Return">return</FONT> humanUserLocal;
+<A NAME="41"></A>    }
+<A NAME="42"></A>
+<A NAME="43"></A><FONT ID="SingleLineComment">// -------------------------- OTHER METHODS --------------------------
+<A NAME="44"></A></FONT>
+<A NAME="45"></A>    <FONT ID="Public">public</FONT> InviteData getInviteData() {
+<A NAME="46"></A>        <FONT ID="Return">return</FONT> inviteData == <FONT ID="Null">null</FONT> ? (inviteData = <FONT ID="New">new</FONT> InviteData()) : inviteData;
+<A NAME="47"></A>    }
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/DownTownFlowCriteria.java.html">DownTownFlowCriteria</A> setDownTownFlowDisplayComponent(<FONT ID="Final">final</FONT> DownTownFlowDisplayComponent downTownFlowDisplayComponent) {
+<A NAME="50"></A>        <FONT ID="This">this</FONT>.downTownFlowDisplayComponent = downTownFlowDisplayComponent;
+<A NAME="51"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="52"></A>    }
+<A NAME="53"></A>
+<A NAME="54"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/DownTownFlowCriteria.java.html">DownTownFlowCriteria</A> setHumanId(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId) {
+<A NAME="55"></A>        <FONT ID="This">this</FONT>.humanId = humanId;
+<A NAME="56"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="57"></A>    }
+<A NAME="58"></A>
+<A NAME="59"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/DownTownFlowCriteria.java.html">DownTownFlowCriteria</A> setHumanUserLocal(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> humanUserLocal) {
+<A NAME="60"></A>        <FONT ID="This">this</FONT>.humanUserLocal = humanUserLocal;
+<A NAME="61"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="62"></A>    }
+<A NAME="63"></A>
+<A NAME="64"></A><FONT ID="SingleLineComment">// -------------------------- INNER CLASSES --------------------------
+<A NAME="65"></A></FONT>
+<A NAME="66"></A>    <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> InviteData {
+<A NAME="67"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="68"></A></FONT>
+<A NAME="69"></A>        <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email;
+<A NAME="70"></A>
+<A NAME="71"></A><FONT ID="SingleLineComment">// ------------------------ ACCESSORS / MUTATORS ------------------------
+<A NAME="72"></A></FONT>
+<A NAME="73"></A>        <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> getEmail() {
+<A NAME="74"></A>            <FONT ID="Return">return</FONT> email;
+<A NAME="75"></A>        }
+<A NAME="76"></A>
+<A NAME="77"></A>        <FONT ID="Public">public</FONT> InviteData setEmail(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email) {
+<A NAME="78"></A>            <FONT ID="This">this</FONT>.email = email;
+<A NAME="79"></A>            <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="80"></A>        }
+<A NAME="81"></A>    }
+<A NAME="82"></A>}
+<A NAME="83"></A></pre>
+</BODY>
+</HTML>

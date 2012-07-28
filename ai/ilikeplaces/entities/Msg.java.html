@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.Msg (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Msg.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.persistence.*;
+<A NAME="8"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="FormalComment">/**
+<A NAME="11"></A> * Okay, we need to
+<A NAME="12"></A> * &lt;p/&gt;
+<A NAME="13"></A> * 1. Remember that entries to this entity will be foreign keys. That is, so that anybody can use this entity.
+<A NAME="14"></A> * &lt;p/&gt;
+<A NAME="15"></A> * 2. This entity should be super efficient since it will be used everywhere.
+<A NAME="16"></A> * &lt;p/&gt;
+<A NAME="17"></A> * Created by IntelliJ IDEA.
+<A NAME="18"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="19"></A> * Date: Jan 25, 2010
+<A NAME="20"></A> * Time: 1:01:22 PM
+<A NAME="21"></A> */</FONT>
+<A NAME="22"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="23"></A>@Entity
+<A NAME="24"></A>@NamedQuery(name = <FONT ID="StringLiteral">"FindWallEntriesByWallIdOrderByIdDesc"</FONT>,
+<A NAME="25"></A>        query = <FONT ID="StringLiteral">"SELECT msg FROM Msg msg WHERE msg.msgId IN (SELECT wall.wallMsgs FROM Wall wall WHERE wall.wallId = :wallId) order by msg.msgId DESC"</FONT>)
+<A NAME="26"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Msg <FONT ID="Implements">implements</FONT> Serializable {
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> Long msgId;
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String msgIdCOL = <FONT ID="StringLiteral">"msgId"</FONT>;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String FindWallEntriesByWallIdOrderByIdDesc = <FONT ID="StringLiteral">"FindWallEntriesByWallIdOrderByIdDesc"</FONT>;
+<A NAME="33"></A>
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> Integer msgType;<FONT ID="SingleLineComment">//Wall, Personal
+<A NAME="36"></A></FONT>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> String msgContent;
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> String msgMetadata;<FONT ID="SingleLineComment">//Anybody can store relavant metadata here
+<A NAME="40"></A></FONT>
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> msgTypeHUMAN = <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="43"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> msgTypeMISC = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="44"></A>
+<A NAME="45"></A>    @Id
+<A NAME="46"></A>    @GeneratedValue(strategy = GenerationType.AUTO)
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> Long getMsgId() {
+<A NAME="48"></A>        <FONT ID="Return">return</FONT> msgId;
+<A NAME="49"></A>    }
+<A NAME="50"></A>
+<A NAME="51"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setMsgId(<FONT ID="Final">final</FONT> Long msgId) {
+<A NAME="52"></A>        <FONT ID="This">this</FONT>.msgId = msgId;
+<A NAME="53"></A>    }
+<A NAME="54"></A>
+<A NAME="55"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> setMsgIdR(<FONT ID="Final">final</FONT> Long msgId) {
+<A NAME="56"></A>        <FONT ID="This">this</FONT>.msgId = msgId;
+<A NAME="57"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="58"></A>
+<A NAME="59"></A>    }
+<A NAME="60"></A>
+<A NAME="61"></A>    <FONT ID="Public">public</FONT> Integer getMsgType() {
+<A NAME="62"></A>        <FONT ID="Return">return</FONT> msgType;
+<A NAME="63"></A>    }
+<A NAME="64"></A>
+<A NAME="65"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setMsgType(<FONT ID="Final">final</FONT> Integer msgType) {
+<A NAME="66"></A>        <FONT ID="This">this</FONT>.msgType = msgType;
+<A NAME="67"></A>    }
+<A NAME="68"></A>
+<A NAME="69"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> setMsgTypeR(<FONT ID="Final">final</FONT> Integer msgType) {
+<A NAME="70"></A>        <FONT ID="This">this</FONT>.msgType = msgType;
+<A NAME="71"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> String getMsgContent() {
+<A NAME="75"></A>        <FONT ID="Return">return</FONT> msgContent;
+<A NAME="76"></A>    }
+<A NAME="77"></A>
+<A NAME="78"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setMsgContent(<FONT ID="Final">final</FONT> String msgContent) {
+<A NAME="79"></A>        <FONT ID="This">this</FONT>.msgContent = msgContent;
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> setMsgContentR(<FONT ID="Final">final</FONT> String msgContent) {
+<A NAME="83"></A>        <FONT ID="This">this</FONT>.msgContent = msgContent;
+<A NAME="84"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="85"></A>    }
+<A NAME="86"></A>
+<A NAME="87"></A>    <FONT ID="Public">public</FONT> String getMsgMetadata() {
+<A NAME="88"></A>        <FONT ID="Return">return</FONT> msgMetadata;
+<A NAME="89"></A>    }
+<A NAME="90"></A>
+<A NAME="91"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setMsgMetadata(<FONT ID="Final">final</FONT> String msgMetadata) {
+<A NAME="92"></A>        <FONT ID="This">this</FONT>.msgMetadata = msgMetadata;
+<A NAME="93"></A>    }
+<A NAME="94"></A>
+<A NAME="95"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A> setMsgMetadataR(<FONT ID="Final">final</FONT> String msgMetadata) {
+<A NAME="96"></A>        <FONT ID="This">this</FONT>.msgMetadata = msgMetadata;
+<A NAME="97"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="98"></A>
+<A NAME="99"></A>    }
+<A NAME="100"></A>
+<A NAME="101"></A>    @Override
+<A NAME="102"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="103"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"Msg{"</FONT> +
+<A NAME="104"></A>                <FONT ID="StringLiteral">"msgId="</FONT> + msgId +
+<A NAME="105"></A>                <FONT ID="StringLiteral">", msgType="</FONT> + msgType +
+<A NAME="106"></A>                <FONT ID="StringLiteral">", msgContent='"</FONT> + msgContent + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="107"></A>                <FONT ID="StringLiteral">", msgMetadata='"</FONT> + msgMetadata + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="108"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="109"></A>    }
+<A NAME="110"></A>}</pre>
+</BODY>
+</HTML>

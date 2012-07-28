@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.entities.Url (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">Url.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.entities;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">ai.ilikeplaces.util.EntityLifeCycleListener</A>;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="Import">import</FONT> javax.persistence.Entity;
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.persistence.EntityListeners;
+<A NAME="8"></A><FONT ID="Import">import</FONT> javax.persistence.Id;
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.persistence.Transient;
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.io.Serializable;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="FormalComment">/**
+<A NAME="13"></A> * @author Ravindranath Akila
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="16"></A>@Entity
+<A NAME="17"></A>@EntityListeners({<A HREF="../../../ai/ilikeplaces/util/EntityLifeCycleListener.java.html">EntityLifeCycleListener</A>.<FONT ID="Class">class</FONT>})
+<A NAME="18"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> Url <FONT ID="Implements">implements</FONT> Serializable {
+<A NAME="19"></A>
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> String url;
+<A NAME="21"></A>
+<A NAME="22"></A>    <FONT ID="Public">public</FONT> <FONT ID="Long">long</FONT> type;
+<A NAME="23"></A>
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> String metadata;
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> typeMISC= <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> typeHUMAN= <FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="28"></A>
+<A NAME="29"></A>    @Id
+<A NAME="30"></A>    <FONT ID="Public">public</FONT> String getUrl() {
+<A NAME="31"></A>        <FONT ID="Return">return</FONT> url;
+<A NAME="32"></A>    }
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setUrl(<FONT ID="Final">final</FONT> String url) {
+<A NAME="35"></A>        <FONT ID="This">this</FONT>.url = url;
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>    @Transient
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Url.java.html">Url</A> setUrlR(<FONT ID="Final">final</FONT> String url) {
+<A NAME="40"></A>        <FONT ID="This">this</FONT>.url = url;
+<A NAME="41"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="42"></A>    }
+<A NAME="43"></A>
+<A NAME="44"></A>    <FONT ID="Public">public</FONT> <FONT ID="Long">long</FONT> getType() {
+<A NAME="45"></A>        <FONT ID="Return">return</FONT> type;
+<A NAME="46"></A>    }
+<A NAME="47"></A>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setType(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> type) {
+<A NAME="49"></A>        <FONT ID="This">this</FONT>.type = type;
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>    @Transient
+<A NAME="53"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Url.java.html">Url</A> setTypeR(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> type) {
+<A NAME="54"></A>        <FONT ID="This">this</FONT>.type = type;
+<A NAME="55"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="56"></A>    }
+<A NAME="57"></A>
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> String getMetadata() {
+<A NAME="59"></A>        <FONT ID="Return">return</FONT> metadata;
+<A NAME="60"></A>    }
+<A NAME="61"></A>
+<A NAME="62"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setMetadata(<FONT ID="Final">final</FONT> String metadata) {
+<A NAME="63"></A>        <FONT ID="This">this</FONT>.metadata = metadata;
+<A NAME="64"></A>    }
+<A NAME="65"></A>
+<A NAME="66"></A>    @Transient
+<A NAME="67"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../ai/ilikeplaces/entities/Url.java.html">Url</A> setMetadataR(<FONT ID="Final">final</FONT> String metadata) {
+<A NAME="68"></A>        <FONT ID="This">this</FONT>.metadata = metadata;
+<A NAME="69"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="70"></A>    }
+<A NAME="71"></A>
+<A NAME="72"></A>    @Override
+<A NAME="73"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> equals(<FONT ID="Final">final</FONT> Object o) {
+<A NAME="74"></A>        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT> == o) <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="75"></A>        <FONT ID="If">if</FONT> (o == <FONT ID="Null">null</FONT> || getClass() != o.getClass()) <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<A NAME="76"></A>
+<A NAME="77"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/entities/Url.java.html">Url</A> url1 = (<A HREF="../../../ai/ilikeplaces/entities/Url.java.html">Url</A>) o;
+<A NAME="78"></A>
+<A NAME="79"></A>        <FONT ID="Return">return</FONT> !(url != <FONT ID="Null">null</FONT> ? !url.equals(url1.url) : url1.url != <FONT ID="Null">null</FONT>);
+<A NAME="80"></A>
+<A NAME="81"></A>    }
+<A NAME="82"></A>
+<A NAME="83"></A>    @Override
+<A NAME="84"></A>    <FONT ID="Public">public</FONT> <FONT ID="Int">int</FONT> hashCode() {
+<A NAME="85"></A>        <FONT ID="Return">return</FONT> url != <FONT ID="Null">null</FONT> ? url.hashCode() : <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="86"></A>    }
+<A NAME="87"></A>
+<A NAME="88"></A>    @Override
+<A NAME="89"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="90"></A>        <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"Url{"</FONT> +
+<A NAME="91"></A>                <FONT ID="StringLiteral">"url='"</FONT> + url + <FONT ID="CharacerLiteral">'\''</FONT> +
+<A NAME="92"></A>                <FONT ID="StringLiteral">", type="</FONT> + type +
+<A NAME="93"></A>                <FONT ID="CharacerLiteral">'}'</FONT>;
+<A NAME="94"></A>    }
+<A NAME="95"></A>}</pre>
+</BODY>
+</HTML>

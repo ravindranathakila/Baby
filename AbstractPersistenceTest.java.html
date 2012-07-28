@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>AbstractPersistenceTest (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">AbstractPersistenceTest.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="SingleLineComment">//package ai.ilikeplaces.entities;
+<A NAME="2"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="3"></A></FONT><FONT ID="SingleLineComment">//import org.junit.*;
+<A NAME="4"></A></FONT><FONT ID="SingleLineComment">//import javax.persistence.EntityManager;
+<A NAME="5"></A></FONT><FONT ID="SingleLineComment">//import javax.persistence.EntityManagerFactory;
+<A NAME="6"></A></FONT><FONT ID="SingleLineComment">//import javax.persistence.Persistence;
+<A NAME="7"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="8"></A></FONT><FONT ID="SingleLineComment">///**
+<A NAME="9"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="10"></A></FONT><FONT ID="SingleLineComment">// * @author Ravindranath Akila
+<A NAME="11"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="12"></A></FONT><FONT ID="SingleLineComment">//public abstract class AbstractPersistenceTest {
+<A NAME="13"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="14"></A></FONT><FONT ID="SingleLineComment">//    protected EntityManagerFactory emf;
+<A NAME="15"></A></FONT><FONT ID="SingleLineComment">//    protected EntityManager manager;
+<A NAME="16"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="17"></A></FONT><FONT ID="SingleLineComment">//    @Before
+<A NAME="18"></A></FONT><FONT ID="SingleLineComment">//    public void beforeTests() {
+<A NAME="19"></A></FONT><FONT ID="SingleLineComment">//        emf = Persistence.createEntityManagerFactory("adimpression_ilikeplaces_war_1.6-SNAPSHOTPU");
+<A NAME="20"></A></FONT><FONT ID="SingleLineComment">//        manager = emf.createEntityManager();
+<A NAME="21"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="22"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="23"></A></FONT><FONT ID="SingleLineComment">//    @Test
+<A NAME="24"></A></FONT><FONT ID="SingleLineComment">//    abstract public void runTest() throws Exception;
+<A NAME="25"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="26"></A></FONT><FONT ID="SingleLineComment">//    @After
+<A NAME="27"></A></FONT><FONT ID="SingleLineComment">//    abstract public void revertTest();
+<A NAME="28"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="29"></A></FONT><FONT ID="SingleLineComment">//    @After
+<A NAME="30"></A></FONT><FONT ID="SingleLineComment">//    public void afterTests() {
+<A NAME="31"></A></FONT><FONT ID="SingleLineComment">//        manager.close();
+<A NAME="32"></A></FONT><FONT ID="SingleLineComment">//        manager = null;//GC
+<A NAME="33"></A></FONT><FONT ID="SingleLineComment">//        emf.close();
+<A NAME="34"></A></FONT><FONT ID="SingleLineComment">//        emf = null;//GC
+<A NAME="35"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="36"></A></FONT><FONT ID="SingleLineComment">//}
+<A NAME="37"></A></FONT></pre>
+</BODY>
+</HTML>

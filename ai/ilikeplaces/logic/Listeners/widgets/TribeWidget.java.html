@@ -1,0 +1,318 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.TribeWidget (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TribeWidget.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ai.ilikeplaces.logic.contactimports.ImportedContact</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">ai.ilikeplaces.logic.validators.unit.Email</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">ai.ilikeplaces.logic.validators.unit.VLong</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="Import">import</FONT> java.text.MessageFormat;
+<A NAME="22"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="23"></A>
+<A NAME="24"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/privateevent/PrivateEventDelete.java.html">ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete.PrivateEventDeleteIds.privateEventDeleteNotice</A>;
+<A NAME="25"></A>
+<A NAME="26"></A><FONT ID="FormalComment">/**
+<A NAME="27"></A> * Created by IntelliJ IDEA.
+<A NAME="28"></A> * User: Ravindranath Akila
+<A NAME="29"></A> * Date: 10/20/11
+<A NAME="30"></A> * Time: 8:50 PM
+<A NAME="31"></A> */</FONT>
+<A NAME="32"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TribeWidget <FONT ID="Extends">extends</FONT> AbstractWidgetListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeWidgetCriteria.java.html">TribeWidgetCriteria</A>&gt; {
+<A NAME="33"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="34"></A></FONT>
+<A NAME="35"></A>
+<A NAME="36"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS STATIC --------------------------
+<A NAME="37"></A></FONT>
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ENTER_A_VALID_EMAIL = <FONT ID="StringLiteral">"enter.a.valid.email"</FONT>;
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String INVITED_ADDED_0 = <FONT ID="StringLiteral">"invited.added.0"</FONT>;
+<A NAME="40"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COULD_NOT_INVITE_AND_ADD_TRY_AGAIN = <FONT ID="StringLiteral">"could.not.invite.and.add.try.again"</FONT>;
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MESSAGE_ADDING_SELF_AS_FRIEND = <FONT ID="StringLiteral">"message.adding.self.as.friend"</FONT>;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String IS_ALREADY_YOUR_FRIEND = <FONT ID="StringLiteral">"0.is.already.your.friend"</FONT>;
+<A NAME="43"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String READ_MORE = <FONT ID="StringLiteral">"read.more"</FONT>;
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String INVITED_BUT_COULD_NOT_ADD_TO_TRIBE_TRY_AGAIN_FROM_YOUR_FRIEND_LIST = <FONT ID="StringLiteral">"invited.but.could.not.add.to.tribe.try.again.from.your.friend.list"</FONT>;
+<A NAME="45"></A>
+<A NAME="46"></A><FONT ID="SingleLineComment">// -------------------------- ENUMERATIONS --------------------------
+<A NAME="47"></A></FONT>
+<A NAME="48"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum TribeWidgetIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="49"></A>        tribeHomeWidget,
+<A NAME="50"></A>        tribeHomeName,
+<A NAME="51"></A>        tribeHomeInfo,
+<A NAME="52"></A>        tribeHomeNotice,
+<A NAME="53"></A>        tribeHomeWall,
+<A NAME="54"></A>        tribeHomeMembers,
+<A NAME="55"></A>        tribeHomeAlbum,
+<A NAME="56"></A>        tribeHomeInviteNoti,
+<A NAME="57"></A>        tribeHomeInviteEmail,
+<A NAME="58"></A>        tribeHomeInviteClick,
+<A NAME="59"></A>        tribeHomeDeleteButton
+<A NAME="60"></A>    }
+<A NAME="61"></A>
+<A NAME="62"></A>    <FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="63"></A></FONT>    <FONT ID="Public">public</FONT> TribeWidget(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeWidgetCriteria.java.html">TribeWidgetCriteria</A> tribeWidgetCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="64"></A>
+<A NAME="65"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.TribeHome, tribeWidgetCriteria, appendToElement__);
+<A NAME="66"></A>    }
+<A NAME="67"></A>
+<A NAME="68"></A><FONT ID="SingleLineComment">// ------------------------ OVERRIDING METHODS ------------------------
+<A NAME="69"></A></FONT>
+<A NAME="70"></A>    <FONT ID="FormalComment">/**
+<A NAME="71"></A>     * Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, Object, org.w3c.dom.Element)}
+<A NAME="72"></A>     * GENERIC constructor.
+<A NAME="73"></A>     *
+<A NAME="74"></A>     * @param tribeWidgetCriteria
+<A NAME="75"></A>     */</FONT>
+<A NAME="76"></A>    @Override
+<A NAME="77"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeWidgetCriteria.java.html">TribeWidgetCriteria</A> tribeWidgetCriteria) {
+<A NAME="78"></A>
+<A NAME="79"></A>        criteria.setTribe(DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).getTribe(criteria.getHumanId(), criteria.getTribeId(), <FONT ID="True">true</FONT>).returnValueBadly());
+<A NAME="80"></A>
+<A NAME="81"></A>        SetTribeName:
+<A NAME="82"></A>        {
+<A NAME="83"></A>           $$(TribeWidgetIds.tribeHomeName).setTextContent(criteria.getTribe().getTribeName());
+<A NAME="84"></A>        }
+<A NAME="85"></A>
+<A NAME="86"></A>        setTribeStory:
+<A NAME="87"></A>        {
+<A NAME="88"></A>            $$(TribeWidgetIds.tribeHomeInfo).setTextContent(criteria.getTribe().getTribeStory());
+<A NAME="89"></A>        }
+<A NAME="90"></A>
+<A NAME="91"></A>
+<A NAME="92"></A>        UCUpdateUserLocation:
+<A NAME="93"></A>        {
+<A NAME="94"></A>            <FONT ID="Super">super</FONT>.$$getHumanUserFromRequest(request).storeAndUpdateWith(
+<A NAME="95"></A>                    HumanUserLocal.STORE_KEY.USER_LOCATION_TYPE,
+<A NAME="96"></A>                    Wall.wallTypeTribe
+<A NAME="97"></A>            );
+<A NAME="98"></A>            <FONT ID="Super">super</FONT>.$$getHumanUserFromRequest(request).storeAndUpdateWith(
+<A NAME="99"></A>                    HumanUserLocal.STORE_KEY.USER_LOCATION_DETAILS,
+<A NAME="100"></A>                    criteria.getTribeId()
+<A NAME="101"></A>            );
+<A NAME="102"></A>        }
+<A NAME="103"></A>
+<A NAME="104"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/WallWidgetTribe.java.html">WallWidgetTribe</A>(request, <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/WallWidgetTribeCriteria.java.html">WallWidgetTribeCriteria</A>().setHumanId(criteria.getHumanId()).setTribeId(criteria.getTribeId().getObj()), $$(TribeWidgetIds.tribeHomeWall));
+<A NAME="105"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/AlbumManagerTribe.java.html">AlbumManagerTribe</A>(request, $$(TribeWidgetIds.tribeHomeAlbum), criteria.getHumanId(), criteria.getTribe());
+<A NAME="106"></A>    }
+<A NAME="107"></A>
+<A NAME="108"></A>    @Override
+<A NAME="109"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="110"></A>
+<A NAME="111"></A>        Delete:
+<A NAME="112"></A>        {
+<A NAME="113"></A>
+<A NAME="114"></A>
+<A NAME="115"></A>            <FONT ID="Super">super</FONT>.registerForClick($$(TribeWidgetIds.tribeHomeDeleteButton), <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeWidgetCriteria.java.html">TribeWidgetCriteria</A>&gt;(criteria) {
+<A NAME="116"></A>
+<A NAME="117"></A>                <FONT ID="Final">final</FONT> Obj&lt;Boolean&gt; alertedUserWithConfirm = (Obj&lt;Boolean&gt;) <FONT ID="New">new</FONT> Obj&lt;Boolean&gt;().setObjAsValid(<FONT ID="False">false</FONT>);
+<A NAME="118"></A>
+<A NAME="119"></A>                <FONT ID="FormalComment">/**
+<A NAME="120"></A>                 * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="121"></A>                 *
+<A NAME="122"></A>                 * @param evt_ fired from client
+<A NAME="123"></A>                 */</FONT>
+<A NAME="124"></A>                @Override
+<A NAME="125"></A>                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt_) {
+<A NAME="126"></A>                    <FONT ID="If">if</FONT> (!alertedUserWithConfirm.getObj()) {
+<A NAME="127"></A>                        alertedUserWithConfirm.setObjAsValid(<FONT ID="True">true</FONT>);
+<A NAME="128"></A>                        $$(evt_).setAttribute(MarkupTag.IMG.src(),
+<A NAME="129"></A>                                $$(evt_).getAttribute(MarkupTag.IMG.src()).replace(<FONT ID="StringLiteral">"JDelete.png"</FONT>, <FONT ID="StringLiteral">"JConfirm.png"</FONT>)
+<A NAME="130"></A>                        );
+<A NAME="131"></A>                        <FONT ID="SingleLineComment">//$$(evt_).setTextContent("Confirm Delete!");
+<A NAME="132"></A></FONT>                    } <FONT ID="Else">else</FONT> {
+<A NAME="133"></A>                        alertedUserWithConfirm.setObjAsValid(<FONT ID="False">false</FONT>); <FONT ID="SingleLineComment">//needed because chrome or itsnat seems to be resending the event.
+<A NAME="134"></A></FONT>
+<A NAME="135"></A>                        <FONT ID="Final">final</FONT> Return&lt;Tribe&gt; r = DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).removeFromTribe(criteria.getHumanId(), criteria.getTribeId());
+<A NAME="136"></A>                        <FONT ID="If">if</FONT> (r.valid()) {
+<A NAME="137"></A>                            remove(evt_.getTarget(), EventType.CLICK, <FONT ID="This">this</FONT>, <FONT ID="False">false</FONT>);
+<A NAME="138"></A>                            $$sendJS(
+<A NAME="139"></A>                                    JSCodeToSend.redirectPageWithURL(Controller.Page.Tribes.getURL())
+<A NAME="140"></A>                            );
+<A NAME="141"></A>                            <FONT ID="SingleLineComment">//clear($$(privateEventDeleteNotice));
+<A NAME="142"></A></FONT>                        } <FONT ID="Else">else</FONT> {
+<A NAME="143"></A>                            $$(privateEventDeleteNotice).setTextContent(r.returnMsg());
+<A NAME="144"></A>                        }
+<A NAME="145"></A>                    }
+<A NAME="146"></A>
+<A NAME="147"></A>
+<A NAME="148"></A>                }
+<A NAME="149"></A>
+<A NAME="150"></A>            }
+<A NAME="151"></A>            );
+<A NAME="152"></A>        }
+<A NAME="153"></A>
+<A NAME="154"></A>        AddRemoveVisitors:
+<A NAME="155"></A>        {
+<A NAME="156"></A>            <FONT ID="Final">final</FONT> HumansNetPeople user = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansNetPeople(criteria.getHumanId());
+<A NAME="157"></A>
+<A NAME="158"></A>            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/MemberHandler.java.html">MemberHandler</A>&lt;HumansFriend, List&lt;HumansFriend&gt;, Return&lt;Tribe&gt;&gt;(
+<A NAME="159"></A>                    request, $$(TribeWidgetIds.tribeHomeMembers),
+<A NAME="160"></A>                    user,
+<A NAME="161"></A>                    user.getHumansNetPeoples(),
+<A NAME="162"></A>                    criteria.getTribe().getTribeMembers(),
+<A NAME="163"></A>                    <FONT ID="New">new</FONT> Save&lt;Return&lt;Tribe&gt;&gt;() {
+<A NAME="164"></A>                        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> mytribeId = criteria.getTribe().getTribeId();
+<A NAME="165"></A>
+<A NAME="166"></A>                        @Override
+<A NAME="167"></A>                        <FONT ID="Public">public</FONT> Return&lt;Tribe&gt; save(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> HumansFriend humansFriend) {
+<A NAME="168"></A>
+<A NAME="169"></A>                            <FONT ID="Return">return</FONT> inviteToTribe(humanId, humansFriend, criteria.getTribeId());
+<A NAME="170"></A>                        }
+<A NAME="171"></A>                    },
+<A NAME="172"></A>                    <FONT ID="New">new</FONT> Save&lt;Return&lt;Tribe&gt;&gt;() {
+<A NAME="173"></A>                        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> mytribeId = criteria.getTribe().getTribeId();
+<A NAME="174"></A>
+<A NAME="175"></A>
+<A NAME="176"></A>                        @Override
+<A NAME="177"></A>                        <FONT ID="Public">public</FONT> Return&lt;Tribe&gt; save(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> HumansFriend humansFriend) {
+<A NAME="178"></A>
+<A NAME="179"></A>                            <FONT ID="Final">final</FONT> Return&lt;Tribe&gt; returnVal = DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).removeFromTribe(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humansFriend.getHumanId()), <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A>(mytribeId));
+<A NAME="180"></A>
+<A NAME="181"></A>                            <FONT ID="If">if</FONT> (returnVal.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="182"></A>                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
+<A NAME="183"></A>                                        humanId.getObj(),
+<A NAME="184"></A>                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+<A NAME="185"></A>                                                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humanId.getHumanId()),
+<A NAME="186"></A>                                                humansFriend.getHumanId(),
+<A NAME="187"></A>                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + <FONT ID="StringLiteral">" has removed you as member of tribe "</FONT> + returnVal.returnValue().getTribeName()
+<A NAME="188"></A>                                        ));
+<A NAME="189"></A>                            }
+<A NAME="190"></A>                            <FONT ID="Return">return</FONT> returnVal;
+<A NAME="191"></A>                        }
+<A NAME="192"></A>                    }
+<A NAME="193"></A>            );
+<A NAME="194"></A>        }
+<A NAME="195"></A>
+<A NAME="196"></A>        AddRemoveVisitorsByEmail:
+<A NAME="197"></A>        {
+<A NAME="198"></A>            <FONT ID="Super">super</FONT>.registerForInputText($$(TribeWidgetIds.tribeHomeInviteEmail),
+<A NAME="199"></A>                    <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeWidgetCriteria.java.html">TribeWidgetCriteria</A>&gt;(criteria) {
+<A NAME="200"></A>                        <FONT ID="FormalComment">/**
+<A NAME="201"></A>                         * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="202"></A>                         *
+<A NAME="203"></A>                         * @param evt fired from client
+<A NAME="204"></A>                         */</FONT>
+<A NAME="205"></A>                        @Override
+<A NAME="206"></A>                        <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="207"></A>
+<A NAME="208"></A>                            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A>($$(evt).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="209"></A>                            <FONT ID="If">if</FONT> (email.valid()) {
+<A NAME="210"></A>                                criteria.getInviteData().setEmail(email);
+<A NAME="211"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="212"></A>                                $$(TribeWidgetIds.tribeHomeInviteNoti).setTextContent(RBGet.gui().getString(ENTER_A_VALID_EMAIL));
+<A NAME="213"></A>                            }
+<A NAME="214"></A>                        }
+<A NAME="215"></A>                    }
+<A NAME="216"></A>            );
+<A NAME="217"></A>
+<A NAME="218"></A>            <FONT ID="Super">super</FONT>.registerForClick($$(TribeWidgetIds.tribeHomeInviteClick),
+<A NAME="219"></A>                    <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeWidgetCriteria.java.html">TribeWidgetCriteria</A>&gt;(criteria) {
+<A NAME="220"></A>                        <FONT ID="FormalComment">/**
+<A NAME="221"></A>                         * Override this method and avoid {@link #handleEvent(org.w3c.dom.events.Event)} to make debug logging transparent
+<A NAME="222"></A>                         *
+<A NAME="223"></A>                         * @param evt fired from client
+<A NAME="224"></A>                         */</FONT>
+<A NAME="225"></A>                        @Override
+<A NAME="226"></A>                        <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> onFire(Event evt) {
+<A NAME="227"></A>
+<A NAME="228"></A>                            <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Email.java.html">Email</A> email = criteria.getInviteData().getEmail();
+<A NAME="229"></A>
+<A NAME="230"></A>                            <FONT ID="If">if</FONT> (email.valid()) {
+<A NAME="231"></A>                                <FONT ID="Boolean">boolean</FONT> isValidDbUser = <FONT ID="False">false</FONT>;
+<A NAME="232"></A>
+<A NAME="233"></A>                                <FONT ID="If">if</FONT> (!DB.getHumanCRUDHumanLocal(<FONT ID="False">false</FONT>).doDirtyCheckHuman(email.getObj()).returnValue()) {
+<A NAME="234"></A>                                    <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
+<A NAME="235"></A>                                            UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.getHumanId().getHumanId(), <FONT ID="StringLiteral">""</FONT>).getHuman().getDisplayName(),
+<A NAME="236"></A>                                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/contactimports/ImportedContact.java.html">ImportedContact</A>().setEmail(email.getObj()).setFullName(<FONT ID="StringLiteral">""</FONT>));
+<A NAME="237"></A>
+<A NAME="238"></A>                                    isValidDbUser = returnVal.valid() &amp;&amp; returnVal.returnValue();
+<A NAME="239"></A>                                } <FONT ID="Else">else</FONT> {
+<A NAME="240"></A>                                    isValidDbUser = <FONT ID="True">true</FONT>;
+<A NAME="241"></A>                                }
+<A NAME="242"></A>
+<A NAME="243"></A>                                <FONT ID="If">if</FONT> (isValidDbUser) {
+<A NAME="244"></A>                                    <FONT ID="If">if</FONT> (!DB.getHumanCRUDHumanLocal(<FONT ID="False">false</FONT>).doDirtyIsHumansNetPeople(criteria.getHumanId(), <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(email.getObj())).returnValue()) {
+<A NAME="245"></A>                                        <FONT ID="If">if</FONT> (!criteria.getHumanId().getHumanId().equals(email.getObj())) {
+<A NAME="246"></A>                                            Return&lt;Boolean&gt; r = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doNTxAddHumansNetPeople(criteria.getHumanId(), <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(email.getObj()));
+<A NAME="247"></A>                                            <FONT ID="If">if</FONT> (r.valid()) {
+<A NAME="248"></A>                                                <FONT ID="Final">final</FONT> Return&lt;Tribe&gt; tribeReturn = inviteToTribe(
+<A NAME="249"></A>                                                        criteria.getHumanId(),
+<A NAME="250"></A>                                                        DB.getHumanCRUDHumanLocal(<FONT ID="False">false</FONT>).doDirtyRHuman(<FONT ID="New">new</FONT> Obj&lt;String&gt;(email.getObj())),
+<A NAME="251"></A>                                                        criteria.getTribeId()
+<A NAME="252"></A>                                                );
+<A NAME="253"></A>
+<A NAME="254"></A>                                                <FONT ID="If">if</FONT> (tribeReturn.valid()) {
+<A NAME="255"></A>                                                    $$(TribeWidgetIds.tribeHomeInviteNoti).setTextContent(MessageFormat.format(RBGet.gui().getString(INVITED_ADDED_0), email));
+<A NAME="256"></A>                                                    $$(TribeWidgetIds.tribeHomeInviteEmail).setAttribute(MarkupTag.INPUT.value(), <FONT ID="StringLiteral">""</FONT>);
+<A NAME="257"></A>                                                } <FONT ID="Else">else</FONT> {
+<A NAME="258"></A>                                                    $$(TribeWidgetIds.tribeHomeInviteNoti).setTextContent(RBGet.gui().getString(INVITED_BUT_COULD_NOT_ADD_TO_TRIBE_TRY_AGAIN_FROM_YOUR_FRIEND_LIST));
+<A NAME="259"></A>                                                }
+<A NAME="260"></A>                                            } <FONT ID="Else">else</FONT> {
+<A NAME="261"></A>                                                $$(TribeWidgetIds.tribeHomeInviteNoti).setTextContent(RBGet.gui().getString(COULD_NOT_INVITE_AND_ADD_TRY_AGAIN));
+<A NAME="262"></A>                                            }
+<A NAME="263"></A>                                        } <FONT ID="Else">else</FONT> {
+<A NAME="264"></A>                                            $$(TribeWidgetIds.tribeHomeInviteNoti).setTextContent(RBGet.gui().getString(MESSAGE_ADDING_SELF_AS_FRIEND));
+<A NAME="265"></A>                                        }
+<A NAME="266"></A>                                    } <FONT ID="Else">else</FONT> {
+<A NAME="267"></A>                                        $$(TribeWidgetIds.tribeHomeInviteNoti).setTextContent(
+<A NAME="268"></A>                                                MessageFormat.format(RBGet.gui().getString(IS_ALREADY_YOUR_FRIEND), UserProperty.HUMANS_IDENTITY_CACHE.get(email.getObj(), <FONT ID="StringLiteral">""</FONT>).getHuman().getDisplayName()));
+<A NAME="269"></A>                                    }
+<A NAME="270"></A>                                } <FONT ID="Else">else</FONT> {
+<A NAME="271"></A>                                    $$(TribeWidgetIds.tribeHomeInviteNoti).setTextContent(RBGet.gui().getString(COULD_NOT_INVITE_AND_ADD_TRY_AGAIN));
+<A NAME="272"></A>                                }
+<A NAME="273"></A>                            }
+<A NAME="274"></A>                        }
+<A NAME="275"></A>                    });
+<A NAME="276"></A>        }
+<A NAME="277"></A>
+<A NAME="278"></A>    }
+<A NAME="279"></A>
+<A NAME="280"></A>    <FONT ID="Private">private</FONT> Return&lt;Tribe&gt; inviteToTribe(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> HumansFriend humansFriend, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/VLong.java.html">VLong</A> tribeId) {
+<A NAME="281"></A>
+<A NAME="282"></A>        <FONT ID="Final">final</FONT> Return&lt;Tribe&gt; returnVal = DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).addToTribe(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humansFriend.getHumanId()), tribeId);
+<A NAME="283"></A>
+<A NAME="284"></A>        <FONT ID="If">if</FONT> (returnVal.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="285"></A>            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
+<A NAME="286"></A>                    humanId.getObj(),
+<A NAME="287"></A>                    UserProperty.getUserPropertyHtmlFor(
+<A NAME="288"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humanId.getHumanId()),
+<A NAME="289"></A>                            humansFriend.getHumanId(),
+<A NAME="290"></A>                            ElementComposer.compose($$(MarkupTag.A))
+<A NAME="291"></A>                                    .$ElementSetHref(<FONT ID="StringLiteral">"#"</FONT>)
+<A NAME="292"></A>                                    .$ElementSetText(<FONT ID="StringLiteral">"I added you as a member of tribe "</FONT> + returnVal.returnValue().getTribeName())
+<A NAME="293"></A>                                    .get()
+<A NAME="294"></A>                    ));
+<A NAME="295"></A>        }
+<A NAME="296"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="297"></A>    }
+<A NAME="298"></A>}
+<A NAME="299"></A></pre>
+</BODY>
+</HTML>

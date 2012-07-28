@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CPrivateEvent (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CPrivateEvent.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.entities.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="13"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * Created by IntelliJ IDEA.
+<A NAME="17"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="18"></A> * Date: Jan 14, 2010
+<A NAME="19"></A> * Time: 12:04:30 AM
+<A NAME="20"></A> */</FONT>
+<A NAME="21"></A>
+<A NAME="22"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="23"></A>@Stateless
+<A NAME="24"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> CPrivateEvent <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CPrivateEventLocal.java.html">CPrivateEventLocal</A> {
+<A NAME="25"></A>
+<A NAME="26"></A>    @EJB
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;PrivateLocation&gt; privateLocationCrudServiceLocal_;
+<A NAME="28"></A>
+<A NAME="29"></A>    @EJB
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;PrivateEvent&gt; privateEventCrudServiceLocal_;
+<A NAME="31"></A>
+<A NAME="32"></A>    @EJB
+<A NAME="33"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;HumansPrivateLocation&gt; humansPrivateLocationCrudServiceLocal_;
+<A NAME="34"></A>
+<A NAME="35"></A>    @EJB
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;Human&gt; humanCrudServiceLocal_;
+<A NAME="37"></A>
+<A NAME="38"></A>    @EJB
+<A NAME="39"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;HumansPrivateEvent&gt; humansPrivateEventCrudServiceLocal_;
+<A NAME="40"></A>
+<A NAME="41"></A>    @EJB
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RPrivateLocationLocal.java.html">RPrivateLocationLocal</A> rPrivateLocationLocal_;
+<A NAME="43"></A>
+<A NAME="44"></A>
+<A NAME="45"></A>    @Override
+<A NAME="46"></A>    <FONT ID="Public">public</FONT> PrivateEvent doNTxCPrivateEvent(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId, <FONT ID="Final">final</FONT> String locationName, <FONT ID="Final">final</FONT> String locationInfo, <FONT ID="Final">final</FONT> String startDate, <FONT ID="Final">final</FONT> String endDate) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A> {
+<A NAME="47"></A>        <FONT ID="Final">final</FONT> HumansPrivateEvent managedOwner = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="48"></A>
+<A NAME="49"></A>
+<A NAME="50"></A>        @WARNING(warning = <FONT ID="StringLiteral">"This call will throw an exception if user has not rights to the location So do not move it to AFTER creation of PrivateEvent."</FONT> +
+<A NAME="51"></A>                <FONT ID="StringLiteral">"Even so, the transaction manager will roll this back too, but do it the safe way."</FONT>)
+<A NAME="52"></A>        @FIXME(issue = <FONT ID="StringLiteral">"Make crud classes based on roles. For example, this call should be made to a method, doRPrivateLocationAsOwner"</FONT>)
+<A NAME="53"></A>        <FONT ID="Final">final</FONT> PrivateLocation managedPrivateLocation = rPrivateLocationLocal_.doRPrivateLocationAsOwner(humanId, privateLocationId);
+<A NAME="54"></A>
+<A NAME="55"></A>        <FONT ID="Final">final</FONT> PrivateEvent managedPrivateEvent = privateEventCrudServiceLocal_.create(
+<A NAME="56"></A>                <FONT ID="New">new</FONT> PrivateEvent()
+<A NAME="57"></A>                        .setPrivateEventNameR(locationName)
+<A NAME="58"></A>                        .setPrivateEventInfoR(locationInfo)
+<A NAME="59"></A>                        .setPrivateEventStartDateR(startDate)
+<A NAME="60"></A>                        .setPrivateEventEndDateR(endDate)
+<A NAME="61"></A>                        .setPrivateEventAlbumR(<FONT ID="New">new</FONT> Album().setAlbumNameR(locationName))
+<A NAME="62"></A>                        .setPrivateEventWallR(<FONT ID="New">new</FONT> Wall().setWallRContent(<FONT ID="StringLiteral">""</FONT>)));
+<A NAME="63"></A>
+<A NAME="64"></A>        wireLocation:
+<A NAME="65"></A>        {
+<A NAME="66"></A>            managedPrivateEvent.setPrivateLocation(managedPrivateLocation);
+<A NAME="67"></A>            managedPrivateLocation.refresh().getPrivateEvents().add(managedPrivateEvent);
+<A NAME="68"></A>        }
+<A NAME="69"></A>
+<A NAME="70"></A>        wireOwnership:
+<A NAME="71"></A>        {
+<A NAME="72"></A>            managedPrivateEvent.getPrivateEventOwners().add(managedOwner);
+<A NAME="73"></A>            managedOwner.getPrivateEventsOwned().add(managedPrivateEvent);
+<A NAME="74"></A>        }
+<A NAME="75"></A>
+<A NAME="76"></A>        wireViewership:
+<A NAME="77"></A>        {
+<A NAME="78"></A>            managedPrivateEvent.getPrivateEventViewers().add(managedOwner);
+<A NAME="79"></A>            managedOwner.getPrivateEventsViewed().add(managedPrivateEvent);
+<A NAME="80"></A>        }
+<A NAME="81"></A>        wireInvitedship:
+<A NAME="82"></A>        {
+<A NAME="83"></A>            managedPrivateEvent.getPrivateEventInvites().add(managedOwner);
+<A NAME="84"></A>            managedOwner.getPrivateEventsInvited().add(managedPrivateEvent);
+<A NAME="85"></A>        }
+<A NAME="86"></A>
+<A NAME="87"></A>        <FONT ID="Return">return</FONT> managedPrivateEvent;
+<A NAME="88"></A>
+<A NAME="89"></A>    }
+<A NAME="90"></A>}</pre>
+</BODY>
+</HTML>

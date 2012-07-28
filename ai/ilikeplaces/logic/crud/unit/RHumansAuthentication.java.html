@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.RHumansAuthentication (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">RHumansAuthentication.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">ai.ilikeplaces.entities.HumansAuthentication</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/security/blowfish/jbcrypt/BCrypt.java.html">ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="FormalComment">/**
+<A NAME="21"></A> * @author Ravindranath Akila
+<A NAME="22"></A> */</FONT>
+<A NAME="23"></A>
+<A NAME="24"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="25"></A>@NOTE(note = <FONT ID="StringLiteral">"SEE CRUDSERVICE WHERE TO SUPPORT READ AND DIRTY READ, THE TX TYPE IS SUPPORTS."</FONT>)
+<A NAME="26"></A>@Stateless
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> RHumansAuthentication <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RHumansAuthenticationLocal.java.html">RHumansAuthenticationLocal</A> {
+<A NAME="28"></A>
+<A NAME="29"></A>
+<A NAME="30"></A>    @EJB
+<A NAME="31"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">HumansAuthentication</A>&gt; humansAuthenticationCrudServiceLocal_;
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> RHumansAuthentication() {
+<A NAME="34"></A>    }
+<A NAME="35"></A>
+<A NAME="36"></A>
+<A NAME="37"></A>    @Override
+<A NAME="38"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">HumansAuthentication</A> doDirtyRHumansAuthentication(String humanId) {
+<A NAME="40"></A>        <FONT ID="Return">return</FONT> humansAuthenticationCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansAuthentication.java.html">HumansAuthentication</A>.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="41"></A>    }
+<A NAME="42"></A>
+<A NAME="43"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RHumansAuthentication.java.html">RHumansAuthentication</A>.<FONT ID="Class">class</FONT>);
+<A NAME="44"></A>}</pre>
+</BODY>
+</HTML>

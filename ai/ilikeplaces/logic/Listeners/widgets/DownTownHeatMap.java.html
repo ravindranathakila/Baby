@@ -1,0 +1,577 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.DownTownHeatMap (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DownTownHeatMap.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Hotspot.java.html">ai.ilikeplaces.logic.hotspots.Hotspot</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/HotspotAnalyzer.java.html">ai.ilikeplaces.logic.hotspots.HotspotAnalyzer</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">ai.ilikeplaces.logic.hotspots.Rawspot</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/modules/Modules.java.html">ai.ilikeplaces.logic.modules.Modules</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.validators.unit.*;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/Info.java.html">ai.ilikeplaces.logic.validators.unit.Info</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="17"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/ServletLogin.java.html">ai.ilikeplaces.servlets.ServletLogin</A>;
+<A NAME="18"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="19"></A><FONT ID="Import">import</FONT> com.google.gdata.data.geo.impl.W3CPoint;
+<A NAME="20"></A><FONT ID="Import">import</FONT> net.sf.oval.Validator;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.NodePropertyTransport;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="25"></A><FONT ID="Import">import</FONT> org.json.JSONArray;
+<A NAME="26"></A><FONT ID="Import">import</FONT> org.json.JSONObject;
+<A NAME="27"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="28"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="29"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="30"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="31"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="32"></A><FONT ID="Import">import</FONT> twitter4j.org.json.JSONException;
+<A NAME="33"></A>
+<A NAME="34"></A><FONT ID="Import">import</FONT> java.util.*;
+<A NAME="35"></A>
+<A NAME="36"></A><FONT ID="FormalComment">/**
+<A NAME="37"></A> * Try not to format this class, just format the section you are interested in.
+<A NAME="38"></A> * It looks like crap, I know, but it'll look worse once you trust the IDE to format it for you, yes, even IntelliJ :)
+<A NAME="39"></A> * &lt;p/&gt;
+<A NAME="40"></A> * Created by IntelliJ IDEA.
+<A NAME="41"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="42"></A> * Date: Sep 10, 2010
+<A NAME="43"></A> * Time: 5:07:59 PM
+<A NAME="44"></A> */</FONT>
+<A NAME="45"></A>
+<A NAME="46"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="47"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DownTownHeatMap <FONT ID="Extends">extends</FONT> AbstractWidgetListener {
+<A NAME="48"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="49"></A></FONT>
+<A NAME="50"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String WOEIDUPDATE_TOKEN = <FONT ID="StringLiteral">"WOEIDUPDATE_TOKEN"</FONT>;
+<A NAME="51"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String OPEN_BRACKET = <FONT ID="StringLiteral">"("</FONT>;
+<A NAME="52"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CLOSE_BRACKET = <FONT ID="StringLiteral">")"</FONT>;
+<A NAME="53"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SINGLE_QUOTE = <FONT ID="StringLiteral">"'"</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CLOSE_BRACE = <FONT ID="StringLiteral">"}"</FONT>;
+<A NAME="55"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SEMI_COLON = <FONT ID="StringLiteral">";"</FONT>;
+<A NAME="56"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String OPEN_BRACE = <FONT ID="StringLiteral">"{"</FONT>;
+<A NAME="57"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String QUOTE = <FONT ID="StringLiteral">"\""</FONT>;
+<A NAME="58"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DownTownHeatMapWOEIDUpdate =
+<A NAME="59"></A>            <FONT ID="StringLiteral">"\nDownTownHeatMapWOEIDUpdate = function"</FONT> + OPEN_BRACKET + <FONT ID="StringLiteral">"lat,lng"</FONT> + CLOSE_BRACKET + OPEN_BRACE + <FONT ID="StringLiteral">"document.getElementById("</FONT> + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + <FONT ID="StringLiteral">".value = "</FONT> + SINGLE_QUOTE + <FONT ID="StringLiteral">"' + lat + ',' + lng"</FONT> + SEMI_COLON + <FONT ID="StringLiteral">" document.getElementById"</FONT> + OPEN_BRACKET + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + <FONT ID="StringLiteral">".focus"</FONT> + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + <FONT ID="StringLiteral">" return document.getElementById("</FONT> + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + <FONT ID="StringLiteral">"\n"</FONT>;
+<A NAME="60"></A>
+<A NAME="61"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String BBUPDATE_TOKEN = <FONT ID="StringLiteral">"BBUPDATE_TOKEN"</FONT>;
+<A NAME="62"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String DownTownHeatMapBBUpdate =
+<A NAME="63"></A>            <FONT ID="StringLiteral">"\nDownTownHeatMapBBUpdate = function"</FONT> + OPEN_BRACKET + <FONT ID="StringLiteral">"swlat,swlng,nelat,nelng"</FONT> + CLOSE_BRACKET + OPEN_BRACE + <FONT ID="StringLiteral">"document.getElementById("</FONT> + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + <FONT ID="StringLiteral">".value = "</FONT> + SINGLE_QUOTE + <FONT ID="StringLiteral">"' + swlat + ',' + swlng + ',' + nelat + ',' + nelng"</FONT> + SEMI_COLON + <FONT ID="StringLiteral">" document.getElementById"</FONT> + OPEN_BRACKET + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + <FONT ID="StringLiteral">".focus"</FONT> + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + <FONT ID="StringLiteral">" return document.getElementById("</FONT> + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + <FONT ID="StringLiteral">"\n"</FONT>;
+<A NAME="64"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COMMA = <FONT ID="StringLiteral">","</FONT>;
+<A NAME="65"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COMMA_SPACE = <FONT ID="StringLiteral">", "</FONT>;
+<A NAME="66"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String X1 = CLOSE_BRACKET + COMMA_SPACE;
+<A NAME="67"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COLON = <FONT ID="StringLiteral">":"</FONT>;
+<A NAME="68"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MAP_MAP = <FONT ID="StringLiteral">"map"</FONT> + COLON + <FONT ID="StringLiteral">" map, "</FONT>;
+<A NAME="69"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ICON_GET_COLORED_MARKER_WITH_INTENSITY = <FONT ID="StringLiteral">"icon"</FONT> + COLON + <FONT ID="StringLiteral">" getColoredMarkerWithIntensity"</FONT> + OPEN_BRACKET;
+<A NAME="70"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String ICON_GET_MY_COLORED_MARKER_WITH_INTENSITY = <FONT ID="StringLiteral">"icon"</FONT> + COLON + <FONT ID="StringLiteral">" getMyColoredMarkerWithIntensity"</FONT> + OPEN_BRACKET;
+<A NAME="71"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String X2 = CLOSE_BRACKET + <FONT ID="StringLiteral">"  "</FONT> + CLOSE_BRACE + <FONT ID="StringLiteral">"))"</FONT> + SEMI_COLON;
+<A NAME="72"></A>
+<A NAME="73"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> com.google.places.api.impl.ClientFactory GOOGLE_API_CLIENT_FACTORY = Modules.getModules().getGooglePlacesAPIFactory();
+<A NAME="74"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOCATION_JSON_OBJ_KEY = <FONT ID="StringLiteral">"location"</FONT>;
+<A NAME="75"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LOCATION = LOCATION_JSON_OBJ_KEY;
+<A NAME="76"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RADIUS = <FONT ID="StringLiteral">"radius"</FONT>;
+<A NAME="77"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PLACE_TYPES = <FONT ID="StringLiteral">"types"</FONT>;
+<A NAME="78"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COMMON_PLACE_TYPES = <FONT ID="StringLiteral">"airport%7Camusement_park%7Caquarium%7Cart_gallery%7Catm%7Cbakery%7Cbank%7Cbar%7Cbeauty_salon%7Cbook_store%7Cbowling_alley%7Cbus_station%7Ccafe%7Ccampground%7Ccar_rental%7Ccasino%7Cchurch%7Ccity_hall%7Cclothing_store%7Cembassy%7Cfire_station%7Cflorist%7Cfood%7Cgas_station%7Cgym%7Chair_care%7Chindu_temple%7Cjewelry_store%7Clibrary%7Clodging%7Cmeal_delivery%7Cmeal_takeaway%7Cmosque%7Cmovie_rental%7Cmovie_theater%7Cmuseum%7Cnight_club%7Cpark%7Cparking%7Cpet_store%7Cplace_of_worship%7Cpolice%7Crestaurant%7Crv_park%7Cschool%7Cshoe_store%7Cshopping_mall%7Cspa%7Cstadium%7Csubway_station%7Csynagogue%7Ctaxi_stand%7Ctrain_station%7Ctravel_agency%7Cuniversity%7Czoo"</FONT>;
+<A NAME="79"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SENSOR = <FONT ID="StringLiteral">"sensor"</FONT>;
+<A NAME="80"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TRUE = <FONT ID="StringLiteral">"true"</FONT>;
+<A NAME="81"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER = <FONT ID="StringLiteral">"listOfHotSpots.unshift"</FONT> + OPEN_BRACKET + <FONT ID="StringLiteral">"new google.maps.Marker("</FONT> + OPEN_BRACE + <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="82"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String POSITION_NEW_GOOGLE_MAPS_LAT_LNG = <FONT ID="StringLiteral">"position"</FONT> + COLON + <FONT ID="StringLiteral">" new google.maps.LatLng"</FONT> + OPEN_BRACKET;
+<A NAME="83"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GOOGLE_MAPS_EVENT_ADD_LISTENER = <FONT ID="StringLiteral">"google.maps.event.addListener"</FONT>;
+<A NAME="84"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION = GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + <FONT ID="StringLiteral">"listOfHotSpots[0], "</FONT> + QUOTE + <FONT ID="StringLiteral">"click', function("</FONT> + CLOSE_BRACKET + <FONT ID="StringLiteral">" "</FONT> + OPEN_BRACE + <FONT ID="StringLiteral">"\n"</FONT>;
+<A NAME="85"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String X4 = CLOSE_BRACE + CLOSE_BRACKET + SEMI_COLON;
+<A NAME="86"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GOOGLE_PLACES_JSON_ENDPOINT = <FONT ID="StringLiteral">"https"</FONT> + COLON + <FONT ID="StringLiteral">"//maps.googleapis.com/maps/api/place/search/json"</FONT>;
+<A NAME="87"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FAILED_TO_FETCH_GOOGLE_PLACES_DATA = <FONT ID="StringLiteral">"Failed to fetch Google Places Data"</FONT>;
+<A NAME="88"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String RESULTS = <FONT ID="StringLiteral">"results"</FONT>;
+<A NAME="89"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String GEOMETRY = <FONT ID="StringLiteral">"geometry"</FONT>;
+<A NAME="90"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LAT = <FONT ID="StringLiteral">"lat"</FONT>;
+<A NAME="91"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LNG = <FONT ID="StringLiteral">"lng"</FONT>;
+<A NAME="92"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NAME = <FONT ID="StringLiteral">"name"</FONT>;
+<A NAME="93"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> APPROX_LENGTH_OF_ONE_LAT = <FONT ID="IntegerLiteral">111325</FONT>;
+<A NAME="94"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SQUOTE = SINGLE_QUOTE;
+<A NAME="95"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String URL_SPACE = <FONT ID="StringLiteral">"%20"</FONT>;
+<A NAME="96"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SPACE = <FONT ID="StringLiteral">" "</FONT>;
+<A NAME="97"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NOTIFY_USER_POSITIVE = <FONT ID="StringLiteral">"setNotificationFetchPositive"</FONT> + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON;
+<A NAME="98"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NOTIFY_USER_NEGATIVE = <FONT ID="StringLiteral">"setNotificationFetchNegative"</FONT> + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON;
+<A NAME="99"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FUNCTION = <FONT ID="StringLiteral">"function"</FONT>;
+<A NAME="100"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HOT_SPOT_CLICKED = <FONT ID="StringLiteral">"hotSpotClicked"</FONT>;
+<A NAME="101"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LATITUDE = <FONT ID="StringLiteral">"latitude"</FONT>;
+<A NAME="102"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LONGITUDE = <FONT ID="StringLiteral">"longitude"</FONT>;
+<A NAME="103"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String URL = <FONT ID="StringLiteral">"url"</FONT>;
+<A NAME="104"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String LIST_OF_HOT_SPOTS_0 = <FONT ID="StringLiteral">"listOfHotSpots[0]"</FONT>;
+<A NAME="105"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CLICK = <FONT ID="StringLiteral">"click"</FONT>;
+<A NAME="106"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String MOUSEOVER = <FONT ID="StringLiteral">"mouseover"</FONT>;
+<A NAME="107"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SET_NOTIFICATION = <FONT ID="StringLiteral">"setNotification"</FONT>;
+<A NAME="108"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HOT_SPOT_MOUSE_ENTER = <FONT ID="StringLiteral">"hotSpotMouseEnter"</FONT>;
+<A NAME="109"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String COMMON_NAME = <FONT ID="StringLiteral">"commonName"</FONT>;
+<A NAME="110"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PROCESS_MARKER = <FONT ID="StringLiteral">"processMarker"</FONT>;
+<A NAME="111"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HTIS = <FONT ID="StringLiteral">"htis"</FONT>;
+<A NAME="112"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String THIS = <FONT ID="StringLiteral">"this"</FONT>;
+<A NAME="113"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String APOSTROPHIE = <FONT ID="StringLiteral">"'"</FONT>;
+<A NAME="114"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String JS_ESCAPTED_APOSTROPHIE = <FONT ID="StringLiteral">"\'"</FONT>;
+<A NAME="115"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TITLE = <FONT ID="StringLiteral">"title"</FONT>;
+<A NAME="116"></A>
+<A NAME="117"></A>
+<A NAME="118"></A>    <FONT ID="Private">private</FONT> Element elementToUpdateWithWOEID;
+<A NAME="119"></A>    <FONT ID="Private">private</FONT> HumanId humanId;
+<A NAME="120"></A>    <FONT ID="Private">private</FONT> Email email;
+<A NAME="121"></A>    <FONT ID="Private">private</FONT> Password password;
+<A NAME="122"></A>
+<A NAME="123"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="124"></A></FONT>
+<A NAME="125"></A>    <FONT ID="FormalComment">/**
+<A NAME="126"></A>     * @param request__                request__
+<A NAME="127"></A>     * @param appendToElement__        appendToElement__
+<A NAME="128"></A>     * @param elementToUpdateWithWOEID elementToUpdateWithWOEID
+<A NAME="129"></A>     * @param humanId__                humanId__
+<A NAME="130"></A>     */</FONT>
+<A NAME="131"></A>    <FONT ID="Public">public</FONT> DownTownHeatMap(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> Element elementToUpdateWithWOEID, <FONT ID="Final">final</FONT> String humanId__) {
+<A NAME="132"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.DownTownHeatMap, appendToElement__, elementToUpdateWithWOEID, humanId__);
+<A NAME="133"></A>    }
+<A NAME="134"></A>
+<A NAME="135"></A>    @Override
+<A NAME="136"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="137"></A>        elementToUpdateWithWOEID = (Element) initArgs[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="138"></A>        humanId = <FONT ID="New">new</FONT> HumanId((String) initArgs[<FONT ID="IntegerLiteral">1</FONT>]);<FONT ID="SingleLineComment">//Value set will be null if user is not logged in
+<A NAME="139"></A></FONT>        email = <FONT ID="New">new</FONT> Email(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="140"></A>        password = <FONT ID="New">new</FONT> Password(<FONT ID="StringLiteral">""</FONT>);
+<A NAME="141"></A>
+<A NAME="142"></A>        <FONT ID="If">if</FONT> (humanId.notNull()) {
+<A NAME="143"></A>            $$displayNone($$(Controller.Page.DownTownHeatMapSignupWidget));
+<A NAME="144"></A>        }
+<A NAME="145"></A>
+<A NAME="146"></A>        itsNatDocument_.addCodeToSend(
+<A NAME="147"></A>                DownTownHeatMapWOEIDUpdate.replace(
+<A NAME="148"></A>                        WOEIDUPDATE_TOKEN,
+<A NAME="149"></A>                        $$(Controller.Page.DownTownHeatMapWOEID).getAttribute(MarkupTag.GENERIC.id()))
+<A NAME="150"></A>        );
+<A NAME="151"></A>
+<A NAME="152"></A>        itsNatDocument_.addCodeToSend(
+<A NAME="153"></A>                DownTownHeatMapBBUpdate.replace(
+<A NAME="154"></A>                        BBUPDATE_TOKEN,
+<A NAME="155"></A>                        $$(Controller.Page.DownTownHeatMapBB).getAttribute(MarkupTag.GENERIC.id()))
+<A NAME="156"></A>        );
+<A NAME="157"></A>    }
+<A NAME="158"></A>
+<A NAME="159"></A>    <FONT ID="FormalComment">/**
+<A NAME="160"></A>     * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="161"></A>     * Do not call this method anywhere, just implement it, as it will be
+<A NAME="162"></A>     * automatically called by the constructor
+<A NAME="163"></A>     *
+<A NAME="164"></A>     * @param itsNatHTMLDocument_
+<A NAME="165"></A>     * @param hTMLDocument_
+<A NAME="166"></A>     */</FONT>
+<A NAME="167"></A>    @Override
+<A NAME="168"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="169"></A>        UCSignup:
+<A NAME="170"></A>        {
+<A NAME="171"></A>            itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupEmail), EventType.BLUR.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="172"></A>                <FONT ID="Final">final</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="173"></A>                <FONT ID="Final">final</FONT> Email myemail = email;
+<A NAME="174"></A>
+<A NAME="175"></A>                @Override
+<A NAME="176"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="177"></A>                    myemail.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="178"></A>                    <FONT ID="If">if</FONT> (myemail.validate(v) == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="179"></A>                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent(<FONT ID="StringLiteral">"Email Valid!"</FONT>);
+<A NAME="180"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="181"></A>                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent(<FONT ID="StringLiteral">"Email INVALID!"</FONT>);
+<A NAME="182"></A>                    }
+<A NAME="183"></A>                }
+<A NAME="184"></A>            }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="185"></A>            itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupPassword), EventType.BLUR.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="186"></A>                <FONT ID="Final">final</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="187"></A>                <FONT ID="Final">final</FONT> Password mypassword = password;
+<A NAME="188"></A>
+<A NAME="189"></A>                @Override
+<A NAME="190"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="191"></A>                    mypassword.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
+<A NAME="192"></A>                    <FONT ID="If">if</FONT> (mypassword.validate(v) == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="193"></A>                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent(<FONT ID="StringLiteral">"Password Valid!"</FONT>);
+<A NAME="194"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="195"></A>                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent(<FONT ID="StringLiteral">"Password INVALID!"</FONT>);
+<A NAME="196"></A>                    }
+<A NAME="197"></A>                }
+<A NAME="198"></A>            }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="199"></A>
+<A NAME="200"></A>            itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupButton), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="201"></A>                <FONT ID="Final">final</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="202"></A>                <FONT ID="Final">final</FONT> Email myemail = email;
+<A NAME="203"></A>                <FONT ID="Final">final</FONT> Password mypassword = password;
+<A NAME="204"></A>
+<A NAME="205"></A>                @Override
+<A NAME="206"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="207"></A>                    <FONT ID="If">if</FONT> (myemail.validate(v) == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; mypassword.validate(v) == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="208"></A>                        <FONT ID="If">if</FONT> (!DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
+<A NAME="209"></A>                                <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; humanCreateReturn = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doCHuman(
+<A NAME="210"></A>                                        <FONT ID="New">new</FONT> HumanId().setObjAsValid(email.getObj()),
+<A NAME="211"></A>                                        mypassword,
+<A NAME="212"></A>                                        myemail);
+<A NAME="213"></A>
+<A NAME="214"></A>                                <FONT ID="If">if</FONT> (humanCreateReturn.valid() &amp;&amp; humanCreateReturn.returnValue()) {
+<A NAME="215"></A>
+<A NAME="216"></A>                                    UserIntroduction.createIntroData(<FONT ID="New">new</FONT> HumanId(email.getObj()));
+<A NAME="217"></A>
+<A NAME="218"></A>                                    <FONT ID="Final">final</FONT> String activationURL = <FONT ID="New">new</FONT> Parameter(<FONT ID="StringLiteral">"http://www.ilikeplaces.com/"</FONT> + <FONT ID="StringLiteral">"activate"</FONT>)
+<A NAME="219"></A>                                            .append(ServletLogin.Username, myemail.getObj(), <FONT ID="True">true</FONT>)
+<A NAME="220"></A>                                            .append(ServletLogin.Password,
+<A NAME="221"></A>                                                    DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansAuthentication(<FONT ID="New">new</FONT> HumanId(myemail.getObj()))
+<A NAME="222"></A>                                                            .returnValue()
+<A NAME="223"></A>                                                            .getHumanAuthenticationHash())
+<A NAME="224"></A>                                            .get();
+<A NAME="225"></A>
+<A NAME="226"></A>
+<A NAME="227"></A>                                    String htmlBody = Bate.getHTMLStringForOfflineFriendInvite(<FONT ID="StringLiteral">"I Like Places"</FONT>, email.getObj());
+<A NAME="228"></A>
+<A NAME="229"></A>                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+<A NAME="230"></A>                                    htmlBody = htmlBody.replace(Bate.PASSWORD_ADVICE, <FONT ID="StringLiteral">""</FONT>);
+<A NAME="231"></A>                                    htmlBody = htmlBody.replace(Bate.PASSWORD_DETAILS, <FONT ID="StringLiteral">""</FONT>);
+<A NAME="232"></A>
+<A NAME="233"></A>                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+<A NAME="234"></A>                                            myemail.getObj(),
+<A NAME="235"></A>                                            <FONT ID="StringLiteral">"I Like Places prides you with an Exclusive Invite!"</FONT>,
+<A NAME="236"></A>                                            htmlBody);
+<A NAME="237"></A>
+<A NAME="238"></A>                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+<A NAME="239"></A>                                } <FONT ID="Else">else</FONT> {
+<A NAME="240"></A>                                    $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent(<FONT ID="StringLiteral">"Email INVALID!"</FONT>);
+<A NAME="241"></A>                                }
+<A NAME="242"></A>
+<A NAME="243"></A>                                <FONT ID="MultiLineComment">/*final Return&lt;Boolean&gt; humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+<A NAME="244"></A>                                        new HumanId().setObjAsValid(email.getObj()),
+<A NAME="245"></A>                                        mypassword,
+<A NAME="246"></A>                                        myemail);
+<A NAME="247"></A>
+<A NAME="248"></A>                                if (humanCreateReturn.returnValue()) {
+<A NAME="249"></A>                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+<A NAME="250"></A>                                            .append(ServletLogin.Username, myemail.getObj(), true)
+<A NAME="251"></A>                                            .append(ServletLogin.Password,
+<A NAME="252"></A>                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+<A NAME="253"></A>                                                            .returnValue()
+<A NAME="254"></A>                                                            .getHumanAuthenticationHash())
+<A NAME="255"></A>                                            .get();
+<A NAME="256"></A>
+<A NAME="257"></A>                                    final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
+<A NAME="258"></A>                                            .replace("activationURL", "&lt;a href='" +
+<A NAME="259"></A>                                                    activationURL + "' &gt;" + activationURL + "&lt;/a&gt;");
+<A NAME="260"></A>                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+<A NAME="261"></A>                                            myemail.getObj(),
+<A NAME="262"></A>                                            RBGet.gui().getString("SIGNUP_HEADER"),
+<A NAME="263"></A>                                            mail);
+<A NAME="264"></A>                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+<A NAME="265"></A>                                }*/</FONT>
+<A NAME="266"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="267"></A>                            $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent(<FONT ID="StringLiteral">"This email is TAKEN!:("</FONT>);
+<A NAME="268"></A>                        }
+<A NAME="269"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="270"></A>                        <FONT ID="SingleLineComment">//Ignored as the individual validators would've reported the error by now
+<A NAME="271"></A></FONT>                    }
+<A NAME="272"></A>                }
+<A NAME="273"></A>            }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="274"></A>        }
+<A NAME="275"></A>
+<A NAME="276"></A>        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapWOEID), EventType.BLUR.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="277"></A>            <FONT ID="Final">final</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="278"></A>            RefObj&lt;String&gt; woeid;
+<A NAME="279"></A>
+<A NAME="280"></A>            @Override
+<A NAME="281"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="282"></A>                woeid = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/Info.java.html">Info</A>(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="283"></A>
+<A NAME="284"></A>                <FONT ID="If">if</FONT> (woeid.validate(v) == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="285"></A>                    elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), woeid.getObjectAsValid());
+<A NAME="286"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="287"></A>                }
+<A NAME="288"></A>            }
+<A NAME="289"></A>        }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="290"></A>
+<A NAME="291"></A>
+<A NAME="292"></A>        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapBB), EventType.BLUR.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="293"></A>            <FONT ID="Final">final</FONT> Validator v = <FONT ID="New">new</FONT> Validator();
+<A NAME="294"></A>            <FONT ID="Final">final</FONT> GeoCoord geoCoordSW = <FONT ID="New">new</FONT> GeoCoord();
+<A NAME="295"></A>            <FONT ID="Final">final</FONT> GeoCoord geoCoordNE = <FONT ID="New">new</FONT> GeoCoord();
+<A NAME="296"></A>            <FONT ID="Final">final</FONT> ItsNatDocument ind = itsNatDocument_;
+<A NAME="297"></A>            <FONT ID="Final">final</FONT> HumanId myhumanId = humanId;
+<A NAME="298"></A>
+<A NAME="299"></A>            @Override
+<A NAME="300"></A>            <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="301"></A>                <FONT ID="Final">final</FONT> GeoCoord[] geoCoord = GeoCoord.getGeoCoordsByBounds(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.TEXTAREA.value()));
+<A NAME="302"></A>
+<A NAME="303"></A>                <FONT ID="If">if</FONT> (geoCoord[<FONT ID="IntegerLiteral">0</FONT>].validate(v) == <FONT ID="IntegerLiteral">0</FONT> &amp;&amp; geoCoord[<FONT ID="IntegerLiteral">1</FONT>].validate(v) == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="304"></A>                    elementToUpdateWithWOEID.setAttribute(MarkupTag.INPUT.value(), geoCoord[<FONT ID="IntegerLiteral">0</FONT>].toString() + COMMA + geoCoord[<FONT ID="IntegerLiteral">1</FONT>]);
+<A NAME="305"></A>
+<A NAME="306"></A>                    <FONT ID="SingleLineComment">/////////////////////////////
+<A NAME="307"></A></FONT>                    <FONT ID="Final">final</FONT> Double latitudeLB = geoCoord[<FONT ID="IntegerLiteral">0</FONT>].getObjectAsValid().getLatitude();
+<A NAME="308"></A>                    <FONT ID="Final">final</FONT> Double latitudeTR = geoCoord[<FONT ID="IntegerLiteral">1</FONT>].getObjectAsValid().getLatitude();
+<A NAME="309"></A>                    <FONT ID="Final">final</FONT> Double longitudeLB = geoCoord[<FONT ID="IntegerLiteral">0</FONT>].getObjectAsValid().getLongitude();
+<A NAME="310"></A>                    <FONT ID="Final">final</FONT> Double longitudeTR = geoCoord[<FONT ID="IntegerLiteral">1</FONT>].getObjectAsValid().getLongitude();
+<A NAME="311"></A>
+<A NAME="312"></A>                    <FONT ID="Final">final</FONT> Set&lt;<A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>&gt; rs = <FONT ID="New">new</FONT> HashSet&lt;<A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>&gt;() {<FONT ID="SingleLineComment">//Initializing HashSet as an anonymous class. God speed!
+<A NAME="313"></A></FONT>                        <FONT ID="MultiLineComment">/*StaticBlockInsideSetToAddElementsEasily*/</FONT> {
+<A NAME="314"></A>                            UCILikePlacesPlaces:
+<A NAME="315"></A>                            {
+<A NAME="316"></A>                                <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; privateEvents__ = DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).doRPrivateEventsByBoundsAsSystem(
+<A NAME="317"></A>                                        latitudeLB,
+<A NAME="318"></A>                                        latitudeTR,
+<A NAME="319"></A>                                        longitudeLB,
+<A NAME="320"></A>                                        longitudeTR).returnValue();
+<A NAME="321"></A>
+<A NAME="322"></A>                                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> privateEvent : privateEvents__) {
+<A NAME="323"></A>                                    add(
+<A NAME="324"></A>                                            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(
+<A NAME="325"></A>                                                    <FONT ID="New">new</FONT> W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
+<A NAME="326"></A>                                                    privateEvent.getPrivateLocation().getPrivateLocationName()));
+<A NAME="327"></A>                                }
+<A NAME="328"></A>                            }
+<A NAME="329"></A>
+<A NAME="330"></A>                            UCGooglePlaces:
+<A NAME="331"></A>                            {
+<A NAME="332"></A>                                <FONT ID="Try">try</FONT> {
+<A NAME="333"></A>                                    <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitudeAverage = (latitudeLB +
+<A NAME="334"></A>                                            latitudeTR) / <FONT ID="IntegerLiteral">2</FONT>;
+<A NAME="335"></A>                                    <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitudeAverage = (longitudeLB +
+<A NAME="336"></A>                                            longitudeTR) / <FONT ID="IntegerLiteral">2</FONT>;
+<A NAME="337"></A>
+<A NAME="338"></A>                                    <FONT ID="Final">final</FONT> JSONObject placesJsonObject = getGooglePlaces(
+<A NAME="339"></A>                                            latitudeAverage,
+<A NAME="340"></A>                                            longitudeAverage,
+<A NAME="341"></A>                                            (<FONT ID="Long">long</FONT>) (Math.abs(latitudeAverage - latitudeLB) * APPROX_LENGTH_OF_ONE_LAT), COMMON_PLACE_TYPES);
+<A NAME="342"></A>
+<A NAME="343"></A>                                    <FONT ID="Final">final</FONT> JSONArray placesJsonArray = placesJsonObject.getJSONArray(RESULTS);
+<A NAME="344"></A>
+<A NAME="345"></A>                                    <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; placesJsonArray.length(); i++) {
+<A NAME="346"></A>                                        <FONT ID="Final">final</FONT> JSONObject lngLat = placesJsonArray.getJSONObject(i).getJSONObject(GEOMETRY).getJSONObject(LOCATION_JSON_OBJ_KEY);
+<A NAME="347"></A>                                        add(
+<A NAME="348"></A>                                                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(
+<A NAME="349"></A>                                                        <FONT ID="New">new</FONT> W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
+<A NAME="350"></A>                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+<A NAME="351"></A>                                        add(
+<A NAME="352"></A>                                                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Rawspot.java.html">Rawspot</A>(
+<A NAME="353"></A>                                                        <FONT ID="New">new</FONT> W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
+<A NAME="354"></A>                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+<A NAME="355"></A>                                    }
+<A NAME="356"></A>                                } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">Exception</A> e) {
+<A NAME="357"></A>                                    Loggers.ERROR.error(FAILED_TO_FETCH_GOOGLE_PLACES_DATA, e);
+<A NAME="358"></A>                                }
+<A NAME="359"></A>                            }
+<A NAME="360"></A>                        }
+<A NAME="361"></A>                    };
+<A NAME="362"></A>
+<A NAME="363"></A>                    <FONT ID="Final">final</FONT> BoundingBox bb = <FONT ID="New">new</FONT> BoundingBox().setObj(
+<A NAME="364"></A>                            latitudeLB,
+<A NAME="365"></A>                            longitudeLB,
+<A NAME="366"></A>                            latitudeTR,
+<A NAME="367"></A>                            longitudeTR);
+<A NAME="368"></A>
+<A NAME="369"></A>                    <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/HotspotAnalyzer.java.html">HotspotAnalyzer</A> hsa = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/HotspotAnalyzer.java.html">HotspotAnalyzer</A>(rs, (BoundingBox) bb.validateThrowAndGetThis());
+<A NAME="370"></A>
+<A NAME="371"></A><FONT ID="SingleLineComment">//                    final Map&lt;Integer, Map&lt;Integer, Hotspot&gt;&gt; hotspots = hsa.getHotspots();
+<A NAME="372"></A></FONT>                    <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Hotspot.java.html">Hotspot</A>[][] hotspots = hsa.getHotspots();
+<A NAME="373"></A>
+<A NAME="374"></A>                    <FONT ID="Boolean">boolean</FONT> foundAnySpots = <FONT ID="False">false</FONT>;
+<A NAME="375"></A>
+<A NAME="376"></A>
+<A NAME="377"></A>                    <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Hotspot.java.html">Hotspot</A>[] hotspotspitch : hotspots) {
+<A NAME="378"></A>                        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/hotspots/Hotspot.java.html">Hotspot</A> yaw : hotspotspitch) {
+<A NAME="379"></A>                            <FONT ID="Final">final</FONT> W3CPoint coords = yaw.getCoordinates();
+<A NAME="380"></A>
+<A NAME="381"></A>                            <FONT ID="If">if</FONT> (yaw.getCoordinates() != <FONT ID="Null">null</FONT>) {
+<A NAME="382"></A>                                foundAnySpots = <FONT ID="True">true</FONT>;
+<A NAME="383"></A>
+<A NAME="384"></A>                                <FONT ID="Final">final</FONT> Double latitude = coords.getLatitude();
+<A NAME="385"></A>                                <FONT ID="Final">final</FONT> Double longitude = coords.getLongitude();
+<A NAME="386"></A>
+<A NAME="387"></A>                                <FONT ID="Final">final</FONT> String commonName = yaw.getCommonName().replace(<FONT ID="StringLiteral">"\""</FONT>, <FONT ID="StringLiteral">"'"</FONT>);
+<A NAME="388"></A>
+<A NAME="389"></A>                                <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> hits = yaw.getHits();
+<A NAME="390"></A>
+<A NAME="391"></A>                                generateMarker(latitude, longitude, commonName, hits);
+<A NAME="392"></A>
+<A NAME="393"></A>                                generateMarkerEvents(coords, commonName, hits);
+<A NAME="394"></A>
+<A NAME="395"></A>                                $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
+<A NAME="396"></A>                                        (OPEN_BRACE +
+<A NAME="397"></A>                                                (HTIS + COLON + THIS) + COMMA +
+<A NAME="398"></A>                                                (COMMON_NAME + COLON + QUOTE + commonName + QUOTE) + COMMA +
+<A NAME="399"></A>                                                (LATITUDE + COLON + coords.getLatitude()) + COMMA +
+<A NAME="400"></A>                                                (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
+<A NAME="401"></A>                                                (URL + COLON + QUOTE + <FONT ID="New">new</FONT> Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, <FONT ID="IntegerLiteral">143</FONT>, <FONT ID="True">true</FONT>).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + QUOTE) +
+<A NAME="402"></A>                                                CLOSE_BRACE) +
+<A NAME="403"></A>                                        CLOSE_BRACKET
+<A NAME="404"></A>                                );
+<A NAME="405"></A>                            }
+<A NAME="406"></A>                        }
+<A NAME="407"></A>                    }
+<A NAME="408"></A>
+<A NAME="409"></A>                    <FONT ID="If">if</FONT> (humanId.validate() == <FONT ID="IntegerLiteral">0</FONT>) {<FONT ID="SingleLineComment">//User is logged in
+<A NAME="410"></A></FONT>                        <FONT ID="Final">final</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; usersOwnPrivateLocations = DB.getHumanCRUDHumanLocal(<FONT ID="False">false</FONT>).doDirtyRHumansPrivateLocation(humanId).returnValue().getPrivateLocationsOwned();
+<A NAME="411"></A>
+<A NAME="412"></A>                        List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; usersOwnPrivateLocationsWithinBounds = <FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;();
+<A NAME="413"></A>
+<A NAME="414"></A>                        UCFindLocationsWithinBounds:
+<A NAME="415"></A>                        {
+<A NAME="416"></A>                            <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> privateLocation : usersOwnPrivateLocations) {
+<A NAME="417"></A>                                <FONT ID="Final">final</FONT> W3CPoint w3CPoint = <FONT ID="New">new</FONT> W3CPoint(privateLocation.getPrivateLocationLatitude(), privateLocation.getPrivateLocationLongitude());
+<A NAME="418"></A>                                <FONT ID="If">if</FONT> (bb.bounds(w3CPoint)) {
+<A NAME="419"></A>                                    usersOwnPrivateLocationsWithinBounds.add(privateLocation);
+<A NAME="420"></A>                                }
+<A NAME="421"></A>                            }
+<A NAME="422"></A>                        }
+<A NAME="423"></A>
+<A NAME="424"></A>                        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A> userOwnPrivateLocation : usersOwnPrivateLocationsWithinBounds) {
+<A NAME="425"></A>                            generateMyMarker(userOwnPrivateLocation.getPrivateLocationLatitude(),
+<A NAME="426"></A>                                    userOwnPrivateLocation.getPrivateLocationLongitude(),
+<A NAME="427"></A>                                    userOwnPrivateLocation.getPrivateLocationName().replaceAll(<FONT ID="StringLiteral">"'"</FONT>, <FONT ID="StringLiteral">"\\'"</FONT>),
+<A NAME="428"></A>                                    <FONT ID="IntegerLiteral">1</FONT>);<FONT ID="SingleLineComment">//@TODO Hits needs to be fixed in an efficient way
+<A NAME="429"></A></FONT>
+<A NAME="430"></A>                            generateMarkerEvents(
+<A NAME="431"></A>                                    <FONT ID="New">new</FONT> W3CPoint(userOwnPrivateLocation.getPrivateLocationLatitude(), userOwnPrivateLocation.getPrivateLocationLongitude()),
+<A NAME="432"></A>                                    userOwnPrivateLocation.getPrivateLocationName().replaceAll(<FONT ID="StringLiteral">"'"</FONT>, <FONT ID="StringLiteral">"\\'"</FONT>),
+<A NAME="433"></A>                                    (<FONT ID="Long">long</FONT>) <FONT ID="IntegerLiteral">1</FONT>);<FONT ID="SingleLineComment">//@TODO Hits needs to be fixed in an efficient way
+<A NAME="434"></A></FONT>
+<A NAME="435"></A>                            $$sendJSStmt(PROCESS_MARKER + OPEN_BRACKET +
+<A NAME="436"></A>                                    (OPEN_BRACE +
+<A NAME="437"></A>                                            (HTIS + COLON + THIS) + COMMA +
+<A NAME="438"></A>                                            (COMMON_NAME + COLON + QUOTE + userOwnPrivateLocation.getPrivateLocationName().replaceAll(<FONT ID="StringLiteral">"'"</FONT>, <FONT ID="StringLiteral">"\\'"</FONT>) + QUOTE) + COMMA +
+<A NAME="439"></A>                                            (LATITUDE + COLON + userOwnPrivateLocation.getPrivateLocationLatitude()) + COMMA +
+<A NAME="440"></A>                                            (LONGITUDE + COLON + userOwnPrivateLocation.getPrivateLocationLongitude()) + COMMA +
+<A NAME="441"></A>                                            (URL + COLON + QUOTE + <FONT ID="New">new</FONT> Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, <FONT ID="IntegerLiteral">143</FONT>, <FONT ID="True">true</FONT>).append(WOEIDGrabber.WOEHINT, userOwnPrivateLocation.getPrivateLocationLatitude() + COMMA + userOwnPrivateLocation.getPrivateLocationLongitude()).get() + QUOTE) +
+<A NAME="442"></A>                                            CLOSE_BRACE) +
+<A NAME="443"></A>                                    CLOSE_BRACKET
+<A NAME="444"></A>                            );
+<A NAME="445"></A>                        }
+<A NAME="446"></A>                    }
+<A NAME="447"></A>
+<A NAME="448"></A>
+<A NAME="449"></A><FONT ID="SingleLineComment">//                    for (int i = 0; i &lt; hotspots.size(); i++) {
+<A NAME="450"></A></FONT><FONT ID="SingleLineComment">//                        for (int j = 0; j &lt; hotspots.get(i).size(); j++) {
+<A NAME="451"></A></FONT><FONT ID="SingleLineComment">//                            final W3CPoint coords = hotspots.get(i).get(j).getCoordinates();
+<A NAME="452"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="453"></A></FONT><FONT ID="SingleLineComment">//                            if (coords != null) {
+<A NAME="454"></A></FONT><FONT ID="SingleLineComment">//                                final Double latitudeLB = coords.getLatitude();
+<A NAME="455"></A></FONT><FONT ID="SingleLineComment">//                                final Double longitude = coords.getLongitude();
+<A NAME="456"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="457"></A></FONT><FONT ID="SingleLineComment">//                                final String commonName = hotspots.get(i).get(j).getCommonName();
+<A NAME="458"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="459"></A></FONT><FONT ID="SingleLineComment">//                                final long hits = hotspots.get(i).get(j).getHits();
+<A NAME="460"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="461"></A></FONT><FONT ID="SingleLineComment">//                                generateMarker(latitudeLB, longitude, commonName, hits);
+<A NAME="462"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="463"></A></FONT><FONT ID="SingleLineComment">//                                generateMarkerEvents(coords,commonName,hits);
+<A NAME="464"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="465"></A></FONT><FONT ID="SingleLineComment">//                            }
+<A NAME="466"></A></FONT><FONT ID="SingleLineComment">//                        }
+<A NAME="467"></A></FONT><FONT ID="SingleLineComment">//                    }
+<A NAME="468"></A></FONT>
+<A NAME="469"></A>                    <FONT ID="If">if</FONT> (foundAnySpots) {
+<A NAME="470"></A>                        $$sendJSStmt(NOTIFY_USER_POSITIVE);
+<A NAME="471"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="472"></A>                        $$sendJSStmt(NOTIFY_USER_NEGATIVE);
+<A NAME="473"></A>                    }
+<A NAME="474"></A>                } <FONT ID="Else">else</FONT> {
+<A NAME="475"></A>                }
+<A NAME="476"></A>            }
+<A NAME="477"></A>        }, <FONT ID="False">false</FONT>, <FONT ID="New">new</FONT> NodePropertyTransport(MarkupTag.TEXTAREA.value()));
+<A NAME="478"></A>    }
+<A NAME="479"></A>
+<A NAME="480"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> JSONObject getGooglePlaces(<FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitude, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitude, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> radiusInMeters, <FONT ID="Final">final</FONT> String placeTypes) <FONT ID="Throws">throws</FONT> JSONException {
+<A NAME="481"></A>        <FONT ID="Final">final</FONT> Map&lt;String, String&gt; params = <FONT ID="New">new</FONT> HashMap&lt;String, String&gt;();
+<A NAME="482"></A>        params.put(LOCATION, latitude + <FONT ID="StringLiteral">","</FONT> + longitude);
+<A NAME="483"></A>        params.put(RADIUS, Double.toString(radiusInMeters));
+<A NAME="484"></A>        params.put(PLACE_TYPES, placeTypes);
+<A NAME="485"></A>        params.put(SENSOR, TRUE);
+<A NAME="486"></A>        <FONT ID="Return">return</FONT> GOOGLE_API_CLIENT_FACTORY.getInstance(GOOGLE_PLACES_JSON_ENDPOINT).get(<FONT ID="StringLiteral">""</FONT>, params);
+<A NAME="487"></A>    }
+<A NAME="488"></A>
+<A NAME="489"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> generateMarker(Double latitude, Double longitude, String commonName, <FONT ID="Long">long</FONT> hits) {
+<A NAME="490"></A>        itsNatDocument_.addCodeToSend(LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER +
+<A NAME="491"></A>                POSITION_NEW_GOOGLE_MAPS_LAT_LNG
+<A NAME="492"></A>                + latitude
+<A NAME="493"></A>                + COMMA
+<A NAME="494"></A>                + longitude
+<A NAME="495"></A>                + X1 +
+<A NAME="496"></A>                TITLE + COLON + QUOTE + commonName + QUOTE + COMMA_SPACE +
+<A NAME="497"></A>                MAP_MAP +
+<A NAME="498"></A>                ICON_GET_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + QUOTE + commonName.replace(SPACE, URL_SPACE) + QUOTE + X2);
+<A NAME="499"></A>    }
+<A NAME="500"></A>
+<A NAME="501"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> generateMyMarker(Double latitude, Double longitude, String commonName, <FONT ID="Long">long</FONT> hits) {
+<A NAME="502"></A>        itsNatDocument_.addCodeToSend(LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER +
+<A NAME="503"></A>                POSITION_NEW_GOOGLE_MAPS_LAT_LNG
+<A NAME="504"></A>                + latitude
+<A NAME="505"></A>                + COMMA
+<A NAME="506"></A>                + longitude
+<A NAME="507"></A>                + X1 +
+<A NAME="508"></A>                TITLE + COLON + QUOTE + commonName + QUOTE + COMMA_SPACE +
+<A NAME="509"></A>                MAP_MAP +
+<A NAME="510"></A>                ICON_GET_MY_COLORED_MARKER_WITH_INTENSITY + hits + COMMA + QUOTE + commonName.replace(SPACE, URL_SPACE) + QUOTE + X2);
+<A NAME="511"></A>    }
+<A NAME="512"></A>
+<A NAME="513"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> generateMarkerEvents(<FONT ID="Final">final</FONT> W3CPoint coords, String commonName, <FONT ID="Long">long</FONT> hits) {
+<A NAME="514"></A>        $$sendJSStmt(generateGoogleMarkerEvent(
+<A NAME="515"></A>                LIST_OF_HOT_SPOTS_0,
+<A NAME="516"></A>                CLICK,
+<A NAME="517"></A>                (HOT_SPOT_CLICKED + OPEN_BRACKET +
+<A NAME="518"></A>                        (OPEN_BRACE +
+<A NAME="519"></A>                                (HTIS + COLON + THIS) + COMMA +
+<A NAME="520"></A>                                (COMMON_NAME + COLON + QUOTE + commonName + QUOTE) + COMMA +
+<A NAME="521"></A>                                (LATITUDE + COLON + coords.getLatitude()) + COMMA +
+<A NAME="522"></A>                                (LONGITUDE + COLON + coords.getLongitude()) + COMMA +
+<A NAME="523"></A>                                (URL + COLON + QUOTE + <FONT ID="New">new</FONT> Parameter(Controller.Page.Organize.getURL()).append(Controller.Page.DocOrganizeCategory, <FONT ID="IntegerLiteral">143</FONT>, <FONT ID="True">true</FONT>).append(WOEIDGrabber.WOEHINT, coords.getLatitude() + COMMA + coords.getLongitude()).get() + QUOTE) +
+<A NAME="524"></A>                                CLOSE_BRACE) + CLOSE_BRACKET + SEMI_COLON)
+<A NAME="525"></A>        ));
+<A NAME="526"></A>        $$sendJSStmt(generateGoogleMarkerEvent(
+<A NAME="527"></A>                LIST_OF_HOT_SPOTS_0,
+<A NAME="528"></A>                MOUSEOVER,
+<A NAME="529"></A>                (HOT_SPOT_MOUSE_ENTER + OPEN_BRACKET +
+<A NAME="530"></A>                        (OPEN_BRACE +
+<A NAME="531"></A>                                (HTIS + COLON + THIS) + COMMA +
+<A NAME="532"></A>                                (COMMON_NAME + COLON + QUOTE + commonName + QUOTE) + COMMA +
+<A NAME="533"></A>                                (LATITUDE + COLON + coords.getLatitude()) + COMMA +
+<A NAME="534"></A>                                (LONGITUDE + COLON + coords.getLongitude()) +
+<A NAME="535"></A>                                CLOSE_BRACE) +
+<A NAME="536"></A>                        CLOSE_BRACKET +
+<A NAME="537"></A>                        SEMI_COLON)
+<A NAME="538"></A>        ));
+<A NAME="539"></A>    }
+<A NAME="540"></A>
+<A NAME="541"></A>    <FONT ID="Private">private</FONT> String generateGoogleMarkerEvent(<FONT ID="Final">final</FONT> String elementToWhichToAssociateEvent, <FONT ID="Final">final</FONT> String eventType, <FONT ID="Final">final</FONT> String javascriptCallbackFunctionContent) {
+<A NAME="542"></A>        <FONT ID="Return">return</FONT> GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + elementToWhichToAssociateEvent + COMMA + QUOTE + eventType + QUOTE + COMMA + FUNCTION + OPEN_BRACKET + CLOSE_BRACKET + OPEN_BRACE +
+<A NAME="543"></A>                javascriptCallbackFunctionContent +
+<A NAME="544"></A>                CLOSE_BRACE + CLOSE_BRACKET + SEMI_COLON;
+<A NAME="545"></A>    }
+<A NAME="546"></A>}
+<A NAME="547"></A>
+<A NAME="548"></A><FONT ID="SingleLineComment">//                            /*
+<A NAME="549"></A></FONT><FONT ID="SingleLineComment">//                            //Below is the working javascript code put here for reference. Do not delete.
+<A NAME="550"></A></FONT><FONT ID="SingleLineComment">//                            listOfHotSpots.unshift(
+<A NAME="551"></A></FONT><FONT ID="SingleLineComment">//                                new google.maps.Marker({
+<A NAME="552"></A></FONT><FONT ID="SingleLineComment">//                                      position: myLatlng,
+<A NAME="553"></A></FONT><FONT ID="SingleLineComment">//                                      map: map,
+<A NAME="554"></A></FONT><FONT ID="SingleLineComment">//                                      title:"2",
+<A NAME="555"></A></FONT><FONT ID="SingleLineComment">//                                      icon:"http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&amp;chld=Point%20this%20Marker|14|000|glyphish_map-marker|16|bb77ee|892e40"
+<A NAME="556"></A></FONT><FONT ID="SingleLineComment">//                                })
+<A NAME="557"></A></FONT><FONT ID="SingleLineComment">//                            );
+<A NAME="558"></A></FONT><FONT ID="SingleLineComment">//                            */</FONT></pre>
+</BODY>
+</HTML>

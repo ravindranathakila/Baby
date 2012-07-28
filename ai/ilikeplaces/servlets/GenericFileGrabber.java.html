@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.GenericFileGrabber (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">GenericFileGrabber.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.FIXME;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/cdn/CDNAlbumPrivateEvent.java.html">ai.ilikeplaces.logic.cdn.CDNAlbumPrivateEvent</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/cdn/CDNProfilePhoto.java.html">ai.ilikeplaces.logic.cdn.CDNProfilePhoto</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/cdn/CDNAlbumTribe.java.html">ai.ilikeplaces.logic.cdn.CDNAlbumTribe</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.apache.commons.fileupload.FileItemIterator;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.apache.commons.fileupload.FileItemStream;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.apache.commons.fileupload.FileUploadException;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.apache.commons.fileupload.servlet.ServletFileUpload;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.apache.commons.fileupload.util.Streams;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="Import">import</FONT> javax.servlet.ServletException;
+<A NAME="20"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServlet;
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="22"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="23"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="24"></A><FONT ID="Import">import</FONT> java.io.*;
+<A NAME="25"></A><FONT ID="Import">import</FONT> java.util.*;
+<A NAME="26"></A>
+<A NAME="27"></A><FONT ID="FormalComment">/**
+<A NAME="28"></A> * @author Ravindranath Akila
+<A NAME="29"></A> */</FONT>
+<A NAME="30"></A>
+<A NAME="31"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="32"></A><FONT ID="Final">final</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> GenericFileGrabber <FONT ID="Extends">extends</FONT> HttpServlet {
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String Error = <FONT ID="StringLiteral">"error"</FONT>;
+<A NAME="35"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> String Ok = <FONT ID="StringLiteral">"ok"</FONT>;
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> ResourceBundle logMsgs = PropertyResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.LogMsgs"</FONT>);
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> ResourceBundle exceptionMsgs = PropertyResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.ExceptionMsgs"</FONT>);
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="Static">static</FONT> String fileCache = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"FILE_CACHE"</FONT>);
+<A NAME="41"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String HYPHEN = <FONT ID="StringLiteral">"-"</FONT>;
+<A NAME="42"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> UPLOAD_LIMIT = <FONT ID="IntegerLiteral">2</FONT> * <FONT ID="IntegerLiteral">1024</FONT> * <FONT ID="IntegerLiteral">1024</FONT>;
+<A NAME="43"></A>
+<A NAME="44"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="45"></A>        fileCache = fileCache.endsWith(<FONT ID="StringLiteral">"/"</FONT>) || fileCache.endsWith(<FONT ID="StringLiteral">"\\"</FONT>) ? fileCache : fileCache + <FONT ID="StringLiteral">"/"</FONT>;
+<A NAME="46"></A>    }
+<A NAME="47"></A>
+<A NAME="48"></A>
+<A NAME="49"></A>    <FONT ID="FormalComment">/**
+<A NAME="50"></A>     * Processes requests for both HTTP &lt;code&gt;GET&lt;/code&gt; and &lt;code&gt;POST&lt;/code&gt; methods.
+<A NAME="51"></A>     *
+<A NAME="52"></A>     * @param request__
+<A NAME="53"></A>     * @param response__
+<A NAME="54"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="55"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="56"></A>     */</FONT>
+<A NAME="57"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> HttpServletRequest request__,
+<A NAME="58"></A>                                  <FONT ID="Final">final</FONT> HttpServletResponse response__)
+<A NAME="59"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="60"></A>
+<A NAME="61"></A>        Loggers.DEBUG.debug(<FONT ID="StringLiteral">"Hello! Request on "</FONT> + getClass().getName());
+<A NAME="62"></A>
+<A NAME="63"></A>        <FONT ID="Final">final</FONT> SmartLogger sl = SmartLogger.start(Loggers.LEVEL.USER, Loggers.CODE_GFG, <FONT ID="IntegerLiteral">60000</FONT>, <FONT ID="Null">null</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="64"></A>
+<A NAME="65"></A>        response__.setContentType(<FONT ID="StringLiteral">"text/html;charset=UTF-8"</FONT>);
+<A NAME="66"></A>
+<A NAME="67"></A>        <FONT ID="Final">final</FONT> PrintWriter out = response__.getWriter();
+<A NAME="68"></A>
+<A NAME="69"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="70"></A>            fileUpload:
+<A NAME="71"></A>            {
+<A NAME="72"></A>                <FONT ID="If">if</FONT> (!isFileUploadPermitted()) {
+<A NAME="73"></A>                    errorTemporarilyDisabled(out);
+<A NAME="74"></A>                    <FONT ID="Break">break</FONT> fileUpload;
+<A NAME="75"></A>                }
+<A NAME="76"></A>                stateSignedOn:
+<A NAME="77"></A>                {
+<A NAME="78"></A>                    <FONT ID="Final">final</FONT> HttpSession session = request__.getSession(<FONT ID="False">false</FONT>);
+<A NAME="79"></A>
+<A NAME="80"></A>                    breakIfNoLogin:
+<A NAME="81"></A>                    {
+<A NAME="82"></A>                        <FONT ID="If">if</FONT> (session == <FONT ID="Null">null</FONT>) {
+<A NAME="83"></A>                            sl.appendToLogMSG(<FONT ID="StringLiteral">"No Login as in no session."</FONT>);
+<A NAME="84"></A>                            sl.complete(Loggers.FAILED);
+<A NAME="85"></A>                            errorNoLogin(out);
+<A NAME="86"></A>                            <FONT ID="Break">break</FONT> stateSignedOn;
+<A NAME="87"></A>                        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (session.getAttribute(ServletLogin.HumanUser) == <FONT ID="Null">null</FONT>) {
+<A NAME="88"></A>                            sl.appendToLogMSG(<FONT ID="StringLiteral">"No Login as in no HumanUser attribute"</FONT>);
+<A NAME="89"></A>                            sl.complete(Loggers.FAILED);
+<A NAME="90"></A>                            errorNoLogin(out);
+<A NAME="91"></A>                            <FONT ID="Break">break</FONT> stateSignedOn;
+<A NAME="92"></A>                        }
+<A NAME="93"></A>                    }
+<A NAME="94"></A>                    processRequestType:
+<A NAME="95"></A>                    {
+<A NAME="96"></A>                        <FONT ID="MultiLineComment">/*Check that we have a file upload request*/</FONT>
+<A NAME="97"></A>                        <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isMultipart = ServletFileUpload.isMultipartContent(request__);
+<A NAME="98"></A>                        <FONT ID="If">if</FONT> (!isMultipart) {
+<A NAME="99"></A>                            LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/servlets/ServletFileUploads.java.html">ServletFileUploads</A>.<FONT ID="Class">class</FONT>.getName()).error(logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletFileUploads.0001"</FONT>));
+<A NAME="100"></A>                            sl.appendToLogMSG(<FONT ID="StringLiteral">"Not multipart request"</FONT>);
+<A NAME="101"></A>                            sl.complete(Loggers.FAILED);
+<A NAME="102"></A>                            errorNonMultipart(out);
+<A NAME="103"></A>                            <FONT ID="Break">break</FONT> processRequestType;
+<A NAME="104"></A>                        }
+<A NAME="105"></A>
+<A NAME="106"></A>                        @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="107"></A>                        <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> sBLoggedOnUserLocal = ((SessionBoundBadRefWrapper&lt;<A HREF="../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A>&gt;) session.getAttribute(ServletLogin.HumanUser)).getBoundInstance();
+<A NAME="108"></A>
+<A NAME="109"></A>                        <FONT ID="Try">try</FONT> {
+<A NAME="110"></A>                            processRequest:
+<A NAME="111"></A>                            {
+<A NAME="112"></A>
+<A NAME="113"></A>                                <FONT ID="SingleLineComment">// Create a new file upload handler
+<A NAME="114"></A></FONT>                                <FONT ID="Final">final</FONT> ServletFileUpload upload = <FONT ID="New">new</FONT> ServletFileUpload();
+<A NAME="115"></A>                                <FONT ID="SingleLineComment">// Parse the request
+<A NAME="116"></A></FONT>                                FileItemIterator iter = upload.getItemIterator(request__);
+<A NAME="117"></A>                                <FONT ID="Boolean">boolean</FONT> persisted = <FONT ID="False">false</FONT>;
+<A NAME="118"></A>
+<A NAME="119"></A>                                Return&lt;File&gt; r = processFileUploadRequest(iter, session);
+<A NAME="120"></A>                                persisted = r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="121"></A>                                <FONT ID="If">if</FONT> (!persisted) {
+<A NAME="122"></A>                                    sl.appendToLogMSG(r.returnMsg());
+<A NAME="123"></A>                                    sl.complete(Loggers.FAILED);
+<A NAME="124"></A>                                    errorReorderedSomethingWentWrong(out, r.returnMsg());
+<A NAME="125"></A>                                    <FONT ID="Break">break</FONT> processRequest;
+<A NAME="126"></A>                                } <FONT ID="Else">else</FONT> {
+<A NAME="127"></A>                                    sl.appendToLogMSG(r.returnMsg());
+<A NAME="128"></A>                                    sl.complete(Loggers.DONE);
+<A NAME="129"></A>                                    successFileName(out, r.returnMsg(), r.returnMsg());
+<A NAME="130"></A>                                    <FONT ID="Break">break</FONT> processRequest;
+<A NAME="131"></A>                                }
+<A NAME="132"></A>                            }
+<A NAME="133"></A>
+<A NAME="134"></A>                        } <FONT ID="Catch">catch</FONT> (FileUploadException ex) {
+<A NAME="135"></A>                            Loggers.EXCEPTION.error(<FONT ID="Null">null</FONT>, ex);
+<A NAME="136"></A>                            errorBusy(out);
+<A NAME="137"></A>                        }
+<A NAME="138"></A>                    }
+<A NAME="139"></A>
+<A NAME="140"></A>                }
+<A NAME="141"></A>
+<A NAME="142"></A>            }
+<A NAME="143"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t_) {
+<A NAME="144"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">"SORRY! I ENCOUNTERED AN EXCEPTION DURING THE FILE UPLOAD"</FONT>, t_);
+<A NAME="145"></A>        }
+<A NAME="146"></A>
+<A NAME="147"></A>    }
+<A NAME="148"></A>
+<A NAME="149"></A>    <FONT ID="Private">private</FONT> String formatTuple(<FONT ID="Final">final</FONT> String... params__) {
+<A NAME="150"></A>        String returnVal = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="151"></A>        <FONT ID="If">if</FONT> (params__.length &gt; <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="152"></A>            String formattedResponse = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="153"></A>            <FONT ID="For">for</FONT> (String param_ : params__) {
+<A NAME="154"></A>                formattedResponse += <FONT ID="StringLiteral">","</FONT>;
+<A NAME="155"></A>                formattedResponse +=
+<A NAME="156"></A>                        param_;
+<A NAME="157"></A>            }
+<A NAME="158"></A>
+<A NAME="159"></A>            returnVal = <FONT ID="StringLiteral">"{"</FONT> + formattedResponse.substring(formattedResponse.indexOf(<FONT ID="StringLiteral">","</FONT>) + <FONT ID="IntegerLiteral">1</FONT>) + <FONT ID="StringLiteral">"}"</FONT>;
+<A NAME="160"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="161"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException(exceptionMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletFileUploads.0001"</FONT>));
+<A NAME="162"></A>        }
+<A NAME="163"></A>
+<A NAME="164"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="165"></A>
+<A NAME="166"></A>    }
+<A NAME="167"></A>
+<A NAME="168"></A>    <FONT ID="Private">private</FONT> PrintWriter flush(<FONT ID="Final">final</FONT> PrintWriter out) {
+<A NAME="169"></A>        out.flush();
+<A NAME="170"></A>        <FONT ID="Return">return</FONT> out;
+<A NAME="171"></A>    }
+<A NAME="172"></A>
+<A NAME="173"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Handle exception"</FONT>)
+<A NAME="174"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> errorSomethingWentWrong(<FONT ID="Final">final</FONT> PrintWriter out) {
+<A NAME="175"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="176"></A>            flush(out).print(formatTuple(Error, <FONT ID="StringLiteral">"something_went_wrong"</FONT>));
+<A NAME="177"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="178"></A>            out.close();
+<A NAME="179"></A>        }
+<A NAME="180"></A>
+<A NAME="181"></A>    }
+<A NAME="182"></A>
+<A NAME="183"></A>
+<A NAME="184"></A>    @FIXME(issues = {<FONT ID="StringLiteral">"Handle exception"</FONT>, <FONT ID="StringLiteral">"Tuple ordering changed with respect to profile photo upload."</FONT>})
+<A NAME="185"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> errorReorderedSomethingWentWrong(<FONT ID="Final">final</FONT> PrintWriter out, <FONT ID="Final">final</FONT> String msg) {
+<A NAME="186"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="187"></A>            flush(out).print(formatTuple(Error, msg, <FONT ID="StringLiteral">"something_went_wrong"</FONT>));
+<A NAME="188"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="189"></A>            out.close();
+<A NAME="190"></A>        }
+<A NAME="191"></A>
+<A NAME="192"></A>    }
+<A NAME="193"></A>
+<A NAME="194"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Handle exception"</FONT>)
+<A NAME="195"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> errorTemporarilyDisabled(<FONT ID="Final">final</FONT> PrintWriter out) {
+<A NAME="196"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="197"></A>            flush(out).print(formatTuple(Error, <FONT ID="StringLiteral">"file_uploading_disabled"</FONT>));
+<A NAME="198"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="199"></A>            out.close();
+<A NAME="200"></A>        }
+<A NAME="201"></A>
+<A NAME="202"></A>    }
+<A NAME="203"></A>
+<A NAME="204"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Handle exception"</FONT>)
+<A NAME="205"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> errorNoLogin(<FONT ID="Final">final</FONT> PrintWriter out) {
+<A NAME="206"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="207"></A>            flush(out).print(formatTuple(Error, <FONT ID="StringLiteral">"no_login"</FONT>));
+<A NAME="208"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="209"></A>            out.close();
+<A NAME="210"></A>        }
+<A NAME="211"></A>
+<A NAME="212"></A>    }
+<A NAME="213"></A>
+<A NAME="214"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Handle exception"</FONT>)
+<A NAME="215"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> errorBusy(<FONT ID="Final">final</FONT> PrintWriter out) {
+<A NAME="216"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="217"></A>            flush(out).print(formatTuple(Error, <FONT ID="StringLiteral">"server_busy"</FONT>));
+<A NAME="218"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="219"></A>            out.close();
+<A NAME="220"></A>        }
+<A NAME="221"></A>
+<A NAME="222"></A>    }
+<A NAME="223"></A>
+<A NAME="224"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Handle exception"</FONT>)
+<A NAME="225"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> errorNonMultipart(<FONT ID="Final">final</FONT> PrintWriter out) {
+<A NAME="226"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="227"></A>            flush(out).print(formatTuple(Error, <FONT ID="StringLiteral">"non_multipart_request"</FONT>));
+<A NAME="228"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="229"></A>            out.close();
+<A NAME="230"></A>        }
+<A NAME="231"></A>
+<A NAME="232"></A>    }
+<A NAME="233"></A>
+<A NAME="234"></A>    @TODO(task = <FONT ID="StringLiteral">"Make a key,value implementation to avoid careless indexing errors on client"</FONT>)
+<A NAME="235"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Handle exception"</FONT>)
+<A NAME="236"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> successFileName(<FONT ID="Final">final</FONT> PrintWriter out,
+<A NAME="237"></A>                                 <FONT ID="Final">final</FONT> String fileName,
+<A NAME="238"></A>                                 <FONT ID="Final">final</FONT> String exposurePublicOrPrivate) {
+<A NAME="239"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="240"></A>            flush(out).print(formatTuple(Ok, fileName, exposurePublicOrPrivate));
+<A NAME="241"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="242"></A>            out.close();
+<A NAME="243"></A>        }
+<A NAME="244"></A>
+<A NAME="245"></A>    }
+<A NAME="246"></A>
+<A NAME="247"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Handle exception"</FONT>)
+<A NAME="248"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> errorFileType(<FONT ID="Final">final</FONT> PrintWriter out,
+<A NAME="249"></A>                               <FONT ID="Final">final</FONT> String fileName) {
+<A NAME="250"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="251"></A>            flush(out).print(formatTuple(Error, <FONT ID="StringLiteral">"wrong_file_type"</FONT>, fileName));
+<A NAME="252"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="253"></A>            out.close();
+<A NAME="254"></A>        }
+<A NAME="255"></A>
+<A NAME="256"></A>    }
+<A NAME="257"></A>
+<A NAME="258"></A>    @FIXME(issue = <FONT ID="StringLiteral">"Handle exception"</FONT>)
+<A NAME="259"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> errorMissingParameters(<FONT ID="Final">final</FONT> PrintWriter out, <FONT ID="Final">final</FONT> String msg) {
+<A NAME="260"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="261"></A>            flush(out).print(formatTuple(Error, <FONT ID="StringLiteral">"missing_parameters"</FONT>, msg));
+<A NAME="262"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="263"></A>            out.close();
+<A NAME="264"></A>        }
+<A NAME="265"></A>
+<A NAME="266"></A>    }
+<A NAME="267"></A>
+<A NAME="268"></A>    <FONT ID="Private">private</FONT> <FONT ID="Boolean">boolean</FONT> isFileUploadPermitted() {
+<A NAME="269"></A>        <FONT ID="Return">return</FONT> (RBGet.getGlobalConfigKey(<FONT ID="StringLiteral">"fileUploadEnabled"</FONT>) != <FONT ID="Null">null</FONT>
+<A NAME="270"></A>                &amp;&amp; RBGet.getGlobalConfigKey(<FONT ID="StringLiteral">"fileUploadEnabled"</FONT>).equals(<FONT ID="StringLiteral">"true"</FONT>));
+<A NAME="271"></A>    }
+<A NAME="272"></A>
+<A NAME="273"></A>    <FONT ID="SingleLineComment">// &lt;editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code."&gt;
+<A NAME="274"></A></FONT>
+<A NAME="275"></A>    <FONT ID="FormalComment">/**
+<A NAME="276"></A>     * Handles the HTTP &lt;code&gt;GET&lt;/code&gt; method.
+<A NAME="277"></A>     *
+<A NAME="278"></A>     * @param request  servlet request
+<A NAME="279"></A>     * @param response servlet response
+<A NAME="280"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="281"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="282"></A>     */</FONT>
+<A NAME="283"></A>    @Override
+<A NAME="284"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> doGet(<FONT ID="Final">final</FONT> HttpServletRequest request,
+<A NAME="285"></A>                         <FONT ID="Final">final</FONT> HttpServletResponse response)
+<A NAME="286"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="287"></A>        processRequest(request, response);
+<A NAME="288"></A>    }
+<A NAME="289"></A>
+<A NAME="290"></A>    <FONT ID="FormalComment">/**
+<A NAME="291"></A>     * Handles the HTTP &lt;code&gt;POST&lt;/code&gt; method.
+<A NAME="292"></A>     *
+<A NAME="293"></A>     * @param request  servlet request
+<A NAME="294"></A>     * @param response servlet response
+<A NAME="295"></A>     * @throws ServletException if a servlet-specific error occurs
+<A NAME="296"></A>     * @throws IOException      if an I/O error occurs
+<A NAME="297"></A>     */</FONT>
+<A NAME="298"></A>    @Override
+<A NAME="299"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> doPost(<FONT ID="Final">final</FONT> HttpServletRequest request,
+<A NAME="300"></A>                          <FONT ID="Final">final</FONT> HttpServletResponse response)
+<A NAME="301"></A>            <FONT ID="Throws">throws</FONT> ServletException, IOException {
+<A NAME="302"></A>        processRequest(request, response);
+<A NAME="303"></A>    }
+<A NAME="304"></A>
+<A NAME="305"></A>    <FONT ID="FormalComment">/**
+<A NAME="306"></A>     * Returns a short description of the servlet.
+<A NAME="307"></A>     *
+<A NAME="308"></A>     * @return a String containing servlet description
+<A NAME="309"></A>     */</FONT>
+<A NAME="310"></A>    @Override
+<A NAME="311"></A>    <FONT ID="Public">public</FONT> String getServletInfo() {
+<A NAME="312"></A>        <FONT ID="Return">return</FONT> logMsgs.getString(<FONT ID="StringLiteral">"ai.ilikeplaces.servlets.ServletFileUploads.0018"</FONT>);
+<A NAME="313"></A>    }
+<A NAME="314"></A>
+<A NAME="315"></A>
+<A NAME="316"></A>    <FONT ID="Private">private</FONT> Return&lt;File&gt; processFileUploadRequest(<FONT ID="Final">final</FONT> FileItemIterator iter, <FONT ID="Final">final</FONT> HttpSession session) <FONT ID="Throws">throws</FONT> IOException, FileUploadException {
+<A NAME="317"></A>        String returnVal = <FONT ID="StringLiteral">"Sorry! No Items To Process"</FONT>;
+<A NAME="318"></A>        <FONT ID="Final">final</FONT> Map&lt;String, String&gt; parameterMap = <FONT ID="New">new</FONT> HashMap&lt;String, String&gt;();
+<A NAME="319"></A>        <FONT ID="Final">final</FONT> File tempFile = getTempFile();
+<A NAME="320"></A>        String userFileExtension = <FONT ID="Null">null</FONT>;
+<A NAME="321"></A>
+<A NAME="322"></A>        <FONT ID="While">while</FONT> (iter.hasNext()) {
+<A NAME="323"></A>            <FONT ID="Final">final</FONT> FileItemStream item = iter.next();
+<A NAME="324"></A>            <FONT ID="Final">final</FONT> String paramName = item.getFieldName();
+<A NAME="325"></A>            <FONT ID="Final">final</FONT> InputStream stream = item.openStream();
+<A NAME="326"></A>
+<A NAME="327"></A>            <FONT ID="If">if</FONT> (item.isFormField()) {<FONT ID="SingleLineComment">//Parameter-Value
+<A NAME="328"></A></FONT>                <FONT ID="Final">final</FONT> String paramValue = Streams.asString(stream);
+<A NAME="329"></A>                parameterMap.put(paramName, paramValue);
+<A NAME="330"></A>            }
+<A NAME="331"></A>            <FONT ID="If">if</FONT> (!item.isFormField()) {
+<A NAME="332"></A>                <FONT ID="Final">final</FONT> String usersFileName = item.getName();
+<A NAME="333"></A>                <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> extensionDotIndex = usersFileName.lastIndexOf(<FONT ID="StringLiteral">"."</FONT>);
+<A NAME="334"></A>                userFileExtension = usersFileName.substring(extensionDotIndex + <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="335"></A>                <FONT ID="Final">final</FONT> FileOutputStream fos = <FONT ID="New">new</FONT> FileOutputStream(tempFile);
+<A NAME="336"></A>                <FONT ID="Int">int</FONT> byteCount = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="337"></A>                <FONT ID="While">while</FONT> (<FONT ID="True">true</FONT>) {
+<A NAME="338"></A>                    <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> dataByte = stream.read();
+<A NAME="339"></A>                    <FONT ID="If">if</FONT> (byteCount++ &gt; UPLOAD_LIMIT) {
+<A NAME="340"></A>                        fos.close();
+<A NAME="341"></A>                        tempFile.delete();
+<A NAME="342"></A>                        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(ExceptionCache.FILE_SIZE_EXCEPTION, <FONT ID="StringLiteral">"File Too Big!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="343"></A>                    }
+<A NAME="344"></A>                    <FONT ID="If">if</FONT> (dataByte != -<FONT ID="IntegerLiteral">1</FONT>) {
+<A NAME="345"></A>                        fos.write(dataByte);
+<A NAME="346"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="347"></A>                        <FONT ID="Break">break</FONT>;<FONT ID="SingleLineComment">//break loop
+<A NAME="348"></A></FONT>                    }
+<A NAME="349"></A>                }
+<A NAME="350"></A>                fos.close();
+<A NAME="351"></A>            }
+<A NAME="352"></A>        }
+<A NAME="353"></A>
+<A NAME="354"></A>        <FONT ID="Final">final</FONT> FileUploadListenerFace&lt;File&gt; fulf;
+<A NAME="355"></A>
+<A NAME="356"></A>        <FONT ID="FormalComment">/**
+<A NAME="357"></A>         * Implement this as a set of listeners. Why it wasn't done now is that, a new object of listener should be
+<A NAME="358"></A>         * created per request and added to the listener pool(list or array whatever).
+<A NAME="359"></A>         */</FONT>
+<A NAME="360"></A>        <FONT ID="Switch">switch</FONT> (Integer.parseInt(parameterMap.get(<FONT ID="StringLiteral">"type"</FONT>))) {
+<A NAME="361"></A>            <FONT ID="Case">case</FONT> <FONT ID="IntegerLiteral">1</FONT>:
+<A NAME="362"></A>                fulf = CDNProfilePhoto.getProfilePhotoCDNLocal();
+<A NAME="363"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="364"></A>            <FONT ID="Case">case</FONT> <FONT ID="IntegerLiteral">2</FONT>:
+<A NAME="365"></A>                fulf = CDNAlbumPrivateEvent.getAlbumPhotoCDNLocal();
+<A NAME="366"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="367"></A>            <FONT ID="Case">case</FONT> <FONT ID="IntegerLiteral">3</FONT>:
+<A NAME="368"></A>                fulf = CDNAlbumTribe.getAlbumTribeCDNLocal();
+<A NAME="369"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="370"></A>            <FONT ID="Default">default</FONT>:
+<A NAME="371"></A>                <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(ExceptionCache.UNSUPPORTED_SWITCH, <FONT ID="StringLiteral">"Unsupported Case"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="372"></A>        }
+<A NAME="373"></A>        <FONT ID="If">if</FONT> (tempFile == <FONT ID="Null">null</FONT>) {
+<A NAME="374"></A>            <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> ReturnImpl&lt;File&gt;(ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION, <FONT ID="StringLiteral">"No File!"</FONT>, <FONT ID="True">true</FONT>);
+<A NAME="375"></A>        }
+<A NAME="376"></A>
+<A NAME="377"></A>        <FONT ID="Return">return</FONT> fulf.run(tempFile, parameterMap, userFileExtension, session);
+<A NAME="378"></A>    }
+<A NAME="379"></A>
+<A NAME="380"></A>    <FONT ID="FormalComment">/**
+<A NAME="381"></A>     * Note that the hyphen is used to to the url breaking standard withing the app with 'undescores' which should not
+<A NAME="382"></A>     * be used here
+<A NAME="383"></A>     *
+<A NAME="384"></A>     * @return
+<A NAME="385"></A>     */</FONT>
+<A NAME="386"></A>    <FONT ID="Private">private</FONT> File getTempFile() {
+<A NAME="387"></A>        <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> File(fileCache + System.currentTimeMillis() + HYPHEN + UUID.randomUUID().toString());
+<A NAME="388"></A>    }
+<A NAME="389"></A>}
+<A NAME="390"></A></pre>
+</BODY>
+</HTML>

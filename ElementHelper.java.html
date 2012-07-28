@@ -1,0 +1,1566 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ElementHelper (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ElementHelper.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="SingleLineComment">///* Copyright (c) 2008 Google Inc.
+<A NAME="2"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="3"></A></FONT><FONT ID="SingleLineComment">// * Licensed under the Apache License, Version 2.0 (the "License");
+<A NAME="4"></A></FONT><FONT ID="SingleLineComment">// * you may not use this file except in compliance with the License.
+<A NAME="5"></A></FONT><FONT ID="SingleLineComment">// * You may obtain a copy of the License at
+<A NAME="6"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="7"></A></FONT><FONT ID="SingleLineComment">// *     http://www.apache.org/licenses/LICENSE-2.0
+<A NAME="8"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="9"></A></FONT><FONT ID="SingleLineComment">// * Unless required by applicable law or agreed to in writing, software
+<A NAME="10"></A></FONT><FONT ID="SingleLineComment">// * distributed under the License is distributed on an "AS IS" BASIS,
+<A NAME="11"></A></FONT><FONT ID="SingleLineComment">// * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<A NAME="12"></A></FONT><FONT ID="SingleLineComment">// * See the License for the specific language governing permissions and
+<A NAME="13"></A></FONT><FONT ID="SingleLineComment">// * limitations under the License.
+<A NAME="14"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="15"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="16"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="17"></A></FONT><FONT ID="SingleLineComment">//package ai.ilikeplaces.logic.contactimports.google;
+<A NAME="18"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="19"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.DateTime;
+<A NAME="20"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.PlainTextConstruct;
+<A NAME="21"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.BillingInformation;
+<A NAME="22"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Birthday;
+<A NAME="23"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.CalendarLink;
+<A NAME="24"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.ContactEntry;
+<A NAME="25"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.ContactGroupEntry;
+<A NAME="26"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.DirectoryServer;
+<A NAME="27"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Event;
+<A NAME="28"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.ExternalId;
+<A NAME="29"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Gender;
+<A NAME="30"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.GroupMembershipInfo;
+<A NAME="31"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Hobby;
+<A NAME="32"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Initials;
+<A NAME="33"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Jot;
+<A NAME="34"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Language;
+<A NAME="35"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.MaidenName;
+<A NAME="36"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Mileage;
+<A NAME="37"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Nickname;
+<A NAME="38"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Occupation;
+<A NAME="39"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Priority;
+<A NAME="40"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Relation;
+<A NAME="41"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Sensitivity;
+<A NAME="42"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.ShortName;
+<A NAME="43"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Subject;
+<A NAME="44"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.UserDefinedField;
+<A NAME="45"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.contacts.Website;
+<A NAME="46"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.AdditionalName;
+<A NAME="47"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.City;
+<A NAME="48"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.Country;
+<A NAME="49"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.Email;
+<A NAME="50"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.ExtendedProperty;
+<A NAME="51"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.FamilyName;
+<A NAME="52"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.FormattedAddress;
+<A NAME="53"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.FullName;
+<A NAME="54"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.GivenName;
+<A NAME="55"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.Im;
+<A NAME="56"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.Name;
+<A NAME="57"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.NamePrefix;
+<A NAME="58"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.NameSuffix;
+<A NAME="59"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.Neighborhood;
+<A NAME="60"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.OrgDepartment;
+<A NAME="61"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.OrgJobDescription;
+<A NAME="62"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.OrgName;
+<A NAME="63"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.OrgSymbol;
+<A NAME="64"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.OrgTitle;
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.Organization;
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.PhoneNumber;
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.PoBox;
+<A NAME="68"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.PostCode;
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.Region;
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.Street;
+<A NAME="71"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.StructuredPostalAddress;
+<A NAME="72"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.When;
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.data.extensions.Where;
+<A NAME="74"></A></FONT><FONT ID="SingleLineComment">//import com.google.gdata.util.XmlBlob;
+<A NAME="75"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">//import java.io.BufferedReader;
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//import java.io.File;
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//import java.io.FileReader;
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//import java.io.IOException;
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//import java.io.PrintStream;
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//import java.util.List;
+<A NAME="82"></A></FONT><FONT ID="SingleLineComment">//import java.util.regex.Matcher;
+<A NAME="83"></A></FONT><FONT ID="SingleLineComment">//import java.util.regex.Pattern;
+<A NAME="84"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="85"></A></FONT><FONT ID="SingleLineComment">///**
+<A NAME="86"></A></FONT><FONT ID="SingleLineComment">// * Helper class to parse, update and display a contact.
+<A NAME="87"></A></FONT><FONT ID="SingleLineComment">// * It uses a bunch of anonymous inner classes for every kind of element to
+<A NAME="88"></A></FONT><FONT ID="SingleLineComment">// * perform the actual job. It is defined as an enum to take advantage of the
+<A NAME="89"></A></FONT><FONT ID="SingleLineComment">// * automatic instantiation and constant-specific methods.
+<A NAME="90"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="91"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="92"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="93"></A></FONT><FONT ID="SingleLineComment">//public enum ElementHelper implements ElementHelperInterface {
+<A NAME="94"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//  BILLING_INFORMATION {
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="97"></A></FONT><FONT ID="SingleLineComment">//      BillingInformation billingInformation = new BillingInformation();
+<A NAME="98"></A></FONT><FONT ID="SingleLineComment">//      billingInformation.setValue(parser.get(PropertyName.VALUE));
+<A NAME="99"></A></FONT><FONT ID="SingleLineComment">//      contact.setBillingInformation(billingInformation);
+<A NAME="100"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="101"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="102"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="103"></A></FONT><FONT ID="SingleLineComment">//       if (contact.hasBillingInformation()) {
+<A NAME="104"></A></FONT><FONT ID="SingleLineComment">//         out.println("billing information: "
+<A NAME="105"></A></FONT><FONT ID="SingleLineComment">//             + contact.getBillingInformation().getValue());
+<A NAME="106"></A></FONT><FONT ID="SingleLineComment">//       }
+<A NAME="107"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="108"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="109"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="110"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasBillingInformation()) {
+<A NAME="111"></A></FONT><FONT ID="SingleLineComment">//        dest.setBillingInformation(src.getBillingInformation());
+<A NAME="112"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="113"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="114"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="115"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="116"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;billing_information&gt;";
+<A NAME="117"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="118"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="119"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="120"></A></FONT><FONT ID="SingleLineComment">//  BIRTHDAY {
+<A NAME="121"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="122"></A></FONT><FONT ID="SingleLineComment">//      Birthday birthday = new Birthday();
+<A NAME="123"></A></FONT><FONT ID="SingleLineComment">//      birthday.setWhen(parser.get(PropertyName.VALUE));
+<A NAME="124"></A></FONT><FONT ID="SingleLineComment">//      contact.setBirthday(birthday);
+<A NAME="125"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="126"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="127"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="128"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasBirthday()) {
+<A NAME="129"></A></FONT><FONT ID="SingleLineComment">//        out.println("birthday: " + contact.getBirthday().getWhen());
+<A NAME="130"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="131"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="132"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="133"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="134"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasBirthday()) {
+<A NAME="135"></A></FONT><FONT ID="SingleLineComment">//        dest.setBirthday(src.getBirthday());
+<A NAME="136"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="137"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="138"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="139"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="140"></A></FONT><FONT ID="SingleLineComment">//      return "YYYY-MM-DD|--MM-DD";
+<A NAME="141"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="142"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="143"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="144"></A></FONT><FONT ID="SingleLineComment">//  CALENDAR_LINK(true) {
+<A NAME="145"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="146"></A></FONT><FONT ID="SingleLineComment">//      CalendarLink calendarLink = new CalendarLink();
+<A NAME="147"></A></FONT><FONT ID="SingleLineComment">//      calendarLink.setHref(parser.get(PropertyName.VALUE));
+<A NAME="148"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="149"></A></FONT><FONT ID="SingleLineComment">//        calendarLink.setRel(
+<A NAME="150"></A></FONT><FONT ID="SingleLineComment">//            CalendarLink.Rel.valueOf(
+<A NAME="151"></A></FONT><FONT ID="SingleLineComment">//                parser.get(PropertyName.REL).toUpperCase()));
+<A NAME="152"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="153"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="154"></A></FONT><FONT ID="SingleLineComment">//        calendarLink.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="155"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="156"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.PRIMARY)) {
+<A NAME="157"></A></FONT><FONT ID="SingleLineComment">//        calendarLink.setPrimary(parser.is(PropertyName.PRIMARY));
+<A NAME="158"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="159"></A></FONT><FONT ID="SingleLineComment">//      contact.addCalendarLink(calendarLink);
+<A NAME="160"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="161"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="162"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="163"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasCalendarLinks()) {
+<A NAME="164"></A></FONT><FONT ID="SingleLineComment">//        out.println("calendar links:");
+<A NAME="165"></A></FONT><FONT ID="SingleLineComment">//        for (CalendarLink calendarLink : contact.getCalendarLinks()) {
+<A NAME="166"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + calendarLink.getHref());
+<A NAME="167"></A></FONT><FONT ID="SingleLineComment">//          if (calendarLink.hasRel()) {
+<A NAME="168"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + calendarLink.getRel());
+<A NAME="169"></A></FONT><FONT ID="SingleLineComment">//          } else if (calendarLink.hasLabel()) {
+<A NAME="170"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + calendarLink.getLabel());
+<A NAME="171"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="172"></A></FONT><FONT ID="SingleLineComment">//          if (calendarLink.hasPrimary() &amp;&amp; calendarLink.getPrimary()) {
+<A NAME="173"></A></FONT><FONT ID="SingleLineComment">//            out.print(" (primary)");
+<A NAME="174"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="175"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="176"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="177"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="178"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="179"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="180"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="181"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasCalendarLinks()) {
+<A NAME="182"></A></FONT><FONT ID="SingleLineComment">//        List&lt;CalendarLink&gt; calendarLinks = dest.getCalendarLinks();
+<A NAME="183"></A></FONT><FONT ID="SingleLineComment">//        calendarLinks.clear();
+<A NAME="184"></A></FONT><FONT ID="SingleLineComment">//        calendarLinks.addAll(src.getCalendarLinks());
+<A NAME="185"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="186"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="187"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="188"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="189"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;href&gt;"
+<A NAME="190"></A></FONT><FONT ID="SingleLineComment">//          + "[,rel:&lt;rel&gt;]"
+<A NAME="191"></A></FONT><FONT ID="SingleLineComment">//          + "[,label:&lt;label&gt;]"
+<A NAME="192"></A></FONT><FONT ID="SingleLineComment">//          + "[,primary:true|false]";
+<A NAME="193"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="194"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="195"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="196"></A></FONT><FONT ID="SingleLineComment">//  DIRECTORY_SERVER {
+<A NAME="197"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="198"></A></FONT><FONT ID="SingleLineComment">//      DirectoryServer directoryServer = new DirectoryServer();
+<A NAME="199"></A></FONT><FONT ID="SingleLineComment">//      directoryServer.setValue(parser.get(PropertyName.VALUE));
+<A NAME="200"></A></FONT><FONT ID="SingleLineComment">//      contact.setDirectoryServer(directoryServer);
+<A NAME="201"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="202"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="203"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="204"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasDirectoryServer()) {
+<A NAME="205"></A></FONT><FONT ID="SingleLineComment">//        out.println("directory server: "
+<A NAME="206"></A></FONT><FONT ID="SingleLineComment">//            + contact.getDirectoryServer().getValue());
+<A NAME="207"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="208"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="209"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="210"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="211"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasDirectoryServer()) {
+<A NAME="212"></A></FONT><FONT ID="SingleLineComment">//        dest.setDirectoryServer(src.getDirectoryServer());
+<A NAME="213"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="214"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="215"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="216"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="217"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;directory_server&gt;";
+<A NAME="218"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="219"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="220"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="221"></A></FONT><FONT ID="SingleLineComment">//  EMAIL(true) {
+<A NAME="222"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="223"></A></FONT><FONT ID="SingleLineComment">//      Email email = new Email();
+<A NAME="224"></A></FONT><FONT ID="SingleLineComment">//      email.setAddress(parser.get(PropertyName.VALUE));
+<A NAME="225"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="226"></A></FONT><FONT ID="SingleLineComment">//        email.setRel(parser.get(PropertyName.REL));
+<A NAME="227"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="228"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="229"></A></FONT><FONT ID="SingleLineComment">//        email.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="230"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="231"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.PRIMARY)) {
+<A NAME="232"></A></FONT><FONT ID="SingleLineComment">//        email.setPrimary(parser.is(PropertyName.PRIMARY));
+<A NAME="233"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="234"></A></FONT><FONT ID="SingleLineComment">//      contact.addEmailAddress(email);
+<A NAME="235"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="236"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="237"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="238"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasEmailAddresses()) {
+<A NAME="239"></A></FONT><FONT ID="SingleLineComment">//        out.println("email addresses:");
+<A NAME="240"></A></FONT><FONT ID="SingleLineComment">//        for (Email email : contact.getEmailAddresses()) {
+<A NAME="241"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + email.getAddress());
+<A NAME="242"></A></FONT><FONT ID="SingleLineComment">//          if (email.getRel() != null) {
+<A NAME="243"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + email.getRel());
+<A NAME="244"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="245"></A></FONT><FONT ID="SingleLineComment">//          if (email.getLabel() != null) {
+<A NAME="246"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + email.getLabel());
+<A NAME="247"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="248"></A></FONT><FONT ID="SingleLineComment">//          if (email.getPrimary()) {
+<A NAME="249"></A></FONT><FONT ID="SingleLineComment">//            out.print(" (primary)");
+<A NAME="250"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="251"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="252"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="253"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="254"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="255"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="256"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="257"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasEmailAddresses()) {
+<A NAME="258"></A></FONT><FONT ID="SingleLineComment">//        List&lt;Email&gt; emailAddresses = dest.getEmailAddresses();
+<A NAME="259"></A></FONT><FONT ID="SingleLineComment">//        emailAddresses.clear();
+<A NAME="260"></A></FONT><FONT ID="SingleLineComment">//        emailAddresses.addAll(src.getEmailAddresses());
+<A NAME="261"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="262"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="263"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="264"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="265"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;email&gt;"
+<A NAME="266"></A></FONT><FONT ID="SingleLineComment">//          + "[,rel:&lt;rel&gt;]"
+<A NAME="267"></A></FONT><FONT ID="SingleLineComment">//          + "[,label:&lt;label&gt;]"
+<A NAME="268"></A></FONT><FONT ID="SingleLineComment">//          + "[,primary:true|false]";
+<A NAME="269"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="270"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="271"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="272"></A></FONT><FONT ID="SingleLineComment">//  EVENT(true) {
+<A NAME="273"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="274"></A></FONT><FONT ID="SingleLineComment">//      Event event = new Event();
+<A NAME="275"></A></FONT><FONT ID="SingleLineComment">//      When when = new When();
+<A NAME="276"></A></FONT><FONT ID="SingleLineComment">//      when.setStartTime(DateTime.parseDate(parser.get(PropertyName.VALUE)));
+<A NAME="277"></A></FONT><FONT ID="SingleLineComment">//      event.setWhen(when);
+<A NAME="278"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="279"></A></FONT><FONT ID="SingleLineComment">//        event.setRel(parser.get(PropertyName.REL));
+<A NAME="280"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="281"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="282"></A></FONT><FONT ID="SingleLineComment">//        event.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="283"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="284"></A></FONT><FONT ID="SingleLineComment">//      contact.addEvent(event);
+<A NAME="285"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="286"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="287"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="288"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasEvents()) {
+<A NAME="289"></A></FONT><FONT ID="SingleLineComment">//        out.println("events:");
+<A NAME="290"></A></FONT><FONT ID="SingleLineComment">//        for (Event event : contact.getEvents()) {
+<A NAME="291"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + event.getWhen().getStartTime().toString());
+<A NAME="292"></A></FONT><FONT ID="SingleLineComment">//          if (event.hasRel()) {
+<A NAME="293"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + event.getRel());
+<A NAME="294"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="295"></A></FONT><FONT ID="SingleLineComment">//          if (event.hasLabel()) {
+<A NAME="296"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + event.getLabel());
+<A NAME="297"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="298"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="299"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="300"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="301"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="302"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="303"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="304"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasEvents()) {
+<A NAME="305"></A></FONT><FONT ID="SingleLineComment">//        List&lt;Event&gt; events = dest.getEvents();
+<A NAME="306"></A></FONT><FONT ID="SingleLineComment">//        events.clear();
+<A NAME="307"></A></FONT><FONT ID="SingleLineComment">//        events.addAll(src.getEvents());
+<A NAME="308"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="309"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="310"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="311"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="312"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;YYYY-MM-DD&gt;"
+<A NAME="313"></A></FONT><FONT ID="SingleLineComment">//        + "[,rel:&lt;rel&gt;]"
+<A NAME="314"></A></FONT><FONT ID="SingleLineComment">//        + "[,label:&lt;label&gt;]";
+<A NAME="315"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="316"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="317"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="318"></A></FONT><FONT ID="SingleLineComment">//  EXTENDED_PROPERTY(true) {
+<A NAME="319"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="320"></A></FONT><FONT ID="SingleLineComment">//     * Reads an XmlBlob from a file.
+<A NAME="321"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="322"></A></FONT><FONT ID="SingleLineComment">//     * @param f the file to be readed.
+<A NAME="323"></A></FONT><FONT ID="SingleLineComment">//     * @return the readed XmlBlog.
+<A NAME="324"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="325"></A></FONT><FONT ID="SingleLineComment">//     * @throws java.io.IOException in case of any IO error.
+<A NAME="326"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="327"></A></FONT><FONT ID="SingleLineComment">//    private XmlBlob readFromFile(File f) throws IOException {
+<A NAME="328"></A></FONT><FONT ID="SingleLineComment">//      StringBuffer xmlBuffer = new StringBuffer();
+<A NAME="329"></A></FONT><FONT ID="SingleLineComment">//        BufferedReader reader = null;
+<A NAME="330"></A></FONT><FONT ID="SingleLineComment">//      try {
+<A NAME="331"></A></FONT><FONT ID="SingleLineComment">//        reader = new BufferedReader(new FileReader(f));
+<A NAME="332"></A></FONT><FONT ID="SingleLineComment">//        String line;
+<A NAME="333"></A></FONT><FONT ID="SingleLineComment">//        while ((line = reader.readLine()) != null) {
+<A NAME="334"></A></FONT><FONT ID="SingleLineComment">//          xmlBuffer.append(line);
+<A NAME="335"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="336"></A></FONT><FONT ID="SingleLineComment">//      } finally {
+<A NAME="337"></A></FONT><FONT ID="SingleLineComment">//        if (reader != null) {
+<A NAME="338"></A></FONT><FONT ID="SingleLineComment">//          reader.close();
+<A NAME="339"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="340"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="341"></A></FONT><FONT ID="SingleLineComment">//      XmlBlob xmlBlob = new XmlBlob();
+<A NAME="342"></A></FONT><FONT ID="SingleLineComment">//      xmlBlob.setBlob(new String(xmlBuffer));
+<A NAME="343"></A></FONT><FONT ID="SingleLineComment">//      return xmlBlob;
+<A NAME="344"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="345"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="346"></A></FONT><FONT ID="SingleLineComment">//    /**
+<A NAME="347"></A></FONT><FONT ID="SingleLineComment">//     * Parses an ExtendedProperty.
+<A NAME="348"></A></FONT><FONT ID="SingleLineComment">//     *
+<A NAME="349"></A></FONT><FONT ID="SingleLineComment">//     * @param parser the parser used for the parsing of the description.
+<A NAME="350"></A></FONT><FONT ID="SingleLineComment">//     * @return the parsed in ExtendedProperty.
+<A NAME="351"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="352"></A></FONT><FONT ID="SingleLineComment">//    private ExtendedProperty parse(ElementParser parser) {
+<A NAME="353"></A></FONT><FONT ID="SingleLineComment">//      ExtendedProperty extendedProperty = new ExtendedProperty();
+<A NAME="354"></A></FONT><FONT ID="SingleLineComment">//      extendedProperty.setName(parser.get(PropertyName.VALUE));
+<A NAME="355"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.FILE)) {
+<A NAME="356"></A></FONT><FONT ID="SingleLineComment">//        File f = new File(parser.get(PropertyName.FILE));
+<A NAME="357"></A></FONT><FONT ID="SingleLineComment">//        if (!f.exists()) {
+<A NAME="358"></A></FONT><FONT ID="SingleLineComment">//          throw new RuntimeException("No Such File:" +
+<A NAME="359"></A></FONT><FONT ID="SingleLineComment">//              parser.get(PropertyName.FILE));
+<A NAME="360"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="361"></A></FONT><FONT ID="SingleLineComment">//        try {
+<A NAME="362"></A></FONT><FONT ID="SingleLineComment">//          extendedProperty.setXmlBlob(readFromFile(f));
+<A NAME="363"></A></FONT><FONT ID="SingleLineComment">//        } catch (IOException ex) {
+<A NAME="364"></A></FONT><FONT ID="SingleLineComment">//          throw new RuntimeException("Failed to read file "
+<A NAME="365"></A></FONT><FONT ID="SingleLineComment">//              + parser.get(PropertyName.FILE));
+<A NAME="366"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="367"></A></FONT><FONT ID="SingleLineComment">//      } else if (parser.has(PropertyName.TEXT)) {
+<A NAME="368"></A></FONT><FONT ID="SingleLineComment">//        extendedProperty.setValue(parser.get(PropertyName.TEXT));
+<A NAME="369"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="370"></A></FONT><FONT ID="SingleLineComment">//      return extendedProperty;
+<A NAME="371"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="372"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="373"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="374"></A></FONT><FONT ID="SingleLineComment">//      ExtendedProperty extendedProperty = parse(parser);
+<A NAME="375"></A></FONT><FONT ID="SingleLineComment">//      contact.addExtendedProperty(extendedProperty);
+<A NAME="376"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="377"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="378"></A></FONT><FONT ID="SingleLineComment">//    public void parseGroup(ContactGroupEntry group, ElementParser parser) {
+<A NAME="379"></A></FONT><FONT ID="SingleLineComment">//      ExtendedProperty extendedProperty = parse(parser);
+<A NAME="380"></A></FONT><FONT ID="SingleLineComment">//      group.addExtendedProperty(extendedProperty);
+<A NAME="381"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="382"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="383"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="384"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasExtendedProperties()) {
+<A NAME="385"></A></FONT><FONT ID="SingleLineComment">//        out.println("extended properties:");
+<A NAME="386"></A></FONT><FONT ID="SingleLineComment">//        for (ExtendedProperty property : contact.getExtendedProperties()) {
+<A NAME="387"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + property.getName());
+<A NAME="388"></A></FONT><FONT ID="SingleLineComment">//          if (property.hasValue()) {
+<A NAME="389"></A></FONT><FONT ID="SingleLineComment">//            out.print(" value:" + property.getValue());
+<A NAME="390"></A></FONT><FONT ID="SingleLineComment">//          } else {
+<A NAME="391"></A></FONT><FONT ID="SingleLineComment">//            out.print(" xmlBlob:" + property.getXmlBlob());
+<A NAME="392"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="393"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="394"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="395"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="396"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="397"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="398"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="399"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasExtendedProperties()) {
+<A NAME="400"></A></FONT><FONT ID="SingleLineComment">//        List&lt;ExtendedProperty&gt; extendedProps = dest.getExtendedProperties();
+<A NAME="401"></A></FONT><FONT ID="SingleLineComment">//        extendedProps.clear();
+<A NAME="402"></A></FONT><FONT ID="SingleLineComment">//        extendedProps.addAll(src.getExtendedProperties());
+<A NAME="403"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="404"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="405"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="406"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="407"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="408"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;name&gt;,text:&lt;value&gt;|file:&lt;XmlFilePath&gt;";
+<A NAME="409"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="410"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="411"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="412"></A></FONT><FONT ID="SingleLineComment">//  EXTERNAL_ID(true) {
+<A NAME="413"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="414"></A></FONT><FONT ID="SingleLineComment">//      ExternalId externalId = new ExternalId();
+<A NAME="415"></A></FONT><FONT ID="SingleLineComment">//      externalId.setValue(parser.get(PropertyName.VALUE));
+<A NAME="416"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="417"></A></FONT><FONT ID="SingleLineComment">//        externalId.setRel(parser.get(PropertyName.REL));
+<A NAME="418"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="419"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="420"></A></FONT><FONT ID="SingleLineComment">//        externalId.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="421"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="422"></A></FONT><FONT ID="SingleLineComment">//      contact.addExternalId(externalId);
+<A NAME="423"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="424"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="425"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="426"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasExternalIds()) {
+<A NAME="427"></A></FONT><FONT ID="SingleLineComment">//        out.println("external ids:");
+<A NAME="428"></A></FONT><FONT ID="SingleLineComment">//        for (ExternalId externalId : contact.getExternalIds()) {
+<A NAME="429"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + externalId.getValue());
+<A NAME="430"></A></FONT><FONT ID="SingleLineComment">//          if (externalId.hasRel()) {
+<A NAME="431"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + externalId.getRel());
+<A NAME="432"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="433"></A></FONT><FONT ID="SingleLineComment">//          if (externalId.hasLabel()) {
+<A NAME="434"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + externalId.getLabel());
+<A NAME="435"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="436"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="437"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="438"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="439"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="440"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="441"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="442"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasExternalIds()) {
+<A NAME="443"></A></FONT><FONT ID="SingleLineComment">//        List&lt;ExternalId&gt; externalIds = dest.getExternalIds();
+<A NAME="444"></A></FONT><FONT ID="SingleLineComment">//        externalIds.clear();
+<A NAME="445"></A></FONT><FONT ID="SingleLineComment">//        externalIds.addAll(src.getExternalIds());
+<A NAME="446"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="447"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="448"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="449"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="450"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;external_id&gt;,rel:&lt;rel&gt;|label:&lt;label&gt;";
+<A NAME="451"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="452"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="453"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="454"></A></FONT><FONT ID="SingleLineComment">//  GENDER {
+<A NAME="455"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="456"></A></FONT><FONT ID="SingleLineComment">//      Gender gender = new Gender();
+<A NAME="457"></A></FONT><FONT ID="SingleLineComment">//      String value = parser.get(PropertyName.VALUE);
+<A NAME="458"></A></FONT><FONT ID="SingleLineComment">//      if (value.equals("male")) {
+<A NAME="459"></A></FONT><FONT ID="SingleLineComment">//        gender.setValue(Gender.Value.MALE);
+<A NAME="460"></A></FONT><FONT ID="SingleLineComment">//      } else if (value.equals("female")) {
+<A NAME="461"></A></FONT><FONT ID="SingleLineComment">//        gender.setValue(Gender.Value.FEMALE);
+<A NAME="462"></A></FONT><FONT ID="SingleLineComment">//      } else {
+<A NAME="463"></A></FONT><FONT ID="SingleLineComment">//        throw new IllegalArgumentException("gender should be male or female");
+<A NAME="464"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="465"></A></FONT><FONT ID="SingleLineComment">//      contact.setGender(gender);
+<A NAME="466"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="467"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="468"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="469"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasGender()) {
+<A NAME="470"></A></FONT><FONT ID="SingleLineComment">//        out.println("gender: "
+<A NAME="471"></A></FONT><FONT ID="SingleLineComment">//            + contact.getGender().getValue().toString().toLowerCase());
+<A NAME="472"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="473"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="474"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="475"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="476"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasGender()) {
+<A NAME="477"></A></FONT><FONT ID="SingleLineComment">//        dest.setGender(src.getGender());
+<A NAME="478"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="479"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="480"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="481"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="482"></A></FONT><FONT ID="SingleLineComment">//      return "male|female";
+<A NAME="483"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="484"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="485"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="486"></A></FONT><FONT ID="SingleLineComment">//  GROUP_MEMBERSHIP_INFO(true) {
+<A NAME="487"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="488"></A></FONT><FONT ID="SingleLineComment">//      GroupMembershipInfo groupMembershipInfo = new GroupMembershipInfo();
+<A NAME="489"></A></FONT><FONT ID="SingleLineComment">//      groupMembershipInfo.setHref(parser.get(PropertyName.VALUE));
+<A NAME="490"></A></FONT><FONT ID="SingleLineComment">//      contact.addGroupMembershipInfo(groupMembershipInfo);
+<A NAME="491"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="492"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="493"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="494"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasGroupMembershipInfos()) {
+<A NAME="495"></A></FONT><FONT ID="SingleLineComment">//        out.println("group membership info:");
+<A NAME="496"></A></FONT><FONT ID="SingleLineComment">//        for (GroupMembershipInfo group : contact.getGroupMembershipInfos()) {
+<A NAME="497"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + group.getHref());
+<A NAME="498"></A></FONT><FONT ID="SingleLineComment">//          if (group.getDeleted()) {
+<A NAME="499"></A></FONT><FONT ID="SingleLineComment">//            out.print(" (deleted)");
+<A NAME="500"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="501"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="502"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="503"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="504"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="505"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="506"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="507"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasGroupMembershipInfos()) {
+<A NAME="508"></A></FONT><FONT ID="SingleLineComment">//        List&lt;GroupMembershipInfo&gt; groupMembershipInfos
+<A NAME="509"></A></FONT><FONT ID="SingleLineComment">//            = dest.getGroupMembershipInfos();
+<A NAME="510"></A></FONT><FONT ID="SingleLineComment">//        groupMembershipInfos.clear();
+<A NAME="511"></A></FONT><FONT ID="SingleLineComment">//        groupMembershipInfos.addAll(src.getGroupMembershipInfos());
+<A NAME="512"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="513"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="514"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="515"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="516"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;url&gt;";
+<A NAME="517"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="518"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="519"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="520"></A></FONT><FONT ID="SingleLineComment">//  HOBBY(true) {
+<A NAME="521"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="522"></A></FONT><FONT ID="SingleLineComment">//      Hobby hobby = new Hobby();
+<A NAME="523"></A></FONT><FONT ID="SingleLineComment">//      hobby.setValue(parser.get(PropertyName.VALUE));
+<A NAME="524"></A></FONT><FONT ID="SingleLineComment">//      contact.addHobby(hobby);
+<A NAME="525"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="526"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="527"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="528"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasHobbies()) {
+<A NAME="529"></A></FONT><FONT ID="SingleLineComment">//        out.println("hobbies:");
+<A NAME="530"></A></FONT><FONT ID="SingleLineComment">//        for (Hobby hobby : contact.getHobbies()) {
+<A NAME="531"></A></FONT><FONT ID="SingleLineComment">//          out.println("  " + hobby.getValue());
+<A NAME="532"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="533"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="534"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="535"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="536"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="537"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasHobbies()) {
+<A NAME="538"></A></FONT><FONT ID="SingleLineComment">//        List&lt;Hobby&gt; hobbies = dest.getHobbies();
+<A NAME="539"></A></FONT><FONT ID="SingleLineComment">//        hobbies.clear();
+<A NAME="540"></A></FONT><FONT ID="SingleLineComment">//        hobbies.addAll(src.getHobbies());
+<A NAME="541"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="542"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="543"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="544"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="545"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;hobby&gt;";
+<A NAME="546"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="547"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="548"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="549"></A></FONT><FONT ID="SingleLineComment">//  IM(true) {
+<A NAME="550"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="551"></A></FONT><FONT ID="SingleLineComment">//      Im im = new Im();
+<A NAME="552"></A></FONT><FONT ID="SingleLineComment">//      im.setAddress(parser.get(PropertyName.VALUE));
+<A NAME="553"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="554"></A></FONT><FONT ID="SingleLineComment">//        im.setRel(parser.get(PropertyName.REL));
+<A NAME="555"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="556"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="557"></A></FONT><FONT ID="SingleLineComment">//        im.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="558"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="559"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.PROTOCOL)) {
+<A NAME="560"></A></FONT><FONT ID="SingleLineComment">//        im.setProtocol(parser.get(PropertyName.PROTOCOL));
+<A NAME="561"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="562"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.PRIMARY)) {
+<A NAME="563"></A></FONT><FONT ID="SingleLineComment">//        im.setPrimary(parser.is(PropertyName.PRIMARY));
+<A NAME="564"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="565"></A></FONT><FONT ID="SingleLineComment">//      contact.addImAddress(im);
+<A NAME="566"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="567"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="568"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="569"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasImAddresses()) {
+<A NAME="570"></A></FONT><FONT ID="SingleLineComment">//        out.println("im addresses:");
+<A NAME="571"></A></FONT><FONT ID="SingleLineComment">//        for (Im im : contact.getImAddresses()) {
+<A NAME="572"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + im.getAddress());
+<A NAME="573"></A></FONT><FONT ID="SingleLineComment">//          if (im.hasRel()) {
+<A NAME="574"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + im.getRel());
+<A NAME="575"></A></FONT><FONT ID="SingleLineComment">//          } else if (im.hasLabel()) {
+<A NAME="576"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + im.getLabel());
+<A NAME="577"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="578"></A></FONT><FONT ID="SingleLineComment">//          if (im.hasProtocol()) {
+<A NAME="579"></A></FONT><FONT ID="SingleLineComment">//            out.print(" protocol:" + im.getProtocol());
+<A NAME="580"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="581"></A></FONT><FONT ID="SingleLineComment">//          if (im.getPrimary()) {
+<A NAME="582"></A></FONT><FONT ID="SingleLineComment">//            out.print(" (primary)");
+<A NAME="583"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="584"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="585"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="586"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="587"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="588"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="589"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="590"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasImAddresses()) {
+<A NAME="591"></A></FONT><FONT ID="SingleLineComment">//        List&lt;Im&gt; ims = dest.getImAddresses();
+<A NAME="592"></A></FONT><FONT ID="SingleLineComment">//        ims.clear();
+<A NAME="593"></A></FONT><FONT ID="SingleLineComment">//        ims.addAll(src.getImAddresses());
+<A NAME="594"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="595"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="596"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="597"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="598"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;im&gt;"
+<A NAME="599"></A></FONT><FONT ID="SingleLineComment">//          + "[,rel:&lt;rel&gt;]"
+<A NAME="600"></A></FONT><FONT ID="SingleLineComment">//          + "[,label:&lt;label&gt;]"
+<A NAME="601"></A></FONT><FONT ID="SingleLineComment">//          + "[,protocol:&lt;protocol&gt;]"
+<A NAME="602"></A></FONT><FONT ID="SingleLineComment">//          + "[,primary:true|false]";
+<A NAME="603"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="604"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="605"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="606"></A></FONT><FONT ID="SingleLineComment">//  INITIALS {
+<A NAME="607"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="608"></A></FONT><FONT ID="SingleLineComment">//      Initials initials = new Initials();
+<A NAME="609"></A></FONT><FONT ID="SingleLineComment">//      initials.setValue(parser.get(PropertyName.VALUE));
+<A NAME="610"></A></FONT><FONT ID="SingleLineComment">//      contact.setInitials(initials);
+<A NAME="611"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="612"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="613"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="614"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasInitials()) {
+<A NAME="615"></A></FONT><FONT ID="SingleLineComment">//        out.println("initials: " + contact.getInitials().getValue());
+<A NAME="616"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="617"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="618"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="619"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="620"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasInitials()) {
+<A NAME="621"></A></FONT><FONT ID="SingleLineComment">//        dest.setInitials(src.getInitials());
+<A NAME="622"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="623"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="624"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="625"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="626"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;initials&gt;";
+<A NAME="627"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="628"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="629"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="630"></A></FONT><FONT ID="SingleLineComment">//  JOT(true) {
+<A NAME="631"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="632"></A></FONT><FONT ID="SingleLineComment">//      Jot jot = new Jot();
+<A NAME="633"></A></FONT><FONT ID="SingleLineComment">//      jot.setValue(parser.get(PropertyName.VALUE));
+<A NAME="634"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="635"></A></FONT><FONT ID="SingleLineComment">//        jot.setRel(Jot.Rel.valueOf(parser.get(PropertyName.REL).toUpperCase()));
+<A NAME="636"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="637"></A></FONT><FONT ID="SingleLineComment">//      contact.addJot(jot);
+<A NAME="638"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="639"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="640"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="641"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasJots()) {
+<A NAME="642"></A></FONT><FONT ID="SingleLineComment">//        out.println("jots:");
+<A NAME="643"></A></FONT><FONT ID="SingleLineComment">//        for (Jot jot : contact.getJots()) {
+<A NAME="644"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + jot.getValue());
+<A NAME="645"></A></FONT><FONT ID="SingleLineComment">//          if (jot.hasRel()) {
+<A NAME="646"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + jot.getRel().toString().toLowerCase());
+<A NAME="647"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="648"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="649"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="650"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="651"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="652"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="653"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="654"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasJots()) {
+<A NAME="655"></A></FONT><FONT ID="SingleLineComment">//        List&lt;Jot&gt; jots = dest.getJots();
+<A NAME="656"></A></FONT><FONT ID="SingleLineComment">//        jots.clear();
+<A NAME="657"></A></FONT><FONT ID="SingleLineComment">//        jots.addAll(src.getJots());
+<A NAME="658"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="659"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="660"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="661"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="662"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;jot&gt;"
+<A NAME="663"></A></FONT><FONT ID="SingleLineComment">//          + "[,rel:home|work|other|keywords|user]";
+<A NAME="664"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="665"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="666"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="667"></A></FONT><FONT ID="SingleLineComment">//  LANGUAGE(true) {
+<A NAME="668"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="669"></A></FONT><FONT ID="SingleLineComment">//      Language language = new Language();
+<A NAME="670"></A></FONT><FONT ID="SingleLineComment">//      language.setLabel(parser.get(PropertyName.VALUE));
+<A NAME="671"></A></FONT><FONT ID="SingleLineComment">//      contact.addLanguage(language);
+<A NAME="672"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="673"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="674"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="675"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasLanguages()) {
+<A NAME="676"></A></FONT><FONT ID="SingleLineComment">//        out.println("languages:");
+<A NAME="677"></A></FONT><FONT ID="SingleLineComment">//        for (Language language : contact.getLanguages()) {
+<A NAME="678"></A></FONT><FONT ID="SingleLineComment">//          out.println("  " + language.getLabel());
+<A NAME="679"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="680"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="681"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="682"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="683"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="684"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasLanguages()) {
+<A NAME="685"></A></FONT><FONT ID="SingleLineComment">//        List&lt;Language&gt; languages = dest.getLanguages();
+<A NAME="686"></A></FONT><FONT ID="SingleLineComment">//        languages.clear();
+<A NAME="687"></A></FONT><FONT ID="SingleLineComment">//        languages.addAll(src.getLanguages());
+<A NAME="688"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="689"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="690"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="691"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="692"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;language&gt;";
+<A NAME="693"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="694"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="695"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="696"></A></FONT><FONT ID="SingleLineComment">//  WHERE {
+<A NAME="697"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="698"></A></FONT><FONT ID="SingleLineComment">//      contact.setWhere(new Where(null, null, parser.get(PropertyName.VALUE)));
+<A NAME="699"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="700"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="701"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="702"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasWhere()) {
+<A NAME="703"></A></FONT><FONT ID="SingleLineComment">//        out.println("where: " + contact.getWhere().getValueString());
+<A NAME="704"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="705"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="706"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="707"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="708"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasWhere()) {
+<A NAME="709"></A></FONT><FONT ID="SingleLineComment">//        dest.setWhere(src.getWhere());
+<A NAME="710"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="711"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="712"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="713"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="714"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;where&gt;";
+<A NAME="715"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="716"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="717"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="718"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="719"></A></FONT><FONT ID="SingleLineComment">//  MAIDEN_NAME {
+<A NAME="720"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="721"></A></FONT><FONT ID="SingleLineComment">//      MaidenName maidenName = new MaidenName();
+<A NAME="722"></A></FONT><FONT ID="SingleLineComment">//      maidenName.setValue(parser.get(PropertyName.VALUE));
+<A NAME="723"></A></FONT><FONT ID="SingleLineComment">//      contact.setMaidenName(maidenName);
+<A NAME="724"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="725"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="726"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="727"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasMaidenName()) {
+<A NAME="728"></A></FONT><FONT ID="SingleLineComment">//        out.println("maiden name: " + contact.getMaidenName().getValue());
+<A NAME="729"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="730"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="731"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="732"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="733"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasMaidenName()) {
+<A NAME="734"></A></FONT><FONT ID="SingleLineComment">//        dest.setMaidenName(src.getMaidenName());
+<A NAME="735"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="736"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="737"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="738"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="739"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;maiden_name&gt;";
+<A NAME="740"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="741"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="742"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="743"></A></FONT><FONT ID="SingleLineComment">//  MILEAGE {
+<A NAME="744"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="745"></A></FONT><FONT ID="SingleLineComment">//      Mileage mileage = new Mileage();
+<A NAME="746"></A></FONT><FONT ID="SingleLineComment">//      mileage.setValue(parser.get(PropertyName.VALUE));
+<A NAME="747"></A></FONT><FONT ID="SingleLineComment">//      contact.setMileage(mileage);
+<A NAME="748"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="749"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="750"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="751"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasMileage()) {
+<A NAME="752"></A></FONT><FONT ID="SingleLineComment">//        out.println("mileage: " + contact.getMileage().getValue());
+<A NAME="753"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="754"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="755"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="756"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="757"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasMileage()) {
+<A NAME="758"></A></FONT><FONT ID="SingleLineComment">//        dest.setMileage(src.getMileage());
+<A NAME="759"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="760"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="761"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="762"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="763"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;mileage&gt;";
+<A NAME="764"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="765"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="766"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="767"></A></FONT><FONT ID="SingleLineComment">//  NAME {
+<A NAME="768"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="769"></A></FONT><FONT ID="SingleLineComment">//      Name name = new Name();
+<A NAME="770"></A></FONT><FONT ID="SingleLineComment">//      name.setFullName(new FullName(parser.get(PropertyName.VALUE), null));
+<A NAME="771"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.GIVEN)) {
+<A NAME="772"></A></FONT><FONT ID="SingleLineComment">//        name.setGivenName(new GivenName(parser.get(PropertyName.GIVEN), null));
+<A NAME="773"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="774"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.FAMILY)) {
+<A NAME="775"></A></FONT><FONT ID="SingleLineComment">//        name.setFamilyName(
+<A NAME="776"></A></FONT><FONT ID="SingleLineComment">//            new FamilyName(parser.get(PropertyName.FAMILY), null));
+<A NAME="777"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="778"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.ADDITIONAL)) {
+<A NAME="779"></A></FONT><FONT ID="SingleLineComment">//        name.setAdditionalName(
+<A NAME="780"></A></FONT><FONT ID="SingleLineComment">//            new AdditionalName(parser.get(PropertyName.ADDITIONAL), null));
+<A NAME="781"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="782"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.PREFIX)) {
+<A NAME="783"></A></FONT><FONT ID="SingleLineComment">//        name.setNamePrefix(new NamePrefix(parser.get(PropertyName.PREFIX)));
+<A NAME="784"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="785"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.SUFFIX)) {
+<A NAME="786"></A></FONT><FONT ID="SingleLineComment">//        name.setNameSuffix(new NameSuffix(parser.get(PropertyName.SUFFIX)));
+<A NAME="787"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="788"></A></FONT><FONT ID="SingleLineComment">//      contact.setName(name);
+<A NAME="789"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="790"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="791"></A></FONT><FONT ID="SingleLineComment">//    public void parseGroup(ContactGroupEntry group, ElementParser parser) {
+<A NAME="792"></A></FONT><FONT ID="SingleLineComment">//      group.setTitle(new PlainTextConstruct(parser.get(PropertyName.VALUE)));
+<A NAME="793"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="794"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="795"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="796"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasName()) {
+<A NAME="797"></A></FONT><FONT ID="SingleLineComment">//        out.println("structured name: ");
+<A NAME="798"></A></FONT><FONT ID="SingleLineComment">//        Name name = contact.getName();
+<A NAME="799"></A></FONT><FONT ID="SingleLineComment">//        if (name.hasFullName()) {
+<A NAME="800"></A></FONT><FONT ID="SingleLineComment">//          out.print(" full name: " + name.getFullName().getValue());
+<A NAME="801"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="802"></A></FONT><FONT ID="SingleLineComment">//        if (name.hasGivenName()) {
+<A NAME="803"></A></FONT><FONT ID="SingleLineComment">//          out.print(" given name: " + name.getGivenName().getValue());
+<A NAME="804"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="805"></A></FONT><FONT ID="SingleLineComment">//        if (name.hasFamilyName()) {
+<A NAME="806"></A></FONT><FONT ID="SingleLineComment">//          out.print(" family name: " + name.getFamilyName().getValue());
+<A NAME="807"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="808"></A></FONT><FONT ID="SingleLineComment">//        if (name.hasAdditionalName()) {
+<A NAME="809"></A></FONT><FONT ID="SingleLineComment">//          out.print(" additional name: " + name.getAdditionalName().getValue());
+<A NAME="810"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="811"></A></FONT><FONT ID="SingleLineComment">//        if (name.hasNamePrefix()) {
+<A NAME="812"></A></FONT><FONT ID="SingleLineComment">//          out.print(" prefix: " + name.getNamePrefix().getValue());
+<A NAME="813"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="814"></A></FONT><FONT ID="SingleLineComment">//        if (name.hasNameSuffix()) {
+<A NAME="815"></A></FONT><FONT ID="SingleLineComment">//          out.print(" suffix: " + name.getNameSuffix().getValue());
+<A NAME="816"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="817"></A></FONT><FONT ID="SingleLineComment">//        out.println();
+<A NAME="818"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="819"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="820"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="821"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="822"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasName()) {
+<A NAME="823"></A></FONT><FONT ID="SingleLineComment">//        dest.setName(src.getName());
+<A NAME="824"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="825"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="826"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="827"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="828"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;name&gt;"
+<A NAME="829"></A></FONT><FONT ID="SingleLineComment">//          + "[,given:&lt;givenName]"
+<A NAME="830"></A></FONT><FONT ID="SingleLineComment">//          + "[,family:&lt;familyName&gt;]"
+<A NAME="831"></A></FONT><FONT ID="SingleLineComment">//          + "[,additional:additionalName]"
+<A NAME="832"></A></FONT><FONT ID="SingleLineComment">//          + "[,prefix:&lt;prefix&gt;]"
+<A NAME="833"></A></FONT><FONT ID="SingleLineComment">//          + "[,suffix:&lt;suffix&gt;]";
+<A NAME="834"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="835"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="836"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="837"></A></FONT><FONT ID="SingleLineComment">//  NICKNAME {
+<A NAME="838"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="839"></A></FONT><FONT ID="SingleLineComment">//      Nickname nickname = new Nickname();
+<A NAME="840"></A></FONT><FONT ID="SingleLineComment">//      nickname.setValue(parser.get(PropertyName.VALUE));
+<A NAME="841"></A></FONT><FONT ID="SingleLineComment">//      contact.setNickname(nickname);
+<A NAME="842"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="843"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="844"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="845"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasNickname()) {
+<A NAME="846"></A></FONT><FONT ID="SingleLineComment">//        out.println("nickname: " + contact.getNickname().getValue());
+<A NAME="847"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="848"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="849"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="850"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="851"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasNickname()) {
+<A NAME="852"></A></FONT><FONT ID="SingleLineComment">//        dest.setNickname(src.getNickname());
+<A NAME="853"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="854"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="855"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="856"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="857"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;nickname&gt;";
+<A NAME="858"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="859"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="860"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="861"></A></FONT><FONT ID="SingleLineComment">//  NOTES {
+<A NAME="862"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="863"></A></FONT><FONT ID="SingleLineComment">//      contact.setContent(
+<A NAME="864"></A></FONT><FONT ID="SingleLineComment">//          new PlainTextConstruct(parser.get(PropertyName.VALUE)));
+<A NAME="865"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="866"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="867"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="868"></A></FONT><FONT ID="SingleLineComment">//      if (contact.getContent() != null) {
+<A NAME="869"></A></FONT><FONT ID="SingleLineComment">//        out.println("notes: "
+<A NAME="870"></A></FONT><FONT ID="SingleLineComment">//            + contact.getTextContent().getContent().getPlainText());
+<A NAME="871"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="872"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="873"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="874"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="875"></A></FONT><FONT ID="SingleLineComment">//      if (src.getContent() != null) {
+<A NAME="876"></A></FONT><FONT ID="SingleLineComment">//        dest.setContent(src.getContent());
+<A NAME="877"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="878"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="879"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="880"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="881"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;notes&gt;";
+<A NAME="882"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="883"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="884"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="885"></A></FONT><FONT ID="SingleLineComment">//  OCCUPATION {
+<A NAME="886"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="887"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="888"></A></FONT><FONT ID="SingleLineComment">//      Occupation occupation = new Occupation();
+<A NAME="889"></A></FONT><FONT ID="SingleLineComment">//      occupation.setValue(parser.get(PropertyName.VALUE));
+<A NAME="890"></A></FONT><FONT ID="SingleLineComment">//      contact.setOccupation(occupation);
+<A NAME="891"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="892"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="893"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="894"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasOccupation()) {
+<A NAME="895"></A></FONT><FONT ID="SingleLineComment">//        out.println("occupation: " + contact.getOccupation().getValue());
+<A NAME="896"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="897"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="898"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="899"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="900"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasOccupation()) {
+<A NAME="901"></A></FONT><FONT ID="SingleLineComment">//        dest.setOccupation(src.getOccupation());
+<A NAME="902"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="903"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="904"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="905"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="906"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;occupation&gt;";
+<A NAME="907"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="908"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="909"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="910"></A></FONT><FONT ID="SingleLineComment">//  ORGANIZATION(true) {
+<A NAME="911"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="912"></A></FONT><FONT ID="SingleLineComment">//      Organization org = new Organization();
+<A NAME="913"></A></FONT><FONT ID="SingleLineComment">//      org.setOrgName(new OrgName(parser.get(PropertyName.VALUE)));
+<A NAME="914"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.DEPARTMENT)) {
+<A NAME="915"></A></FONT><FONT ID="SingleLineComment">//        org.setOrgDepartment(
+<A NAME="916"></A></FONT><FONT ID="SingleLineComment">//            new OrgDepartment(parser.get(PropertyName.DEPARTMENT)));
+<A NAME="917"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="918"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="919"></A></FONT><FONT ID="SingleLineComment">//        org.setRel(parser.get(PropertyName.REL));
+<A NAME="920"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="921"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="922"></A></FONT><FONT ID="SingleLineComment">//        org.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="923"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="924"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.TITLE)) {
+<A NAME="925"></A></FONT><FONT ID="SingleLineComment">//        org.setOrgTitle(new OrgTitle(parser.get(PropertyName.TITLE)));
+<A NAME="926"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="927"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.SYMBOL)) {
+<A NAME="928"></A></FONT><FONT ID="SingleLineComment">//        org.setOrgSymbol(new OrgSymbol(parser.get(PropertyName.SYMBOL)));
+<A NAME="929"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="930"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.DESCRIPTION)) {
+<A NAME="931"></A></FONT><FONT ID="SingleLineComment">//        org.setOrgJobDescription(
+<A NAME="932"></A></FONT><FONT ID="SingleLineComment">//            new OrgJobDescription(parser.get(PropertyName.DESCRIPTION)));
+<A NAME="933"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="934"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.WHERE)) {
+<A NAME="935"></A></FONT><FONT ID="SingleLineComment">//        Where where = new Where();
+<A NAME="936"></A></FONT><FONT ID="SingleLineComment">//        where.setValueString(parser.get(PropertyName.WHERE));
+<A NAME="937"></A></FONT><FONT ID="SingleLineComment">//        org.setWhere(where);
+<A NAME="938"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="939"></A></FONT><FONT ID="SingleLineComment">//      contact.addOrganization(org);
+<A NAME="940"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="941"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="942"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="943"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasOrganizations()) {
+<A NAME="944"></A></FONT><FONT ID="SingleLineComment">//        out.println("organizations:");
+<A NAME="945"></A></FONT><FONT ID="SingleLineComment">//        for (Organization organization : contact.getOrganizations()) {
+<A NAME="946"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + organization.getOrgName().getValue());
+<A NAME="947"></A></FONT><FONT ID="SingleLineComment">//          if (organization.hasRel()) {
+<A NAME="948"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + organization.getRel());
+<A NAME="949"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="950"></A></FONT><FONT ID="SingleLineComment">//          if (organization.hasLabel()) {
+<A NAME="951"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + organization.getLabel());
+<A NAME="952"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="953"></A></FONT><FONT ID="SingleLineComment">//          if (organization.hasOrgDepartment()) {
+<A NAME="954"></A></FONT><FONT ID="SingleLineComment">//            out.print(" department:"
+<A NAME="955"></A></FONT><FONT ID="SingleLineComment">//                + organization.getOrgDepartment().getValue());
+<A NAME="956"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="957"></A></FONT><FONT ID="SingleLineComment">//          if (organization.hasOrgTitle()) {
+<A NAME="958"></A></FONT><FONT ID="SingleLineComment">//            out.print(" title:" + organization.getOrgTitle().getValue());
+<A NAME="959"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="960"></A></FONT><FONT ID="SingleLineComment">//          if (organization.hasOrgSymbol()) {
+<A NAME="961"></A></FONT><FONT ID="SingleLineComment">//            out.print(" symbol:" + organization.getOrgSymbol().getValue());
+<A NAME="962"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="963"></A></FONT><FONT ID="SingleLineComment">//          if (organization.hasWhere()) {
+<A NAME="964"></A></FONT><FONT ID="SingleLineComment">//            out.print(" where:" + organization.getWhere().getValueString());
+<A NAME="965"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="966"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="967"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="968"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="969"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="970"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="971"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="972"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasOrganizations()) {
+<A NAME="973"></A></FONT><FONT ID="SingleLineComment">//        List&lt;Organization&gt; organizations = dest.getOrganizations();
+<A NAME="974"></A></FONT><FONT ID="SingleLineComment">//        organizations.clear();
+<A NAME="975"></A></FONT><FONT ID="SingleLineComment">//        organizations.addAll(src.getOrganizations());
+<A NAME="976"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="977"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="978"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="979"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="980"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;name&gt;"
+<A NAME="981"></A></FONT><FONT ID="SingleLineComment">//          + "[,rel:&lt;rel&gt;]"
+<A NAME="982"></A></FONT><FONT ID="SingleLineComment">//          + "[,label&lt;label&gt;]"
+<A NAME="983"></A></FONT><FONT ID="SingleLineComment">//          + "[,primary:true|false]"
+<A NAME="984"></A></FONT><FONT ID="SingleLineComment">//          + "[,department:&lt;department&gt;]"
+<A NAME="985"></A></FONT><FONT ID="SingleLineComment">//          + "[,description:&lt;description&gt;]"
+<A NAME="986"></A></FONT><FONT ID="SingleLineComment">//          + "[,symbol:&lt;symbol&gt;]"
+<A NAME="987"></A></FONT><FONT ID="SingleLineComment">//          + "[,title:&lt;title&gt;]"
+<A NAME="988"></A></FONT><FONT ID="SingleLineComment">//          + "[,where:&lt;where&gt;]";
+<A NAME="989"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="990"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="991"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="992"></A></FONT><FONT ID="SingleLineComment">//  PHONE(true) {
+<A NAME="993"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="994"></A></FONT><FONT ID="SingleLineComment">//      PhoneNumber phone = new PhoneNumber();
+<A NAME="995"></A></FONT><FONT ID="SingleLineComment">//      phone.setPhoneNumber(parser.get(PropertyName.VALUE));
+<A NAME="996"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="997"></A></FONT><FONT ID="SingleLineComment">//        phone.setRel(parser.get(PropertyName.REL));
+<A NAME="998"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="999"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="1000"></A></FONT><FONT ID="SingleLineComment">//        phone.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="1001"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1002"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.URI)) {
+<A NAME="1003"></A></FONT><FONT ID="SingleLineComment">//        phone.setUri(parser.get(PropertyName.URI));
+<A NAME="1004"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1005"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.PRIMARY)) {
+<A NAME="1006"></A></FONT><FONT ID="SingleLineComment">//        phone.setPrimary(parser.is(PropertyName.PRIMARY));
+<A NAME="1007"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1008"></A></FONT><FONT ID="SingleLineComment">//      contact.addPhoneNumber(phone);
+<A NAME="1009"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1010"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1011"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="1012"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasPhoneNumbers()) {
+<A NAME="1013"></A></FONT><FONT ID="SingleLineComment">//        out.println("phone numbers:");
+<A NAME="1014"></A></FONT><FONT ID="SingleLineComment">//        for (PhoneNumber phone : contact.getPhoneNumbers()) {
+<A NAME="1015"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + phone.getPhoneNumber());
+<A NAME="1016"></A></FONT><FONT ID="SingleLineComment">//          if (phone.getRel() != null) {
+<A NAME="1017"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + phone.getRel());
+<A NAME="1018"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1019"></A></FONT><FONT ID="SingleLineComment">//          if (phone.getLabel() != null) {
+<A NAME="1020"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + phone.getLabel());
+<A NAME="1021"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1022"></A></FONT><FONT ID="SingleLineComment">//          if (phone.getUri() != null) {
+<A NAME="1023"></A></FONT><FONT ID="SingleLineComment">//            out.print(" uri:" + phone.getUri());
+<A NAME="1024"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1025"></A></FONT><FONT ID="SingleLineComment">//          if (phone.getPrimary()) {
+<A NAME="1026"></A></FONT><FONT ID="SingleLineComment">//            out.print(" (primary)");
+<A NAME="1027"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1028"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="1029"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="1030"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1031"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1032"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1033"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="1034"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasPhoneNumbers()) {
+<A NAME="1035"></A></FONT><FONT ID="SingleLineComment">//        List&lt;PhoneNumber&gt; phoneNumbers = dest.getPhoneNumbers();
+<A NAME="1036"></A></FONT><FONT ID="SingleLineComment">//        phoneNumbers.clear();
+<A NAME="1037"></A></FONT><FONT ID="SingleLineComment">//        phoneNumbers.addAll(src.getPhoneNumbers());
+<A NAME="1038"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1039"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1040"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1041"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="1042"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;phone&gt;"
+<A NAME="1043"></A></FONT><FONT ID="SingleLineComment">//          + "[,rel:&lt;rel&gt;]"
+<A NAME="1044"></A></FONT><FONT ID="SingleLineComment">//          + "[,label:&lt;label&gt;]"
+<A NAME="1045"></A></FONT><FONT ID="SingleLineComment">//          + "[,uri:&lt;uri&gt;]"
+<A NAME="1046"></A></FONT><FONT ID="SingleLineComment">//          + "[,primary:true|false]";
+<A NAME="1047"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1048"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="1049"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1050"></A></FONT><FONT ID="SingleLineComment">//  PRIORITY {
+<A NAME="1051"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="1052"></A></FONT><FONT ID="SingleLineComment">//      Priority priority = new Priority();
+<A NAME="1053"></A></FONT><FONT ID="SingleLineComment">//      priority.setRel(
+<A NAME="1054"></A></FONT><FONT ID="SingleLineComment">//          Priority.Rel.valueOf(parser.get(PropertyName.VALUE).toUpperCase()));
+<A NAME="1055"></A></FONT><FONT ID="SingleLineComment">//      contact.setPriority(priority);
+<A NAME="1056"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1057"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1058"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="1059"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasPriority()) {
+<A NAME="1060"></A></FONT><FONT ID="SingleLineComment">//        out.println("priority: "
+<A NAME="1061"></A></FONT><FONT ID="SingleLineComment">//            + contact.getPriority().getRel().toString().toLowerCase());
+<A NAME="1062"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1063"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1064"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1065"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="1066"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasPriority()) {
+<A NAME="1067"></A></FONT><FONT ID="SingleLineComment">//        dest.setPriority(src.getPriority());
+<A NAME="1068"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1069"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1070"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1071"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="1072"></A></FONT><FONT ID="SingleLineComment">//      return "low|normal|high";
+<A NAME="1073"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1074"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="1075"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1076"></A></FONT><FONT ID="SingleLineComment">//  RELATION(true) {
+<A NAME="1077"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="1078"></A></FONT><FONT ID="SingleLineComment">//      Relation relation = new Relation();
+<A NAME="1079"></A></FONT><FONT ID="SingleLineComment">//      relation.setValue(parser.get(PropertyName.VALUE));
+<A NAME="1080"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="1081"></A></FONT><FONT ID="SingleLineComment">//        relation.setRel(
+<A NAME="1082"></A></FONT><FONT ID="SingleLineComment">//            Relation.Rel.valueOf(parser.get(PropertyName.REL).toUpperCase()));
+<A NAME="1083"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1084"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="1085"></A></FONT><FONT ID="SingleLineComment">//        relation.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="1086"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1087"></A></FONT><FONT ID="SingleLineComment">//      contact.addRelation(relation);
+<A NAME="1088"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1089"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1090"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="1091"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasRelations()) {
+<A NAME="1092"></A></FONT><FONT ID="SingleLineComment">//        out.println("relations:");
+<A NAME="1093"></A></FONT><FONT ID="SingleLineComment">//        for (Relation relation : contact.getRelations()) {
+<A NAME="1094"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + relation.getValue());
+<A NAME="1095"></A></FONT><FONT ID="SingleLineComment">//          if (relation.hasLabel()) {
+<A NAME="1096"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + relation.getLabel());
+<A NAME="1097"></A></FONT><FONT ID="SingleLineComment">//          } else if (relation.hasRel()) {
+<A NAME="1098"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + relation.getRel().toString().toLowerCase());
+<A NAME="1099"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1100"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="1101"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="1102"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1103"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1104"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1105"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="1106"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasRelations()) {
+<A NAME="1107"></A></FONT><FONT ID="SingleLineComment">//        List&lt;Relation&gt; relations = dest.getRelations();
+<A NAME="1108"></A></FONT><FONT ID="SingleLineComment">//        relations.clear();
+<A NAME="1109"></A></FONT><FONT ID="SingleLineComment">//        relations.addAll(src.getRelations());
+<A NAME="1110"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1111"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1112"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1113"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="1114"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;relation&gt;"
+<A NAME="1115"></A></FONT><FONT ID="SingleLineComment">//          + "[,label:&lt;label&gt;]"
+<A NAME="1116"></A></FONT><FONT ID="SingleLineComment">//          + "[,rel:&lt;rel&gt;]";
+<A NAME="1117"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1118"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="1119"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1120"></A></FONT><FONT ID="SingleLineComment">//  SENSITIVITY {
+<A NAME="1121"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1122"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="1123"></A></FONT><FONT ID="SingleLineComment">//      Sensitivity sensitivity = new Sensitivity();
+<A NAME="1124"></A></FONT><FONT ID="SingleLineComment">//      sensitivity.setRel(
+<A NAME="1125"></A></FONT><FONT ID="SingleLineComment">//          Sensitivity.Rel.valueOf(
+<A NAME="1126"></A></FONT><FONT ID="SingleLineComment">//              parser.get(PropertyName.VALUE).toUpperCase()));
+<A NAME="1127"></A></FONT><FONT ID="SingleLineComment">//      contact.setSensitivity(sensitivity);
+<A NAME="1128"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1129"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1130"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="1131"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasSensitivity()) {
+<A NAME="1132"></A></FONT><FONT ID="SingleLineComment">//        out.println("sensitivity:"
+<A NAME="1133"></A></FONT><FONT ID="SingleLineComment">//            + contact.getSensitivity().getRel().toString().toLowerCase());
+<A NAME="1134"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1135"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1136"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1137"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="1138"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasSensitivity()) {
+<A NAME="1139"></A></FONT><FONT ID="SingleLineComment">//        dest.setSensitivity(src.getSensitivity());
+<A NAME="1140"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1141"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1142"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1143"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="1144"></A></FONT><FONT ID="SingleLineComment">//      return "confidental|normal|personal|private";
+<A NAME="1145"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1146"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="1147"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1148"></A></FONT><FONT ID="SingleLineComment">//  SHORT_NAME {
+<A NAME="1149"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="1150"></A></FONT><FONT ID="SingleLineComment">//      ShortName shortName = new ShortName();
+<A NAME="1151"></A></FONT><FONT ID="SingleLineComment">//      shortName.setValue(parser.get(PropertyName.VALUE));
+<A NAME="1152"></A></FONT><FONT ID="SingleLineComment">//      contact.setShortName(shortName);
+<A NAME="1153"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1154"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1155"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="1156"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasShortName()) {
+<A NAME="1157"></A></FONT><FONT ID="SingleLineComment">//        out.println("short name:" + contact.getShortName().getValue());
+<A NAME="1158"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1159"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1160"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1161"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="1162"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasShortName()) {
+<A NAME="1163"></A></FONT><FONT ID="SingleLineComment">//        dest.setShortName(src.getShortName());
+<A NAME="1164"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1165"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1166"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1167"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="1168"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;short_name&gt;";
+<A NAME="1169"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1170"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="1171"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1172"></A></FONT><FONT ID="SingleLineComment">//  POSTAL(true) {
+<A NAME="1173"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="1174"></A></FONT><FONT ID="SingleLineComment">//      StructuredPostalAddress address = new StructuredPostalAddress();
+<A NAME="1175"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="1176"></A></FONT><FONT ID="SingleLineComment">//        address.setRel(parser.get(PropertyName.REL));
+<A NAME="1177"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1178"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="1179"></A></FONT><FONT ID="SingleLineComment">//        address.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="1180"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1181"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.PRIMARY)) {
+<A NAME="1182"></A></FONT><FONT ID="SingleLineComment">//        address.setPrimary(parser.is(PropertyName.PRIMARY));
+<A NAME="1183"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1184"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.CITY)) {
+<A NAME="1185"></A></FONT><FONT ID="SingleLineComment">//        address.setCity(new City(parser.get(PropertyName.CITY)));
+<A NAME="1186"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1187"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.COUNTRY)) {
+<A NAME="1188"></A></FONT><FONT ID="SingleLineComment">//        // Don't care about country code
+<A NAME="1189"></A></FONT><FONT ID="SingleLineComment">//        address.setCountry(new Country(null, parser.get(PropertyName.COUNTRY)));
+<A NAME="1190"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1191"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.FORMATTED)) {
+<A NAME="1192"></A></FONT><FONT ID="SingleLineComment">//        address.setFormattedAddress(
+<A NAME="1193"></A></FONT><FONT ID="SingleLineComment">//            new FormattedAddress(parser.get(PropertyName.FORMATTED)));
+<A NAME="1194"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1195"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.NEIGHBORHOOD)) {
+<A NAME="1196"></A></FONT><FONT ID="SingleLineComment">//        address.setNeighborhood(
+<A NAME="1197"></A></FONT><FONT ID="SingleLineComment">//            new Neighborhood(parser.get(PropertyName.NEIGHBORHOOD)));
+<A NAME="1198"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1199"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.POBOX)) {
+<A NAME="1200"></A></FONT><FONT ID="SingleLineComment">//        address.setPobox(new PoBox(parser.get(PropertyName.POBOX)));
+<A NAME="1201"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1202"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.POSTCODE)) {
+<A NAME="1203"></A></FONT><FONT ID="SingleLineComment">//        address.setPostcode(new PostCode(parser.get(PropertyName.POSTCODE)));
+<A NAME="1204"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1205"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REGION)) {
+<A NAME="1206"></A></FONT><FONT ID="SingleLineComment">//        address.setRegion(new Region(parser.get(PropertyName.REGION)));
+<A NAME="1207"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1208"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.STREET)) {
+<A NAME="1209"></A></FONT><FONT ID="SingleLineComment">//        address.setStreet(new Street(parser.get(PropertyName.STREET)));
+<A NAME="1210"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1211"></A></FONT><FONT ID="SingleLineComment">//      contact.addStructuredPostalAddress(address);
+<A NAME="1212"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1213"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1214"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="1215"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasStructuredPostalAddresses()) {
+<A NAME="1216"></A></FONT><FONT ID="SingleLineComment">//        out.println("addresses:");
+<A NAME="1217"></A></FONT><FONT ID="SingleLineComment">//        for (StructuredPostalAddress address
+<A NAME="1218"></A></FONT><FONT ID="SingleLineComment">//            : contact.getStructuredPostalAddresses()) {
+<A NAME="1219"></A></FONT><FONT ID="SingleLineComment">//          out.print("  ");
+<A NAME="1220"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasRel()) {
+<A NAME="1221"></A></FONT><FONT ID="SingleLineComment">//            out.print(" rel:" + address.getRel());
+<A NAME="1222"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1223"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasLabel()) {
+<A NAME="1224"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + address.getLabel());
+<A NAME="1225"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1226"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasCity()) {
+<A NAME="1227"></A></FONT><FONT ID="SingleLineComment">//            out.print(" city:" + address.getCity().getValue());
+<A NAME="1228"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1229"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasCountry()) {
+<A NAME="1230"></A></FONT><FONT ID="SingleLineComment">//            out.print(" country:" + address.getCountry().getValue());
+<A NAME="1231"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1232"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasFormattedAddress()) {
+<A NAME="1233"></A></FONT><FONT ID="SingleLineComment">//            out.print(" formatted:" + address.getFormattedAddress().getValue());
+<A NAME="1234"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1235"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasNeighborhood()) {
+<A NAME="1236"></A></FONT><FONT ID="SingleLineComment">//            out.print(" neighborhood:" + address.getNeighborhood().getValue());
+<A NAME="1237"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1238"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasPobox()) {
+<A NAME="1239"></A></FONT><FONT ID="SingleLineComment">//            out.print(" pobox:" + address.getPobox().getValue());
+<A NAME="1240"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1241"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasPostcode()) {
+<A NAME="1242"></A></FONT><FONT ID="SingleLineComment">//            out.print(" postcode:" + address.getPostcode().getValue());
+<A NAME="1243"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1244"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasRegion()) {
+<A NAME="1245"></A></FONT><FONT ID="SingleLineComment">//            out.print(" region:" + address.getRegion().getValue());
+<A NAME="1246"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1247"></A></FONT><FONT ID="SingleLineComment">//          if (address.hasStreet()) {
+<A NAME="1248"></A></FONT><FONT ID="SingleLineComment">//            out.print(" street:" + address.getStreet().getValue());
+<A NAME="1249"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1250"></A></FONT><FONT ID="SingleLineComment">//          if (address.getPrimary()) {
+<A NAME="1251"></A></FONT><FONT ID="SingleLineComment">//            out.print(" (primary)");
+<A NAME="1252"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1253"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="1254"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="1255"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1256"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1257"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1258"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="1259"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasStructuredPostalAddresses()) {
+<A NAME="1260"></A></FONT><FONT ID="SingleLineComment">//        List&lt;StructuredPostalAddress&gt; structuredPostalAddresses =
+<A NAME="1261"></A></FONT><FONT ID="SingleLineComment">//            dest.getStructuredPostalAddresses();
+<A NAME="1262"></A></FONT><FONT ID="SingleLineComment">//        structuredPostalAddresses.clear();
+<A NAME="1263"></A></FONT><FONT ID="SingleLineComment">//        structuredPostalAddresses.addAll(src.getStructuredPostalAddresses());
+<A NAME="1264"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1265"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1266"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1267"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="1268"></A></FONT><FONT ID="SingleLineComment">//      return "[rel:&lt;rel&gt;]"
+<A NAME="1269"></A></FONT><FONT ID="SingleLineComment">//          + "[,label:&lt;label&gt;]"
+<A NAME="1270"></A></FONT><FONT ID="SingleLineComment">//          + "[,primary:true|false]"
+<A NAME="1271"></A></FONT><FONT ID="SingleLineComment">//          + "[,city:&lt;city&gt;]"
+<A NAME="1272"></A></FONT><FONT ID="SingleLineComment">//          + "[,country:&lt;country&gt;]"
+<A NAME="1273"></A></FONT><FONT ID="SingleLineComment">//          + "[,formatted:&lt;formattedAddress&gt;]"
+<A NAME="1274"></A></FONT><FONT ID="SingleLineComment">//          + "[,neighborhood:&lt;neighborhood&gt;]"
+<A NAME="1275"></A></FONT><FONT ID="SingleLineComment">//          + "[,pobox:&lt;poBox&gt;]"
+<A NAME="1276"></A></FONT><FONT ID="SingleLineComment">//          + "[,postcode:&lt;postCode&gt;]"
+<A NAME="1277"></A></FONT><FONT ID="SingleLineComment">//          + "[,region:&lt;region&gt;]"
+<A NAME="1278"></A></FONT><FONT ID="SingleLineComment">//          + "[,street:&lt;street&gt;]";
+<A NAME="1279"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1280"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="1281"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1282"></A></FONT><FONT ID="SingleLineComment">//  SUBJECT {
+<A NAME="1283"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="1284"></A></FONT><FONT ID="SingleLineComment">//      Subject subject = new Subject();
+<A NAME="1285"></A></FONT><FONT ID="SingleLineComment">//      subject.setValue(parser.get(PropertyName.VALUE));
+<A NAME="1286"></A></FONT><FONT ID="SingleLineComment">//      contact.setSubject(subject);
+<A NAME="1287"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1288"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1289"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="1290"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasSubject()) {
+<A NAME="1291"></A></FONT><FONT ID="SingleLineComment">//        out.println("subject:" + contact.getSubject().getValue());
+<A NAME="1292"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1293"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1294"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1295"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="1296"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasSubject()) {
+<A NAME="1297"></A></FONT><FONT ID="SingleLineComment">//        dest.setSubject(src.getSubject());
+<A NAME="1298"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1299"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1300"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1301"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="1302"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;subject&gt;";
+<A NAME="1303"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1304"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="1305"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1306"></A></FONT><FONT ID="SingleLineComment">//  USER_DEFINED_FIELD(true) {
+<A NAME="1307"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="1308"></A></FONT><FONT ID="SingleLineComment">//      UserDefinedField userDefinedField = new UserDefinedField();
+<A NAME="1309"></A></FONT><FONT ID="SingleLineComment">//      userDefinedField.setValue(parser.get(PropertyName.VALUE));
+<A NAME="1310"></A></FONT><FONT ID="SingleLineComment">//      userDefinedField.setKey(parser.get(PropertyName.KEY));
+<A NAME="1311"></A></FONT><FONT ID="SingleLineComment">//      contact.addUserDefinedField(userDefinedField);
+<A NAME="1312"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1313"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1314"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="1315"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasUserDefinedFields()) {
+<A NAME="1316"></A></FONT><FONT ID="SingleLineComment">//        out.println("user defined fields:");
+<A NAME="1317"></A></FONT><FONT ID="SingleLineComment">//        for (UserDefinedField field : contact.getUserDefinedFields()) {
+<A NAME="1318"></A></FONT><FONT ID="SingleLineComment">//          out.println("  " + field.getValue() + " key: " + field.getKey());
+<A NAME="1319"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="1320"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1321"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1322"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1323"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="1324"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasUserDefinedFields()) {
+<A NAME="1325"></A></FONT><FONT ID="SingleLineComment">//        List&lt;UserDefinedField&gt; userDefinedFields = dest.getUserDefinedFields();
+<A NAME="1326"></A></FONT><FONT ID="SingleLineComment">//        userDefinedFields.clear();
+<A NAME="1327"></A></FONT><FONT ID="SingleLineComment">//        userDefinedFields.addAll(src.getUserDefinedFields());
+<A NAME="1328"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1329"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1330"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1331"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="1332"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;value&gt;,key:&lt;key&gt;";
+<A NAME="1333"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1334"></A></FONT><FONT ID="SingleLineComment">//  },
+<A NAME="1335"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1336"></A></FONT><FONT ID="SingleLineComment">//  WEBSITE(true) {
+<A NAME="1337"></A></FONT><FONT ID="SingleLineComment">//    public void parse(ContactEntry contact, ElementParser parser) {
+<A NAME="1338"></A></FONT><FONT ID="SingleLineComment">//      Website website = new Website();
+<A NAME="1339"></A></FONT><FONT ID="SingleLineComment">//      website.setHref(parser.get(PropertyName.VALUE));
+<A NAME="1340"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.REL)) {
+<A NAME="1341"></A></FONT><FONT ID="SingleLineComment">//        website.setRel(
+<A NAME="1342"></A></FONT><FONT ID="SingleLineComment">//            Website.Rel.valueOf(parser.get(PropertyName.REL).toLowerCase()));
+<A NAME="1343"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1344"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.LABEL)) {
+<A NAME="1345"></A></FONT><FONT ID="SingleLineComment">//        website.setLabel(parser.get(PropertyName.LABEL));
+<A NAME="1346"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1347"></A></FONT><FONT ID="SingleLineComment">//      if (parser.has(PropertyName.PRIMARY)) {
+<A NAME="1348"></A></FONT><FONT ID="SingleLineComment">//        website.setPrimary(parser.is(PropertyName.PRIMARY));
+<A NAME="1349"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1350"></A></FONT><FONT ID="SingleLineComment">//      contact.addWebsite(website);
+<A NAME="1351"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1352"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1353"></A></FONT><FONT ID="SingleLineComment">//    public void print(PrintStream out, ContactEntry contact) {
+<A NAME="1354"></A></FONT><FONT ID="SingleLineComment">//      if (contact.hasWebsites()) {
+<A NAME="1355"></A></FONT><FONT ID="SingleLineComment">//        out.println("websites:");
+<A NAME="1356"></A></FONT><FONT ID="SingleLineComment">//        for (Website website : contact.getWebsites()) {
+<A NAME="1357"></A></FONT><FONT ID="SingleLineComment">//          out.print("  " + website.getHref());
+<A NAME="1358"></A></FONT><FONT ID="SingleLineComment">//          if (website.hasRel()) {
+<A NAME="1359"></A></FONT><FONT ID="SingleLineComment">//            out.print(" ref:" + website.getRel().toString().toLowerCase());
+<A NAME="1360"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1361"></A></FONT><FONT ID="SingleLineComment">//          if (website.hasLabel()) {
+<A NAME="1362"></A></FONT><FONT ID="SingleLineComment">//            out.print(" label:" + website.getLabel());
+<A NAME="1363"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1364"></A></FONT><FONT ID="SingleLineComment">//          if (website.getPrimary()) {
+<A NAME="1365"></A></FONT><FONT ID="SingleLineComment">//            out.print(" (primary)");
+<A NAME="1366"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="1367"></A></FONT><FONT ID="SingleLineComment">//          out.println();
+<A NAME="1368"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="1369"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1370"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1371"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1372"></A></FONT><FONT ID="SingleLineComment">//    public void update(ContactEntry dest, ContactEntry src) {
+<A NAME="1373"></A></FONT><FONT ID="SingleLineComment">//      if (src.hasWebsites()) {
+<A NAME="1374"></A></FONT><FONT ID="SingleLineComment">//        List&lt;Website&gt; websites = dest.getWebsites();
+<A NAME="1375"></A></FONT><FONT ID="SingleLineComment">//        websites.clear();
+<A NAME="1376"></A></FONT><FONT ID="SingleLineComment">//        websites.addAll(src.getWebsites());
+<A NAME="1377"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1378"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1379"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1380"></A></FONT><FONT ID="SingleLineComment">//    public String getUsage() {
+<A NAME="1381"></A></FONT><FONT ID="SingleLineComment">//      return "&lt;url&gt;"
+<A NAME="1382"></A></FONT><FONT ID="SingleLineComment">//          + "[,rel:&lt;rel&gt;]"
+<A NAME="1383"></A></FONT><FONT ID="SingleLineComment">//          + "[label:&lt;label&gt;]"
+<A NAME="1384"></A></FONT><FONT ID="SingleLineComment">//          + "[,primary:true|false]";
+<A NAME="1385"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1386"></A></FONT><FONT ID="SingleLineComment">//  };
+<A NAME="1387"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1388"></A></FONT><FONT ID="SingleLineComment">//  // Flag to indicate if the element can be repeated.
+<A NAME="1389"></A></FONT><FONT ID="SingleLineComment">//  private final boolean repetable;
+<A NAME="1390"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1391"></A></FONT><FONT ID="SingleLineComment">//  // some regexp for parameter parsing/checking
+<A NAME="1392"></A></FONT><FONT ID="SingleLineComment">//  private final static Pattern REPEATED_ARG_PATTERN
+<A NAME="1393"></A></FONT><FONT ID="SingleLineComment">//      = Pattern.compile("^(\\D+)\\d*$");
+<A NAME="1394"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1395"></A></FONT><FONT ID="SingleLineComment">//  // Constructors.
+<A NAME="1396"></A></FONT><FONT ID="SingleLineComment">//  private ElementHelper(boolean repetable) { this.repetable = repetable; }
+<A NAME="1397"></A></FONT><FONT ID="SingleLineComment">//  private ElementHelper() { this(false); }
+<A NAME="1398"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1399"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="1400"></A></FONT><FONT ID="SingleLineComment">//   * The default implementation just throws an UnsuportedOperationException, and
+<A NAME="1401"></A></FONT><FONT ID="SingleLineComment">//   * only those helpers override it, what are used in parsing groups elements.
+<A NAME="1402"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1403"></A></FONT><FONT ID="SingleLineComment">//   * @param group  the group the parsed element should be added or set.
+<A NAME="1404"></A></FONT><FONT ID="SingleLineComment">//   * @param parser the parser used for the parsing of the description.
+<A NAME="1405"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1406"></A></FONT><FONT ID="SingleLineComment">//   * @throws UnsupportedOperationException in case the specific element can not
+<A NAME="1407"></A></FONT><FONT ID="SingleLineComment">//   *         be set on a ContactGroupEntry.
+<A NAME="1408"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1409"></A></FONT><FONT ID="SingleLineComment">//   * @see ElementParser
+<A NAME="1410"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="1411"></A></FONT><FONT ID="SingleLineComment">//  public void parseGroup(ContactGroupEntry group, ElementParser parser) {
+<A NAME="1412"></A></FONT><FONT ID="SingleLineComment">//    throw new UnsupportedOperationException("parseGroup not supported for"
+<A NAME="1413"></A></FONT><FONT ID="SingleLineComment">//        + this.toString().toLowerCase() + " element");
+<A NAME="1414"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="1415"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1416"></A></FONT><FONT ID="SingleLineComment">//  private static ElementHelper find(String name)
+<A NAME="1417"></A></FONT><FONT ID="SingleLineComment">//      throws IllegalArgumentException {
+<A NAME="1418"></A></FONT><FONT ID="SingleLineComment">//    Matcher m = REPEATED_ARG_PATTERN.matcher(name);
+<A NAME="1419"></A></FONT><FONT ID="SingleLineComment">//    if (!m.matches()) {
+<A NAME="1420"></A></FONT><FONT ID="SingleLineComment">//      throw new IllegalArgumentException("badly formated parameter: " + name);
+<A NAME="1421"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1422"></A></FONT><FONT ID="SingleLineComment">//    try {
+<A NAME="1423"></A></FONT><FONT ID="SingleLineComment">//      return valueOf(m.group(1).toUpperCase());
+<A NAME="1424"></A></FONT><FONT ID="SingleLineComment">//    } catch (IllegalArgumentException ex) {
+<A NAME="1425"></A></FONT><FONT ID="SingleLineComment">//      throw new IllegalArgumentException("unknown parameter: " + name);
+<A NAME="1426"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1427"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="1428"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1429"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="1430"></A></FONT><FONT ID="SingleLineComment">//   * Builds a contact from the list of element descriptions.
+<A NAME="1431"></A></FONT><FONT ID="SingleLineComment">//   * It delegates the element specific parsing to the appropriate helper
+<A NAME="1432"></A></FONT><FONT ID="SingleLineComment">//   * instances. The actual element type is matched by the name of the enum
+<A NAME="1433"></A></FONT><FONT ID="SingleLineComment">//   * instance, so the element names specified in the parameters should (almost)
+<A NAME="1434"></A></FONT><FONT ID="SingleLineComment">//   * match the name of enum instances. The exceptions are those elements what
+<A NAME="1435"></A></FONT><FONT ID="SingleLineComment">//   * can be repeated, when the parameter format is "name&lt;n&gt;".* Due to this
+<A NAME="1436"></A></FONT><FONT ID="SingleLineComment">//   * formating convention we cannot use directly the valueOf() facility of the
+<A NAME="1437"></A></FONT><FONT ID="SingleLineComment">//   * enum.
+<A NAME="1438"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1439"></A></FONT><FONT ID="SingleLineComment">//   * @param contact    the contact to build.
+<A NAME="1440"></A></FONT><FONT ID="SingleLineComment">//   * @param parameters list of element descriptions.
+<A NAME="1441"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1442"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="1443"></A></FONT><FONT ID="SingleLineComment">//  public static void buildContact(ContactEntry contact,
+<A NAME="1444"></A></FONT><FONT ID="SingleLineComment">//      List&lt;String&gt; parameters) {
+<A NAME="1445"></A></FONT><FONT ID="SingleLineComment">//    for (String string : parameters) {
+<A NAME="1446"></A></FONT><FONT ID="SingleLineComment">//      if (!string.startsWith("--")) {
+<A NAME="1447"></A></FONT><FONT ID="SingleLineComment">//        throw new IllegalArgumentException("unknown argument: " + string);
+<A NAME="1448"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1449"></A></FONT><FONT ID="SingleLineComment">//      String param = string.substring(2);
+<A NAME="1450"></A></FONT><FONT ID="SingleLineComment">//      String params[] = param.split("=", 2);
+<A NAME="1451"></A></FONT><FONT ID="SingleLineComment">//      if (params.length != 2) {
+<A NAME="1452"></A></FONT><FONT ID="SingleLineComment">//        throw new IllegalArgumentException("badly formated argument: "
+<A NAME="1453"></A></FONT><FONT ID="SingleLineComment">//            + string);
+<A NAME="1454"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1455"></A></FONT><FONT ID="SingleLineComment">//      ElementHelper helper = find(params[0]);
+<A NAME="1456"></A></FONT><FONT ID="SingleLineComment">//      if (helper == null) {
+<A NAME="1457"></A></FONT><FONT ID="SingleLineComment">//        throw new IllegalArgumentException("unknown argument: " + string);
+<A NAME="1458"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1459"></A></FONT><FONT ID="SingleLineComment">//      helper.parse(contact, new ElementParser(params[1]));
+<A NAME="1460"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1461"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="1462"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1463"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="1464"></A></FONT><FONT ID="SingleLineComment">//   * Builds a group from the list of element descriptions.
+<A NAME="1465"></A></FONT><FONT ID="SingleLineComment">//   * It delegates the element specific parsing to the appropriate helper
+<A NAME="1466"></A></FONT><FONT ID="SingleLineComment">//   * instances. The actual element type is matched by the name of the enum
+<A NAME="1467"></A></FONT><FONT ID="SingleLineComment">//   * instance, so the element names specified in the parameters should (almost)
+<A NAME="1468"></A></FONT><FONT ID="SingleLineComment">//   * match the name of enum instances. The exceptions are those elements what
+<A NAME="1469"></A></FONT><FONT ID="SingleLineComment">//   * can be repeated, when the parameter format is "name&lt;n&gt;".* Due to this
+<A NAME="1470"></A></FONT><FONT ID="SingleLineComment">//   * formating convention we cannot use directly the valueOf() facility of the
+<A NAME="1471"></A></FONT><FONT ID="SingleLineComment">//   * enum.
+<A NAME="1472"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1473"></A></FONT><FONT ID="SingleLineComment">//   * @param group      the group to build.
+<A NAME="1474"></A></FONT><FONT ID="SingleLineComment">//   * @param parameters list of element descriptions.
+<A NAME="1475"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1476"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="1477"></A></FONT><FONT ID="SingleLineComment">//  public static void buildGroup(ContactGroupEntry group,
+<A NAME="1478"></A></FONT><FONT ID="SingleLineComment">//      List&lt;String&gt; parameters) {
+<A NAME="1479"></A></FONT><FONT ID="SingleLineComment">//    for (String string : parameters) {
+<A NAME="1480"></A></FONT><FONT ID="SingleLineComment">//      if (!string.startsWith("--")) {
+<A NAME="1481"></A></FONT><FONT ID="SingleLineComment">//        throw new IllegalArgumentException("unknown argument: " + string);
+<A NAME="1482"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1483"></A></FONT><FONT ID="SingleLineComment">//      String param = string.substring(2);
+<A NAME="1484"></A></FONT><FONT ID="SingleLineComment">//      String params[] = param.split("=", 2);
+<A NAME="1485"></A></FONT><FONT ID="SingleLineComment">//      if (params.length != 2) {
+<A NAME="1486"></A></FONT><FONT ID="SingleLineComment">//        throw new IllegalArgumentException("badly formated argument: "
+<A NAME="1487"></A></FONT><FONT ID="SingleLineComment">//            + string);
+<A NAME="1488"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1489"></A></FONT><FONT ID="SingleLineComment">//      ElementHelper helper = find(params[0]);
+<A NAME="1490"></A></FONT><FONT ID="SingleLineComment">//      if (helper == null) {
+<A NAME="1491"></A></FONT><FONT ID="SingleLineComment">//        throw new IllegalArgumentException("unknown argument: " + string);
+<A NAME="1492"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1493"></A></FONT><FONT ID="SingleLineComment">//      helper.parseGroup(group, new ElementParser(params[1]));
+<A NAME="1494"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1495"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="1496"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1497"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="1498"></A></FONT><FONT ID="SingleLineComment">//   * Updates the elements of a contact entry based on the elements of another
+<A NAME="1499"></A></FONT><FONT ID="SingleLineComment">//   * contact entry.
+<A NAME="1500"></A></FONT><FONT ID="SingleLineComment">//   * Those elements are replaced in the destination contact entry what are
+<A NAME="1501"></A></FONT><FONT ID="SingleLineComment">//   * exists in the source contact. Those elements not contained by the source
+<A NAME="1502"></A></FONT><FONT ID="SingleLineComment">//   * contact are left unchanged on the destination contact.
+<A NAME="1503"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1504"></A></FONT><FONT ID="SingleLineComment">//   * @param dest the destination contact to be updated.
+<A NAME="1505"></A></FONT><FONT ID="SingleLineComment">//   * @param src  the source contact
+<A NAME="1506"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="1507"></A></FONT><FONT ID="SingleLineComment">//  public static void updateContact(ContactEntry dest, ContactEntry src) {
+<A NAME="1508"></A></FONT><FONT ID="SingleLineComment">//    for (ElementHelper helper : values()) {
+<A NAME="1509"></A></FONT><FONT ID="SingleLineComment">//      helper.update(dest, src);
+<A NAME="1510"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1511"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="1512"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1513"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="1514"></A></FONT><FONT ID="SingleLineComment">//   * Prints the content of the contact in a human readable form.
+<A NAME="1515"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1516"></A></FONT><FONT ID="SingleLineComment">//   * @param out     the stream to print to.
+<A NAME="1517"></A></FONT><FONT ID="SingleLineComment">//   * @param contact the contact to be printed out.
+<A NAME="1518"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="1519"></A></FONT><FONT ID="SingleLineComment">//  public static void printContact(PrintStream out, ContactEntry contact) {
+<A NAME="1520"></A></FONT><FONT ID="SingleLineComment">//    for (ElementHelper helper : values()) {
+<A NAME="1521"></A></FONT><FONT ID="SingleLineComment">//      helper.print(out, contact);
+<A NAME="1522"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1523"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="1524"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="1525"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="1526"></A></FONT><FONT ID="SingleLineComment">//   * Gives the usage help text of all elements.
+<A NAME="1527"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="1528"></A></FONT><FONT ID="SingleLineComment">//   * @return the usage help text for all elements.
+<A NAME="1529"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="1530"></A></FONT><FONT ID="SingleLineComment">//  public static String getUsageString() {
+<A NAME="1531"></A></FONT><FONT ID="SingleLineComment">//    StringBuffer buffer = new StringBuffer();
+<A NAME="1532"></A></FONT><FONT ID="SingleLineComment">//    for (ElementHelper helper : values()) {
+<A NAME="1533"></A></FONT><FONT ID="SingleLineComment">//      buffer.append("             --" + helper.toString().toLowerCase());
+<A NAME="1534"></A></FONT><FONT ID="SingleLineComment">//      if (helper.repetable) {
+<A NAME="1535"></A></FONT><FONT ID="SingleLineComment">//        buffer.append("&lt;n&gt;");
+<A NAME="1536"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="1537"></A></FONT><FONT ID="SingleLineComment">//      buffer.append("=" + helper.getUsage() + "\n");
+<A NAME="1538"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="1539"></A></FONT><FONT ID="SingleLineComment">//    buffer.append(
+<A NAME="1540"></A></FONT><FONT ID="SingleLineComment">//        "Notes! &lt;n&gt; is a unique number for the field - several fields\n"
+<A NAME="1541"></A></FONT><FONT ID="SingleLineComment">//        + " of the same type can be present (example: im1, im2, im3).\n"
+<A NAME="1542"></A></FONT><FONT ID="SingleLineComment">//        + " Available rels and protocols can be looked up in the \n"
+<A NAME="1543"></A></FONT><FONT ID="SingleLineComment">//        + " feed documentation.\n");
+<A NAME="1544"></A></FONT><FONT ID="SingleLineComment">//    return buffer.toString();
+<A NAME="1545"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="1546"></A></FONT><FONT ID="SingleLineComment">//}
+<A NAME="1547"></A></FONT></pre>
+</BODY>
+</HTML>

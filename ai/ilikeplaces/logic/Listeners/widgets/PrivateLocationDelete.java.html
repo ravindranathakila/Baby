@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationDelete (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">PrivateLocationDelete.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.OK;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">ai.ilikeplaces.entities.HumansFriend</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">ai.ilikeplaces.entities.HumansNetPeople</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/mail/SendMail.java.html">ai.ilikeplaces.logic.mail.SendMail</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">ai.ilikeplaces.logic.validators.unit.GeoCoord</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="15"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="16"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="24"></A>
+<A NAME="25"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="26"></A>
+<A NAME="27"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="28"></A>
+<A NAME="29"></A>
+<A NAME="30"></A><FONT ID="FormalComment">/**
+<A NAME="31"></A> * @author Ravindranath Akila
+<A NAME="32"></A> */</FONT>
+<A NAME="33"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="34"></A>@OK
+<A NAME="35"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> PrivateLocationDelete <FONT ID="Extends">extends</FONT> AbstractWidgetListener {
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String PLD_LIST_ITEM = <FONT ID="StringLiteral">"PLDListItem"</FONT>;
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NO_MOMENTS_STARTED_HERE_YET = <FONT ID="StringLiteral">"No moments started here yet!"</FONT>;
+<A NAME="38"></A>    <FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="39"></A></FONT>
+<A NAME="40"></A>    Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; r;
+<A NAME="41"></A>    List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A>&gt; possibilities;
+<A NAME="42"></A>
+<A NAME="43"></A>
+<A NAME="44"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId = <FONT ID="Null">null</FONT>;
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> Long privateLocationId = <FONT ID="Null">null</FONT>;
+<A NAME="46"></A>
+<A NAME="47"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="48"></A></FONT>
+<A NAME="49"></A>    <FONT ID="Public">public</FONT> PrivateLocationDelete(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> String humanId__, <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> privateLocationId__) {
+<A NAME="50"></A>        <FONT ID="Super">super</FONT>(request__, Page.PrivateLocationDelete, appendToElement__, humanId__, privateLocationId__);
+<A NAME="51"></A>    }
+<A NAME="52"></A>
+<A NAME="53"></A>    <FONT ID="FormalComment">/**
+<A NAME="54"></A>     *
+<A NAME="55"></A>     */</FONT>
+<A NAME="56"></A>    @Override
+<A NAME="57"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="58"></A>        <FONT ID="This">this</FONT>.humanId = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>();
+<A NAME="59"></A>        humanId.setObjAsValid((String) initArgs[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="60"></A>
+<A NAME="61"></A>        <FONT ID="This">this</FONT>.privateLocationId = (Long) initArgs[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="62"></A>
+<A NAME="63"></A>        r = DB.getHumanCrudPrivateLocationLocal(<FONT ID="True">true</FONT>).dirtyRPrivateLocationAsOwner(humanId, privateLocationId);
+<A NAME="64"></A>        <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="65"></A>            $$(privateLocationDeleteName).setTextContent(r.returnValue().getPrivateLocationName());
+<A NAME="66"></A>            $$(privateLocationDeleteInfo).setTextContent(r.returnValue().getPrivateLocationInfo());
+<A NAME="67"></A>            SetEventList:
+<A NAME="68"></A>            {
+<A NAME="69"></A>                <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A> pe : r.returnValue().getPrivateEvents()) {
+<A NAME="70"></A>                    <FONT ID="If">if</FONT> (DB.getHumanCrudPrivateEventLocal(<FONT ID="True">true</FONT>).dirtyRPrivateEventIsViewer(humanId, pe.getPrivateEventId()).returnValue()) {
+<A NAME="71"></A>                        $$(privateLocationDeleteEventList).appendChild(
+<A NAME="72"></A>                                ElementComposer.compose($$(MarkupTag.DIV))
+<A NAME="73"></A>                                        .$ElementSetClasses(PLD_LIST_ITEM)
+<A NAME="74"></A>                                        .wrapThis(
+<A NAME="75"></A>                                                ElementComposer.compose($$(MarkupTag.A))
+<A NAME="76"></A>                                                        .$ElementSetText(pe.getPrivateEventName())
+<A NAME="77"></A>                                                        .$ElementSetHref(
+<A NAME="78"></A>                                                                <FONT ID="New">new</FONT> Parameter(Organize.getURL())
+<A NAME="79"></A>                                                                        .append(DocOrganizeCategory, DocOrganizeModeEvent, <FONT ID="True">true</FONT>)
+<A NAME="80"></A>                                                                        .append(DocOrganizeLocation, r.returnValue().getPrivateLocationId())
+<A NAME="81"></A>                                                                        .append(DocOrganizeEvent, pe.getPrivateEventId())
+<A NAME="82"></A>                                                                        .get()
+<A NAME="83"></A>                                                        )
+<A NAME="84"></A>                                                        .get()
+<A NAME="85"></A>                                        )
+<A NAME="86"></A>                                        .get());
+<A NAME="87"></A>                    }
+<A NAME="88"></A>                }
+<A NAME="89"></A>                <FONT ID="If">if</FONT> (r.returnValue().getPrivateEvents().size() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="90"></A>                    $$(privateLocationDeleteEventList).appendChild(
+<A NAME="91"></A>                            ElementComposer.compose($$(MarkupTag.DIV)).$ElementSetText(NO_MOMENTS_STARTED_HERE_YET)
+<A NAME="92"></A>                                    .get());
+<A NAME="93"></A>                }
+<A NAME="94"></A>            }
+<A NAME="95"></A>
+<A NAME="96"></A>            SetLocationMap:
+<A NAME="97"></A>            {
+<A NAME="98"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A> gc = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>();
+<A NAME="99"></A>                gc.setObj(r.returnValue().getPrivateLocationLatitude() , r.returnValue().getPrivateLocationLongitude());
+<A NAME="100"></A>                gc.validateThrow();
+<A NAME="101"></A>
+<A NAME="102"></A>                $$(privateLocationDeleteLocationMap).setAttribute(MarkupTag.IMG.src(),
+<A NAME="103"></A>                        <FONT ID="New">new</FONT> Parameter(<FONT ID="StringLiteral">"http://maps.google.com/maps/api/staticmap"</FONT>)
+<A NAME="104"></A>                                .append(<FONT ID="StringLiteral">"sensor"</FONT>, <FONT ID="StringLiteral">"false"</FONT>, <FONT ID="True">true</FONT>)
+<A NAME="105"></A>                                .append(<FONT ID="StringLiteral">"center"</FONT>, gc.toString())
+<A NAME="106"></A>                                .append(<FONT ID="StringLiteral">"size"</FONT>, <FONT ID="StringLiteral">"230x250"</FONT>)
+<A NAME="107"></A>                                .append(<FONT ID="StringLiteral">"format"</FONT>, <FONT ID="StringLiteral">"jpg"</FONT>)
+<A NAME="108"></A>                                .append(<FONT ID="StringLiteral">"markers"</FONT>, <FONT ID="StringLiteral">"color:0x7fe2ff|label:S|path=fillcolor:0xAA000033|color:0xFFFFFF00|"</FONT>
+<A NAME="109"></A>                                        + gc.toString())
+<A NAME="110"></A>                                .get());
+<A NAME="111"></A>            }
+<A NAME="112"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="113"></A>            $$(privateLocationDeleteNotice).setTextContent(r.returnMsg());
+<A NAME="114"></A>        }
+<A NAME="115"></A>    }
+<A NAME="116"></A>
+<A NAME="117"></A>    @Override
+<A NAME="118"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__) {
+<A NAME="119"></A>        UCDelete:
+<A NAME="120"></A>        {
+<A NAME="121"></A>            itsNatHTMLDocument__.addEventListener((EventTarget) $$(privateLocationDelete), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="122"></A>                <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = humanId;
+<A NAME="123"></A>                <FONT ID="Final">final</FONT> Long myprivateLocationId = privateLocationId;
+<A NAME="124"></A>
+<A NAME="125"></A>                @Override
+<A NAME="126"></A>                <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/PrivateEvent.java.html">Event</A> evt_) {
+<A NAME="127"></A>
+<A NAME="128"></A>                    <FONT ID="Final">final</FONT> Return&lt;Boolean&gt; r = DB.getHumanCrudPrivateLocationLocal(<FONT ID="True">true</FONT>).dPrivateLocation(myhumanId, myprivateLocationId);
+<A NAME="129"></A>                    logger.debug(<FONT ID="StringLiteral">"DELETED. DB REPLY:"</FONT> + r.returnValue());
+<A NAME="130"></A>
+<A NAME="131"></A>                    <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="132"></A>
+<A NAME="133"></A>                        remove(evt_.getTarget(), EventType.CLICK, <FONT ID="This">this</FONT>);
+<A NAME="134"></A>                        logger.debug(<FONT ID="StringLiteral">"REMOVED CLICK."</FONT>);
+<A NAME="135"></A>
+<A NAME="136"></A>                        clear($$(privateLocationDeleteNotice));
+<A NAME="137"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="138"></A>                        $$(privateLocationDelete).setTextContent(r.returnMsg());
+<A NAME="139"></A>                    }
+<A NAME="140"></A>                }
+<A NAME="141"></A>
+<A NAME="142"></A>            }, <FONT ID="False">false</FONT>, JSCodeToSend.redirectPageWithURL(Page.Organize.getURL()));
+<A NAME="143"></A>        }
+<A NAME="144"></A>
+<A NAME="145"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> user = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansNetPeople(humanId);
+<A NAME="146"></A>        <FONT ID="This">this</FONT>.possibilities = user.getHumansNetPeoples();
+<A NAME="147"></A>
+<A NAME="148"></A>        AddRemoveOwners:
+<A NAME="149"></A>        {
+<A NAME="150"></A>            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/MemberHandler.java.html">MemberHandler</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A>, List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A>&gt;, Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;&gt;(
+<A NAME="151"></A>                    request, $$(privateLocationDeleteOwners),
+<A NAME="152"></A>                    user.getHumansNet(),
+<A NAME="153"></A>                    possibilities,
+<A NAME="154"></A>                    r.returnValue().getPrivateLocationOwners(),
+<A NAME="155"></A>                    <FONT ID="New">new</FONT> Save&lt;Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;&gt;() {
+<A NAME="156"></A>                        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> myprivateLocationId = r.returnValue().getPrivateLocationId();
+<A NAME="157"></A>
+<A NAME="158"></A>                        @Override
+<A NAME="159"></A>                        <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; save(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> humansFriend) {
+<A NAME="160"></A>                            <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; returnVal = DB.getHumanCrudPrivateLocationLocal(<FONT ID="True">true</FONT>).uPrivateLocationAddOwner(humanId, myprivateLocationId, humansFriend);
+<A NAME="161"></A>                            <FONT ID="If">if</FONT> (returnVal.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="162"></A>                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
+<A NAME="163"></A>                                        humanId.getObj(),
+<A NAME="164"></A>                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+<A NAME="165"></A>                                                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humanId.getHumanId()),
+<A NAME="166"></A>                                                humansFriend.getHumanId(),
+<A NAME="167"></A>                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + <FONT ID="StringLiteral">" has added you as an Owner of "</FONT> + returnVal.returnValue().getPrivateLocationName()));
+<A NAME="168"></A>                            }
+<A NAME="169"></A>                            <FONT ID="Return">return</FONT> returnVal;
+<A NAME="170"></A>                        }
+<A NAME="171"></A>                    },
+<A NAME="172"></A>                    <FONT ID="New">new</FONT> Save&lt;Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;&gt;() {
+<A NAME="173"></A>                        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> myprivateLocationId = r.returnValue().getPrivateLocationId();
+<A NAME="174"></A>
+<A NAME="175"></A>                        @Override
+<A NAME="176"></A>                        <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; save(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> humansFriend) {
+<A NAME="177"></A>                            <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; returnVal = DB.getHumanCrudPrivateLocationLocal(<FONT ID="True">true</FONT>).uPrivateLocationRemoveOwner(humanId, myprivateLocationId, humansFriend);
+<A NAME="178"></A>                            <FONT ID="If">if</FONT> (returnVal.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="179"></A>                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
+<A NAME="180"></A>                                        humanId.getObj(),
+<A NAME="181"></A>                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+<A NAME="182"></A>                                                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humanId.getHumanId()),
+<A NAME="183"></A>                                                humansFriend.getHumanId(),
+<A NAME="184"></A>                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + <FONT ID="StringLiteral">" has removed you as an Owner of "</FONT> + returnVal.returnValue().getPrivateLocationName()));
+<A NAME="185"></A>                            }
+<A NAME="186"></A>
+<A NAME="187"></A>                            <FONT ID="Return">return</FONT> returnVal;
+<A NAME="188"></A>                        }
+<A NAME="189"></A>                    }
+<A NAME="190"></A>            ) {
+<A NAME="191"></A>            };
+<A NAME="192"></A>        }
+<A NAME="193"></A>        AddRemoveVisitors:
+<A NAME="194"></A>        {
+<A NAME="195"></A>            <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/MemberHandler.java.html">MemberHandler</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A>, List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A>&gt;, Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;&gt;(
+<A NAME="196"></A>                    request, $$(privateLocationDeleteVisitors),
+<A NAME="197"></A>                    user.getHumansNet(),
+<A NAME="198"></A>                    possibilities,
+<A NAME="199"></A>                    r.returnValue().getPrivateLocationViewers(),
+<A NAME="200"></A>                    <FONT ID="New">new</FONT> Save&lt;Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;&gt;() {
+<A NAME="201"></A>                        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> myprivateLocationId = r.returnValue().getPrivateLocationId();
+<A NAME="202"></A>
+<A NAME="203"></A>                        @Override
+<A NAME="204"></A>                        <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; save(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> humansFriend) {
+<A NAME="205"></A>                            <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; returnVal = DB.getHumanCrudPrivateLocationLocal(<FONT ID="True">true</FONT>).uPrivateLocationAddVisitor(humanId, myprivateLocationId, humansFriend);
+<A NAME="206"></A>                            <FONT ID="If">if</FONT> (returnVal.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="207"></A>                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
+<A NAME="208"></A>                                        humanId.getObj(),
+<A NAME="209"></A>                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+<A NAME="210"></A>                                                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humanId.getHumanId()),
+<A NAME="211"></A>                                                humansFriend.getHumanId(),
+<A NAME="212"></A>                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + <FONT ID="StringLiteral">" has added you as a Visitor of "</FONT> + returnVal.returnValue().getPrivateLocationName()));
+<A NAME="213"></A>                            }
+<A NAME="214"></A>                            <FONT ID="Return">return</FONT> returnVal;
+<A NAME="215"></A>                        }
+<A NAME="216"></A>                    },
+<A NAME="217"></A>                    <FONT ID="New">new</FONT> Save&lt;Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt;&gt;() {
+<A NAME="218"></A>                        <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> myprivateLocationId = r.returnValue().getPrivateLocationId();
+<A NAME="219"></A>
+<A NAME="220"></A>                        @Override
+<A NAME="221"></A>                        <FONT ID="Public">public</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; save(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansFriend.java.html">HumansFriend</A> humansFriend) {
+<A NAME="222"></A>                            <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; returnVal = DB.getHumanCrudPrivateLocationLocal(<FONT ID="True">true</FONT>).uPrivateLocationRemoveVisitor(humanId, myprivateLocationId, humansFriend);
+<A NAME="223"></A>                            <FONT ID="If">if</FONT> (returnVal.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="224"></A>                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(humansFriend.getHumanId(),
+<A NAME="225"></A>                                        humanId.getObj(),
+<A NAME="226"></A>                                        ai.ilikeplaces.logic.Listeners.widgets.UserProperty.getUserPropertyHtmlFor(
+<A NAME="227"></A>                                                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(humanId.getHumanId()),
+<A NAME="228"></A>                                                humansFriend.getHumanId(),
+<A NAME="229"></A>                                                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.SENDER_NAME + <FONT ID="StringLiteral">" has removed you as a Visitor of "</FONT> + returnVal.returnValue().getPrivateLocationName()));
+<A NAME="230"></A>                            }
+<A NAME="231"></A>                            <FONT ID="Return">return</FONT> returnVal;
+<A NAME="232"></A>                        }
+<A NAME="233"></A>                    }
+<A NAME="234"></A>            ) {
+<A NAME="235"></A>            };
+<A NAME="236"></A>        }
+<A NAME="237"></A>    }
+<A NAME="238"></A>}</pre>
+</BODY>
+</HTML>

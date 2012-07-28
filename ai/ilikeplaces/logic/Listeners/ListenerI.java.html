@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerI (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerI.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.logic.Listeners.widgets.*;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/ElementComposer.java.html">ai.ilikeplaces.util.ElementComposer</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/MarkupTag.java.html">ai.ilikeplaces.util.MarkupTag</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/SmartLogger.java.html">ai.ilikeplaces.util.SmartLogger</A>;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="22"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="23"></A>
+<A NAME="24"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>.*;
+<A NAME="25"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers.EXCEPTION</A>;
+<A NAME="26"></A>
+<A NAME="27"></A><FONT ID="FormalComment">/**
+<A NAME="28"></A> * @author Ravindranath Akila
+<A NAME="29"></A> */</FONT>
+<A NAME="30"></A>@WARNING(warning = <FONT ID="StringLiteral">"Remember, this shows profiles of other users to the current user. Might impose serious privacy issues if "</FONT> +
+<A NAME="31"></A>        <FONT ID="StringLiteral">"not handled with utmost care"</FONT>)
+<A NAME="32"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="33"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerI <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String USER_PROFILE = <FONT ID="StringLiteral">"up"</FONT>;
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NOT_YET_YOUR_FRIEND = <FONT ID="StringLiteral">"Not yet your friend"</FONT>;
+<A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String VIEW_FRIEND_SUCCESSFUL = <FONT ID="StringLiteral">"View Friend Successful."</FONT>;
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String NOT_FRIEND = <FONT ID="StringLiteral">"Not Friend."</FONT>;
+<A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String SORRY_I_ENCOUNTERED_AN_ERROR_IN_REDIRECTING_THE_USER_FROM_I_PAGE = <FONT ID="StringLiteral">"SORRY! I ENCOUNTERED AN ERROR IN REDIRECTING THE USER FROM 'I' PAGE {}"</FONT>;
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="FormalComment">/**
+<A NAME="41"></A>     * @param request__
+<A NAME="42"></A>     * @param response__
+<A NAME="43"></A>     */</FONT>
+<A NAME="44"></A>    @WARNING(warning = <FONT ID="StringLiteral">"Remember, this shows profiles of other users to the current user. Might impose serious privacy issues if "</FONT> +
+<A NAME="45"></A>            <FONT ID="StringLiteral">"not handled with utmost care"</FONT>)
+<A NAME="46"></A>    @Override
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> ItsNatServletResponse response__) {
+<A NAME="48"></A>
+<A NAME="49"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/AbstractSkeletonListener.java.html">AbstractSkeletonListener</A>(request__, response__) {
+<A NAME="50"></A>
+<A NAME="51"></A>            <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> redirectToSomeOtherPage(<FONT ID="Final">final</FONT> ItsNatServletResponse response) {
+<A NAME="52"></A>                <FONT ID="Try">try</FONT> {
+<A NAME="53"></A>                    ((HttpServletResponse) response.getServletResponse()).sendRedirect(Controller.Page.Organize.getURL());
+<A NAME="54"></A>                } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="55"></A>                    Loggers.EXCEPTION.error(SORRY_I_ENCOUNTERED_AN_ERROR_IN_REDIRECTING_THE_USER_FROM_I_PAGE, e);
+<A NAME="56"></A>                }
+<A NAME="57"></A>            }
+<A NAME="58"></A>
+<A NAME="59"></A>            <FONT ID="FormalComment">/**
+<A NAME="60"></A>             * Intialize your document here by appending fragments
+<A NAME="61"></A>             */</FONT>
+<A NAME="62"></A>            @Override
+<A NAME="63"></A>            @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="64"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="65"></A>                <FONT ID="SingleLineComment">//itsNatDocument.addCodeToSend(JSCodeToSend.FnEventMonitor);
+<A NAME="66"></A></FONT>
+<A NAME="67"></A>                SmartLogger.g().appendToLogMSG(<FONT ID="StringLiteral">"Returning I Page"</FONT>);
+<A NAME="68"></A>
+<A NAME="69"></A>
+<A NAME="70"></A>                <FONT ID="Final">final</FONT> String requestedProfile = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyProfileFromURL(request__.getServletRequest().getParameter(USER_PROFILE)).returnValueBadly();
+<A NAME="71"></A>
+<A NAME="72"></A>
+<A NAME="73"></A>                SmartLogger.g().appendToLogMSG(<FONT ID="StringLiteral">"Requested Profile:"</FONT> + requestedProfile);
+<A NAME="74"></A>
+<A NAME="75"></A>                <FONT ID="If">if</FONT> (getUsername() == <FONT ID="Null">null</FONT>) {
+<A NAME="76"></A>                    SmartLogger.g().complete(Loggers.LEVEL.DEBUG, <FONT ID="StringLiteral">"No Login."</FONT> + Loggers.DONE);
+<A NAME="77"></A>                    redirectToSomeOtherPage(response__);
+<A NAME="78"></A>                } <FONT ID="Else">else</FONT> {<FONT ID="SingleLineComment">//User is logged on, now other things
+<A NAME="79"></A></FONT>                    <FONT ID="If">if</FONT> (requestedProfile == <FONT ID="Null">null</FONT>) {<FONT ID="SingleLineComment">//This user isn't alive
+<A NAME="80"></A></FONT>                        SmartLogger.g().complete(Loggers.LEVEL.DEBUG, <FONT ID="StringLiteral">"No Such Live User."</FONT> + Loggers.DONE);
+<A NAME="81"></A>                        redirectToSomeOtherPage(response__);
+<A NAME="82"></A>                    } <FONT ID="Else">else</FONT> {<FONT ID="SingleLineComment">//This user should be a friend
+<A NAME="83"></A></FONT>                        <FONT ID="SingleLineComment">//Be careful who checks who here. this user should have been added by the profile we are visiting as friend.(asymetric friend addition)
+<A NAME="84"></A></FONT>                        <FONT ID="If">if</FONT> (DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doNTxIsHumansNetPeople(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(requestedProfile), <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid())).returnValue()
+<A NAME="85"></A>                                || getUsernameAsValid().equals(requestedProfile)) {<FONT ID="SingleLineComment">//Show page if it is I am a friend of hers or if this is my profile
+<A NAME="86"></A></FONT>
+<A NAME="87"></A>                            layoutNeededForAllPages:
+<A NAME="88"></A>                            {
+<A NAME="89"></A>                                setLoginWidget:
+<A NAME="90"></A>                                {
+<A NAME="91"></A>                                    setLoginWidget((ItsNatServletRequest) initArgs[<FONT ID="IntegerLiteral">0</FONT>], SignInOnCriteria.SignInOnDisplayComponent.TALKS);
+<A NAME="92"></A>                                }
+<A NAME="93"></A>                                <FONT ID="SingleLineComment">//Setting her details for identity
+<A NAME="94"></A></FONT>                                signOnDisplayLink:
+<A NAME="95"></A>                                {
+<A NAME="96"></A>                                    $(Skeleton_othersidebar_identity).setTextContent(DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(requestedProfile).getDisplayName());
+<A NAME="97"></A>                                }
+<A NAME="98"></A>                                <FONT ID="SingleLineComment">//Setting her details for identity
+<A NAME="99"></A></FONT>                                setProfileLink:
+<A NAME="100"></A>                                {
+<A NAME="101"></A>                                    <FONT ID="SingleLineComment">//setProfileDataLink();//We wii do this ourselves. Look below
+<A NAME="102"></A></FONT>                                }
+<A NAME="103"></A>                                <FONT ID="SingleLineComment">//Setting her details for identity
+<A NAME="104"></A></FONT>                                setProfilePhotoLink:
+<A NAME="105"></A>                                {
+<A NAME="106"></A>                                    <FONT ID="FormalComment">/**
+<A NAME="107"></A>                                     * TODO check for db failure
+<A NAME="108"></A>                                     */</FONT>
+<A NAME="109"></A>                                    <FONT ID="Final">final</FONT> String url = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHumansProfilePhoto(<FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(requestedProfile)).returnValueBadly();
+<A NAME="110"></A>                                    $(Skeleton_profile_photo).setAttribute(MarkupTag.IMG.src(),
+<A NAME="111"></A>                                            ai.ilikeplaces.logic.Listeners.widgets.UserProperty.formatProfilePhotoUrlStatic(url));
+<A NAME="112"></A>                                }
+<A NAME="113"></A>                                <FONT ID="SingleLineComment">//My friends, not hers
+<A NAME="114"></A></FONT>                                setSidebarFriends:
+<A NAME="115"></A>                                {
+<A NAME="116"></A>                                    setSideBarFriends((ItsNatServletRequest) initArgs[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="117"></A>                                }
+<A NAME="118"></A>
+<A NAME="119"></A>                                setAddAsFriendIfNotFriend:
+<A NAME="120"></A>                                {
+<A NAME="121"></A>                                    <FONT ID="Try">try</FONT> {
+<A NAME="122"></A>                                        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Human.java.html">Human</A> me = DB.getHumanCRUDHumanLocal(<FONT ID="True">true</FONT>).doDirtyRHuman(getUsernameAsValid());
+<A NAME="123"></A>                                        <FONT ID="If">if</FONT> (<FONT ID="MultiLineComment">/*Self*/</FONT>!me.getHumanId().equals(requestedProfile)
+<A NAME="124"></A>                                                <FONT ID="MultiLineComment">/*Other*/</FONT> &amp;&amp; me.notFriend(requestedProfile)) {
+<A NAME="125"></A>                                            <FONT ID="New">new</FONT> UserProperty(request__, $(Skeleton_center_content), <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(requestedProfile)) {
+<A NAME="126"></A>                                                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="127"></A>                                                    $$(Controller.Page.user_property_content).appendChild(
+<A NAME="128"></A>                                                            ElementComposer.compose($$(MarkupTag.DIV))
+<A NAME="129"></A>                                                                    .$ElementSetText(NOT_YET_YOUR_FRIEND).get());
+<A NAME="130"></A>                                                    <FONT ID="New">new</FONT> FriendAdd(request__, $$(Controller.Page.user_property_content), <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(requestedProfile).getSelfAsValid(), <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid()).getSelfAsValid()) {
+<A NAME="131"></A>                                                    };
+<A NAME="132"></A>                                                }
+<A NAME="133"></A>                                            };
+<A NAME="134"></A>
+<A NAME="135"></A>                                            setTitle:
+<A NAME="136"></A>                                            {
+<A NAME="137"></A>                                                <FONT ID="Super">super</FONT>.setTitle(me.getDisplayName());
+<A NAME="138"></A>                                            }
+<A NAME="139"></A>                                        } <FONT ID="Else">else</FONT> {
+<A NAME="140"></A>
+<A NAME="141"></A>                                        }
+<A NAME="142"></A>                                    } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="143"></A>                                        EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="144"></A>
+<A NAME="145"></A>                                    }
+<A NAME="146"></A>                                }
+<A NAME="147"></A>                                <FONT ID="SingleLineComment">//Setting her details for identity
+<A NAME="148"></A></FONT>                                setWall:
+<A NAME="149"></A>                                {
+<A NAME="150"></A>                                    <FONT ID="Try">try</FONT> {
+<A NAME="151"></A>                                        <FONT ID="New">new</FONT> WallWidgetHumansWall(request__, $(Skeleton_center_content), <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(requestedProfile), <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsernameAsValid()));
+<A NAME="152"></A>
+<A NAME="153"></A>                                    } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Throwable t) {
+<A NAME="154"></A>                                        EXCEPTION.error(<FONT ID="StringLiteral">"{}"</FONT>, t);
+<A NAME="155"></A>
+<A NAME="156"></A>                                    }
+<A NAME="157"></A>                                }
+<A NAME="158"></A>                            }
+<A NAME="159"></A>                            SmartLogger.g().complete(Loggers.LEVEL.DEBUG, VIEW_FRIEND_SUCCESSFUL + Loggers.DONE);
+<A NAME="160"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="161"></A>                            SmartLogger.g().complete(Loggers.LEVEL.DEBUG, NOT_FRIEND + Loggers.DONE);
+<A NAME="162"></A>                            redirectToSomeOtherPage(response__);
+<A NAME="163"></A>                        }
+<A NAME="164"></A>                    }
+<A NAME="165"></A>                }
+<A NAME="166"></A>
+<A NAME="167"></A>            }
+<A NAME="168"></A>
+<A NAME="169"></A>            <FONT ID="FormalComment">/**
+<A NAME="170"></A>             * Use ItsNatHTMLDocument variable stored in the AbstractListener class
+<A NAME="171"></A>             */</FONT>
+<A NAME="172"></A>            @Override
+<A NAME="173"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(
+<A NAME="174"></A>                    <FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__,
+<A NAME="175"></A>                    <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__,
+<A NAME="176"></A>                    <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__) {
+<A NAME="177"></A>            }
+<A NAME="178"></A>        };
+<A NAME="179"></A>    }
+<A NAME="180"></A>}</pre>
+</BODY>
+</HTML>

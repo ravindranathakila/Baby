@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerGeoBusiness (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerGeoBusiness.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * Created by IntelliJ IDEA.
+<A NAME="11"></A> * User: Ravindranath Akila
+<A NAME="12"></A> * Date: Nov 23, 2010
+<A NAME="13"></A> * Time: 6:15:52 AM
+<A NAME="14"></A> */</FONT>
+<A NAME="15"></A>
+<A NAME="16"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="17"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerGeoBusiness <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="18"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String CALLED = <FONT ID="StringLiteral">" CALLED."</FONT>;
+<A NAME="19"></A>
+<A NAME="20"></A>    @Override
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest itsNatServletRequest, <FONT ID="Final">final</FONT> ItsNatServletResponse response) {
+<A NAME="22"></A>        Loggers.INFO.info(getClass().getName()+ CALLED);
+<A NAME="23"></A>    }
+<A NAME="24"></A>
+<A NAME="25"></A>}
+<A NAME="26"></A></pre>
+</BODY>
+</HTML>

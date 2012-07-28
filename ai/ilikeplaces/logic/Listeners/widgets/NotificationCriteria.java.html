@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.NotificationCriteria (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">NotificationCriteria.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="FormalComment">/**
+<A NAME="6"></A> * Created by IntelliJ IDEA.
+<A NAME="7"></A> * User: Ravindranath Akila
+<A NAME="8"></A> * Date: 10/13/11
+<A NAME="9"></A> * Time: 9:19 PM
+<A NAME="10"></A> */</FONT>
+<A NAME="11"></A>@NOTE(<FONT ID="StringLiteral">"Use this class with one type of NotificationAction* ONLY. "</FONT> +
+<A NAME="12"></A>        <FONT ID="StringLiteral">"Only one should be populated and others should be null. "</FONT>)
+<A NAME="13"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> NotificationCriteria {
+<A NAME="14"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="15"></A></FONT>
+<A NAME="16"></A>    <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/NotificationActionJS.java.html">NotificationActionJS</A> notificationActionJS = <FONT ID="Null">null</FONT>;
+<A NAME="17"></A>    String notificationText = <FONT ID="StringLiteral">""</FONT>;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="20"></A></FONT>
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> NotificationCriteria(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/NotificationActionJS.java.html">NotificationActionJS</A> notificationActionJS, <FONT ID="Final">final</FONT> String notificationText) {
+<A NAME="22"></A>        <FONT ID="This">this</FONT>.notificationActionJS = notificationActionJS;
+<A NAME="23"></A>        <FONT ID="This">this</FONT>.notificationText = notificationText;
+<A NAME="24"></A>    }
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="Public">public</FONT> NotificationCriteria(String notificationText) {
+<A NAME="27"></A>        <FONT ID="This">this</FONT>.notificationText = notificationText;
+<A NAME="28"></A>    }
+<A NAME="29"></A>}
+<A NAME="30"></A></pre>
+</BODY>
+</HTML>

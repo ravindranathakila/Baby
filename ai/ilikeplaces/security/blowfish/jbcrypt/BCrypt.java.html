@@ -1,0 +1,759 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">BCrypt.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.security.blowfish.jbcrypt;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> java.io.UnsupportedEncodingException;
+<A NAME="4"></A><FONT ID="Import">import</FONT> java.security.SecureRandom;
+<A NAME="5"></A>
+<A NAME="6"></A><FONT ID="FormalComment">/**
+<A NAME="7"></A> * BCrypt implements OpenBSD-style Blowfish password hashing using
+<A NAME="8"></A> * the scheme described in "A Future-Adaptable Password Scheme" by
+<A NAME="9"></A> * Niels Provos and David Mazieres.
+<A NAME="10"></A> * &lt;p&gt;
+<A NAME="11"></A> * This password hashing system tries to thwart off-line password
+<A NAME="12"></A> * cracking using a computationally-intensive hashing algorithm,
+<A NAME="13"></A> * based on Bruce Schneier's Blowfish cipher. The work factor of
+<A NAME="14"></A> * the algorithm is parameterised, so it can be increased as
+<A NAME="15"></A> * computers get faster.
+<A NAME="16"></A> * &lt;p&gt;
+<A NAME="17"></A> * Usage is really simple. To hash a password for the first time,
+<A NAME="18"></A> * call the hashpw method with a random salt, like this:
+<A NAME="19"></A> * &lt;p&gt;
+<A NAME="20"></A> * &lt;code&gt;
+<A NAME="21"></A> * String pw_hash = BCrypt.hashpw(plain_password, BCrypt.gensalt()); &lt;br /&gt;
+<A NAME="22"></A> * &lt;/code&gt;
+<A NAME="23"></A> * &lt;p&gt;
+<A NAME="24"></A> * To check whether a plaintext password matches one that has been
+<A NAME="25"></A> * hashed previously, use the checkpw method:
+<A NAME="26"></A> * &lt;p&gt;
+<A NAME="27"></A> * &lt;code&gt;
+<A NAME="28"></A> * if (BCrypt.checkpw(candidate_password, stored_hash))&lt;br /&gt;
+<A NAME="29"></A> * &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;System.out.println("It matches");&lt;br /&gt;
+<A NAME="30"></A> * else&lt;br /&gt;
+<A NAME="31"></A> * &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;System.out.println("It does not match");&lt;br /&gt;
+<A NAME="32"></A> * &lt;/code&gt;
+<A NAME="33"></A> * &lt;p&gt;
+<A NAME="34"></A> * The gensalt() method takes an optional parameter (log_rounds)
+<A NAME="35"></A> * that determines the computational complexity of the hashing:
+<A NAME="36"></A> * &lt;p&gt;
+<A NAME="37"></A> * &lt;code&gt;
+<A NAME="38"></A> * String strong_salt = BCrypt.gensalt(10)&lt;br /&gt;
+<A NAME="39"></A> * String stronger_salt = BCrypt.gensalt(12)&lt;br /&gt;
+<A NAME="40"></A> * &lt;/code&gt;
+<A NAME="41"></A> * &lt;p&gt;
+<A NAME="42"></A> * The amount of work increases exponentially (2**log_rounds), so 
+<A NAME="43"></A> * each increment is twice as much work. The default log_rounds is
+<A NAME="44"></A> * 10, and the valid range is 4 to 31.
+<A NAME="45"></A> *
+<A NAME="46"></A> * @author Damien Miller
+<A NAME="47"></A> * @version 0.2
+<A NAME="48"></A> */</FONT>
+<A NAME="49"></A>
+<A NAME="50"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="51"></A></FONT><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> BCrypt {
+<A NAME="52"></A>    <FONT ID="SingleLineComment">// BCrypt parameters
+<A NAME="53"></A></FONT>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> GENSALT_DEFAULT_LOG2_ROUNDS = <FONT ID="IntegerLiteral">10</FONT>;
+<A NAME="54"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> BCRYPT_SALT_LEN = <FONT ID="IntegerLiteral">16</FONT>;
+<A NAME="55"></A>
+<A NAME="56"></A>    <FONT ID="SingleLineComment">// Blowfish parameters
+<A NAME="57"></A></FONT>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> BLOWFISH_NUM_ROUNDS = <FONT ID="IntegerLiteral">16</FONT>;
+<A NAME="58"></A>
+<A NAME="59"></A>    <FONT ID="SingleLineComment">// Initial contents of key schedule
+<A NAME="60"></A></FONT>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> P_orig[] = {
+<A NAME="61"></A>        <FONT ID="IntegerLiteral">0x243f6a88</FONT>, <FONT ID="IntegerLiteral">0x85a308d3</FONT>, <FONT ID="IntegerLiteral">0x13198a2e</FONT>, <FONT ID="IntegerLiteral">0x03707344</FONT>,
+<A NAME="62"></A>        <FONT ID="IntegerLiteral">0xa4093822</FONT>, <FONT ID="IntegerLiteral">0x299f31d0</FONT>, <FONT ID="IntegerLiteral">0x082efa98</FONT>, <FONT ID="IntegerLiteral">0xec4e6c89</FONT>,
+<A NAME="63"></A>        <FONT ID="IntegerLiteral">0x452821e6</FONT>, <FONT ID="IntegerLiteral">0x38d01377</FONT>, <FONT ID="IntegerLiteral">0xbe5466cf</FONT>, <FONT ID="IntegerLiteral">0x34e90c6c</FONT>,
+<A NAME="64"></A>        <FONT ID="IntegerLiteral">0xc0ac29b7</FONT>, <FONT ID="IntegerLiteral">0xc97c50dd</FONT>, <FONT ID="IntegerLiteral">0x3f84d5b5</FONT>, <FONT ID="IntegerLiteral">0xb5470917</FONT>,
+<A NAME="65"></A>        <FONT ID="IntegerLiteral">0x9216d5d9</FONT>, <FONT ID="IntegerLiteral">0x8979fb1b</FONT>
+<A NAME="66"></A>    };
+<A NAME="67"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> S_orig[] = {
+<A NAME="68"></A>        <FONT ID="IntegerLiteral">0xd1310ba6</FONT>, <FONT ID="IntegerLiteral">0x98dfb5ac</FONT>, <FONT ID="IntegerLiteral">0x2ffd72db</FONT>, <FONT ID="IntegerLiteral">0xd01adfb7</FONT>,
+<A NAME="69"></A>        <FONT ID="IntegerLiteral">0xb8e1afed</FONT>, <FONT ID="IntegerLiteral">0x6a267e96</FONT>, <FONT ID="IntegerLiteral">0xba7c9045</FONT>, <FONT ID="IntegerLiteral">0xf12c7f99</FONT>,
+<A NAME="70"></A>        <FONT ID="IntegerLiteral">0x24a19947</FONT>, <FONT ID="IntegerLiteral">0xb3916cf7</FONT>, <FONT ID="IntegerLiteral">0x0801f2e2</FONT>, <FONT ID="IntegerLiteral">0x858efc16</FONT>,
+<A NAME="71"></A>        <FONT ID="IntegerLiteral">0x636920d8</FONT>, <FONT ID="IntegerLiteral">0x71574e69</FONT>, <FONT ID="IntegerLiteral">0xa458fea3</FONT>, <FONT ID="IntegerLiteral">0xf4933d7e</FONT>,
+<A NAME="72"></A>        <FONT ID="IntegerLiteral">0x0d95748f</FONT>, <FONT ID="IntegerLiteral">0x728eb658</FONT>, <FONT ID="IntegerLiteral">0x718bcd58</FONT>, <FONT ID="IntegerLiteral">0x82154aee</FONT>,
+<A NAME="73"></A>        <FONT ID="IntegerLiteral">0x7b54a41d</FONT>, <FONT ID="IntegerLiteral">0xc25a59b5</FONT>, <FONT ID="IntegerLiteral">0x9c30d539</FONT>, <FONT ID="IntegerLiteral">0x2af26013</FONT>,
+<A NAME="74"></A>        <FONT ID="IntegerLiteral">0xc5d1b023</FONT>, <FONT ID="IntegerLiteral">0x286085f0</FONT>, <FONT ID="IntegerLiteral">0xca417918</FONT>, <FONT ID="IntegerLiteral">0xb8db38ef</FONT>,
+<A NAME="75"></A>        <FONT ID="IntegerLiteral">0x8e79dcb0</FONT>, <FONT ID="IntegerLiteral">0x603a180e</FONT>, <FONT ID="IntegerLiteral">0x6c9e0e8b</FONT>, <FONT ID="IntegerLiteral">0xb01e8a3e</FONT>,
+<A NAME="76"></A>        <FONT ID="IntegerLiteral">0xd71577c1</FONT>, <FONT ID="IntegerLiteral">0xbd314b27</FONT>, <FONT ID="IntegerLiteral">0x78af2fda</FONT>, <FONT ID="IntegerLiteral">0x55605c60</FONT>,
+<A NAME="77"></A>        <FONT ID="IntegerLiteral">0xe65525f3</FONT>, <FONT ID="IntegerLiteral">0xaa55ab94</FONT>, <FONT ID="IntegerLiteral">0x57489862</FONT>, <FONT ID="IntegerLiteral">0x63e81440</FONT>,
+<A NAME="78"></A>        <FONT ID="IntegerLiteral">0x55ca396a</FONT>, <FONT ID="IntegerLiteral">0x2aab10b6</FONT>, <FONT ID="IntegerLiteral">0xb4cc5c34</FONT>, <FONT ID="IntegerLiteral">0x1141e8ce</FONT>,
+<A NAME="79"></A>        <FONT ID="IntegerLiteral">0xa15486af</FONT>, <FONT ID="IntegerLiteral">0x7c72e993</FONT>, <FONT ID="IntegerLiteral">0xb3ee1411</FONT>, <FONT ID="IntegerLiteral">0x636fbc2a</FONT>,
+<A NAME="80"></A>        <FONT ID="IntegerLiteral">0x2ba9c55d</FONT>, <FONT ID="IntegerLiteral">0x741831f6</FONT>, <FONT ID="IntegerLiteral">0xce5c3e16</FONT>, <FONT ID="IntegerLiteral">0x9b87931e</FONT>,
+<A NAME="81"></A>        <FONT ID="IntegerLiteral">0xafd6ba33</FONT>, <FONT ID="IntegerLiteral">0x6c24cf5c</FONT>, <FONT ID="IntegerLiteral">0x7a325381</FONT>, <FONT ID="IntegerLiteral">0x28958677</FONT>,
+<A NAME="82"></A>        <FONT ID="IntegerLiteral">0x3b8f4898</FONT>, <FONT ID="IntegerLiteral">0x6b4bb9af</FONT>, <FONT ID="IntegerLiteral">0xc4bfe81b</FONT>, <FONT ID="IntegerLiteral">0x66282193</FONT>,
+<A NAME="83"></A>        <FONT ID="IntegerLiteral">0x61d809cc</FONT>, <FONT ID="IntegerLiteral">0xfb21a991</FONT>, <FONT ID="IntegerLiteral">0x487cac60</FONT>, <FONT ID="IntegerLiteral">0x5dec8032</FONT>,
+<A NAME="84"></A>        <FONT ID="IntegerLiteral">0xef845d5d</FONT>, <FONT ID="IntegerLiteral">0xe98575b1</FONT>, <FONT ID="IntegerLiteral">0xdc262302</FONT>, <FONT ID="IntegerLiteral">0xeb651b88</FONT>,
+<A NAME="85"></A>        <FONT ID="IntegerLiteral">0x23893e81</FONT>, <FONT ID="IntegerLiteral">0xd396acc5</FONT>, <FONT ID="IntegerLiteral">0x0f6d6ff3</FONT>, <FONT ID="IntegerLiteral">0x83f44239</FONT>,
+<A NAME="86"></A>        <FONT ID="IntegerLiteral">0x2e0b4482</FONT>, <FONT ID="IntegerLiteral">0xa4842004</FONT>, <FONT ID="IntegerLiteral">0x69c8f04a</FONT>, <FONT ID="IntegerLiteral">0x9e1f9b5e</FONT>,
+<A NAME="87"></A>        <FONT ID="IntegerLiteral">0x21c66842</FONT>, <FONT ID="IntegerLiteral">0xf6e96c9a</FONT>, <FONT ID="IntegerLiteral">0x670c9c61</FONT>, <FONT ID="IntegerLiteral">0xabd388f0</FONT>,
+<A NAME="88"></A>        <FONT ID="IntegerLiteral">0x6a51a0d2</FONT>, <FONT ID="IntegerLiteral">0xd8542f68</FONT>, <FONT ID="IntegerLiteral">0x960fa728</FONT>, <FONT ID="IntegerLiteral">0xab5133a3</FONT>,
+<A NAME="89"></A>        <FONT ID="IntegerLiteral">0x6eef0b6c</FONT>, <FONT ID="IntegerLiteral">0x137a3be4</FONT>, <FONT ID="IntegerLiteral">0xba3bf050</FONT>, <FONT ID="IntegerLiteral">0x7efb2a98</FONT>,
+<A NAME="90"></A>        <FONT ID="IntegerLiteral">0xa1f1651d</FONT>, <FONT ID="IntegerLiteral">0x39af0176</FONT>, <FONT ID="IntegerLiteral">0x66ca593e</FONT>, <FONT ID="IntegerLiteral">0x82430e88</FONT>,
+<A NAME="91"></A>        <FONT ID="IntegerLiteral">0x8cee8619</FONT>, <FONT ID="IntegerLiteral">0x456f9fb4</FONT>, <FONT ID="IntegerLiteral">0x7d84a5c3</FONT>, <FONT ID="IntegerLiteral">0x3b8b5ebe</FONT>,
+<A NAME="92"></A>        <FONT ID="IntegerLiteral">0xe06f75d8</FONT>, <FONT ID="IntegerLiteral">0x85c12073</FONT>, <FONT ID="IntegerLiteral">0x401a449f</FONT>, <FONT ID="IntegerLiteral">0x56c16aa6</FONT>,
+<A NAME="93"></A>        <FONT ID="IntegerLiteral">0x4ed3aa62</FONT>, <FONT ID="IntegerLiteral">0x363f7706</FONT>, <FONT ID="IntegerLiteral">0x1bfedf72</FONT>, <FONT ID="IntegerLiteral">0x429b023d</FONT>,
+<A NAME="94"></A>        <FONT ID="IntegerLiteral">0x37d0d724</FONT>, <FONT ID="IntegerLiteral">0xd00a1248</FONT>, <FONT ID="IntegerLiteral">0xdb0fead3</FONT>, <FONT ID="IntegerLiteral">0x49f1c09b</FONT>,
+<A NAME="95"></A>        <FONT ID="IntegerLiteral">0x075372c9</FONT>, <FONT ID="IntegerLiteral">0x80991b7b</FONT>, <FONT ID="IntegerLiteral">0x25d479d8</FONT>, <FONT ID="IntegerLiteral">0xf6e8def7</FONT>,
+<A NAME="96"></A>        <FONT ID="IntegerLiteral">0xe3fe501a</FONT>, <FONT ID="IntegerLiteral">0xb6794c3b</FONT>, <FONT ID="IntegerLiteral">0x976ce0bd</FONT>, <FONT ID="IntegerLiteral">0x04c006ba</FONT>,
+<A NAME="97"></A>        <FONT ID="IntegerLiteral">0xc1a94fb6</FONT>, <FONT ID="IntegerLiteral">0x409f60c4</FONT>, <FONT ID="IntegerLiteral">0x5e5c9ec2</FONT>, <FONT ID="IntegerLiteral">0x196a2463</FONT>,
+<A NAME="98"></A>        <FONT ID="IntegerLiteral">0x68fb6faf</FONT>, <FONT ID="IntegerLiteral">0x3e6c53b5</FONT>, <FONT ID="IntegerLiteral">0x1339b2eb</FONT>, <FONT ID="IntegerLiteral">0x3b52ec6f</FONT>,
+<A NAME="99"></A>        <FONT ID="IntegerLiteral">0x6dfc511f</FONT>, <FONT ID="IntegerLiteral">0x9b30952c</FONT>, <FONT ID="IntegerLiteral">0xcc814544</FONT>, <FONT ID="IntegerLiteral">0xaf5ebd09</FONT>,
+<A NAME="100"></A>        <FONT ID="IntegerLiteral">0xbee3d004</FONT>, <FONT ID="IntegerLiteral">0xde334afd</FONT>, <FONT ID="IntegerLiteral">0x660f2807</FONT>, <FONT ID="IntegerLiteral">0x192e4bb3</FONT>,
+<A NAME="101"></A>        <FONT ID="IntegerLiteral">0xc0cba857</FONT>, <FONT ID="IntegerLiteral">0x45c8740f</FONT>, <FONT ID="IntegerLiteral">0xd20b5f39</FONT>, <FONT ID="IntegerLiteral">0xb9d3fbdb</FONT>,
+<A NAME="102"></A>        <FONT ID="IntegerLiteral">0x5579c0bd</FONT>, <FONT ID="IntegerLiteral">0x1a60320a</FONT>, <FONT ID="IntegerLiteral">0xd6a100c6</FONT>, <FONT ID="IntegerLiteral">0x402c7279</FONT>,
+<A NAME="103"></A>        <FONT ID="IntegerLiteral">0x679f25fe</FONT>, <FONT ID="IntegerLiteral">0xfb1fa3cc</FONT>, <FONT ID="IntegerLiteral">0x8ea5e9f8</FONT>, <FONT ID="IntegerLiteral">0xdb3222f8</FONT>,
+<A NAME="104"></A>        <FONT ID="IntegerLiteral">0x3c7516df</FONT>, <FONT ID="IntegerLiteral">0xfd616b15</FONT>, <FONT ID="IntegerLiteral">0x2f501ec8</FONT>, <FONT ID="IntegerLiteral">0xad0552ab</FONT>,
+<A NAME="105"></A>        <FONT ID="IntegerLiteral">0x323db5fa</FONT>, <FONT ID="IntegerLiteral">0xfd238760</FONT>, <FONT ID="IntegerLiteral">0x53317b48</FONT>, <FONT ID="IntegerLiteral">0x3e00df82</FONT>,
+<A NAME="106"></A>        <FONT ID="IntegerLiteral">0x9e5c57bb</FONT>, <FONT ID="IntegerLiteral">0xca6f8ca0</FONT>, <FONT ID="IntegerLiteral">0x1a87562e</FONT>, <FONT ID="IntegerLiteral">0xdf1769db</FONT>,
+<A NAME="107"></A>        <FONT ID="IntegerLiteral">0xd542a8f6</FONT>, <FONT ID="IntegerLiteral">0x287effc3</FONT>, <FONT ID="IntegerLiteral">0xac6732c6</FONT>, <FONT ID="IntegerLiteral">0x8c4f5573</FONT>,
+<A NAME="108"></A>        <FONT ID="IntegerLiteral">0x695b27b0</FONT>, <FONT ID="IntegerLiteral">0xbbca58c8</FONT>, <FONT ID="IntegerLiteral">0xe1ffa35d</FONT>, <FONT ID="IntegerLiteral">0xb8f011a0</FONT>,
+<A NAME="109"></A>        <FONT ID="IntegerLiteral">0x10fa3d98</FONT>, <FONT ID="IntegerLiteral">0xfd2183b8</FONT>, <FONT ID="IntegerLiteral">0x4afcb56c</FONT>, <FONT ID="IntegerLiteral">0x2dd1d35b</FONT>,
+<A NAME="110"></A>        <FONT ID="IntegerLiteral">0x9a53e479</FONT>, <FONT ID="IntegerLiteral">0xb6f84565</FONT>, <FONT ID="IntegerLiteral">0xd28e49bc</FONT>, <FONT ID="IntegerLiteral">0x4bfb9790</FONT>,
+<A NAME="111"></A>        <FONT ID="IntegerLiteral">0xe1ddf2da</FONT>, <FONT ID="IntegerLiteral">0xa4cb7e33</FONT>, <FONT ID="IntegerLiteral">0x62fb1341</FONT>, <FONT ID="IntegerLiteral">0xcee4c6e8</FONT>,
+<A NAME="112"></A>        <FONT ID="IntegerLiteral">0xef20cada</FONT>, <FONT ID="IntegerLiteral">0x36774c01</FONT>, <FONT ID="IntegerLiteral">0xd07e9efe</FONT>, <FONT ID="IntegerLiteral">0x2bf11fb4</FONT>,
+<A NAME="113"></A>        <FONT ID="IntegerLiteral">0x95dbda4d</FONT>, <FONT ID="IntegerLiteral">0xae909198</FONT>, <FONT ID="IntegerLiteral">0xeaad8e71</FONT>, <FONT ID="IntegerLiteral">0x6b93d5a0</FONT>,
+<A NAME="114"></A>        <FONT ID="IntegerLiteral">0xd08ed1d0</FONT>, <FONT ID="IntegerLiteral">0xafc725e0</FONT>, <FONT ID="IntegerLiteral">0x8e3c5b2f</FONT>, <FONT ID="IntegerLiteral">0x8e7594b7</FONT>,
+<A NAME="115"></A>        <FONT ID="IntegerLiteral">0x8ff6e2fb</FONT>, <FONT ID="IntegerLiteral">0xf2122b64</FONT>, <FONT ID="IntegerLiteral">0x8888b812</FONT>, <FONT ID="IntegerLiteral">0x900df01c</FONT>,
+<A NAME="116"></A>        <FONT ID="IntegerLiteral">0x4fad5ea0</FONT>, <FONT ID="IntegerLiteral">0x688fc31c</FONT>, <FONT ID="IntegerLiteral">0xd1cff191</FONT>, <FONT ID="IntegerLiteral">0xb3a8c1ad</FONT>,
+<A NAME="117"></A>        <FONT ID="IntegerLiteral">0x2f2f2218</FONT>, <FONT ID="IntegerLiteral">0xbe0e1777</FONT>, <FONT ID="IntegerLiteral">0xea752dfe</FONT>, <FONT ID="IntegerLiteral">0x8b021fa1</FONT>,
+<A NAME="118"></A>        <FONT ID="IntegerLiteral">0xe5a0cc0f</FONT>, <FONT ID="IntegerLiteral">0xb56f74e8</FONT>, <FONT ID="IntegerLiteral">0x18acf3d6</FONT>, <FONT ID="IntegerLiteral">0xce89e299</FONT>,
+<A NAME="119"></A>        <FONT ID="IntegerLiteral">0xb4a84fe0</FONT>, <FONT ID="IntegerLiteral">0xfd13e0b7</FONT>, <FONT ID="IntegerLiteral">0x7cc43b81</FONT>, <FONT ID="IntegerLiteral">0xd2ada8d9</FONT>,
+<A NAME="120"></A>        <FONT ID="IntegerLiteral">0x165fa266</FONT>, <FONT ID="IntegerLiteral">0x80957705</FONT>, <FONT ID="IntegerLiteral">0x93cc7314</FONT>, <FONT ID="IntegerLiteral">0x211a1477</FONT>,
+<A NAME="121"></A>        <FONT ID="IntegerLiteral">0xe6ad2065</FONT>, <FONT ID="IntegerLiteral">0x77b5fa86</FONT>, <FONT ID="IntegerLiteral">0xc75442f5</FONT>, <FONT ID="IntegerLiteral">0xfb9d35cf</FONT>,
+<A NAME="122"></A>        <FONT ID="IntegerLiteral">0xebcdaf0c</FONT>, <FONT ID="IntegerLiteral">0x7b3e89a0</FONT>, <FONT ID="IntegerLiteral">0xd6411bd3</FONT>, <FONT ID="IntegerLiteral">0xae1e7e49</FONT>,
+<A NAME="123"></A>        <FONT ID="IntegerLiteral">0x00250e2d</FONT>, <FONT ID="IntegerLiteral">0x2071b35e</FONT>, <FONT ID="IntegerLiteral">0x226800bb</FONT>, <FONT ID="IntegerLiteral">0x57b8e0af</FONT>,
+<A NAME="124"></A>        <FONT ID="IntegerLiteral">0x2464369b</FONT>, <FONT ID="IntegerLiteral">0xf009b91e</FONT>, <FONT ID="IntegerLiteral">0x5563911d</FONT>, <FONT ID="IntegerLiteral">0x59dfa6aa</FONT>,
+<A NAME="125"></A>        <FONT ID="IntegerLiteral">0x78c14389</FONT>, <FONT ID="IntegerLiteral">0xd95a537f</FONT>, <FONT ID="IntegerLiteral">0x207d5ba2</FONT>, <FONT ID="IntegerLiteral">0x02e5b9c5</FONT>,
+<A NAME="126"></A>        <FONT ID="IntegerLiteral">0x83260376</FONT>, <FONT ID="IntegerLiteral">0x6295cfa9</FONT>, <FONT ID="IntegerLiteral">0x11c81968</FONT>, <FONT ID="IntegerLiteral">0x4e734a41</FONT>,
+<A NAME="127"></A>        <FONT ID="IntegerLiteral">0xb3472dca</FONT>, <FONT ID="IntegerLiteral">0x7b14a94a</FONT>, <FONT ID="IntegerLiteral">0x1b510052</FONT>, <FONT ID="IntegerLiteral">0x9a532915</FONT>,
+<A NAME="128"></A>        <FONT ID="IntegerLiteral">0xd60f573f</FONT>, <FONT ID="IntegerLiteral">0xbc9bc6e4</FONT>, <FONT ID="IntegerLiteral">0x2b60a476</FONT>, <FONT ID="IntegerLiteral">0x81e67400</FONT>,
+<A NAME="129"></A>        <FONT ID="IntegerLiteral">0x08ba6fb5</FONT>, <FONT ID="IntegerLiteral">0x571be91f</FONT>, <FONT ID="IntegerLiteral">0xf296ec6b</FONT>, <FONT ID="IntegerLiteral">0x2a0dd915</FONT>,
+<A NAME="130"></A>        <FONT ID="IntegerLiteral">0xb6636521</FONT>, <FONT ID="IntegerLiteral">0xe7b9f9b6</FONT>, <FONT ID="IntegerLiteral">0xff34052e</FONT>, <FONT ID="IntegerLiteral">0xc5855664</FONT>,
+<A NAME="131"></A>        <FONT ID="IntegerLiteral">0x53b02d5d</FONT>, <FONT ID="IntegerLiteral">0xa99f8fa1</FONT>, <FONT ID="IntegerLiteral">0x08ba4799</FONT>, <FONT ID="IntegerLiteral">0x6e85076a</FONT>,
+<A NAME="132"></A>        <FONT ID="IntegerLiteral">0x4b7a70e9</FONT>, <FONT ID="IntegerLiteral">0xb5b32944</FONT>, <FONT ID="IntegerLiteral">0xdb75092e</FONT>, <FONT ID="IntegerLiteral">0xc4192623</FONT>,
+<A NAME="133"></A>        <FONT ID="IntegerLiteral">0xad6ea6b0</FONT>, <FONT ID="IntegerLiteral">0x49a7df7d</FONT>, <FONT ID="IntegerLiteral">0x9cee60b8</FONT>, <FONT ID="IntegerLiteral">0x8fedb266</FONT>,
+<A NAME="134"></A>        <FONT ID="IntegerLiteral">0xecaa8c71</FONT>, <FONT ID="IntegerLiteral">0x699a17ff</FONT>, <FONT ID="IntegerLiteral">0x5664526c</FONT>, <FONT ID="IntegerLiteral">0xc2b19ee1</FONT>,
+<A NAME="135"></A>        <FONT ID="IntegerLiteral">0x193602a5</FONT>, <FONT ID="IntegerLiteral">0x75094c29</FONT>, <FONT ID="IntegerLiteral">0xa0591340</FONT>, <FONT ID="IntegerLiteral">0xe4183a3e</FONT>,
+<A NAME="136"></A>        <FONT ID="IntegerLiteral">0x3f54989a</FONT>, <FONT ID="IntegerLiteral">0x5b429d65</FONT>, <FONT ID="IntegerLiteral">0x6b8fe4d6</FONT>, <FONT ID="IntegerLiteral">0x99f73fd6</FONT>,
+<A NAME="137"></A>        <FONT ID="IntegerLiteral">0xa1d29c07</FONT>, <FONT ID="IntegerLiteral">0xefe830f5</FONT>, <FONT ID="IntegerLiteral">0x4d2d38e6</FONT>, <FONT ID="IntegerLiteral">0xf0255dc1</FONT>,
+<A NAME="138"></A>        <FONT ID="IntegerLiteral">0x4cdd2086</FONT>, <FONT ID="IntegerLiteral">0x8470eb26</FONT>, <FONT ID="IntegerLiteral">0x6382e9c6</FONT>, <FONT ID="IntegerLiteral">0x021ecc5e</FONT>,
+<A NAME="139"></A>        <FONT ID="IntegerLiteral">0x09686b3f</FONT>, <FONT ID="IntegerLiteral">0x3ebaefc9</FONT>, <FONT ID="IntegerLiteral">0x3c971814</FONT>, <FONT ID="IntegerLiteral">0x6b6a70a1</FONT>,
+<A NAME="140"></A>        <FONT ID="IntegerLiteral">0x687f3584</FONT>, <FONT ID="IntegerLiteral">0x52a0e286</FONT>, <FONT ID="IntegerLiteral">0xb79c5305</FONT>, <FONT ID="IntegerLiteral">0xaa500737</FONT>,
+<A NAME="141"></A>        <FONT ID="IntegerLiteral">0x3e07841c</FONT>, <FONT ID="IntegerLiteral">0x7fdeae5c</FONT>, <FONT ID="IntegerLiteral">0x8e7d44ec</FONT>, <FONT ID="IntegerLiteral">0x5716f2b8</FONT>,
+<A NAME="142"></A>        <FONT ID="IntegerLiteral">0xb03ada37</FONT>, <FONT ID="IntegerLiteral">0xf0500c0d</FONT>, <FONT ID="IntegerLiteral">0xf01c1f04</FONT>, <FONT ID="IntegerLiteral">0x0200b3ff</FONT>,
+<A NAME="143"></A>        <FONT ID="IntegerLiteral">0xae0cf51a</FONT>, <FONT ID="IntegerLiteral">0x3cb574b2</FONT>, <FONT ID="IntegerLiteral">0x25837a58</FONT>, <FONT ID="IntegerLiteral">0xdc0921bd</FONT>,
+<A NAME="144"></A>        <FONT ID="IntegerLiteral">0xd19113f9</FONT>, <FONT ID="IntegerLiteral">0x7ca92ff6</FONT>, <FONT ID="IntegerLiteral">0x94324773</FONT>, <FONT ID="IntegerLiteral">0x22f54701</FONT>,
+<A NAME="145"></A>        <FONT ID="IntegerLiteral">0x3ae5e581</FONT>, <FONT ID="IntegerLiteral">0x37c2dadc</FONT>, <FONT ID="IntegerLiteral">0xc8b57634</FONT>, <FONT ID="IntegerLiteral">0x9af3dda7</FONT>,
+<A NAME="146"></A>        <FONT ID="IntegerLiteral">0xa9446146</FONT>, <FONT ID="IntegerLiteral">0x0fd0030e</FONT>, <FONT ID="IntegerLiteral">0xecc8c73e</FONT>, <FONT ID="IntegerLiteral">0xa4751e41</FONT>,
+<A NAME="147"></A>        <FONT ID="IntegerLiteral">0xe238cd99</FONT>, <FONT ID="IntegerLiteral">0x3bea0e2f</FONT>, <FONT ID="IntegerLiteral">0x3280bba1</FONT>, <FONT ID="IntegerLiteral">0x183eb331</FONT>,
+<A NAME="148"></A>        <FONT ID="IntegerLiteral">0x4e548b38</FONT>, <FONT ID="IntegerLiteral">0x4f6db908</FONT>, <FONT ID="IntegerLiteral">0x6f420d03</FONT>, <FONT ID="IntegerLiteral">0xf60a04bf</FONT>,
+<A NAME="149"></A>        <FONT ID="IntegerLiteral">0x2cb81290</FONT>, <FONT ID="IntegerLiteral">0x24977c79</FONT>, <FONT ID="IntegerLiteral">0x5679b072</FONT>, <FONT ID="IntegerLiteral">0xbcaf89af</FONT>,
+<A NAME="150"></A>        <FONT ID="IntegerLiteral">0xde9a771f</FONT>, <FONT ID="IntegerLiteral">0xd9930810</FONT>, <FONT ID="IntegerLiteral">0xb38bae12</FONT>, <FONT ID="IntegerLiteral">0xdccf3f2e</FONT>,
+<A NAME="151"></A>        <FONT ID="IntegerLiteral">0x5512721f</FONT>, <FONT ID="IntegerLiteral">0x2e6b7124</FONT>, <FONT ID="IntegerLiteral">0x501adde6</FONT>, <FONT ID="IntegerLiteral">0x9f84cd87</FONT>,
+<A NAME="152"></A>        <FONT ID="IntegerLiteral">0x7a584718</FONT>, <FONT ID="IntegerLiteral">0x7408da17</FONT>, <FONT ID="IntegerLiteral">0xbc9f9abc</FONT>, <FONT ID="IntegerLiteral">0xe94b7d8c</FONT>,
+<A NAME="153"></A>        <FONT ID="IntegerLiteral">0xec7aec3a</FONT>, <FONT ID="IntegerLiteral">0xdb851dfa</FONT>, <FONT ID="IntegerLiteral">0x63094366</FONT>, <FONT ID="IntegerLiteral">0xc464c3d2</FONT>,
+<A NAME="154"></A>        <FONT ID="IntegerLiteral">0xef1c1847</FONT>, <FONT ID="IntegerLiteral">0x3215d908</FONT>, <FONT ID="IntegerLiteral">0xdd433b37</FONT>, <FONT ID="IntegerLiteral">0x24c2ba16</FONT>,
+<A NAME="155"></A>        <FONT ID="IntegerLiteral">0x12a14d43</FONT>, <FONT ID="IntegerLiteral">0x2a65c451</FONT>, <FONT ID="IntegerLiteral">0x50940002</FONT>, <FONT ID="IntegerLiteral">0x133ae4dd</FONT>,
+<A NAME="156"></A>        <FONT ID="IntegerLiteral">0x71dff89e</FONT>, <FONT ID="IntegerLiteral">0x10314e55</FONT>, <FONT ID="IntegerLiteral">0x81ac77d6</FONT>, <FONT ID="IntegerLiteral">0x5f11199b</FONT>,
+<A NAME="157"></A>        <FONT ID="IntegerLiteral">0x043556f1</FONT>, <FONT ID="IntegerLiteral">0xd7a3c76b</FONT>, <FONT ID="IntegerLiteral">0x3c11183b</FONT>, <FONT ID="IntegerLiteral">0x5924a509</FONT>,
+<A NAME="158"></A>        <FONT ID="IntegerLiteral">0xf28fe6ed</FONT>, <FONT ID="IntegerLiteral">0x97f1fbfa</FONT>, <FONT ID="IntegerLiteral">0x9ebabf2c</FONT>, <FONT ID="IntegerLiteral">0x1e153c6e</FONT>,
+<A NAME="159"></A>        <FONT ID="IntegerLiteral">0x86e34570</FONT>, <FONT ID="IntegerLiteral">0xeae96fb1</FONT>, <FONT ID="IntegerLiteral">0x860e5e0a</FONT>, <FONT ID="IntegerLiteral">0x5a3e2ab3</FONT>,
+<A NAME="160"></A>        <FONT ID="IntegerLiteral">0x771fe71c</FONT>, <FONT ID="IntegerLiteral">0x4e3d06fa</FONT>, <FONT ID="IntegerLiteral">0x2965dcb9</FONT>, <FONT ID="IntegerLiteral">0x99e71d0f</FONT>,
+<A NAME="161"></A>        <FONT ID="IntegerLiteral">0x803e89d6</FONT>, <FONT ID="IntegerLiteral">0x5266c825</FONT>, <FONT ID="IntegerLiteral">0x2e4cc978</FONT>, <FONT ID="IntegerLiteral">0x9c10b36a</FONT>,
+<A NAME="162"></A>        <FONT ID="IntegerLiteral">0xc6150eba</FONT>, <FONT ID="IntegerLiteral">0x94e2ea78</FONT>, <FONT ID="IntegerLiteral">0xa5fc3c53</FONT>, <FONT ID="IntegerLiteral">0x1e0a2df4</FONT>,
+<A NAME="163"></A>        <FONT ID="IntegerLiteral">0xf2f74ea7</FONT>, <FONT ID="IntegerLiteral">0x361d2b3d</FONT>, <FONT ID="IntegerLiteral">0x1939260f</FONT>, <FONT ID="IntegerLiteral">0x19c27960</FONT>,
+<A NAME="164"></A>        <FONT ID="IntegerLiteral">0x5223a708</FONT>, <FONT ID="IntegerLiteral">0xf71312b6</FONT>, <FONT ID="IntegerLiteral">0xebadfe6e</FONT>, <FONT ID="IntegerLiteral">0xeac31f66</FONT>,
+<A NAME="165"></A>        <FONT ID="IntegerLiteral">0xe3bc4595</FONT>, <FONT ID="IntegerLiteral">0xa67bc883</FONT>, <FONT ID="IntegerLiteral">0xb17f37d1</FONT>, <FONT ID="IntegerLiteral">0x018cff28</FONT>,
+<A NAME="166"></A>        <FONT ID="IntegerLiteral">0xc332ddef</FONT>, <FONT ID="IntegerLiteral">0xbe6c5aa5</FONT>, <FONT ID="IntegerLiteral">0x65582185</FONT>, <FONT ID="IntegerLiteral">0x68ab9802</FONT>,
+<A NAME="167"></A>        <FONT ID="IntegerLiteral">0xeecea50f</FONT>, <FONT ID="IntegerLiteral">0xdb2f953b</FONT>, <FONT ID="IntegerLiteral">0x2aef7dad</FONT>, <FONT ID="IntegerLiteral">0x5b6e2f84</FONT>,
+<A NAME="168"></A>        <FONT ID="IntegerLiteral">0x1521b628</FONT>, <FONT ID="IntegerLiteral">0x29076170</FONT>, <FONT ID="IntegerLiteral">0xecdd4775</FONT>, <FONT ID="IntegerLiteral">0x619f1510</FONT>,
+<A NAME="169"></A>        <FONT ID="IntegerLiteral">0x13cca830</FONT>, <FONT ID="IntegerLiteral">0xeb61bd96</FONT>, <FONT ID="IntegerLiteral">0x0334fe1e</FONT>, <FONT ID="IntegerLiteral">0xaa0363cf</FONT>,
+<A NAME="170"></A>        <FONT ID="IntegerLiteral">0xb5735c90</FONT>, <FONT ID="IntegerLiteral">0x4c70a239</FONT>, <FONT ID="IntegerLiteral">0xd59e9e0b</FONT>, <FONT ID="IntegerLiteral">0xcbaade14</FONT>,
+<A NAME="171"></A>        <FONT ID="IntegerLiteral">0xeecc86bc</FONT>, <FONT ID="IntegerLiteral">0x60622ca7</FONT>, <FONT ID="IntegerLiteral">0x9cab5cab</FONT>, <FONT ID="IntegerLiteral">0xb2f3846e</FONT>,
+<A NAME="172"></A>        <FONT ID="IntegerLiteral">0x648b1eaf</FONT>, <FONT ID="IntegerLiteral">0x19bdf0ca</FONT>, <FONT ID="IntegerLiteral">0xa02369b9</FONT>, <FONT ID="IntegerLiteral">0x655abb50</FONT>,
+<A NAME="173"></A>        <FONT ID="IntegerLiteral">0x40685a32</FONT>, <FONT ID="IntegerLiteral">0x3c2ab4b3</FONT>, <FONT ID="IntegerLiteral">0x319ee9d5</FONT>, <FONT ID="IntegerLiteral">0xc021b8f7</FONT>,
+<A NAME="174"></A>        <FONT ID="IntegerLiteral">0x9b540b19</FONT>, <FONT ID="IntegerLiteral">0x875fa099</FONT>, <FONT ID="IntegerLiteral">0x95f7997e</FONT>, <FONT ID="IntegerLiteral">0x623d7da8</FONT>,
+<A NAME="175"></A>        <FONT ID="IntegerLiteral">0xf837889a</FONT>, <FONT ID="IntegerLiteral">0x97e32d77</FONT>, <FONT ID="IntegerLiteral">0x11ed935f</FONT>, <FONT ID="IntegerLiteral">0x16681281</FONT>,
+<A NAME="176"></A>        <FONT ID="IntegerLiteral">0x0e358829</FONT>, <FONT ID="IntegerLiteral">0xc7e61fd6</FONT>, <FONT ID="IntegerLiteral">0x96dedfa1</FONT>, <FONT ID="IntegerLiteral">0x7858ba99</FONT>,
+<A NAME="177"></A>        <FONT ID="IntegerLiteral">0x57f584a5</FONT>, <FONT ID="IntegerLiteral">0x1b227263</FONT>, <FONT ID="IntegerLiteral">0x9b83c3ff</FONT>, <FONT ID="IntegerLiteral">0x1ac24696</FONT>,
+<A NAME="178"></A>        <FONT ID="IntegerLiteral">0xcdb30aeb</FONT>, <FONT ID="IntegerLiteral">0x532e3054</FONT>, <FONT ID="IntegerLiteral">0x8fd948e4</FONT>, <FONT ID="IntegerLiteral">0x6dbc3128</FONT>,
+<A NAME="179"></A>        <FONT ID="IntegerLiteral">0x58ebf2ef</FONT>, <FONT ID="IntegerLiteral">0x34c6ffea</FONT>, <FONT ID="IntegerLiteral">0xfe28ed61</FONT>, <FONT ID="IntegerLiteral">0xee7c3c73</FONT>,
+<A NAME="180"></A>        <FONT ID="IntegerLiteral">0x5d4a14d9</FONT>, <FONT ID="IntegerLiteral">0xe864b7e3</FONT>, <FONT ID="IntegerLiteral">0x42105d14</FONT>, <FONT ID="IntegerLiteral">0x203e13e0</FONT>,
+<A NAME="181"></A>        <FONT ID="IntegerLiteral">0x45eee2b6</FONT>, <FONT ID="IntegerLiteral">0xa3aaabea</FONT>, <FONT ID="IntegerLiteral">0xdb6c4f15</FONT>, <FONT ID="IntegerLiteral">0xfacb4fd0</FONT>,
+<A NAME="182"></A>        <FONT ID="IntegerLiteral">0xc742f442</FONT>, <FONT ID="IntegerLiteral">0xef6abbb5</FONT>, <FONT ID="IntegerLiteral">0x654f3b1d</FONT>, <FONT ID="IntegerLiteral">0x41cd2105</FONT>,
+<A NAME="183"></A>        <FONT ID="IntegerLiteral">0xd81e799e</FONT>, <FONT ID="IntegerLiteral">0x86854dc7</FONT>, <FONT ID="IntegerLiteral">0xe44b476a</FONT>, <FONT ID="IntegerLiteral">0x3d816250</FONT>,
+<A NAME="184"></A>        <FONT ID="IntegerLiteral">0xcf62a1f2</FONT>, <FONT ID="IntegerLiteral">0x5b8d2646</FONT>, <FONT ID="IntegerLiteral">0xfc8883a0</FONT>, <FONT ID="IntegerLiteral">0xc1c7b6a3</FONT>,
+<A NAME="185"></A>        <FONT ID="IntegerLiteral">0x7f1524c3</FONT>, <FONT ID="IntegerLiteral">0x69cb7492</FONT>, <FONT ID="IntegerLiteral">0x47848a0b</FONT>, <FONT ID="IntegerLiteral">0x5692b285</FONT>,
+<A NAME="186"></A>        <FONT ID="IntegerLiteral">0x095bbf00</FONT>, <FONT ID="IntegerLiteral">0xad19489d</FONT>, <FONT ID="IntegerLiteral">0x1462b174</FONT>, <FONT ID="IntegerLiteral">0x23820e00</FONT>,
+<A NAME="187"></A>        <FONT ID="IntegerLiteral">0x58428d2a</FONT>, <FONT ID="IntegerLiteral">0x0c55f5ea</FONT>, <FONT ID="IntegerLiteral">0x1dadf43e</FONT>, <FONT ID="IntegerLiteral">0x233f7061</FONT>,
+<A NAME="188"></A>        <FONT ID="IntegerLiteral">0x3372f092</FONT>, <FONT ID="IntegerLiteral">0x8d937e41</FONT>, <FONT ID="IntegerLiteral">0xd65fecf1</FONT>, <FONT ID="IntegerLiteral">0x6c223bdb</FONT>,
+<A NAME="189"></A>        <FONT ID="IntegerLiteral">0x7cde3759</FONT>, <FONT ID="IntegerLiteral">0xcbee7460</FONT>, <FONT ID="IntegerLiteral">0x4085f2a7</FONT>, <FONT ID="IntegerLiteral">0xce77326e</FONT>,
+<A NAME="190"></A>        <FONT ID="IntegerLiteral">0xa6078084</FONT>, <FONT ID="IntegerLiteral">0x19f8509e</FONT>, <FONT ID="IntegerLiteral">0xe8efd855</FONT>, <FONT ID="IntegerLiteral">0x61d99735</FONT>,
+<A NAME="191"></A>        <FONT ID="IntegerLiteral">0xa969a7aa</FONT>, <FONT ID="IntegerLiteral">0xc50c06c2</FONT>, <FONT ID="IntegerLiteral">0x5a04abfc</FONT>, <FONT ID="IntegerLiteral">0x800bcadc</FONT>,
+<A NAME="192"></A>        <FONT ID="IntegerLiteral">0x9e447a2e</FONT>, <FONT ID="IntegerLiteral">0xc3453484</FONT>, <FONT ID="IntegerLiteral">0xfdd56705</FONT>, <FONT ID="IntegerLiteral">0x0e1e9ec9</FONT>,
+<A NAME="193"></A>        <FONT ID="IntegerLiteral">0xdb73dbd3</FONT>, <FONT ID="IntegerLiteral">0x105588cd</FONT>, <FONT ID="IntegerLiteral">0x675fda79</FONT>, <FONT ID="IntegerLiteral">0xe3674340</FONT>,
+<A NAME="194"></A>        <FONT ID="IntegerLiteral">0xc5c43465</FONT>, <FONT ID="IntegerLiteral">0x713e38d8</FONT>, <FONT ID="IntegerLiteral">0x3d28f89e</FONT>, <FONT ID="IntegerLiteral">0xf16dff20</FONT>,
+<A NAME="195"></A>        <FONT ID="IntegerLiteral">0x153e21e7</FONT>, <FONT ID="IntegerLiteral">0x8fb03d4a</FONT>, <FONT ID="IntegerLiteral">0xe6e39f2b</FONT>, <FONT ID="IntegerLiteral">0xdb83adf7</FONT>,
+<A NAME="196"></A>        <FONT ID="IntegerLiteral">0xe93d5a68</FONT>, <FONT ID="IntegerLiteral">0x948140f7</FONT>, <FONT ID="IntegerLiteral">0xf64c261c</FONT>, <FONT ID="IntegerLiteral">0x94692934</FONT>,
+<A NAME="197"></A>        <FONT ID="IntegerLiteral">0x411520f7</FONT>, <FONT ID="IntegerLiteral">0x7602d4f7</FONT>, <FONT ID="IntegerLiteral">0xbcf46b2e</FONT>, <FONT ID="IntegerLiteral">0xd4a20068</FONT>,
+<A NAME="198"></A>        <FONT ID="IntegerLiteral">0xd4082471</FONT>, <FONT ID="IntegerLiteral">0x3320f46a</FONT>, <FONT ID="IntegerLiteral">0x43b7d4b7</FONT>, <FONT ID="IntegerLiteral">0x500061af</FONT>,
+<A NAME="199"></A>        <FONT ID="IntegerLiteral">0x1e39f62e</FONT>, <FONT ID="IntegerLiteral">0x97244546</FONT>, <FONT ID="IntegerLiteral">0x14214f74</FONT>, <FONT ID="IntegerLiteral">0xbf8b8840</FONT>,
+<A NAME="200"></A>        <FONT ID="IntegerLiteral">0x4d95fc1d</FONT>, <FONT ID="IntegerLiteral">0x96b591af</FONT>, <FONT ID="IntegerLiteral">0x70f4ddd3</FONT>, <FONT ID="IntegerLiteral">0x66a02f45</FONT>,
+<A NAME="201"></A>        <FONT ID="IntegerLiteral">0xbfbc09ec</FONT>, <FONT ID="IntegerLiteral">0x03bd9785</FONT>, <FONT ID="IntegerLiteral">0x7fac6dd0</FONT>, <FONT ID="IntegerLiteral">0x31cb8504</FONT>,
+<A NAME="202"></A>        <FONT ID="IntegerLiteral">0x96eb27b3</FONT>, <FONT ID="IntegerLiteral">0x55fd3941</FONT>, <FONT ID="IntegerLiteral">0xda2547e6</FONT>, <FONT ID="IntegerLiteral">0xabca0a9a</FONT>,
+<A NAME="203"></A>        <FONT ID="IntegerLiteral">0x28507825</FONT>, <FONT ID="IntegerLiteral">0x530429f4</FONT>, <FONT ID="IntegerLiteral">0x0a2c86da</FONT>, <FONT ID="IntegerLiteral">0xe9b66dfb</FONT>,
+<A NAME="204"></A>        <FONT ID="IntegerLiteral">0x68dc1462</FONT>, <FONT ID="IntegerLiteral">0xd7486900</FONT>, <FONT ID="IntegerLiteral">0x680ec0a4</FONT>, <FONT ID="IntegerLiteral">0x27a18dee</FONT>,
+<A NAME="205"></A>        <FONT ID="IntegerLiteral">0x4f3ffea2</FONT>, <FONT ID="IntegerLiteral">0xe887ad8c</FONT>, <FONT ID="IntegerLiteral">0xb58ce006</FONT>, <FONT ID="IntegerLiteral">0x7af4d6b6</FONT>,
+<A NAME="206"></A>        <FONT ID="IntegerLiteral">0xaace1e7c</FONT>, <FONT ID="IntegerLiteral">0xd3375fec</FONT>, <FONT ID="IntegerLiteral">0xce78a399</FONT>, <FONT ID="IntegerLiteral">0x406b2a42</FONT>,
+<A NAME="207"></A>        <FONT ID="IntegerLiteral">0x20fe9e35</FONT>, <FONT ID="IntegerLiteral">0xd9f385b9</FONT>, <FONT ID="IntegerLiteral">0xee39d7ab</FONT>, <FONT ID="IntegerLiteral">0x3b124e8b</FONT>,
+<A NAME="208"></A>        <FONT ID="IntegerLiteral">0x1dc9faf7</FONT>, <FONT ID="IntegerLiteral">0x4b6d1856</FONT>, <FONT ID="IntegerLiteral">0x26a36631</FONT>, <FONT ID="IntegerLiteral">0xeae397b2</FONT>,
+<A NAME="209"></A>        <FONT ID="IntegerLiteral">0x3a6efa74</FONT>, <FONT ID="IntegerLiteral">0xdd5b4332</FONT>, <FONT ID="IntegerLiteral">0x6841e7f7</FONT>, <FONT ID="IntegerLiteral">0xca7820fb</FONT>,
+<A NAME="210"></A>        <FONT ID="IntegerLiteral">0xfb0af54e</FONT>, <FONT ID="IntegerLiteral">0xd8feb397</FONT>, <FONT ID="IntegerLiteral">0x454056ac</FONT>, <FONT ID="IntegerLiteral">0xba489527</FONT>,
+<A NAME="211"></A>        <FONT ID="IntegerLiteral">0x55533a3a</FONT>, <FONT ID="IntegerLiteral">0x20838d87</FONT>, <FONT ID="IntegerLiteral">0xfe6ba9b7</FONT>, <FONT ID="IntegerLiteral">0xd096954b</FONT>,
+<A NAME="212"></A>        <FONT ID="IntegerLiteral">0x55a867bc</FONT>, <FONT ID="IntegerLiteral">0xa1159a58</FONT>, <FONT ID="IntegerLiteral">0xcca92963</FONT>, <FONT ID="IntegerLiteral">0x99e1db33</FONT>,
+<A NAME="213"></A>        <FONT ID="IntegerLiteral">0xa62a4a56</FONT>, <FONT ID="IntegerLiteral">0x3f3125f9</FONT>, <FONT ID="IntegerLiteral">0x5ef47e1c</FONT>, <FONT ID="IntegerLiteral">0x9029317c</FONT>,
+<A NAME="214"></A>        <FONT ID="IntegerLiteral">0xfdf8e802</FONT>, <FONT ID="IntegerLiteral">0x04272f70</FONT>, <FONT ID="IntegerLiteral">0x80bb155c</FONT>, <FONT ID="IntegerLiteral">0x05282ce3</FONT>,
+<A NAME="215"></A>        <FONT ID="IntegerLiteral">0x95c11548</FONT>, <FONT ID="IntegerLiteral">0xe4c66d22</FONT>, <FONT ID="IntegerLiteral">0x48c1133f</FONT>, <FONT ID="IntegerLiteral">0xc70f86dc</FONT>,
+<A NAME="216"></A>        <FONT ID="IntegerLiteral">0x07f9c9ee</FONT>, <FONT ID="IntegerLiteral">0x41041f0f</FONT>, <FONT ID="IntegerLiteral">0x404779a4</FONT>, <FONT ID="IntegerLiteral">0x5d886e17</FONT>,
+<A NAME="217"></A>        <FONT ID="IntegerLiteral">0x325f51eb</FONT>, <FONT ID="IntegerLiteral">0xd59bc0d1</FONT>, <FONT ID="IntegerLiteral">0xf2bcc18f</FONT>, <FONT ID="IntegerLiteral">0x41113564</FONT>,
+<A NAME="218"></A>        <FONT ID="IntegerLiteral">0x257b7834</FONT>, <FONT ID="IntegerLiteral">0x602a9c60</FONT>, <FONT ID="IntegerLiteral">0xdff8e8a3</FONT>, <FONT ID="IntegerLiteral">0x1f636c1b</FONT>,
+<A NAME="219"></A>        <FONT ID="IntegerLiteral">0x0e12b4c2</FONT>, <FONT ID="IntegerLiteral">0x02e1329e</FONT>, <FONT ID="IntegerLiteral">0xaf664fd1</FONT>, <FONT ID="IntegerLiteral">0xcad18115</FONT>,
+<A NAME="220"></A>        <FONT ID="IntegerLiteral">0x6b2395e0</FONT>, <FONT ID="IntegerLiteral">0x333e92e1</FONT>, <FONT ID="IntegerLiteral">0x3b240b62</FONT>, <FONT ID="IntegerLiteral">0xeebeb922</FONT>,
+<A NAME="221"></A>        <FONT ID="IntegerLiteral">0x85b2a20e</FONT>, <FONT ID="IntegerLiteral">0xe6ba0d99</FONT>, <FONT ID="IntegerLiteral">0xde720c8c</FONT>, <FONT ID="IntegerLiteral">0x2da2f728</FONT>,
+<A NAME="222"></A>        <FONT ID="IntegerLiteral">0xd0127845</FONT>, <FONT ID="IntegerLiteral">0x95b794fd</FONT>, <FONT ID="IntegerLiteral">0x647d0862</FONT>, <FONT ID="IntegerLiteral">0xe7ccf5f0</FONT>,
+<A NAME="223"></A>        <FONT ID="IntegerLiteral">0x5449a36f</FONT>, <FONT ID="IntegerLiteral">0x877d48fa</FONT>, <FONT ID="IntegerLiteral">0xc39dfd27</FONT>, <FONT ID="IntegerLiteral">0xf33e8d1e</FONT>,
+<A NAME="224"></A>        <FONT ID="IntegerLiteral">0x0a476341</FONT>, <FONT ID="IntegerLiteral">0x992eff74</FONT>, <FONT ID="IntegerLiteral">0x3a6f6eab</FONT>, <FONT ID="IntegerLiteral">0xf4f8fd37</FONT>,
+<A NAME="225"></A>        <FONT ID="IntegerLiteral">0xa812dc60</FONT>, <FONT ID="IntegerLiteral">0xa1ebddf8</FONT>, <FONT ID="IntegerLiteral">0x991be14c</FONT>, <FONT ID="IntegerLiteral">0xdb6e6b0d</FONT>,
+<A NAME="226"></A>        <FONT ID="IntegerLiteral">0xc67b5510</FONT>, <FONT ID="IntegerLiteral">0x6d672c37</FONT>, <FONT ID="IntegerLiteral">0x2765d43b</FONT>, <FONT ID="IntegerLiteral">0xdcd0e804</FONT>,
+<A NAME="227"></A>        <FONT ID="IntegerLiteral">0xf1290dc7</FONT>, <FONT ID="IntegerLiteral">0xcc00ffa3</FONT>, <FONT ID="IntegerLiteral">0xb5390f92</FONT>, <FONT ID="IntegerLiteral">0x690fed0b</FONT>,
+<A NAME="228"></A>        <FONT ID="IntegerLiteral">0x667b9ffb</FONT>, <FONT ID="IntegerLiteral">0xcedb7d9c</FONT>, <FONT ID="IntegerLiteral">0xa091cf0b</FONT>, <FONT ID="IntegerLiteral">0xd9155ea3</FONT>,
+<A NAME="229"></A>        <FONT ID="IntegerLiteral">0xbb132f88</FONT>, <FONT ID="IntegerLiteral">0x515bad24</FONT>, <FONT ID="IntegerLiteral">0x7b9479bf</FONT>, <FONT ID="IntegerLiteral">0x763bd6eb</FONT>,
+<A NAME="230"></A>        <FONT ID="IntegerLiteral">0x37392eb3</FONT>, <FONT ID="IntegerLiteral">0xcc115979</FONT>, <FONT ID="IntegerLiteral">0x8026e297</FONT>, <FONT ID="IntegerLiteral">0xf42e312d</FONT>,
+<A NAME="231"></A>        <FONT ID="IntegerLiteral">0x6842ada7</FONT>, <FONT ID="IntegerLiteral">0xc66a2b3b</FONT>, <FONT ID="IntegerLiteral">0x12754ccc</FONT>, <FONT ID="IntegerLiteral">0x782ef11c</FONT>,
+<A NAME="232"></A>        <FONT ID="IntegerLiteral">0x6a124237</FONT>, <FONT ID="IntegerLiteral">0xb79251e7</FONT>, <FONT ID="IntegerLiteral">0x06a1bbe6</FONT>, <FONT ID="IntegerLiteral">0x4bfb6350</FONT>,
+<A NAME="233"></A>        <FONT ID="IntegerLiteral">0x1a6b1018</FONT>, <FONT ID="IntegerLiteral">0x11caedfa</FONT>, <FONT ID="IntegerLiteral">0x3d25bdd8</FONT>, <FONT ID="IntegerLiteral">0xe2e1c3c9</FONT>,
+<A NAME="234"></A>        <FONT ID="IntegerLiteral">0x44421659</FONT>, <FONT ID="IntegerLiteral">0x0a121386</FONT>, <FONT ID="IntegerLiteral">0xd90cec6e</FONT>, <FONT ID="IntegerLiteral">0xd5abea2a</FONT>,
+<A NAME="235"></A>        <FONT ID="IntegerLiteral">0x64af674e</FONT>, <FONT ID="IntegerLiteral">0xda86a85f</FONT>, <FONT ID="IntegerLiteral">0xbebfe988</FONT>, <FONT ID="IntegerLiteral">0x64e4c3fe</FONT>,
+<A NAME="236"></A>        <FONT ID="IntegerLiteral">0x9dbc8057</FONT>, <FONT ID="IntegerLiteral">0xf0f7c086</FONT>, <FONT ID="IntegerLiteral">0x60787bf8</FONT>, <FONT ID="IntegerLiteral">0x6003604d</FONT>,
+<A NAME="237"></A>        <FONT ID="IntegerLiteral">0xd1fd8346</FONT>, <FONT ID="IntegerLiteral">0xf6381fb0</FONT>, <FONT ID="IntegerLiteral">0x7745ae04</FONT>, <FONT ID="IntegerLiteral">0xd736fccc</FONT>,
+<A NAME="238"></A>        <FONT ID="IntegerLiteral">0x83426b33</FONT>, <FONT ID="IntegerLiteral">0xf01eab71</FONT>, <FONT ID="IntegerLiteral">0xb0804187</FONT>, <FONT ID="IntegerLiteral">0x3c005e5f</FONT>,
+<A NAME="239"></A>        <FONT ID="IntegerLiteral">0x77a057be</FONT>, <FONT ID="IntegerLiteral">0xbde8ae24</FONT>, <FONT ID="IntegerLiteral">0x55464299</FONT>, <FONT ID="IntegerLiteral">0xbf582e61</FONT>,
+<A NAME="240"></A>        <FONT ID="IntegerLiteral">0x4e58f48f</FONT>, <FONT ID="IntegerLiteral">0xf2ddfda2</FONT>, <FONT ID="IntegerLiteral">0xf474ef38</FONT>, <FONT ID="IntegerLiteral">0x8789bdc2</FONT>,
+<A NAME="241"></A>        <FONT ID="IntegerLiteral">0x5366f9c3</FONT>, <FONT ID="IntegerLiteral">0xc8b38e74</FONT>, <FONT ID="IntegerLiteral">0xb475f255</FONT>, <FONT ID="IntegerLiteral">0x46fcd9b9</FONT>,
+<A NAME="242"></A>        <FONT ID="IntegerLiteral">0x7aeb2661</FONT>, <FONT ID="IntegerLiteral">0x8b1ddf84</FONT>, <FONT ID="IntegerLiteral">0x846a0e79</FONT>, <FONT ID="IntegerLiteral">0x915f95e2</FONT>,
+<A NAME="243"></A>        <FONT ID="IntegerLiteral">0x466e598e</FONT>, <FONT ID="IntegerLiteral">0x20b45770</FONT>, <FONT ID="IntegerLiteral">0x8cd55591</FONT>, <FONT ID="IntegerLiteral">0xc902de4c</FONT>,
+<A NAME="244"></A>        <FONT ID="IntegerLiteral">0xb90bace1</FONT>, <FONT ID="IntegerLiteral">0xbb8205d0</FONT>, <FONT ID="IntegerLiteral">0x11a86248</FONT>, <FONT ID="IntegerLiteral">0x7574a99e</FONT>,
+<A NAME="245"></A>        <FONT ID="IntegerLiteral">0xb77f19b6</FONT>, <FONT ID="IntegerLiteral">0xe0a9dc09</FONT>, <FONT ID="IntegerLiteral">0x662d09a1</FONT>, <FONT ID="IntegerLiteral">0xc4324633</FONT>,
+<A NAME="246"></A>        <FONT ID="IntegerLiteral">0xe85a1f02</FONT>, <FONT ID="IntegerLiteral">0x09f0be8c</FONT>, <FONT ID="IntegerLiteral">0x4a99a025</FONT>, <FONT ID="IntegerLiteral">0x1d6efe10</FONT>,
+<A NAME="247"></A>        <FONT ID="IntegerLiteral">0x1ab93d1d</FONT>, <FONT ID="IntegerLiteral">0x0ba5a4df</FONT>, <FONT ID="IntegerLiteral">0xa186f20f</FONT>, <FONT ID="IntegerLiteral">0x2868f169</FONT>,
+<A NAME="248"></A>        <FONT ID="IntegerLiteral">0xdcb7da83</FONT>, <FONT ID="IntegerLiteral">0x573906fe</FONT>, <FONT ID="IntegerLiteral">0xa1e2ce9b</FONT>, <FONT ID="IntegerLiteral">0x4fcd7f52</FONT>,
+<A NAME="249"></A>        <FONT ID="IntegerLiteral">0x50115e01</FONT>, <FONT ID="IntegerLiteral">0xa70683fa</FONT>, <FONT ID="IntegerLiteral">0xa002b5c4</FONT>, <FONT ID="IntegerLiteral">0x0de6d027</FONT>,
+<A NAME="250"></A>        <FONT ID="IntegerLiteral">0x9af88c27</FONT>, <FONT ID="IntegerLiteral">0x773f8641</FONT>, <FONT ID="IntegerLiteral">0xc3604c06</FONT>, <FONT ID="IntegerLiteral">0x61a806b5</FONT>,
+<A NAME="251"></A>        <FONT ID="IntegerLiteral">0xf0177a28</FONT>, <FONT ID="IntegerLiteral">0xc0f586e0</FONT>, <FONT ID="IntegerLiteral">0x006058aa</FONT>, <FONT ID="IntegerLiteral">0x30dc7d62</FONT>,
+<A NAME="252"></A>        <FONT ID="IntegerLiteral">0x11e69ed7</FONT>, <FONT ID="IntegerLiteral">0x2338ea63</FONT>, <FONT ID="IntegerLiteral">0x53c2dd94</FONT>, <FONT ID="IntegerLiteral">0xc2c21634</FONT>,
+<A NAME="253"></A>        <FONT ID="IntegerLiteral">0xbbcbee56</FONT>, <FONT ID="IntegerLiteral">0x90bcb6de</FONT>, <FONT ID="IntegerLiteral">0xebfc7da1</FONT>, <FONT ID="IntegerLiteral">0xce591d76</FONT>,
+<A NAME="254"></A>        <FONT ID="IntegerLiteral">0x6f05e409</FONT>, <FONT ID="IntegerLiteral">0x4b7c0188</FONT>, <FONT ID="IntegerLiteral">0x39720a3d</FONT>, <FONT ID="IntegerLiteral">0x7c927c24</FONT>,
+<A NAME="255"></A>        <FONT ID="IntegerLiteral">0x86e3725f</FONT>, <FONT ID="IntegerLiteral">0x724d9db9</FONT>, <FONT ID="IntegerLiteral">0x1ac15bb4</FONT>, <FONT ID="IntegerLiteral">0xd39eb8fc</FONT>,
+<A NAME="256"></A>        <FONT ID="IntegerLiteral">0xed545578</FONT>, <FONT ID="IntegerLiteral">0x08fca5b5</FONT>, <FONT ID="IntegerLiteral">0xd83d7cd3</FONT>, <FONT ID="IntegerLiteral">0x4dad0fc4</FONT>,
+<A NAME="257"></A>        <FONT ID="IntegerLiteral">0x1e50ef5e</FONT>, <FONT ID="IntegerLiteral">0xb161e6f8</FONT>, <FONT ID="IntegerLiteral">0xa28514d9</FONT>, <FONT ID="IntegerLiteral">0x6c51133c</FONT>,
+<A NAME="258"></A>        <FONT ID="IntegerLiteral">0x6fd5c7e7</FONT>, <FONT ID="IntegerLiteral">0x56e14ec4</FONT>, <FONT ID="IntegerLiteral">0x362abfce</FONT>, <FONT ID="IntegerLiteral">0xddc6c837</FONT>,
+<A NAME="259"></A>        <FONT ID="IntegerLiteral">0xd79a3234</FONT>, <FONT ID="IntegerLiteral">0x92638212</FONT>, <FONT ID="IntegerLiteral">0x670efa8e</FONT>, <FONT ID="IntegerLiteral">0x406000e0</FONT>,
+<A NAME="260"></A>        <FONT ID="IntegerLiteral">0x3a39ce37</FONT>, <FONT ID="IntegerLiteral">0xd3faf5cf</FONT>, <FONT ID="IntegerLiteral">0xabc27737</FONT>, <FONT ID="IntegerLiteral">0x5ac52d1b</FONT>,
+<A NAME="261"></A>        <FONT ID="IntegerLiteral">0x5cb0679e</FONT>, <FONT ID="IntegerLiteral">0x4fa33742</FONT>, <FONT ID="IntegerLiteral">0xd3822740</FONT>, <FONT ID="IntegerLiteral">0x99bc9bbe</FONT>,
+<A NAME="262"></A>        <FONT ID="IntegerLiteral">0xd5118e9d</FONT>, <FONT ID="IntegerLiteral">0xbf0f7315</FONT>, <FONT ID="IntegerLiteral">0xd62d1c7e</FONT>, <FONT ID="IntegerLiteral">0xc700c47b</FONT>,
+<A NAME="263"></A>        <FONT ID="IntegerLiteral">0xb78c1b6b</FONT>, <FONT ID="IntegerLiteral">0x21a19045</FONT>, <FONT ID="IntegerLiteral">0xb26eb1be</FONT>, <FONT ID="IntegerLiteral">0x6a366eb4</FONT>,
+<A NAME="264"></A>        <FONT ID="IntegerLiteral">0x5748ab2f</FONT>, <FONT ID="IntegerLiteral">0xbc946e79</FONT>, <FONT ID="IntegerLiteral">0xc6a376d2</FONT>, <FONT ID="IntegerLiteral">0x6549c2c8</FONT>,
+<A NAME="265"></A>        <FONT ID="IntegerLiteral">0x530ff8ee</FONT>, <FONT ID="IntegerLiteral">0x468dde7d</FONT>, <FONT ID="IntegerLiteral">0xd5730a1d</FONT>, <FONT ID="IntegerLiteral">0x4cd04dc6</FONT>,
+<A NAME="266"></A>        <FONT ID="IntegerLiteral">0x2939bbdb</FONT>, <FONT ID="IntegerLiteral">0xa9ba4650</FONT>, <FONT ID="IntegerLiteral">0xac9526e8</FONT>, <FONT ID="IntegerLiteral">0xbe5ee304</FONT>,
+<A NAME="267"></A>        <FONT ID="IntegerLiteral">0xa1fad5f0</FONT>, <FONT ID="IntegerLiteral">0x6a2d519a</FONT>, <FONT ID="IntegerLiteral">0x63ef8ce2</FONT>, <FONT ID="IntegerLiteral">0x9a86ee22</FONT>,
+<A NAME="268"></A>        <FONT ID="IntegerLiteral">0xc089c2b8</FONT>, <FONT ID="IntegerLiteral">0x43242ef6</FONT>, <FONT ID="IntegerLiteral">0xa51e03aa</FONT>, <FONT ID="IntegerLiteral">0x9cf2d0a4</FONT>,
+<A NAME="269"></A>        <FONT ID="IntegerLiteral">0x83c061ba</FONT>, <FONT ID="IntegerLiteral">0x9be96a4d</FONT>, <FONT ID="IntegerLiteral">0x8fe51550</FONT>, <FONT ID="IntegerLiteral">0xba645bd6</FONT>,
+<A NAME="270"></A>        <FONT ID="IntegerLiteral">0x2826a2f9</FONT>, <FONT ID="IntegerLiteral">0xa73a3ae1</FONT>, <FONT ID="IntegerLiteral">0x4ba99586</FONT>, <FONT ID="IntegerLiteral">0xef5562e9</FONT>,
+<A NAME="271"></A>        <FONT ID="IntegerLiteral">0xc72fefd3</FONT>, <FONT ID="IntegerLiteral">0xf752f7da</FONT>, <FONT ID="IntegerLiteral">0x3f046f69</FONT>, <FONT ID="IntegerLiteral">0x77fa0a59</FONT>,
+<A NAME="272"></A>        <FONT ID="IntegerLiteral">0x80e4a915</FONT>, <FONT ID="IntegerLiteral">0x87b08601</FONT>, <FONT ID="IntegerLiteral">0x9b09e6ad</FONT>, <FONT ID="IntegerLiteral">0x3b3ee593</FONT>,
+<A NAME="273"></A>        <FONT ID="IntegerLiteral">0xe990fd5a</FONT>, <FONT ID="IntegerLiteral">0x9e34d797</FONT>, <FONT ID="IntegerLiteral">0x2cf0b7d9</FONT>, <FONT ID="IntegerLiteral">0x022b8b51</FONT>,
+<A NAME="274"></A>        <FONT ID="IntegerLiteral">0x96d5ac3a</FONT>, <FONT ID="IntegerLiteral">0x017da67d</FONT>, <FONT ID="IntegerLiteral">0xd1cf3ed6</FONT>, <FONT ID="IntegerLiteral">0x7c7d2d28</FONT>,
+<A NAME="275"></A>        <FONT ID="IntegerLiteral">0x1f9f25cf</FONT>, <FONT ID="IntegerLiteral">0xadf2b89b</FONT>, <FONT ID="IntegerLiteral">0x5ad6b472</FONT>, <FONT ID="IntegerLiteral">0x5a88f54c</FONT>,
+<A NAME="276"></A>        <FONT ID="IntegerLiteral">0xe029ac71</FONT>, <FONT ID="IntegerLiteral">0xe019a5e6</FONT>, <FONT ID="IntegerLiteral">0x47b0acfd</FONT>, <FONT ID="IntegerLiteral">0xed93fa9b</FONT>,
+<A NAME="277"></A>        <FONT ID="IntegerLiteral">0xe8d3c48d</FONT>, <FONT ID="IntegerLiteral">0x283b57cc</FONT>, <FONT ID="IntegerLiteral">0xf8d56629</FONT>, <FONT ID="IntegerLiteral">0x79132e28</FONT>,
+<A NAME="278"></A>        <FONT ID="IntegerLiteral">0x785f0191</FONT>, <FONT ID="IntegerLiteral">0xed756055</FONT>, <FONT ID="IntegerLiteral">0xf7960e44</FONT>, <FONT ID="IntegerLiteral">0xe3d35e8c</FONT>,
+<A NAME="279"></A>        <FONT ID="IntegerLiteral">0x15056dd4</FONT>, <FONT ID="IntegerLiteral">0x88f46dba</FONT>, <FONT ID="IntegerLiteral">0x03a16125</FONT>, <FONT ID="IntegerLiteral">0x0564f0bd</FONT>,
+<A NAME="280"></A>        <FONT ID="IntegerLiteral">0xc3eb9e15</FONT>, <FONT ID="IntegerLiteral">0x3c9057a2</FONT>, <FONT ID="IntegerLiteral">0x97271aec</FONT>, <FONT ID="IntegerLiteral">0xa93a072a</FONT>,
+<A NAME="281"></A>        <FONT ID="IntegerLiteral">0x1b3f6d9b</FONT>, <FONT ID="IntegerLiteral">0x1e6321f5</FONT>, <FONT ID="IntegerLiteral">0xf59c66fb</FONT>, <FONT ID="IntegerLiteral">0x26dcf319</FONT>,
+<A NAME="282"></A>        <FONT ID="IntegerLiteral">0x7533d928</FONT>, <FONT ID="IntegerLiteral">0xb155fdf5</FONT>, <FONT ID="IntegerLiteral">0x03563482</FONT>, <FONT ID="IntegerLiteral">0x8aba3cbb</FONT>,
+<A NAME="283"></A>        <FONT ID="IntegerLiteral">0x28517711</FONT>, <FONT ID="IntegerLiteral">0xc20ad9f8</FONT>, <FONT ID="IntegerLiteral">0xabcc5167</FONT>, <FONT ID="IntegerLiteral">0xccad925f</FONT>,
+<A NAME="284"></A>        <FONT ID="IntegerLiteral">0x4de81751</FONT>, <FONT ID="IntegerLiteral">0x3830dc8e</FONT>, <FONT ID="IntegerLiteral">0x379d5862</FONT>, <FONT ID="IntegerLiteral">0x9320f991</FONT>,
+<A NAME="285"></A>        <FONT ID="IntegerLiteral">0xea7a90c2</FONT>, <FONT ID="IntegerLiteral">0xfb3e7bce</FONT>, <FONT ID="IntegerLiteral">0x5121ce64</FONT>, <FONT ID="IntegerLiteral">0x774fbe32</FONT>,
+<A NAME="286"></A>        <FONT ID="IntegerLiteral">0xa8b6e37e</FONT>, <FONT ID="IntegerLiteral">0xc3293d46</FONT>, <FONT ID="IntegerLiteral">0x48de5369</FONT>, <FONT ID="IntegerLiteral">0x6413e680</FONT>,
+<A NAME="287"></A>        <FONT ID="IntegerLiteral">0xa2ae0810</FONT>, <FONT ID="IntegerLiteral">0xdd6db224</FONT>, <FONT ID="IntegerLiteral">0x69852dfd</FONT>, <FONT ID="IntegerLiteral">0x09072166</FONT>,
+<A NAME="288"></A>        <FONT ID="IntegerLiteral">0xb39a460a</FONT>, <FONT ID="IntegerLiteral">0x6445c0dd</FONT>, <FONT ID="IntegerLiteral">0x586cdecf</FONT>, <FONT ID="IntegerLiteral">0x1c20c8ae</FONT>,
+<A NAME="289"></A>        <FONT ID="IntegerLiteral">0x5bbef7dd</FONT>, <FONT ID="IntegerLiteral">0x1b588d40</FONT>, <FONT ID="IntegerLiteral">0xccd2017f</FONT>, <FONT ID="IntegerLiteral">0x6bb4e3bb</FONT>,
+<A NAME="290"></A>        <FONT ID="IntegerLiteral">0xdda26a7e</FONT>, <FONT ID="IntegerLiteral">0x3a59ff45</FONT>, <FONT ID="IntegerLiteral">0x3e350a44</FONT>, <FONT ID="IntegerLiteral">0xbcb4cdd5</FONT>,
+<A NAME="291"></A>        <FONT ID="IntegerLiteral">0x72eacea8</FONT>, <FONT ID="IntegerLiteral">0xfa6484bb</FONT>, <FONT ID="IntegerLiteral">0x8d6612ae</FONT>, <FONT ID="IntegerLiteral">0xbf3c6f47</FONT>,
+<A NAME="292"></A>        <FONT ID="IntegerLiteral">0xd29be463</FONT>, <FONT ID="IntegerLiteral">0x542f5d9e</FONT>, <FONT ID="IntegerLiteral">0xaec2771b</FONT>, <FONT ID="IntegerLiteral">0xf64e6370</FONT>,
+<A NAME="293"></A>        <FONT ID="IntegerLiteral">0x740e0d8d</FONT>, <FONT ID="IntegerLiteral">0xe75b1357</FONT>, <FONT ID="IntegerLiteral">0xf8721671</FONT>, <FONT ID="IntegerLiteral">0xaf537d5d</FONT>,
+<A NAME="294"></A>        <FONT ID="IntegerLiteral">0x4040cb08</FONT>, <FONT ID="IntegerLiteral">0x4eb4e2cc</FONT>, <FONT ID="IntegerLiteral">0x34d2466a</FONT>, <FONT ID="IntegerLiteral">0x0115af84</FONT>,
+<A NAME="295"></A>        <FONT ID="IntegerLiteral">0xe1b00428</FONT>, <FONT ID="IntegerLiteral">0x95983a1d</FONT>, <FONT ID="IntegerLiteral">0x06b89fb4</FONT>, <FONT ID="IntegerLiteral">0xce6ea048</FONT>,
+<A NAME="296"></A>        <FONT ID="IntegerLiteral">0x6f3f3b82</FONT>, <FONT ID="IntegerLiteral">0x3520ab82</FONT>, <FONT ID="IntegerLiteral">0x011a1d4b</FONT>, <FONT ID="IntegerLiteral">0x277227f8</FONT>,
+<A NAME="297"></A>        <FONT ID="IntegerLiteral">0x611560b1</FONT>, <FONT ID="IntegerLiteral">0xe7933fdc</FONT>, <FONT ID="IntegerLiteral">0xbb3a792b</FONT>, <FONT ID="IntegerLiteral">0x344525bd</FONT>,
+<A NAME="298"></A>        <FONT ID="IntegerLiteral">0xa08839e1</FONT>, <FONT ID="IntegerLiteral">0x51ce794b</FONT>, <FONT ID="IntegerLiteral">0x2f32c9b7</FONT>, <FONT ID="IntegerLiteral">0xa01fbac9</FONT>,
+<A NAME="299"></A>        <FONT ID="IntegerLiteral">0xe01cc87e</FONT>, <FONT ID="IntegerLiteral">0xbcc7d1f6</FONT>, <FONT ID="IntegerLiteral">0xcf0111c3</FONT>, <FONT ID="IntegerLiteral">0xa1e8aac7</FONT>,
+<A NAME="300"></A>        <FONT ID="IntegerLiteral">0x1a908749</FONT>, <FONT ID="IntegerLiteral">0xd44fbd9a</FONT>, <FONT ID="IntegerLiteral">0xd0dadecb</FONT>, <FONT ID="IntegerLiteral">0xd50ada38</FONT>,
+<A NAME="301"></A>        <FONT ID="IntegerLiteral">0x0339c32a</FONT>, <FONT ID="IntegerLiteral">0xc6913667</FONT>, <FONT ID="IntegerLiteral">0x8df9317c</FONT>, <FONT ID="IntegerLiteral">0xe0b12b4f</FONT>,
+<A NAME="302"></A>        <FONT ID="IntegerLiteral">0xf79e59b7</FONT>, <FONT ID="IntegerLiteral">0x43f5bb3a</FONT>, <FONT ID="IntegerLiteral">0xf2d519ff</FONT>, <FONT ID="IntegerLiteral">0x27d9459c</FONT>,
+<A NAME="303"></A>        <FONT ID="IntegerLiteral">0xbf97222c</FONT>, <FONT ID="IntegerLiteral">0x15e6fc2a</FONT>, <FONT ID="IntegerLiteral">0x0f91fc71</FONT>, <FONT ID="IntegerLiteral">0x9b941525</FONT>,
+<A NAME="304"></A>        <FONT ID="IntegerLiteral">0xfae59361</FONT>, <FONT ID="IntegerLiteral">0xceb69ceb</FONT>, <FONT ID="IntegerLiteral">0xc2a86459</FONT>, <FONT ID="IntegerLiteral">0x12baa8d1</FONT>,
+<A NAME="305"></A>        <FONT ID="IntegerLiteral">0xb6c1075e</FONT>, <FONT ID="IntegerLiteral">0xe3056a0c</FONT>, <FONT ID="IntegerLiteral">0x10d25065</FONT>, <FONT ID="IntegerLiteral">0xcb03a442</FONT>,
+<A NAME="306"></A>        <FONT ID="IntegerLiteral">0xe0ec6e0e</FONT>, <FONT ID="IntegerLiteral">0x1698db3b</FONT>, <FONT ID="IntegerLiteral">0x4c98a0be</FONT>, <FONT ID="IntegerLiteral">0x3278e964</FONT>,
+<A NAME="307"></A>        <FONT ID="IntegerLiteral">0x9f1f9532</FONT>, <FONT ID="IntegerLiteral">0xe0d392df</FONT>, <FONT ID="IntegerLiteral">0xd3a0342b</FONT>, <FONT ID="IntegerLiteral">0x8971f21e</FONT>,
+<A NAME="308"></A>        <FONT ID="IntegerLiteral">0x1b0a7441</FONT>, <FONT ID="IntegerLiteral">0x4ba3348c</FONT>, <FONT ID="IntegerLiteral">0xc5be7120</FONT>, <FONT ID="IntegerLiteral">0xc37632d8</FONT>,
+<A NAME="309"></A>        <FONT ID="IntegerLiteral">0xdf359f8d</FONT>, <FONT ID="IntegerLiteral">0x9b992f2e</FONT>, <FONT ID="IntegerLiteral">0xe60b6f47</FONT>, <FONT ID="IntegerLiteral">0x0fe3f11d</FONT>,
+<A NAME="310"></A>        <FONT ID="IntegerLiteral">0xe54cda54</FONT>, <FONT ID="IntegerLiteral">0x1edad891</FONT>, <FONT ID="IntegerLiteral">0xce6279cf</FONT>, <FONT ID="IntegerLiteral">0xcd3e7e6f</FONT>,
+<A NAME="311"></A>        <FONT ID="IntegerLiteral">0x1618b166</FONT>, <FONT ID="IntegerLiteral">0xfd2c1d05</FONT>, <FONT ID="IntegerLiteral">0x848fd2c5</FONT>, <FONT ID="IntegerLiteral">0xf6fb2299</FONT>,
+<A NAME="312"></A>        <FONT ID="IntegerLiteral">0xf523f357</FONT>, <FONT ID="IntegerLiteral">0xa6327623</FONT>, <FONT ID="IntegerLiteral">0x93a83531</FONT>, <FONT ID="IntegerLiteral">0x56cccd02</FONT>,
+<A NAME="313"></A>        <FONT ID="IntegerLiteral">0xacf08162</FONT>, <FONT ID="IntegerLiteral">0x5a75ebb5</FONT>, <FONT ID="IntegerLiteral">0x6e163697</FONT>, <FONT ID="IntegerLiteral">0x88d273cc</FONT>,
+<A NAME="314"></A>        <FONT ID="IntegerLiteral">0xde966292</FONT>, <FONT ID="IntegerLiteral">0x81b949d0</FONT>, <FONT ID="IntegerLiteral">0x4c50901b</FONT>, <FONT ID="IntegerLiteral">0x71c65614</FONT>,
+<A NAME="315"></A>        <FONT ID="IntegerLiteral">0xe6c6c7bd</FONT>, <FONT ID="IntegerLiteral">0x327a140a</FONT>, <FONT ID="IntegerLiteral">0x45e1d006</FONT>, <FONT ID="IntegerLiteral">0xc3f27b9a</FONT>,
+<A NAME="316"></A>        <FONT ID="IntegerLiteral">0xc9aa53fd</FONT>, <FONT ID="IntegerLiteral">0x62a80f00</FONT>, <FONT ID="IntegerLiteral">0xbb25bfe2</FONT>, <FONT ID="IntegerLiteral">0x35bdd2f6</FONT>,
+<A NAME="317"></A>        <FONT ID="IntegerLiteral">0x71126905</FONT>, <FONT ID="IntegerLiteral">0xb2040222</FONT>, <FONT ID="IntegerLiteral">0xb6cbcf7c</FONT>, <FONT ID="IntegerLiteral">0xcd769c2b</FONT>,
+<A NAME="318"></A>        <FONT ID="IntegerLiteral">0x53113ec0</FONT>, <FONT ID="IntegerLiteral">0x1640e3d3</FONT>, <FONT ID="IntegerLiteral">0x38abbd60</FONT>, <FONT ID="IntegerLiteral">0x2547adf0</FONT>,
+<A NAME="319"></A>        <FONT ID="IntegerLiteral">0xba38209c</FONT>, <FONT ID="IntegerLiteral">0xf746ce76</FONT>, <FONT ID="IntegerLiteral">0x77afa1c5</FONT>, <FONT ID="IntegerLiteral">0x20756060</FONT>,
+<A NAME="320"></A>        <FONT ID="IntegerLiteral">0x85cbfe4e</FONT>, <FONT ID="IntegerLiteral">0x8ae88dd8</FONT>, <FONT ID="IntegerLiteral">0x7aaaf9b0</FONT>, <FONT ID="IntegerLiteral">0x4cf9aa7e</FONT>,
+<A NAME="321"></A>        <FONT ID="IntegerLiteral">0x1948c25c</FONT>, <FONT ID="IntegerLiteral">0x02fb8a8c</FONT>, <FONT ID="IntegerLiteral">0x01c36ae4</FONT>, <FONT ID="IntegerLiteral">0xd6ebe1f9</FONT>,
+<A NAME="322"></A>        <FONT ID="IntegerLiteral">0x90d4f869</FONT>, <FONT ID="IntegerLiteral">0xa65cdea0</FONT>, <FONT ID="IntegerLiteral">0x3f09252d</FONT>, <FONT ID="IntegerLiteral">0xc208e69f</FONT>,
+<A NAME="323"></A>        <FONT ID="IntegerLiteral">0xb74e6132</FONT>, <FONT ID="IntegerLiteral">0xce77e25b</FONT>, <FONT ID="IntegerLiteral">0x578fdfe3</FONT>, <FONT ID="IntegerLiteral">0x3ac372e6</FONT>
+<A NAME="324"></A>    };
+<A NAME="325"></A>
+<A NAME="326"></A>    <FONT ID="SingleLineComment">// bcrypt IV: "OrpheanBeholderScryDoubt"
+<A NAME="327"></A></FONT>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> bf_crypt_ciphertext[] = {
+<A NAME="328"></A>        <FONT ID="IntegerLiteral">0x4f727068</FONT>, <FONT ID="IntegerLiteral">0x65616e42</FONT>, <FONT ID="IntegerLiteral">0x65686f6c</FONT>,
+<A NAME="329"></A>        <FONT ID="IntegerLiteral">0x64657253</FONT>, <FONT ID="IntegerLiteral">0x63727944</FONT>, <FONT ID="IntegerLiteral">0x6f756274</FONT>
+<A NAME="330"></A>    };
+<A NAME="331"></A>
+<A NAME="332"></A>    <FONT ID="SingleLineComment">// Table for Base64 encoding
+<A NAME="333"></A></FONT>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> <FONT ID="Char">char</FONT> base64_code[] = {
+<A NAME="334"></A>        <FONT ID="CharacerLiteral">'.'</FONT>, <FONT ID="CharacerLiteral">'/'</FONT>, <FONT ID="CharacerLiteral">'A'</FONT>, <FONT ID="CharacerLiteral">'B'</FONT>, <FONT ID="CharacerLiteral">'C'</FONT>, <FONT ID="CharacerLiteral">'D'</FONT>, <FONT ID="CharacerLiteral">'E'</FONT>, <FONT ID="CharacerLiteral">'F'</FONT>, <FONT ID="CharacerLiteral">'G'</FONT>, <FONT ID="CharacerLiteral">'H'</FONT>, <FONT ID="CharacerLiteral">'I'</FONT>, <FONT ID="CharacerLiteral">'J'</FONT>,
+<A NAME="335"></A>        <FONT ID="CharacerLiteral">'K'</FONT>, <FONT ID="CharacerLiteral">'L'</FONT>, <FONT ID="CharacerLiteral">'M'</FONT>, <FONT ID="CharacerLiteral">'N'</FONT>, <FONT ID="CharacerLiteral">'O'</FONT>, <FONT ID="CharacerLiteral">'P'</FONT>, <FONT ID="CharacerLiteral">'Q'</FONT>, <FONT ID="CharacerLiteral">'R'</FONT>, <FONT ID="CharacerLiteral">'S'</FONT>, <FONT ID="CharacerLiteral">'T'</FONT>, <FONT ID="CharacerLiteral">'U'</FONT>, <FONT ID="CharacerLiteral">'V'</FONT>,
+<A NAME="336"></A>        <FONT ID="CharacerLiteral">'W'</FONT>, <FONT ID="CharacerLiteral">'X'</FONT>, <FONT ID="CharacerLiteral">'Y'</FONT>, <FONT ID="CharacerLiteral">'Z'</FONT>, <FONT ID="CharacerLiteral">'a'</FONT>, <FONT ID="CharacerLiteral">'b'</FONT>, <FONT ID="CharacerLiteral">'c'</FONT>, <FONT ID="CharacerLiteral">'d'</FONT>, <FONT ID="CharacerLiteral">'e'</FONT>, <FONT ID="CharacerLiteral">'f'</FONT>, <FONT ID="CharacerLiteral">'g'</FONT>, <FONT ID="CharacerLiteral">'h'</FONT>,
+<A NAME="337"></A>        <FONT ID="CharacerLiteral">'i'</FONT>, <FONT ID="CharacerLiteral">'j'</FONT>, <FONT ID="CharacerLiteral">'k'</FONT>, <FONT ID="CharacerLiteral">'l'</FONT>, <FONT ID="CharacerLiteral">'m'</FONT>, <FONT ID="CharacerLiteral">'n'</FONT>, <FONT ID="CharacerLiteral">'o'</FONT>, <FONT ID="CharacerLiteral">'p'</FONT>, <FONT ID="CharacerLiteral">'q'</FONT>, <FONT ID="CharacerLiteral">'r'</FONT>, <FONT ID="CharacerLiteral">'s'</FONT>, <FONT ID="CharacerLiteral">'t'</FONT>,
+<A NAME="338"></A>        <FONT ID="CharacerLiteral">'u'</FONT>, <FONT ID="CharacerLiteral">'v'</FONT>, <FONT ID="CharacerLiteral">'w'</FONT>, <FONT ID="CharacerLiteral">'x'</FONT>, <FONT ID="CharacerLiteral">'y'</FONT>, <FONT ID="CharacerLiteral">'z'</FONT>, <FONT ID="CharacerLiteral">'0'</FONT>, <FONT ID="CharacerLiteral">'1'</FONT>, <FONT ID="CharacerLiteral">'2'</FONT>, <FONT ID="CharacerLiteral">'3'</FONT>, <FONT ID="CharacerLiteral">'4'</FONT>, <FONT ID="CharacerLiteral">'5'</FONT>,
+<A NAME="339"></A>        <FONT ID="CharacerLiteral">'6'</FONT>, <FONT ID="CharacerLiteral">'7'</FONT>, <FONT ID="CharacerLiteral">'8'</FONT>, <FONT ID="CharacerLiteral">'9'</FONT>
+<A NAME="340"></A>    };
+<A NAME="341"></A>
+<A NAME="342"></A>    <FONT ID="SingleLineComment">// Table for Base64 decoding
+<A NAME="343"></A></FONT>    <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> <FONT ID="Byte">byte</FONT> index_64[] = {
+<A NAME="344"></A>        -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>,
+<A NAME="345"></A>        -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>,
+<A NAME="346"></A>        -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>,
+<A NAME="347"></A>        -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>,
+<A NAME="348"></A>        -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">1</FONT>, <FONT ID="IntegerLiteral">54</FONT>, <FONT ID="IntegerLiteral">55</FONT>,
+<A NAME="349"></A>        <FONT ID="IntegerLiteral">56</FONT>, <FONT ID="IntegerLiteral">57</FONT>, <FONT ID="IntegerLiteral">58</FONT>, <FONT ID="IntegerLiteral">59</FONT>, <FONT ID="IntegerLiteral">60</FONT>, <FONT ID="IntegerLiteral">61</FONT>, <FONT ID="IntegerLiteral">62</FONT>, <FONT ID="IntegerLiteral">63</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>,
+<A NAME="350"></A>        -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, <FONT ID="IntegerLiteral">2</FONT>, <FONT ID="IntegerLiteral">3</FONT>, <FONT ID="IntegerLiteral">4</FONT>, <FONT ID="IntegerLiteral">5</FONT>, <FONT ID="IntegerLiteral">6</FONT>,
+<A NAME="351"></A>        <FONT ID="IntegerLiteral">7</FONT>, <FONT ID="IntegerLiteral">8</FONT>, <FONT ID="IntegerLiteral">9</FONT>, <FONT ID="IntegerLiteral">10</FONT>, <FONT ID="IntegerLiteral">11</FONT>, <FONT ID="IntegerLiteral">12</FONT>, <FONT ID="IntegerLiteral">13</FONT>, <FONT ID="IntegerLiteral">14</FONT>, <FONT ID="IntegerLiteral">15</FONT>, <FONT ID="IntegerLiteral">16</FONT>,
+<A NAME="352"></A>        <FONT ID="IntegerLiteral">17</FONT>, <FONT ID="IntegerLiteral">18</FONT>, <FONT ID="IntegerLiteral">19</FONT>, <FONT ID="IntegerLiteral">20</FONT>, <FONT ID="IntegerLiteral">21</FONT>, <FONT ID="IntegerLiteral">22</FONT>, <FONT ID="IntegerLiteral">23</FONT>, <FONT ID="IntegerLiteral">24</FONT>, <FONT ID="IntegerLiteral">25</FONT>, <FONT ID="IntegerLiteral">26</FONT>, <FONT ID="IntegerLiteral">27</FONT>,
+<A NAME="353"></A>        -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, <FONT ID="IntegerLiteral">28</FONT>, <FONT ID="IntegerLiteral">29</FONT>, <FONT ID="IntegerLiteral">30</FONT>,
+<A NAME="354"></A>        <FONT ID="IntegerLiteral">31</FONT>, <FONT ID="IntegerLiteral">32</FONT>, <FONT ID="IntegerLiteral">33</FONT>, <FONT ID="IntegerLiteral">34</FONT>, <FONT ID="IntegerLiteral">35</FONT>, <FONT ID="IntegerLiteral">36</FONT>, <FONT ID="IntegerLiteral">37</FONT>, <FONT ID="IntegerLiteral">38</FONT>, <FONT ID="IntegerLiteral">39</FONT>, <FONT ID="IntegerLiteral">40</FONT>,
+<A NAME="355"></A>        <FONT ID="IntegerLiteral">41</FONT>, <FONT ID="IntegerLiteral">42</FONT>, <FONT ID="IntegerLiteral">43</FONT>, <FONT ID="IntegerLiteral">44</FONT>, <FONT ID="IntegerLiteral">45</FONT>, <FONT ID="IntegerLiteral">46</FONT>, <FONT ID="IntegerLiteral">47</FONT>, <FONT ID="IntegerLiteral">48</FONT>, <FONT ID="IntegerLiteral">49</FONT>, <FONT ID="IntegerLiteral">50</FONT>,
+<A NAME="356"></A>        <FONT ID="IntegerLiteral">51</FONT>, <FONT ID="IntegerLiteral">52</FONT>, <FONT ID="IntegerLiteral">53</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>, -<FONT ID="IntegerLiteral">1</FONT>
+<A NAME="357"></A>    };
+<A NAME="358"></A>
+<A NAME="359"></A>    <FONT ID="SingleLineComment">// Expanded Blowfish key
+<A NAME="360"></A></FONT>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> P[];
+<A NAME="361"></A>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> S[];
+<A NAME="362"></A>
+<A NAME="363"></A>    <FONT ID="FormalComment">/**
+<A NAME="364"></A>     * Encode a byte array using bcrypt's slightly-modified base64
+<A NAME="365"></A>     * encoding scheme. Note that this is *not* compatible with
+<A NAME="366"></A>     * the standard MIME-base64 encoding.
+<A NAME="367"></A>     *
+<A NAME="368"></A>     * @param d the byte array to encode
+<A NAME="369"></A>     * @param len   the number of bytes to encode
+<A NAME="370"></A>     * @return  base64-encoded string
+<A NAME="371"></A>     * @exception IllegalArgumentException if the length is invalid
+<A NAME="372"></A>     */</FONT>
+<A NAME="373"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> String encode_base64(<FONT ID="Byte">byte</FONT> d[], <FONT ID="Int">int</FONT> len)
+<A NAME="374"></A>        <FONT ID="Throws">throws</FONT> IllegalArgumentException {
+<A NAME="375"></A>        <FONT ID="Int">int</FONT> off = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="376"></A>        StringBuffer rs = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="377"></A>        <FONT ID="Int">int</FONT> c1, c2;
+<A NAME="378"></A>
+<A NAME="379"></A>        <FONT ID="If">if</FONT> (len &lt;= <FONT ID="IntegerLiteral">0</FONT> || len &gt; d.length)
+<A NAME="380"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"Invalid len"</FONT>);
+<A NAME="381"></A>
+<A NAME="382"></A>        <FONT ID="While">while</FONT> (off &lt; len) {
+<A NAME="383"></A>            c1 = d[off++] &amp; <FONT ID="IntegerLiteral">0xff</FONT>;
+<A NAME="384"></A>            rs.append(base64_code[(c1 &gt;&gt; <FONT ID="IntegerLiteral">2</FONT>) &amp; <FONT ID="IntegerLiteral">0x3f</FONT>]);
+<A NAME="385"></A>            c1 = (c1 &amp; <FONT ID="IntegerLiteral">0x03</FONT>) &lt;&lt; <FONT ID="IntegerLiteral">4</FONT>;
+<A NAME="386"></A>            <FONT ID="If">if</FONT> (off &gt;= len) {
+<A NAME="387"></A>                rs.append(base64_code[c1 &amp; <FONT ID="IntegerLiteral">0x3f</FONT>]);
+<A NAME="388"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="389"></A>            }
+<A NAME="390"></A>            c2 = d[off++] &amp; <FONT ID="IntegerLiteral">0xff</FONT>;
+<A NAME="391"></A>            c1 |= (c2 &gt;&gt; <FONT ID="IntegerLiteral">4</FONT>) &amp; <FONT ID="IntegerLiteral">0x0f</FONT>;
+<A NAME="392"></A>            rs.append(base64_code[c1 &amp; <FONT ID="IntegerLiteral">0x3f</FONT>]);
+<A NAME="393"></A>            c1 = (c2 &amp; <FONT ID="IntegerLiteral">0x0f</FONT>) &lt;&lt; <FONT ID="IntegerLiteral">2</FONT>;
+<A NAME="394"></A>            <FONT ID="If">if</FONT> (off &gt;= len) {
+<A NAME="395"></A>                rs.append(base64_code[c1 &amp; <FONT ID="IntegerLiteral">0x3f</FONT>]);
+<A NAME="396"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="397"></A>            }
+<A NAME="398"></A>            c2 = d[off++] &amp; <FONT ID="IntegerLiteral">0xff</FONT>;
+<A NAME="399"></A>            c1 |= (c2 &gt;&gt; <FONT ID="IntegerLiteral">6</FONT>) &amp; <FONT ID="IntegerLiteral">0x03</FONT>;
+<A NAME="400"></A>            rs.append(base64_code[c1 &amp; <FONT ID="IntegerLiteral">0x3f</FONT>]);
+<A NAME="401"></A>            rs.append(base64_code[c2 &amp; <FONT ID="IntegerLiteral">0x3f</FONT>]);
+<A NAME="402"></A>        }
+<A NAME="403"></A>        <FONT ID="Return">return</FONT> rs.toString();
+<A NAME="404"></A>    }
+<A NAME="405"></A>
+<A NAME="406"></A>    <FONT ID="FormalComment">/**
+<A NAME="407"></A>     * Look up the 3 bits base64-encoded by the specified character,
+<A NAME="408"></A>     * range-checking againt conversion table
+<A NAME="409"></A>     * @param x the base64-encoded value
+<A NAME="410"></A>     * @return  the decoded value of x
+<A NAME="411"></A>     */</FONT>
+<A NAME="412"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT> char64(<FONT ID="Char">char</FONT> x) {
+<A NAME="413"></A>        <FONT ID="If">if</FONT> ((<FONT ID="Int">int</FONT>)x &lt; <FONT ID="IntegerLiteral">0</FONT> || (<FONT ID="Int">int</FONT>)x &gt; index_64.length)
+<A NAME="414"></A>            <FONT ID="Return">return</FONT> -<FONT ID="IntegerLiteral">1</FONT>;
+<A NAME="415"></A>        <FONT ID="Return">return</FONT> index_64[(<FONT ID="Int">int</FONT>)x];
+<A NAME="416"></A>    }
+<A NAME="417"></A>
+<A NAME="418"></A>    <FONT ID="FormalComment">/**
+<A NAME="419"></A>     * Decode a string encoded using bcrypt's base64 scheme to a
+<A NAME="420"></A>     * byte array. Note that this is *not* compatible with
+<A NAME="421"></A>     * the standard MIME-base64 encoding.
+<A NAME="422"></A>     * @param s the string to decode
+<A NAME="423"></A>     * @param maxolen   the maximum number of bytes to decode
+<A NAME="424"></A>     * @return  an array containing the decoded bytes
+<A NAME="425"></A>     * @throws IllegalArgumentException if maxolen is invalid
+<A NAME="426"></A>     */</FONT>
+<A NAME="427"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Byte">byte</FONT>[] decode_base64(String s, <FONT ID="Int">int</FONT> maxolen)
+<A NAME="428"></A>        <FONT ID="Throws">throws</FONT> IllegalArgumentException {
+<A NAME="429"></A>        StringBuffer rs = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="430"></A>        <FONT ID="Int">int</FONT> off = <FONT ID="IntegerLiteral">0</FONT>, slen = s.length(), olen = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="431"></A>        <FONT ID="Byte">byte</FONT> ret[];
+<A NAME="432"></A>        <FONT ID="Byte">byte</FONT> c1, c2, c3, c4, o;
+<A NAME="433"></A>
+<A NAME="434"></A>        <FONT ID="If">if</FONT> (maxolen &lt;= <FONT ID="IntegerLiteral">0</FONT>)
+<A NAME="435"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"Invalid maxolen"</FONT>);
+<A NAME="436"></A>
+<A NAME="437"></A>        <FONT ID="While">while</FONT> (off &lt; slen - <FONT ID="IntegerLiteral">1</FONT> &amp;&amp; olen &lt; maxolen) {
+<A NAME="438"></A>            c1 = char64(s.charAt(off++));
+<A NAME="439"></A>            c2 = char64(s.charAt(off++));
+<A NAME="440"></A>            <FONT ID="If">if</FONT> (c1 == -<FONT ID="IntegerLiteral">1</FONT> || c2 == -<FONT ID="IntegerLiteral">1</FONT>)
+<A NAME="441"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="442"></A>            o = (<FONT ID="Byte">byte</FONT>)(c1 &lt;&lt; <FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="443"></A>            o |= (c2 &amp; <FONT ID="IntegerLiteral">0x30</FONT>) &gt;&gt; <FONT ID="IntegerLiteral">4</FONT>;
+<A NAME="444"></A>            rs.append((<FONT ID="Char">char</FONT>)o);
+<A NAME="445"></A>            <FONT ID="If">if</FONT> (++olen &gt;= maxolen || off &gt;= slen)
+<A NAME="446"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="447"></A>            c3 = char64(s.charAt(off++));
+<A NAME="448"></A>            <FONT ID="If">if</FONT> (c3 == -<FONT ID="IntegerLiteral">1</FONT>)
+<A NAME="449"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="450"></A>            o = (<FONT ID="Byte">byte</FONT>)((c2 &amp; <FONT ID="IntegerLiteral">0x0f</FONT>) &lt;&lt; <FONT ID="IntegerLiteral">4</FONT>);
+<A NAME="451"></A>            o |= (c3 &amp; <FONT ID="IntegerLiteral">0x3c</FONT>) &gt;&gt; <FONT ID="IntegerLiteral">2</FONT>;
+<A NAME="452"></A>            rs.append((<FONT ID="Char">char</FONT>)o);
+<A NAME="453"></A>            <FONT ID="If">if</FONT> (++olen &gt;= maxolen || off &gt;= slen)
+<A NAME="454"></A>                <FONT ID="Break">break</FONT>;
+<A NAME="455"></A>            c4 = char64(s.charAt(off++));
+<A NAME="456"></A>            o = (<FONT ID="Byte">byte</FONT>)((c3 &amp; <FONT ID="IntegerLiteral">0x03</FONT>) &lt;&lt; <FONT ID="IntegerLiteral">6</FONT>);
+<A NAME="457"></A>            o |= c4;
+<A NAME="458"></A>            rs.append((<FONT ID="Char">char</FONT>)o);
+<A NAME="459"></A>            ++olen;
+<A NAME="460"></A>        }
+<A NAME="461"></A>
+<A NAME="462"></A>        ret = <FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[olen];
+<A NAME="463"></A>        <FONT ID="For">for</FONT> (off = <FONT ID="IntegerLiteral">0</FONT>; off &lt; olen; off++)
+<A NAME="464"></A>            ret[off] = (<FONT ID="Byte">byte</FONT>)rs.charAt(off);
+<A NAME="465"></A>        <FONT ID="Return">return</FONT> ret;
+<A NAME="466"></A>    }
+<A NAME="467"></A>
+<A NAME="468"></A>    <FONT ID="FormalComment">/**
+<A NAME="469"></A>     * Blowfish encipher a single 64-bit block encoded as
+<A NAME="470"></A>     * two 32-bit halves
+<A NAME="471"></A>     * @param lr    an array containing the two 32-bit half blocks
+<A NAME="472"></A>     * @param off   the position in the array of the blocks
+<A NAME="473"></A>     */</FONT>
+<A NAME="474"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> encipher(<FONT ID="Int">int</FONT> lr[], <FONT ID="Int">int</FONT> off) {
+<A NAME="475"></A>        <FONT ID="Int">int</FONT> i, n, l = lr[off], r = lr[off + <FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="476"></A>
+<A NAME="477"></A>        l ^= P[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="478"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt;= BLOWFISH_NUM_ROUNDS - <FONT ID="IntegerLiteral">2</FONT>;) {
+<A NAME="479"></A>            <FONT ID="SingleLineComment">// Feistel substitution on left word
+<A NAME="480"></A></FONT>            n = S[(l &gt;&gt; <FONT ID="IntegerLiteral">24</FONT>) &amp; <FONT ID="IntegerLiteral">0xff</FONT>];
+<A NAME="481"></A>            n += S[<FONT ID="IntegerLiteral">0x100</FONT> | ((l &gt;&gt; <FONT ID="IntegerLiteral">16</FONT>) &amp; <FONT ID="IntegerLiteral">0xff</FONT>)];
+<A NAME="482"></A>            n ^= S[<FONT ID="IntegerLiteral">0x200</FONT> | ((l &gt;&gt; <FONT ID="IntegerLiteral">8</FONT>) &amp; <FONT ID="IntegerLiteral">0xff</FONT>)];
+<A NAME="483"></A>            n += S[<FONT ID="IntegerLiteral">0x300</FONT> | (l &amp; <FONT ID="IntegerLiteral">0xff</FONT>)];
+<A NAME="484"></A>            r ^= n ^ P[++i];
+<A NAME="485"></A>
+<A NAME="486"></A>            <FONT ID="SingleLineComment">// Feistel substitution on right word
+<A NAME="487"></A></FONT>            n = S[(r &gt;&gt; <FONT ID="IntegerLiteral">24</FONT>) &amp; <FONT ID="IntegerLiteral">0xff</FONT>];
+<A NAME="488"></A>            n += S[<FONT ID="IntegerLiteral">0x100</FONT> | ((r &gt;&gt; <FONT ID="IntegerLiteral">16</FONT>) &amp; <FONT ID="IntegerLiteral">0xff</FONT>)];
+<A NAME="489"></A>            n ^= S[<FONT ID="IntegerLiteral">0x200</FONT> | ((r &gt;&gt; <FONT ID="IntegerLiteral">8</FONT>) &amp; <FONT ID="IntegerLiteral">0xff</FONT>)];
+<A NAME="490"></A>            n += S[<FONT ID="IntegerLiteral">0x300</FONT> | (r &amp; <FONT ID="IntegerLiteral">0xff</FONT>)];
+<A NAME="491"></A>            l ^= n ^ P[++i];
+<A NAME="492"></A>        }
+<A NAME="493"></A>        lr[off] = r ^ P[BLOWFISH_NUM_ROUNDS + <FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="494"></A>        lr[off + <FONT ID="IntegerLiteral">1</FONT>] = l;
+<A NAME="495"></A>    }
+<A NAME="496"></A>
+<A NAME="497"></A>    <FONT ID="FormalComment">/**
+<A NAME="498"></A>     * Cycically extract a word of key material
+<A NAME="499"></A>     * @param data  the string to extract the data from
+<A NAME="500"></A>     * @param offp  a "pointer" (as a one-entry array) to the
+<A NAME="501"></A>     * current offset into data
+<A NAME="502"></A>     * @return  the next word of material from data
+<A NAME="503"></A>     */</FONT>
+<A NAME="504"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Int">int</FONT> streamtoword(<FONT ID="Byte">byte</FONT> data[], <FONT ID="Int">int</FONT> offp[]) {
+<A NAME="505"></A>        <FONT ID="Int">int</FONT> i;
+<A NAME="506"></A>        <FONT ID="Int">int</FONT> word = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="507"></A>        <FONT ID="Int">int</FONT> off = offp[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="508"></A>
+<A NAME="509"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; <FONT ID="IntegerLiteral">4</FONT>; i++) {
+<A NAME="510"></A>            word = (word &lt;&lt; <FONT ID="IntegerLiteral">8</FONT>) | (data[off] &amp; <FONT ID="IntegerLiteral">0xff</FONT>);
+<A NAME="511"></A>            off = (off + <FONT ID="IntegerLiteral">1</FONT>) % data.length;
+<A NAME="512"></A>        }
+<A NAME="513"></A>
+<A NAME="514"></A>        offp[<FONT ID="IntegerLiteral">0</FONT>] = off;
+<A NAME="515"></A>        <FONT ID="Return">return</FONT> word;
+<A NAME="516"></A>    }
+<A NAME="517"></A>
+<A NAME="518"></A>    <FONT ID="FormalComment">/**
+<A NAME="519"></A>     * Initialise the Blowfish key schedule
+<A NAME="520"></A>     */</FONT>
+<A NAME="521"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> init_key() {
+<A NAME="522"></A>        P = (<FONT ID="Int">int</FONT>[])P_orig.clone();
+<A NAME="523"></A>        S = (<FONT ID="Int">int</FONT>[])S_orig.clone();
+<A NAME="524"></A>    }
+<A NAME="525"></A>
+<A NAME="526"></A>    <FONT ID="FormalComment">/**
+<A NAME="527"></A>     * Key the Blowfish cipher
+<A NAME="528"></A>     * @param key   an array containing the key
+<A NAME="529"></A>     */</FONT>
+<A NAME="530"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> key(<FONT ID="Byte">byte</FONT> key[]) {
+<A NAME="531"></A>        <FONT ID="Int">int</FONT> i;
+<A NAME="532"></A>        <FONT ID="Int">int</FONT> koffp[] = { <FONT ID="IntegerLiteral">0</FONT> };
+<A NAME="533"></A>        <FONT ID="Int">int</FONT> lr[] = { <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT> };
+<A NAME="534"></A>        <FONT ID="Int">int</FONT> plen = P.length, slen = S.length;
+<A NAME="535"></A>
+<A NAME="536"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; plen; i++)
+<A NAME="537"></A>            P[i] = P[i] ^ streamtoword(key, koffp);
+<A NAME="538"></A>
+<A NAME="539"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; plen; i += <FONT ID="IntegerLiteral">2</FONT>) {
+<A NAME="540"></A>            encipher(lr, <FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="541"></A>            P[i] = lr[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="542"></A>            P[i + <FONT ID="IntegerLiteral">1</FONT>] = lr[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="543"></A>        }
+<A NAME="544"></A>
+<A NAME="545"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; slen; i += <FONT ID="IntegerLiteral">2</FONT>) {
+<A NAME="546"></A>            encipher(lr, <FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="547"></A>            S[i] = lr[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="548"></A>            S[i + <FONT ID="IntegerLiteral">1</FONT>] = lr[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="549"></A>        }
+<A NAME="550"></A>    }
+<A NAME="551"></A>
+<A NAME="552"></A>    <FONT ID="FormalComment">/**
+<A NAME="553"></A>     * Perform the "enhanced key schedule" step described by
+<A NAME="554"></A>     * Provos and Mazieres in "A Future-Adaptable Password Scheme"
+<A NAME="555"></A>     * http://www.openbsd.org/papers/bcrypt-paper.ps
+<A NAME="556"></A>     * @param data  salt information
+<A NAME="557"></A>     * @param key   password information
+<A NAME="558"></A>     */</FONT>
+<A NAME="559"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> ekskey(<FONT ID="Byte">byte</FONT> data[], <FONT ID="Byte">byte</FONT> key[]) {
+<A NAME="560"></A>        <FONT ID="Int">int</FONT> i;
+<A NAME="561"></A>        <FONT ID="Int">int</FONT> koffp[] = { <FONT ID="IntegerLiteral">0</FONT> }, doffp[] = { <FONT ID="IntegerLiteral">0</FONT> };
+<A NAME="562"></A>        <FONT ID="Int">int</FONT> lr[] = { <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT> };
+<A NAME="563"></A>        <FONT ID="Int">int</FONT> plen = P.length, slen = S.length;
+<A NAME="564"></A>
+<A NAME="565"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; plen; i++)
+<A NAME="566"></A>            P[i] = P[i] ^ streamtoword(key, koffp);
+<A NAME="567"></A>
+<A NAME="568"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; plen; i += <FONT ID="IntegerLiteral">2</FONT>) {
+<A NAME="569"></A>            lr[<FONT ID="IntegerLiteral">0</FONT>] ^= streamtoword(data, doffp);
+<A NAME="570"></A>            lr[<FONT ID="IntegerLiteral">1</FONT>] ^= streamtoword(data, doffp);
+<A NAME="571"></A>            encipher(lr, <FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="572"></A>            P[i] = lr[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="573"></A>            P[i + <FONT ID="IntegerLiteral">1</FONT>] = lr[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="574"></A>        }
+<A NAME="575"></A>
+<A NAME="576"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; slen; i += <FONT ID="IntegerLiteral">2</FONT>) {
+<A NAME="577"></A>            lr[<FONT ID="IntegerLiteral">0</FONT>] ^= streamtoword(data, doffp);
+<A NAME="578"></A>            lr[<FONT ID="IntegerLiteral">1</FONT>] ^= streamtoword(data, doffp);
+<A NAME="579"></A>            encipher(lr, <FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="580"></A>            S[i] = lr[<FONT ID="IntegerLiteral">0</FONT>];
+<A NAME="581"></A>            S[i + <FONT ID="IntegerLiteral">1</FONT>] = lr[<FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="582"></A>        }
+<A NAME="583"></A>    }
+<A NAME="584"></A>
+<A NAME="585"></A>    <FONT ID="FormalComment">/**
+<A NAME="586"></A>     * Perform the central password hashing step in the
+<A NAME="587"></A>     * bcrypt scheme
+<A NAME="588"></A>     * @param password  the password to hash
+<A NAME="589"></A>     * @param salt  the binary salt to hash with the password
+<A NAME="590"></A>     * @param log_rounds    the binary logarithm of the number
+<A NAME="591"></A>     * of rounds of hashing to apply
+<A NAME="592"></A>     * @return  an array containing the binary hashed password
+<A NAME="593"></A>     */</FONT>
+<A NAME="594"></A>    <FONT ID="Private">private</FONT> <FONT ID="Byte">byte</FONT>[] crypt_raw(<FONT ID="Byte">byte</FONT> password[], <FONT ID="Byte">byte</FONT> salt[], <FONT ID="Int">int</FONT> log_rounds) {
+<A NAME="595"></A>        <FONT ID="Int">int</FONT> rounds, i, j;
+<A NAME="596"></A>        <FONT ID="Int">int</FONT> cdata[] = (<FONT ID="Int">int</FONT>[])bf_crypt_ciphertext.clone();
+<A NAME="597"></A>        <FONT ID="Int">int</FONT> clen = cdata.length;
+<A NAME="598"></A>        <FONT ID="Byte">byte</FONT> ret[];
+<A NAME="599"></A>
+<A NAME="600"></A>        <FONT ID="If">if</FONT> (log_rounds &lt; <FONT ID="IntegerLiteral">4</FONT> || log_rounds &gt; <FONT ID="IntegerLiteral">31</FONT>)
+<A NAME="601"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"Bad number of rounds"</FONT>);
+<A NAME="602"></A>        rounds = <FONT ID="IntegerLiteral">1</FONT> &lt;&lt; log_rounds;
+<A NAME="603"></A>        <FONT ID="If">if</FONT> (salt.length != BCRYPT_SALT_LEN)
+<A NAME="604"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"Bad salt length"</FONT>);
+<A NAME="605"></A>
+<A NAME="606"></A>        init_key();
+<A NAME="607"></A>        ekskey(salt, password);
+<A NAME="608"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; rounds; i++) {
+<A NAME="609"></A>            key(password);
+<A NAME="610"></A>            key(salt);
+<A NAME="611"></A>        }
+<A NAME="612"></A>
+<A NAME="613"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; <FONT ID="IntegerLiteral">64</FONT>; i++) {
+<A NAME="614"></A>            <FONT ID="For">for</FONT> (j = <FONT ID="IntegerLiteral">0</FONT>; j &lt; (clen &gt;&gt; <FONT ID="IntegerLiteral">1</FONT>); j++)
+<A NAME="615"></A>                encipher(cdata, j &lt;&lt; <FONT ID="IntegerLiteral">1</FONT>);
+<A NAME="616"></A>        }
+<A NAME="617"></A>
+<A NAME="618"></A>        ret = <FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[clen * <FONT ID="IntegerLiteral">4</FONT>];
+<A NAME="619"></A>        <FONT ID="For">for</FONT> (i = <FONT ID="IntegerLiteral">0</FONT>, j = <FONT ID="IntegerLiteral">0</FONT>; i &lt; clen; i++) {
+<A NAME="620"></A>            ret[j++] = (<FONT ID="Byte">byte</FONT>)((cdata[i] &gt;&gt; <FONT ID="IntegerLiteral">24</FONT>) &amp; <FONT ID="IntegerLiteral">0xff</FONT>);
+<A NAME="621"></A>            ret[j++] = (<FONT ID="Byte">byte</FONT>)((cdata[i] &gt;&gt; <FONT ID="IntegerLiteral">16</FONT>) &amp; <FONT ID="IntegerLiteral">0xff</FONT>);
+<A NAME="622"></A>            ret[j++] = (<FONT ID="Byte">byte</FONT>)((cdata[i] &gt;&gt; <FONT ID="IntegerLiteral">8</FONT>) &amp; <FONT ID="IntegerLiteral">0xff</FONT>);
+<A NAME="623"></A>            ret[j++] = (<FONT ID="Byte">byte</FONT>)(cdata[i] &amp; <FONT ID="IntegerLiteral">0xff</FONT>);
+<A NAME="624"></A>        }
+<A NAME="625"></A>        <FONT ID="Return">return</FONT> ret;
+<A NAME="626"></A>    }
+<A NAME="627"></A>
+<A NAME="628"></A>    <FONT ID="FormalComment">/**
+<A NAME="629"></A>     * Hash a password using the OpenBSD bcrypt scheme
+<A NAME="630"></A>     * @param password  the password to hash
+<A NAME="631"></A>     * @param salt  the salt to hash with (perhaps generated
+<A NAME="632"></A>     * using BCrypt.gensalt)
+<A NAME="633"></A>     * @return  the hashed password
+<A NAME="634"></A>     */</FONT>
+<A NAME="635"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String hashpw(String password, String salt) {
+<A NAME="636"></A>        <A HREF="../../../../../ai/ilikeplaces/security/blowfish/jbcrypt/BCrypt.java.html">BCrypt</A> B;
+<A NAME="637"></A>        String real_salt;
+<A NAME="638"></A>        <FONT ID="Byte">byte</FONT> passwordb[], saltb[], hashed[];
+<A NAME="639"></A>        <FONT ID="Char">char</FONT> minor = (<FONT ID="Char">char</FONT>)<FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="640"></A>        <FONT ID="Int">int</FONT> rounds, off = <FONT ID="IntegerLiteral">0</FONT>;
+<A NAME="641"></A>        StringBuffer rs = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="642"></A>
+<A NAME="643"></A>        <FONT ID="If">if</FONT> (salt.charAt(<FONT ID="IntegerLiteral">0</FONT>) != <FONT ID="CharacerLiteral">'$'</FONT> || salt.charAt(<FONT ID="IntegerLiteral">1</FONT>) != <FONT ID="CharacerLiteral">'2'</FONT>)
+<A NAME="644"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"Invalid salt version"</FONT>);
+<A NAME="645"></A>        <FONT ID="If">if</FONT> (salt.charAt(<FONT ID="IntegerLiteral">1</FONT>) != <FONT ID="CharacerLiteral">'$'</FONT>) {
+<A NAME="646"></A>            minor = salt.charAt(<FONT ID="IntegerLiteral">2</FONT>);
+<A NAME="647"></A>            <FONT ID="If">if</FONT> (minor != <FONT ID="CharacerLiteral">'a'</FONT> || salt.charAt(<FONT ID="IntegerLiteral">3</FONT>) != <FONT ID="CharacerLiteral">'$'</FONT>)
+<A NAME="648"></A>                <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"Invalid salt revision"</FONT>);
+<A NAME="649"></A>            off = <FONT ID="IntegerLiteral">4</FONT>;
+<A NAME="650"></A>        } <FONT ID="Else">else</FONT>
+<A NAME="651"></A>            off = <FONT ID="IntegerLiteral">3</FONT>;
+<A NAME="652"></A>
+<A NAME="653"></A>        <FONT ID="SingleLineComment">// Extract number of rounds
+<A NAME="654"></A></FONT>        <FONT ID="If">if</FONT> (salt.charAt(off + <FONT ID="IntegerLiteral">2</FONT>) &gt; <FONT ID="CharacerLiteral">'$'</FONT>)
+<A NAME="655"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> IllegalArgumentException (<FONT ID="StringLiteral">"Missing salt rounds"</FONT>);
+<A NAME="656"></A>        rounds = Integer.parseInt(salt.substring(off, off + <FONT ID="IntegerLiteral">2</FONT>));
+<A NAME="657"></A>
+<A NAME="658"></A>        real_salt = salt.substring(off + <FONT ID="IntegerLiteral">3</FONT>, off + <FONT ID="IntegerLiteral">25</FONT>);
+<A NAME="659"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="660"></A>            passwordb = (password + (minor &gt;= <FONT ID="CharacerLiteral">'a'</FONT> ? <FONT ID="StringLiteral">"\000"</FONT> : <FONT ID="StringLiteral">""</FONT>)).getBytes(<FONT ID="StringLiteral">"US-ASCII"</FONT>);
+<A NAME="661"></A>        } <FONT ID="Catch">catch</FONT> (UnsupportedEncodingException uee) {
+<A NAME="662"></A>            <FONT ID="SingleLineComment">// The JDK guarantees that US-ASCII is supported.
+<A NAME="663"></A></FONT>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> AssertionError(<FONT ID="StringLiteral">"US-ASCII is not supported"</FONT>);
+<A NAME="664"></A>        }
+<A NAME="665"></A>
+<A NAME="666"></A>        saltb = decode_base64(real_salt, BCRYPT_SALT_LEN);
+<A NAME="667"></A>
+<A NAME="668"></A>        B = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/security/blowfish/jbcrypt/BCrypt.java.html">BCrypt</A>();
+<A NAME="669"></A>        hashed = B.crypt_raw(passwordb, saltb, rounds);
+<A NAME="670"></A>
+<A NAME="671"></A>        rs.append(<FONT ID="StringLiteral">"$2"</FONT>);
+<A NAME="672"></A>        <FONT ID="If">if</FONT> (minor &gt;= <FONT ID="CharacerLiteral">'a'</FONT>)
+<A NAME="673"></A>            rs.append(minor);
+<A NAME="674"></A>        rs.append(<FONT ID="StringLiteral">"$"</FONT>);
+<A NAME="675"></A>        <FONT ID="If">if</FONT> (rounds &lt; <FONT ID="IntegerLiteral">10</FONT>)
+<A NAME="676"></A>            rs.append(<FONT ID="StringLiteral">"0"</FONT>);
+<A NAME="677"></A>        rs.append(Integer.toString(rounds));
+<A NAME="678"></A>        rs.append(<FONT ID="StringLiteral">"$"</FONT>);
+<A NAME="679"></A>        rs.append(encode_base64(saltb, saltb.length));
+<A NAME="680"></A>        rs.append(encode_base64(hashed,
+<A NAME="681"></A>            bf_crypt_ciphertext.length * <FONT ID="IntegerLiteral">4</FONT> - <FONT ID="IntegerLiteral">1</FONT>));
+<A NAME="682"></A>        <FONT ID="Return">return</FONT> rs.toString();
+<A NAME="683"></A>    }
+<A NAME="684"></A>
+<A NAME="685"></A>    <FONT ID="FormalComment">/**
+<A NAME="686"></A>     * Generate a salt for use with the BCrypt.hashpw() method
+<A NAME="687"></A>     * @param log_rounds    the log2 of the number of rounds of
+<A NAME="688"></A>     * hashing to apply - the work factor therefore increases as
+<A NAME="689"></A>     * 2**log_rounds.
+<A NAME="690"></A>     * @param random        an instance of SecureRandom to use
+<A NAME="691"></A>     * @return  an encoded salt value
+<A NAME="692"></A>     */</FONT>
+<A NAME="693"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String gensalt(<FONT ID="Int">int</FONT> log_rounds, SecureRandom random) {
+<A NAME="694"></A>        StringBuffer rs = <FONT ID="New">new</FONT> StringBuffer();
+<A NAME="695"></A>        <FONT ID="Byte">byte</FONT> rnd[] = <FONT ID="New">new</FONT> <FONT ID="Byte">byte</FONT>[BCRYPT_SALT_LEN];
+<A NAME="696"></A>
+<A NAME="697"></A>        random.nextBytes(rnd);
+<A NAME="698"></A>
+<A NAME="699"></A>        rs.append(<FONT ID="StringLiteral">"$2a$"</FONT>);
+<A NAME="700"></A>        <FONT ID="If">if</FONT> (log_rounds &lt; <FONT ID="IntegerLiteral">10</FONT>)
+<A NAME="701"></A>            rs.append(<FONT ID="StringLiteral">"0"</FONT>);
+<A NAME="702"></A>        rs.append(Integer.toString(log_rounds));
+<A NAME="703"></A>        rs.append(<FONT ID="StringLiteral">"$"</FONT>);
+<A NAME="704"></A>        rs.append(encode_base64(rnd, rnd.length));
+<A NAME="705"></A>        <FONT ID="Return">return</FONT> rs.toString();
+<A NAME="706"></A>    }
+<A NAME="707"></A>
+<A NAME="708"></A>    <FONT ID="FormalComment">/**
+<A NAME="709"></A>     * Generate a salt for use with the BCrypt.hashpw() method
+<A NAME="710"></A>     * @param log_rounds    the log2 of the number of rounds of
+<A NAME="711"></A>     * hashing to apply - the work factor therefore increases as
+<A NAME="712"></A>     * 2**log_rounds.
+<A NAME="713"></A>     * @return  an encoded salt value
+<A NAME="714"></A>     */</FONT>
+<A NAME="715"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String gensalt(<FONT ID="Int">int</FONT> log_rounds) {
+<A NAME="716"></A>        <FONT ID="Return">return</FONT> gensalt(log_rounds, <FONT ID="New">new</FONT> SecureRandom());
+<A NAME="717"></A>    }
+<A NAME="718"></A>
+<A NAME="719"></A>    <FONT ID="FormalComment">/**
+<A NAME="720"></A>     * Generate a salt for use with the BCrypt.hashpw() method,
+<A NAME="721"></A>     * selecting a reasonable default for the number of hashing
+<A NAME="722"></A>     * rounds to apply
+<A NAME="723"></A>     * @return  an encoded salt value
+<A NAME="724"></A>     */</FONT>
+<A NAME="725"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> String gensalt() {
+<A NAME="726"></A>        <FONT ID="Return">return</FONT> gensalt(GENSALT_DEFAULT_LOG2_ROUNDS);
+<A NAME="727"></A>    }
+<A NAME="728"></A>
+<A NAME="729"></A>    <FONT ID="FormalComment">/**
+<A NAME="730"></A>     * Check that a plaintext password matches a previously hashed
+<A NAME="731"></A>     * one
+<A NAME="732"></A>     * @param plaintext the plaintext password to verify
+<A NAME="733"></A>     * @param hashed    the previously-hashed password
+<A NAME="734"></A>     * @return  true if the passwords match, false otherwise
+<A NAME="735"></A>     */</FONT>
+<A NAME="736"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Boolean">boolean</FONT> checkpw(String plaintext, String hashed) {
+<A NAME="737"></A>        <FONT ID="Return">return</FONT> (hashed.compareTo(hashpw(plaintext, hashed)) == <FONT ID="IntegerLiteral">0</FONT>);
+<A NAME="738"></A>    }
+<A NAME="739"></A>}
+<A NAME="740"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.HumanCRUDLocationLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">HumanCRUDLocationLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">ai.ilikeplaces.entities.Location</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">ai.ilikeplaces.util.Return</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.ejb.Remote;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.util.Map;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="FormalComment">/**
+<A NAME="15"></A> * @author Ravindranath Akila
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="19"></A></FONT>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="20"></A>@Remote
+<A NAME="21"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> HumanCRUDLocationLocal {
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String NAME = <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A>.<FONT ID="Class">class</FONT>.getSimpleName();
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; dirtyRLocation(<FONT ID="Final">final</FONT> String locationName, <FONT ID="Final">final</FONT> String superLocationName);
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; dirtyRLocation(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId);
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; doRLocation(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec);
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; doULocationComments(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> locationId, <FONT ID="Final">final</FONT> Map&lt;String, String&gt; posts, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec);
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> List&lt;String&gt; dirtyRLikeLocationNames(<FONT ID="Final">final</FONT> String likeLocationName);
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; dirtyRLikeLocations(<FONT ID="Final">final</FONT> String likeLocationName);
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A>&gt; doDirtyRLocationsBySuperLocation(<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> locationSuperset);
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/entities/Location.java.html">Location</A> doULocationLatLng(<A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;Long&gt; locationId, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;Double&gt; latitude, <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;Double&gt; longitude);
+<A NAME="40"></A>}
+<A NAME="41"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.util.UserIntroduction (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">UserIntroduction.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.util;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/Human.java.html">ai.ilikeplaces.entities.Human</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivateEvent.java.html">ai.ilikeplaces.entities.PrivateEvent</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/entities/PrivateLocation.java.html">ai.ilikeplaces.entities.PrivateLocation</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">ai.ilikeplaces.logic.validators.unit.GeoCoord</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">ai.ilikeplaces.logic.validators.unit.SimpleString</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/VDouble.java.html">ai.ilikeplaces.logic.validators.unit.VDouble</A>;
+<A NAME="11"></A>
+<A NAME="12"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> UserIntroduction {
+<A NAME="13"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <FONT ID="Void">void</FONT> createIntroData(<A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> newUser) {
+<A NAME="14"></A>
+<A NAME="15"></A>        SettingMoment:
+<A NAME="16"></A>        {
+<A NAME="17"></A>            <A HREF="../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A> geoCoord = <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>().setObj(<FONT ID="StringLiteral">"27.17311262887182"</FONT>, <FONT ID="StringLiteral">"78.04209488227843"</FONT>);
+<A NAME="18"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivateLocation.java.html">PrivateLocation</A>&gt; privateLocationReturn = DB.getHumanCrudPrivateLocationLocal(<FONT ID="False">false</FONT>).cPrivateLocation(
+<A NAME="19"></A>                    newUser,
+<A NAME="20"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">SimpleString</A>(<FONT ID="StringLiteral">"Taj Mahal"</FONT>),
+<A NAME="21"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/SimpleString.java.html">SimpleString</A>(<FONT ID="StringLiteral">"The symbol of love"</FONT>),
+<A NAME="22"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/VDouble.java.html">VDouble</A>(geoCoord.getObjectAsValid().getLatitude()),
+<A NAME="23"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/logic/validators/unit/VDouble.java.html">VDouble</A>(geoCoord.getObjectAsValid().getLongitude()));
+<A NAME="24"></A>
+<A NAME="25"></A>            <FONT ID="Final">final</FONT> <A HREF="../../../ai/ilikeplaces/util/Return.java.html">Return</A>&lt;<A HREF="../../../ai/ilikeplaces/entities/PrivateEvent.java.html">PrivateEvent</A>&gt; privateEventReturn = DB.getHumanCrudPrivateEventLocal(<FONT ID="False">false</FONT>).cPrivateEvent(
+<A NAME="26"></A>                    newUser.getHumanId(),
+<A NAME="27"></A>                    privateLocationReturn.returnValue().getPrivateLocationId(),
+<A NAME="28"></A>                    <FONT ID="StringLiteral">"Trotting Taj Mahal"</FONT>,
+<A NAME="29"></A>                    <FONT ID="StringLiteral">"and feelin' the luv!"</FONT>,
+<A NAME="30"></A>                    <FONT ID="StringLiteral">"TODO"</FONT>,
+<A NAME="31"></A>                    <FONT ID="StringLiteral">"TODO"</FONT>);
+<A NAME="32"></A>
+<A NAME="33"></A>
+<A NAME="34"></A>            DB.getHumanCrudPrivateEventLocal(<FONT ID="False">false</FONT>).addEntryToWall(
+<A NAME="35"></A>                     newUser,
+<A NAME="36"></A>                     newUser,
+<A NAME="37"></A>                     <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Obj.java.html">Obj</A>&lt;Long&gt;(privateEventReturn.returnValue().getPrivateEventId()),
+<A NAME="38"></A>                     <FONT ID="StringLiteral">"I can delete this event. With deleting goes all stuff in it!"</FONT>);
+<A NAME="39"></A>
+<A NAME="40"></A>
+<A NAME="41"></A>            DB.getHumanCrudPrivateEventLocal(<FONT ID="False">false</FONT>).addEntryToWall(
+<A NAME="42"></A>                     newUser,
+<A NAME="43"></A>                     newUser,
+<A NAME="44"></A>                     <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Obj.java.html">Obj</A>&lt;Long&gt;(privateEventReturn.returnValue().getPrivateEventId()),
+<A NAME="45"></A>                     <FONT ID="StringLiteral">"The stuff on this moment is private to it's members only."</FONT>);
+<A NAME="46"></A>
+<A NAME="47"></A>
+<A NAME="48"></A>            DB.getHumanCrudPrivateEventLocal(<FONT ID="False">false</FONT>).addEntryToWall(
+<A NAME="49"></A>                     newUser,
+<A NAME="50"></A>                     newUser,
+<A NAME="51"></A>                     <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Obj.java.html">Obj</A>&lt;Long&gt;(privateEventReturn.returnValue().getPrivateEventId()),
+<A NAME="52"></A>                     <FONT ID="StringLiteral">"I should add my friends so that I can invite them to this moment (visit http://www.ilikeplaces.com/page/_friends)"</FONT>);
+<A NAME="53"></A>
+<A NAME="54"></A>
+<A NAME="55"></A>            DB.getHumanCrudPrivateEventLocal(<FONT ID="False">false</FONT>).addEntryToWall(
+<A NAME="56"></A>                    newUser,
+<A NAME="57"></A>                    newUser,
+<A NAME="58"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Obj.java.html">Obj</A>&lt;Long&gt;(privateEventReturn.returnValue().getPrivateEventId()),
+<A NAME="59"></A>                    <FONT ID="StringLiteral">"I should also try uploading and forwarding a photo to see what happens! (see below)"</FONT>);
+<A NAME="60"></A>
+<A NAME="61"></A>
+<A NAME="62"></A>            DB.getHumanCrudPrivateEventLocal(<FONT ID="False">false</FONT>).addEntryToWall(
+<A NAME="63"></A>                    newUser,
+<A NAME="64"></A>                    newUser,
+<A NAME="65"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Obj.java.html">Obj</A>&lt;Long&gt;(privateEventReturn.returnValue().getPrivateEventId()),
+<A NAME="66"></A>                    <FONT ID="StringLiteral">"I just started a moment at Taj Mahal!"</FONT>);
+<A NAME="67"></A>
+<A NAME="68"></A>     }
+<A NAME="69"></A>
+<A NAME="70"></A>        SettingPersonalWall:
+<A NAME="71"></A>        {
+<A NAME="72"></A>            DB.getHumanCrudWallLocal(<FONT ID="False">false</FONT>).addEntryToWall(
+<A NAME="73"></A>                    newUser,
+<A NAME="74"></A>                    newUser,
+<A NAME="75"></A>                    <FONT ID="New">new</FONT> <A HREF="../../../ai/ilikeplaces/util/Obj.java.html">Obj</A>&lt;<A HREF="../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>&gt;(newUser),
+<A NAME="76"></A>                    <FONT ID="StringLiteral">"Just joined Down Town!"</FONT>);<FONT ID="SingleLineComment">//Not using "I" because when seen on sidebar, says something like "John Steven - Just joined Down Town!"
+<A NAME="77"></A></FONT>        }
+<A NAME="78"></A>
+<A NAME="79"></A>    }
+<A NAME="80"></A>}</pre>
+</BODY>
+</HTML>

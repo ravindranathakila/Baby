@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.security.blowfish.BlowFishLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">BlowFishLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.security.blowfish;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="4"></A>
+<A NAME="5"></A><FONT ID="FormalComment">/**
+<A NAME="6"></A> *
+<A NAME="7"></A> * @author Ravindranath Akila
+<A NAME="8"></A> */</FONT>
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="SingleLineComment">// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+<A NAME="11"></A></FONT>@Local
+<A NAME="12"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> BlowFishLocal {
+<A NAME="13"></A>
+<A NAME="14"></A>    <FONT ID="FormalComment">/**
+<A NAME="15"></A>     * General Call on Any BlowFish library. Wrapper method.
+<A NAME="16"></A>     * @param passWord
+<A NAME="17"></A>     * @param salt
+<A NAME="18"></A>     * @param salt
+<A NAME="19"></A>     * @param salt
+<A NAME="20"></A>     * @return
+<A NAME="21"></A>     */</FONT>
+<A NAME="22"></A>    <FONT ID="Public">public</FONT> String getHash(<FONT ID="Final">final</FONT> String passWord, <FONT ID="Final">final</FONT> String salt);
+<A NAME="23"></A>}
+<A NAME="24"></A></pre>
+</BODY>
+</HTML>

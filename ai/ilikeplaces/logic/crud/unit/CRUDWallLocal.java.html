@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CRUDWallLocal (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CRUDWallLocal.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">ai.ilikeplaces.entities.Msg</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">ai.ilikeplaces.exception.DBDishonourCheckedException</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">ai.ilikeplaces.exception.DBFetchDataException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.ejb.Local;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="12"></A>
+<A NAME="13"></A><FONT ID="FormalComment">/**
+<A NAME="14"></A> * @author Ravindranath Akila
+<A NAME="15"></A> */</FONT>
+<A NAME="16"></A>
+<A NAME="17"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="18"></A>@Local
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> CRUDWallLocal {
+<A NAME="20"></A>    <FONT ID="FormalComment">/**
+<A NAME="21"></A>     * @param wall
+<A NAME="22"></A>     * @return Wall
+<A NAME="23"></A>     */</FONT>
+<A NAME="24"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doNTxCWall(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> wall);
+<A NAME="25"></A>
+<A NAME="26"></A>    <FONT ID="FormalComment">/**
+<A NAME="27"></A>     * @param wallId
+<A NAME="28"></A>     * @return Wall
+<A NAME="29"></A>     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+<A NAME="30"></A>     */</FONT>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doDirtyRWall(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> wallId) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="FormalComment">/**
+<A NAME="34"></A>     * @param wallId
+<A NAME="35"></A>     * @param refreshSpec
+<A NAME="36"></A>     * @return Wall
+<A NAME="37"></A>     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+<A NAME="38"></A>     * @throws ai.ilikeplaces.exception.DBFetchDataException
+<A NAME="39"></A>     */</FONT>
+<A NAME="40"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doRWall(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpec) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>, <A HREF="../../../../../ai/ilikeplaces/exception/DBFetchDataException.java.html">DBFetchDataException</A>;
+<A NAME="41"></A>
+<A NAME="42"></A><FONT ID="SingleLineComment">//    /**
+<A NAME="43"></A></FONT><FONT ID="SingleLineComment">//     * @param wallId
+<A NAME="44"></A></FONT><FONT ID="SingleLineComment">//     * @param contentToBeAppended
+<A NAME="45"></A></FONT><FONT ID="SingleLineComment">//     * @return Wall
+<A NAME="46"></A></FONT><FONT ID="SingleLineComment">//     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+<A NAME="47"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="48"></A></FONT><FONT ID="SingleLineComment">//    @Deprecated
+<A NAME="49"></A></FONT><FONT ID="SingleLineComment">//    public Wall doNTxUAppendToWall(final long wallId, final String contentToBeAppended) throws DBDishonourCheckedException;
+<A NAME="50"></A></FONT>
+<A NAME="51"></A>    <FONT ID="FormalComment">/**
+<A NAME="52"></A>     * @param wallId
+<A NAME="53"></A>     * @param humanId
+<A NAME="54"></A>     * @param contentToBeAppended
+<A NAME="55"></A>     * @return Wall
+<A NAME="56"></A>     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+<A NAME="57"></A>     */</FONT>
+<A NAME="58"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doUAddEntry(<FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> String humanId, String contentToBeAppended) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="59"></A>
+<A NAME="60"></A>    <FONT ID="FormalComment">/**
+<A NAME="61"></A>     * @param wallId
+<A NAME="62"></A>     * @param mutee
+<A NAME="63"></A>     * @return Wall
+<A NAME="64"></A>     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+<A NAME="65"></A>     */</FONT>
+<A NAME="66"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doUAddMuteEntry(<FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> String mutee) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="67"></A>
+<A NAME="68"></A>    <FONT ID="FormalComment">/**
+<A NAME="69"></A>     * @param wallId
+<A NAME="70"></A>     * @param mutee
+<A NAME="71"></A>     * @return Wall
+<A NAME="72"></A>     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+<A NAME="73"></A>     */</FONT>
+<A NAME="74"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A> doURemoveMuteEntry(<FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> String mutee) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourCheckedException.java.html">DBDishonourCheckedException</A>;
+<A NAME="75"></A>
+<A NAME="76"></A><FONT ID="SingleLineComment">//    /**
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//     * @param wallId
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//     * @return Wall
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//     * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//     */
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//    public Wall doUClearWall(final long wallId) throws DBDishonourCheckedException;
+<A NAME="82"></A></FONT>
+<A NAME="83"></A>    <FONT ID="FormalComment">/**
+<A NAME="84"></A>     * @param wallId
+<A NAME="85"></A>     */</FONT>
+<A NAME="86"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doNTxDWall(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> wallId);
+<A NAME="87"></A>
+<A NAME="88"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Msg.java.html">Msg</A>&gt; doRHumansWallLastEntries(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> Integer numberOfEntriesToFetch);
+<A NAME="89"></A>
+<A NAME="90"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doUpdateMetadata(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> wallId, <FONT ID="Final">final</FONT> String key, <FONT ID="Final">final</FONT> String value);
+<A NAME="91"></A>}</pre>
+</BODY>
+</HTML>

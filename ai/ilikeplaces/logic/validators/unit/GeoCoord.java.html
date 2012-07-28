@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.validators.unit.GeoCoord (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">GeoCoord.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.validators.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">ai.ilikeplaces.util.RefObj</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> com.google.gdata.data.geo.GeoLat;
+<A NAME="6"></A><FONT ID="Import">import</FONT> com.google.gdata.data.geo.GeoLong;
+<A NAME="7"></A><FONT ID="Import">import</FONT> com.google.gdata.data.geo.impl.W3CPoint;
+<A NAME="8"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.IsInvariant;
+<A NAME="9"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotNull;
+<A NAME="10"></A>
+<A NAME="11"></A><FONT ID="FormalComment">/**
+<A NAME="12"></A> * Created by IntelliJ IDEA.
+<A NAME="13"></A> * User: &lt;a href="http://www.ilikeplaces.com"&gt; http://www.ilikeplaces.com &lt;/a&gt;
+<A NAME="14"></A> * Date: Sep 12, 2010
+<A NAME="15"></A> * Time: 7:29:37 PM
+<A NAME="16"></A> */</FONT>
+<A NAME="17"></A>
+<A NAME="18"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="19"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> GeoCoord <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/RefObj.java.html">RefObj</A>&lt;W3CPoint&gt; {
+<A NAME="20"></A>    <FONT ID="Public">public</FONT> GeoCoord() {
+<A NAME="21"></A>    }
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="FormalComment">/**
+<A NAME="24"></A>     * @param latitudeCOMMAlongitude
+<A NAME="25"></A>     * @return this
+<A NAME="26"></A>     */</FONT>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A> setObj(<FONT ID="Final">final</FONT> String latitudeCOMMAlongitude) {
+<A NAME="28"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="29"></A>            <FONT ID="Final">final</FONT> GeoLat geoLat = <FONT ID="New">new</FONT> GeoLat();
+<A NAME="30"></A>            geoLat.setValue(latitudeCOMMAlongitude.split(<FONT ID="StringLiteral">","</FONT>)[<FONT ID="IntegerLiteral">0</FONT>]);<FONT ID="SingleLineComment">//will throw a runtime exception if wrong.
+<A NAME="31"></A></FONT>
+<A NAME="32"></A>            <FONT ID="Final">final</FONT> GeoLong geoLong = <FONT ID="New">new</FONT> GeoLong();
+<A NAME="33"></A>            geoLong.setValue(latitudeCOMMAlongitude.split(<FONT ID="StringLiteral">","</FONT>)[<FONT ID="IntegerLiteral">1</FONT>]);<FONT ID="SingleLineComment">//will throw a runtime exception if wrong. 
+<A NAME="34"></A></FONT>
+<A NAME="35"></A>            setObj(<FONT ID="New">new</FONT> W3CPoint(geoLat.getLatitude(), geoLong.getLongitude()));
+<A NAME="36"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> RuntimeException e) {
+<A NAME="37"></A>            <FONT ID="Super">super</FONT>.setObj(<FONT ID="Null">null</FONT>);
+<A NAME="38"></A>        }
+<A NAME="39"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="40"></A>    }
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>[] getGeoCoordsByBounds(<FONT ID="Final">final</FONT> String listOfLatCommaLongOfBoundsInOrder) {
+<A NAME="43"></A>        <FONT ID="Final">final</FONT> String[] vals = listOfLatCommaLongOfBoundsInOrder.split(<FONT ID="StringLiteral">","</FONT>);
+<A NAME="44"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>[] bounds = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>[(vals.length / <FONT ID="IntegerLiteral">2</FONT>) + <FONT ID="IntegerLiteral">1</FONT>];
+<A NAME="45"></A>
+<A NAME="46"></A>        <FONT ID="For">for</FONT> (<FONT ID="Int">int</FONT> i = <FONT ID="IntegerLiteral">0</FONT>; i &lt; vals.length; i += <FONT ID="IntegerLiteral">2</FONT>) {
+<A NAME="47"></A>            bounds[i == <FONT ID="IntegerLiteral">0</FONT> ? i : i / <FONT ID="IntegerLiteral">2</FONT>] = <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A>().setObj(vals[i], vals[i + <FONT ID="IntegerLiteral">1</FONT>]);
+<A NAME="48"></A>        }
+<A NAME="49"></A>        <FONT ID="Return">return</FONT> bounds;
+<A NAME="50"></A>    }
+<A NAME="51"></A>
+<A NAME="52"></A>    <FONT ID="FormalComment">/**
+<A NAME="53"></A>     * @param latitude
+<A NAME="54"></A>     * @param longitude
+<A NAME="55"></A>     * @return this
+<A NAME="56"></A>     */</FONT>
+<A NAME="57"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A> setObj(<FONT ID="Final">final</FONT> String latitude, <FONT ID="Final">final</FONT> String longitude) {
+<A NAME="58"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="59"></A>            <FONT ID="Final">final</FONT> GeoLat geoLat = <FONT ID="New">new</FONT> GeoLat();
+<A NAME="60"></A>            geoLat.setValue(latitude);<FONT ID="SingleLineComment">//will throw a runtime exception if wrong.
+<A NAME="61"></A></FONT>
+<A NAME="62"></A>            <FONT ID="Final">final</FONT> GeoLong geoLong = <FONT ID="New">new</FONT> GeoLong();
+<A NAME="63"></A>            geoLong.setValue(longitude);<FONT ID="SingleLineComment">//will throw a runtime exception if wrong.
+<A NAME="64"></A></FONT>
+<A NAME="65"></A>            setObj(<FONT ID="New">new</FONT> W3CPoint(geoLat.getLatitude(), geoLong.getLongitude()));
+<A NAME="66"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> RuntimeException e) {
+<A NAME="67"></A>            <FONT ID="Super">super</FONT>.setObj(<FONT ID="Null">null</FONT>);
+<A NAME="68"></A>        }
+<A NAME="69"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="70"></A>    }
+<A NAME="71"></A>
+<A NAME="72"></A>    <FONT ID="FormalComment">/**
+<A NAME="73"></A>     * @param latitude
+<A NAME="74"></A>     * @param longitude
+<A NAME="75"></A>     * @return this
+<A NAME="76"></A>     */</FONT>
+<A NAME="77"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/GeoCoord.java.html">GeoCoord</A> setObj(<FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> latitude, <FONT ID="Final">final</FONT> <FONT ID="Double">double</FONT> longitude) {
+<A NAME="78"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="79"></A>            <FONT ID="Final">final</FONT> GeoLat geoLat = <FONT ID="New">new</FONT> GeoLat();
+<A NAME="80"></A>            geoLat.setLatitude(latitude);<FONT ID="SingleLineComment">//will throw a runtime exception if wrong.
+<A NAME="81"></A></FONT>
+<A NAME="82"></A>            <FONT ID="Final">final</FONT> GeoLong geoLong = <FONT ID="New">new</FONT> GeoLong();
+<A NAME="83"></A>            geoLong.setLongitude(longitude);<FONT ID="SingleLineComment">//will throw a runtime exception if wrong.
+<A NAME="84"></A></FONT>
+<A NAME="85"></A>            setObj(<FONT ID="New">new</FONT> W3CPoint(geoLat.getLatitude(), geoLong.getLongitude()));
+<A NAME="86"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> RuntimeException e) {
+<A NAME="87"></A>            <FONT ID="Super">super</FONT>.setObj(<FONT ID="Null">null</FONT>);
+<A NAME="88"></A>        }
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> <FONT ID="This">this</FONT>;
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    @IsInvariant
+<A NAME="93"></A>    @NotNull(message = <FONT ID="StringLiteral">"Sorry! The given coordinates seem to be wrong!"</FONT>)
+<A NAME="94"></A>    @Override
+<A NAME="95"></A>    <FONT ID="Public">public</FONT> W3CPoint getObj() {
+<A NAME="96"></A>        <FONT ID="Return">return</FONT> obj;
+<A NAME="97"></A>    }
+<A NAME="98"></A>
+<A NAME="99"></A>    <FONT ID="FormalComment">/**
+<A NAME="100"></A>     * @return 3.13343,23.23232 format lat,lng
+<A NAME="101"></A>     */</FONT>
+<A NAME="102"></A>    @Override
+<A NAME="103"></A>    <FONT ID="Public">public</FONT> String toString() {
+<A NAME="104"></A>        <FONT ID="Return">return</FONT> getObjectAsValid().getLatitude() + <FONT ID="StringLiteral">","</FONT> + getObjectAsValid().getLongitude();
+<A NAME="105"></A>    }
+<A NAME="106"></A>}
+<A NAME="107"></A></pre>
+</BODY>
+</HTML>

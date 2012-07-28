@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.ListenerPhoto (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ListenerPhoto.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">ai.ilikeplaces.entities.PrivatePhoto</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/DownTownFlowCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/Photo$Description.java.html">ai.ilikeplaces.logic.Listeners.widgets.Photo$Description</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/SignInOnCriteria.java.html">ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="13"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatDocument;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletResponse;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.itsnat.core.event.ItsNatServletRequestListener;
+<A NAME="18"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="19"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="20"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="21"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="22"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="23"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventTarget;
+<A NAME="24"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="25"></A>
+<A NAME="26"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="27"></A>
+<A NAME="28"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page.pd_photo</A>;
+<A NAME="29"></A><FONT ID="Import">import</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page.pd_photo_permalink</A>;
+<A NAME="30"></A>
+<A NAME="31"></A><FONT ID="FormalComment">/**
+<A NAME="32"></A> * @author Ravindranath Akila
+<A NAME="33"></A> */</FONT>
+<A NAME="34"></A>
+<A NAME="35"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="36"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ListenerPhoto <FONT ID="Implements">implements</FONT> ItsNatServletRequestListener {
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="Final">final</FONT> <FONT ID="Private">private</FONT> String permaLink = <FONT ID="Null">null</FONT>;
+<A NAME="39"></A>
+<A NAME="40"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Private">private</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../ai/ilikeplaces/logic/Listeners/ListenerPhoto.java.html">ListenerPhoto</A>.<FONT ID="Class">class</FONT>.getName());
+<A NAME="41"></A>
+<A NAME="42"></A>    <FONT ID="FormalComment">/**
+<A NAME="43"></A>     * @param request__
+<A NAME="44"></A>     * @param response__
+<A NAME="45"></A>     */</FONT>
+<A NAME="46"></A>    @Override
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> processRequest(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> ItsNatServletResponse response__) {
+<A NAME="48"></A>
+<A NAME="49"></A>
+<A NAME="50"></A>        <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/AbstractSkeletonListener.java.html">AbstractSkeletonListener</A>(request__, response__) {
+<A NAME="51"></A>
+<A NAME="52"></A>            <FONT ID="FormalComment">/**
+<A NAME="53"></A>             * Intialize your document here by appending fragments
+<A NAME="54"></A>             */</FONT>
+<A NAME="55"></A>            @Override
+<A NAME="56"></A>            @SuppressWarnings(<FONT ID="StringLiteral">"unchecked"</FONT>)
+<A NAME="57"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__, <FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="58"></A>
+<A NAME="59"></A>                layoutNeededForAllPages:
+<A NAME="60"></A>                {
+<A NAME="61"></A>                    setLoginWidget:
+<A NAME="62"></A>                    {
+<A NAME="63"></A>                        setLoginWidget(request__, SignInOnCriteria.SignInOnDisplayComponent.SNAPS);
+<A NAME="64"></A>                    }
+<A NAME="65"></A>
+<A NAME="66"></A>                    setTitle:
+<A NAME="67"></A>                    {
+<A NAME="68"></A>                        <FONT ID="SingleLineComment">//set below
+<A NAME="69"></A></FONT>                    }
+<A NAME="70"></A>                    setProfileDataLink:
+<A NAME="71"></A>                    {
+<A NAME="72"></A>                        setProfileDataLink();
+<A NAME="73"></A>                    }
+<A NAME="74"></A>                    sideBarFriends:
+<A NAME="75"></A>                    {
+<A NAME="76"></A>                        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS);
+<A NAME="77"></A>                    }
+<A NAME="78"></A>                    signinupActionNotice:
+<A NAME="79"></A>                    {
+<A NAME="80"></A>                        <FONT ID="SingleLineComment">//We do nothing now
+<A NAME="81"></A></FONT>                    }
+<A NAME="82"></A>                    SetNotifications:
+<A NAME="83"></A>                    {
+<A NAME="84"></A>                        setNotifications();
+<A NAME="85"></A>                    }
+<A NAME="86"></A>                }
+<A NAME="87"></A>
+<A NAME="88"></A>
+<A NAME="89"></A>                <FONT ID="If">if</FONT> (<FONT ID="Super">super</FONT>.getUsername() != <FONT ID="Null">null</FONT>) {
+<A NAME="90"></A>
+<A NAME="91"></A>                    <FONT ID="Final">final</FONT> Return&lt;List&lt;<A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A>&gt;&gt; r = DB.getHumanCRUDPrivatePhotoLocal(<FONT ID="True">true</FONT>).rPrivatePhotos(getUsernameAsValid());
+<A NAME="92"></A>
+<A NAME="93"></A>                    <FONT ID="If">if</FONT> (r.returnStatus() == <FONT ID="IntegerLiteral">0</FONT>) {
+<A NAME="94"></A>
+<A NAME="95"></A>                        <FONT ID="For">for</FONT> (<FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> privatePhoto : r.returnValue()) {
+<A NAME="96"></A>                            <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/Listeners/widgets/Photo$Description.java.html">Photo$Description</A>(request__, $(Controller.Page.Skeleton_center_content)) {
+<A NAME="97"></A>
+<A NAME="98"></A>                                <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> myhumanId = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsername());
+<A NAME="99"></A>                                <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> myprivatePhoto = privatePhoto;
+<A NAME="100"></A>
+<A NAME="101"></A>                                @Override
+<A NAME="102"></A>                                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="103"></A>                                    <FONT ID="Final">final</FONT> String imageURL = RBGet.globalConfig.getString(<FONT ID="StringLiteral">"ALBUM_PHOTOS"</FONT>) + privatePhoto.getPrivatePhotoURLPath();
+<A NAME="104"></A>                                    $$(pd_photo_permalink).setAttribute(<FONT ID="StringLiteral">"href"</FONT>, imageURL);
+<A NAME="105"></A>                                    <FONT ID="SingleLineComment">//$$(pd_photo).setAttribute("src", "_");
+<A NAME="106"></A></FONT>                                    $$(pd_photo).setAttribute(<FONT ID="StringLiteral">"title"</FONT>, imageURL);
+<A NAME="107"></A>
+<A NAME="108"></A>                                    displayBlock($$(Controller.Page.pd_photo_delete));
+<A NAME="109"></A>                                }
+<A NAME="110"></A>
+<A NAME="111"></A>                                @Override
+<A NAME="112"></A>                                <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="113"></A>                                    itsNatHTMLDocument__.addEventListener((EventTarget) $$(Controller.Page.pd_photo_delete), EventType.CLICK.toString(), <FONT ID="New">new</FONT> EventListener() {
+<A NAME="114"></A>
+<A NAME="115"></A>                                        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> mymyhumanId = <FONT ID="New">new</FONT> <A HREF="../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A>(getUsername());
+<A NAME="116"></A>
+<A NAME="117"></A>                                        @TODO(task = <FONT ID="StringLiteral">"Expecting itsnat does not serialize these values. Bulky. Verify with Jose."</FONT>)
+<A NAME="118"></A>                                        <FONT ID="Final">final</FONT> <A HREF="../../../../ai/ilikeplaces/entities/PrivatePhoto.java.html">PrivatePhoto</A> mymyprivatePhoto = privatePhoto;
+<A NAME="119"></A>
+<A NAME="120"></A>                                        @Override
+<A NAME="121"></A>                                        <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> handleEvent(<FONT ID="Final">final</FONT> Event evt_) {
+<A NAME="122"></A>                                            DB.getHumanCRUDPrivatePhotoLocal(<FONT ID="True">true</FONT>).dPrivatePhoto(mymyhumanId, mymyprivatePhoto.getPrivatePhotoId());
+<A NAME="123"></A>                                            $$sendJS(JSCodeToSend.jqueryHide($$getId(Controller.Page.pd)));
+<A NAME="124"></A>                                        }
+<A NAME="125"></A>
+<A NAME="126"></A>                                    }, <FONT ID="False">false</FONT>);
+<A NAME="127"></A>                                }
+<A NAME="128"></A>                            };
+<A NAME="129"></A>                        }
+<A NAME="130"></A>
+<A NAME="131"></A>
+<A NAME="132"></A>                    } <FONT ID="Else">else</FONT> {
+<A NAME="133"></A>                        $(Controller.Page.SkeletonCPageNotice).setTextContent(r.returnMsg());
+<A NAME="134"></A>                    }
+<A NAME="135"></A>                }
+<A NAME="136"></A>                SmartLogger.g().complete(<FONT ID="StringLiteral">"Done loading photo page"</FONT>);
+<A NAME="137"></A>
+<A NAME="138"></A>            }
+<A NAME="139"></A>
+<A NAME="140"></A>            @Override
+<A NAME="141"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument__, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument__, <FONT ID="Final">final</FONT> ItsNatDocument itsNatDocument__) {
+<A NAME="142"></A>            }
+<A NAME="143"></A>        };
+<A NAME="144"></A>    }
+<A NAME="145"></A>
+<A NAME="146"></A>    <FONT ID="FormalComment">/**
+<A NAME="147"></A>     * @param showChangeLog__
+<A NAME="148"></A>     * @return changeLog
+<A NAME="149"></A>     */</FONT>
+<A NAME="150"></A>    <FONT ID="Public">public</FONT> String toString(<FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> showChangeLog__) {
+<A NAME="151"></A>        String changeLog = <FONT ID="New">new</FONT> String(toString() + <FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="152"></A>        <FONT ID="Return">return</FONT> showChangeLog__ ? changeLog : toString();
+<A NAME="153"></A>    }
+<A NAME="154"></A>}
+<A NAME="155"></A></pre>
+</BODY>
+</HTML>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.TribeCreateWidget (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TribeCreateWidget.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">ai.ilikeplaces.entities.Tribe</A>;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/JSCodeToSend.java.html">ai.ilikeplaces.logic.Listeners.JSCodeToSend</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/DB.java.html">ai.ilikeplaces.logic.crud.DB</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/Validator.java.html">ai.ilikeplaces.logic.validators.Validator</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> net.sf.oval.configuration.annotation.IsInvariant;
+<A NAME="11"></A><FONT ID="Import">import</FONT> net.sf.oval.constraint.NotNull;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.Event;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.w3c.dom.events.EventListener;
+<A NAME="17"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="18"></A>
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.util.logging.Logger;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="FormalComment">/**
+<A NAME="22"></A> * Created by IntelliJ IDEA.
+<A NAME="23"></A> * User: Ravindranath Akila
+<A NAME="24"></A> * Date: 10/20/11
+<A NAME="25"></A> * Time: 8:50 PM
+<A NAME="26"></A> */</FONT>
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TribeCreateWidget <FONT ID="Extends">extends</FONT> AbstractWidgetListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeCreateWidgetCriteria.java.html">TribeCreateWidgetCriteria</A>&gt; {
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String YIKES_SOMETHING_WENT_WRONG = <FONT ID="StringLiteral">"YIKES_SOMETHING_WENT_WRONG"</FONT>;
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TRIBE_NAME_INVALID = <FONT ID="StringLiteral">"tribe.name.invalid"</FONT>;
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String TRIBE_STORY_INVALID = <FONT ID="StringLiteral">"tribe.story.invalid"</FONT>;
+<A NAME="31"></A>    <FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="32"></A></FONT>
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> TribeCreateWidget(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeCreateWidgetCriteria.java.html">TribeCreateWidgetCriteria</A> tribeCreateWidgetCriteria, <FONT ID="Final">final</FONT> Element appendToElement__) {
+<A NAME="35"></A>        <FONT ID="Super">super</FONT>(request__, Controller.Page.TribeCreateHome, tribeCreateWidgetCriteria, appendToElement__);
+<A NAME="36"></A>    }
+<A NAME="37"></A>
+<A NAME="38"></A>    <FONT ID="FormalComment">/**
+<A NAME="39"></A>     * Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, Object, org.w3c.dom.Element)}
+<A NAME="40"></A>     * GENERIC constructor.
+<A NAME="41"></A>     *
+<A NAME="42"></A>     * @param tribeCreateWidgetCriteria
+<A NAME="43"></A>     */</FONT>
+<A NAME="44"></A>    @Override
+<A NAME="45"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeCreateWidgetCriteria.java.html">TribeCreateWidgetCriteria</A> tribeCreateWidgetCriteria) {
+<A NAME="46"></A>        <FONT ID="Super">super</FONT>.registerUserNotifier($$(Controller.Page.tribeHomeCreateNoti));
+<A NAME="47"></A>    }
+<A NAME="48"></A>
+<A NAME="49"></A>    @Override
+<A NAME="50"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="51"></A>        <FONT ID="Super">super</FONT>.registerForInputText($$(Controller.Page.tribeHomeCreateName),
+<A NAME="52"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeCreateWidgetCriteria.java.html">TribeCreateWidgetCriteria</A>&gt;(criteria) {
+<A NAME="53"></A>
+<A NAME="54"></A>                    @Override
+<A NAME="55"></A>                    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> onFire(<FONT ID="Final">final</FONT> Event evt) {
+<A NAME="56"></A>                        <FONT ID="This">this</FONT>.criteria.getvTribeName().setObj(TribeCreateWidget.<FONT ID="This">this</FONT>.getTargetInputText(evt));
+<A NAME="57"></A>                    }
+<A NAME="58"></A>                }
+<A NAME="59"></A>        );
+<A NAME="60"></A>
+<A NAME="61"></A>        <FONT ID="Super">super</FONT>.registerForInputText($$(Controller.Page.tribeHomeCreateStory),
+<A NAME="62"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeCreateWidgetCriteria.java.html">TribeCreateWidgetCriteria</A>&gt;(criteria) {
+<A NAME="63"></A>
+<A NAME="64"></A>                    @Override
+<A NAME="65"></A>                    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> onFire(<FONT ID="Final">final</FONT> Event evt) {
+<A NAME="66"></A>                        <FONT ID="This">this</FONT>.criteria.getvTribeStory().setObj(TribeCreateWidget.<FONT ID="This">this</FONT>.getTargetInputText(evt));
+<A NAME="67"></A>                    }
+<A NAME="68"></A>                });
+<A NAME="69"></A>
+<A NAME="70"></A>        <FONT ID="Super">super</FONT>.registerForClick($$(Controller.Page.tribeHomeCreateSave),
+<A NAME="71"></A>                <FONT ID="New">new</FONT> AIEventListener&lt;<A HREF="../../../../../ai/ilikeplaces/logic/Listeners/widgets/TribeCreateWidgetCriteria.java.html">TribeCreateWidgetCriteria</A>&gt;(criteria) {
+<A NAME="72"></A>
+<A NAME="73"></A>                    @Override
+<A NAME="74"></A>                    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> onFire(<FONT ID="Final">final</FONT> Event evt) {
+<A NAME="75"></A>                        Loggers.DEBUG.debug(<FONT ID="This">this</FONT>.criteria.getvTribeName().getObj());
+<A NAME="76"></A>                        Loggers.DEBUG.debug(<FONT ID="This">this</FONT>.criteria.getvTribeStory().getObj());
+<A NAME="77"></A>
+<A NAME="78"></A>                        <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.criteria.getvTribeName().valid() &amp;&amp; <FONT ID="This">this</FONT>.criteria.getvTribeStory().valid()) {
+<A NAME="79"></A>                            <FONT ID="Final">final</FONT> Return&lt;<A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">Tribe</A>&gt; tribeReturn = DB.getHumanCRUDTribeLocal(<FONT ID="False">false</FONT>).createTribe(criteria.getHumanId(), <FONT ID="This">this</FONT>.criteria.getvTribeName(), <FONT ID="This">this</FONT>.criteria.getvTribeStory());
+<A NAME="80"></A>                            <FONT ID="If">if</FONT> (tribeReturn.valid()) {
+<A NAME="81"></A>                                $$sendJSStmt(JSCodeToSend.redirectPageWithURL(
+<A NAME="82"></A>                                        <FONT ID="New">new</FONT> Parameter(Controller.Page.Tribes.getURL())
+<A NAME="83"></A>                                                .append(
+<A NAME="84"></A>                                                        Controller.Page.DocTribesMode,
+<A NAME="85"></A>                                                        Controller.Page.DocTribesModeView,
+<A NAME="86"></A>                                                        <FONT ID="True">true</FONT>
+<A NAME="87"></A>                                                )
+<A NAME="88"></A>                                                .append(
+<A NAME="89"></A>                                                        Controller.Page.DocTribesWhich,
+<A NAME="90"></A>                                                        tribeReturn.returnValueBadly().getTribeId()
+<A NAME="91"></A>                                                )
+<A NAME="92"></A>                                                .get()
+<A NAME="93"></A>                                ));
+<A NAME="94"></A>                            } <FONT ID="Else">else</FONT> {
+<A NAME="95"></A>                                TribeCreateWidget.<FONT ID="Super">super</FONT>.notifyUser(RBGet.gui().getString(YIKES_SOMETHING_WENT_WRONG));
+<A NAME="96"></A>                            }
+<A NAME="97"></A>                        } <FONT ID="Else">else</FONT> {
+<A NAME="98"></A>                            <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.criteria.getvTribeStory().invalid()) {
+<A NAME="99"></A>                                TribeCreateWidget.<FONT ID="Super">super</FONT>.notifyUser(RBGet.gui().getString(TRIBE_STORY_INVALID));
+<A NAME="100"></A>                            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (<FONT ID="This">this</FONT>.criteria.getvTribeName().invalid()) {
+<A NAME="101"></A>                                TribeCreateWidget.<FONT ID="Super">super</FONT>.notifyUser(RBGet.gui().getString(TRIBE_NAME_INVALID));
+<A NAME="102"></A>                            }
+<A NAME="103"></A>                        }
+<A NAME="104"></A>                    }
+<A NAME="105"></A>                });
+<A NAME="106"></A>    }
+<A NAME="107"></A>}
+<A NAME="108"></A></pre>
+</BODY>
+</HTML>

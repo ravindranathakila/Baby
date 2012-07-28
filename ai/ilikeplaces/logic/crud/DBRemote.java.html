@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.DBRemote (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DBRemote.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">ai.ilikeplaces.logic.role.HumanUserLocal</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">ai.ilikeplaces.security.face.SingletonHashingRemote</A>;
+<A NAME="6"></A>
+<A NAME="7"></A><FONT ID="Import">import</FONT> javax.ejb.Remote;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="FormalComment">/**
+<A NAME="10"></A> * @author Ravindranath Akila
+<A NAME="11"></A> */</FONT>
+<A NAME="12"></A>
+<A NAME="13"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="14"></A>@<A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">Remote</A>
+<A NAME="15"></A><FONT ID="Public">public</FONT> <FONT ID="Interface">interface</FONT> DBRemote {
+<A NAME="16"></A>
+<A NAME="17"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String NAME = <A HREF="../../../../ai/ilikeplaces/logic/crud/DBRemote.java.html">DBRemote</A>.<FONT ID="Class">class</FONT>.getSimpleName();
+<A NAME="18"></A>
+<A NAME="19"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPublicPhotoLocal.java.html">HumanCRUDPublicPhotoLocal</A> getHumanCRUDPublicPhotoLocal();
+<A NAME="20"></A>
+<A NAME="21"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivatePhotoLocal.java.html">HumanCRUDPrivatePhotoLocal</A> getHumanCRUDPrivatePhotoLocal();
+<A NAME="22"></A>
+<A NAME="23"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDLocationLocal.java.html">HumanCRUDLocationLocal</A> getHumanCRUDLocationLocal();
+<A NAME="24"></A>
+<A NAME="25"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumanLocal.java.html">HumanCRUDHumanLocal</A> getHumanCRUDHumanLocal();
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDMapLocal.java.html">HumanCRUDMapLocal</A> getHumanCRUDMapLocal();
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateEventLocal.java.html">HumanCRUDPrivateEventLocal</A> getHumanCrudPrivateEventLocal();
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDPrivateLocationLocal.java.html">HumanCRUDPrivateLocationLocal</A> getHumanCrudPrivateLocationLocal();
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDWallLocal.java.html">HumanCRUDWallLocal</A> getHumanCrudWallLocal();
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/security/face/SingletonHashingRemote.java.html">SingletonHashingRemote</A> getSingletonHashingFaceLocal();
+<A NAME="36"></A>
+<A NAME="37"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/role/HumanUserLocal.java.html">HumanUserLocal</A> getHumanUserLocal();
+<A NAME="38"></A>
+<A NAME="39"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDHumansUnseenLocal.java.html">HumanCRUDHumansUnseenLocal</A> getHumanCRUDHumansUnseenLocal();
+<A NAME="40"></A>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../ai/ilikeplaces/logic/crud/HumanCRUDTribeLocal.java.html">HumanCRUDTribeLocal</A> getHumanCRUDTribeLocal();
+<A NAME="42"></A>
+<A NAME="43"></A>}
+<A NAME="44"></A></pre>
+</BODY>
+</HTML>

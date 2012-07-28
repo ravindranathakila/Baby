@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.CRUDTribe (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">CRUDTribe.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">ai.ilikeplaces.entities.Album</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">ai.ilikeplaces.entities.HumansTribe</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Tribe.java.html">ai.ilikeplaces.entities.Tribe</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">ai.ilikeplaces.entities.Wall</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudService.java.html">ai.ilikeplaces.jpa.CrudService</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">ai.ilikeplaces.util.jpa.RefreshException</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">ai.ilikeplaces.util.jpa.RefreshSpec</A>;
+<A NAME="13"></A>
+<A NAME="14"></A><FONT ID="Import">import</FONT> javax.ejb.*;
+<A NAME="15"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<A NAME="16"></A><FONT ID="Import">import</FONT> java.util.Collections;
+<A NAME="17"></A><FONT ID="Import">import</FONT> java.util.List;
+<A NAME="18"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="FormalComment">/**
+<A NAME="21"></A> * Created by IntelliJ IDEA.
+<A NAME="22"></A> * User: Ravindranath Akila
+<A NAME="23"></A> * Date: 10/27/11
+<A NAME="24"></A> * Time: 7:33 PM
+<A NAME="25"></A> */</FONT>
+<A NAME="26"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="27"></A>@Stateless
+<A NAME="28"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> CRUDTribe <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/CRUDTribeLocal.java.html">CRUDTribeLocal</A> {
+<A NAME="29"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="30"></A></FONT>
+<A NAME="31"></A>    @EJB
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A>&gt; tribeCrudServiceLocal_;
+<A NAME="33"></A>
+<A NAME="34"></A>    @EJB
+<A NAME="35"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A>&gt; humansTribeCrudServiceLocal__;
+<A NAME="36"></A>
+<A NAME="37"></A><FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="38"></A></FONT>
+<A NAME="39"></A>
+<A NAME="40"></A><FONT ID="SingleLineComment">// --------------------- Interface CRUDTribeLocal ---------------------
+<A NAME="41"></A></FONT>
+<A NAME="42"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="43"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A> doNTxCTribe(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> String tribeName, <FONT ID="Final">final</FONT> String tribeStory) {
+<A NAME="44"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A> managedTribe = tribeCrudServiceLocal_.create(
+<A NAME="45"></A>                <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A>()
+<A NAME="46"></A>                        .setTribeNameR(tribeName)
+<A NAME="47"></A>                        .setTribeStoryR(tribeStory)
+<A NAME="48"></A>                        .setTribeWallR(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Wall.java.html">Wall</A>().setWallTypeR(Wall.wallTypeTribe))
+<A NAME="49"></A>                        .setTribeAlbumR(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A>()));
+<A NAME="50"></A>
+<A NAME="51"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A> managedHumansTribe = getHumansTribe(humanId);
+<A NAME="52"></A>
+<A NAME="53"></A>        WiringBothSidesOfTheRelationship:
+<A NAME="54"></A>        {
+<A NAME="55"></A>            managedTribe.getTribeMembers().add(managedHumansTribe);
+<A NAME="56"></A>            managedHumansTribe.getTribes().add(managedTribe);
+<A NAME="57"></A>        }
+<A NAME="58"></A>
+<A NAME="59"></A>        <FONT ID="Return">return</FONT> managedTribe;
+<A NAME="60"></A>    }
+<A NAME="61"></A>
+<A NAME="62"></A>    @Override
+<A NAME="63"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="64"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A> getHumansTribe(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="65"></A>        <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A> humansTribe = humansTribeCrudServiceLocal__.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A>.<FONT ID="Class">class</FONT>, humanId);
+<A NAME="66"></A>
+<A NAME="67"></A>        <FONT ID="If">if</FONT> (humansTribe == <FONT ID="Null">null</FONT>) {
+<A NAME="68"></A>            humansTribe = humansTribeCrudServiceLocal__.create(<FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A>().setHumanIdR(humanId));
+<A NAME="69"></A>        }
+<A NAME="70"></A>
+<A NAME="71"></A>        <FONT ID="Return">return</FONT> humansTribe;
+<A NAME="72"></A>    }
+<A NAME="73"></A>
+<A NAME="74"></A>    <FONT ID="FormalComment">/**
+<A NAME="75"></A>     * @param humanId To be added to the given Tribe
+<A NAME="76"></A>     * @param tribeId The tribe to which to add the given user
+<A NAME="77"></A>     * @return The Tribe
+<A NAME="78"></A>     */</FONT>
+<A NAME="79"></A>    @Override
+<A NAME="80"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="81"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A> addToTribe(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long tribeId) {
+<A NAME="82"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A> managedTribe = getTribe(tribeId);
+<A NAME="83"></A>
+<A NAME="84"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A> managedHumansTribe = getHumansTribe(humanId);
+<A NAME="85"></A>
+<A NAME="86"></A>        WiringBothSidesOfTheRelationship:
+<A NAME="87"></A>        {
+<A NAME="88"></A>            managedTribe.getTribeMembers().add(managedHumansTribe);
+<A NAME="89"></A>            managedHumansTribe.getTribes().add(managedTribe);
+<A NAME="90"></A>        }
+<A NAME="91"></A>
+<A NAME="92"></A>        <FONT ID="Return">return</FONT> managedTribe;
+<A NAME="93"></A>    }
+<A NAME="94"></A>
+<A NAME="95"></A>
+<A NAME="96"></A>    @Override
+<A NAME="97"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="98"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A> getTribe(<FONT ID="Final">final</FONT> Long tribeId) {
+<A NAME="99"></A>        <FONT ID="Return">return</FONT> tribeCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A>.<FONT ID="Class">class</FONT>, tribeId);
+<A NAME="100"></A>    }
+<A NAME="101"></A>
+<A NAME="102"></A>    <FONT ID="FormalComment">/**
+<A NAME="103"></A>     * @param humanId To be removed from the given Tribe
+<A NAME="104"></A>     * @param tribeId The tribe from which to remove the given user, and &lt;b&gt;if last member, removes the tribe too.&lt;/b&gt;
+<A NAME="105"></A>     * @return The Tribe
+<A NAME="106"></A>     */</FONT>
+<A NAME="107"></A>    @Override
+<A NAME="108"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="109"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A> removeFromTribe(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long tribeId) {
+<A NAME="110"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A> managedTribe = getTribe(tribeId);
+<A NAME="111"></A>
+<A NAME="112"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A> managedHumansTribe = getHumansTribe(humanId);
+<A NAME="113"></A>
+<A NAME="114"></A>        WiringBothSidesOfTheRelationship:
+<A NAME="115"></A>        {
+<A NAME="116"></A>            <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> isMember = managedTribe.getTribeMembers().contains(managedHumansTribe);
+<A NAME="117"></A>            <FONT ID="If">if</FONT> (managedTribe.getTribeMembers().size() == <FONT ID="IntegerLiteral">1</FONT> &amp;&amp; isMember) {
+<A NAME="118"></A>                managedTribe.getTribeMembers().remove(managedHumansTribe);
+<A NAME="119"></A>                managedHumansTribe.getTribes().remove(managedTribe);
+<A NAME="120"></A>                tribeCrudServiceLocal_.delete(<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A>.<FONT ID="Class">class</FONT>, tribeId);
+<A NAME="121"></A>            } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (isMember) {
+<A NAME="122"></A>                managedTribe.getTribeMembers().remove(managedHumansTribe);
+<A NAME="123"></A>                managedHumansTribe.getTribes().remove(managedTribe);
+<A NAME="124"></A>            }
+<A NAME="125"></A>        }
+<A NAME="126"></A>
+<A NAME="127"></A>        <FONT ID="Return">return</FONT> managedTribe;
+<A NAME="128"></A>    }
+<A NAME="129"></A>
+<A NAME="130"></A>
+<A NAME="131"></A>    <FONT ID="FormalComment">/**
+<A NAME="132"></A>     * @param humanId whos permissions to be checked
+<A NAME="133"></A>     * @param tribeId of which the given humanId should be a member of
+<A NAME="134"></A>     * @return if the given humanId is a member of the given tribe
+<A NAME="135"></A>     */</FONT>
+<A NAME="136"></A>    @Override
+<A NAME="137"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="138"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> isTribeMember(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long tribeId) {
+<A NAME="139"></A>        <FONT ID="Return">return</FONT> getTribe(tribeId).getTribeMembers().contains(getHumansTribe(humanId));
+<A NAME="140"></A>    }
+<A NAME="141"></A>
+<A NAME="142"></A>    <FONT ID="FormalComment">/**
+<A NAME="143"></A>     * @param humanId The humanId of whose to return all the Tribes she's member of
+<A NAME="144"></A>     * @return The Tribes the given user is a member of
+<A NAME="145"></A>     */</FONT>
+<A NAME="146"></A>    @Override
+<A NAME="147"></A>    <FONT ID="Public">public</FONT> Set&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A>&gt; getHumansTribesAsSet(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="148"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A> humansTribe = getHumansTribe(humanId);
+<A NAME="149"></A>
+<A NAME="150"></A>        humansTribe.getTribes().size();<FONT ID="SingleLineComment">//refreshing if lazy
+<A NAME="151"></A></FONT>
+<A NAME="152"></A>        <FONT ID="Return">return</FONT> humansTribe.getTribes();
+<A NAME="153"></A>    }
+<A NAME="154"></A>
+<A NAME="155"></A>    <FONT ID="FormalComment">/**
+<A NAME="156"></A>     * @param humanId The humanId of whose to return all the Tribes she's member of
+<A NAME="157"></A>     * @return The Tribes the given user is a member of
+<A NAME="158"></A>     */</FONT>
+<A NAME="159"></A>    @Override
+<A NAME="160"></A>    <FONT ID="Public">public</FONT> List&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A>&gt; getHumansTribes(<FONT ID="Final">final</FONT> String humanId) {
+<A NAME="161"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">HumansTribe</A> humansTribe = getHumansTribe(humanId);
+<A NAME="162"></A>
+<A NAME="163"></A>        humansTribe.getTribes().size();<FONT ID="SingleLineComment">//refreshing if lazy
+<A NAME="164"></A></FONT>
+<A NAME="165"></A>        <FONT ID="Final">final</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A>&gt; tribes = <FONT ID="New">new</FONT> ArrayList&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A>&gt;(humansTribe.getTribes());
+<A NAME="166"></A>
+<A NAME="167"></A>        Collections.sort(tribes);
+<A NAME="168"></A>
+<A NAME="169"></A>        <FONT ID="Return">return</FONT> tribes;
+<A NAME="170"></A>    }
+<A NAME="171"></A>
+<A NAME="172"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+<A NAME="173"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A> doRTribe(<FONT ID="Final">final</FONT> Long tribeId) {
+<A NAME="174"></A>        <FONT ID="Return">return</FONT> tribeCrudServiceLocal_.find(<A HREF="../../../../../ai/ilikeplaces/entities/HumansTribe.java.html">Tribe</A>.<FONT ID="Class">class</FONT>, tribeId);
+<A NAME="175"></A>    }
+<A NAME="176"></A>
+<A NAME="177"></A>    <FONT ID="FormalComment">/**
+<A NAME="178"></A>     * @param humanId
+<A NAME="179"></A>     * @param tribeId
+<A NAME="180"></A>     * @param refreshSpecInit
+<A NAME="181"></A>     * @return
+<A NAME="182"></A>     */</FONT>
+<A NAME="183"></A>    @Override
+<A NAME="184"></A>    <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/Album.java.html">Album</A> rTribeReadAlbum(<FONT ID="Final">final</FONT> String humanId, <FONT ID="Final">final</FONT> Long tribeId, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshSpec.java.html">RefreshSpec</A> refreshSpecInit) <FONT ID="Throws">throws</FONT> <A HREF="../../../../../ai/ilikeplaces/util/jpa/RefreshException.java.html">RefreshException</A> {
+<A NAME="185"></A>        <FONT ID="Return">return</FONT> getTribe(tribeId).getTribeAlbum().refresh(refreshSpecInit);
+<A NAME="186"></A>    }
+<A NAME="187"></A>}
+<A NAME="188"></A></pre>
+</BODY>
+</HTML>

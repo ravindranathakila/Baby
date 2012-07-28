@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.rbs.RBGet (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">RBGet.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.rbs;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.CONVENTION;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="6"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.TODO;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="8"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="9"></A>
+<A NAME="10"></A><FONT ID="Import">import</FONT> java.util.Locale;
+<A NAME="11"></A><FONT ID="Import">import</FONT> java.util.MissingResourceException;
+<A NAME="12"></A><FONT ID="Import">import</FONT> java.util.ResourceBundle;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.util.Set;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * @author Ravindranath Akila
+<A NAME="17"></A> */</FONT>
+<A NAME="18"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="19"></A>@NOTE(note = <FONT ID="StringLiteral">"THIS PROVIDES DEFAULT RB ACCESS THROUGH VARIABLES. EXCEPTION IS MADE FOR GUI WHERE"</FONT> +
+<A NAME="20"></A>        <FONT ID="StringLiteral">"CALLER IS THE ONE WHO KNOWS THE DIALECT."</FONT> +
+<A NAME="21"></A>        <FONT ID="StringLiteral">"IN THE CASE OF logMsgs THE DEVELOPER CAN SET THE APPLICATION SPECIFIC LOCALIZAION IN THE"</FONT> +
+<A NAME="22"></A>        <FONT ID="StringLiteral">"STARTUP SERVLET. config WILL ALWAYS HAVE NO DIALECT."</FONT>)
+<A NAME="23"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> RBGet {
+<A NAME="24"></A>
+<A NAME="25"></A>    @CONVENTION(convention = <FONT ID="StringLiteral">"THIS SHOULD BE AN IDENTICAL COPY OF Config.properties. IDEALLY GlobalConfig SHOULD BE IN THE SERVER PATH SO THAT IT CAN BE EDITED DURING RUNTIME."</FONT>)
+<A NAME="26"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> ResourceBundle globalConfig;
+<A NAME="27"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> ResourceBundle logMsgs = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.LogMsgs"</FONT>);
+<A NAME="28"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> ResourceBundle expMsgs = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.ExceptionMsgs"</FONT>);
+<A NAME="29"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> ResourceBundle l33t = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.l33t"</FONT>);
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../ai/ilikeplaces/rbs/RBGet.java.html">RBGet</A>.<FONT ID="Class">class</FONT>);
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String url_CDN_STATIC = <FONT ID="StringLiteral">"url.CDN_STATIC"</FONT>;
+<A NAME="34"></A>
+<A NAME="35"></A>    <FONT ID="Static">static</FONT> {
+<A NAME="36"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="37"></A>            globalConfig = ResourceBundle.getBundle(<FONT ID="StringLiteral">"GlobalConfig"</FONT>);<FONT ID="SingleLineComment">//This should be a copy of config.properties put in the classpath in name GlobalConfig.properties
+<A NAME="38"></A></FONT>        } <FONT ID="Catch">catch</FONT> (@NOTE(note = <FONT ID="StringLiteral">"WE DON'T NEED THE STACK TRACE"</FONT>)
+<A NAME="39"></A>        <FONT ID="Final">final</FONT> MissingResourceException e_) {
+<A NAME="40"></A>            logger.error(<FONT ID="StringLiteral">"PLEASE INCLUDE GLOBALCONFIG.PROPERTIES IN WEB SERVER CLASSPATH. FALLING BACK TO USING INTERNAL CONFIG."</FONT>, e_);
+<A NAME="41"></A>            globalConfig = ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.Config"</FONT>);
+<A NAME="42"></A>        }
+<A NAME="43"></A>    }
+<A NAME="44"></A>
+<A NAME="45"></A>    <FONT ID="Private">private</FONT> RBGet() {
+<A NAME="46"></A>        logger.debug(logMsgs.getString(<FONT ID="StringLiteral">"common.Constructor.Init"</FONT>), <A HREF="../../../ai/ilikeplaces/rbs/RBGet.java.html">RBGet</A>.<FONT ID="Class">class</FONT>, <FONT ID="This">this</FONT>.hashCode());
+<A NAME="47"></A>    }
+<A NAME="48"></A>
+<A NAME="49"></A>
+<A NAME="50"></A>    <FONT ID="FormalComment">/**
+<A NAME="51"></A>     * @param key__
+<A NAME="52"></A>     * @return Value of Null if value could not be fetched
+<A NAME="53"></A>     */</FONT>
+<A NAME="54"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String getGlobalConfigKey(<FONT ID="Final">final</FONT> String key__) {
+<A NAME="55"></A>        String returnVal = <FONT ID="Null">null</FONT>;
+<A NAME="56"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="57"></A>            returnVal = globalConfig.getString(key__);
+<A NAME="58"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception e__) {
+<A NAME="59"></A>            <FONT ID="MultiLineComment">/*We return null*/</FONT>
+<A NAME="60"></A>        }
+<A NAME="61"></A>        <FONT ID="Return">return</FONT> returnVal;
+<A NAME="62"></A>    }
+<A NAME="63"></A>
+<A NAME="64"></A>    @TODO(task = <FONT ID="StringLiteral">"IF A KEY STARTS WITH ai.ilikeplaces, LOAD PACKAGE AND SEE IF THE KEY IS VALID."</FONT>)
+<A NAME="65"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> String verify() {
+<A NAME="66"></A>        <FONT ID="Final">final</FONT> StringBuilder result_ = <FONT ID="New">new</FONT> StringBuilder();
+<A NAME="67"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="68"></A>            result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="69"></A>            config:
+<A NAME="70"></A>            {
+<A NAME="71"></A>                result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="72"></A>                result_.append(RBGet.globalConfig.getString(<FONT ID="StringLiteral">"verify"</FONT>));
+<A NAME="73"></A>                <FONT ID="Final">final</FONT> Set&lt;String&gt; keySet = RBGet.globalConfig.keySet();
+<A NAME="74"></A>                <FONT ID="For">for</FONT> (String key : keySet) {
+<A NAME="75"></A>                    result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="76"></A>                    result_.append(<FONT ID="StringLiteral">"{"</FONT> + key + <FONT ID="StringLiteral">","</FONT> + RBGet.globalConfig.getString(key) + <FONT ID="StringLiteral">"}"</FONT>);
+<A NAME="77"></A>                }
+<A NAME="78"></A>                result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="79"></A>            }
+<A NAME="80"></A>
+<A NAME="81"></A>            logMsgs:
+<A NAME="82"></A>            {
+<A NAME="83"></A>                result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="84"></A>                result_.append(logMsgs.getString(<FONT ID="StringLiteral">"verify"</FONT>));
+<A NAME="85"></A>                <FONT ID="Final">final</FONT> Set&lt;String&gt; keySet = logMsgs.keySet();
+<A NAME="86"></A>                <FONT ID="For">for</FONT> (String key : keySet) {
+<A NAME="87"></A>                    result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="88"></A>                    result_.append(<FONT ID="StringLiteral">"{"</FONT> + key + <FONT ID="StringLiteral">","</FONT> + logMsgs.getString(key) + <FONT ID="StringLiteral">"}"</FONT>);
+<A NAME="89"></A>                }
+<A NAME="90"></A>                result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="91"></A>            }
+<A NAME="92"></A>
+<A NAME="93"></A>            expMsgs:
+<A NAME="94"></A>            {
+<A NAME="95"></A>                result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="96"></A>                result_.append(expMsgs.getString(<FONT ID="StringLiteral">"verify"</FONT>));
+<A NAME="97"></A>                <FONT ID="Final">final</FONT> Set&lt;String&gt; keySet = expMsgs.keySet();
+<A NAME="98"></A>                <FONT ID="For">for</FONT> (String key : keySet) {
+<A NAME="99"></A>                    result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="100"></A>                    result_.append(<FONT ID="StringLiteral">"{"</FONT> + key + <FONT ID="StringLiteral">","</FONT> + expMsgs.getString(key) + <FONT ID="StringLiteral">"}"</FONT>);
+<A NAME="101"></A>                }
+<A NAME="102"></A>                result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="103"></A>            }
+<A NAME="104"></A>            globalConfig:
+<A NAME="105"></A>            {
+<A NAME="106"></A>                result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="107"></A>                result_.append(globalConfig.getString(<FONT ID="StringLiteral">"verify"</FONT>));
+<A NAME="108"></A>                <FONT ID="Final">final</FONT> Set&lt;String&gt; keySet = globalConfig.keySet();
+<A NAME="109"></A>                <FONT ID="For">for</FONT> (String key : keySet) {
+<A NAME="110"></A>                    result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="111"></A>                    result_.append(<FONT ID="StringLiteral">"{"</FONT> + key + <FONT ID="StringLiteral">","</FONT> + globalConfig.getString(key) + <FONT ID="StringLiteral">"}"</FONT>);
+<A NAME="112"></A>                }
+<A NAME="113"></A>                result_.append(<FONT ID="StringLiteral">"\n"</FONT>);
+<A NAME="114"></A>            }
+<A NAME="115"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> Exception e) {
+<A NAME="116"></A>            result_.append(e.getMessage());
+<A NAME="117"></A>        }
+<A NAME="118"></A>        <FONT ID="Return">return</FONT> result_.toString();
+<A NAME="119"></A>    }
+<A NAME="120"></A>
+<A NAME="121"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> ResourceBundle gui() {
+<A NAME="122"></A>        <FONT ID="Return">return</FONT> ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.GUI"</FONT>);
+<A NAME="123"></A>    }
+<A NAME="124"></A>
+<A NAME="125"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> ResourceBundle gui(<FONT ID="Final">final</FONT> Locale locale) {
+<A NAME="126"></A>        <FONT ID="Return">return</FONT> ResourceBundle.getBundle(<FONT ID="StringLiteral">"ai.ilikeplaces.rbs.GUI"</FONT>, locale);
+<A NAME="127"></A>    }
+<A NAME="128"></A>}
+<A NAME="129"></A></pre>
+</BODY>
+</HTML>

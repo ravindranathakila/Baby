@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.servlets.filters.FacebookUserFilter (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">FacebookUserFilter.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.servlets.filters;
+<A NAME="2"></A>
+<A NAME="3"></A>
+<A NAME="4"></A><FONT ID="Import">import</FONT> com.google.code.facebookapi.*;
+<A NAME="5"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="6"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="7"></A><FONT ID="Import">import</FONT> org.w3c.dom.Document;
+<A NAME="8"></A>
+<A NAME="9"></A><FONT ID="Import">import</FONT> javax.servlet.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletRequest;
+<A NAME="11"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpServletResponse;
+<A NAME="12"></A><FONT ID="Import">import</FONT> javax.servlet.http.HttpSession;
+<A NAME="13"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="FormalComment">/**
+<A NAME="16"></A> * The Facebook User Filter ensures that a Facebook client that pertains to
+<A NAME="17"></A> * the logged in user is available in the session object named "facebook.user.client".
+<A NAME="18"></A> * &lt;p/&gt;
+<A NAME="19"></A> * The session ID is stored as "facebook.user.session". It's important to get
+<A NAME="20"></A> * the session ID only when the application actually needs it. The user has to
+<A NAME="21"></A> * authorise to give the application a session key.
+<A NAME="22"></A> *
+<A NAME="23"></A> * @author Dave
+<A NAME="24"></A> */</FONT>
+<A NAME="25"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> FacebookUserFilter <FONT ID="Implements">implements</FONT> Filter {
+<A NAME="26"></A>
+<A NAME="27"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../ai/ilikeplaces/servlets/filters/FacebookUserFilter.java.html">FacebookUserFilter</A>.<FONT ID="Class">class</FONT>);
+<A NAME="28"></A>
+<A NAME="29"></A>    <FONT ID="Private">private</FONT> String api_key;
+<A NAME="30"></A>    <FONT ID="Private">private</FONT> String secret;
+<A NAME="31"></A>
+<A NAME="32"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> String FACEBOOK_USER_CLIENT = <FONT ID="StringLiteral">"facebook.user.client"</FONT>;
+<A NAME="33"></A>
+<A NAME="34"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> init(FilterConfig filterConfig) <FONT ID="Throws">throws</FONT> ServletException {
+<A NAME="35"></A>        api_key = filterConfig.getInitParameter(<FONT ID="StringLiteral">"facebook_api_key"</FONT>);
+<A NAME="36"></A>        secret = filterConfig.getInitParameter(<FONT ID="StringLiteral">"facebook_secret"</FONT>);
+<A NAME="37"></A>        <FONT ID="If">if</FONT> (api_key == <FONT ID="Null">null</FONT> || secret == <FONT ID="Null">null</FONT>) {
+<A NAME="38"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> ServletException(<FONT ID="StringLiteral">"Cannot initialise Facebook User Filter because the "</FONT> +
+<A NAME="39"></A>                    <FONT ID="StringLiteral">"facebook_api_key or facebook_secret context init "</FONT> +
+<A NAME="40"></A>                    <FONT ID="StringLiteral">"params have not been set. Check that they're there "</FONT> +
+<A NAME="41"></A>                    <FONT ID="StringLiteral">"in your servlet context descriptor."</FONT>);
+<A NAME="42"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="43"></A>            logger.debug(<FONT ID="StringLiteral">"Using facebook API key: "</FONT> + api_key);
+<A NAME="44"></A>        }
+<A NAME="45"></A>    }
+<A NAME="46"></A>
+<A NAME="47"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> destroy() {
+<A NAME="48"></A>    }
+<A NAME="49"></A>
+<A NAME="50"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> doFilter(ServletRequest req, ServletResponse res, FilterChain chain) <FONT ID="Throws">throws</FONT> IOException, ServletException {
+<A NAME="51"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="52"></A>            logger.debug(<FONT ID="StringLiteral">"user ip:"</FONT> + req.getRemoteAddr());
+<A NAME="53"></A>
+<A NAME="54"></A>            HttpServletRequest request = (HttpServletRequest) req;
+<A NAME="55"></A>            HttpServletResponse response = (HttpServletResponse) res;
+<A NAME="56"></A>
+<A NAME="57"></A>            HttpSession session = request.getSession(<FONT ID="True">true</FONT>);
+<A NAME="58"></A>            IFacebookRestClient&lt;Document&gt; userClient = getUserClient(session);
+<A NAME="59"></A>            <FONT ID="If">if</FONT> (userClient == <FONT ID="Null">null</FONT>) {
+<A NAME="60"></A>                logger.debug(<FONT ID="StringLiteral">"User session doesn't have a Facebook API client setup yet. Creating one and storing it in the user's session."</FONT>);
+<A NAME="61"></A>                userClient = <FONT ID="New">new</FONT> FacebookXmlRestClient(api_key, secret);
+<A NAME="62"></A>                session.setAttribute(FACEBOOK_USER_CLIENT, userClient);
+<A NAME="63"></A>            }
+<A NAME="64"></A>
+<A NAME="65"></A>            logger.debug(<FONT ID="StringLiteral">"Creating a FacebookWebappHelper, which copies fb_ request param data into the userClient"</FONT>);
+<A NAME="66"></A>            FacebookWebappHelper&lt;Document&gt; facebook = <FONT ID="New">new</FONT> FacebookWebappHelper&lt;Document&gt;(request, response, api_key, secret, userClient);
+<A NAME="67"></A>            String nextPage = request.getRequestURI();
+<A NAME="68"></A>            nextPage = nextPage.substring(nextPage.indexOf(<FONT ID="StringLiteral">"/"</FONT>, <FONT ID="IntegerLiteral">1</FONT>) + <FONT ID="IntegerLiteral">1</FONT>); <FONT ID="SingleLineComment">//cut out the first /, the context path and the 2nd /
+<A NAME="69"></A></FONT>            logger.debug(nextPage);
+<A NAME="70"></A>            <FONT ID="Boolean">boolean</FONT> redirectOccurred = facebook.requireLogin(nextPage);
+<A NAME="71"></A><FONT ID="SingleLineComment">//            if (redirectOccurred) {
+<A NAME="72"></A></FONT><FONT ID="SingleLineComment">//                return;
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="74"></A></FONT>            redirectOccurred = facebook.requireFrame(nextPage);
+<A NAME="75"></A><FONT ID="SingleLineComment">//            if (redirectOccurred) {
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">//                return;
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//            }
+<A NAME="78"></A></FONT>
+<A NAME="79"></A>            <FONT ID="Long">long</FONT> facebookUserID;
+<A NAME="80"></A>            <FONT ID="Try">try</FONT> {
+<A NAME="81"></A>                facebookUserID = userClient.users_getLoggedInUser();
+<A NAME="82"></A>            } <FONT ID="Catch">catch</FONT> (FacebookException ex) {
+<A NAME="83"></A>                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, <FONT ID="StringLiteral">"Error while fetching user's facebook ID"</FONT>);
+<A NAME="84"></A>                logger.error(<FONT ID="StringLiteral">"Error while getting cached (supplied by request params) value "</FONT> +
+<A NAME="85"></A>                        <FONT ID="StringLiteral">"of the user's facebook ID or while fetching it from the Facebook service "</FONT> +
+<A NAME="86"></A>                        <FONT ID="StringLiteral">"if the cached value was not present for some reason. Cached value = {}"</FONT>, userClient.getCacheUserId());
+<A NAME="87"></A>                <FONT ID="Return">return</FONT>;
+<A NAME="88"></A>            }
+<A NAME="89"></A>
+<A NAME="90"></A>            logger.debug(<FONT ID="StringLiteral">"facebookUserId:"</FONT> + facebookUserID);
+<A NAME="91"></A>
+<A NAME="92"></A>
+<A NAME="93"></A>            chain.doFilter(request, response);
+<A NAME="94"></A>        } <FONT ID="Finally">finally</FONT> {
+<A NAME="95"></A>
+<A NAME="96"></A>        }
+<A NAME="97"></A>    }
+<A NAME="98"></A>
+<A NAME="99"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> FacebookXmlRestClient getUserClient(HttpSession session) {
+<A NAME="100"></A>        <FONT ID="Return">return</FONT> (FacebookXmlRestClient) session.getAttribute(FACEBOOK_USER_CLIENT);
+<A NAME="101"></A>    }
+<A NAME="102"></A>}</pre>
+</BODY>
+</HTML>

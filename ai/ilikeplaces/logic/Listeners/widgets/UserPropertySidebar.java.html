@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">UserPropertySidebar.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.Listeners.widgets;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">ai.ilikeplaces.entities.HumansIdentity</A>;
+<A NAME="5"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">ai.ilikeplaces.logic.validators.unit.HumanId</A>;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/Controller.java.html">ai.ilikeplaces.servlets.Controller.Page</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/servlets/filters/ProfileRedirect.java.html">ai.ilikeplaces.servlets.filters.ProfileRedirect</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.util.*;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">ai.ilikeplaces.util.cache.SmartCache2String</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> org.itsnat.core.ItsNatServletRequest;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.itsnat.core.html.ItsNatHTMLDocument;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.w3c.dom.Document;
+<A NAME="14"></A><FONT ID="Import">import</FONT> org.w3c.dom.Element;
+<A NAME="15"></A><FONT ID="Import">import</FONT> org.w3c.dom.html.HTMLDocument;
+<A NAME="16"></A><FONT ID="Import">import</FONT> org.xml.sax.SAXException;
+<A NAME="17"></A>
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.xml.transform.TransformerException;
+<A NAME="19"></A><FONT ID="Import">import</FONT> java.io.IOException;
+<A NAME="20"></A>
+<A NAME="21"></A><FONT ID="FormalComment">/**
+<A NAME="22"></A> * @author Ravindranath Akila
+<A NAME="23"></A> */</FONT>
+<A NAME="24"></A>
+<A NAME="25"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="26"></A><FONT ID="Abstract">abstract</FONT> <FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> UserPropertySidebar <FONT ID="Extends">extends</FONT> AbstractWidgetListener {
+<A NAME="27"></A>
+<A NAME="28"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> USER_PROPERTY_EMAIL_XHTML = <FONT ID="StringLiteral">"ai/ilikeplaces/widgets/UserProperty_email.xhtml"</FONT>;
+<A NAME="29"></A>    <FONT ID="Protected">protected</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> profilePhotoURLFinal = <FONT ID="StringLiteral">"#"</FONT>;
+<A NAME="30"></A>
+<A NAME="31"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">SmartCache2String</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A>, <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>&gt; HUMANS_IDENTITY_SIDEBAR_CACHE = UserProperty.HUMANS_IDENTITY_CACHE;
+<A NAME="32"></A>
+<A NAME="33"></A>    <FONT ID="Public">public</FONT> <FONT ID="Static">static</FONT> enum UserPropertySidebarIds <FONT ID="Implements">implements</FONT> WidgetIds {
+<A NAME="34"></A>        user_property_sidebar_profile_photo,
+<A NAME="35"></A>        user_property_sidebar_name,
+<A NAME="36"></A>        user_property_sidebar_widget,
+<A NAME="37"></A>        user_property_sidebar_content,
+<A NAME="38"></A>        user_property_sidebar_talk,
+<A NAME="39"></A>        user_property_sidebar_engage,
+<A NAME="40"></A>        user_property_sidebar_name_section,
+<A NAME="41"></A>    }
+<A NAME="42"></A>
+<A NAME="43"></A>
+<A NAME="44"></A>    <FONT ID="FormalComment">/**
+<A NAME="45"></A>     * Shows the profile belonging to humanId
+<A NAME="46"></A>     * &lt;p/&gt;
+<A NAME="47"></A>     * Does not support fetchtoemail. use other constructor instead.
+<A NAME="48"></A>     * &lt;p/&gt;
+<A NAME="49"></A>     * Use this if you are not using fetchtomail.
+<A NAME="50"></A>     *
+<A NAME="51"></A>     * @param request__
+<A NAME="52"></A>     * @param appendToElement__
+<A NAME="53"></A>     * @param humanId
+<A NAME="54"></A>     * @param params
+<A NAME="55"></A>     */</FONT>
+<A NAME="56"></A>    <FONT ID="Public">public</FONT> UserPropertySidebar(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> Object... params) {
+<A NAME="57"></A>        <FONT ID="Super">super</FONT>(request__, Page.UserPropertySidebar, appendToElement__, humanId, params);
+<A NAME="58"></A>
+<A NAME="59"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get((humanId.getHumanId()),<FONT ID="StringLiteral">""</FONT>);
+<A NAME="60"></A>
+<A NAME="61"></A>        $$(UserPropertySidebarIds.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
+<A NAME="62"></A>        <FONT ID="SingleLineComment">//$$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+<A NAME="63"></A></FONT>        $$(UserPropertySidebarIds.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+<A NAME="64"></A>
+<A NAME="65"></A>        <FONT ID="MultiLineComment">/*  fetchToEmail(//WARNING! This does not append the content.
+<A NAME="66"></A>        hi.getHuman().getInviterDisplayName(),
+<A NAME="67"></A>        formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), true),
+<A NAME="68"></A>        formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));*/</FONT>
+<A NAME="69"></A>
+<A NAME="70"></A>    }
+<A NAME="71"></A>
+<A NAME="72"></A>    <FONT ID="FormalComment">/**
+<A NAME="73"></A>     * Shows the profile belonging to humanId
+<A NAME="74"></A>     *
+<A NAME="75"></A>     * @param request__
+<A NAME="76"></A>     * @param appendToElement__
+<A NAME="77"></A>     * @param humanId
+<A NAME="78"></A>     * @param params
+<A NAME="79"></A>     */</FONT>
+<A NAME="80"></A>    <FONT ID="Public">public</FONT> UserPropertySidebar(<FONT ID="Final">final</FONT> ItsNatServletRequest request__, <FONT ID="Final">final</FONT> Element appendToElement__, <FONT ID="Final">final</FONT> Element content, <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/validators/unit/HumanId.java.html">HumanId</A> humanId, <FONT ID="Final">final</FONT> Object... params) {
+<A NAME="81"></A>        <FONT ID="Super">super</FONT>(request__, Page.UserProperty, appendToElement__, humanId, params);
+<A NAME="82"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansIdentity.java.html">HumansIdentity</A> hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get((humanId.getHumanId()),<FONT ID="StringLiteral">""</FONT>);
+<A NAME="83"></A>        $$(UserPropertySidebarIds.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
+<A NAME="84"></A>        <FONT ID="SingleLineComment">//$$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+<A NAME="85"></A></FONT>        $$(UserPropertySidebarIds.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+<A NAME="86"></A>        $$(UserPropertySidebarIds.user_property_sidebar_content).appendChild(content);
+<A NAME="87"></A>
+<A NAME="88"></A>        fetchToEmail(
+<A NAME="89"></A>                hi.getHuman().getDisplayName(),
+<A NAME="90"></A>                formatProfileUrl(ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl(), <FONT ID="True">true</FONT>),
+<A NAME="91"></A>                formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()),
+<A NAME="92"></A>                content);
+<A NAME="93"></A>
+<A NAME="94"></A>    }
+<A NAME="95"></A>
+<A NAME="96"></A>    <FONT ID="FormalComment">/**
+<A NAME="97"></A>     * @param args
+<A NAME="98"></A>     */</FONT>
+<A NAME="99"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> fetchToEmail(<FONT ID="Final">final</FONT> Object... args) {
+<A NAME="100"></A>        <FONT ID="Try">try</FONT> {
+<A NAME="101"></A>            <FONT ID="Final">final</FONT> Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + USER_PROPERTY_EMAIL_XHTML);
+<A NAME="102"></A>            $$(UserPropertySidebarIds.user_property_sidebar_name.name(), document).setTextContent((<A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>) args[<FONT ID="IntegerLiteral">0</FONT>]);
+<A NAME="103"></A>            <FONT ID="SingleLineComment">//$$(Page.user_property_sidebar_name, document).setAttribute(MarkupTag.A.href(), (String) args[1]);
+<A NAME="104"></A></FONT>            $$(UserPropertySidebarIds.user_property_sidebar_profile_photo.name(), document).setAttribute(MarkupTag.IMG.src(), (<A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A>) args[<FONT ID="IntegerLiteral">2</FONT>]);
+<A NAME="105"></A>            $$(UserPropertySidebarIds.user_property_sidebar_content.name(), document).appendChild(
+<A NAME="106"></A>                    document.importNode(((Element) args[<FONT ID="IntegerLiteral">3</FONT>]), <FONT ID="True">true</FONT>)
+<A NAME="107"></A>            );
+<A NAME="108"></A>
+<A NAME="109"></A>
+<A NAME="110"></A>            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(UserPropertySidebarIds.user_property_sidebar_widget.name(), document));
+<A NAME="111"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> TransformerException e) {
+<A NAME="112"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, e);
+<A NAME="113"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> SAXException e) {
+<A NAME="114"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, e);
+<A NAME="115"></A>        } <FONT ID="Catch">catch</FONT> (<FONT ID="Final">final</FONT> IOException e) {
+<A NAME="116"></A>            Loggers.EXCEPTION.error(<FONT ID="StringLiteral">""</FONT>, e);
+<A NAME="117"></A>        }
+<A NAME="118"></A>    }
+<A NAME="119"></A>
+<A NAME="120"></A>    <FONT ID="FormalComment">/**
+<A NAME="121"></A>     *
+<A NAME="122"></A>     */</FONT>
+<A NAME="123"></A>    @Override
+<A NAME="124"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> init(<FONT ID="Final">final</FONT> Object... initArgs) {
+<A NAME="125"></A>    }
+<A NAME="126"></A>
+<A NAME="127"></A>    @Override
+<A NAME="128"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> registerEventListeners(<FONT ID="Final">final</FONT> ItsNatHTMLDocument itsNatHTMLDocument_, <FONT ID="Final">final</FONT> HTMLDocument hTMLDocument_) {
+<A NAME="129"></A>    }
+<A NAME="130"></A>
+<A NAME="131"></A>
+<A NAME="132"></A>    <FONT ID="FormalComment">/**
+<A NAME="133"></A>     * User profile photo URL from DB. Can be null, in which case the default photo URL is returned. This value is
+<A NAME="134"></A>     * define in the properties files
+<A NAME="135"></A>     *
+<A NAME="136"></A>     * @param rawURLFromDB
+<A NAME="137"></A>     * @return
+<A NAME="138"></A>     */</FONT>
+<A NAME="139"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> formatProfilePhotoUrl(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> rawURLFromDB) {
+<A NAME="140"></A>        <FONT ID="Return">return</FONT> UserProperty.formatProfilePhotoUrl(rawURLFromDB);
+<A NAME="141"></A>    }
+<A NAME="142"></A>
+<A NAME="143"></A>    <FONT ID="Static">static</FONT> <FONT ID="Public">public</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> formatProfileUrl(<FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/util/cache/SmartCache2String.java.html">String</A> relativeURL, <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> makeAbsolute) {
+<A NAME="144"></A>        <FONT ID="Return">return</FONT> UserProperty.formatProfileUrl(relativeURL, makeAbsolute);
+<A NAME="145"></A>    }
+<A NAME="146"></A>}</pre>
+</BODY>
+</HTML>

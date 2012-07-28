@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ai.ilikeplaces.logic.crud.unit.UHumansNetPeople (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">UHumansNetPeople.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="Package">package</FONT> ai.ilikeplaces.logic.crud.unit;
+<A NAME="2"></A>
+<A NAME="3"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.License;
+<A NAME="4"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.NOTE;
+<A NAME="5"></A><FONT ID="Import">import</FONT> ai.ilikeplaces.doc.WARNING;
+<A NAME="6"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">ai.ilikeplaces.entities.HumansNetPeople</A>;
+<A NAME="7"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourException.java.html">ai.ilikeplaces.exception.DBDishonourException</A>;
+<A NAME="8"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">ai.ilikeplaces.jpa.CrudServiceLocal</A>;
+<A NAME="9"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/rbs/RBGet.java.html">ai.ilikeplaces.rbs.RBGet</A>;
+<A NAME="10"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">ai.ilikeplaces.util.AbstractSLBCallbacks</A>;
+<A NAME="11"></A><FONT ID="Import">import</FONT> <A HREF="../../../../../ai/ilikeplaces/util/Loggers.java.html">ai.ilikeplaces.util.Loggers</A>;
+<A NAME="12"></A><FONT ID="Import">import</FONT> org.slf4j.Logger;
+<A NAME="13"></A><FONT ID="Import">import</FONT> org.slf4j.LoggerFactory;
+<A NAME="14"></A>
+<A NAME="15"></A><FONT ID="Import">import</FONT> javax.ejb.EJB;
+<A NAME="16"></A><FONT ID="Import">import</FONT> javax.ejb.Stateless;
+<A NAME="17"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttribute;
+<A NAME="18"></A><FONT ID="Import">import</FONT> javax.ejb.TransactionAttributeType;
+<A NAME="19"></A>
+<A NAME="20"></A><FONT ID="FormalComment">/**
+<A NAME="21"></A> * @author Ravindranath Akila
+<A NAME="22"></A> */</FONT>
+<A NAME="23"></A>
+<A NAME="24"></A>@License(content = <FONT ID="StringLiteral">"This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3"</FONT>)
+<A NAME="25"></A>@NOTE(note = <FONT ID="StringLiteral">"SEE CRUDSERVICE WHERE TO SUPPORT READ AND DIRTY READ, THE TX TYPE IS SUPPORTS."</FONT>)
+<A NAME="26"></A>@Stateless
+<A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> UHumansNetPeople <FONT ID="Extends">extends</FONT> <A HREF="../../../../../ai/ilikeplaces/util/AbstractSLBCallbacks.java.html">AbstractSLBCallbacks</A> <FONT ID="Implements">implements</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/UHumansNetPeopleLocal.java.html">UHumansNetPeopleLocal</A> {
+<A NAME="28"></A><FONT ID="SingleLineComment">// ------------------------------ FIELDS ------------------------------
+<A NAME="29"></A></FONT>
+<A NAME="30"></A>    <FONT ID="Final">final</FONT> <FONT ID="Static">static</FONT> Logger logger = LoggerFactory.getLogger(<A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/UHumansNetPeople.java.html">UHumansNetPeople</A>.<FONT ID="Class">class</FONT>);
+<A NAME="31"></A>
+<A NAME="32"></A>
+<A NAME="33"></A>    @EJB
+<A NAME="34"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/logic/crud/unit/RHumansNetPeopleLocal.java.html">RHumansNetPeopleLocal</A> rHumansNetPeopleLocal_;
+<A NAME="35"></A>
+<A NAME="36"></A>    @EJB
+<A NAME="37"></A>    <FONT ID="Private">private</FONT> <A HREF="../../../../../ai/ilikeplaces/jpa/CrudServiceLocal.java.html">CrudServiceLocal</A>&lt;<A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A>&gt; crudServiceLocal_;
+<A NAME="38"></A>
+<A NAME="39"></A><FONT ID="SingleLineComment">// --------------------------- CONSTRUCTORS ---------------------------
+<A NAME="40"></A></FONT>
+<A NAME="41"></A>    <FONT ID="Public">public</FONT> UHumansNetPeople() {
+<A NAME="42"></A>    }
+<A NAME="43"></A>
+<A NAME="44"></A><FONT ID="SingleLineComment">// ------------------------ INTERFACE METHODS ------------------------
+<A NAME="45"></A></FONT>
+<A NAME="46"></A>
+<A NAME="47"></A><FONT ID="SingleLineComment">// --------------------- Interface UHumansNetPeopleLocal ---------------------
+<A NAME="48"></A></FONT>
+<A NAME="49"></A>    @Override
+<A NAME="50"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="51"></A>    @WARNING(warning = <FONT ID="StringLiteral">"ADD will not work if you remove transaction as entities will be unmanaged."</FONT>)
+<A NAME="52"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doNTxAddHumansNetPeople(<FONT ID="Final">final</FONT> String adderHumanId, <FONT ID="Final">final</FONT> String addeeHumanId) {
+<A NAME="53"></A>        <FONT ID="If">if</FONT> (adderHumanId.equals(addeeHumanId)) {
+<A NAME="54"></A>            <FONT ID="Throw">throw</FONT> <FONT ID="New">new</FONT> <A HREF="../../../../../ai/ilikeplaces/exception/DBDishonourException.java.html">DBDishonourException</A>(<FONT ID="StringLiteral">"SORRY! ADDING SELF IS NOT SUPPORTED!"</FONT>);
+<A NAME="55"></A>        }
+<A NAME="56"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> adder = rHumansNetPeopleLocal_.doRHumansNetPeople(adderHumanId);
+<A NAME="57"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> addee = rHumansNetPeopleLocal_.doRHumansNetPeople(addeeHumanId);
+<A NAME="58"></A>
+<A NAME="59"></A>        <FONT ID="If">if</FONT> (!adder.getHumansNetPeoples().contains(addee)) {
+<A NAME="60"></A>            adder.getHumansNetPeoples().add(addee);
+<A NAME="61"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="62"></A>            <FONT ID="Throw">throw</FONT> DBDishonourException.ADDING_AN_EXISTING_VALUE;
+<A NAME="63"></A>        }
+<A NAME="64"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="65"></A>    }
+<A NAME="66"></A>
+<A NAME="67"></A>    @Override
+<A NAME="68"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="69"></A>    @WARNING(warning = <FONT ID="StringLiteral">"REMOVE will not work if you remove transaction as entities will be unmanaged."</FONT>)
+<A NAME="70"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doNTxRemoveHumansNetPeople(<FONT ID="Final">final</FONT> String adderHumanId, <FONT ID="Final">final</FONT> String addeeHumanId) {
+<A NAME="71"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> adder = rHumansNetPeopleLocal_.doRHumansNetPeople(adderHumanId);
+<A NAME="72"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> addee = rHumansNetPeopleLocal_.doRHumansNetPeople(addeeHumanId);
+<A NAME="73"></A>
+<A NAME="74"></A>        <FONT ID="If">if</FONT> (adder.getHumansNetPeoples().contains(addee)) {
+<A NAME="75"></A>            adder.getHumansNetPeoples().remove(addee);
+<A NAME="76"></A>        } <FONT ID="Else">else</FONT> {
+<A NAME="77"></A>            <FONT ID="Throw">throw</FONT> DBDishonourException.REMOVING_A_NON_EXISTING_VALUE;
+<A NAME="78"></A>        }
+<A NAME="79"></A>        <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<A NAME="80"></A>    }
+<A NAME="81"></A>
+<A NAME="82"></A>    @Override
+<A NAME="83"></A>    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+<A NAME="84"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doNTxIsHumansNetPeople(<FONT ID="Final">final</FONT> String checker, <FONT ID="Final">final</FONT> String checkeee) {
+<A NAME="85"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> cker = rHumansNetPeopleLocal_.doRHumansNetPeople(checker);
+<A NAME="86"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> ckeee = rHumansNetPeopleLocal_.doRHumansNetPeople(checkeee);
+<A NAME="87"></A>        <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> contains = cker.getHumansNetPeoples().contains(ckeee);
+<A NAME="88"></A>        Loggers.DEBUG.debug(<FONT ID="StringLiteral">"Is friend:"</FONT> + contains);
+<A NAME="89"></A>        <FONT ID="Return">return</FONT> contains;
+<A NAME="90"></A>    }
+<A NAME="91"></A>
+<A NAME="92"></A>    @Override
+<A NAME="93"></A>    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+<A NAME="94"></A>    <FONT ID="Public">public</FONT> <FONT ID="Boolean">boolean</FONT> doDirtyIsHumansNetPeople(<FONT ID="Final">final</FONT> String adderHumanId, <FONT ID="Final">final</FONT> String addeeHumanId) {
+<A NAME="95"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> adder = rHumansNetPeopleLocal_.doRHumansNetPeople(adderHumanId);
+<A NAME="96"></A>        <FONT ID="Final">final</FONT> <A HREF="../../../../../ai/ilikeplaces/entities/HumansNetPeople.java.html">HumansNetPeople</A> addee = rHumansNetPeopleLocal_.doRHumansNetPeople(addeeHumanId);
+<A NAME="97"></A>        <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> contains = adder.getHumansNetPeoples().contains(addee);
+<A NAME="98"></A>        Loggers.DEBUG.debug(<FONT ID="StringLiteral">"Is friend:"</FONT> + contains);
+<A NAME="99"></A>        <FONT ID="Return">return</FONT> contains;
+<A NAME="100"></A>    }
+<A NAME="101"></A>}</pre>
+</BODY>
+</HTML>

@@ -1,0 +1,320 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>ContactsExampleParameters (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ContactsExampleParameters.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<A NAME="1"></A><FONT ID="SingleLineComment">///* Copyright (c) 2008 Google Inc.
+<A NAME="2"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="3"></A></FONT><FONT ID="SingleLineComment">// * Licensed under the Apache License, Version 2.0 (the "License");
+<A NAME="4"></A></FONT><FONT ID="SingleLineComment">// * you may not use this file except in compliance with the License.
+<A NAME="5"></A></FONT><FONT ID="SingleLineComment">// * You may obtain a copy of the License at
+<A NAME="6"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="7"></A></FONT><FONT ID="SingleLineComment">// *     http://www.apache.org/licenses/LICENSE-2.0
+<A NAME="8"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="9"></A></FONT><FONT ID="SingleLineComment">// * Unless required by applicable law or agreed to in writing, software
+<A NAME="10"></A></FONT><FONT ID="SingleLineComment">// * distributed under the License is distributed on an "AS IS" BASIS,
+<A NAME="11"></A></FONT><FONT ID="SingleLineComment">// * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<A NAME="12"></A></FONT><FONT ID="SingleLineComment">// * See the License for the specific language governing permissions and
+<A NAME="13"></A></FONT><FONT ID="SingleLineComment">// * limitations under the License.
+<A NAME="14"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="15"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="16"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="17"></A></FONT><FONT ID="SingleLineComment">//package ai.ilikeplaces.logic.contactimports.google;
+<A NAME="18"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="19"></A></FONT><FONT ID="SingleLineComment">//import java.util.LinkedList;
+<A NAME="20"></A></FONT><FONT ID="SingleLineComment">//import java.util.List;
+<A NAME="21"></A></FONT><FONT ID="SingleLineComment">//import java.util.SortedMap;
+<A NAME="22"></A></FONT><FONT ID="SingleLineComment">//import java.util.TreeMap;
+<A NAME="23"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="24"></A></FONT><FONT ID="SingleLineComment">///**
+<A NAME="25"></A></FONT><FONT ID="SingleLineComment">// * Keeps structured command line parameters for ContactsExample program.
+<A NAME="26"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="27"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="28"></A></FONT><FONT ID="SingleLineComment">// *
+<A NAME="29"></A></FONT><FONT ID="SingleLineComment">// */
+<A NAME="30"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="31"></A></FONT><FONT ID="SingleLineComment">//public class ContactsExampleParameters {
+<A NAME="32"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="33"></A></FONT><FONT ID="SingleLineComment">//   * Actions that can be executed with the sample application.
+<A NAME="34"></A></FONT><FONT ID="SingleLineComment">//   * They are all lowercase because they are passed as parameters
+<A NAME="35"></A></FONT><FONT ID="SingleLineComment">//   * and then converted using valueOf() method.
+<A NAME="36"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="37"></A></FONT><FONT ID="SingleLineComment">//  public enum Actions  {
+<A NAME="38"></A></FONT><FONT ID="SingleLineComment">//    LIST,
+<A NAME="39"></A></FONT><FONT ID="SingleLineComment">//    QUERY,
+<A NAME="40"></A></FONT><FONT ID="SingleLineComment">//    ADD,
+<A NAME="41"></A></FONT><FONT ID="SingleLineComment">//    DELETE,
+<A NAME="42"></A></FONT><FONT ID="SingleLineComment">//    UPDATE
+<A NAME="43"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="44"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="45"></A></FONT><FONT ID="SingleLineComment">//  private static final String DEFAULT_FEED = "https://www.google.com/m8/feeds/";
+<A NAME="46"></A></FONT><FONT ID="SingleLineComment">//  private static final String DEFAULT_PROJECTION = "thin";
+<A NAME="47"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="48"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="49"></A></FONT><FONT ID="SingleLineComment">//   * Keeps map of parameter -&gt; value.
+<A NAME="50"></A></FONT><FONT ID="SingleLineComment">//   * Note! Tree Map is used to keep sequence of fields.
+<A NAME="51"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="52"></A></FONT><FONT ID="SingleLineComment">//  private SortedMap&lt;String, String&gt; parameterValueMap =
+<A NAME="53"></A></FONT><FONT ID="SingleLineComment">//    new TreeMap&lt;String,String&gt;();
+<A NAME="54"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="55"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="56"></A></FONT><FONT ID="SingleLineComment">//   * List of command line parameters likely to be the description of an
+<A NAME="57"></A></FONT><FONT ID="SingleLineComment">//   * element.
+<A NAME="58"></A></FONT><FONT ID="SingleLineComment">//   * Those parameters are added to the list, what are not recognized as a valid
+<A NAME="59"></A></FONT><FONT ID="SingleLineComment">//   * command line argument (nor an action or option).
+<A NAME="60"></A></FONT><FONT ID="SingleLineComment">//   * These parameters are later parsed by {@link ElementParser} and processed by
+<A NAME="61"></A></FONT><FONT ID="SingleLineComment">//   * {@link ElementHelper}.
+<A NAME="62"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="63"></A></FONT><FONT ID="SingleLineComment">//  private List&lt;String&gt; elementDesc = new LinkedList&lt;String&gt;();
+<A NAME="64"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="65"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="66"></A></FONT><FONT ID="SingleLineComment">//   * Stores names of parameters.
+<A NAME="67"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="68"></A></FONT><FONT ID="SingleLineComment">//  public enum ParameterNames {
+<A NAME="69"></A></FONT><FONT ID="SingleLineComment">//    SCRIPT("script"),
+<A NAME="70"></A></FONT><FONT ID="SingleLineComment">//    ACTION("action"),
+<A NAME="71"></A></FONT><FONT ID="SingleLineComment">//    BASE_URL("base-url"),
+<A NAME="72"></A></FONT><FONT ID="SingleLineComment">//    USERNAME("username"),
+<A NAME="73"></A></FONT><FONT ID="SingleLineComment">//    PASSWORD("password"),
+<A NAME="74"></A></FONT><FONT ID="SingleLineComment">//    CONTACTFEED("contactfeed"),
+<A NAME="75"></A></FONT><FONT ID="SingleLineComment">//    GROUPFEED("groupfeed"),
+<A NAME="76"></A></FONT><FONT ID="SingleLineComment">//    SHOWDELETED("showdeleted"),
+<A NAME="77"></A></FONT><FONT ID="SingleLineComment">//    REQUIRE_ALL_DELETED("require-all-deleted"),
+<A NAME="78"></A></FONT><FONT ID="SingleLineComment">//    UPDATED_MIN("updated-min"),
+<A NAME="79"></A></FONT><FONT ID="SingleLineComment">//    OREDERBY("orderby"),
+<A NAME="80"></A></FONT><FONT ID="SingleLineComment">//    SORTORDER("sortorder"),
+<A NAME="81"></A></FONT><FONT ID="SingleLineComment">//    MAX_RESULTS("max-results"),
+<A NAME="82"></A></FONT><FONT ID="SingleLineComment">//    START_INDEX("start-index"),
+<A NAME="83"></A></FONT><FONT ID="SingleLineComment">//    HELP("help"),
+<A NAME="84"></A></FONT><FONT ID="SingleLineComment">//    PROJECTION("projection"),
+<A NAME="85"></A></FONT><FONT ID="SingleLineComment">//    VERBOSE("verbose"),
+<A NAME="86"></A></FONT><FONT ID="SingleLineComment">//    ID("id"),
+<A NAME="87"></A></FONT><FONT ID="SingleLineComment">//    GROUP("querygroupid"),
+<A NAME="88"></A></FONT><FONT ID="SingleLineComment">//    ;
+<A NAME="89"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="90"></A></FONT><FONT ID="SingleLineComment">//    private final String parameterName;
+<A NAME="91"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="92"></A></FONT><FONT ID="SingleLineComment">//    ParameterNames(String parameterName) {
+<A NAME="93"></A></FONT><FONT ID="SingleLineComment">//      this.parameterName = parameterName;
+<A NAME="94"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="95"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="96"></A></FONT><FONT ID="SingleLineComment">//    public String getParameterName() {
+<A NAME="97"></A></FONT><FONT ID="SingleLineComment">//      return parameterName;
+<A NAME="98"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="99"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="100"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="101"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="102"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="103"></A></FONT><FONT ID="SingleLineComment">//   * Constructor used in case script parameter is used.
+<A NAME="104"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="105"></A></FONT><FONT ID="SingleLineComment">//   * @param commandLineParams command line parameters
+<A NAME="106"></A></FONT><FONT ID="SingleLineComment">//   * @param scriptLine line read from a file
+<A NAME="107"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="108"></A></FONT><FONT ID="SingleLineComment">//  public ContactsExampleParameters(ContactsExampleParameters commandLineParams,
+<A NAME="109"></A></FONT><FONT ID="SingleLineComment">//      String scriptLine) {
+<A NAME="110"></A></FONT><FONT ID="SingleLineComment">//    parameterValueMap.putAll(commandLineParams.parameterValueMap);
+<A NAME="111"></A></FONT><FONT ID="SingleLineComment">//    elementDesc.addAll(commandLineParams.elementDesc);
+<A NAME="112"></A></FONT><FONT ID="SingleLineComment">//    fillFromArguments(scriptLine.split(" "));
+<A NAME="113"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="114"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="115"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="116"></A></FONT><FONT ID="SingleLineComment">//   * Constructor used when no script is passed at command line
+<A NAME="117"></A></FONT><FONT ID="SingleLineComment">//   * only the command line parameters are used.
+<A NAME="118"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="119"></A></FONT><FONT ID="SingleLineComment">//   * @param arguments arguments in form of array
+<A NAME="120"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="121"></A></FONT><FONT ID="SingleLineComment">//  public ContactsExampleParameters(String arguments[]) {
+<A NAME="122"></A></FONT><FONT ID="SingleLineComment">//    fillFromArguments(arguments);
+<A NAME="123"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="124"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="125"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="126"></A></FONT><FONT ID="SingleLineComment">//   * Parse arguments.
+<A NAME="127"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="128"></A></FONT><FONT ID="SingleLineComment">//   * @param arguments arguments in form of array
+<A NAME="129"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="130"></A></FONT><FONT ID="SingleLineComment">//  private void fillFromArguments(String[] arguments) {
+<A NAME="131"></A></FONT><FONT ID="SingleLineComment">//    for (String string : arguments) {
+<A NAME="132"></A></FONT><FONT ID="SingleLineComment">//      if (!string.startsWith("--")) {
+<A NAME="133"></A></FONT><FONT ID="SingleLineComment">//        throw new IllegalArgumentException("illegal parameter: " + string);
+<A NAME="134"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="135"></A></FONT><FONT ID="SingleLineComment">//      String param = string.substring(2);
+<A NAME="136"></A></FONT><FONT ID="SingleLineComment">//      String params[] = param.split("=", 2);
+<A NAME="137"></A></FONT><FONT ID="SingleLineComment">//      boolean found = false;
+<A NAME="138"></A></FONT><FONT ID="SingleLineComment">//      for (ParameterNames parameterName : ParameterNames.values()) {
+<A NAME="139"></A></FONT><FONT ID="SingleLineComment">//        String name = parameterName.getParameterName().toLowerCase();
+<A NAME="140"></A></FONT><FONT ID="SingleLineComment">//        if (name.equals(params[0])) {
+<A NAME="141"></A></FONT><FONT ID="SingleLineComment">//          if (params.length == 1) {
+<A NAME="142"></A></FONT><FONT ID="SingleLineComment">//            parameterValueMap.put(params[0], "");
+<A NAME="143"></A></FONT><FONT ID="SingleLineComment">//          } else {
+<A NAME="144"></A></FONT><FONT ID="SingleLineComment">//            parameterValueMap.put(params[0], params[1]);
+<A NAME="145"></A></FONT><FONT ID="SingleLineComment">//          }
+<A NAME="146"></A></FONT><FONT ID="SingleLineComment">//          found = true;
+<A NAME="147"></A></FONT><FONT ID="SingleLineComment">//          break;
+<A NAME="148"></A></FONT><FONT ID="SingleLineComment">//        }
+<A NAME="149"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="150"></A></FONT><FONT ID="SingleLineComment">//      if (!found) {
+<A NAME="151"></A></FONT><FONT ID="SingleLineComment">//        elementDesc.add(string);
+<A NAME="152"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="153"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="154"></A></FONT><FONT ID="SingleLineComment">//    verifyAllParameters();
+<A NAME="155"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="156"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="157"></A></FONT><FONT ID="SingleLineComment">//  /**
+<A NAME="158"></A></FONT><FONT ID="SingleLineComment">//   * Verify if we understand all parameters.
+<A NAME="159"></A></FONT><FONT ID="SingleLineComment">//   *
+<A NAME="160"></A></FONT><FONT ID="SingleLineComment">//   * @throws IllegalArgumentException in case there
+<A NAME="161"></A></FONT><FONT ID="SingleLineComment">//   * is a parameter which is not expected.
+<A NAME="162"></A></FONT><FONT ID="SingleLineComment">//   */
+<A NAME="163"></A></FONT><FONT ID="SingleLineComment">//  private void verifyAllParameters() {
+<A NAME="164"></A></FONT><FONT ID="SingleLineComment">//    for (String parameter : parameterValueMap.keySet()) {
+<A NAME="165"></A></FONT><FONT ID="SingleLineComment">//      verifyParameter(parameter);
+<A NAME="166"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="167"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="168"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="169"></A></FONT><FONT ID="SingleLineComment">//  private void verifyParameter(String name) {
+<A NAME="170"></A></FONT><FONT ID="SingleLineComment">//    for (ParameterNames parameter : ParameterNames.values()) {
+<A NAME="171"></A></FONT><FONT ID="SingleLineComment">//      if (name.equals(parameter.getParameterName())) {
+<A NAME="172"></A></FONT><FONT ID="SingleLineComment">//        return;
+<A NAME="173"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="174"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="175"></A></FONT><FONT ID="SingleLineComment">//    throw new IllegalArgumentException(
+<A NAME="176"></A></FONT><FONT ID="SingleLineComment">//        "Parameter " + name + " is not correct.");
+<A NAME="177"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="178"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="179"></A></FONT><FONT ID="SingleLineComment">//  String getParameter(ParameterNames parameters) {
+<A NAME="180"></A></FONT><FONT ID="SingleLineComment">//    return parameterValueMap.get(parameters.getParameterName());
+<A NAME="181"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="182"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="183"></A></FONT><FONT ID="SingleLineComment">//  String getScript() {
+<A NAME="184"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.SCRIPT);
+<A NAME="185"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="186"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="187"></A></FONT><FONT ID="SingleLineComment">//  Actions getAction() {
+<A NAME="188"></A></FONT><FONT ID="SingleLineComment">//    String actionString = getParameter(ParameterNames.ACTION);
+<A NAME="189"></A></FONT><FONT ID="SingleLineComment">//    if (actionString == null) {
+<A NAME="190"></A></FONT><FONT ID="SingleLineComment">//      return null;
+<A NAME="191"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="192"></A></FONT><FONT ID="SingleLineComment">//    return Actions.valueOf(actionString.toUpperCase());
+<A NAME="193"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="194"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="195"></A></FONT><FONT ID="SingleLineComment">//  String getBaseUrl() {
+<A NAME="196"></A></FONT><FONT ID="SingleLineComment">//    String url = getParameter(ParameterNames.BASE_URL);
+<A NAME="197"></A></FONT><FONT ID="SingleLineComment">//    if (url == null) {
+<A NAME="198"></A></FONT><FONT ID="SingleLineComment">//      url = DEFAULT_FEED;
+<A NAME="199"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="200"></A></FONT><FONT ID="SingleLineComment">//    return url;
+<A NAME="201"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="202"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="203"></A></FONT><FONT ID="SingleLineComment">//  String getUserName() {
+<A NAME="204"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.USERNAME);
+<A NAME="205"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="206"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="207"></A></FONT><FONT ID="SingleLineComment">//  String getPassword() {
+<A NAME="208"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.PASSWORD);
+<A NAME="209"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="210"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="211"></A></FONT><FONT ID="SingleLineComment">//  boolean isContactFeed() {
+<A NAME="212"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.CONTACTFEED) != null;
+<A NAME="213"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="214"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="215"></A></FONT><FONT ID="SingleLineComment">//  boolean isGroupFeed() {
+<A NAME="216"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.GROUPFEED) != null;
+<A NAME="217"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="218"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="219"></A></FONT><FONT ID="SingleLineComment">//  boolean isShowDeleted() {
+<A NAME="220"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.SHOWDELETED) != null;
+<A NAME="221"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="222"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="223"></A></FONT><FONT ID="SingleLineComment">//  String getRequireAllDeleted() {
+<A NAME="224"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.REQUIRE_ALL_DELETED);
+<A NAME="225"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="226"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="227"></A></FONT><FONT ID="SingleLineComment">//  String getUpdatedMin() {
+<A NAME="228"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.UPDATED_MIN);
+<A NAME="229"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="230"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="231"></A></FONT><FONT ID="SingleLineComment">//  String getOrderBy() {
+<A NAME="232"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.OREDERBY);
+<A NAME="233"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="234"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="235"></A></FONT><FONT ID="SingleLineComment">//  String getSortorder() {
+<A NAME="236"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.SORTORDER);
+<A NAME="237"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="238"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="239"></A></FONT><FONT ID="SingleLineComment">//  Integer getMaxResults() {
+<A NAME="240"></A></FONT><FONT ID="SingleLineComment">//    String maxResString = getParameter(ParameterNames.MAX_RESULTS);
+<A NAME="241"></A></FONT><FONT ID="SingleLineComment">//    if (maxResString != null) {
+<A NAME="242"></A></FONT><FONT ID="SingleLineComment">//      Integer val = Integer.parseInt(maxResString);
+<A NAME="243"></A></FONT><FONT ID="SingleLineComment">//      if (val.intValue() &lt; 1) {
+<A NAME="244"></A></FONT><FONT ID="SingleLineComment">//        throw new RuntimeException(
+<A NAME="245"></A></FONT><FONT ID="SingleLineComment">//            ParameterNames.MAX_RESULTS + " should be &gt; 0" );
+<A NAME="246"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="247"></A></FONT><FONT ID="SingleLineComment">//      return val;
+<A NAME="248"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="249"></A></FONT><FONT ID="SingleLineComment">//    return null;
+<A NAME="250"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="251"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="252"></A></FONT><FONT ID="SingleLineComment">//  Integer getStartIndex() {
+<A NAME="253"></A></FONT><FONT ID="SingleLineComment">//    String startIndexString = getParameter(ParameterNames.START_INDEX);
+<A NAME="254"></A></FONT><FONT ID="SingleLineComment">//    if (startIndexString != null) {
+<A NAME="255"></A></FONT><FONT ID="SingleLineComment">//      Integer val = Integer.parseInt(startIndexString);
+<A NAME="256"></A></FONT><FONT ID="SingleLineComment">//      if (val.intValue() &lt; 1) {
+<A NAME="257"></A></FONT><FONT ID="SingleLineComment">//        throw new RuntimeException(
+<A NAME="258"></A></FONT><FONT ID="SingleLineComment">//            ParameterNames.START_INDEX + " should be &gt; 0" );
+<A NAME="259"></A></FONT><FONT ID="SingleLineComment">//      }
+<A NAME="260"></A></FONT><FONT ID="SingleLineComment">//      return val;
+<A NAME="261"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="262"></A></FONT><FONT ID="SingleLineComment">//    return null;
+<A NAME="263"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="264"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="265"></A></FONT><FONT ID="SingleLineComment">//  boolean isHelp() {
+<A NAME="266"></A></FONT><FONT ID="SingleLineComment">//    return (getParameter(ParameterNames.HELP) != null);
+<A NAME="267"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="268"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="269"></A></FONT><FONT ID="SingleLineComment">//  boolean isVerbose() {
+<A NAME="270"></A></FONT><FONT ID="SingleLineComment">//    return (getParameter(ParameterNames.VERBOSE) != null);
+<A NAME="271"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="272"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="273"></A></FONT><FONT ID="SingleLineComment">//  String getId() {
+<A NAME="274"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.ID);
+<A NAME="275"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="276"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="277"></A></FONT><FONT ID="SingleLineComment">//  void setId(String id) {
+<A NAME="278"></A></FONT><FONT ID="SingleLineComment">//    parameterValueMap.put(ParameterNames.ID.getParameterName(), id);
+<A NAME="279"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="280"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="281"></A></FONT><FONT ID="SingleLineComment">//  String getProjection() {
+<A NAME="282"></A></FONT><FONT ID="SingleLineComment">//    String projection = getParameter(ParameterNames.PROJECTION);
+<A NAME="283"></A></FONT><FONT ID="SingleLineComment">//    if (projection == null) {
+<A NAME="284"></A></FONT><FONT ID="SingleLineComment">//      projection = DEFAULT_PROJECTION;
+<A NAME="285"></A></FONT><FONT ID="SingleLineComment">//    }
+<A NAME="286"></A></FONT><FONT ID="SingleLineComment">//    return projection;
+<A NAME="287"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="288"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="289"></A></FONT><FONT ID="SingleLineComment">//  String getGroup() {
+<A NAME="290"></A></FONT><FONT ID="SingleLineComment">//    return getParameter(ParameterNames.GROUP);
+<A NAME="291"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="292"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="293"></A></FONT><FONT ID="SingleLineComment">//  List&lt;String&gt; getElementDesc() {
+<A NAME="294"></A></FONT><FONT ID="SingleLineComment">//    return elementDesc;
+<A NAME="295"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="296"></A></FONT><FONT ID="SingleLineComment">//
+<A NAME="297"></A></FONT><FONT ID="SingleLineComment">//  int numberOfParameters() {
+<A NAME="298"></A></FONT><FONT ID="SingleLineComment">//    return parameterValueMap.size();
+<A NAME="299"></A></FONT><FONT ID="SingleLineComment">//  }
+<A NAME="300"></A></FONT><FONT ID="SingleLineComment">//}
+<A NAME="301"></A></FONT></pre>
+</BODY>
+</HTML>
