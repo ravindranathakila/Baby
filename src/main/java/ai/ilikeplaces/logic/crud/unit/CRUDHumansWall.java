@@ -153,4 +153,18 @@ public class CRUDHumansWall extends AbstractSLBCallbacks implements CRUDHumansWa
         }
     }
 
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Msg doUHumansWallMsgs(final String humanId, final Msg msg) {
+        final Msg managedMsg = crudServiceMsg_.create(msg);
+
+        final HumansWall humansWall = this.doRHumansWall(humanId);
+        humansWall.getWall().getWallMsgs().add(managedMsg);
+
+        wallCrudServiceLocal_.update(humansWall.getWall());
+
+        return managedMsg;
+    }
+
 }

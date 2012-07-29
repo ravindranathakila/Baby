@@ -87,15 +87,18 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Wall doUAddEntry(long wallId, final String humanId, String contentToBeAppended) throws DBDishonourCheckedException {
         final Wall returnVal = rWallBadly(wallId);
-        final Msg msg = new Msg();
-
-        msg
+        final Msg msg = new Msg()
                 .setMsgContentR(contentToBeAppended)
                 .setMsgTypeR(Msg.msgTypeHUMAN)
-                .setMsgMetadata(humanId);
+                .setMsgMetadataR(humanId);
+
+        final Msg managedMsg = msgCrudServiceLocal_.create(msg);
 
         returnVal.getWallMsgs().size();//refreshing
         returnVal.getWallMsgs().add(msg);
+
+        crudServiceLocal_.update(returnVal);
+
         return returnVal;
     }
 
@@ -167,11 +170,11 @@ public class CRUDWall extends AbstractSLBCallbacks implements CRUDWallLocal {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @WARNING("Reflect any changes on CRUDHumansWall as well")
     public void doUpdateMetadata(final long wallId, final String key, final String value) {
-        if(key == null || key.isEmpty()){
+        if (key == null || key.isEmpty()) {
             throw new NullPointerException(key + IS_NULL_OR_EMPTY);
         }
 
-        if(value == null || value.isEmpty()){
+        if (value == null || value.isEmpty()) {
             throw new NullPointerException(value + IS_NULL_OR_EMPTY);
         }
 

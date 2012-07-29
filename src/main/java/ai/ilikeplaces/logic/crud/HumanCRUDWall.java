@@ -86,11 +86,16 @@ public class HumanCRUDWall extends AbstractSLBCallbacks implements HumanCRUDWall
     public Return<Wall> addEntryToWall(final HumanId whosWall, final HumanId msgOwner__, Obj wallReference__, final String contentToBeAppended) {
         final Wall wall = crudHumansWallLocal_.doRHumansWallRefreshed(whosWall.getObj()).getWall();
 
-        wall.getWallMsgs().size();//refreshing
-        wall.getWallMsgs().add(new Msg()
+//        wall.getWallMsgs().size();//refreshing
+//        wall.getWallMsgs().add(new Msg()
+//                .setMsgContentR(contentToBeAppended)
+//                .setMsgTypeR(Msg.msgTypeHUMAN)
+//                .setMsgMetadataR(msgOwner__.getObj()));
+
+        crudHumansWallLocal_.doUHumansWallMsgs(whosWall.getObj(), (new Msg()
                 .setMsgContentR(contentToBeAppended)
                 .setMsgTypeR(Msg.msgTypeHUMAN)
-                .setMsgMetadataR(msgOwner__.getObj()));
+                .setMsgMetadataR(msgOwner__.getObj())));
 
         return new ReturnImpl<Wall>(wall, UPDATE_WALL_SUCCESSFUL);
 

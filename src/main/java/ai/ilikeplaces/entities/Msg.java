@@ -24,7 +24,7 @@ import java.io.Serializable;
 @NamedQuery(name = "FindWallEntriesByWallIdOrderByIdDesc",
         query = "SELECT msg FROM Msg msg WHERE msg.msgId IN (SELECT wall.wallMsgs FROM Wall wall WHERE wall.wallId = :wallId) order by msg.msgId DESC")
 @EntityListeners({EntityLifeCycleListener.class})
-public class Msg implements Serializable{
+public class Msg implements Serializable {
 
     public Long msgId;
     public static final String msgIdCOL = "msgId";
@@ -96,5 +96,15 @@ public class Msg implements Serializable{
         this.msgMetadata = msgMetadata;
         return this;
 
+    }
+
+    @Override
+    public String toString() {
+        return "Msg{" +
+                "msgId=" + msgId +
+                ", msgType=" + msgType +
+                ", msgContent='" + msgContent + '\'' +
+                ", msgMetadata='" + msgMetadata + '\'' +
+                '}';
     }
 }

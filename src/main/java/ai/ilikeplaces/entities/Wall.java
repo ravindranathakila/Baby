@@ -84,7 +84,7 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     @TODO(task = "Move DESC ASC TO SOME STATIC CLASS FOR REUSE")
     @OrderBy(Msg.msgIdCOL + " DESC")
     @OneToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE},
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
     public List<Msg> getWallMsgs() {
         return wallMsgs;
@@ -96,7 +96,7 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
 
     @UNIDIRECTIONAL
     @OneToMany(
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE},
+            cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
     public List<Mute> getWallMutes() {
         return wallMutes;

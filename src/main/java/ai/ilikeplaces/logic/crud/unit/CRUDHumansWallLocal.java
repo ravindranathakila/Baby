@@ -20,6 +20,7 @@ public interface CRUDHumansWallLocal {
 
     /**
      * Warning: lazy initialized fields ignored
+     *
      * @param humanId
      * @return
      */
@@ -34,4 +35,6 @@ public interface CRUDHumansWallLocal {
     public HumansWall doRHumansWall(String humanId);
 
     public void doUpdateMetadata(final long wallId, final String key, final String value);
+
+    public Msg doUHumansWallMsgs(final String humanId, final Msg msg);
 }

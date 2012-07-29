@@ -8,6 +8,7 @@
 
  Following content is rather old and out dated
  Following content is NOT outdated as reviewed on 2011/09/24
+ Following content is now partially outdated w.r.t transactions as Hazelcast and HBase were introduced, as reviewed on 2012/07/28
 
  C = Create
  R = Read
