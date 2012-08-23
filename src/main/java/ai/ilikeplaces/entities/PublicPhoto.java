@@ -56,7 +56,6 @@ public class PublicPhoto implements Serializable {
     public HumansPublicPhoto humansPublicPhoto;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPublicPhotoId() {
         return publicPhotoId;
     }

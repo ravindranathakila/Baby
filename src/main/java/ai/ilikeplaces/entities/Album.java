@@ -45,7 +45,6 @@ public class Album implements RefreshData<Album>, Refreshable<Album>, Serializab
     public static final Refresh<Album> REFRESH = new Refresh<Album>();
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getAlbumId() {
         return albumId;
     }

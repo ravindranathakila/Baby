@@ -52,7 +52,6 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getWallId() {
         return wallId;
     }

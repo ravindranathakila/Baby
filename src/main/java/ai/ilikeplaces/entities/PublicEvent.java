@@ -80,7 +80,6 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPublicEventId() {
         return publicEventId;
     }

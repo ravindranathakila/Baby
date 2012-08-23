@@ -79,7 +79,6 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
      * @return privateLocationId
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPrivateLocationId() {
         return privateLocationId;
     }

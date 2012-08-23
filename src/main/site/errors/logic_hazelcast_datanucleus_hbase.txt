@@ -140,6 +140,8 @@ Better:
 
 java -cp $(echo *.jar | tr ' ' ':'):hazelcast.xml:log4j.properties  com.hazelcast.examples.TestApp
 
+java -cp $(echo *.* | tr ' ' ':')  com.hazelcast.examples.TestApp
+
 If a NullPointerException(NPE) is thrown saying entityManger is null, this might be because the jars in the app are not deleted. i.e. they are already present in tomcats main lib folder.
 
 DO NOT HAVE hazelcast_mapstore.jar on tomcat lib, will cause wierd exceptions.
