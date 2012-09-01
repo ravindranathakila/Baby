@@ -20,6 +20,7 @@
 
     <!--<persistence-unit name="adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN" transaction-type="RESOURCE_LOCAL">-->
         <!--<provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider>-->
+        <!--<mapping-file>META-INF\orm.xml</mapping-file>-->
         <!--<class>ai.ilikeplaces.entities.HumansAuthorization</class>-->
         <!--<class>ai.ilikeplaces.entities.Wall</class>-->
         <!--<class>ai.ilikeplaces.entities.PrivateEvent</class>-->
@@ -52,6 +53,7 @@
             <!--<property name="datanucleus.ConnectionURL" value="hbase"/>-->
             <!--<property name="datanucleus.ConnectionUserName" value=""/>-->
             <!--<property name="datanucleus.ConnectionPassword" value=""/>-->
+            <!--<property name="datanucleus.allowAttachOfTransient" value="true"/>-->
             <!--<property name="datanucleus.autoCreateSchema" value="true"/>-->
             <!--<property name="datanucleus.validateTables" value="false"/>-->
             <!--<property name="datanucleus.Optimistic" value="false"/>-->

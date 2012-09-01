@@ -36,15 +36,9 @@ public abstract class AbstractHCMapStore<T> implements MapStore<Object, Object> 
             em.getTransaction().begin();
             System.out.println("Began Transaction.");
 
-            final Object existingValue = em.find(type, key);
+            em.merge(value);
 
-            if (existingValue == null) {
-                em.persist(value);
-            } else {
-                em.merge(value);
-            }
-
-            System.out.println("Persisted data.");
+            System.out.println("Merged data.");
 
             em.getTransaction().commit();
             System.out.println("Committed Transaction");

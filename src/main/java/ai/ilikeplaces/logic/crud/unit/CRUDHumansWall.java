@@ -154,13 +154,20 @@ public class CRUDHumansWall extends AbstractSLBCallbacks implements CRUDHumansWa
     }
 
 
+    /**
+     * Waring: Returns an unmanaged instance
+     * @param humanId
+     * @param msg
+     * @return
+     */
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    @WARNING("Returns an unmanaged instance w.r.t. Hazelcast")
     public Msg doUHumansWallMsgs(final String humanId, final Msg msg) {
         final Msg managedMsg = crudServiceMsg_.create(msg);
 
         final HumansWall humansWall = this.doRHumansWall(humanId);
-        humansWall.getWall().getWallMsgs().add(managedMsg);
+        humansWall.getWall().getWallMsgs().add(msg);
 
         wallCrudServiceLocal_.update(humansWall.getWall());
 

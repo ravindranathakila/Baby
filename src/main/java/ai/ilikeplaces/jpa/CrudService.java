@@ -161,6 +161,7 @@ public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceL
     @SuppressWarnings("unchecked")
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    @Deprecated//Hazelcast, thereby HBase cannot get updated this way unless a manual update goes through.
     public T getReference(final Class type, final Object id) {
         return (T) entityManager.getReference(type, id);
     }
