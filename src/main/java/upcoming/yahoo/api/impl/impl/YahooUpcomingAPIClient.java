@@ -1,6 +1,5 @@
-package com.google.places.api.impl.impl;
+package upcoming.yahoo.api.impl.impl;
 
-import com.google.places.api.impl.Client;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.name.Named;
@@ -9,6 +8,7 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.json.JSONException;
 import org.json.JSONObject;
+import upcoming.yahoo.api.impl.Client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +25,7 @@ import java.util.Map;
  *
  * @author Ravindranath Akila
  */
-public class GooglePlacesAPIClient implements Client {
+public class YahooUpcomingAPIClient implements Client {
 
     private static final String QUESTION_MARK = "?";
     private static final String GOT_ERROR_CODE = "Got error code:";
@@ -40,7 +40,7 @@ public class GooglePlacesAPIClient implements Client {
     final private String jsonEndpoint;
 
     @Inject
-    public GooglePlacesAPIClient(@Named(value = "api_key") final String api_key, @Assisted final String jsonEndpoint) {
+    public YahooUpcomingAPIClient(@Named(value = "api_key") final String api_key, @Assisted final String jsonEndpoint) {
         this.api_key = api_key;
         this.jsonEndpoint = jsonEndpoint;
     }
