@@ -10,6 +10,7 @@ import ai.ilikeplaces.util.jndi.impl.JNDILookupFactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.places.api.impl.impl.GooglePlacesAPIClient;
+import upcoming.yahoo.api.impl.ClientFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -41,6 +42,7 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
     private final ai.ilikeplaces.ygp.impl.ClientFactory yahooGeoPlanetFactory;
     private final com.disqus.api.impl.ClientFactory disqusApiFactory;
     private final com.google.places.api.impl.ClientFactory googlePlacesApiFactory;
+    private final upcoming.yahoo.api.impl.ClientFactory yahooUplcomingFactory;
 
     public Modules() {
         {
@@ -55,6 +57,11 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
             final Injector googlePlacesApiFactoryInjector = Guice.createInjector(new GooglePlacesAPIClientModule());
             googlePlacesApiFactory = googlePlacesApiFactoryInjector.getInstance(com.google.places.api.impl.ClientFactory.class);
         }
+        {
+            final Injector yahooUpcomingFactoryInjector = Guice.createInjector(new YahooUpcomingClientModule());
+            yahooUplcomingFactory = yahooUpcomingFactoryInjector.getInstance(upcoming.yahoo.api.impl.ClientFactory.class);
+
+        }
     }
 
     public static ModulesLocal getModules(){
@@ -67,6 +74,10 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
 
     public ai.ilikeplaces.ygp.impl.ClientFactory getYahooGeoPlanetFactory() {
         return yahooGeoPlanetFactory;
+    }
+
+    public upcoming.yahoo.api.impl.ClientFactory getYahooUplcomingFactory() {
+        return yahooUplcomingFactory;
     }
 
     public com.disqus.api.impl.ClientFactory getDisqusAPIFactory() {

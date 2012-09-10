@@ -3,10 +3,8 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.entities.LongMsg;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.*;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.modules.Modules;
@@ -22,11 +20,9 @@ import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Element;
-import org.w3c.dom.events.*;
 import org.w3c.dom.html.HTMLDocument;
 import twitter4j.*;
 import where.yahooapis.com.v1.Place;
@@ -55,8 +51,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String HTTP_SESSION_ATTR_LOCATION = "HttpSessionAttr.location";
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0005 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0005";
-    private static final String POST_ID = "id";
-    private static final String HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY = "http://travel.ilikeplaces.com/index.jsp?c" + POST_ID + "=317285&pageName=hotSearch&submitted=true&validateCity=true&city=";
+    private static final String HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY = "http://travel.ilikeplaces.com/index.jsp?c" + "id" + "=317285&pageName=hotSearch&submitted=true&validateCity=true&city=";
     private static final String QUERIES_FOR_LOCATION = " queries for location ";
     private static final String OF = " of ";
     private static final String AI_ILIKEPLACES_RBS_GUI = "ai.ilikeplaces.rbs.GUI";
@@ -72,25 +67,23 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String _OF_ = "_of_";
     private static final String CLICK_TO_EXPLORE = "Click to explore ";
     private static final String VTIP = "vtip";
-    private static final String WIDTH = "w" + POST_ID + "th";
+    private static final String WIDTH = "w" + "id" + "th";
     private static final String PX = "110px;";
     private static final String UNLOADING_BODY_TIME_SPENT = "Unloading body. Time spent:";
-    private static final String WOEIDPAGE_TITLE = "woe" + POST_ID + "page.title";
-    private static final String WOEIDPAGE_DESC = "woe" + POST_ID + "page.desc";
     private static final String COMMA = ",";
     private static final ClientFactory YAHOO_GEO_PLANET_FACTORY = Modules.getModules().getYahooGeoPlanetFactory();
     private static final com.disqus.api.impl.ClientFactory DISQUS_API_FACTORY = Modules.getModules().getDisqusAPIFactory();
     private static final String HTTP_DISQUS_COM_API_3_0_THREADS = "http://disqus.com/api/3.0/threads/";
     private static final String HTTP_DISQUS_COM_API_3_0_POSTS = "http://disqus.com/api/3.0/posts/";
-    private static final String IDENT_WOEID = POST_ID + "ent:WOEID=";
+    private static final String IDENT_WOEID = "id" + "ent:WOEID=";
     private static final String THREAD = "thread";
     private static final String LIST = "list";
     private static final String RESPONSE = "response";
-    private static final String ID = POST_ID;
+    private static final String ID = "id";
     private static final String NUMBER_OF_ITEMS_AT_DISQUS_IN_THREAD = "Number of Items At Disqus in Thread:";
     private static final String RAW__MESSAGE = "raw_message";
     private static final String ERROR_IN_UC_DISQUS = "Error in UC DISQUS";
-    private static final String ERROR_IN_UC_SET_LOGIN_WIDGET = "Error in UC setLoginW" + POST_ID + "get";
+    private static final String ERROR_IN_UC_SET_LOGIN_WIDGET = "Error in UC setLoginW" + "id" + "get";
     private static final String ERROR_IN_UC_SEO = "Error in UC SEO";
     private static final String ERROR_IN_UC_SIGN_ON_DISPLAY_LINK = "Error in UC signOnDisplayLink";
     private static final String ERROR_IN_UC_SET_PROFILE_PHOTO_LINK = "Error in UC setProfilePhotoLink";
@@ -130,7 +123,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
              */
             @Override
             @SuppressWarnings("unchecked")
-            @TODO(task = "If location is not available, it should be added through a w" + POST_ID + "get(or fragment maybe?)")
+            @TODO(task = "If location is not available, it should be added through a w" + "id" + "get(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
 
                 final SmartLogger sl = SmartLogger.start(
@@ -190,12 +183,12 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         try {
                             setMainTitle:
                             {
-                                $(mainTitle).setTextContent(MessageFormat.format(gUI.getString(WOEIDPAGE_TITLE), location));
+                                $(mainTitle).setTextContent(MessageFormat.format(gUI.getString("woeidpage.title"), location));
 
                             }
                             setMetaDescription:
                             {
-                                $(mainMetaDesc).setAttribute(MarkupTag.META.content(), MessageFormat.format(gUI.getString(WOEIDPAGE_DESC), location));
+                                $(mainMetaDesc).setAttribute(MarkupTag.META.content(), MessageFormat.format(gUI.getString("woeidpage.desc"), location));
                             }
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SEO, t);
@@ -311,6 +304,11 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         };
 
 
+                    }
+
+                    EVENTS_WIDGETS:
+                    {
+                        new Event(request__,new EventCriteria(),$(Controller.Page.Main_right_column));
                     }
 
 

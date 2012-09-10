@@ -31,7 +31,7 @@ public class YahooUpcomingAPIClient implements Client {
     private static final String GOT_ERROR_CODE = "Got error code:";
     private static final String DOT_JASON = ".json";
     private static final String EQUALS = "=";
-    private static final String API_KEY = "key" + EQUALS;
+    private static final String API_KEY = "api_key" + EQUALS;
     private static final String AMPERSAND = "&";
     private static final String OPEN_SQR_BRCKT = "[";
     private static final String CLOSE_SQR_BRCKT = "]";

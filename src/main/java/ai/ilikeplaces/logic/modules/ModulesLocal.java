@@ -16,7 +16,9 @@ public interface ModulesLocal {
 
     public ai.ilikeplaces.ygp.impl.ClientFactory getYahooGeoPlanetFactory();
 
-    public com.disqus.api.impl.ClientFactory getDisqusAPIFactory();
+    public upcoming.yahoo.api.impl.ClientFactory getYahooUplcomingFactory();
+
+        public com.disqus.api.impl.ClientFactory getDisqusAPIFactory();
 
     public com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory();
 }
