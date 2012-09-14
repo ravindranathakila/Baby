@@ -1,14 +1,11 @@
 package ai.ilikeplaces.logic.Listeners.widgets.schema.thing;
 
-import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
-
-import java.util.HashMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +17,14 @@ public class Event extends AbstractWidgetListener<EventCriteria> {
 
     public enum EventIds implements WidgetIds {
         eventName,
+        eventImage,
+        eventPlace,
+        /**
+         * This should be in  ISO 8601 date format http://en.wikipedia.org/wiki/ISO_8601 .
+         * e.g. 2007-04-05T14:30 .
+         * Do not screw this up, or search engines will screw us :-/ .
+         */
+        eventStartTime,
     }
 
     /**
@@ -33,6 +38,19 @@ public class Event extends AbstractWidgetListener<EventCriteria> {
     }
 
     /**
+     * Override this mehod at your own risk.
+     * This method initializes all the fireworks of this widget.
+     *
+     * @param eventCriteria
+     */
+    @Override
+    protected void init(final EventCriteria eventCriteria) {
+        $$(Event.EventIds.eventName).setTextContent(criteria.getEventName());
+        $$(Event.EventIds.eventStartTime).setTextContent(criteria.eventStartTime());
+        new Place(request, criteria.getPlaceCriteria(), $$(Event.EventIds.eventPlace));
+    }
+
+    /**
      * Use ItsNatHTMLDocument variable stored in the AbstractListener class
      * Do not call this method anywhere, just implement it, as it will be
      * automatically called by the constructor
@@ -42,19 +60,6 @@ public class Event extends AbstractWidgetListener<EventCriteria> {
      */
     @Override
     protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
-       $$(Event.EventIds.eventName).setTextContent(
-               Modules.getModules().getYahooUplcomingFactory()
-                       .getInstance("http://upcoming.yahooapis.com/services/rest/")
-                       .get("",
-                               new HashMap<String, String>(){
-                                   {//Don't worry, this is a static initializer of this map :)
-                                       put("method","event.search");
-                                       put("woeid","12589759");
-                                       put("format","json");
-                                   }
-                               }
 
-                       ).toString()
-       );
     }
 }

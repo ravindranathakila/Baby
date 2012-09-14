@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.modules;
 
+import ai.ilikeplaces.rbs.RBGet;
 import upcoming.yahoo.api.conf.AbstractYahooUpcomingAPIClientModule;
 
 /**
@@ -9,8 +10,11 @@ import upcoming.yahoo.api.conf.AbstractYahooUpcomingAPIClientModule;
  * Time: 8:16 PM
  */
 public class YahooUpcomingClientModule extends AbstractYahooUpcomingAPIClientModule {
+
+    public static final String YAHOO_KEY = RBGet.getGlobalConfigKey("YAHOO_K3Y");
+
     @Override
     protected String appKey() {
-        return "WRONG_KEY";
+        return YAHOO_KEY;
     }
 }

@@ -20,6 +20,7 @@ import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Element;
@@ -308,7 +309,46 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                     EVENTS_WIDGETS:
                     {
-                        new Event(request__,new EventCriteria(),$(Controller.Page.Main_right_column));
+                        try {
+                            final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
+                                    .getInstance("http://upcoming.yahooapis.com/services/rest/")
+                                    .get("",
+                                            new HashMap<String, String>() {
+                                                {//Don't worry, this is a static initializer of this map :)
+                                                    put("method", "event.search");
+                                                    put("woeid", WOEID.toString());
+                                                    put("format", "json");
+                                                }
+                                            }
+
+                                    );
+                            final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
+                            for (int i = 0; i < events.length(); i++) {
+
+                                final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
+                                new Event(request__, new EventCriteria()
+                                        .setEventName(eventJSONObject.get("name").toString())
+                                        .setEventStartDate(eventJSONObject.get("start_date").toString())
+                                        .setPlaceCriteria(
+                                                new PlaceCriteria()
+                                                        .setPlaceName(existingLocation_.getLocationName())
+                                                        .setPlaceLat(eventJSONObject.get("latitude").toString())
+                                                        .setPlaceLng(eventJSONObject.get("longitude").toString())
+                                                                //Parent Place
+                                                        .setPlaceSuperName(locationSuperSet.getLocationName())
+                                                        .setPlaceSuperLat(locationSuperSet.getLocationGeo1())
+                                                        .setPlaceSuperLng(locationSuperSet.getLocationGeo2())
+                                                                //Parent WOEID
+                                                        .setPlaceSuperWOEID(locationSuperSet.getWOEID().toString())
+
+                                        )
+                                        , $(Controller.Page.Main_right_column));
+
+                            }
+                        } catch (final JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
                     }
 
 

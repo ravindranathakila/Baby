@@ -7,4 +7,36 @@ package ai.ilikeplaces.logic.Listeners.widgets.schema.thing;
  * Time: 12:07 PM
  */
 public class EventCriteria {
+
+    private String eventName;
+    private String eventStartDate;
+    private PlaceCriteria placeCriteria;
+
+
+    public String getEventName() {
+        return "" + eventName;
+    }
+
+    public EventCriteria setEventName(final String eventName) {
+        this.eventName = eventName;//Returning empty if null
+        return this;
+    }
+
+    public String eventStartTime() {
+        return "" + eventStartDate;//Returning empty if null
+    }
+
+    public EventCriteria setEventStartDate(final String eventStartDate) {
+        this.eventStartDate = eventStartDate;
+        return this;
+    }
+
+    public PlaceCriteria getPlaceCriteria() {
+        return placeCriteria == null ? new PlaceCriteria() : placeCriteria;
+    }
+
+    public EventCriteria setPlaceCriteria(final PlaceCriteria placeCriteria) {
+        this.placeCriteria = placeCriteria;
+        return this;
+    }
 }
