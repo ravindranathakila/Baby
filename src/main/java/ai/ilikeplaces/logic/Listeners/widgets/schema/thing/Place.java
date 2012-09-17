@@ -21,6 +21,7 @@ public class Place extends AbstractWidgetListener<PlaceCriteria> {
     public static final String PAGE = "/page/";
 
     public static enum PlaceIds implements WidgetIds {
+        placeWidget,
         //Place
         placeNamePre,
         placeName,
@@ -85,6 +86,5 @@ public class Place extends AbstractWidgetListener<PlaceCriteria> {
      */
     @Override
     protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

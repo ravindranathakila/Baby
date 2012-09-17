@@ -99,6 +99,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String ERROR_IN_UC_SET_PROFILE_LINK = "Error in UC setProfileLink";
     private static final String PIPE = "|";
 
+    final static Query QUERY = new Query("fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)");
+
     final static Twitter TWITTER = new TwitterFactory().getInstance();
     private static final String AT_SIGN = "@";
     private static final String EMPTY = "";
@@ -286,21 +288,22 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                             @Override
                             protected void init(CommentCriteria commentCriteria) {
-                                new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place(request__,
+                                final ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place place = new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place(request__,
                                         new PlaceCriteria()
                                                 //This Place
                                                 .setPlaceNamePre("Exciting events in ")
                                                 .setPlaceName(existingLocation_.getLocationName())
                                                 .setPlaceLat(existingLocation_.getLocationGeo1())
                                                 .setPlaceLng(existingLocation_.getLocationGeo2())
-                                                        //Parent Place
-                                                //.setPlaceSuperName(locationSuperSet.getLocationName())
-                                                //.setPlaceSuperLat(locationSuperSet.getLocationGeo1())
-                                                //.setPlaceSuperLng(locationSuperSet.getLocationGeo2())
-                                                        //Parent WOEID
-                                                //.setPlaceSuperWOEID(locationSuperSet.getWOEID().toString())
+                                        //Parent Place
+                                        //.setPlaceSuperName(locationSuperSet.getLocationName())
+                                        //.setPlaceSuperLat(locationSuperSet.getLocationGeo1())
+                                        //.setPlaceSuperLng(locationSuperSet.getLocationGeo2())
+                                        //Parent WOEID
+                                        //.setPlaceSuperWOEID(locationSuperSet.getWOEID().toString())
                                         ,
                                         $$(CommentIds.commentPerson));
+                                place.$$displayNone(place.$$(ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place.PlaceIds.placeWidget));
                             }
                         };
 
@@ -363,8 +366,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     TWITTER_WIDGETS:
                     {
                         try {
-                            //final QueryResult result = TWITTER.search(new Query(eventNames.toString()).geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
-                            final QueryResult result = TWITTER.search(new Query("Happy").geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
+                            final QueryResult result = TWITTER.search(QUERY.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
+                            //final QueryResult result = TWITTER.search(new Query("Happy").geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
                             for (Tweet tweet : result.getTweets()) {
                                 new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person(
                                         request__,
