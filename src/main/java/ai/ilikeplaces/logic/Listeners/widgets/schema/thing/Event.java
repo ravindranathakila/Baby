@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets.schema.thing;
 
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.MarkupTag;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -29,8 +30,7 @@ public class Event extends AbstractWidgetListener<EventCriteria> {
 
     /**
      * @param request__
-     * @param page__
-     * @param t
+     * @param eventCriteria
      * @param appendToElement__
      */
     public Event(final ItsNatServletRequest request__, final EventCriteria eventCriteria, final Element appendToElement__) {
@@ -38,7 +38,7 @@ public class Event extends AbstractWidgetListener<EventCriteria> {
     }
 
     /**
-     * Override this mehod at your own risk.
+     * Override this method at your own risk.
      * This method initializes all the fireworks of this widget.
      *
      * @param eventCriteria
@@ -47,6 +47,11 @@ public class Event extends AbstractWidgetListener<EventCriteria> {
     protected void init(final EventCriteria eventCriteria) {
         $$(Event.EventIds.eventName).setTextContent(criteria.getEventName());
         $$(Event.EventIds.eventStartTime).setTextContent(criteria.eventStartTime());
+        if (!criteria.getEventPhoto().isEmpty()) {
+            $$(EventIds.eventImage).setAttribute(MarkupTag.IMG.src(), criteria.getEventPhoto());
+        } else {
+            $$(EventIds.eventImage).setAttribute(MarkupTag.IMG.alt(), eventCriteria.getEventName());
+        }
         new Place(request, criteria.getPlaceCriteria(), $$(Event.EventIds.eventPlace));
     }
 

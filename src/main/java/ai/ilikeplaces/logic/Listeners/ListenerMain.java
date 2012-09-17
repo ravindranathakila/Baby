@@ -100,7 +100,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String PIPE = "|";
 
     final static Twitter TWITTER = new TwitterFactory().getInstance();
-    final static Query QUERY = new Query("fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)");
     private static final String AT_SIGN = "@";
     private static final String EMPTY = "";
 
@@ -290,15 +289,16 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place(request__,
                                         new PlaceCriteria()
                                                 //This Place
+                                                .setPlaceNamePre("Exciting events in ")
                                                 .setPlaceName(existingLocation_.getLocationName())
                                                 .setPlaceLat(existingLocation_.getLocationGeo1())
                                                 .setPlaceLng(existingLocation_.getLocationGeo2())
                                                         //Parent Place
-                                                .setPlaceSuperName(locationSuperSet.getLocationName())
-                                                .setPlaceSuperLat(locationSuperSet.getLocationGeo1())
-                                                .setPlaceSuperLng(locationSuperSet.getLocationGeo2())
+                                                //.setPlaceSuperName(locationSuperSet.getLocationName())
+                                                //.setPlaceSuperLat(locationSuperSet.getLocationGeo1())
+                                                //.setPlaceSuperLng(locationSuperSet.getLocationGeo2())
                                                         //Parent WOEID
-                                                .setPlaceSuperWOEID(locationSuperSet.getWOEID().toString())
+                                                //.setPlaceSuperWOEID(locationSuperSet.getWOEID().toString())
                                         ,
                                         $$(CommentIds.commentPerson));
                             }
@@ -306,6 +306,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
 
                     }
+
+                    final StringBuilder eventNames = new StringBuilder("");
 
                     EVENTS_WIDGETS:
                     {
@@ -326,15 +328,21 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             for (int i = 0; i < events.length(); i++) {
 
                                 final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
+
+                                eventNames.append(eventJSONObject.get("name").toString().replaceAll(" AND ", " OR ") + " OR ");
+
                                 new Event(request__, new EventCriteria()
                                         .setEventName(eventJSONObject.get("name").toString())
                                         .setEventStartDate(eventJSONObject.get("start_date").toString())
+                                        .setEventPhoto(eventJSONObject.get("photo_url").toString())
                                         .setPlaceCriteria(
                                                 new PlaceCriteria()
+                                                        .setPlaceNamePre("This event is taking place in ")
                                                         .setPlaceName(existingLocation_.getLocationName())
                                                         .setPlaceLat(eventJSONObject.get("latitude").toString())
                                                         .setPlaceLng(eventJSONObject.get("longitude").toString())
                                                                 //Parent Place
+                                                        .setPlaceSuperNamePre(existingLocation_.getLocationName() + " is located in ")
                                                         .setPlaceSuperName(locationSuperSet.getLocationName())
                                                         .setPlaceSuperLat(locationSuperSet.getLocationGeo1())
                                                         .setPlaceSuperLng(locationSuperSet.getLocationGeo2())
@@ -346,9 +354,33 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                             }
                         } catch (final JSONException e) {
-                            throw new RuntimeException(e);
+                            sl.l("Error fetching data from Yahoo Upcoming: " + e.getMessage(), e);
                         }
 
+                    }
+
+
+                    TWITTER_WIDGETS:
+                    {
+                        try {
+                            //final QueryResult result = TWITTER.search(new Query(eventNames.toString()).geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
+                            final QueryResult result = TWITTER.search(new Query("Happy").geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
+                            for (Tweet tweet : result.getTweets()) {
+                                new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person(
+                                        request__,
+                                        new PersonCriteria()
+                                                .setPersonName(tweet.getFromUser())
+                                                .setPersonPhoto(tweet.getProfileImageUrl())
+                                                .setPersonData(tweet.getText()),
+                                        $(Main_right_column)
+                                );
+                            }
+                            if (result.getTweets().size() == 0) {
+                                sl.l("No twitter results found");
+                            }
+                        } catch (final Throwable t) {
+                            sl.l("An error occurred during twitter fetch:" + t.getMessage(), t);
+                        }
                     }
 
 
@@ -360,27 +392,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             $(Main_geoposition).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationGeo1() + COMMA + existingLocation_.getLocationGeo2());
                             $(Main_geoplacename).setAttribute(MarkupTag.META.content(), existingLocation_.getLocationName());
                             $(Main_georegion).setAttribute(MarkupTag.META.content(), locationSuperSet.getLocationName());
-                        }
-                        setTwitterData:
-                        {
-                            try {
-                                final QueryResult result = TWITTER.search(QUERY.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
-                                for (Tweet tweet : result.getTweets()) {
-                                    new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person(
-                                            request__,
-                                            new PersonCriteria()
-                                                    .setPersonName(tweet.getFromUser())
-                                                    .setPersonPhoto(tweet.getProfileImageUrl())
-                                                    .setPersonData(tweet.getText()),
-                                            $(Main_right_column)
-                                    );
-                                }
-                                if (result.getTweets().size() == 0) {
-                                    sl.l("No twitter results found");
-                                }
-                            } catch (final Throwable t) {
-                                sl.l("An error occurred during twitter fetch:" + t.getMessage(), t);
-                            }
                         }
                     }
 
