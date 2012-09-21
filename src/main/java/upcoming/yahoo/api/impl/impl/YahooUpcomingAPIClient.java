@@ -1,5 +1,6 @@
 package upcoming.yahoo.api.impl.impl;
 
+import ai.ilikeplaces.util.Loggers;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.name.Named;
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -62,7 +64,9 @@ public class YahooUpcomingAPIClient implements Client {
         try {
             jsonObject = new JSONObject(getJson(endpointEndValue, sb.toString()));
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
+            jsonObject = new JSONObject();
+            Loggers.ERROR.error("Error parsing this to JSON:" + sb.toString());
         }
 
         return jsonObject;

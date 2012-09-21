@@ -357,7 +357,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                             }
                         } catch (final JSONException e) {
-                            sl.l("Error fetching data from Yahoo Upcoming: " + e.getMessage(), e);
+                            sl.l("Error fetching data from Yahoo Upcoming: " + e.getMessage());
                         }
 
                     }
@@ -382,7 +382,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 sl.l("No twitter results found");
                             }
                         } catch (final Throwable t) {
-                            sl.l("An error occurred during twitter fetch:" + t.getMessage(), t);
+                            sl.l("An error occurred during twitter fetch:" + t.getMessage());
                         }
                     }
 
