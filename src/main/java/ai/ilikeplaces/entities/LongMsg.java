@@ -37,6 +37,7 @@ public class LongMsg implements Serializable{
     final static public int longMsgTypeMISC = 0;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getLongMsgId() {
         return longMsgId;
     }

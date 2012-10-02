@@ -90,6 +90,7 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPrivateEventId() {
         return privateEventId;
     }

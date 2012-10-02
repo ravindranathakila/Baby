@@ -37,6 +37,7 @@ public class Mute extends HumanEquals implements Serializable {
     final static public int muteTypeMISC = 0;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getMuteId() {
         return muteId;
     }

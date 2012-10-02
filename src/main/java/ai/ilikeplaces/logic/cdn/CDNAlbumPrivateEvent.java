@@ -36,8 +36,7 @@ import java.util.Map;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@Stateless
-@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class})
+@Stateless@Interceptors({EntityManagerInjector.class,ParamValidator.class, MethodTimer.class, MethodParams.class})
 public class CDNAlbumPrivateEvent extends CDN implements CDNAlbumPrivateEventLocal {
 
     public static final String CONTAINER = "ALBUM_PHOTOS";

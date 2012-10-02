@@ -60,6 +60,7 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
     private static final Refresh<PrivatePhoto> REFRESH = new Refresh<PrivatePhoto>();
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPrivatePhotoId() {
         return privatePhotoId;
     }
