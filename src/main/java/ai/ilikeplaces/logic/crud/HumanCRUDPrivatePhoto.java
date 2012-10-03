@@ -26,7 +26,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({DBOffilne.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
+@Interceptors({EntityManagerInjector.class, DBOffline.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 final public class HumanCRUDPrivatePhoto extends AbstractSLBCallbacks implements HumanCRUDPrivatePhotoLocal {
 
     private static final String WRITE_WALL_SUCCESSFUL = "Write Wall Successful!";

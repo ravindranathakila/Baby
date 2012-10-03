@@ -2,62 +2,48 @@
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
-    <persistence-unit name="adimpression_ilikeplaces_war_1.6-SNAPSHOTPU" transaction-type="JTA">
-        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
-        <jta-data-source>ilp</jta-data-source>
-        <non-jta-data-source>ilpUn</non-jta-data-source>
-        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+    <persistence-unit name="adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN" transaction-type="RESOURCE_LOCAL">
+        <provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider>
+        <mapping-file>META-INF/orm.xml</mapping-file>
+        <class>ai.ilikeplaces.entities.HumansAuthorization</class>
+        <class>ai.ilikeplaces.entities.Wall</class>
+        <class>ai.ilikeplaces.entities.PrivateEvent</class>
+        <class>ai.ilikeplaces.entities.Map</class>
+        <class>ai.ilikeplaces.entities.PrivatePhoto</class>
+        <class>ai.ilikeplaces.entities.HumansAuthentication</class>
+        <class>ai.ilikeplaces.entities.HumansPrivateEvent</class>
+        <class>ai.ilikeplaces.entities.Mute</class>
+        <class>ai.ilikeplaces.entities.Url</class>
+        <class>ai.ilikeplaces.entities.HumansPrivateLocation</class>
+        <class>ai.ilikeplaces.entities.PublicPhoto</class>
+        <class>ai.ilikeplaces.entities.HumansNet</class>
+        <class>ai.ilikeplaces.entities.Msg</class>
+        <class>ai.ilikeplaces.entities.HumanEmbedded</class>
+        <class>ai.ilikeplaces.entities.Human</class>
+        <class>ai.ilikeplaces.entities.HumansTribe</class>
+        <class>ai.ilikeplaces.entities.HumansNetPeople</class>
+        <class>ai.ilikeplaces.entities.Tribe</class>
+        <class>ai.ilikeplaces.entities.HumansWall</class>
+        <class>ai.ilikeplaces.entities.Album</class>
+        <class>ai.ilikeplaces.entities.PrivateLocation</class>
+        <class>ai.ilikeplaces.entities.HumansIdentity</class>
+        <class>ai.ilikeplaces.entities.HumansPrivatePhoto</class>
+        <class>ai.ilikeplaces.entities.HumansAlbum</class>
+        <class>ai.ilikeplaces.entities.LongMsg</class>
+        <class>ai.ilikeplaces.entities.Location</class>
+        <class>ai.ilikeplaces.entities.HumansPublicPhoto</class>
+        <class>ai.ilikeplaces.entities.HumansUnseen</class>
         <properties>
-            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
-            <property name="openjpa.Log" value="File=..\logs\openjpa.log, DefaultLevel=INFO, Runtime=INFO, SQL=INFO"/>
-            <property name="openjpa.QueryCache" value="net.sf.ehcache.openjpa.datacache.EhCacheQueryCache"/>
-            <property name="openjpa.DataCache" value="net.sf.ehcache.openjpa.datacache.EhCacheDataCache"/>
-            <property name="openjpa.RemoteCommitProvider" value="net.sf.ehcache.openjpa.datacache.NoOpRemoteCommitProvider"/>
-            <property name="openjpa.DataCacheManager" value="net.sf.ehcache.openjpa.datacache.EhCacheDataCacheManager"/>
-            <property name="openjpa.FlushBeforeQueries" value="true"/>
+            <property name="datanucleus.ConnectionURL" value="hbase"/>
+            <property name="datanucleus.ConnectionUserName" value=""/>
+            <property name="datanucleus.ConnectionPassword" value=""/>
+            <property name="datanucleus.allowAttachOfTransient" value="true"/>
+            <property name="datanucleus.autoCreateSchema" value="true"/>
+            <property name="datanucleus.validateTables" value="false"/>
+            <property name="datanucleus.Optimistic" value="false"/>
+            <property name="datanucleus.validateConstraints" value="false"/>
+            <property name="datanucleus.jtaLocator" value="openejb"/>
         </properties>
     </persistence-unit>
-
-    <!--<persistence-unit name="adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN" transaction-type="RESOURCE_LOCAL">-->
-        <!--<provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider>-->
-        <!--<mapping-file>META-INF\orm.xml</mapping-file>-->
-        <!--<class>ai.ilikeplaces.entities.HumansAuthorization</class>-->
-        <!--<class>ai.ilikeplaces.entities.Wall</class>-->
-        <!--<class>ai.ilikeplaces.entities.PrivateEvent</class>-->
-        <!--<class>ai.ilikeplaces.entities.Map</class>-->
-        <!--<class>ai.ilikeplaces.entities.PrivatePhoto</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansAuthentication</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansPrivateEvent</class>-->
-        <!--<class>ai.ilikeplaces.entities.Mute</class>-->
-        <!--<class>ai.ilikeplaces.entities.Url</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansPrivateLocation</class>-->
-        <!--<class>ai.ilikeplaces.entities.PublicPhoto</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansNet</class>-->
-        <!--<class>ai.ilikeplaces.entities.Msg</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumanEmbedded</class>-->
-        <!--<class>ai.ilikeplaces.entities.Human</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansTribe</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansNetPeople</class>-->
-        <!--<class>ai.ilikeplaces.entities.Tribe</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansWall</class>-->
-        <!--<class>ai.ilikeplaces.entities.Album</class>-->
-        <!--<class>ai.ilikeplaces.entities.PrivateLocation</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansIdentity</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansPrivatePhoto</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansAlbum</class>-->
-        <!--<class>ai.ilikeplaces.entities.LongMsg</class>-->
-        <!--<class>ai.ilikeplaces.entities.Location</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansPublicPhoto</class>-->
-        <!--<class>ai.ilikeplaces.entities.HumansUnseen</class>-->
-        <!--<properties>-->
-            <!--<property name="datanucleus.ConnectionURL" value="hbase"/>-->
-            <!--<property name="datanucleus.ConnectionUserName" value=""/>-->
-            <!--<property name="datanucleus.ConnectionPassword" value=""/>-->
-            <!--<property name="datanucleus.allowAttachOfTransient" value="true"/>-->
-            <!--<property name="datanucleus.autoCreateSchema" value="true"/>-->
-            <!--<property name="datanucleus.validateTables" value="false"/>-->
-            <!--<property name="datanucleus.Optimistic" value="false"/>-->
-            <!--<property name="datanucleus.validateConstraints" value="false"/>-->
-        <!--</properties>-->
-    <!--</persistence-unit>-->
 </persistence>

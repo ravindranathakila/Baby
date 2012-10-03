@@ -20,7 +20,7 @@ import javax.interceptor.Interceptors;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-@Interceptors({MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
+@Interceptors({EntityManagerInjector.class, DBOffline.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDMap extends AbstractSLBCallbacks implements HumanCRUDMapLocal {
 
     @EJB

@@ -22,7 +22,7 @@ import java.util.Map;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
+@Interceptors({EntityManagerInjector.class, DBOffline.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDLocation extends AbstractSLBCallbacks implements HumanCRUDLocationLocal {
 
     private static final String FIND_LOCATION_BY_LOCATION_ID_SUCCESSFUL = "Find location by location Id Successful!";

@@ -8,7 +8,6 @@ import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.*;
-import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.*;
@@ -30,7 +29,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
+@Interceptors({EntityManagerInjector.class, DBOffline.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHumanLocal {
 
     private static final String IDENTITY_READ_SUCCESSFUL = "Identity Read Successful.";

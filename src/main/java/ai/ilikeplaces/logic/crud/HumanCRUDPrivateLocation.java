@@ -8,11 +8,8 @@ import ai.ilikeplaces.logic.crud.unit.CPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.DPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.UPrivateLocationLocal;
-import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.VDouble;
-import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.util.*;
-import com.google.gdata.data.geo.impl.W3CPoint;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -29,7 +26,7 @@ import javax.interceptor.Interceptors;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
+@Interceptors({EntityManagerInjector.class, DBOffline.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDPrivateLocation extends AbstractSLBCallbacks implements HumanCRUDPrivateLocationLocal {
 
     @EJB

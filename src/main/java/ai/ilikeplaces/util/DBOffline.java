@@ -14,14 +14,13 @@ import java.lang.reflect.Type;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class DBOffilne {
-
-    //final static private Logger logger = LoggerFactory.getLogger(DBOffilne.class);
+public class DBOffline {
 
     public static boolean OFFLINE = false;
+    private static Throwable DB_OFFLINE_EXCEPTION = new Throwable("DATABASE IS OFFLINE!");
 
     @AroundInvoke
     public Object notify(InvocationContext invocation) throws Exception {
-        return OFFLINE ? new ReturnImpl<Type>(null, "Blush blush:P I'm offline for maintenance.", true) : invocation.proceed();
+        return OFFLINE ? new ReturnImpl<Type>(DB_OFFLINE_EXCEPTION, "I'm offline for maintenance.", true) : invocation.proceed();
     }
 }

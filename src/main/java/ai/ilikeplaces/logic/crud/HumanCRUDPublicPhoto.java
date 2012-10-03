@@ -2,7 +2,6 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.CPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.DPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.RPublicPhotoLocal;
@@ -27,7 +26,7 @@ import java.util.List;
 @CONVENTION(convention = "do all the possible needful9setters etc) before going into the transaction, via an intermediate method. saves resources. " +
         "why not let the caller do this? lets do the hard work. give the guy a break! besides, we can enforce him to give us required fields. this also " +
         "facilitates setting granular role permissions.")
-@Interceptors({DBOffilne.class,ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
+@Interceptors({EntityManagerInjector.class, DBOffline.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements HumanCRUDPublicPhotoLocal {
 
     @EJB
@@ -94,6 +93,7 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
     public boolean dPublicPhoto(final String humanId, final long publicPhotoId) {
         return doHumanDPublicPhoto(publicPhotoId);
     }
+
     /*END OF NON TRANSACTIONAL METHODS*/
     final static Logger logger = LoggerFactory.getLogger(HumanCRUDPublicPhoto.class);
 }
