@@ -105,13 +105,6 @@
         </dependency>
 
         <dependency>
-            <groupId>DB</groupId>
-            <artifactId>derbyclient</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>/home/ravindranathakila/JavaDB/lib/derbyclient.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>0.9.17</version>
@@ -310,10 +303,10 @@
             <version>3.0.4</version>
         </dependency>
         <dependency>
-          <groupId>com.google.code.gson</groupId>
-          <artifactId>gson</artifactId>
-          <version>1.7.2</version>
-          <scope>compile</scope>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>1.7.2</version>
+            <scope>compile</scope>
         </dependency>
 
         <!--hazelcast-->
