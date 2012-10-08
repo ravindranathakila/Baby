@@ -5,11 +5,11 @@ How have you been? What brought you here?
 === 0) WWW, You and Us ===
 ==== 0.1) The links ====
 
-For now, it's just four links for us, and a million web pages for a million locations on Earth
+For now, it's just three links for us, and a million web pages for a million locations on Earth
 
 * [http://www.ilikeplaces.com  I Like Places]
 * [http://www.facebook.com Facebook Fan Page]
-* [[https://www.pivotaltracker.com/projects/304913 Project Manager, where you can find out what really is going on in the code]
+* [https://www.pivotaltracker.com/projects/304913 Project Manager, where you can find out what really is going on in the code]
 
 ==== 0.2) How may we serve you? ====
 * 0.2.1) Can we interest you in finding out what interesting places to visit, given any location on earth?
