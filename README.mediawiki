@@ -4,11 +4,13 @@ How have you been? What brought you here?
 
 === 0) WWW, You and Us ===
 ==== 0.1) The links ====
-[[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/facebook_ilikeplaces.png]]
-[[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_adakuda.png]]
-[[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/pivotaltracker_ilikeplaces.png]]
-[[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/twitter_ilikeplaces.png]]
-[[File:www.ilikeplaces.com/raw/master/src/main/site/qr_codes/ilikeplaces.png]]
+
+For now, it's just four links for us, and a million web pages for a million locations on Earth
+
+* [http://www.ilikeplaces.com  I Like Places]
+* [http://www.facebook.com Facebook Fan Page]
+* [[https://www.pivotaltracker.com/projects/304913 Project Manager, where you can find out what really is going on in the code]
+
 ==== 0.2) How may we serve you? ====
 * 0.2.1) Can we interest you in finding out what interesting places to visit, given any location on earth?
 If so, head over to [http://www.ilikeplaces.com www.iLikePlaces.com] and search for any location on Earth.
