@@ -1,34 +1,37 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:itsnat="http://itsnat.org/itsnat" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Sign On Off</title>
-    </head>
-    <body>
-    <div class="use100" id="SignInOn" style="display:block;" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
-        <div class="use100 signinon_header" id="signinonBG">
+<head>
+    <title>Sign On Off</title>
+</head>
+<body>
+<div class="use100" id="SignInOn" style="display:block;" itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat">
+    <div class="use100 signinon_header" id="signinonBG">
         <div class="use100" style="background:url(/images/Metal_translucent.png) repeat">
-
-        <!-- Only one of these 2 divs are visible at a given time -->
-        <div class="use100" style="height:78px;display:none;" id="signinon_login">
-            <div class="use20">
-                <div class="use100 inherit_height bg_a9abf1" style="overflow:hidden;">
-                    <div class="use100 inherit_height line_height_50 center" style="font-size:18px;color:#dddddd;font-weight:900;">
-                        SIGN UP / LOGIN*<I>(*free)</I>
+            <!-- Only one of these 2 divs are visible at a given time -->
+            <div class="use100" style="height:78px;display:none;" id="signinon_login">
+                <div class="use20">
+                    <div class="use100 inherit_height bg_a9abf1" style="overflow:hidden;">
+                        <div class="use100 inherit_height line_height_50 center"
+                             style="font-size:18px;color:#dddddd;font-weight:900;">
+                            SIGN UP / LOGIN*<I>(*free)</I>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="use60">
-                <div class="use100 inherit_height" style="overflow:hidden;height:50px;">
+                <div class="use60">
+                    <div class="use100 inherit_height" style="overflow:hidden;height:50px;">
                         <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
-                            <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
+                            <div class="use100 inherit_height line_height_50 center"
+                                 style="font-size:13px;color:#dddddd;font-weight:900;">
                                 &nbsp;&nbsp;EMAIL:&nbsp;
                             </div>
                         </div>
-                        <div class="use25 inherit_height line_height_50" style="overflow:hidden;" >
+                        <div class="use25 inherit_height line_height_50" style="overflow:hidden;">
                             <div class="use100" style="height:16px;">&nbsp;</div>
                             <div class="use90 use5p use5a" style="height:18px;">
-                                <input class="use100 inherit_height vtip" style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonUsername"
+                                <input class="use100 inherit_height vtip"
+                                       style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;"
+                                       id="signinonUsername"
                                        title="This is for entering your email|Enter your email to login|Upon clicking the on/off button you will be signed in"
                                        onkeypress="javascript:if((event.keyCode ? event.keyCode : event.which) == 13){$('.JSPasswordInput').focus();}"
                                        name="Username" maxlength="255" type="text" tabindex="1"/>
@@ -36,14 +39,17 @@
                             <div class="use100" style="height:16px;">&nbsp;</div>
                         </div>
                         <div class="use15 inherit_height bg_a9abf1" style="overflow:hidden;">
-                            <div class="use100 inherit_height line_height_50 center" style="font-size:13px;color:#dddddd;font-weight:900;">
+                            <div class="use100 inherit_height line_height_50 center"
+                                 style="font-size:13px;color:#dddddd;font-weight:900;">
                                 &nbsp;PASSWORD:&nbsp;
                             </div>
                         </div>
                         <div class="use25 inherit_height line_height_50" style="overflow:hidden;">
                             <div class="use100" style="height:16px;">&nbsp;</div>
                             <div class="use90 use5p use5a" style="height:18px;">
-                                <input class="use100 bold vtip JSPasswordInput" style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;" id="signinonPassword"
+                                <input class="use100 bold vtip JSPasswordInput"
+                                       style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;"
+                                       id="signinonPassword"
                                        title="This is for entering your password|Enter your password to login|Upon clicking the on/off button you will be signed in"
                                        onkeypress="javascript:if((event.keyCode ? event.keyCode : event.which) == 13){ $('.JSPasswordInput').blur(); fireEvent(document.getElementsByName('JSLoginButton')[0],'click'); }"
                                        name="Password" maxlength="255" type="password" tabindex="2"/>
@@ -58,132 +64,137 @@
                                     <a class="vtip click_indicator_strong" id="signinonSubmit"
                                        name="JSLoginButton"
                                        title="You haven't signed in yet|Enter your email, password and click here|You will be signed in shortly after"
-                                       tabindex="3"><img src="/images/Power_off_Off.png" alt="Login" style="height:30px;cursor:pointer;"/></a>
+                                       tabindex="3"><img src="/images/Power_off_Off.png" alt="Login"
+                                                         style="height:30px;cursor:pointer;"/></a>
                                 </div>
                                 <div class="use100" style="height:4px;">&nbsp;</div>
                             </div>
                         </div>
-                </div>
-                <!-- Notification Footer of Header -->
-                <div class="use100 use20a center" style="height:28px;">
-                    <div class="use30">
-                        &nbsp;
                     </div>
-                    <div class="use40 center" style="overflow:hidden;">
+                    <!-- Notification Footer of Header -->
+                    <div class="use100 use20a center" style="height:28px;">
+                        <div class="use30">
+                            &nbsp;
+                        </div>
+                        <div class="use40 center" style="overflow:hidden;">
                         <span id="signinonNotice" style="white-space:pre;font-size:12px;color:#ffffff;font-weight:900;"
-                                class="center">&nbsp;</span>
-                    </div>
-                    <div class="use30 center" style="overflow:hidden;">
-                        <div class="use60 center cursor_link">
-                            <div class="use100 intensity_3" style="height:20px;">
-                                <a href="/page/_profile"  class="bold vtip" tabindex="4" style="text-decoration:underline;"
-                                        title="Your inaccessible account is recoverable|Click here to unlock/recover your account|You will be taken to the recovery page"
-                                        >Recover Access Here</a>
+                              class="center">&nbsp;</span>
+                        </div>
+                        <div class="use30 center" style="overflow:hidden;">
+                            <div class="use60 center cursor_link">
+                                <div class="use100 intensity_3" style="height:20px;">
+                                    <a href="/page/_profile" class="bold vtip" tabindex="4"
+                                       style="text-decoration:underline;"
+                                       title="Your inaccessible account is recoverable|Click here to unlock/recover your account|You will be taken to the recovery page"
+                                            >Recover Access Here</a>
+                                </div>
+                                <div class="use100" style="height:8px;">&nbsp;</div>
                             </div>
-                            <div class="use100" style="height:8px;">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="use20">
+                    <div class="use100" style="height:9px;"> &nbsp;</div>
+                    <div class="use100" style="height:40px;">
+                        <div class="use100" style="height:20px;"> `
+                            <a href="#" id="signinonFacebook" class="bold vtip" style="text-decoration:underline;"
+                               title="You haven't signed in yet|Click here to Sign in with your Facebook account|You will be signed in with your Facebook credentials">
+                                Login Using Facebook
+                            </a>
+                        </div>
+                        <div class="use100" style="height:20px;">
+                            <a href="#" id="signinonGoogle" class="bold vtip" style="text-decoration:underline;"
+                               title="You haven't signed in yet|Click here to Sign in with your Google account|You will be signed in with your Google credentials">
+                                Login Using Google
+                            </a>
+                        </div>
+                    </div>
+                    <div class="use100" style="height:29px;font-size:10px;">
+                        <i>Note: The corresponding email will be used. If different, a new account will be created.</i>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Only one of these 2 divs are visible at a given time-->
+            <div class="use100" id="signinon_logon" style="height:78px;display:none;">
+                <div class="use100" style="height:78px;">
+                    <div class="use100 inherit_height">
+                        <div class="use40 inherit_height center" style="display:none;">
+                            <div class="use100" style="height:28px;">&nbsp;</div>
+                            <div class="use100"
+                                 style="height:25px; color:red;text-transform: uppercase;font-weight:900;"
+                                 id="Skeleton_notifications">&nbsp;</div>
+                            <div class="use100" style="height:25px;">&nbsp;</div>
+                        </div>
+                        <div class="use20 inherit_height center click_indicator_strong"
+                             style="display:block;overflow:hidden;">
+                            <a href="#"
+                               onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location=$('.profile_link').attr('href');});"
+                                    >
+                                <img class="vtip cursor_link center"
+                                     style="height:100%;vertical-align:middle;cursor:pointer;"
+                                     title="What is exciting lately among friends?|Tell your friends what is exciting or find out about them| You can view/talk on your and friends profiles"
+                                     src="/images/The Talk.png"
+                                     alt="The Talk"
+                                        />
+                            </a>
+                            <a href="#" class="profile_link" id="Global_Profile_Link" style="display:none;">&nbsp;
+                            </a>
+                        </div>
+                        <div class="use20 inherit_height center click_indicator_strong"
+                             style="display:block;overflow:hidden;">
+                            <a href="/page/_tribes"
+                               onclick="javascript:$('.fade_out').fadeOut(1000, function() {});"
+                                    >
+                                <img class="vtip cursor_link center"
+                                     style="height:100%;vertical-align:middle;cursor:pointer;"
+                                     id="Skeleton_othersidebar_places_link"
+                                     title="What is exciting lately among groups?|Find out exciting updates on groups you belong to|You will be taken to the tribe home"
+                                     src="/images/The Tribes.png"
+                                     alt="The Tribes"
+                                        />
+                            </a>
+                        </div>
+                        <div class="use20 inherit_height center" id="signinon_autoplay" style="overflow:hidden;">
+
+                        </div>
+                        <div class="use20 inherit_height center click_indicator_strong"
+                             style="display:block;overflow:hidden;">
+                            <a href="/page/_org"
+                               onclick="javascript:$('.fade_out').fadeOut(1000, function() {});"
+                                    >
+                                <img class="vtip cursor_link center"
+                                     style="height:100%;vertical-align:middle;cursor:pointer;"
+                                     id="Skeleton_othersidebar_organizer_link"
+                                     title="What is exciting lately in events?|Find, attend and share, hot exciting events|You will be taken to the moments home"
+                                     src="/images/The Moments.png"
+                                     alt="The Moments"
+                                        />
+                            </a>
+                        </div>
+                        <div class="use20 inherit_height center click_indicator_strong"
+                             style="display:block;overflow:hidden;">
+                            <a href="/page/_me"
+                               onclick="javascript:$('.fade_out').fadeOut(1000, function() {});"
+                                    >
+                                <img class="vtip cursor_link center "
+                                     style="height:100%;vertical-align:middle;cursor:pointer;"
+                                     title="All your photos on one single page|Click to manage(delete/share) your photos|You will be taken to the snaps page"
+                                     src="/images/The Places.png"
+                                     alt="The Snaps"
+                                        />
+                            </a>
+                        </div>
+                        <div id="Skeleton_login_widget" class="use40" style="display:none;height:78px;">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="use20">
-                <div class="use100" style="height:9px;"> &nbsp;</div>
-                <div class="use100" style="height:40px;">
-                    <div class="use100" style="height:20px;">
-                        <a href="#" id="signinonFacebook" class="bold vtip" style="text-decoration:underline;"
-                             title="You haven't signed in yet|Click here to Sign in with your Facebook account|You will be signed in with your Facebook credentials"
-                                >
-                            Login Using Facebook
-                        </a>
-                    </div>
-                    <div class="use100" style="height:20px;">
-                        <a href="#" id="signinonGoogle" class="bold vtip" style="text-decoration:underline;"
-                            title="You haven't signed in yet|Click here to Sign in with your Google account|You will be signed in with your Google credentials"
-                                >
-                            Login Using Google
-                        </a>
-                    </div>
-                </div>
-                <div class="use100" style="height:29px;font-size:10px;">
-                    <i>Note: The corresponding email will be used. If different, a new account will be created.</i>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- Only one of these 2 divs are visible at a given time-->
-        <div class="use100" id="signinon_logon" style="height:78px;display:none;">
-            <div class="use100"  style="height:78px;">
-            <div class="use100 inherit_height">
-                <div class="use40 inherit_height center" style="display:none;">
-                    <div class="use100" style="height:28px;">&nbsp;</div>
-                    <div class="use100" style="height:25px; color:red;text-transform: uppercase;font-weight:900;" id="Skeleton_notifications">&nbsp;</div>
-                    <div class="use100" style="height:25px;">&nbsp;</div>
-                </div>
-                <div class="use20 inherit_height center click_indicator_strong" style="display:block;overflow:hidden;">
-                    <a href="#"
-                       onclick="javascript:$('.fade_out').fadeOut(1000, function() {window.location=$('.profile_link').attr('href');});"
-                            >
-                        <img class="vtip cursor_link center"
-                             style="height:100%;vertical-align:middle;cursor:pointer;"
-                             title="What is exciting lately among friends?|Tell your friends what is exciting or find out about them| You can view/talk on your and friends profiles"
-                             src="/images/The Talk.png"
-                             alt="The Talk"
-                                />
-                    </a>
-                    <a href="#" class="profile_link" id="Global_Profile_Link" style="display:none;">&nbsp;
-                    </a>
-                </div>
-                <div class="use20 inherit_height center click_indicator_strong" style="display:block;overflow:hidden;">
-                    <a href="/page/_tribes"
-                       onclick="javascript:$('.fade_out').fadeOut(1000, function() {});"
-                            >
-                        <img class="vtip cursor_link center"
-                             style="height:100%;vertical-align:middle;cursor:pointer;"
-                             id="Skeleton_othersidebar_places_link"
-                             title="What is exciting lately among groups?|Find out exciting updates on groups you belong to|You will be taken to the tribe home"
-                             src="/images/The Tribes.png"
-                             alt="The Tribes"
-                                />
-                    </a>
-                </div>
-                <div class="use20 inherit_height center" id="signinon_autoplay" style="overflow:hidden;">
-
-                </div>
-                <div class="use20 inherit_height center click_indicator_strong" style="display:block;overflow:hidden;">
-                    <a href="/page/_org"
-                       onclick="javascript:$('.fade_out').fadeOut(1000, function() {});"
-                            >
-                        <img class="vtip cursor_link center"
-                             style="height:100%;vertical-align:middle;cursor:pointer;"
-                             id="Skeleton_othersidebar_organizer_link"
-                             title="What is exciting lately in events?|Find, attend and share, hot exciting events|You will be taken to the moments home"
-                             src="/images/The Moments.png"
-                             alt="The Moments"
-                                />
-                    </a>
-                </div>
-                <div class="use20 inherit_height center click_indicator_strong" style="display:block;overflow:hidden;">
-                    <a href="/page/_me"
-                       onclick="javascript:$('.fade_out').fadeOut(1000, function() {});"
-                            >
-                        <img class="vtip cursor_link center "
-                             style="height:100%;vertical-align:middle;cursor:pointer;"
-                             title="All your photos on one single page|Click to manage(delete/share) your photos|You will be taken to the snaps page"
-                             src="/images/The Places.png"
-                             alt="The Snaps"
-                                />
-                    </a>
-                </div>
-                <div id="Skeleton_login_widget" class="use40" style="display:none;height:78px;">
-                </div>
-            </div>
-        </div>
-        </div>
 
         </div>
-        </div>
-
     </div>
-    </body>
+
+</div>
+</body>
 </html>
