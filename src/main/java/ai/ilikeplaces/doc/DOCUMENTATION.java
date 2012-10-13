@@ -13,15 +13,15 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 public @interface DOCUMENTATION {
-    SEE SEE() default @SEE();
+    SEE SEE()[] default @SEE();
 
-    NOTE NOTE() default @NOTE(note = "");
+    NOTE NOTE()[] default @NOTE(note = "");
 
-    FIXME FIXME() default @FIXME();
+    FIXME FIXME()[] default @FIXME();
 
-    TODO TODO() default @TODO();
+    TODO TODO()[] default @TODO();
 
-    WARNING WARNING() default @WARNING(warning = "");
+    WARNING WARNING()[] default @WARNING(warning = "");
 
-    LOGIC LOGIC() default @LOGIC();
+    LOGIC LOGIC()[] default @LOGIC();
 }
