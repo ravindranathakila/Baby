@@ -1,28 +1,21 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.TODO;
-import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.SmartLogger;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.html.HTMLDocument;
 
 import java.util.ResourceBundle;
-
-import static ai.ilikeplaces.servlets.Controller.Page.*;
 
 /**
  * @author Ravindranath Akila
@@ -34,7 +27,6 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
 
 
     final static protected String LocationId = RBGet.globalConfig.getString("LOCATIONID");
-
 
 
     /**
@@ -64,7 +56,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 
-                if (getUsername() != null) {
+                if (getUsername() == null) {
                     displayNone($(Controller.Page.AarrrJuice));
                     displayBlock($(Controller.Page.AarrrDownTownHeatMap));
                 } else {
