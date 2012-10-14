@@ -32,7 +32,7 @@ import java.util.Set;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
+@Interceptors({EntityManagerInjector.class, DBOffline.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDTribe extends AbstractSLBCallbacks implements HumanCRUDTribeLocal {
 // ------------------------------ FIELDS ------------------------------
 

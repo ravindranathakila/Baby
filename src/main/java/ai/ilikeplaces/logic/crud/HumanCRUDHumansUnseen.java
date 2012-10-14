@@ -1,8 +1,9 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.entities.*;
-import ai.ilikeplaces.logic.crud.unit.*;
+import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.HumansUnseen;
+import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.logic.crud.unit.CRUDHumansUnseenLocal;
 import ai.ilikeplaces.util.*;
 
 import javax.ejb.EJB;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
+@Interceptors({EntityManagerInjector.class, DBOffline.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
 public class HumanCRUDHumansUnseen extends AbstractSLBCallbacks implements HumanCRUDHumansUnseenLocal {
 
 
@@ -45,7 +46,7 @@ public class HumanCRUDHumansUnseen extends AbstractSLBCallbacks implements Human
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void removeEntry(final String humanId, final Long wallId) {
-           crudHumansUnseenLocal_.removeEntry(humanId,wallId);
+        crudHumansUnseenLocal_.removeEntry(humanId, wallId);
     }
 
     @Override

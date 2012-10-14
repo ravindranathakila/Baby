@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.crud;
 
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.Return;
 
 /**
@@ -9,7 +10,7 @@ import ai.ilikeplaces.util.Return;
  * Time: 11:03:15 PM
  */
 
-// @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public interface HumanCRUDMapLocal {
     final static public String NAME = HumanCRUDMapLocal.class.getSimpleName();
 
