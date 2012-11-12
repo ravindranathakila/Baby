@@ -24,7 +24,14 @@
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(ga, s);
         })();
+
     </script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <style type="text/css">
+        *:focus {
+            outline: none;
+        }
+    </style>
 </head>
 <body style="background-color:#ffffff;height:100%;" id="body">
 <div itsnat:nocache="true" xmlns:itsnat="http://itsnat.org/itsnat" style="height:100%;">
@@ -35,15 +42,6 @@
         </div>
         <div class="use100" id="Aarrr_morpheus">
             <div class="use100" id="Morpheus">
-                <div class="use100 center Morpheus_Dreams"
-                     style="color:#bcbbbb;font-weight:900;font-size:12px;background-color:#f7f1f1;overflow:hidden;display:none;">
-                    <div class="use309 Morpheus_Dreams_State">
-                    </div>
-                    <div class="use382 Morpheus_Dreams_Action">
-                    </div>
-                    <div class="use309 Morpheus_Dreams_Result">
-                    </div>
-                </div>
                 <div class="use100 Morpheus_Typewriter"
                      style="background-color:#f7f1f1;overflow:hidden;height:12px;">
                     <div class="use25 right">
@@ -79,6 +77,15 @@
                         <div class="use14 alphabet">X</div>
                         <div class="use14 alphabet">Y</div>
                         <div class="use14 alphabet">Z</div>
+                    </div>
+                </div>
+                <div class="use100 center Morpheus_Dreams"
+                     style="background-color:#f7f1f1;overflow:hidden;display:none;">
+                    <div class="use309 Morpheus_Dreams_State">
+                    </div>
+                    <div class="use382 Morpheus_Dreams_Action">
+                    </div>
+                    <div class="use309 Morpheus_Dreams_Result">
                     </div>
                 </div>
             </div>
@@ -173,8 +180,56 @@
 
 </script>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 <script type="text/javascript" src="/js/miniquarry/all_aarrr.js"></script>
+<script type="text/javascript">
+    ORIGINAL_DOCUMENT_TITLE = document.title;//Man, don't change this!
+
+    var lastUpdateTimeOfMorpheusDreams = (new Date()).getTime();
+    function clearMorpheusDreams() {
+        if ((new Date()).getTime() - lastUpdateTimeOfMorpheusDreams > 10000) {
+            $('.Morpheus_Dreams').slideUp();
+            $('.Morpheus_Dreams_State').empty();
+            $('.Morpheus_Dreams_Action').empty();
+            $('.Morpheus_Dreams_Result').empty();
+            $(document).attr("title", ORIGINAL_DOCUMENT_TITLE);
+        }
+    }
+
+    setInterval('clearMorpheusDreams()', 5000);
+
+    jQuery(document).ready(
+            function ($) {
+                $(".vtip").unbind().hover(
+                        function (e) {
+                            $('.Morpheus_Dreams_State').empty();
+                            $('.Morpheus_Dreams_Action').empty();
+                            $('.Morpheus_Dreams_Result').empty();
+
+                            if (this.title.indexOf("|") == -1) {
+                                $('.Morpheus_Dreams_State').text('_');
+                                $('.Morpheus_Dreams_Action').text(this.title);
+                                $('.Morpheus_Dreams_Result').text('_');
+                                $(document).attr("title", this.title);
+                            } else {
+                                var Morpheus_Dreams_SAR_Array = this.title.split("|");
+                                $('.Morpheus_Dreams_State').text(Morpheus_Dreams_SAR_Array[0]);
+                                $('.Morpheus_Dreams_Action').text(Morpheus_Dreams_SAR_Array[1]);
+                                $('.Morpheus_Dreams_Result').text(Morpheus_Dreams_SAR_Array[2]);
+                                $(document).attr("title", Morpheus_Dreams_SAR_Array[1]);
+                            }
+
+                            $('.Morpheus_Dreams').slideDown();
+
+                            lastUpdateTimeOfMorpheusDreams = (new Date()).getTime();
+
+                        },
+                        function () {
+                        }
+                );
+            }
+    );
+
+</script>
 
 </body>
 </html>
