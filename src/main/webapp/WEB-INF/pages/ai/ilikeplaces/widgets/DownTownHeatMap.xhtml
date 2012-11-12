@@ -16,45 +16,50 @@
 <script type="text/javascript">
 
 
- //var rooze = [{featureType:"all",elementType:"all",stylers:[{hue:"#ffbb00"}]},{featureType:"poi",elementType:"all",stylers:[{hue:"#ff3300"}]},{featureType:"landscape.man_made",elementType:"all", stylers:[{hue:"#ff3300"}]},{ featureType:"landscape.natural", elementType:"all", stylers:[{hue:"#b2ff00"}]}];
- var rooze = [
-  {
-    featureType: "water",
-    elementType: "all",
-    stylers: [
-      { saturation: -100 },
-      { lightness: 100 }
-    ]
-  },{
-    featureType: "transit",
-    elementType: "all",
-    stylers: [
-    ]
-  },{
-    featureType: "road",
-    elementType: "all",
-    stylers: [
-      { saturation: -100 }
-    ]
-  },{
-    featureType: "poi",
-    elementType: "all",
-    stylers: [
-      { saturation: -98 }
-    ]
-  },{
-    featureType: "landscape",
-    elementType: "all",
-    stylers: [
-      { saturation: -100 }
-    ]
-  },{
-    featureType: "administrative",
-    elementType: "all",
-    stylers: [
-      { saturation: -100 }
-    ]
-  }
+//var rooze = [{featureType:"all",elementType:"all",stylers:[{hue:"#ffbb00"}]},{featureType:"poi",elementType:"all",stylers:[{hue:"#ff3300"}]},{featureType:"landscape.man_made",elementType:"all", stylers:[{hue:"#ff3300"}]},{ featureType:"landscape.natural", elementType:"all", stylers:[{hue:"#b2ff00"}]}];
+var rooze = [
+    {
+        featureType:"water",
+        elementType:"all",
+        stylers:[
+            { saturation:-100 },
+            { lightness:100 }
+        ]
+    },
+    {
+        featureType:"transit",
+        elementType:"all",
+        stylers:[
+        ]
+    },
+    {
+        featureType:"road",
+        elementType:"all",
+        stylers:[
+            { saturation:-100 }
+        ]
+    },
+    {
+        featureType:"poi",
+        elementType:"all",
+        stylers:[
+            { saturation:-98 }
+        ]
+    },
+    {
+        featureType:"landscape",
+        elementType:"all",
+        stylers:[
+            { saturation:-100 }
+        ]
+    },
+    {
+        featureType:"administrative",
+        elementType:"all",
+        stylers:[
+            { saturation:-100 }
+        ]
+    }
 ];
 
 rooze = [];
@@ -66,19 +71,19 @@ focusLng = 0;
 zoom = 5;
 
 lastSelectedLocation = {
-            name:'',
+    name:'',
+    desc:'',
+    lat:undefined,
+    lng:undefined
+};
+
+function clearLastSelectedLocation() {
+    lastSelectedLocation = {
+        name:'',
         desc:'',
         lat:undefined,
         lng:undefined
     };
-
-function clearLastSelectedLocation(){
-    lastSelectedLocation = {
-            name:'',
-            desc:'',
-            lat:undefined,
-            lng:undefined
-        };
 }
 
 
@@ -86,23 +91,23 @@ function clearLastSelectedLocation(){
 lastSelectionInfoWindow = undefined;//to be intialized after google map loads
 lastSelectionInfoWindowContent = "<div id=\'lastSelectionInfoWindowTitle\' style=\'width:100%;overflow:hidden;font-weight:900;height:30px;text-align:right;\'>Title</div><div id=\'lastSelectionInfoWindowContent\'style=\'height:60px;text-align:right;\'>Content</div>"
 
-function getLastSelectionInfoWindow(){
-    if(!lastSelectionInfoWindow){
+function getLastSelectionInfoWindow() {
+    if (!lastSelectionInfoWindow) {
         lastSelectionInfoWindow = new google.maps.InfoWindow({
-                content: lastSelectionInfoWindowContent,
-                disableAutoPan: false
-            });
+            content:lastSelectionInfoWindowContent,
+            disableAutoPan:false
+        });
         lastSelectionInfoWindow.open(GAIA);
     }
-    if(lastSelectionInfoWindow.getMap() == undefined){
-            lastSelectionInfoWindow.setContent(lastSelectionInfoWindowContent);
-            lastSelectionInfoWindow.open(GAIA);
+    if (lastSelectionInfoWindow.getMap() == undefined) {
+        lastSelectionInfoWindow.setContent(lastSelectionInfoWindowContent);
+        lastSelectionInfoWindow.open(GAIA);
     }
     return lastSelectionInfoWindow;
 }
 
 
-function setLastSelectionInfoWindow(latLng, title, content){
+function setLastSelectionInfoWindow(latLng, title, content) {
     getLastSelectionInfoWindow().setPosition(latLng);
     $('#lastSelectionInfoWindowTitle').empty().text(title);
     $('#lastSelectionInfoWindowContent').empty().text(content);
@@ -110,302 +115,301 @@ function setLastSelectionInfoWindow(latLng, title, content){
 
 geocoder = undefined;
 
-function getGeocoder(){
+function getGeocoder() {
     return geocoder = geocoder != undefined ? geocoder : new google.maps.Geocoder();
 }
 
-function getAddress(latLng, callback){
+function getAddress(latLng, callback) {
     getGeocoder().geocode(
-        {
-            location:latLng
-        },
-        function(geocoderResult,geocoderStatus){
-            if(geocoderStatus == google.maps.GeocoderStatus.OK){
-                var locationString = '';
-                    for(var j in geocoderResult[0].address_components){
+            {
+                location:latLng
+            },
+            function (geocoderResult, geocoderStatus) {
+                if (geocoderStatus == google.maps.GeocoderStatus.OK) {
+                    var locationString = '';
+                    for (var j in geocoderResult[0].address_components) {
                         locationString += geocoderResult[0].address_components[j].long_name + ' ';
-                        if(j>1){
+                        if (j > 1) {
                             break;
                         }
                     }
-                 locationString;
-                 callback(locationString);
-            }else{
-                 getAddressReturnVal =  '';
+                    locationString;
+                    callback(locationString);
+                } else {
+                    getAddressReturnVal = '';
+                }
             }
-        }
     );
 }
 
 
-
 listOfHotSpots = new Array();
 
-function clearHotSpots(){
-    try{
-        for(var i in listOfHotSpots){
+function clearHotSpots() {
+    try {
+        for (var i in listOfHotSpots) {
             listOfHotSpots[i].setMap(null);
         }
-    }catch(err){
+    } catch (err) {
         alert(err);
     }
 }
 
 clearNotificationAreaFuncCacheLastText = undefined;
 
-function clearNotificationArea(){
-    if($('#CurrentActivityNotificationBox').is(':empty') == false){
-        if(clearNotificationAreaFuncCacheLastText == $('#CurrentActivityNotificationBox').text()){
+function clearNotificationArea() {
+    if ($('#CurrentActivityNotificationBox').is(':empty') == false) {
+        if (clearNotificationAreaFuncCacheLastText == $('#CurrentActivityNotificationBox').text()) {
             $('#CurrentActivityNotificationBox').empty();
-        }else{
+        } else {
             clearNotificationAreaFuncCacheLastText = $('#CurrentActivityNotificationBox').text();
         }
     }
 }
 
-function setNotificationFetchPositive(){//WARNING! used in java
-   setNotification('Wag Wag.. Look what I found!!');
+function setNotificationFetchPositive() {//WARNING! used in java
+    setNotification('Wag Wag.. Look what I found!!');
 }
 
-function setNotificationFetchNegative(){//WARNING! used in java
-   setNotification('Puff puff!!.. Nothing here for us... Nobody\'s been here in ages!');
+function setNotificationFetchNegative() {//WARNING! used in java
+    setNotification('Puff puff!!.. Nothing here for us... Nobody\'s been here in ages!');
 }
 
 simpleMomentAlertCount = 0;
 
-function setNotification(text){//WARNING! used in java
+function setNotification(text) {//WARNING! used in java
     simpleMomentAlertCount++;
-    if(simpleMomentAlertCount > 2){
-        $('#CurrentActivityNotificationBox').append('<span style=\'color:#c615af;font-size:18px;background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'+'Click on a marker or anywhere on map to start a Moment'+'<br/></span>');
-        setTimeout('setClearForLastNotification()',5000);
+    if (simpleMomentAlertCount > 2) {
+        $('#CurrentActivityNotificationBox').append('<span style=\'color:#c615af;font-size:18px;background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>' + 'Click on a marker or anywhere on map to start a Moment' + '<br/></span>');
+        setTimeout('setClearForLastNotification()', 5000);
         simpleMomentAlertCount = 0;
     }
 
-    $('#CurrentActivityNotificationBox').append('<span style=\'background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>'+text+'<br/></span>');
-    setTimeout('setClearForLastNotification()',5000);
+    $('#CurrentActivityNotificationBox').append('<span style=\'background-color:#ffffff;opacity:0.7;filter:alpha(opacity=70);\'>' + text + '<br/></span>');
+    setTimeout('setClearForLastNotification()', 5000);
 }
 
-function setActionLink(text, title, onclickActions, doClear){//WARNING! used in java
-    if(doClear){
+function setActionLink(text, title, onclickActions, doClear) {//WARNING! used in java
+    if (doClear) {
         $('#mapCustomControlsActionLinks').empty();
         $('#mapCustomControlsActionLinksTitle').empty().text(title);
         //$('#take_action_link').click(onclickActions);//since if not clear, some not-so-important actions are to follow and this is the most important out of them
     }
     $('#mapCustomControlsActionLinks').append(
-        '<div class=\'by\'><a style=\'font-size:18px;margin-right:0px;font-weight:900;cursor:pointer;color:#aa4400;text-decoration:underline;\' class=\'\'>'+text+'</a></div>');
+            '<div class=\'by\'><a style=\'font-size:18px;margin-right:0px;font-weight:900;cursor:pointer;color:#aa4400;text-decoration:underline;\' class=\'\'>' + text + '</a></div>');
     $('#mapCustomControlsActionLinks').children(':last').click(onclickActions);
     $('#mapCustomControlsActionLinks').append(
-        '<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
+            '<div class=\'by\' style=\'height:7px;\'>&nbsp;</div>');
 }
 
-function setClearForLastNotification(){
-   try{
-    $('#CurrentActivityNotificationBox').children(':first').remove();
-   }catch(err){
-    //ignoring since this will get cleared onclick too
-   }
+function setClearForLastNotification() {
+    try {
+        $('#CurrentActivityNotificationBox').children(':first').remove();
+    } catch (err) {
+        //ignoring since this will get cleared onclick too
+    }
 }
 
-function alertAndZoomIn(zoomTo){
-        setNotification("<span style=\'color:#B02;font-size:18px;background-color:#ffffff;opacity:1.0;filter:alpha(opacity=100);\'>'Zooming you in on this place because you're way too high up.</span>");
-        setNotification("Once you get a better view, click on the place.");
-        GAIA.setCenter(new google.maps.LatLng(lastSelectedLocation.lat,lastSelectedLocation.lng));
-        GAIA.setZoom(zoomTo);
+function alertAndZoomIn(zoomTo) {
+    setNotification("<span style=\'color:#B02;font-size:18px;background-color:#ffffff;opacity:1.0;filter:alpha(opacity=100);\'>'Zooming you in on this place because you're way too high up.</span>");
+    setNotification("Once you get a better view, click on the place.");
+    GAIA.setCenter(new google.maps.LatLng(lastSelectedLocation.lat, lastSelectedLocation.lng));
+    GAIA.setZoom(zoomTo);
 }
 
 //setInterval("clearNotificationArea()",7000);
 
- directionWorker = undefined;
- directionsDisplay = undefined;
+directionWorker = undefined;
+directionsDisplay = undefined;
 
- function hotSpotClicked(hotspotClickDetails){//WARNING! used in java
+function hotSpotClicked(hotspotClickDetails) {//WARNING! used in java
     clearLastSelectedLocation();
 
     lastSelectedLocation.name = hotspotClickDetails.commonName;
-    lastSelectedLocation.lat =  hotspotClickDetails.latitude;
-    lastSelectedLocation.lng =  hotspotClickDetails.longitude;
+    lastSelectedLocation.lat = hotspotClickDetails.latitude;
+    lastSelectedLocation.lng = hotspotClickDetails.longitude;
 
-    if(GAIA.getZoom() < 14){
+    if (GAIA.getZoom() < 14) {
         alertAndZoomIn(14);
         return;
     }
 
     setNotification("Great! You've selected a place. Check Actions!");
 
-    var position = new google.maps.LatLng(lastSelectedLocation.lat,lastSelectedLocation.lng);
+    var position = new google.maps.LatLng(lastSelectedLocation.lat, lastSelectedLocation.lng);
 
     getAddress(
-        position,
-        function(desc){
-            lastSelectedLocation.desc = desc;
-            $.prompt(impromptuPlaceDetailsPopup);
-            $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
-            $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
-        }
+            position,
+            function (desc) {
+                lastSelectedLocation.desc = desc;
+                $.prompt(impromptuPlaceDetailsPopup);
+                $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+                $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
+            }
     );
 
-    setLastSelectionInfoWindow(position, 'You selected '+hotspotClickDetails.commonName, 'Check Actions on Bottom Right of Page!');
+    setLastSelectionInfoWindow(position, 'You selected ' + hotspotClickDetails.commonName, 'Check Actions on Bottom Right of Page!');
 
     setActionLink(
-        "CREATE A MOMENT",
-        hotspotClickDetails.commonName,
-        function(){
-            $.prompt(impromptuPlaceDetailsPopup);
-            $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
-            $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
-        },
-        true
+            "CREATE A MOMENT",
+            hotspotClickDetails.commonName,
+            function () {
+                $.prompt(impromptuPlaceDetailsPopup);
+                $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+                $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
+            },
+            true
     );
- }
+}
 
- function renderRouteFromURL(){
-        var toLatLng = gup('toLatLng');
-        var toLat = toLatLng.split(',')[0];
-        var toLng = toLatLng.split(',')[1];
-        if(!toLat || !toLng){
-          return;
-        }
+function renderRouteFromURL() {
+    var toLatLng = gup('toLatLng');
+    var toLat = toLatLng.split(',')[0];
+    var toLng = toLatLng.split(',')[1];
+    if (!toLat || !toLng) {
+        return;
+    }
 
-        renderRoute(toLat,toLng);
- }
+    renderRoute(toLat, toLng);
+}
 
- function renderRoute(toLat,toLng){
+function renderRoute(toLat, toLng) {
 
-         try{
-           $.prompt.close();
-         }catch(err){
-             //nah we ignore this
-         }
+    try {
+        $.prompt.close();
+    } catch (err) {
+        //nah we ignore this
+    }
 
-         setUpDirectionStuff();
+    setUpDirectionStuff();
 
-         var from  = prompt('Where are you starting your journey from?');
-         directionWorker.route({
-                    origin:from,
-                    destination:new google.maps.LatLng(toLat,toLng),
-                    travelMode:google.maps.TravelMode.DRIVING
-                },
-                function(response,status){
-                    if (status == google.maps.DirectionsStatus.OK) {
-                        directionsDisplay.setDirections(response);
-                        setNotification("Did you know you can drag direction markers?");
-                    }else{
-                        if(confirm('Couldn\'t find a route to the place you gave :-( . Retry?')){
-                            renderRoute(toLat,toLng);
-                        }
+    var from = prompt('Where are you starting your journey from?');
+    directionWorker.route({
+                origin:from,
+                destination:new google.maps.LatLng(toLat, toLng),
+                travelMode:google.maps.TravelMode.DRIVING
+            },
+            function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                    setNotification("Did you know you can drag direction markers?");
+                } else {
+                    if (confirm('Couldn\'t find a route to the place you gave :-( . Retry?')) {
+                        renderRoute(toLat, toLng);
                     }
                 }
-         );
+            }
+    );
 
- }
+}
 
- function setUpDirectionStuff(){//Chose stuff over handler, manager, initializer. Lately starting to hate too techy words;)
-        directionWorker = ((directionWorker == undefined) ? (new google.maps.DirectionsService()) : directionWorker);
-        directionsDisplay = ((directionsDisplay == undefined) ? (new google.maps.DirectionsRenderer({draggable: true})) : directionsDisplay);
-        directionsDisplay.setMap(GAIA);
- }
+function setUpDirectionStuff() {//Chose stuff over handler, manager, initializer. Lately starting to hate too techy words;)
+    directionWorker = ((directionWorker == undefined) ? (new google.maps.DirectionsService()) : directionWorker);
+    directionsDisplay = ((directionsDisplay == undefined) ? (new google.maps.DirectionsRenderer({draggable:true})) : directionsDisplay);
+    directionsDisplay.setMap(GAIA);
+}
 
- function hotSpotMouseEnter(hotspotMouseEnterDetails){//WARNING! used in java
+function hotSpotMouseEnter(hotspotMouseEnterDetails) {//WARNING! used in java
     setNotification(hotspotMouseEnterDetails.commonName);
- }
+}
 
- function processMarker(markerInfo){
-    document.getElementById('mapCustomControlsSolidLinksWidget').style.zIndex='11';//Main notifications overlaps this div. Doing this immediately after pushing won't work either.
+function processMarker(markerInfo) {
+    document.getElementById('mapCustomControlsSolidLinksWidget').style.zIndex = '11';//Main notifications overlaps this div. Doing this immediately after pushing won't work either.
 
-    $('#mapCustomControlsSolidLinks').append('<span style=\'cursor:pointer;text-decoration:underline;font-size:13px;\'>'+markerInfo.commonName + '</span><div style=\'width:100%;height:5px;\'>&nbsp;</div> ');
+    $('#mapCustomControlsSolidLinks').append('<span style=\'cursor:pointer;text-decoration:underline;font-size:13px;\'>' + markerInfo.commonName + '</span><div style=\'width:100%;height:5px;\'>&nbsp;</div> ');
 
     var currentMarker = listOfHotSpots[0];
 
     $('#mapCustomControlsSolidLinks').children(':last').prev().click(
-        function(){
-            GAIA.setCenter(new google.maps.LatLng(markerInfo.latitude,markerInfo.longitude));
-            if(GAIA.getZoom() < 16){
-                GAIA.setZoom(GAIA.getZoom() + 2);
-            }else{
-                GAIA.setZoom(GAIA.getZoom() + 2);
+            function () {
+                GAIA.setCenter(new google.maps.LatLng(markerInfo.latitude, markerInfo.longitude));
+                if (GAIA.getZoom() < 16) {
+                    GAIA.setZoom(GAIA.getZoom() + 2);
+                } else {
+                    GAIA.setZoom(GAIA.getZoom() + 2);
+                }
             }
-        }
     );
 
     $('#mapCustomControlsSolidLinks').children(':last').prev()
-    .mouseenter(
-        function(){
-            currentMarker.setAnimation(google.maps.Animation.BOUNCE);
-        }
+            .mouseenter(
+            function () {
+                currentMarker.setAnimation(google.maps.Animation.BOUNCE);
+            }
     )
-    .mouseleave(
-        function(){
-            currentMarker.setAnimation(null);
-        }
+            .mouseleave(
+            function () {
+                currentMarker.setAnimation(null);
+            }
     );
- }
+}
 
-function getColoredMarkerWithIntensity(intensity, title){
-    if(intensity < 2 ){
+function getColoredMarkerWithIntensity(intensity, title) {
+    if (intensity < 2) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ff00cc|glyphish_map-marker|24|ff00cc|FB0';
     }
-    if(intensity < 4 ){
+    if (intensity < 4) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ee00aa|glyphish_map-marker|24|cc00aa|FB0';
     }
-    if(intensity < 6 ){
+    if (intensity < 6) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|dd0088|glyphish_map-marker|24|cc0088|FB0';
     }
-    if(intensity < 8 ){
+    if (intensity < 8) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|cc0066|glyphish_map-marker|24|990066|FB0';
     }
-    if(intensity < 10 ){
+    if (intensity < 10) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|bb0044|glyphish_map-marker|24|990044|FB0';
     }
-    if(intensity < 12 ){
+    if (intensity < 12) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|aa0022|glyphish_map-marker|24|660022|FB0';
     }
-    if(intensity >= 12 ){
+    if (intensity >= 12) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|990000|glyphish_map-marker|24|660000|FB0';
     }
 }
-function getMyColoredMarkerWithIntensity(intensity, title){
-    if(intensity < 2 ){
+function getMyColoredMarkerWithIntensity(intensity, title) {
+    if (intensity < 2) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ff99cc|glyphish_map-marker|24|00ffcc|FB0';
     }
-    if(intensity < 4 ){
+    if (intensity < 4) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|ee99aa|glyphish_map-marker|24|00ccaa|FB0';
     }
-    if(intensity < 6 ){
+    if (intensity < 6) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|dd9988|glyphish_map-marker|24|00cc88|FB0';
     }
-    if(intensity < 8 ){
+    if (intensity < 8) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|cc9966|glyphish_map-marker|24|009966|FB0';
     }
-    if(intensity < 10 ){
+    if (intensity < 10) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|bb9944|glyphish_map-marker|24|009944|FB0';
     }
-    if(intensity < 12 ){
+    if (intensity < 12) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|aa9922|glyphish_map-marker|24|006622|FB0';
     }
-    if(intensity >= 12 ){
+    if (intensity >= 12) {
         return 'http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=' + intensity + '|20|999900|glyphish_map-marker|24|006600|FB0';
     }
 }
 
 
-function zoomMap(){
+function zoomMap() {
     GAIA.setZoom(zoom);
 }
 
-function initialize_DownTownHeatMap_map(){
+function initialize_DownTownHeatMap_map() {
 
- var DWN_TWN_ID = 'dwntwn';
+    var DWN_TWN_ID = 'dwntwn';
 
-    myLatlng = new google.maps.LatLng(focusLat,focusLng);
+    myLatlng = new google.maps.LatLng(focusLat, focusLng);
     var myOptions = {
-        zoom: 5,
-        center: myLatlng,
-        mapTypeId: DWN_TWN_ID,
-        mapTypeControl: false,
+        zoom:5,
+        center:myLatlng,
+        mapTypeId:DWN_TWN_ID,
+        mapTypeControl:false,
         mapTypeControlOptions:{
             style:google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
             position:google.maps.ControlPosition.TOP_LEFT,
-            mapTypeIds: [DWN_TWN_ID, google.maps.MapTypeId.SATELLITE]
+            mapTypeIds:[DWN_TWN_ID, google.maps.MapTypeId.SATELLITE]
 
         },
         zoomControl:false,
@@ -417,7 +421,7 @@ function initialize_DownTownHeatMap_map(){
     };
 
     map = new google.maps.Map(document.getElementById("DownTownHeatMap_map"), myOptions);
- 
+
     GAIA = map;
 
 
@@ -428,161 +432,163 @@ function initialize_DownTownHeatMap_map(){
     panoramioLayer = new google.maps.panoramio.PanoramioLayer(panoramioLayerOpts);
     panoramioLayer.setMap(null);
 
-    google.maps.event.addListener(map, 'zoom_changed', function() {
-        if(GAIA.getZoom() > 16){
+    google.maps.event.addListener(map, 'zoom_changed', function () {
+        if (GAIA.getZoom() > 16) {
             panoramioLayer.setOptions(panoramioLayerOptsInfo);
-        }else{
+        } else {
             panoramioLayer.setOptions(panoramioLayerOptsNoInfo);
         }
     });
 
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsShowHide'), 'click', function() {
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsShowHide'), 'click', function () {
         var mapCustomControlsShowHideText = document.getElementById('mapCustomControlsShowHideText');
-        if(panoramioLayer.getMap() == map){
+        if (panoramioLayer.getMap() == map) {
             panoramioLayer.setMap(null);
-            mapCustomControlsShowHideText.innerHTML='Show Pics';
-        }else{
+            mapCustomControlsShowHideText.innerHTML = 'Show Pics';
+        } else {
             panoramioLayer.setMap(map);
-            mapCustomControlsShowHideText.innerHTML='Hide Pics';
+            mapCustomControlsShowHideText.innerHTML = 'Hide Pics';
         }
-     });
+    });
 
-     GAIA.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(document.getElementById('mapCustomControlsShowHide'));
+    GAIA.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(document.getElementById('mapCustomControlsShowHide'));
 
-     document.getElementById('mapCustomControlsSearchBox').index = 1;
-     GAIA.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('mapCustomControlsSearchBox'));
-     $('#CurrentActivityNotificationBox').mouseenter(function(){$(this).empty();});
+    document.getElementById('mapCustomControlsSearchBox').index = 1;
+    GAIA.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('mapCustomControlsSearchBox'));
+    $('#CurrentActivityNotificationBox').mouseenter(function () {
+        $(this).empty();
+    });
 
-     GAIA.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('mapCustomControlsSolidLinksWidget'));
+    GAIA.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('mapCustomControlsSolidLinksWidget'));
 
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNW'), 'click', function() {
-     GAIA.panBy(-30, -30);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSN'), 'click', function() {
-     GAIA.panBy(0, -50);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNE'), 'click', function() {
-     GAIA.panBy(30, -30);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSW'), 'click', function() {
-     GAIA.panBy(-50, 0);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSE'), 'click', function() {
-     GAIA.panBy(50, 0);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSSW'), 'click', function() {
-     GAIA.panBy(-30, 30);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSS'), 'click', function() {
-     GAIA.panBy(0, +50);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSSE'), 'click', function() {
-     GAIA.panBy(30, 30);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomIn'), 'click', function() {
-     GAIA.setZoom(GAIA.getZoom()+1);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomOut'), 'click', function() {
-     GAIA.setZoom(GAIA.getZoom()-1);
-     });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNW'), 'click', function () {
+        GAIA.panBy(-30, -30);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSN'), 'click', function () {
+        GAIA.panBy(0, -50);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSNE'), 'click', function () {
+        GAIA.panBy(30, -30);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSW'), 'click', function () {
+        GAIA.panBy(-50, 0);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSE'), 'click', function () {
+        GAIA.panBy(50, 0);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSSW'), 'click', function () {
+        GAIA.panBy(-30, 30);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSS'), 'click', function () {
+        GAIA.panBy(0, +50);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSSE'), 'click', function () {
+        GAIA.panBy(30, 30);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomIn'), 'click', function () {
+        GAIA.setZoom(GAIA.getZoom() + 1);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomOut'), 'click', function () {
+        GAIA.setZoom(GAIA.getZoom() - 1);
+    });
 
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomInMain'), 'click', function() {
-     GAIA.setZoom(GAIA.getZoom()+1);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomOutMain'), 'click', function() {
-     GAIA.setZoom(GAIA.getZoom()-1);
-     });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomInMain'), 'click', function () {
+        GAIA.setZoom(GAIA.getZoom() + 1);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomOutMain'), 'click', function () {
+        GAIA.setZoom(GAIA.getZoom() - 1);
+    });
 
-     (function(a){jQuery.browser.mobile=/android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))})(navigator.userAgent||navigator.vendor||window.opera);
-     if(jQuery.browser.mobile){
+    (function (a) {
+        jQuery.browser.mobile = /android|avantgo|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))
+    })(navigator.userAgent || navigator.vendor || window.opera);
+    if (jQuery.browser.mobile) {
         document.getElementById('mapCustomControlsNEWS').index = 1;
         GAIA.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('mapCustomControlsNEWS'));
-     }else{
+    } else {
         var adUnitDiv = document.getElementById('mapCustomControlsAdUnit');
         var adUnitOptions = {
-            format: google.maps.adsense.AdFormat.SQUARE,
-            position: google.maps.ControlPosition.RIGHT_BOTTOM,
-            map: GAIA,
-            visible: true,
-            publisherId: 'pub-6582809080416673'
+            format:google.maps.adsense.AdFormat.SQUARE,
+            position:google.maps.ControlPosition.RIGHT_BOTTOM,
+            map:GAIA,
+            visible:true,
+            publisherId:'pub-6582809080416673'
         }
         //adUnit = new google.maps.adsense.AdUnit(adUnitDiv, adUnitOptions);
-     }
+    }
 
 
-     GAIA.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('mapCustomControlsDownTownLink'));
+    GAIA.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('mapCustomControlsSolidActionsWidget'));
 
-     GAIA.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('mapCustomControlsSolidActionsWidget'));
+    GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsSignupForm'));
 
-     GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsSignupForm'));
+    GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsPersonIntros'));
 
-     GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsPersonIntros'));
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomInMain'), 'click', function () {
+        GAIA.setZoom(GAIA.getZoom() + 1);
+    });
+    google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomOutMain'), 'click', function () {
+        GAIA.setZoom(GAIA.getZoom() - 1);
+    });
 
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomInMain'), 'click', function() {
-     GAIA.setZoom(GAIA.getZoom()+1);
-     });
-     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomOutMain'), 'click', function() {
-     GAIA.setZoom(GAIA.getZoom()-1);
-     });
-
-     document.getElementById('mapCustomControlsNEWSZoomMain').index = 1;
-     GAIA.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('mapCustomControlsNEWSZoomMain'));
+    document.getElementById('mapCustomControlsNEWSZoomMain').index = 1;
+    GAIA.controls[google.maps.ControlPosition.TOP_RIGHT].push(document.getElementById('mapCustomControlsNEWSZoomMain'));
 
 
     <!--panoramioSingleClickEvent = undefined;-->
 
     <!--runPanoramioIfNotDblClick = function(){-->
-        <!--if(panoramioSingleClickEvent != undefined){-->
-            <!--alert(panoramioSingleClickEvent);-->
-        <!--}else{-->
-        <!--}-->
+    <!--if(panoramioSingleClickEvent != undefined){-->
+    <!--alert(panoramioSingleClickEvent);-->
+    <!--}else{-->
+    <!--}-->
     <!--}-->
 
     <!--google.maps.event.addListener(panoramioLayer, 'click', function(event) {-->
-        <!--panoramioSingleClickEvent = event;-->
-        <!--runPanoramioIfNotDblClick();-->
+    <!--panoramioSingleClickEvent = event;-->
+    <!--runPanoramioIfNotDblClick();-->
     <!--});-->
 
 
     var styledMapOptions = {
-        name: "DownTown"
+        name:"DownTown"
     };
 
     var dwntwnMapTyp = new google.maps.StyledMapType(rooze, styledMapOptions);
 
     GAIA.mapTypes.set(DWN_TWN_ID, dwntwnMapTyp);
 
-    initialGmapLoadListener = google.maps.event.addListener(map, 'bounds_changed', function() {
-        setTimeout("zoomMap()",10);
+    initialGmapLoadListener = google.maps.event.addListener(map, 'bounds_changed', function () {
+        setTimeout("zoomMap()", 10);
         google.maps.event.removeListener(initialGmapLoadListener);
     });
 
 
     //WE NEED TO DO THIS HERE BECAUSE SOMETIMES THIS ISN'T INITIALIZED UPON FIRST CALL AT getLastSelectionInfoWindow()
     lastSelectionInfoWindow = new google.maps.InfoWindow({
-            content: lastSelectionInfoWindowContent,
-            maxWidth:200,
-            disableAutoPan: false
-        });
+        content:lastSelectionInfoWindowContent,
+        maxWidth:200,
+        disableAutoPan:false
+    });
     lastSelectionInfoWindow.open(GAIA);
 
-    geoCodeToNotifications = function(){
-        if(GAIA.getZoom() > 13){
+    geoCodeToNotifications = function () {
+        if (GAIA.getZoom() > 13) {
             setNotification("Wait for me...");
 
             getAddress(
-                GAIA.getCenter(),
-                function(locationString){
-                    locationString = (locationString == '' || locationString == undefined ?  'Hey where are we?!!' : 'We are somewhere near.. ' + locationString );
+                    GAIA.getCenter(),
+                    function (locationString) {
+                        locationString = (locationString == '' || locationString == undefined ? 'Hey where are we?!!' : 'We are somewhere near.. ' + locationString );
 
-                    setNotification(locationString);
-                }
+                        setNotification(locationString);
+                    }
             );
         }
     };
 
-    alertWithPlaceMarkBox = function(){
-        if(18 > GAIA.getZoom()){
+    alertWithPlaceMarkBox = function () {
+        if (18 > GAIA.getZoom()) {
             setNotification("<span style=\'color:#B02;font-size:18px;background-color:#ffffff;opacity:1.0;filter:alpha(opacity=100);\'>To mark new places on map you need to zoom to street level</span>");
             setNotification("<span style=\'color:#B02;font-size:18px;background-color:#ffffff;opacity:1.0;filter:alpha(opacity=100);\'>Zooming you in. Then you can select a PRECISE PLACE.</span>");
             GAIA.setZoom(GAIA.getZoom() + 2);
@@ -593,70 +599,70 @@ function initialize_DownTownHeatMap_map(){
 
         clearLastSelectedLocation();
 
-        lastSelectedLocation.lat =   GAIA.getCenter().lat();
-        lastSelectedLocation.lng =   GAIA.getCenter().lng();
+        lastSelectedLocation.lat = GAIA.getCenter().lat();
+        lastSelectedLocation.lng = GAIA.getCenter().lng();
 
-        if(GAIA.getZoom() < 14){
+        if (GAIA.getZoom() < 14) {
             alertAndZoomIn(14);
             return;
         }
 
         getAddress(
-            GAIA.getCenter(),
-            function(address){
-                setNotification('You selected ' + address);
-                $('#mapCustomControlsActionLinksTitle').empty().text(address);//hack to our own code due to late network loading :'(
-                $('#lastSelectionInfoWindowTitle').empty().text(address);
-                lastSelectedLocation.desc = address;
-                lastSelectedLocation.name = address;
-            }
+                GAIA.getCenter(),
+                function (address) {
+                    setNotification('You selected ' + address);
+                    $('#mapCustomControlsActionLinksTitle').empty().text(address);//hack to our own code due to late network loading :'(
+                    $('#lastSelectionInfoWindowTitle').empty().text(address);
+                    lastSelectedLocation.desc = address;
+                    lastSelectedLocation.name = address;
+                }
         );
 
-        var position = new google.maps.LatLng(lastSelectedLocation.lat,lastSelectedLocation.lng);
+        var position = new google.maps.LatLng(lastSelectedLocation.lat, lastSelectedLocation.lng);
 
         getAddress(
-            position,
-            function(desc){
-                lastSelectedLocation.desc = desc;
-                $.prompt(impromptuPlaceDetailsPopup);
-                $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
-                $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
-            }
+                position,
+                function (desc) {
+                    lastSelectedLocation.desc = desc;
+                    $.prompt(impromptuPlaceDetailsPopup);
+                    $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+                    $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
+                }
         );
 
-        setLastSelectionInfoWindow(GAIA.getCenter(),lastSelectedLocation.name, 'Check Actions on Bottom Right of Page!');
+        setLastSelectionInfoWindow(GAIA.getCenter(), lastSelectedLocation.name, 'Check Actions on Bottom Right of Page!');
 
         setNotification("Great! You've selected a place. Check Actions!");
 
         setActionLink(
-            "CREATE A MOMENT",
-            lastSelectedLocation.name,
-            function(){
-               $.prompt(impromptuPlaceDetailsPopup);
-               $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
-               $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
-            },
-            true
+                "CREATE A MOMENT",
+                lastSelectedLocation.name,
+                function () {
+                    $.prompt(impromptuPlaceDetailsPopup);
+                    $("#impromptuPlaceDetailsPlaceName").attr('value', lastSelectedLocation.name);
+                    $("#impromptuPlaceDetailsPlaceDetails").attr('value', lastSelectedLocation.desc);
+                },
+                true
         );
     };
 
-    runIfNotDblClick = function(event){
-        if(singleClick){
+    runIfNotDblClick = function (event) {
+        if (singleClick) {
             GAIA.setCenter(currentSingleClickEvent.latLng);
-            setTimeout("alertWithPlaceMarkBox()",500);
+            setTimeout("alertWithPlaceMarkBox()", 500);
         }
     };
 
     singleClick = false;
     currentSingleClickEvent = undefined;
 
-    google.maps.event.addListener(map, 'click', function(event) {// duh! :-( google map zoom on double click!
+    google.maps.event.addListener(map, 'click', function (event) {// duh! :-( google map zoom on double click!
         singleClick = true;
         currentSingleClickEvent = event;
         setTimeout("runIfNotDblClick()", 500);
     });
 
-    google.maps.event.addListener(map, 'dblclick', function(event) {// duh! :-( google map zoom on double click!
+    google.maps.event.addListener(map, 'dblclick', function (event) {// duh! :-( google map zoom on double click!
         singleClick = false;
     });
 
@@ -664,44 +670,44 @@ function initialize_DownTownHeatMap_map(){
     //    placeMarker.setPosition(GAIA.getCenter());
     //});
 
-    google.maps.event.addListener(map, 'idle', function() {
+    google.maps.event.addListener(map, 'idle', function () {
         geoCodeToNotifications();
     });
 
-    google.maps.event.addListener(map, 'idle', function() {
+    google.maps.event.addListener(map, 'idle', function () {
         $('#mapCustomControlsSolidLinks').empty();
     });
 
 
-    function listenerCallOnDownTownHeatMapBBUpdate(){
-            setNotification('Sniff Sniff....');
-             var curr = DownTownHeatMapBBUpdate(
+    function listenerCallOnDownTownHeatMapBBUpdate() {
+        setNotification('Sniff Sniff....');
+        var curr = DownTownHeatMapBBUpdate(
                 GAIA.getBounds().getSouthWest().lat(),
                 GAIA.getBounds().getSouthWest().lng(),
                 GAIA.getBounds().getNorthEast().lat(),
                 GAIA.getBounds().getNorthEast().lng());
-            clearHotSpots();
-            curr.focus();
-            curr.blur();
+        clearHotSpots();
+        curr.focus();
+        curr.blur();
     }
 
-    google.maps.event.addListener(map, 'idle', function() {
-        if(GAIA.getZoom()>7){
+    google.maps.event.addListener(map, 'idle', function () {
+        if (GAIA.getZoom() > 7) {
             listenerCallOnDownTownHeatMapBBUpdate();
         }
     });
-	
-    google.maps.event.addListener(map, 'idle', function() {
-        if(GAIA.getZoom()<=7){
+
+    google.maps.event.addListener(map, 'idle', function () {
+        if (GAIA.getZoom() <= 7) {
             setNotification('Whoa! we\'re too high up!');
         }
     });
 
-    google.maps.event.addListener(map, 'idle', function() {
-        if(GAIA.getZoom()>=18){
+    google.maps.event.addListener(map, 'idle', function () {
+        if (GAIA.getZoom() >= 18) {
             GAIA.setMapTypeId(google.maps.MapTypeId.SATELLITE); //Setting the map to sattelite mode for user to see where the building is properly
             setNotification('Map is now in satellite mode so that you can see actual places to choose from.');
-        }else{
+        } else {
             GAIA.setMapTypeId(DWN_TWN_ID);//Resetting the map to normal mode
         }
     });
@@ -709,23 +715,23 @@ function initialize_DownTownHeatMap_map(){
 
 initialize_gmap_scripts_done = false;
 
-if(initialize_gmap_scripts_done){
+if (initialize_gmap_scripts_done) {
     renderRouteFromURL()
-}else{
-    try{
-       setTimeout('renderRouteFromURL()',5000);
-    }catch(err){
-       try{
-          setTimeout('renderRouteFromURL()',10000);
-       }catch(err){
-           //to hell with it!
-       }
+} else {
+    try {
+        setTimeout('renderRouteFromURL()', 5000);
+    } catch (err) {
+        try {
+            setTimeout('renderRouteFromURL()', 10000);
+        } catch (err) {
+            //to hell with it!
+        }
     }
 }
 
 
-function initialize_gmap_scripts(){//wise any changes also to initialize_gmap_scripts_transparently
-    if(!initialize_gmap_scripts_done){
+function initialize_gmap_scripts() {//wise any changes also to initialize_gmap_scripts_transparently
+    if (!initialize_gmap_scripts_done) {
         document.getElementById("DownTownHeatMap_load_click").style.display = "none";
         document.getElementById("DownTownHeatMap_map_wrapper").style.display = "block";
         var scripts = document.createElement("script");
@@ -733,316 +739,351 @@ function initialize_gmap_scripts(){//wise any changes also to initialize_gmap_sc
         scripts.src = "http://maps.google.com/maps/api/js?sensor=false&callback=initialize_DownTownHeatMap_map&libraries=adsense,panoramio";
         document.body.appendChild(scripts);
         initialize_gmap_scripts_done = true;
-    }else{
+    } else {
         //map already loaded
     }
 
 }
 
-function initialize_gmap_scripts_transparently(){//wise any changes also to initialize_gmap_scripts
-    if(!initialize_gmap_scripts_done){
+function initialize_gmap_scripts_transparently() {//wise any changes also to initialize_gmap_scripts
+    if (!initialize_gmap_scripts_done) {
         var scripts = document.createElement("script");
         scripts.type = "text/javascript";
         scripts.src = "http://maps.google.com/maps/api/js?sensor=false&callback=initialize_DownTownHeatMap_map&libraries=adsense,panoramio";
         document.body.appendChild(scripts);
-    }else{
+    } else {
         //map already loaded
     }
 
 }
 
 
-function setMapToLocation(value){
-    try{
+function setMapToLocation(value) {
+    try {
         getGeocoder().geocode(
-            {address:value},
-            function(geocoderResult, geocoderStatus){
-                if(geocoderStatus == google.maps.GeocoderStatus.OK){
-                    if(!(zoomInHint = !zoomInHint)){
+                {address:value},
+                function (geocoderResult, geocoderStatus) {
+                    if (geocoderStatus == google.maps.GeocoderStatus.OK) {
+                        if (!(zoomInHint = !zoomInHint)) {
+                        }
+                        GAIA.setCenter(geocoderResult[0].geometry.location);
+                        var llb = geocoderResult[0].geometry.viewport;
+                        GAIA.fitBounds(llb);
+                    } else {
+                        setNotification('No find ' + value + ' :(  (try city, state or a larger place)');
                     }
-                    GAIA.setCenter(geocoderResult[0].geometry.location);
-                    var llb = geocoderResult[0].geometry.viewport;
-                    GAIA.fitBounds(llb);
-                }else{
-                    setNotification('No find '+value+' :(  (try city, state or a larger place)');
                 }
-            }
         );
-    }catch(err){
+    } catch (err) {
     }
 }
 
 </script>
-    <div class="by" style="overflow:hidden;height:99%;" id="DownTownHeatMap_load_click">
-        <div></div>
-        <div class="by center" style="cursor:pointer;">
-            <a href="/page/Earth_of_Earth?WOEID=1" style="text-decoration:none;">
-             <img src="/images/circle.gif" style="width:30px;" alt="Loading..." />
-            </a>
-        </div>
-        <div></div>
+<div class="by" style="overflow:hidden;height:99%;" id="DownTownHeatMap_load_click">
+    <div></div>
+    <div class="by center" style="cursor:pointer;">
+        <a href="/page/Earth_of_Earth?WOEID=1" style="text-decoration:none;">
+            <img src="/images/circle.gif" style="width:30px;" alt="Loading..."/>
+        </a>
     </div>
-    <div class="by" style="overflow:hidden;display:none;height:99%;" id="DownTownHeatMap_map_wrapper">
-        <div id="DownTownHeatMap_map" class="by" style="height:100%;font-size:12px;">
-        </div>
+    <div></div>
+</div>
+<div class="by" style="overflow:hidden;display:none;height:99%;" id="DownTownHeatMap_map_wrapper">
+    <div id="DownTownHeatMap_map" class="by" style="height:100%;font-size:12px;">
     </div>
-    <div class="by center" style="height:1%;overflow:hidden;">
-        <div class="by2 center">
-            <input type="text" class="by center" id="DownTownHeatMapWOEID" value="0,0" readonly="readonly" style="background-color:transparent;color:transparent;border:none;" onfocus="javascript:$(window).scrollTop($(document).height());"/>
-        </div>
-        <div class="by2 center">
-            <input type="text" class="by center" id="DownTownHeatMapBB" value="0,0" readonly="readonly" style="background-color:transparent;color:transparent;border:none;" onfocus="javascript:$(window).scrollTop($(document).height());"/>
-        </div>
+</div>
+<div class="by center" style="height:1%;overflow:hidden;">
+    <div class="by2 center">
+        <input type="text" class="by center" id="DownTownHeatMapWOEID" value="0,0" readonly="readonly"
+               style="background-color:transparent;color:transparent;border:none;"
+               onfocus="javascript:$(window).scrollTop($(document).height());"/>
     </div>
-    <div style="display:none;">
-        <div id="mapCustomControlsPersonIntros" style="width:19.1%;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);padding: 5px 5px 5px 5px;display:none;" class="lose_attn">
-            <div class="use100" id="impromptuRealityAmandaPopupLink" style="cursor:pointer;display:none;">
-                <div class="use191 center">
-                    <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG" class="use90 use5p use5a ajax_image" alt="Loading..." title="/images/amanda_jane_profile_pic_th.jpg" style="padding: 3px 3px 3px 3px; background-color:#eeeeee;"/>
-                </div>
-                <div class="use618 center" style="font-size:16px;font-weight:900;text-transform: uppercase;color:#919090;padding: 5px 0px 0px 0px;">
-                    Amanda Jane
-                </div>
-                <div class="use618 center" style="font-size:12px;font-weight:900;padding: 5px 0px 0px 0px;">
-                    Her trip to Cudillero!
-                </div>
-                <div class="use191">
-                    &nbsp;
-                </div>
+    <div class="by2 center">
+        <input type="text" class="by center" id="DownTownHeatMapBB" value="0,0" readonly="readonly"
+               style="background-color:transparent;color:transparent;border:none;"
+               onfocus="javascript:$(window).scrollTop($(document).height());"/>
+    </div>
+</div>
+<div style="display:none;">
+    <div id="mapCustomControlsPersonIntros"
+         style="width:19.1%;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);padding: 5px 5px 5px 5px;display:none;"
+         class="lose_attn">
+        <div class="use100" id="impromptuRealityAmandaPopupLink" style="cursor:pointer;display:none;">
+            <div class="use191 center">
+                <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG"
+                     class="use90 use5p use5a ajax_image" alt="Loading..."
+                     title="/images/amanda_jane_profile_pic_th.jpg"
+                     style="padding: 3px 3px 3px 3px; background-color:#eeeeee;"/>
             </div>
-            <div class="use100" style="height:5px;background-color:none;">&nbsp;</div>
+            <div class="use618 center"
+                 style="font-size:16px;font-weight:900;text-transform: uppercase;color:#919090;padding: 5px 0px 0px 0px;">
+                Amanda Jane
+            </div>
+            <div class="use618 center" style="font-size:12px;font-weight:900;padding: 5px 0px 0px 0px;">
+                Her trip to Cudillero!
+            </div>
+            <div class="use191">
+                &nbsp;
+            </div>
         </div>
+        <div class="use100" style="height:5px;background-color:none;">&nbsp;</div>
     </div>
-    <div style="display:none;">
-        <div id="mapCustomControlsSignupForm" style="width:30.9%;display:block;">
-            <div id="DownTownHeatMapSignupWidget" class="use90 use5p use5a" style="padding:4px solid #dddddd;">
-                <div class="use80 use10a use10p">
-                    <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
-                        Enter Your Email
-                    </div>
-                    <div class="use100">
-                        <input
-                                class="ClassDownTownHeatMapSignupEmail"
-                                id="DownTownHeatMapSignupEmail"
-                                style="width:100%;color:#000000;height:34px;border:4px solid #dddddd;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+</div>
+<div style="display:none;">
+<div id="mapCustomControlsSignupForm" style="width:30.9%;display:block;">
+    <div id="DownTownHeatMapSignupWidget" class="use90 use5p use5a" style="padding:4px solid #dddddd;">
+        <div class="use80 use10a use10p">
+            <div class="use100"
+                 style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
+                Enter Your Email
+            </div>
+            <div class="use100">
+                <input
+                        class="ClassDownTownHeatMapSignupEmail"
+                        id="DownTownHeatMapSignupEmail"
+                        style="width:100%;color:#000000;height:34px;border:4px solid #dddddd;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
                         />
-                    </div>
-                    <div class="use100" style="height:5px;">
+            </div>
+            <div class="use100" style="height:5px;">
 
-                    </div>
-                    <div class="use100" style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
-                        Choose a Password
-                    </div>
-                    <div class="use100" style="color:#000000;font-size:10px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
-                        (we won't store it)
-                        (it should be at least 8 characters long)
-                    </div>
-                    <div class="use100">
-                        <input
-                                id="DownTownHeatMapSignupPassword"
-                                style="width:100%;color:#000000;height:34px;border:4px solid #dddddd;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
-                                type="password"
+            </div>
+            <div class="use100"
+                 style="color:#000000;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
+                Choose a Password
+            </div>
+            <div class="use100"
+                 style="color:#000000;font-size:10px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;">
+                (we won't store it)
+                (it should be at least 8 characters long)
+            </div>
+            <div class="use100">
+                <input
+                        id="DownTownHeatMapSignupPassword"
+                        style="width:100%;color:#000000;height:34px;border:4px solid #dddddd;font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+                        type="password"
                         />
-                    </div>
-                    <div class="use100 center" >
+            </div>
+            <div class="use100 center">
                         <span
                                 id="DownTownHeatMapSignupNotifications"
                                 style="width:100%;text-align:center;color:#000000;font-weight:900;">
                             &nbsp;
                         </span>
-                    </div>
-                    <div class="use90 use5a use5p"
-                           id="DownTownHeatMapSignupButton"
-                           style="height:28px;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;opacity:0.8;filter:alpha(opacity=80);">
-                         <img src="/images/circle.gif" alt="Sign Up!" class="use100 ajax_image" title="/images/Sign Up_Button.png"/>
-                    </div>
-                    <div class="use100 center" style="height:10px;">
-                        &nbsp;
-                    </div>
-                    <div class="use100 center">
-                            <hr style="color:#000000;background-color:#000000;"/>
-                           <a href="https://www.pivotaltracker.com/projects/384415/overview"
-                              target="_blank"
-                              style="font-size:12px;font-weight:900;color:#000000;text-decoration:underline;">SUGGEST A FEATURE <img src="/images/bulb.gif" alt=" " style="height:12px;" title="Attribution: http://findicons.com/icon/179702/bulb_on?id=180061"/> OR REPORT A BUG <img src="/images/bug.gif" alt=" " style="height:12px;" title="Attribution: http://findicons.com/icon/64935/bug"/></a>
-                    </div>
-                </div>
-                </div>
-        </div>
-        <div id="mapCustomControlsAdUnit" class="by5" style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
-        </div>
-        <div id="mapCustomControlsSolidLinksWidget" class="bold" style="width:30.9%;">
-            <div class="by" style="height:5px;">&nbsp;</div>
-            <div class="by">
-                <div class="use5">&nbsp;</div>
-                <div class="use90">
-                    <div class="by bold center">
-                        <span id="img_on_the_map"
-                             style="cursor:pointer;font-size:20px;text-decoration:underline;font-weight:900;letter-spacing:-1px;"
-                             class="use100 vtip center" onclick="javascript:$('#mapCustomControlsSolidLinks').slideToggle();$('#mapCustomControlsHiddenNoti').slideToggle();"
-                             title="Click to show hide">
-                            WHAT'S ON THE MAP?
-                        </span>
-                    </div>
-                    <div class="by" style="height:3px;">
-                        &nbsp;
-                    </div>
-                    <div class="by center" style="height:10px;display:block;" id="mapCustomControlsHiddenNoti">
-                        Hidden! Click above to show.
-                    </div>
-                    <div class="use191" style="background-color:transparent;">&nbsp;</div>
-                    <div id="mapCustomControlsSolidLinks" class="bold use618 center" style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);display:none;">
-                    </div>
-                    <div class="use191" style="background-color:transparent;">&nbsp;</div>
-                </div>
-                <div class="use5">&nbsp;</div>
+            </div>
+            <div class="use90 use5a use5p"
+                 id="DownTownHeatMapSignupButton"
+                 style="height:28px;line-height:28px;;font-size:21.3px;font-weight:900;cursor:pointer;border:1px;text-align:center;vertical-align:middle;opacity:0.8;filter:alpha(opacity=80);">
+                <img src="/images/circle.gif" alt="Sign Up!" class="use100 ajax_image"
+                     title="/images/Sign Up_Button.png"/>
+            </div>
+            <div class="use100 center" style="height:10px;">
+                &nbsp;
+            </div>
+            <div class="use100 center">
+                <hr style="color:#000000;background-color:#000000;"/>
+                <a href="https://www.pivotaltracker.com/projects/384415/overview"
+                   target="_blank"
+                   style="font-size:12px;font-weight:900;color:#000000;text-decoration:underline;">SUGGEST A FEATURE
+                    <img src="/images/bulb.gif" alt=" " style="height:12px;"
+                         title="Attribution: http://findicons.com/icon/179702/bulb_on?id=180061"/> OR REPORT A BUG <img
+                            src="/images/bug.gif" alt=" " style="height:12px;"
+                            title="Attribution: http://findicons.com/icon/64935/bug"/></a>
             </div>
         </div>
-        <div id="mapCustomControlsSolidActionsWidget" class="bold" style="width:19.1%;overflow:hidden;">
-            <div style="height:50px;" class="by">&nbsp;</div>
-            <div class="by" style="height:5px;">&nbsp;</div>
-            <div class="by">
-                <div class="use100">
-                    <div class="use100" style="color:#bb0022;text-align:center;">
-                        <h2 id="mapCustomControlsActionLinksTitle" style="font-size:22px;">&nbsp;</h2>
-                    </div>
-                    <div class="use80 use10p use10a">
-                        <div class="use100" style="height:5px;">
-                            &nbsp;
-                        </div>
-                        <div id="mapCustomControlsActionLinks" class="use100" style="text-align:center;">
-                        </div>
-                        <div class="use100" style="height:5px;">
-                            &nbsp;
-                        </div>
-                    </div>
-                    <div class="use100 bold center" id="take_action_link" style="cursor:pointer;">
-                        <hr/>
+    </div>
+</div>
+<div id="mapCustomControlsAdUnit" class="by5"
+     style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);">
+</div>
+<div id="mapCustomControlsSolidLinksWidget" class="bold" style="width:30.9%;">
+    <div class="by" style="height:5px;">&nbsp;</div>
+    <div class="by">
+        <div class="use5">&nbsp;</div>
+        <div class="use90">
+            <div class="by bold center">
+                        <span id="img_on_the_map"
+                              style="cursor:pointer;font-size:20px;text-decoration:underline;font-weight:900;letter-spacing:-1px;"
+                              class="use100 vtip center"
+                              onclick="javascript:$('#mapCustomControlsSolidLinks').slideToggle();$('#mapCustomControlsHiddenNoti').slideToggle();"
+                              title="Click to show hide">
+                            WHAT'S ON THE MAP?
+                        </span>
+            </div>
+            <div class="by" style="height:3px;">
+                &nbsp;
+            </div>
+            <div class="by center" style="height:10px;display:block;" id="mapCustomControlsHiddenNoti">
+                Hidden! Click above to show.
+            </div>
+            <div class="use191" style="background-color:transparent;">&nbsp;</div>
+            <div id="mapCustomControlsSolidLinks" class="bold use618 center"
+                 style="color:#000000;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);display:none;">
+            </div>
+            <div class="use191" style="background-color:transparent;">&nbsp;</div>
+        </div>
+        <div class="use5">&nbsp;</div>
+    </div>
+</div>
+<div id="mapCustomControlsSolidActionsWidget" class="bold" style="width:19.1%;overflow:hidden;">
+    <div style="height:50px;" class="by">&nbsp;</div>
+    <div class="by" style="height:5px;">&nbsp;</div>
+    <div class="by">
+        <div class="use100">
+            <div class="use100" style="color:#bb0022;text-align:center;">
+                <h2 id="mapCustomControlsActionLinksTitle" style="font-size:22px;">&nbsp;</h2>
+            </div>
+            <div class="use80 use10p use10a">
+                <div class="use100" style="height:5px;">
+                    &nbsp;
+                </div>
+                <div id="mapCustomControlsActionLinks" class="use100" style="text-align:center;">
+                </div>
+                <div class="use100" style="height:5px;">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="use100 bold center" id="take_action_link" style="cursor:pointer;">
+                <hr/>
                         <span class="center" style="font-size:20px;font-weight:900;letter-spacing:-1px;">
                             ACTIONS
                         </span>
-                    </div>
-                </div>
             </div>
-            <div class="by"  style="height:5px;">&nbsp;</div>
-        </div>
-        <div id="mapCustomControlsDownTownLink" class="center" style="width:19.1%;overflow:hidden;">
-            <img src="/images/circle.gif" alt="Down Town" class="use100 ajax_image" title="/images/downtown_logo_home_page_2t.png" style="cursor:pointer;" onclick="javascript:window.location.href = '/page/_org';"/>
-        </div>
-        <div id="mapCustomControlsShowHide" style="width:140px;;" class="lose_attn">
-            <div style="display:none;">
-                    <img src="/images/circle.gif" alt="Show Pics" title="/images/Show Pics_Button.png" class="use100 ajax_image"/>
-            </div>
-        </div>
-        <div id="mapCustomControlsNEWS" class="by5" style="height:200px;width:144px;">
-			<div class="by" style="height:135px;">
-				<div class="by" style="height:45px;">
-                <div class="by3" style="height:45px;">
-                    <div id="mapCustomControlsNEWSNW" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/arrow_sans_upperleft_32t.png" style="height:100%;" alt="&#8598;"/></div>
-                </div>
-                <div class="by3" style="height:45px;">
-                    <div id="mapCustomControlsNEWSN" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/arrow_sans_up_32t.png" style="height:100%;" alt="&uarr;"/></div>
-                </div>
-                <div class="by3" style="height:45px;">
-                    <div id="mapCustomControlsNEWSNE" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/arrow_sans_upperright_32t.png" style="height:100%;" alt="&#8599;"/></div>
-                </div>
-            </div>
-				<div class="by" style="height:45px;">
-                <div class="by3" style="height:45px;">
-                    <div id="mapCustomControlsNEWSW" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/arrow_sans_left_32t.png" style="height:100%;" alt="&larr;"/></div>
-                </div>
-                <div class="by3" style="height:45px;">
-                    <div id="mapCustomControlsNEWSZoom" class="by" style="font-size:24px;font-weight:bold;text-align:center;height:100%;">
-                        &nbsp;</div>
-                </div>
-                <div class="by3" style="height:45px;">
-                    <div id="mapCustomControlsNEWSE" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/arrow_sans_right_32t.png" style="height:100%;" alt="&rarr;"/></div>
-                </div>
-            </div>
-				<div class="by" style="height:45px;">
-                <div class="by3" style="height:45px;">
-                    <div id="mapCustomControlsNEWSSW" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/arrow_sans_lowerleft_32t.png" style="height:100%;" alt="&#8601;"/></div>
-                </div>
-                <div class="by3" style="height:45px;">
-
-                    <div id="mapCustomControlsNEWSS" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/arrow_sans_down_32t.png" style="height:100%;" alt="&darr;"/></div>
-                </div>
-                <div class="by3" style="height:45px;">
-                    <div id="mapCustomControlsNEWSSE" class="by" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="/images/arrow_sans_lowerright_32t.png" style="height:100%;" alt="&#8600;"/></div>
-                </div>
-
-            </div>
-			</div>
-            <div class="by" style="height:20px;">&nbsp;
-            </div>
-            <div class="by" style="height:45px;">
-                <div class="by" style="height:45px;">
-                    <div id="mapCustomControlsNEWSZoomIn" class="by2" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_in_32.png" style="height:100%;" alt="+"/></div>
-                    <div id="mapCustomControlsNEWSZoomOut" class="by2" style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_out_32.png" style="height:100%;" alt="-"/></div>
-                </div>
-            </div>
-        </div>
-        <div class="by lose_attn" id="mapCustomControlsNEWSZoomMain" style="height:123.6px;width:200px;opacity:0.8;filter:alpha(opacity=80);">
-            <div style="width:100%;height:100%;">
-                <div class="use618" style="height:100%;">
-                    &nbsp;
-                </div>
-                <div class="use382" style="height:100%;">
-                    <div class="use618" style="height:38.2%;">
-                        &nbsp;
-                    </div>
-                    <div id="mapCustomControlsNEWSZoomOutMain" class="use382" style="height:38.2%;cursor:pointer;">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_out_32.png" style="width:100%;" alt="-"/></div>
-                    <div id="mapCustomControlsNEWSZoomInMain" class="use618" style="height:61.8%;cursor:pointer;">
-                        <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_in_32.png"  style="width:100%;" alt="+"/></div>
-                    <div class="use382" style="height:61.8%;">
-                        &nbsp;
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="mapCustomControlsSearchBox" style="width:38.2%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
-                    <div class="use100">
-                        <div class="use5" style="height:89px;;">&nbsp;</div>
-                        <div class="use90" style="height:89px;;">
-                            <div style="width:100%;height:5px;">&nbsp;</div>
-                            <div style="width:100%;height:34px;">
-                                <div class="use100" style="height:34px;">
-                                    <input class="vtip use100 center layer_2"
-                                       id="searchboxmap"
-                                       style="color:#000000;height:34px;border:4px solid #dddddd; font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
-                                       value="e.g. las vegas, united states"
-                                       tabindex="3"
-                                       onchange="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
-                                        />
-                                </div>
-                            </div>
-                            <div style="width:100%;height:50px;overflow:hidden;">
-                                <div class="use50 use25a use25p center vtip"
-                                       id="searchButtonMap"
-                                       title="This is for searching for a place|Enter place name in the Go Fetch box and click search|The map will focus the place if it is found"
-                                       onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
-                                       style="height:100%;cursor:pointer;opacity:0.8;filter:alpha(opacity=80);">
-                                    <img  src="/images/circle.gif" alt="Go Fetch!" class="ajax_image" title="/images/Go Fetch_Button.png" style="width:100%;"/>
-                                </div>
-                             </div>
-                        </div>
-                        <div class="use5" style="height:89px;">&nbsp;</div>
-                    </div>
-                    <div id="CurrentActivityNotificationBox" class="bold" style="text-align:center;color:#000000;">&nbsp;</div>
-        </div>
-        <div id="mapCustomControlsSignInOn" style="width:38.2%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
         </div>
     </div>
+    <div class="by" style="height:5px;">&nbsp;</div>
+</div>
+<div id="mapCustomControlsShowHide" style="width:140px;;" class="lose_attn">
+    <div style="display:none;">
+        <img src="/images/circle.gif" alt="Show Pics" title="/images/Show Pics_Button.png" class="use100 ajax_image"/>
+    </div>
+</div>
+<div id="mapCustomControlsNEWS" class="by5" style="height:200px;width:144px;">
+    <div class="by" style="height:135px;">
+        <div class="by" style="height:45px;">
+            <div class="by3" style="height:45px;">
+                <div id="mapCustomControlsNEWSNW" class="by"
+                     style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                    <img src="/images/arrow_sans_upperleft_32t.png" style="height:100%;" alt="&#8598;"/></div>
+            </div>
+            <div class="by3" style="height:45px;">
+                <div id="mapCustomControlsNEWSN" class="by"
+                     style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                    <img src="/images/arrow_sans_up_32t.png" style="height:100%;" alt="&uarr;"/></div>
+            </div>
+            <div class="by3" style="height:45px;">
+                <div id="mapCustomControlsNEWSNE" class="by"
+                     style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                    <img src="/images/arrow_sans_upperright_32t.png" style="height:100%;" alt="&#8599;"/></div>
+            </div>
+        </div>
+        <div class="by" style="height:45px;">
+            <div class="by3" style="height:45px;">
+                <div id="mapCustomControlsNEWSW" class="by"
+                     style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                    <img src="/images/arrow_sans_left_32t.png" style="height:100%;" alt="&larr;"/></div>
+            </div>
+            <div class="by3" style="height:45px;">
+                <div id="mapCustomControlsNEWSZoom" class="by"
+                     style="font-size:24px;font-weight:bold;text-align:center;height:100%;">
+                    &nbsp;</div>
+            </div>
+            <div class="by3" style="height:45px;">
+                <div id="mapCustomControlsNEWSE" class="by"
+                     style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                    <img src="/images/arrow_sans_right_32t.png" style="height:100%;" alt="&rarr;"/></div>
+            </div>
+        </div>
+        <div class="by" style="height:45px;">
+            <div class="by3" style="height:45px;">
+                <div id="mapCustomControlsNEWSSW" class="by"
+                     style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                    <img src="/images/arrow_sans_lowerleft_32t.png" style="height:100%;" alt="&#8601;"/></div>
+            </div>
+            <div class="by3" style="height:45px;">
+
+                <div id="mapCustomControlsNEWSS" class="by"
+                     style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                    <img src="/images/arrow_sans_down_32t.png" style="height:100%;" alt="&darr;"/></div>
+            </div>
+            <div class="by3" style="height:45px;">
+                <div id="mapCustomControlsNEWSSE" class="by"
+                     style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                    <img src="/images/arrow_sans_lowerright_32t.png" style="height:100%;" alt="&#8600;"/></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="by" style="height:20px;">&nbsp;
+    </div>
+    <div class="by" style="height:45px;">
+        <div class="by" style="height:45px;">
+            <div id="mapCustomControlsNEWSZoomIn" class="by2"
+                 style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_in_32.png" style="height:100%;"
+                     alt="+"/></div>
+            <div id="mapCustomControlsNEWSZoomOut" class="by2"
+                 style="font-size:24px;font-weight:bold;text-align:center;cursor:pointer;height:100%;">
+                <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_out_32.png" style="height:100%;"
+                     alt="-"/></div>
+        </div>
+    </div>
+</div>
+<div class="by lose_attn" id="mapCustomControlsNEWSZoomMain"
+     style="height:123.6px;width:200px;opacity:0.8;filter:alpha(opacity=80);">
+    <div style="width:100%;height:100%;">
+        <div class="use618" style="height:100%;">
+            &nbsp;
+        </div>
+        <div class="use382" style="height:100%;">
+            <div class="use618" style="height:38.2%;">
+                &nbsp;
+            </div>
+            <div id="mapCustomControlsNEWSZoomOutMain" class="use382" style="height:38.2%;cursor:pointer;">
+                <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_out_32.png" style="width:100%;"
+                     alt="-"/></div>
+            <div id="mapCustomControlsNEWSZoomInMain" class="use618" style="height:61.8%;cursor:pointer;">
+                <img src="http://c1606662.cdn.cloudfiles.rackspacecloud.com/zoom_in_32.png" style="width:100%;"
+                     alt="+"/></div>
+            <div class="use382" style="height:61.8%;">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+<div id="mapCustomControlsSearchBox" style="width:38.2%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
+    <div class="use100">
+        <div class="use5" style="height:89px;;">&nbsp;</div>
+        <div class="use90" style="height:89px;;">
+            <div style="width:100%;height:5px;">&nbsp;</div>
+            <div style="width:100%;height:34px;">
+                <div class="use100" style="height:34px;">
+                    <input class="vtip use100 center layer_2"
+                           id="searchboxmap"
+                           style="color:#000000;height:34px;border:4px solid #dddddd; font-size:21.3px;font-weight:bold;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);"
+                           value="e.g. las vegas, united states"
+                           tabindex="3"
+                           onchange="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
+                            />
+                </div>
+            </div>
+            <div style="width:100%;height:50px;overflow:hidden;">
+                <div class="use50 use25a use25p center vtip"
+                     id="searchButtonMap"
+                     title="This is for searching for a place|Enter place name in the Go Fetch box and click search|The map will focus the place if it is found"
+                     onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
+                     style="height:100%;cursor:pointer;opacity:0.8;filter:alpha(opacity=80);">
+                    <img src="/images/circle.gif" alt="Go Fetch!" class="ajax_image" title="/images/Go Fetch_Button.png"
+                         style="width:100%;"/>
+                </div>
+            </div>
+        </div>
+        <div class="use5" style="height:89px;">&nbsp;</div>
+    </div>
+    <div id="CurrentActivityNotificationBox" class="bold" style="text-align:center;color:#000000;">&nbsp;</div>
+</div>
+<div id="mapCustomControlsSignInOn" style="width:38.2%;padding-left:30.9%;padding-right:30.9%;overflow:hidden;">
+</div>
+</div>
 </div>
 </body>
 </html>
