@@ -24,10 +24,14 @@ import java.util.ResourceBundle;
 // @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @TODO(task = "rename to listenerlocation. do a string search on listenermain to find usage first. current search shows no issues. refac delayed till next check")
 public class ListenerAarrr implements ItsNatServletRequestListener {
-
+// ------------------------------ FIELDS ------------------------------
 
     final static protected String LocationId = RBGet.globalConfig.getString("LOCATIONID");
 
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface ItsNatServletRequestListener ---------------------
 
     /**
      * @param request__
@@ -35,7 +39,6 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
      */
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
-
         new AbstractListener(request__, response__) {
 //        new AbstractSkeletonListener(request__) {
 
@@ -56,7 +59,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 
-                if (getUsername() == null) {
+                if (getUsername() != null) {
                     displayNone($(Controller.Page.AarrrJuice));
                     displayBlock($(Controller.Page.AarrrDownTownHeatMap));
                 } else {

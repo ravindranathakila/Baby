@@ -14,20 +14,19 @@
     <div class="use100" style="height:19%;">
         <div class="use19 juice TALKS" id="Juice_Talk" style="height:100%;">
             <div class="use100" style="height:100%;background:url('/images/Metal_translucent.png');">
-                <img src="/images/The%20Talk.png" alt="" class="use100"/>
+                &nbsp;
             </div>
         </div>
         <div class="use62 juice TALKS" id="Juice_Talk_Content" style="height:100%;">
             <div class="use100" style="height:100%;background:url('/images/Metal_translucent.png');">
                 <div class="use100 rise100">
-                    <img src="/images/What_is_exciting_lately_Talk.png" alt="Tell you friends... Let them tell you!"
-                         class="use100"/>
+                    &nbsp;
                 </div>
             </div>
         </div>
         <div class="use19 juice TRIBES" id="Juice_Tribe" style="height:100%;">
             <div class="use100" style="height:100%;background:url('/images/Metal_translucent.png');">
-                <img src="/images/The%20Tribes.png" alt="" class="use100"/>
+                &nbsp;
             </div>
         </div>
     </div>
@@ -35,25 +34,25 @@
         <div class="use19" id="Juice_Snap_Content" style="height:100%;">
             <div class="use100" style="height:100%;background:url('/images/Metal_translucent.png');">
                 <div class="use100 rise100 overflow_hidden">
-                    <img src="/images/What_is_exciting_lately_Snaps.png" alt="Get excited with like minded people!"
-                         class="rise100"/>
+                    &nbsp;
                 </div>
             </div>
         </div>
         <div class="use62" id="Juice_Content"
              style="height:100%;background:url('/images/Talk_home_page_5.jpg') center;overflow:hidden;">
 
-            <img src="" alt="_" class="use100 hidden ajax_image" title="/images/Talk_home_page_1.jpg"/>
-            <img src="" alt="_" class="use100 hidden ajax_image" title="/images/Talk_home_page_2.jpg"/>
-            <img src="" alt="_" class="use100 hidden ajax_image" title="/images/Talk_home_page_3.jpg"/>
-            <img src="" alt="_" class="use100 hidden ajax_image" title="/images/Talk_home_page_4.jpg"/>
-            <img src="" alt="_" class="use100 hidden ajax_image" title="/images/Talk_home_page_5.jpg"/>
-
             <div class="use100" style="height:100%;background-color:transparent;">
-                <div class="use100" id="Juice_Noti" style="font-size:30px;font-family:'Comic Sans MS';color:#00eeee;">
+                <div class="use100" id="Juice_Noti"
+                     style="font-size:30px;font-family:'Comic Sans MS',serif;color:#00eeee;">
                 </div>
                 <div class="use100" style="height:40%;">
-                    <img src="/images/What_is_exciting_lately.png" alt="What is exciting lately?" class="use100"/>
+                    <div class="use100" style="height: 10px;">
+                        &nbsp;
+                    </div>
+                    <div class="use100">
+                        <img src="/images/what_is_exciting_in_my_area.png" alt="What is exciting in my area?"
+                             class="use90 use5p use5a"/>
+                    </div>
                 </div>
                 <div class="use100 hidden" id="jsSignupBox" style="height:45%;">
                     <div class="use100" style="height:20%;">
@@ -91,28 +90,53 @@
                 </div>
                 <div class="use100" id="jsSignupFiller" style="height:45%;">
                     <div class="use100" style="height:50%;">
-                        <div class="use62 use19p use19a">
+                        <div class="use19">
+                            <div class="use95 use5p">
+                                <img src="/images/i_am_in.png" alt="" class="use100" style="overflow: hidden;"/>
+                            </div>
+                            <div class="use100" style="height: 20px;">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="use62">
+                            <div class="use100" style="height: 10px;">
+                                &nbsp;
+                            </div>
                             <input type="text"
                                    value=""
                                    id="JSJuicePlaceInput"
-                                   style="height:100%;font-family:'Comic Sans MS',serif;color:#f928c7;text-align:center;border:1px solid #46a1ff;background:url('/images/Metal_translucent.png') repeat;font-size:25px;"
+                                   style="height:100%;font-family:'Comic Sans MS',serif;color:#f928c7;text-align:center;
+                                   border: 0 #46a1ff solid;border-bottom-width: 5px;
+                                   background:url('/images/Metal_translucent.png') repeat;font-size:25px;"
                                    class="use100"
                                    onclick="suggestPlace();"
-                                   onblur="$('#searchboxmap').val(this.value).text(this.value);$('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();"
                                     />
-
-                            <div class="use100" style="height:5px;">
-                                &nbsp;
-                            </div>
+                        </div>
+                        <div class="use19">
                             <div class="use100">
-                                <img src="/images/Go Fetch_Button.png" alt="" class="use38 use31p use31a"/>
+                                <img src="/images/Search.png"
+                                     title="Enter a place|Click search|You will be redirected to map"
+                                     alt="" class="use100 vtip click_indicator"
+                                     style="overflow: hidden; cursor: pointer;"
+                                     onclick="$('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchButtonMap').click();"/>
+                            </div>
+                            <div class="use100" style="height: 20px;">
+                                &nbsp;
                             </div>
                         </div>
                     </div>
-                    <div class="use20 use75p use5a" style="height:50%;">
+                    <div class="use20 use75p use5a" style="height:50%;display: none;">
                         <img id="Juice_Signup_Show" src="/images/Sign_up.png" alt="Sign up.. It's free!" class="use100"
                              style="cursor:pointer;"
                              onclick="$('#jsSignupFiller').fadeOut();$('#jsSignupBox').fadeIn();"/>
+                    </div>
+                    <div class="use90 use5p use5a" style="height:50%;display: block;">
+                        <div class="use100" style="height: 70px;">
+                            &nbsp;
+                        </div>
+                        <img src="/images/are_you_looking_for_excitement__lets_do_it_in_your_style.png"
+                             alt="Sign up.. It's free!" class="use100"
+                             style="vertical-align: bottom;"/>
                     </div>
                 </div>
                 <div class="use100" style="height:15%;">
@@ -123,8 +147,7 @@
         <div class="use19 juice TRIBES" id="Juice_Tribe_Content" style="height:100%;">
             <div class="use100" style="height:100%;background:url('/images/Metal_translucent.png');">
                 <div class="use100 rise100 overflow_hidden">
-                    <img src="/images/What_is_exciting_lately_Tribes.png" alt="Get excited with like minded people!"
-                         class="rise100"/>
+                    &nbsp;
                 </div>
             </div>
         </div>
@@ -132,20 +155,19 @@
     <div class="use100" style="height:19%;">
         <div class="use19 juice SNAPS" id="Juice_Snap" style="height:100%;">
             <div class="use100" style="height:100%;background:url('/images/Metal_translucent.png');">
-                <img src="/images/The%20Snaps.png" alt="" class="use100"/>
+                &nbsp;
             </div>
         </div>
         <div class="use62 juice MOMENTS" id="Juice_Moment_Content" style="height:100%;">
             <div class="use100" style="height:100%;background:url('/images/Metal_translucent.png');">
                 <div class="use100 rise100">
-                    <img src="/images/What_is_exciting_lately_Moments.png" alt="Find or Share Exciting Events"
-                         class="use100"/>
+                    &nbsp;
                 </div>
             </div>
         </div>
         <div class="use19 juice MOMENTS" id="Juice_Moment" style="height:100%;">
             <div class="use100 " style="height:100%;background:url('/images/Metal_translucent.png');">
-                <img src="/images/The%20Moments.png" alt="" class="use100"/>
+                &nbsp;
             </div>
         </div>
     </div>
@@ -174,14 +196,16 @@
                         browserLocation = (data.geoplugin_city != null ? data.geoplugin_city + ',' : '')
                                 + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
                                 + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
-                        document.getElementById('searchboxmap').value = browserLocation;
-                        document.getElementById('JSJuicePlaceInput').value = browserLocation;
+                        $("#searchboxmap").val(browserLocation).text(browserLocation);
+                        $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation)
                     });
                 } catch (err) {
                 }
             }
 
         }
+
+        $('#JSJuicePlaceInput').delay(500).focus();
     </script>
 </div>
 </body>

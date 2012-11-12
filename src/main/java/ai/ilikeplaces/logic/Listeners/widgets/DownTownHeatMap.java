@@ -3,7 +3,6 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.hotspots.Hotspot;
@@ -139,9 +138,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
         email = new Email("");
         password = new Password("");
 
-        if (humanId.notNull()) {
-            $$displayNone($$(Controller.Page.DownTownHeatMapSignupWidget));
-        }
+        $$displayNone($$(Controller.Page.DownTownHeatMapSignupWidget));
 
         itsNatDocument_.addCodeToSend(
                 DownTownHeatMapWOEIDUpdate.replace(
@@ -206,63 +203,63 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 public void handleEvent(final Event evt_) {
                     if (myemail.validate(v) == 0 && mypassword.validate(v) == 0) {
                         if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
-                                final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                                        new HumanId().setObjAsValid(email.getObj()),
-                                        mypassword,
-                                        myemail);
+                            final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                    new HumanId().setObjAsValid(email.getObj()),
+                                    mypassword,
+                                    myemail);
 
-                                if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
+                            if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
 
-                                    UserIntroduction.createIntroData(new HumanId(email.getObj()));
+                                UserIntroduction.createIntroData(new HumanId(email.getObj()));
 
-                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                            .append(ServletLogin.Username, myemail.getObj(), true)
-                                            .append(ServletLogin.Password,
-                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                            .returnValue()
-                                                            .getHumanAuthenticationHash())
-                                            .get();
+                                final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                        .append(ServletLogin.Username, myemail.getObj(), true)
+                                        .append(ServletLogin.Password,
+                                                DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                        .returnValue()
+                                                        .getHumanAuthenticationHash())
+                                        .get();
 
 
-                                    String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", email.getObj());
+                                String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", email.getObj());
 
-                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                    htmlBody = htmlBody.replace(Bate.PASSWORD_ADVICE, "");
-                                    htmlBody = htmlBody.replace(Bate.PASSWORD_DETAILS, "");
+                                htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                                htmlBody = htmlBody.replace(Bate.PASSWORD_ADVICE, "");
+                                htmlBody = htmlBody.replace(Bate.PASSWORD_DETAILS, "");
 
-                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                            myemail.getObj(),
-                                            "I Like Places prides you with an Exclusive Invite!",
-                                            htmlBody);
+                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                        myemail.getObj(),
+                                        "I Like Places prides you with an Exclusive Invite!",
+                                        htmlBody);
 
-                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
-                                } else {
-                                    $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
-                                }
+                                $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                            } else {
+                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
+                            }
 
-                                /*final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                                        new HumanId().setObjAsValid(email.getObj()),
-                                        mypassword,
-                                        myemail);
+                            /*final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                    new HumanId().setObjAsValid(email.getObj()),
+                                    mypassword,
+                                    myemail);
 
-                                if (humanCreateReturn.returnValue()) {
-                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                            .append(ServletLogin.Username, myemail.getObj(), true)
-                                            .append(ServletLogin.Password,
-                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                            .returnValue()
-                                                            .getHumanAuthenticationHash())
-                                            .get();
+                            if (humanCreateReturn.returnValue()) {
+                                final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                        .append(ServletLogin.Username, myemail.getObj(), true)
+                                        .append(ServletLogin.Password,
+                                                DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                        .returnValue()
+                                                        .getHumanAuthenticationHash())
+                                        .get();
 
-                                    final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
-                                            .replace("activationURL", "<a href='" +
-                                                    activationURL + "' >" + activationURL + "</a>");
-                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                            myemail.getObj(),
-                                            RBGet.gui().getString("SIGNUP_HEADER"),
-                                            mail);
-                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
-                                }*/
+                                final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
+                                        .replace("activationURL", "<a href='" +
+                                                activationURL + "' >" + activationURL + "</a>");
+                                SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                        myemail.getObj(),
+                                        RBGet.gui().getString("SIGNUP_HEADER"),
+                                        mail);
+                                $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                            }*/
                         } else {
                             $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("This email is TAKEN!:(");
                         }
@@ -313,17 +310,20 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                         /*StaticBlockInsideSetToAddElementsEasily*/ {
                             UCILikePlacesPlaces:
                             {
-                                final List<PrivateEvent> privateEvents__ = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
+                                Return<List<PrivateEvent>> RETURN = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
                                         latitudeLB,
                                         latitudeTR,
                                         longitudeLB,
-                                        longitudeTR).returnValue();
+                                        longitudeTR);
 
-                                for (final PrivateEvent privateEvent : privateEvents__) {
-                                    add(
-                                            new Rawspot(
-                                                    new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
-                                                    privateEvent.getPrivateLocation().getPrivateLocationName()));
+                                if (RETURN.valid()) {
+                                    final List<PrivateEvent> privateEvents__ = RETURN.returnValue();
+                                    for (final PrivateEvent privateEvent : privateEvents__) {
+                                        add(
+                                                new Rawspot(
+                                                        new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
+                                                        privateEvent.getPrivateLocation().getPrivateLocationName()));
+                                    }
                                 }
                             }
 
