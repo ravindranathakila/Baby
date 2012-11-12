@@ -1,7 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
@@ -112,6 +111,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String APOSTROPHIE = "'";
     private static final String JS_ESCAPTED_APOSTROPHIE = "\'";
     private static final String TITLE = "title";
+    public static final String ERROR_PROCESSING_YAHOO_UPCOMING_DATA = "ERROR PROCESSING YAHOO UPCOMING DATA!";
 
 
     private Element elementToUpdateWithWOEID;
@@ -308,53 +308,92 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                     final Set<Rawspot> rs = new HashSet<Rawspot>() {//Initializing HashSet as an anonymous class. God speed!
                         /*StaticBlockInsideSetToAddElementsEasily*/ {
-                            UCILikePlacesPlaces:
-                            {
-                                Return<List<PrivateEvent>> RETURN = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
-                                        latitudeLB,
-                                        latitudeTR,
-                                        longitudeLB,
-                                        longitudeTR);
+//                            UCILikePlacesPlaces:
+//                            {
+//                                Return<List<PrivateEvent>> RETURN = DB.getHumanCrudPrivateEventLocal(true).doRPrivateEventsByBoundsAsSystem(
+//                                        latitudeLB,
+//                                        latitudeTR,
+//                                        longitudeLB,
+//                                        longitudeTR);
+//
+//                                if (RETURN.valid()) {
+//                                    final List<PrivateEvent> privateEvents__ = RETURN.returnValue();
+//                                    for (final PrivateEvent privateEvent : privateEvents__) {
+//                                        add(
+//                                                new Rawspot(
+//                                                        new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
+//                                                        privateEvent.getPrivateLocation().getPrivateLocationName()));
+//                                    }
+//                                }
+//                            }
+//
+//                            UCGooglePlaces:
+//                            {
+//                                try {
+//                                    final double latitudeAverage = (latitudeLB +
+//                                            latitudeTR) / 2;
+//                                    final double longitudeAverage = (longitudeLB +
+//                                            longitudeTR) / 2;
+//
+//                                    final JSONObject placesJsonObject = getGooglePlaces(
+//                                            latitudeAverage,
+//                                            longitudeAverage,
+//                                            (long) (Math.abs(latitudeAverage - latitudeLB) * APPROX_LENGTH_OF_ONE_LAT), COMMON_PLACE_TYPES);
+//
+//                                    final JSONArray placesJsonArray = placesJsonObject.getJSONArray(RESULTS);
+//
+//                                    for (int i = 0; i < placesJsonArray.length(); i++) {
+//                                        final JSONObject lngLat = placesJsonArray.getJSONObject(i).getJSONObject(GEOMETRY).getJSONObject(LOCATION_JSON_OBJ_KEY);
+//                                        add(
+//                                                new Rawspot(
+//                                                        new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
+//                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+//                                        add(
+//                                                new Rawspot(
+//                                                        new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
+//                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+//                                    }
+//                                } catch (final Exception e) {
+//                                    Loggers.ERROR.error(FAILED_TO_FETCH_GOOGLE_PLACES_DATA, e);
+//                                }
+//                            }
 
-                                if (RETURN.valid()) {
-                                    final List<PrivateEvent> privateEvents__ = RETURN.returnValue();
-                                    for (final PrivateEvent privateEvent : privateEvents__) {
-                                        add(
-                                                new Rawspot(
-                                                        new W3CPoint(privateEvent.getPrivateLocation().getPrivateLocationLatitude(), privateEvent.getPrivateLocation().getPrivateLocationLongitude()),
-                                                        privateEvent.getPrivateLocation().getPrivateLocationName()));
-                                    }
-                                }
-                            }
-
-                            UCGooglePlaces:
+                            UCYahooUpcomingEvents:
                             {
+
                                 try {
                                     final double latitudeAverage = (latitudeLB +
                                             latitudeTR) / 2;
                                     final double longitudeAverage = (longitudeLB +
                                             longitudeTR) / 2;
 
-                                    final JSONObject placesJsonObject = getGooglePlaces(
-                                            latitudeAverage,
-                                            longitudeAverage,
-                                            (long) (Math.abs(latitudeAverage - latitudeLB) * APPROX_LENGTH_OF_ONE_LAT), COMMON_PLACE_TYPES);
+                                    final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
+                                            .getInstance("http://upcoming.yahooapis.com/services/rest/")
+                                            .get("",
+                                                    new HashMap<String, String>() {
+                                                        {//Don't worry, this is a static initializer of this map :)
+                                                            put("method", "event.search");
+                                                            put("location", "" + latitudeAverage + "," + longitudeAverage);
+                                                            put("format", "json");
+                                                        }
+                                                    }
 
-                                    final JSONArray placesJsonArray = placesJsonObject.getJSONArray(RESULTS);
-
-                                    for (int i = 0; i < placesJsonArray.length(); i++) {
-                                        final JSONObject lngLat = placesJsonArray.getJSONObject(i).getJSONObject(GEOMETRY).getJSONObject(LOCATION_JSON_OBJ_KEY);
+                                            );
+                                    final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
+                                    for (int i = 0; i < events.length(); i++) {
+                                        final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
                                         add(
                                                 new Rawspot(
-                                                        new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
-                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+                                                        new W3CPoint(Double.parseDouble(eventJSONObject.getString(LATITUDE)), Double.parseDouble(eventJSONObject.getString(LONGITUDE))),
+                                                        eventJSONObject.getString(NAME).toLowerCase()));
                                         add(
                                                 new Rawspot(
-                                                        new W3CPoint(Double.parseDouble(lngLat.getString(LAT)), Double.parseDouble(lngLat.getString(LNG))),
-                                                        placesJsonArray.getJSONObject(i).getString(NAME).toLowerCase()));
+                                                        new W3CPoint(Double.parseDouble(eventJSONObject.getString(LATITUDE)), Double.parseDouble(eventJSONObject.getString(LONGITUDE))),
+                                                        eventJSONObject.getString(NAME).toLowerCase()));
+
                                     }
                                 } catch (final Exception e) {
-                                    Loggers.ERROR.error(FAILED_TO_FETCH_GOOGLE_PLACES_DATA, e);
+                                    Loggers.error(ERROR_PROCESSING_YAHOO_UPCOMING_DATA, e);
                                 }
                             }
                         }
