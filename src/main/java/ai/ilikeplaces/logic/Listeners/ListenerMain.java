@@ -41,14 +41,16 @@ import static ai.ilikeplaces.util.MarkupTag.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @TODO(task = "RENAME TO LISTENERLOCATION. DO A STRING SEARCH ON LISTENERMAIN TO FIND USAGE FIRST. CURRENT SEARCH SHOWS NO ISSUES. REFAC DELAYED TILL NEXT CHECK")
 public class ListenerMain implements ItsNatServletRequestListener {
+// ------------------------------ FIELDS ------------------------------
+
+    public static final String NUMBER_OF_PHOTOS_FOR = "Number of photos for ";
+    public static final String COLON = ":";
 
 
     final static protected String LocationId = RBGet.globalConfig.getString("LOCATIONID");
     private static final String RETURNING_LOCATION = "Returning location ";
     private static final String TO_USER = " to user";
     private static final String WRONG_WOEID_FORMAT = "SORRY! WRONG WOEID FORMAT";
-    public static final String NUMBER_OF_PHOTOS_FOR = "Number of photos for ";
-    public static final String COLON = ":";
     private static final String HTTP_SESSION_ATTR_LOCATION = "HttpSessionAttr.location";
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0005 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0005";
@@ -105,15 +107,18 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String AT_SIGN = "@";
     private static final String EMPTY = "";
 
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface ItsNatServletRequestListener ---------------------
+
     /**
      * @param request__
      * @param response__
      */
     @Override
     public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
-
         new AbstractListener(request__, response__) {
-
             protected String location;
 
             protected String superLocation;
@@ -127,7 +132,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
             @SuppressWarnings("unchecked")
             @TODO(task = "If location is not available, it should be added through a w" + "id" + "get(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
-
                 final SmartLogger sl = SmartLogger.start(
                         Loggers.LEVEL.DEBUG,
                         "Location Page.",
@@ -186,7 +190,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             setMainTitle:
                             {
                                 $(mainTitle).setTextContent(MessageFormat.format(gUI.getString("woeidpage.title"), location));
-
                             }
                             setMetaDescription:
                             {
@@ -207,7 +210,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SIGN_ON_DISPLAY_LINK, t);
                         }
-
                     }
                     setProfileLink:
                     {
@@ -241,7 +243,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             }
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SET_PROFILE_PHOTO_LINK, t);
-
                         }
                     }
                 }
@@ -283,9 +284,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     final Location locationSuperSet = existingLocation_.getLocationSuperSet();
                     GEO_WIDGET:
                     {
-
                         new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Comment(request__, new CommentCriteria(), $(Controller.Page.Main_right_column)) {
-
                             @Override
                             protected void init(CommentCriteria commentCriteria) {
                                 final ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place place = new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place(request__,
@@ -306,11 +305,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 place.$$displayNone(place.$$(ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place.PlaceIds.placeWidget));
                             }
                         };
-
-
                     }
 
                     final StringBuilder eventNames = new StringBuilder("");
+                    final List<String> titleManifest = new ArrayList<String>();
 
                     EVENTS_WIDGETS:
                     {
@@ -329,10 +327,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                     );
                             final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
                             for (int i = 0; i < events.length(); i++) {
-
                                 final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
 
                                 eventNames.append(eventJSONObject.get("name").toString().replaceAll(" AND ", " OR ") + " OR ");
+                                titleManifest.add(eventJSONObject.get("name").toString());
 
                                 new Event(request__, new EventCriteria()
                                         .setEventName(eventJSONObject.get("name").toString())
@@ -354,12 +352,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                                         )
                                         , $(Controller.Page.Main_right_column));
-
                             }
                         } catch (final JSONException e) {
                             sl.l("Error fetching data from Yahoo Upcoming: " + e.getMessage());
                         }
-
                     }
 
 
@@ -377,6 +373,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                                 .setPersonData(tweet.getText()),
                                         $(Main_right_column)
                                 );
+                                titleManifest.add(tweet.getText());
                             }
                             if (result.getTweets().size() == 0) {
                                 sl.l("No twitter results found");
@@ -409,7 +406,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                             $(Main_location_name).setAttribute(INPUT.value(), existingLocation_.getLocationName() + "");
                             $(Main_super_location_name).setAttribute(INPUT.value(), locationSuperSet.getLocationName() + "");
-
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SET_LOCATION_ID_FOR_JSREFERENCE, t);
                         }
@@ -432,7 +428,16 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     setLocationAsPageTopic:
                     {
                         try {
-                            $(Main_center_main_location_title).setTextContent(THIS_IS + existingLocation_.getLocationName() + OF + locationSuperSet);
+
+                            final StringBuilder title = new StringBuilder();
+
+                            for (final String titleGuest : titleManifest) {
+                                title.append(titleGuest);
+                            }
+
+                            final String finalTitle = title.toString();
+
+                            $(Main_center_main_location_title).setTextContent(finalTitle.isEmpty() ? (THIS_IS + existingLocation_.getLocationName() + OF + locationSuperSet) : finalTitle);
                             $(Main_center_content).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(AT + existingLocation_.getLocationName() + YOU_CAN_VISIT + COLON + SPACE))));
 
 
@@ -440,14 +445,10 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 $(Main_location_list).appendChild(element);
                                 displayBlock($(Main_notice_sh));
                             }
-
                         } catch (final Throwable t) {
                             sl.l(ERROR_IN_UC_SET_LOCATION_AS_PAGE_TOPIC, t);
                         }
-
                     }
-
-
                 } else {
                     noSupportForNewLocations:
                     {
@@ -483,7 +484,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
             }
 
             private List<Element> generateLocationLinks(final List<Location> locationList) {
-
                 final ElementComposer UList = ElementComposer.compose($(UL)).$ElementSetAttribute(MarkupTag.UL.id(), PLACE_LIST);
 
                 for (Location location : locationList) {
@@ -520,7 +520,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                 final List<Element> elements = new ArrayList<Element>();
                 elements.add(UList.get());
                 return elements;
-
             }
 
             private Element generateLocationLink(final Location location) {
@@ -552,6 +551,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
             }
         };//Listener
     }
+
+// -------------------------- OTHER METHODS --------------------------
 
     private JSONObject getDisqusPosts(final long WOEID) throws JSONException {
         final com.disqus.api.impl.Client threads = DISQUS_API_FACTORY.getInstance(HTTP_DISQUS_COM_API_3_0_THREADS);

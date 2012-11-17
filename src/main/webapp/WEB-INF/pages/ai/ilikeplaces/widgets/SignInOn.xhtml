@@ -31,7 +31,7 @@
             <div class="use100 inherit_height bg_a9abf1" style="overflow:hidden;">
                 <div class="use100 inherit_height line_height_50 center"
                      style="font-size:18px;color:#dddddd;font-weight:900;">
-                    SIGN UP / LOGIN*<I>(*free)</I>
+                    SIGN UP / ACCESS<i>(*free)</i>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                         <input class="use100 inherit_height vtip"
                                style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;"
                                id="signinonUsername"
-                               title="This is for entering your email|Enter your email to login|Upon clicking the on/off button you will be signed in"
+                               title="This is for entering your email|Enter your email to login/signup|Upon clicking the on/off button you will be signed in"
                                onkeypress="javascript:if((event.keyCode ? event.keyCode : event.which) == 13){$('.JSPasswordInput').focus();}"
                                name="Username" maxlength="255" type="text" tabindex="1"/>
                     </div>
@@ -67,7 +67,7 @@
                         <input class="use100 bold vtip JSPasswordInput"
                                style="height:100%;color:#ffffff;background-color:transparent;border:4px solid #dddddd;font-family:'trebuchet ms';font-weight:900;"
                                id="signinonPassword"
-                               title="This is for entering your password|Enter your password to login|Upon clicking the on/off button you will be signed in"
+                               title="This is for entering your password|Enter your password to login/signup|Upon clicking the on/off button you will be signed in"
                                onkeypress="javascript:if((event.keyCode ? event.keyCode : event.which) == 13){ $('.JSPasswordInput').blur(); fireEvent(document.getElementsByName('JSLoginButton')[0],'click'); }"
                                name="Password" maxlength="255" type="password" tabindex="2"/>
                     </div>
@@ -94,7 +94,8 @@
                     &nbsp;
                 </div>
                 <div class="use40 center" style="overflow:hidden;">
-                        <span id="signinonNotice" style="white-space:pre;font-size:12px;color:#ffffff;font-weight:900;"
+                        <span id="signinonNotice"
+                              style="white-space:pre;font-size:12px;color:#ffffff;font-weight:900;font-style: italic;"
                               class="center">&nbsp;</span>
                 </div>
                 <div class="use30 center" style="overflow:hidden;">
@@ -114,20 +115,24 @@
             <div class="use100" style="height:9px;"> &nbsp;</div>
             <div class="use100" style="height:40px;">
                 <div class="use100" style="height:20px;">
+                    <img src="http://www.facebook.com/favicon.ico" alt="Facebook"
+                         style="text-align: center;width: 16px;"/>
                     <a href="#" id="signinonFacebook" class="bold vtip" style="text-decoration:underline;"
                        title="You haven't signed in yet|Click here to Sign in with your Facebook account|You will be signed in with your Facebook credentials">
-                        Login Using Facebook
+                        Free Access Using Facebook
                     </a>
                 </div>
                 <div class="use100" style="height:20px;">
+                    <img src="http://www.google.com/favicon.ico" alt="Facebook"
+                         style="text-align: center;width: 16px;"/>
                     <a href="#" id="signinonGoogle" class="bold vtip" style="text-decoration:underline;"
                        title="You haven't signed in yet|Click here to Sign in with your Google account|You will be signed in with your Google credentials">
-                        Login Using Google
+                        Free Access Using Google
                     </a>
                 </div>
             </div>
             <div class="use100" style="height:29px;font-size:10px;">
-                <i>Note: The corresponding email will be used. If different, a new account will be created.</i>
+                &nbsp;
             </div>
         </div>
     </div>

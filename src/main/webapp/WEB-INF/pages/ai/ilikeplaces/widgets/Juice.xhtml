@@ -115,10 +115,10 @@
                         <div class="use19">
                             <div class="use100">
                                 <img src="/images/Search.png"
-                                     title="Enter a place|Click search|You will be redirected to map"
+                                     title="You need to enter a place|Click search|You will be redirected to map"
                                      alt="" class="use100 vtip click_indicator"
                                      style="overflow: hidden; cursor: pointer;"
-                                     onclick="$('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchButtonMap').click();"/>
+                                     onclick="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchButtonMap').click();"/>
                             </div>
                             <div class="use100" style="height: 20px;">
                                 &nbsp;

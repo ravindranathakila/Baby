@@ -165,4 +165,8 @@ See? We want you to get moving fast.
 
 
 
+        query = "SELECT DISTINCT humansNetPeople FROM HumansNetPeople humansNetPeople inner join humansNetPeople.humansNetPeoples friend WHERE friend.humanId = :humanId"
+
+
+
 
