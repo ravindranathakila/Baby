@@ -1,8 +1,5 @@
 package ai.ilikeplaces.util.jpa;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -15,9 +12,7 @@ import java.util.Collection;
  * Date: 2/6/11
  * Time: 9:30 PM
  */
-public class Refresh<T> implements Serializable{
-
-    public static Logger LOGGER = LoggerFactory.getLogger(ai.ilikeplaces.util.jpa.Refresh.class.getClass().getCanonicalName());
+public class Refresh<T> implements Serializable {
 
     private static final String ERROR_WHILE_REFRESHING_COLLECTION = "ERROR WHILE REFRESHING LAZY FIELD";
     private static final String COUNLDN_T_FIND_IN_THE_BEAN = "COULDN'T FIND IN THE BEAN: ";
@@ -30,8 +25,6 @@ public class Refresh<T> implements Serializable{
     private static final String GET = "get";
 
     public T refresh(final T bean, final RefreshSpec refreshSpec) throws RefreshException {
-        LOGGER.trace(RECEIVED_BEAN, bean);
-        LOGGER.trace(RECEIVED_SPEC, refreshSpec);
 
         final Field[] fields = bean.getClass().getFields();
 
