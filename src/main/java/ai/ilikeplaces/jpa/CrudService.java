@@ -16,7 +16,6 @@ import com.hazelcast.core.IMap;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.Query;
@@ -36,7 +35,6 @@ import java.util.Set;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@Interceptors({EntityManagerInjector.class})
 @CONVENTION(convention = "Caller assumes this class methods are of tx scope supports, " +
         "but create and updates here are of scope mandatory which will ensure caller does no mistake.")
 @OK
