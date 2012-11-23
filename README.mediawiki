@@ -167,6 +167,21 @@ See? We want you to get moving fast.
 
         query = "SELECT DISTINCT humansNetPeople FROM HumansNetPeople humansNetPeople inner join humansNetPeople.humansNetPeoples friend WHERE friend.humanId = :humanId"
 
+javax.persistence.PersistenceException: Human
+Caused by: javax.persistence.PersistenceException: Human
+Caused by: org.apache.hadoop.hbase.TableNotFoundException: Human
+
+Happens when datanuclues is run against an empty HBase installation. i.e. No tables.
+
+
+Good to have bash_profile values for a java server.
+
+alias k='kill -9'
+alias pt='ps -ef|grep tomcat'
+alias ph='ps -ef|grep hbase'
+alias t='tail -f'
+alias ll='ls -la'
+
 
 
 
