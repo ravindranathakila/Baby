@@ -24,6 +24,7 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
 // ------------------------------ FIELDS ------------------------------
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
     /**
@@ -32,46 +33,48 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
      * The motivation is to get all humansAlive to be true on ilikeplaces.com:-)
      * Important: This is also the switch for the privacy policy.
      */
+    @Column(name = "humanAlive")
     public Boolean humanAlive;
 
+    @Column(name = "clearance")
     public Long clearance = 0L;
 
     //@PrimaryKeyJoinColumn
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public HumansAuthentication humansAuthentication;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn
     public HumansIdentity humansIdentity;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn
     public HumansPublicPhoto humansPublicPhoto;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn
     public HumansPrivatePhoto HumansPrivatePhoto;
 
     @NOTE(note = "HumansNet is a simple entity with no List based getters and setters.")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     //@PrimaryKeyJoinColumn
     public HumansNet humansNet;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn
     public HumansPrivateLocation humansPrivateLocation;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn
     public HumansPrivateEvent humansPrivateEvent;
 
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn
     public HumansAlbum humansAlbum;
 
     @WARNING(warning = "DO NOT fetch eager. Wall will pull all the damn messages eager.")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn
     public HumansWall humansWall;
 

@@ -22,6 +22,7 @@ public class HumansUnseen implements Serializable {
 // ------------------------------ FIELDS ------------------------------
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
 

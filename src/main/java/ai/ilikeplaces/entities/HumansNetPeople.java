@@ -49,11 +49,11 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
     private static final char BACKSLASH = '\'';
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
 
-    @OneToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "humanId")
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public HumansNet humansNet;
 

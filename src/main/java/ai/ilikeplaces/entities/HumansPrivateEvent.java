@@ -28,10 +28,11 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace, 
 // ------------------------------ FIELDS ------------------------------
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 

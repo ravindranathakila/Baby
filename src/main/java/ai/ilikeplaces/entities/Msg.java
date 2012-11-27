@@ -36,6 +36,7 @@ public class Msg implements Serializable {
     final static public int msgTypeMISC = 0;
 
     @Id
+    @Column(name = "msgId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long msgId;
 

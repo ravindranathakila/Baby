@@ -30,6 +30,7 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "privatePhotoId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long privatePhotoId;
 
@@ -76,7 +77,7 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
 
     @RefreshId("privatePhotoWall")
     @_unidirectional
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "wallId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Wall privatePhotoWall;
 
     private static final Refresh<PrivatePhoto> REFRESH = new Refresh<PrivatePhoto>();

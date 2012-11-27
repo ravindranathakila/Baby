@@ -22,10 +22,11 @@ public class HumansPublicPhoto implements HumanIdFace, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL)
     //@PrimaryKeyJoinColumn
     public Human human;
 

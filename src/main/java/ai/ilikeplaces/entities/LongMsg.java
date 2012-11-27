@@ -33,6 +33,7 @@ public class LongMsg implements Serializable {
 
 
     @Id
+    @Column(name = "longMsgId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long longMsgId;
 

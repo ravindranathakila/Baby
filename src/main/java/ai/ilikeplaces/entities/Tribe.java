@@ -68,6 +68,7 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
 // ------------------------------ FIELDS ------------------------------
 
     @Id
+    @Column(name = "tribeId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long tribeId;
 
@@ -78,11 +79,11 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
     public String tribeStory;
 
     @_unidirectional
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "wallId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Wall tribeWall;
 
     @_unidirectional
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "albumId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Album tribeAlbum;
 
     @WARNING(warning = "Owner because once an tribe needs to be deleted, deleting this tribe is easier if owner." +

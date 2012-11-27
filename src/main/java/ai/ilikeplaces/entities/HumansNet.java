@@ -90,9 +90,10 @@ import java.io.Serializable;
 public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 
@@ -108,7 +109,7 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
             warnings = {"If you are changing, check with Human which fetches this eager.",
                     "If you are changing, check how to efficiently fetch displayName.",
                     "You could use pkjoincolumn between HumansNet and the requiring entity."})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn
     public HumansNetPeople humansNetPeople;
 

@@ -21,6 +21,7 @@ public class Map implements Serializable {
 // ------------------------------ FIELDS ------------------------------
 
     @Id
+    @Column(name = "id")
     @GeneratedValue
     public Integer id;
 

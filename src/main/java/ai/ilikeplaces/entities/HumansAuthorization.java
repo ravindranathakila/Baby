@@ -17,10 +17,8 @@ public class HumansAuthorization implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "humanIdentification")
     public String humanIdentification;
-
-    @Column(name = "humansToken")
-    public String humansToken;
 
 // --------------------- GETTER / SETTER METHODS ---------------------
 

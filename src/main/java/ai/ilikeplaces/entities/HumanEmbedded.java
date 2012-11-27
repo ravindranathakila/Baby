@@ -19,10 +19,11 @@ public class HumanEmbedded implements HumanPkJoinFace, Serializable {
 // ------------------------------ FIELDS ------------------------------
 
     @Id
+    @Column(name = "humanId")
     private String humanId;
 
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     private Human human;
 

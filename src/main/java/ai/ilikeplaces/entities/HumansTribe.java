@@ -26,6 +26,7 @@ public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace, 
 // ------------------------------ FIELDS ------------------------------
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
 

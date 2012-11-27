@@ -25,6 +25,7 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
 
 
     @Id
+    @Column(name = "privateEventId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long privateEventId;
 
@@ -45,7 +46,7 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
 
 
     @_unidirectional
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "wallId", cascade = CascadeType.ALL)
     public Wall privateEventWall;
 
 
@@ -114,7 +115,7 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
 
 
     @_unidirectional
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "albumId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Column
     public Album privateEventAlbum;
     final static public String privateEventAlbumCOL = "privateEventAlbum";

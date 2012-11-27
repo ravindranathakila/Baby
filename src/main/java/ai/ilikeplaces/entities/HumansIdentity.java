@@ -46,10 +46,11 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
     private static final char CLOSING_BRACE = '}';
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 
@@ -62,7 +63,7 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
     @Column(name = "humansIdentityProfilePhoto")
     public String humansIdentityProfilePhoto;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "url", cascade = CascadeType.ALL)
     public Url url;
 
 // --------------------- GETTER / SETTER METHODS ---------------------

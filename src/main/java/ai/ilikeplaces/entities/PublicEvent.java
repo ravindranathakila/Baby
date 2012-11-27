@@ -41,6 +41,7 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
 
 
     @Id
+    @Column(name = "publicEventId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long publicEventId;
 
@@ -61,7 +62,7 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
 
 
     @_unidirectional
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "wallId", cascade = CascadeType.ALL)
     public Wall publicEventWall;
 
 

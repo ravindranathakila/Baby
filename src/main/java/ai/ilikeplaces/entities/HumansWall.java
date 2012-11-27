@@ -25,15 +25,16 @@ public class HumansWall implements HumanPkJoinFace, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL)
     public Wall wall;//Convention would be naming this humansWallWall :-(
 
 // --------------------- GETTER / SETTER METHODS ---------------------

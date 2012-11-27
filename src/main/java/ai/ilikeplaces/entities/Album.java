@@ -27,6 +27,7 @@ public class Album implements RefreshData<Album>, Refreshable<Album>, Serializab
 
 
     @Id
+    @Column(name = "albumId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long albumId;
 

@@ -22,10 +22,11 @@ import java.io.Serializable;
 public class HumansAlbum implements HumanPkJoinFace, Serializable {
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 

@@ -20,6 +20,7 @@ public class Url implements Serializable {
     public static final int typeHUMAN = 1;
 
     @Id
+    @Column(name = "url")
     public String url;
 
     @Column(name = "type")

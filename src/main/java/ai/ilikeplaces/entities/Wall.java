@@ -35,6 +35,7 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     private static final Refresh<Wall> REFRESH = new Refresh<Wall>();
 
     @Id
+    @Column(name = "wallId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long wallId = null;
 

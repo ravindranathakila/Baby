@@ -53,6 +53,7 @@ public class Location implements Serializable, Clearance, Comparable<Location>, 
 
 
     @Id
+    @Column(name = "locationId")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long locationId;
 
@@ -66,7 +67,7 @@ public class Location implements Serializable, Clearance, Comparable<Location>, 
     public String locationInfo;
 
 
-    @OneToOne(optional = false,
+    @OneToOne(mappedBy = "locationId", optional = false,
             targetEntity = Location.class)
     public Location locationSuperSet;
 

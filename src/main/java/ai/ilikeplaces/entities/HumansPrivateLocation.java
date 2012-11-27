@@ -31,9 +31,10 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
 // ------------------------------ FIELDS ------------------------------
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 

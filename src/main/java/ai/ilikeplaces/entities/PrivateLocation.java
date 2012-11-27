@@ -59,6 +59,7 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
 
 
     @Id
+    @Column(name = "privateLocationId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long privateLocationId;
 

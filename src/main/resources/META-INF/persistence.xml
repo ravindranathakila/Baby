@@ -4,6 +4,35 @@
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="ilpMainSchema" transaction-type="RESOURCE_LOCAL">
         <provider>com.impetus.kundera.KunderaPersistence</provider>
+        <class>ai.ilikeplaces.entities.HumansAuthorization</class>
+        <class>ai.ilikeplaces.entities.Wall</class>
+        <class>ai.ilikeplaces.entities.PrivateEvent</class>
+        <class>ai.ilikeplaces.entities.Map</class>
+        <class>ai.ilikeplaces.entities.PrivatePhoto</class>
+        <class>ai.ilikeplaces.entities.HumansAuthentication</class>
+        <class>ai.ilikeplaces.entities.HumansPrivateEvent</class>
+        <class>ai.ilikeplaces.entities.Mute</class>
+        <class>ai.ilikeplaces.entities.Url</class>
+        <class>ai.ilikeplaces.entities.HumansPrivateLocation</class>
+        <class>ai.ilikeplaces.entities.PublicPhoto</class>
+        <class>ai.ilikeplaces.entities.HumansNet</class>
+        <class>ai.ilikeplaces.entities.Msg</class>
+        <class>ai.ilikeplaces.entities.HumanEmbedded</class>
+        <class>ai.ilikeplaces.entities.Human</class>
+        <class>ai.ilikeplaces.entities.HumansTribe</class>
+        <class>ai.ilikeplaces.entities.HumansNetPeople</class>
+        <class>ai.ilikeplaces.entities.Tribe</class>
+        <class>ai.ilikeplaces.entities.HumansWall</class>
+        <class>ai.ilikeplaces.entities.Album</class>
+        <class>ai.ilikeplaces.entities.PrivateLocation</class>
+        <class>ai.ilikeplaces.entities.HumansIdentity</class>
+        <class>ai.ilikeplaces.entities.HumansPrivatePhoto</class>
+        <class>ai.ilikeplaces.entities.HumansAlbum</class>
+        <class>ai.ilikeplaces.entities.LongMsg</class>
+        <class>ai.ilikeplaces.entities.Location</class>
+        <class>ai.ilikeplaces.entities.HumansPublicPhoto</class>
+        <class>ai.ilikeplaces.entities.HumansUnseen</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="kundera.nodes" value="localhost"/>
             <property name="kundera.port" value="60000"/>

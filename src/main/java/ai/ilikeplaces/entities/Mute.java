@@ -33,6 +33,7 @@ public class Mute extends HumanEquals implements Serializable {
 
 
     @Id
+    @Column(name = "muteId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long muteId;
 

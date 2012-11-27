@@ -20,9 +20,10 @@ public class HumansAuthentication implements HumanPkJoinFace, Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "humanId")
     public String humanId;
 
-    @OneToOne(cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 
