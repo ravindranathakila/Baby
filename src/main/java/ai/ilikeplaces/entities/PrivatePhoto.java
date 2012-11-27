@@ -22,11 +22,15 @@ import java.util.List;
                 SEE = @SEE(WallWidgetPrivatePhoto.class)
         )
 )
+@Table(name = "PrivatePhoto", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Refreshable<PrivatePhoto> {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long privatePhotoId;
 
     @FieldPreamble(description = "CDN security issue. Put in folders?")
@@ -34,33 +38,49 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
 
     @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
             "Also make sure this supports good SEO.")
+    @Column(name = "privatePhotoURLPath")
     public String privatePhotoURLPath;
 
+    @Column(name = "privatePhotoName")
     public String privatePhotoName;
 
+    @Column(name = "privatePhotoDescription")
     public String privatePhotoDescription;
 
     @FieldPreamble(description = "Required to show users")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "privatePhotoUploadDate")
     public Date privatePhotoUploadDate;
 
     @FieldPreamble(description = "Required to show users")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "privatePhotoTakenDate")
     public Date privatePhotoTakenDate;
 
     @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
             "Privacy important? " +
             "Lets preserve the info.")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "humanId")
     public HumansPrivatePhoto humansPrivatePhoto;
 
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    @WARNING(warning = "Owning as deleting a photo should automatically reflect in albums, not vice versa.")
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = albumsCOL),
+            inverseJoinColumns = @JoinColumn(name = Album.albumPhotosCOL)
+    )
     public List<Album> albums;
-    final static public String albumsCol = "albums";
+    final static public String albumsCOL = "albums";
 
     @RefreshId("privatePhotoWall")
+    @_unidirectional
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Wall privatePhotoWall;
 
     private static final Refresh<PrivatePhoto> REFRESH = new Refresh<PrivatePhoto>();
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPrivatePhotoId() {
         return privatePhotoId;
     }
@@ -103,7 +123,6 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
         return this;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     public HumansPrivatePhoto getHumansPrivatePhoto() {
         return humansPrivatePhoto;
     }
@@ -133,7 +152,6 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
     }
 
 
-    @Temporal(javax.persistence.TemporalType.DATE)
     public Date getPrivatePhotoTakenDate() {
         return privatePhotoTakenDate;
     }
@@ -162,7 +180,6 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
         return this;
     }
 
-    @Temporal(javax.persistence.TemporalType.DATE)
     public Date getPrivatePhotoUploadDate() {
         return privatePhotoUploadDate;
     }
@@ -177,9 +194,6 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
         return this;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @WARNING(warning = "Owning as deleting a photo should automatically reflect in albums, not vice versa.")
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     public List<Album> getAlbums() {
         return albums;
     }
@@ -188,8 +202,6 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
         this.albums = albums;
     }
 
-    @UNIDIRECTIONAL
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Wall getPrivatePhotoWall() {
         return privatePhotoWall;
     }

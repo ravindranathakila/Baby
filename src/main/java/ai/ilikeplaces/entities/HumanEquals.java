@@ -2,7 +2,6 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.util.Loggers;
 
 /**
  * This class is to be used with the equals method in objects.
@@ -21,7 +20,7 @@ import ai.ilikeplaces.util.Loggers;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public abstract class HumanEquals implements HumanEqualsFace{
+public abstract class HumanEquals implements HumanEqualsFace {
     private static final UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = new UnsupportedOperationException("SORRY! YOU ARE COMPARING OBJECTS OF THE SAME CLASS IN THIS METHOD, WHICH IS NOT CORRECT.");
     private static final UnsupportedOperationException NOT_EXTEND = new UnsupportedOperationException("SORRY! THE OTHER OBJECT DOES NOT EXTEND HumanEquals.");
     private static final UnsupportedOperationException NOT_IMPLEMENTED = new UnsupportedOperationException("SORRY! THE OTHER OBJECT DOES NOT IMPLEMENTED HumanEqualsFace.");
@@ -53,7 +52,7 @@ public abstract class HumanEquals implements HumanEqualsFace{
 
     /**
      * New approach on HumanEquals but not tested. Check intensively if you are using this static approach.
-     * 
+     *
      * @param main
      * @param other
      * @return

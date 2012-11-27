@@ -21,7 +21,7 @@ public class EntityManagerInjector {
 
     public static final ThreadLocal<EntityManager> THREAD_SAFE_ENTITY_MANAGER = new ThreadLocal<EntityManager>() {
 
-        private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("adimpression_ilikeplaces_war_1.6-SNAPSHOTPU_DN");
+        private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ilpMainSchema");
 
         @Override
         protected EntityManager initialValue() {

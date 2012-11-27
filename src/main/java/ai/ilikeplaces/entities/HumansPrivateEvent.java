@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.GetMailAddress;
@@ -21,24 +21,60 @@ import java.util.List;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "HumansPrivateEvent", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
-public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,HumansFriend, GetMailAddress, HumanIdFace, Serializable {
+public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace, HumansFriend, GetMailAddress, HumanIdFace, Serializable {
 // ------------------------------ FIELDS ------------------------------
 
+    @Id
     public String humanId;
 
+
+    @OneToOne(cascade = CascadeType.REFRESH)
+    //@PrimaryKeyJoinColumn
     public Human human;
 
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventOwnersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = privateEventsOwnedCOL),
+            inverseJoinColumns = @JoinColumn(name = PrivateEvent.privateEventOwnersCOL)
+    )
     public List<PrivateEvent> privateEventsOwned;
+    public static final String privateEventsOwnedCOL = "privateEventsOwned";
+
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventViewersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = privateEventsViewedCOL),
+            inverseJoinColumns = @JoinColumn(name = PrivateEvent.privateEventViewersCOL)
+    )
     public List<PrivateEvent> privateEventsViewed;
+    public static final String privateEventsViewedCOL = "privateEventsViewed";
+
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventInvitesCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = privateEventsInvitedCOL),
+            inverseJoinColumns = @JoinColumn(name = PrivateEvent.privateEventInvitesCOL)
+    )
     public List<PrivateEvent> privateEventsInvited;
+    public static final String privateEventsInvitedCOL = "privateEventsInvited";
+
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
+    @ManyToMany(mappedBy = PrivateEvent.privateEventRejectsCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = privateEventsRejectedCOL),
+            inverseJoinColumns = @JoinColumn(name = PrivateEvent.privateEventRejectsCOL)
+    )
     public List<PrivateEvent> privateEventsRejected;
+    public static final String privateEventsRejectedCOL = "privateEventsRejected";
+
+// --------------------- GETTER / SETTER METHODS ---------------------
 
 // ------------------------ ACCESSORS / MUTATORS ------------------------
 
-    @OneToOne(cascade = CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
     public Human getHuman() {
         return human;
     }
@@ -47,7 +83,6 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,H
         this.human = human;
     }
 
-    @Id
     public String getHumanId() {
         return humanId;
     }
@@ -56,8 +91,6 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,H
         this.humanId = humanId__;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(mappedBy = PrivateEvent.privateEventInvitesCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEventsInvited() {
         return privateEventsInvited;
     }
@@ -66,8 +99,6 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,H
         this.privateEventsInvited = privateEventsInvited;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(mappedBy = PrivateEvent.privateEventOwnersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEventsOwned() {
         return privateEventsOwned;
     }
@@ -76,8 +107,6 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,H
         this.privateEventsOwned = privateEventsOwned;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(mappedBy = PrivateEvent.privateEventRejectsCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEventsRejected() {
         return privateEventsRejected;
     }
@@ -86,14 +115,28 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,H
         this.privateEventsRejected = privateEventsRejected;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(mappedBy = PrivateEvent.privateEventViewersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivateEvent> getPrivateEventsViewed() {
         return privateEventsViewed;
     }
 
     public void setPrivateEventsViewed(List<PrivateEvent> privateEventsViewed) {
         this.privateEventsViewed = privateEventsViewed;
+    }
+
+// ------------------------ CANONICAL METHODS ------------------------
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+
+        if (o == null) return false;
+
+        if (getClass() == o.getClass()) {
+            final HumansPrivateEvent that = (HumansPrivateEvent) o;
+            return (!(this.getHumanId() == null || that.getHumanId() == null)) && this.getHumanId().equals(that.getHumanId());
+        } else {
+            return matchHumanId(o);
+        }
     }
 
 // ------------------------ INTERFACE METHODS ------------------------
@@ -132,22 +175,4 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace,H
     public boolean notFriend(final String friendsHumanId) {
         return !ifFriend(friendsHumanId);
     }
-
-// ------------------------ CANONICAL METHODS ------------------------
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-
-        if (o == null) return false;
-
-        if (getClass() == o.getClass()) {
-            final HumansPrivateEvent that = (HumansPrivateEvent) o;
-            return (!(this.getHumanId() == null || that.getHumanId() == null)) && this.getHumanId().equals(that.getHumanId());
-        } else {
-            return matchHumanId(o);
-        }
-    }
-
-// -------------------------- STATIC METHODS --------------------------
 }

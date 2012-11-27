@@ -14,36 +14,24 @@ import java.io.Serializable;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "Map", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class Map implements Serializable {
-
-    public Integer id;
-
-    public String label;
-
-    public String entry;
+// ------------------------------ FIELDS ------------------------------
 
     @Id
     @GeneratedValue
-    public Integer getId() {
-        return id;
-    }
+    public Integer id;
 
-    public void setId(final Integer id) {
-        this.id = id;
-    }
+    @Column(name = "label", length = 255)
+    public String label;
 
-    @Column(length = 255)
-    public String getLabel() {
-        return label;
-    }
+    @Column(name = "entry", length = 1000)
+    public String entry;
 
-    public void setLabel(final String label) {
-        this.label = label;
-    }
+// --------------------- GETTER / SETTER METHODS ---------------------
 
-    @Column(length = 1000)
     public String getEntry() {
         return entry;
     }
@@ -52,6 +40,24 @@ public class Map implements Serializable {
         this.entry = entry;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(final Integer id) {
+        this.id = id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(final String label) {
+        this.label = label;
+    }
+
+// ------------------------ CANONICAL METHODS ------------------------
+
     @Override
     public String toString() {
         return "Map{" +
@@ -59,5 +65,5 @@ public class Map implements Serializable {
                 ", label='" + label + '\'' +
                 ", entry='" + entry + '\'' +
                 '}';
-    } 
+    }
 }

@@ -17,10 +17,13 @@ import java.io.*;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "Human", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class Human extends HumanEquals implements HumanIdFace, Serializable, Clearance, HumansFriend, Cloneable {
+// ------------------------------ FIELDS ------------------------------
 
+    @Id
     public String humanId;
 
     /**
@@ -33,18 +36,65 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
 
     public Long clearance = 0L;
 
-
+    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public HumansAuthentication humansAuthentication;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@PrimaryKeyJoinColumn
     public HumansIdentity humansIdentity;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+    //@PrimaryKeyJoinColumn
     public HumansPublicPhoto humansPublicPhoto;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@PrimaryKeyJoinColumn
     public HumansPrivatePhoto HumansPrivatePhoto;
+
+    @NOTE(note = "HumansNet is a simple entity with no List based getters and setters.")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    //@PrimaryKeyJoinColumn
     public HumansNet humansNet;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@PrimaryKeyJoinColumn
     public HumansPrivateLocation humansPrivateLocation;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@PrimaryKeyJoinColumn
     public HumansPrivateEvent humansPrivateEvent;
+
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@PrimaryKeyJoinColumn
     public HumansAlbum humansAlbum;
+
+    @WARNING(warning = "DO NOT fetch eager. Wall will pull all the damn messages eager.")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@PrimaryKeyJoinColumn
     public HumansWall humansWall;
 
-    @Id
+// --------------------- GETTER / SETTER METHODS ---------------------
+
+    @Override
+    public Long getClearance() {
+        return clearance;
+    }
+
+    @Override
+    public void setClearance(final Long clearance) {
+        this.clearance = clearance;
+    }
+
+    public Boolean getHumanAlive() {
+        return humanAlive;
+    }
+
+    public void setHumanAlive(final Boolean humanAlive) {
+        this.humanAlive = humanAlive;
+    }
+
     public String getHumanId() {
         return humanId;
     }
@@ -53,10 +103,109 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
         this.humanId = humanId__;
     }
 
-    @Transient
-    public Human getHuman() {
-        return this;
+    public HumansAlbum getHumansAlbum() {
+        return humansAlbum;
     }
+
+    public void setHumansAlbum(HumansAlbum humansAlbum) {
+        this.humansAlbum = humansAlbum;
+    }
+
+    public HumansIdentity getHumansIdentity() {
+        return humansIdentity;
+    }
+
+    public void setHumansIdentity(final HumansIdentity humansIdentity) {
+        this.humansIdentity = humansIdentity;
+    }
+
+    public HumansNet getHumansNet() {
+        return humansNet;
+    }
+
+    public void setHumansNet(final HumansNet humansNet) {
+        this.humansNet = humansNet;
+    }
+
+    public HumansPrivateEvent getHumansPrivateEvent() {
+        return humansPrivateEvent;
+    }
+
+    public void setHumansPrivateEvent(final HumansPrivateEvent humansPrivateEvent) {
+        this.humansPrivateEvent = humansPrivateEvent;
+    }
+
+    public HumansPrivateLocation getHumansPrivateLocation() {
+        return humansPrivateLocation;
+    }
+
+    public void setHumansPrivateLocation(final HumansPrivateLocation humansPrivateLocation) {
+        this.humansPrivateLocation = humansPrivateLocation;
+    }
+
+    public HumansPublicPhoto getHumansPublicPhoto() {
+        return humansPublicPhoto;
+    }
+
+    public void setHumansPublicPhoto(HumansPublicPhoto humansPublicPhoto) {
+        this.humansPublicPhoto = humansPublicPhoto;
+    }
+
+    public HumansWall getHumansWall() {
+        return humansWall;
+    }
+
+    public void setHumansWall(final HumansWall humansWall) {
+        this.humansWall = humansWall;
+    }
+
+// ------------------------ CANONICAL METHODS ------------------------
+
+    @Override
+    @Transient
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(this);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return (Human) ois.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+
+        if (o == null) return false;
+
+        if (getClass() == o.getClass()) {
+            final Human that = (Human) o;
+            return (!(this.getHumanId() == null || that.getHumanId() == null)) && this.getHumanId().equals(that.getHumanId());
+        } else {
+            return matchHumanId(o);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Human{" +
+                "humanId='" + humanId + '\'' +
+                ", clearance=" + clearance +
+                ", humanAlive=" + humanAlive +
+                '}';
+    }
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface HumansFriend ---------------------
 
     @Transient
     @Override
@@ -92,157 +241,26 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
         return !ifFriend(friendsHumanId);
     }
 
+// -------------------------- OTHER METHODS --------------------------
 
-    public Boolean getHumanAlive() {
-        return humanAlive;
+    @Transient
+    public Human getHuman() {
+        return this;
     }
 
-    public void setHumanAlive(final Boolean humanAlive) {
-        this.humanAlive = humanAlive;
-    }
-
-    @Override
-    public Long getClearance() {
-        return clearance;
-    }
-
-    @Override
-    public void setClearance(final Long clearance) {
-        this.clearance = clearance;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
     public HumansAuthentication getHumansAuthentications() {
         return humansAuthentication;
+    }
+
+    public HumansPrivatePhoto getHumansPrivatePhoto() {
+        return HumansPrivatePhoto;
     }
 
     public void setHumansAuthentications(final HumansAuthentication humansAuthentications) {
         this.humansAuthentication = humansAuthentications;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    public HumansIdentity getHumansIdentity() {
-        return humansIdentity;
-    }
-
-    public void setHumansIdentity(final HumansIdentity humansIdentity) {
-        this.humansIdentity = humansIdentity;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    public HumansPrivatePhoto getHumansPrivatePhoto() {
-        return HumansPrivatePhoto;
-    }
-
     public void setHumansPrivatePhoto(HumansPrivatePhoto HumansPrivatePhoto) {
         this.HumansPrivatePhoto = HumansPrivatePhoto;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    public HumansPublicPhoto getHumansPublicPhoto() {
-        return humansPublicPhoto;
-    }
-
-    public void setHumansPublicPhoto(HumansPublicPhoto humansPublicPhoto) {
-        this.humansPublicPhoto = humansPublicPhoto;
-    }
-
-    @NOTE(note = "HumansNet is a simple entity with no List based getters and setters.")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @PrimaryKeyJoinColumn
-    public HumansNet getHumansNet() {
-        return humansNet;
-    }
-
-    public void setHumansNet(final HumansNet humansNet) {
-        this.humansNet = humansNet;
-    }
-
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    public HumansPrivateLocation getHumansPrivateLocation() {
-        return humansPrivateLocation;
-    }
-
-    public void setHumansPrivateLocation(final HumansPrivateLocation humansPrivateLocation) {
-        this.humansPrivateLocation = humansPrivateLocation;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    public HumansPrivateEvent getHumansPrivateEvent() {
-        return humansPrivateEvent;
-    }
-
-    public void setHumansPrivateEvent(final HumansPrivateEvent humansPrivateEvent) {
-        this.humansPrivateEvent = humansPrivateEvent;
-    }
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    public HumansAlbum getHumansAlbum() {
-        return humansAlbum;
-    }
-
-    public void setHumansAlbum(HumansAlbum humansAlbum) {
-        this.humansAlbum = humansAlbum;
-    }
-
-    @WARNING(warning = "DO NOT fetch eager. Wall will pull all the damn messages eager.")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    public HumansWall getHumansWall() {
-        return humansWall;
-    }
-
-    public void setHumansWall(final HumansWall humansWall) {
-        this.humansWall = humansWall;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-
-        if (o == null) return false;
-
-        if (getClass() == o.getClass()) {
-            final Human that = (Human) o;
-            return (!(this.getHumanId() == null || that.getHumanId() == null)) && this.getHumanId().equals(that.getHumanId());
-        } else {
-            return matchHumanId(o);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Human{" +
-                "humanId='" + humanId + '\'' +
-                ", clearance=" + clearance +
-                ", humanAlive=" + humanAlive +
-                '}';
-    }
-
-
-    @Override
-    @Transient
-    protected Object clone() throws CloneNotSupportedException {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(this);
-
-            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            ObjectInputStream ois = new ObjectInputStream(bais);
-            return (Human) ois.readObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

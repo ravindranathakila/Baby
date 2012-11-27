@@ -13,31 +13,31 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "HumansPrivatePhoto", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansPrivatePhoto implements HumanIdFace, Serializable {
+// ------------------------------ FIELDS ------------------------------
+
     private static final long serialVersionUID = 1L;
 
+    @Id
     public String humanId;
+
+    @OneToOne(cascade = CascadeType.REFRESH)
+    //@PrimaryKeyJoinColumn
     public Human human;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "humanId")
     public List<PrivatePhoto> privatePhotos;
 
-    @Id
-    public String getHumanId() {
-        return humanId;
-    }
+// --------------------- GETTER / SETTER METHODS ---------------------
 
-    public void setHumanId(final String humanId__) {
-        this.humanId = humanId__;
-    }
-
-    @OneToOne(cascade=CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
     public Human getHuman() {
         return human;
     }
@@ -46,7 +46,14 @@ public class HumansPrivatePhoto implements HumanIdFace, Serializable {
         this.human = human;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    public String getHumanId() {
+        return humanId;
+    }
+
+    public void setHumanId(final String humanId__) {
+        this.humanId = humanId__;
+    }
+
     public List<PrivatePhoto> getPrivatePhotos() {
         return privatePhotos;
     }
@@ -54,31 +61,6 @@ public class HumansPrivatePhoto implements HumanIdFace, Serializable {
     public void setPrivatePhotos(List<PrivatePhoto> privatePhotos) {
         this.privatePhotos = privatePhotos;
     }
-    
 
-//    @Override
-//    public int hashCode() {
-//        int hash = 0;
-//        hash += (id != null ? id.hashCode() : 0);
-//        return hash;
-//    }
-//
-//    @Override
-//    public boolean equals(Object object) {
-//        // TODO: Warning - this method won't work in the case the id fields are not set
-//        if (!(object instanceof HumansPrivatePhoto)) {
-//            return false;
-//        }
-//        HumansPrivatePhoto other = (HumansPrivatePhoto) object;
-//        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "ai.ilikeplaces.entities.HumansPrivatePhoto[id=" + id + "]";
-//    }
 
 }

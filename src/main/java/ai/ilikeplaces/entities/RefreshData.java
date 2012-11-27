@@ -10,13 +10,13 @@ import ai.ilikeplaces.exception.DBFetchDataException;
  * Time: 2:35:56 PM
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public interface RefreshData<T>{
+public interface RefreshData<T> {
 
     /**
      * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
      *
-     * @throws DBFetchDataException in case the entity fails to refresh something inside it
      * @return T
+     * @throws DBFetchDataException in case the entity fails to refresh something inside it
      */
     @Deprecated
     public T refresh() throws DBFetchDataException;

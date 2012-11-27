@@ -12,19 +12,12 @@
     </properties>
 
     <dependencies>
-        <!--Required for providing Datanucleus JTA locator plugin-->
-        <dependency>
-            <groupId>org.apache.openejb</groupId>
-            <artifactId>openejb-core</artifactId>
-            <version>3.1.4</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>Java</groupId>
             <artifactId>jsp-api</artifactId>
             <version>1+</version>
             <scope>system</scope>
-            <systemPath>${catalina.home}/lib/jsp-api.jar</systemPath>
+            <systemPath>${catalina.home}/lib/jsp-api-2.1-6.1.14.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.apache.openejb</groupId>
@@ -193,7 +186,7 @@
             <artifactId>log4j</artifactId>
             <version>log4j-1.2.15</version>
             <scope>system</scope>
-            <systemPath>${catalina.home}/lib/log4j-1.2.15.jar
+            <systemPath>${catalina.home}/lib/log4j-1.2.16.jar
             </systemPath>
         </dependency>
         <dependency>
@@ -201,7 +194,7 @@
             <artifactId>xercesImpl</artifactId>
             <version>2.8.1</version>
             <scope>system</scope>
-            <systemPath>${catalina.home}/lib/xercesImpl-2.8.1.jar
+            <systemPath>${catalina.home}/lib/xercesImpl.jar
             </systemPath>
         </dependency>
         <dependency>
@@ -300,53 +293,6 @@
             <version>0.2.0</version>
         </dependency>
 
-        <!--hbase datanuclues-->
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-core</artifactId>
-            <version>[3.0,)</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-jpa_2.0_spec</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-api-jdo</artifactId>
-            <version>[3.0,)</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-api-jpa</artifactId>
-            <version>[3.0,)</version>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-rdbms</artifactId>
-            <version>[3.0,)</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-enhancer</artifactId>
-            <version>[3.0,)</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.jdo</groupId>
-            <artifactId>jdo-api</artifactId>
-            <version>[3.0,)</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.datanucleus</groupId>
-            <artifactId>datanucleus-hbase</artifactId>
-            <version>[3.0,)</version>
-            <scope>runtime</scope>
-        </dependency>
-
         <!--hazelcast-->
 
         <dependency>
@@ -384,6 +330,20 @@
             <artifactId>json</artifactId>
             <version>20090211</version>
         </dependency>
+
+        <!-- Kundera Dependencies -->
+        <dependency>
+            <groupId>com.impetus.core</groupId>
+            <artifactId>kundera-core</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.impetus.client</groupId>
+            <artifactId>kundera-hbase</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <!-- End Of Kundera Dependencies -->
 
     </dependencies>
     <build>
@@ -442,10 +402,10 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <outputDirectory>
-                        {catalina.home}/webapps/
+                        ${catalina.home}/webapps/
                     </outputDirectory>
                     <webappDirectory>
-                        {catalina.home}/webapps/${project.build.finalName}
+                        ${catalina.home}/webapps/${project.build.finalName}
                     </webappDirectory>
                 </configuration>
                 <executions>
@@ -456,7 +416,7 @@
                         </goals>
                         <configuration>
                             <webappDirectory>
-                                {catalina.home}/webapps/${project.build.finalName}
+                                ${catalina.home}/webapps/${project.build.finalName}
                             </webappDirectory>
                             <archive>
                                 <manifest>
@@ -496,65 +456,10 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.datanucleus</groupId>
-                <artifactId>maven-datanucleus-plugin</artifactId>
-                <version>3.0.1</version>
-                <configuration>
-                    <log4jConfiguration>${basedir}/log4j.properties</log4jConfiguration>
-                    <verbose>true</verbose>
-                    <api>JPA</api>
-                    <metadataIncludes>ai/ilikeplaces/entities/*.class</metadataIncludes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>enhance</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--<plugin>-->
-            <!--<groupId>org.apache.openjpa</groupId>-->
-            <!--<artifactId>openjpa-maven-plugin</artifactId>-->
-            <!--<version>2.2.0</version>-->
-            <!--<configuration>-->
-            <!--<includes>**/entities/*.class</includes>-->
-            <!--<excludes>**/entities/XML*.class</excludes>-->
-            <!--<addDefaultConstructor>true</addDefaultConstructor>-->
-            <!--<enforcePropertyRestrictions>true</enforcePropertyRestrictions>-->
-            <!--<skip>false</skip>-->
-            <!--</configuration>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>enhancer</id>-->
-            <!--<phase>process-classes</phase>-->
-            <!--<goals>-->
-            <!--<goal>enhance</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--<dependencies>-->
-            <!--<dependency>-->
-            <!--<groupId>org.apache.openjpa</groupId>-->
-            <!--<artifactId>openjpa</artifactId>-->
-            <!--&lt;!&ndash; set the version to be the same as the level in your runtime &ndash;&gt;-->
-            <!--<version>1.2.1</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--</plugin>-->
 
         </plugins>
         <finalName>ROOT</finalName>
     </build>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>DataNucleus_2</id>
-            <url>http://www.datanucleus.org/downloads/maven2/</url>
-        </pluginRepository>
-    </pluginRepositories>
     <repositories>
         <repository>
             <id>mvn</id>
@@ -580,16 +485,36 @@
             </snapshots>
         </repository>
         <repository>
-            <id>DataNucleus_Repos2</id>
-            <name>DataNucleus Repository</name>
-            <url>http://www.datanucleus.org/downloads/maven2</url>
-        </repository>
-        <repository>
             <id>Java_Net_LEGACY</id>
             <name>Java.Net legacy</name>
             <url>http://download.java.net/maven/1/</url>
             <layout>legacy</layout>
         </repository>
+
+        <!-- Kundera Repos-->
+        <repository>
+            <id>sonatype-nexus</id>
+            <name>Kundera Public Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>kundera-missing</id>
+            <name>Kundera Public Missing Resources Repository</name>
+            <url>http://kundera.googlecode.com/svn/maven2/maven-missing-resources</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <!-- End of Kundera Repos -->
     </repositories>
 </project>
 

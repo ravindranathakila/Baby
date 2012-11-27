@@ -11,5 +11,5 @@ import ai.ilikeplaces.doc.License;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public interface HumanEqualsFace {
-    abstract public String getHumanId();    
+    abstract public String getHumanId();
 }

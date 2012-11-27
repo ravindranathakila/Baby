@@ -4,16 +4,12 @@ import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.ExceptionCache;
-import ai.ilikeplaces.util.jpa.Refresh;
 import ai.ilikeplaces.util.jpa.RefreshException;
 import ai.ilikeplaces.util.jpa.RefreshSpec;
 import ai.ilikeplaces.util.jpa.Refreshable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -65,26 +61,46 @@ import java.util.Set;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @OK
+@Table(name = "Tribe", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Tribe>, Comparable<Tribe> {
 // ------------------------------ FIELDS ------------------------------
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long tribeId;
 
+    @Column(name = "tribeName", nullable = false, length = 255)
     public String tribeName;
+
+    @Column(name = "tribeStory", nullable = false, length = 1000)
     public String tribeStory;
 
+    @_unidirectional
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Wall tribeWall;
 
+    @_unidirectional
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Album tribeAlbum;
 
+    @WARNING(warning = "Owner because once an tribe needs to be deleted, deleting this tribe is easier if owner." +
+            "If this tribe is not the owner, individual owner viewer accepteee rejectee will have to delete their tribes individually.")
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = HumansTribe.tribesCOL),
+            inverseJoinColumns = @JoinColumn(name = tribeMembersCOL)
+    )
     public Set<HumansTribe> tribeMembers;
+    public static final String tribeMembersCOL = "tribeMembers";
+
+// --------------------- GETTER / SETTER METHODS ---------------------
 
 // ------------------------ ACCESSORS / MUTATORS ------------------------
 
-    @UNIDIRECTIONAL
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
     public Album getTribeAlbum() {
         return tribeAlbum;
     }
@@ -93,15 +109,6 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
         this.tribeAlbum = tribeAlbum;
     }
 
-
-    @Transient
-    public Tribe setTribeAlbumR(final Album tribeAlbum) {
-        this.tribeAlbum = tribeAlbum;
-        return this;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getTribeId() {
         return tribeId;
     }
@@ -110,10 +117,6 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
         this.tribeId = tribeId;
     }
 
-    @WARNING(warning = "Owner because once an tribe needs to be deleted, deleting this tribe is easier if owner." +
-            "If this tribe is not the owner, individual owner viewer accepteee rejectee will have to delete their tribes individually.")
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public Set<HumansTribe> getTribeMembers() {
         return tribeMembers;
     }
@@ -122,7 +125,6 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
         this.tribeMembers = tribeMembers;
     }
 
-    @Column(nullable = false, length = 255)
     public String getTribeName() {
         return tribeName;
     }
@@ -131,13 +133,6 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
         this.tribeName = tribeName;
     }
 
-    @Transient
-    public Tribe setTribeNameR(String tribeName) {
-        this.tribeName = tribeName;
-        return this;
-    }
-
-    @Column(nullable = false, length = 1000)
     public String getTribeStory() {
         return tribeStory;
     }
@@ -146,14 +141,6 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
         this.tribeStory = tribeStory;
     }
 
-    @Transient
-    public Tribe setTribeStoryR(final String tribeStory) {
-        this.tribeStory = tribeStory;
-        return this;
-    }
-
-    @UNIDIRECTIONAL
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Wall getTribeWall() {
         return tribeWall;
     }
@@ -162,21 +149,28 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
         this.tribeWall = tribeWall;
     }
 
-    @Transient
-    public Tribe setTribeWallR(final Wall tribeWall) {
-        this.tribeWall = tribeWall;
-        return this;
+// ------------------------ CANONICAL METHODS ------------------------
+
+    @Override
+    public String toString() {
+        return "Tribe{" +
+                "tribeId=" + tribeId +
+                ", tribeName='" + tribeName + '\'' +
+                '}';
     }
 
 // ------------------------ INTERFACE METHODS ------------------------
 
 
-// --------------------- Interface Refreshable ---------------------
+// --------------------- Interface Comparable ---------------------
+
 
     @Override
-    public Tribe refresh(RefreshSpec refreshSpec) throws RefreshException {
-        throw ExceptionCache.METHOD_NOT_IMPLEMENTED;
+    public int compareTo(final Tribe o) {
+        return (int) (this.tribeId - o.tribeId);
     }
+
+// --------------------- Interface RefreshData ---------------------
 
     /**
      * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
@@ -191,18 +185,37 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
         return this;
     }
 
+// --------------------- Interface Refreshable ---------------------
+
     @Override
-    public String toString() {
-        return "Tribe{" +
-                "tribeId=" + tribeId +
-                ", tribeName='" + tribeName + '\'' +
-                '}';
+    public Tribe refresh(RefreshSpec refreshSpec) throws RefreshException {
+        throw ExceptionCache.METHOD_NOT_IMPLEMENTED;
     }
 
+// -------------------------- OTHER METHODS --------------------------
 
-    @Override
-    public int compareTo(final Tribe o) {
-        return (int) (this.tribeId - o.tribeId);
+    @Transient
+    public Tribe setTribeAlbumR(final Album tribeAlbum) {
+        this.tribeAlbum = tribeAlbum;
+        return this;
+    }
+
+    @Transient
+    public Tribe setTribeNameR(String tribeName) {
+        this.tribeName = tribeName;
+        return this;
+    }
+
+    @Transient
+    public Tribe setTribeStoryR(final String tribeStory) {
+        this.tribeStory = tribeStory;
+        return this;
+    }
+
+    @Transient
+    public Tribe setTribeWallR(final Wall tribeWall) {
+        this.tribeWall = tribeWall;
+        return this;
     }
 }
 

@@ -2,7 +2,6 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
 
-import javax.persistence.Id;
 import javax.persistence.Transient;
 
 /**

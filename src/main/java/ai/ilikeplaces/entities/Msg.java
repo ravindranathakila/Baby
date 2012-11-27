@@ -1,7 +1,6 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
@@ -20,23 +19,17 @@ import java.io.Serializable;
  * Time: 1:01:22 PM
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "Msg", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @NamedQuery(name = "FindWallEntriesByWallIdOrderByIdDesc",
-        query = "SELECT msg FROM Msg msg WHERE msg.msgId IN (SELECT wall.wallMsgs FROM Wall wall WHERE wall.wallId = :wallId) order by msg.msgId DESC")
+        query = "SELECT msg FROM Msg msg")
 @EntityListeners({EntityLifeCycleListener.class})
 public class Msg implements Serializable {
+// ------------------------------ FIELDS ------------------------------
 
-    public Long msgId;
     public static final String msgIdCOL = "msgId";
 
     final static public String FindWallEntriesByWallIdOrderByIdDesc = "FindWallEntriesByWallIdOrderByIdDesc";
-
-
-    public Integer msgType;//Wall, Personal
-
-    public String msgContent;
-
-    public String msgMetadata;//Anybody can store relavant metadata here
 
 
     final static public int msgTypeHUMAN = 1;
@@ -44,32 +37,19 @@ public class Msg implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getMsgId() {
-        return msgId;
-    }
+    public Long msgId;
 
-    public void setMsgId(final Long msgId) {
-        this.msgId = msgId;
-    }
 
-    public Msg setMsgIdR(final Long msgId) {
-        this.msgId = msgId;
-        return this;
+    @Column(name = "msgType")
+    public Integer msgType;//Wall, Personal
 
-    }
+    @Column(name = "msgContent")
+    public String msgContent;
 
-    public Integer getMsgType() {
-        return msgType;
-    }
+    @Column(name = "msgMetadata")
+    public String msgMetadata;//Anybody can store relavant metadata here
 
-    public void setMsgType(final Integer msgType) {
-        this.msgType = msgType;
-    }
-
-    public Msg setMsgTypeR(final Integer msgType) {
-        this.msgType = msgType;
-        return this;
-    }
+// --------------------- GETTER / SETTER METHODS ---------------------
 
     public String getMsgContent() {
         return msgContent;
@@ -79,9 +59,12 @@ public class Msg implements Serializable {
         this.msgContent = msgContent;
     }
 
-    public Msg setMsgContentR(final String msgContent) {
-        this.msgContent = msgContent;
-        return this;
+    public Long getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(final Long msgId) {
+        this.msgId = msgId;
     }
 
     public String getMsgMetadata() {
@@ -92,11 +75,15 @@ public class Msg implements Serializable {
         this.msgMetadata = msgMetadata;
     }
 
-    public Msg setMsgMetadataR(final String msgMetadata) {
-        this.msgMetadata = msgMetadata;
-        return this;
-
+    public Integer getMsgType() {
+        return msgType;
     }
+
+    public void setMsgType(final Integer msgType) {
+        this.msgType = msgType;
+    }
+
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public String toString() {
@@ -106,5 +93,27 @@ public class Msg implements Serializable {
                 ", msgContent='" + msgContent + '\'' +
                 ", msgMetadata='" + msgMetadata + '\'' +
                 '}';
+    }
+
+// -------------------------- OTHER METHODS --------------------------
+
+    public Msg setMsgContentR(final String msgContent) {
+        this.msgContent = msgContent;
+        return this;
+    }
+
+    public Msg setMsgIdR(final Long msgId) {
+        this.msgId = msgId;
+        return this;
+    }
+
+    public Msg setMsgMetadataR(final String msgMetadata) {
+        this.msgMetadata = msgMetadata;
+        return this;
+    }
+
+    public Msg setMsgTypeR(final Integer msgType) {
+        this.msgType = msgType;
+        return this;
     }
 }

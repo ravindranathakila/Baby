@@ -16,16 +16,20 @@ import java.io.Serializable;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "HumansAlbum", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansAlbum implements HumanPkJoinFace, Serializable {
 
+    @Id
     public String humanId;
 
+
+    @OneToOne(cascade = CascadeType.REFRESH)
+    //@PrimaryKeyJoinColumn
     public Human human;
 
 
-    @Id
     public String getHumanId() {
         return humanId;
     }
@@ -34,8 +38,7 @@ public class HumansAlbum implements HumanPkJoinFace, Serializable {
         this.humanId = humanId__;
     }
 
-    @OneToOne(cascade = CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
+
     public Human getHuman() {
         return human;
     }

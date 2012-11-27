@@ -5,7 +5,6 @@ import ai.ilikeplaces.exception.DBFetchDataException;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -40,28 +39,46 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
     final static public String locationCOL = "location";
     final static public String publicEventAlbumCOL = "publicEventAlbum";
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long publicEventId;
 
+    @Column(name = "publicEventName")
     public String publicEventName;
 
+    @Column(name = "publicEventInfo")
     public String publicEventInfo;
 
+    @Column(name = "publicEventStartDate")
     public String publicEventStartDate;
 
+    @Column(name = "publicEventEndDate")
     public String publicEventEndDate;
 
+    @Column(name = "extendedAccess")
     public Boolean extendedAccess;
 
+
+    @_unidirectional
+    @OneToOne(cascade = CascadeType.ALL)
     public Wall publicEventWall;
 
+
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "privateLocationId")
     public PrivateLocation privateLocation;
 
     public Location location;
 
+// --------------------- GETTER / SETTER METHODS ---------------------
+
 // ------------------------ ACCESSORS / MUTATORS ------------------------
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "locationId")
     public Location getLocation() {
         return location;
     }
@@ -70,6 +87,13 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
         this.location = location;
     }
 
+    public PrivateLocation getPrivateLocation() {
+        return privateLocation;
+    }
+
+    public void setPrivateLocation(PrivateLocation privateLocation) {
+        this.privateLocation = privateLocation;
+    }
 
     public String getPublicEventEndDate() {
         return publicEventEndDate;
@@ -79,8 +103,6 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
         this.publicEventEndDate = publicEventEndDate;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPublicEventId() {
         return publicEventId;
     }
@@ -97,7 +119,6 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
         this.publicEventInfo = publicEventInfo;
     }
 
-
     public String getPublicEventName() {
         return publicEventName;
     }
@@ -105,7 +126,6 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
     public void setPublicEventName(String publicEventName) {
         this.publicEventName = publicEventName;
     }
-
 
     public String getPublicEventStartDate() {
         return publicEventStartDate;
@@ -115,8 +135,6 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
         this.publicEventStartDate = publicEventStartDate;
     }
 
-    @UNIDIRECTIONAL
-    @OneToOne(cascade = CascadeType.ALL)
     public Wall getPublicEventWall() {
         return publicEventWall;
     }
@@ -125,22 +143,22 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
         this.publicEventWall = publicEventWall;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    public PrivateLocation getPrivateLocation() {
-        return privateLocation;
-    }
-
-    public void setPrivateLocation(PrivateLocation privateLocation) {
-        this.privateLocation = privateLocation;
-    }
-
     public Boolean isExtendedAccess() {
         return extendedAccess;
     }
 
     public void setExtendedAccess(Boolean extendedAccess) {
         this.extendedAccess = extendedAccess;
+    }
+
+// ------------------------ CANONICAL METHODS ------------------------
+
+    @Override
+    public String toString() {
+        return "PublicEvent{" +
+                ", publicEventId=" + publicEventId +
+                ", privateLocation=" + privateLocation +
+                '}';
     }
 
 // ------------------------ INTERFACE METHODS ------------------------
@@ -163,16 +181,6 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
         return this;
     }
 
-// ------------------------ CANONICAL METHODS ------------------------
-
-    @Override
-    public String toString() {
-        return "PublicEvent{" +
-                ", publicEventId=" + publicEventId +
-                ", privateLocation=" + privateLocation +
-                '}';
-    }
-
 // -------------------------- OTHER METHODS --------------------------
 
     @Transient
@@ -184,6 +192,12 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
     @Transient
     public PublicEvent setLocationR(Location location) {
         setLocation(location);
+        return this;
+    }
+
+    @Transient
+    public PublicEvent setPrivateLocationR(PrivateLocation privateLocation) {
+        this.privateLocation = privateLocation;
         return this;
     }
 
@@ -220,12 +234,6 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
     @Transient
     public PublicEvent setPublicEventWallR(final Wall publicEventWall) {
         this.publicEventWall = publicEventWall;
-        return this;
-    }
-
-    @Transient
-    public PublicEvent setPrivateLocationR(PrivateLocation privateLocation) {
-        this.privateLocation = privateLocation;
         return this;
     }
 }

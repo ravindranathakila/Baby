@@ -11,12 +11,6 @@ import java.lang.annotation.RetentionPolicy;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface BIDIRECTIONAL {
-    enum OWNING {
-        IS,
-        NOT,
-        TODO
-    }
-
-    public OWNING ownerside() default OWNING.TODO;
+public @interface _unidirectional {
+    String note() default "";
 }

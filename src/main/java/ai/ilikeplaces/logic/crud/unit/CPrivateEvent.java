@@ -59,7 +59,7 @@ public class CPrivateEvent extends AbstractSLBCallbacks implements CPrivateEvent
                         .setPrivateEventStartDateR(startDate)
                         .setPrivateEventEndDateR(endDate)
                         .setPrivateEventAlbumR(new Album().setAlbumNameR(locationName))
-                        .setPrivateEventWallR(new Wall().setWallRContent("")));
+                        .setPrivateEventWallR(new Wall().setWallContentR("")));
 
         wireLocation:
         {

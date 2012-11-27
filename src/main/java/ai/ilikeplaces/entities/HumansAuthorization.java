@@ -2,25 +2,28 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- *
  * @author Ravindranath Akila
  */
+@Table(name = "HumansAuthorization", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansAuthorization implements Serializable {
+// ------------------------------ FIELDS ------------------------------
 
     private static final long serialVersionUID = 1L;
 
+    @Id
     public String humanIdentification;
 
+    @Column(name = "humansToken")
+    public String humansToken;
 
-    @Id
+// --------------------- GETTER / SETTER METHODS ---------------------
+
     public String getHumanIdentification() {
         return humanIdentification;
     }
@@ -29,12 +32,7 @@ public class HumansAuthorization implements Serializable {
         this.humanIdentification = humanIdentification__;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (humanIdentification != null ? humanIdentification.hashCode() : 0);
-        return hash;
-    }
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public boolean equals(Object object) {
@@ -47,6 +45,13 @@ public class HumansAuthorization implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (humanIdentification != null ? humanIdentification.hashCode() : 0);
+        return hash;
     }
 
     @Override

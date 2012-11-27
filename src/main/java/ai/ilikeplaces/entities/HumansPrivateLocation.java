@@ -1,9 +1,9 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.crud.DB;
@@ -24,30 +24,47 @@ import java.util.List;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "HumansPrivateLocation", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFace, HumansFriend, RefreshData<HumansPrivateLocation>, Serializable {
-
-    public String humanId;
-
-    public Human human;
-
-    public List<PrivateLocation> privateLocationsViewed;
-
-    public List<PrivateLocation> privateLocationsOwned;
-
+// ------------------------------ FIELDS ------------------------------
 
     @Id
-    public String getHumanId() {
-        return humanId;
-    }
-
-    public void setHumanId(final String humanId__) {
-        this.humanId = humanId__;
-    }
+    public String humanId;
 
     @OneToOne(cascade = CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
+    //@PrimaryKeyJoinColumn
+    public Human human;
+
+    @_bidirectional
+    @WARNING(warning = "Many",
+            warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
+                    "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
+    @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationViewersCOL, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = PrivateLocation.privateLocationViewersCOL),
+            inverseJoinColumns = @JoinColumn(name = privateLocationsViewedCOL)
+    )
+    public List<PrivateLocation> privateLocationsViewed;
+    public static final String privateLocationsViewedCOL = "privateLocationsViewed";
+
+    @_bidirectional
+    @WARNING(warning = "Many",
+            warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
+                    "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
+    @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationOwnersCOL, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = PrivateLocation.privateLocationOwnersCOL),
+            inverseJoinColumns = @JoinColumn(name = privateLocationsOwnedCOL)
+    )
+    public List<PrivateLocation> privateLocationsOwned;
+    public static final String privateLocationsOwnedCOL = "privateLocationsOwned";
+
+// --------------------- GETTER / SETTER METHODS ---------------------
+
     public Human getHuman() {
         return human;
     }
@@ -56,34 +73,22 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
         this.human = human;
     }
 
-    @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
-    @Override
-    @Transient
-    public String getDisplayName() {
-        return this.human.getHumansNet().getDisplayName();
+    public String getHumanId() {
+        return humanId;
     }
 
-    @Override
-    @Transient
-    public boolean ifFriend(final String friendsHumanId) {
-        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
-        if (r.returnStatus() != 0) {
-            throw new DBException(r.returnError());
-        }
-        return r.returnValue();
+    public void setHumanId(final String humanId__) {
+        this.humanId = humanId__;
     }
 
-    @Override
-    public boolean notFriend(final String friendsHumanId) {
-        return !ifFriend(friendsHumanId);
+    public List<PrivateLocation> getPrivateLocationsOwned() {
+        return privateLocationsOwned;
     }
 
-    @BIDIRECTIONAL
-    @WARNING(warning = "Many",
-             warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
-                     "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
-    @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
-    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationViewersCOL, fetch = FetchType.LAZY)
+    public void setPrivateLocationsOwned(List<PrivateLocation> privateLocationsOwned) {
+        this.privateLocationsOwned = privateLocationsOwned;
+    }
+
     public List<PrivateLocation> getPrivateLocationsViewed() {
         return privateLocationsViewed;
     }
@@ -92,19 +97,7 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
         this.privateLocationsViewed = privateLocationsViewed;
     }
 
-    @BIDIRECTIONAL
-    @WARNING(warning = "Many",
-             warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
-                     "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
-    @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
-    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationOwnersCOL, fetch = FetchType.LAZY)
-    public List<PrivateLocation> getPrivateLocationsOwned() {
-        return privateLocationsOwned;
-    }
-
-    public void setPrivateLocationsOwned(List<PrivateLocation> privateLocationsOwned) {
-        this.privateLocationsOwned = privateLocationsOwned;
-    }
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public boolean equals(final Object o) {
@@ -135,6 +128,35 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
                 "human=" + human +
                 '}';
     }
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface HumansFriend ---------------------
+
+    @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
+    @Override
+    @Transient
+    public String getDisplayName() {
+        return this.human.getHumansNet().getDisplayName();
+    }
+
+    @Override
+    @Transient
+    public boolean ifFriend(final String friendsHumanId) {
+        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
+        if (r.returnStatus() != 0) {
+            throw new DBException(r.returnError());
+        }
+        return r.returnValue();
+    }
+
+    @Override
+    public boolean notFriend(final String friendsHumanId) {
+        return !ifFriend(friendsHumanId);
+    }
+
+// --------------------- Interface RefreshData ---------------------
 
 
     /**

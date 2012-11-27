@@ -1,8 +1,9 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.doc.DOCUMENTATION;
+import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
-import ai.ilikeplaces.util.ExceptionCache;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,6 +29,7 @@ import java.util.Date;
                 "Observed Problems:" +
                 "1. Too many joins.")
 )
+@Table(name = "HumansIdentity", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @NamedQueries({
         @NamedQuery(name = "FindPaginatedHumansByEmails",
@@ -35,6 +37,7 @@ import java.util.Date;
 
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Serializable {
+// ------------------------------ FIELDS ------------------------------
 
     final static public String FindPaginatedHumansByEmails = "FindPaginatedHumansByEmails";
     final static public String HumansIdentityEmails = "humansIdentityEmails";
@@ -42,23 +45,28 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
     private static final String HUMAN_ID = "humanId='";
     private static final char CLOSING_BRACE = '}';
 
-    public String humanId;
-    public Human human;
-    public Date humansIdentityDateOfBirth;
-    public String humansIdentityProfilePhoto;
-    public Url url;
-
     @Id
-    public String getHumanId() {
-        return humanId;
-    }
+    public String humanId;
 
-    public void setHumanId(final String humanId__) {
-        this.humanId = humanId__;
-    }
 
     @OneToOne(cascade = CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
+    //@PrimaryKeyJoinColumn
+    public Human human;
+
+
+    @Basic(fetch = FetchType.LAZY)
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name = "humansIdentityDateOfBirth")
+    public Date humansIdentityDateOfBirth;
+
+    @Column(name = "humansIdentityProfilePhoto")
+    public String humansIdentityProfilePhoto;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    public Url url;
+
+// --------------------- GETTER / SETTER METHODS ---------------------
+
     public Human getHuman() {
         return human;
     }
@@ -67,9 +75,14 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
         this.human = human;
     }
 
+    public String getHumanId() {
+        return humanId;
+    }
 
-    @Basic(fetch = FetchType.LAZY)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    public void setHumanId(final String humanId__) {
+        this.humanId = humanId__;
+    }
+
     public Date getHumansIdentityDateOfBirth() {
         return humansIdentityDateOfBirth;
     }
@@ -77,7 +90,6 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
     public void setHumansIdentityDateOfBirth(final Date humansIdentityDateOfBirth) {
         this.humansIdentityDateOfBirth = humansIdentityDateOfBirth;
     }
-
 
     public String getHumansIdentityProfilePhoto() {
         return humansIdentityProfilePhoto;
@@ -87,8 +99,6 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
         this.humansIdentityProfilePhoto = humansIdentityProfilePhoto;
     }
 
-
-    @OneToOne(cascade = CascadeType.ALL)
     public Url getUrl() {
         return url;
     }
@@ -96,6 +106,8 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
     public void setUrl(final Url url) {
         this.url = url;
     }
+
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public boolean equals(final Object o) {
@@ -105,7 +117,6 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
         final HumansIdentity that = (HumansIdentity) o;
 
         return !(humanId != null ? !humanId.equals(that.humanId) : that.humanId != null);
-
     }
 
     @Override

@@ -5,41 +5,42 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.util.EntityLifeCycleListener;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 
 /**
- *
  * @author Ravindranath Akila
  */
+@Table(name = "HumanEmbedded", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumanEmbedded implements HumanPkJoinFace, Serializable {
-
-    private String humanId;
-
-    private Human human;
-
+// ------------------------------ FIELDS ------------------------------
 
     @Id
-    public String getHumanId() {
-        return humanId;
-    }
+    private String humanId;
 
-    public void setHumanId(final String humanId__) {
-        this.humanId = humanId__;
-    }
 
     @OneToOne(cascade = CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
+    //@PrimaryKeyJoinColumn
+    private Human human;
+
+// --------------------- GETTER / SETTER METHODS ---------------------
+
     public Human getHuman() {
         return human;
     }
 
     public void setHuman(final Human human) {
         this.human = human;
+    }
+
+    public String getHumanId() {
+        return humanId;
+    }
+
+    public void setHumanId(final String humanId__) {
+        this.humanId = humanId__;
     }
 }

@@ -2,7 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.UNIDIRECTIONAL;
+import ai.ilikeplaces.doc._unidirectional;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
@@ -22,6 +22,7 @@ import java.util.List;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "HumansNetPeople", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @NamedQueries(
         {
@@ -31,24 +32,39 @@ import java.util.List;
                                 "WHERE humansNetPeople.humanId " +
                                 "IN(" +
                                 "SELECT humansNetPeople2 FROM HumansNetPeople humansNetPeople2, HumansNetPeople humansNetPeople3 " +
-                                "WHERE humansNetPeople3.humanId = :humanId AND humansNetPeople3 MEMBER OF humansNetPeople2.humansNetPeoples)"//Don't ask me how I did it. It took me hours! Weather wasn't ideal either
+                                "WHERE humansNetPeople3.humanId = :humanId)"//Don't ask me how I did it. It took me hours! Weather wasn't ideal either
                 )
         }
 )
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanIdFace, Serializable {
-    public String humanId;
+// ------------------------------ FIELDS ------------------------------
+
     public final static String humanIdCOL = "humanId";
-    public HumansNet humansNet;
-    public List<HumansNetPeople> humansNetPeoples;
+
+    public final static String FindHumansNetPeoplesWhoHaveMeAsAFriend = "FindHumansNetPeoplesWhoHaveMeAsAFriend";
     private static final String HUMANS_NET_PEOPLE = "HumansNetPeople{";
     private static final String HUMAN_ID = "humanId='";
     private static final char CHAR = '}';
     private static final char BACKSLASH = '\'';
 
-    public final static String FindHumansNetPeoplesWhoHaveMeAsAFriend = "FindHumansNetPeoplesWhoHaveMeAsAFriend";
-
     @Id
+    public String humanId;
+
+
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "humanId")
+    //@PrimaryKeyJoinColumn
+    public HumansNet humansNet;
+
+    @NOTE(note = "MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN.")
+    @_unidirectional(note = "Asymmetric Relationship")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "humanId")
+    public List<HumansNetPeople> humansNetPeoples;
+
+// --------------------- GETTER / SETTER METHODS ---------------------
+
     public String getHumanId() {
         return humanId;
     }
@@ -57,8 +73,6 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
         this.humanId = humanId__;
     }
 
-    @OneToOne(cascade = CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
     public HumansNet getHumansNet() {
         return humansNet;
     }
@@ -67,31 +81,6 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
         this.humansNet = humansNet;
     }
 
-    @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
-    @Override
-    @Transient
-    public String getDisplayName() {
-        return this.getHumansNet().getDisplayName();
-    }
-
-    @Override
-    @Transient
-    public boolean ifFriend(final String friendsHumanId) {
-        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
-        if (r.returnStatus() != 0) {
-            throw new DBException(r.returnError());
-        }
-        return r.returnValue();
-    }
-
-    @Override
-    public boolean notFriend(final String friendsHumanId) {
-        return !ifFriend(friendsHumanId);
-    }
-
-    @NOTE(note = "MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN.")
-    @UNIDIRECTIONAL(note = "Asymmetric Relationship")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     public List<HumansNetPeople> getHumansNetPeoples() {
         return humansNetPeoples;
     }
@@ -99,6 +88,8 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
     public void setHumansNetPeoples(final List<HumansNetPeople> humansNetPeoples) {
         this.humansNetPeoples = humansNetPeoples;
     }
+
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public boolean equals(Object o) {
@@ -124,5 +115,32 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
         return HUMANS_NET_PEOPLE +
                 HUMAN_ID + humanId + BACKSLASH +
                 CHAR;
+    }
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface HumansFriend ---------------------
+
+    @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
+    @Override
+    @Transient
+    public String getDisplayName() {
+        return this.getHumansNet().getDisplayName();
+    }
+
+    @Override
+    @Transient
+    public boolean ifFriend(final String friendsHumanId) {
+        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
+        if (r.returnStatus() != 0) {
+            throw new DBException(r.returnError());
+        }
+        return r.returnValue();
+    }
+
+    @Override
+    public boolean notFriend(final String friendsHumanId) {
+        return !ifFriend(friendsHumanId);
     }
 }

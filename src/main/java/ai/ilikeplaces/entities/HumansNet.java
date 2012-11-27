@@ -84,11 +84,16 @@ import java.io.Serializable;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "HumansNet", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
 
+    @Id
     public String humanId;
+
+    @OneToOne(cascade = CascadeType.REFRESH)
+    //@PrimaryKeyJoinColumn
     public Human human;
 
     @NOTE(note = "Display name is used for adding removing users etc. This can also be the nick name." +
@@ -96,11 +101,17 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
             "This name is important for us as it helps DB performance(instead of loading identity bean." +
             "This is one place where the benefit breaking table with PK is elaborated.(we made this displayName entry much " +
             "later in the development cycle)")
+    @Column(name = "displayName")
     public String displayName;
 
+    @WARNING(warning = "Do not change LAZY loading.",
+            warnings = {"If you are changing, check with Human which fetches this eager.",
+                    "If you are changing, check how to efficiently fetch displayName.",
+                    "You could use pkjoincolumn between HumansNet and the requiring entity."})
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    //@PrimaryKeyJoinColumn
     public HumansNetPeople humansNetPeople;
 
-    @Id
     public String getHumanId() {
         return humanId;
     }
@@ -109,8 +120,7 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
         this.humanId = humanId__;
     }
 
-    @OneToOne(cascade = CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
+
     public Human getHuman() {
         return human;
     }
@@ -143,12 +153,7 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
         this.displayName = displayName;
     }
 
-    @WARNING(warning = "Do not change LAZY loading.",
-            warnings = {"If you are changing, check with Human which fetches this eager.",
-                    "If you are changing, check how to efficiently fetch displayName.",
-                    "You could use pkjoincolumn between HumansNet and the requiring entity."})
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
+
     public HumansNetPeople getHumansNetPeople() {
         return humansNetPeople;
     }

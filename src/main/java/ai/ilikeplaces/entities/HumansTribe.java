@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.crud.DB;
@@ -19,17 +19,67 @@ import java.util.Set;
  * Time: 7:47 PM
  */
 @WARNING("THIS ENTITY IS NOT GUARANTEED TO 'BE' EVEN THOUGH A HUMAN IS SIGNED UP. SO CREATE IT IF NOT PRESENT!")
+@Table(name = "HumansTribe", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
-public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace , Serializable {
-    public String humanId;
-
-    public Set<Tribe> tribes;
+public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace, Serializable {
+// ------------------------------ FIELDS ------------------------------
 
     @Id
+    public String humanId;
+
+
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
+    @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = Tribe.tribeMembersCOL, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = Tribe.tribeMembersCOL),
+            inverseJoinColumns = @JoinColumn(name = tribesCOL)
+    )
+    public Set<Tribe> tribes;
+    public static final String tribesCOL = "tribes";
+
+// --------------------- GETTER / SETTER METHODS ---------------------
+
     public String getHumanId() {
         return humanId;
     }
+
+    public void setHumanId(final String humanId) {
+        this.humanId = humanId;
+    }
+
+    public Set<Tribe> getTribes() {
+        return tribes;
+    }
+
+    public void setTribes(final Set<Tribe> tribes) {
+        this.tribes = tribes;
+    }
+
+// ------------------------ CANONICAL METHODS ------------------------
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (getClass() == o.getClass()) {
+            final HumanEqualsFace that = (HumanEqualsFace) o;
+            return !(this.getHumanId() == null || that.getHumanId() == null) && this.getHumanId().equals(that.getHumanId());
+        } else {
+            return HumanEquals.staticMatchHumanId(this, o);
+        }
+    }
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface HumansFriend ---------------------
 
     @Override
     @Transient
@@ -52,42 +102,12 @@ public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace ,
         return !ifFriend(friendsHumanId);
     }
 
-    public void setHumanId(final String humanId) {
-        this.humanId = humanId;
-    }
+// -------------------------- OTHER METHODS --------------------------
 
     @Transient
     public HumansTribe setHumanIdR(final String humanId) {
         this.humanId = humanId;
         return this;
-    }
-
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    public Set<Tribe> getTribes() {
-        return tribes;
-    }
-
-    public void setTribes(final Set<Tribe> tribes) {
-        this.tribes = tribes;
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null) {
-            return false;
-        }
-
-        if (getClass() == o.getClass()) {
-            final HumanEqualsFace that = (HumanEqualsFace) o;
-            return !(this.getHumanId() == null || that.getHumanId() == null) && this.getHumanId().equals(that.getHumanId());
-        } else {
-            return HumanEquals.staticMatchHumanId(this, o);
-        }
     }
 }
 

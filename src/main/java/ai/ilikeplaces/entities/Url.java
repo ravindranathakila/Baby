@@ -3,42 +3,39 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "Url", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class Url implements Serializable {
+// ------------------------------ FIELDS ------------------------------
 
-    public String url;
-
-    public long type;
-
-    public String metadata;
-
-    public static final int typeMISC= 0;
-    public static final int typeHUMAN= 1;
+    public static final int typeMISC = 0;
+    public static final int typeHUMAN = 1;
 
     @Id
-    public String getUrl() {
-        return url;
+    public String url;
+
+    @Column(name = "type")
+    public long type;
+
+    @Column(name = "metadata")
+    public String metadata;
+
+// --------------------- GETTER / SETTER METHODS ---------------------
+
+    public String getMetadata() {
+        return metadata;
     }
 
-    public void setUrl(final String url) {
-        this.url = url;
-    }
-
-    @Transient
-    public Url setUrlR(final String url) {
-        this.url = url;
-        return this;
+    public void setMetadata(final String metadata) {
+        this.metadata = metadata;
     }
 
     public long getType() {
@@ -49,25 +46,15 @@ public class Url implements Serializable {
         this.type = type;
     }
 
-    @Transient
-    public Url setTypeR(final long type) {
-        this.type = type;
-        return this;
+    public String getUrl() {
+        return url;
     }
 
-    public String getMetadata() {
-        return metadata;
+    public void setUrl(final String url) {
+        this.url = url;
     }
 
-    public void setMetadata(final String metadata) {
-        this.metadata = metadata;
-    }
-
-    @Transient
-    public Url setMetadataR(final String metadata) {
-        this.metadata = metadata;
-        return this;
-    }
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public boolean equals(final Object o) {
@@ -77,7 +64,6 @@ public class Url implements Serializable {
         final Url url1 = (Url) o;
 
         return !(url != null ? !url.equals(url1.url) : url1.url != null);
-
     }
 
     @Override
@@ -91,5 +77,25 @@ public class Url implements Serializable {
                 "url='" + url + '\'' +
                 ", type=" + type +
                 '}';
+    }
+
+// -------------------------- OTHER METHODS --------------------------
+
+    @Transient
+    public Url setMetadataR(final String metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Transient
+    public Url setTypeR(final long type) {
+        this.type = type;
+        return this;
+    }
+
+    @Transient
+    public Url setUrlR(final String url) {
+        this.url = url;
+        return this;
     }
 }

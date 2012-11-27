@@ -16,112 +16,80 @@ import java.util.List;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "Wall", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class Wall implements Clearance, Refreshable<Wall>, Serializable {
-    public Long wallId = null;
-    public static String wallIdCOL = "wallId";
-    public Long clearance = 0L;
-    public String wallContent = null;
-
-    @RefreshId("wallMsgs")
-    public List<Msg> wallMsgs = null;
-
-    @RefreshId("wallMutes")
-    public List<Mute> wallMutes = null;
-    public Integer wallType = null;
-    public String wallMetadata = null;
+// ------------------------------ FIELDS ------------------------------
 
     final static public int wallTypeMISC = 0;
     final static public int wallTypeHuman = 1;
     final static public int wallTypePrivateEvent = 2;
     final static public int wallTypeTribe = 3;
     final static public int wallTypePrivatePhoto = 4;
+    public static String wallIdCOL = "wallId";
 
 
 //    final static public int WALL_LENGTH = 10240;
 
     private static final Refresh<Wall> REFRESH = new Refresh<Wall>();
 
-    public static enum WallMetadataKey {
-        HUMAN,
-        PRIVATE_PHOTO,
-        PRIVATE_EVENT,
-        TRIBE,
-    }
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getWallId() {
-        return wallId;
-    }
+    public Long wallId = null;
 
-    public void setWallId(Long wallId) {
-        this.wallId = wallId;
-    }
+    @Column(name = "clearance")
+    public Long clearance = 0L;
 
-//    @Column(length = WALL_LENGTH)
-//    public String getWallContent() {
-//        return wallContent;
-//    }
-//
-//    public void setWallContent(String wallContent) {
-//        this.wallContent = wallContent;
-//    }
+    @Column(name = "wallContent")
+    public String wallContent = null;
 
-    @Transient
-    public Wall setWallRContent(String wallContent) {
-        this.wallContent = wallContent;
-        return this;
-    }
-
+    @RefreshId("wallMsgs")
     @DOCUMENTATION(
             NOTE = @NOTE("Wall msgs are fetched lazy because sometimes private event is required to be loaded fast, and fetches wall, thereby wall msgs.")
     )
     @FIXME(issue = "Find out how to limit resultset to say, last 20, in order to limit the results fetched")
-    @UNIDIRECTIONAL
+    @_unidirectional
     @TODO(task = "Move DESC ASC TO SOME STATIC CLASS FOR REUSE")
     @OrderBy(Msg.msgIdCOL + " DESC")
     @OneToMany(
             cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
-    public List<Msg> getWallMsgs() {
-        return wallMsgs;
-    }
+    @JoinColumn(name = "wallId")
+    public List<Msg> wallMsgs = null;
 
-    public void setWallMsgs(final List<Msg> wallMsgs) {
-        this.wallMsgs = wallMsgs;
-    }
-
-    @UNIDIRECTIONAL
+    @RefreshId("wallMutes")
+    @_unidirectional
     @OneToMany(
             cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
-    public List<Mute> getWallMutes() {
-        return wallMutes;
-    }
+    @JoinColumn(name = "wallId")
+    public List<Mute> wallMutes = null;
 
-    public void setWallMutes(final List<Mute> wallMutes) {
-        this.wallMutes = wallMutes;
-    }
+    @Column(name = "wallType")
+    public Integer wallType = null;
+
+    @Column(name = "wallMetadata")
+    public String wallMetadata = null;
+
+// --------------------- GETTER / SETTER METHODS ---------------------
 
     @Override
     public Long getClearance() {
         return this.clearance;
     }
 
-    public Integer getWallType() {
-        return wallType;
+    @Override
+    public void setClearance(final Long clearance) {
+        this.clearance = clearance;
     }
 
-    public void setWallType(final Integer wallType) {
-        this.wallType = wallType;
+    public Long getWallId() {
+        return wallId;
     }
 
-    public Wall setWallTypeR(final Integer wallType) {
-        this.wallType = wallType;
-        return this;
+    public void setWallId(Long wallId) {
+        this.wallId = wallId;
     }
 
     public String getWallMetadata() {
@@ -132,17 +100,31 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
         this.wallMetadata = wallMetadata;
     }
 
-    @Override
-    public void setClearance(final Long clearance) {
-        this.clearance = clearance;
+    public List<Msg> getWallMsgs() {
+        return wallMsgs;
     }
 
-    @Override
-    public Wall refresh(final RefreshSpec refreshSpec) throws RefreshException {
-        REFRESH.refresh(this, refreshSpec);
-        return this;
+    public void setWallMsgs(final List<Msg> wallMsgs) {
+        this.wallMsgs = wallMsgs;
     }
 
+    public List<Mute> getWallMutes() {
+        return wallMutes;
+    }
+
+    public void setWallMutes(final List<Mute> wallMutes) {
+        this.wallMutes = wallMutes;
+    }
+
+    public Integer getWallType() {
+        return wallType;
+    }
+
+    public void setWallType(final Integer wallType) {
+        this.wallType = wallType;
+    }
+
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public boolean equals(Object o) {
@@ -170,9 +152,22 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
                 ", wallMetadata='" + wallMetadata + '\'' +
                 '}';
     }
-    
+
+// ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface Refreshable ---------------------
+
+    @Override
+    public Wall refresh(final RefreshSpec refreshSpec) throws RefreshException {
+        REFRESH.refresh(this, refreshSpec);
+        return this;
+    }
+
+// -------------------------- OTHER METHODS --------------------------
+
     @Transient
-    public String metadataValueFor(final WallMetadataKey keyEnum){
+    public String metadataValueFor(final WallMetadataKey keyEnum) {
         final String key = keyEnum.toString();
         final String wallMetadata = this.getWallMetadata();
         final String returnVal;
@@ -192,4 +187,32 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
         return returnVal;
     }
 
+//    @Column(length = WALL_LENGTH)
+//    public String getWallContent() {
+//        return wallContent;
+//    }
+//
+//    public void setWallContent(String wallContent) {
+//        this.wallContent = wallContent;
+//    }
+
+    @Transient
+    public Wall setWallContentR(String wallContent) {
+        this.wallContent = wallContent;
+        return this;
+    }
+
+    public Wall setWallTypeR(final Integer wallType) {
+        this.wallType = wallType;
+        return this;
+    }
+
+// -------------------------- ENUMERATIONS --------------------------
+
+    public static enum WallMetadataKey {
+        HUMAN,
+        PRIVATE_PHOTO,
+        PRIVATE_EVENT,
+        TRIBE,
+    }
 }

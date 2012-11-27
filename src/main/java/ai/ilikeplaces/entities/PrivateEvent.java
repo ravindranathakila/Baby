@@ -17,52 +17,112 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @CREATED_BY(who = {PrivateEvent.class},
-            note = "We need to return this entity to the user for CRUD, hence cascade creation not possible.")
+        note = "We need to return this entity to the user for CRUD, hence cascade creation not possible.")
+@Table(name = "PrivateEvent", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
-// ------------------------------ FIELDS ------------------------------
 
-    final static public String privateEventOwnersCOL = "privateEventOwners";
-    final static public String privateEventViewersCOL = "privateEventViewers";
-    final static public String privateEventInvitesCOL = "privateEventInvites";
-    final static public String privateEventRejectsCOL = "privateEventRejects";
-    final static public String privateLocationCOL = "privateLocation";
-    final static public String locationCOL = "location";
-    final static public String privateEventAlbumCOL = "privateEventAlbum";
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long privateEventId;
 
+    @Column(name = "privateEventName")
     public String privateEventName;
 
+    @Column(name = "privateEventInfo")
     public String privateEventInfo;
 
+    @Column(name = "privateEventStartDate")
     public String privateEventStartDate;
 
+    @Column(name = "privateEventEndDate")
     public String privateEventEndDate;
 
+    @Column(name = "extendedAccess")
     public Boolean extendedAccess;
 
+
+    @_unidirectional
+    @OneToOne(cascade = CascadeType.ALL)
     public Wall privateEventWall;
 
+
+    @NOTE("Viewers of a private event have no implication except that they could be used as 'people who can see shared items' in future. " +
+            "So far, there is no use of this. We are hiding it for this release 2011/09/19 in the user interface")
+    @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
+            "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = privateEventOwnersCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.privateEventsOwnedCOL)
+    )
     public List<HumansPrivateEvent> privateEventOwners;
+    final static public String privateEventOwnersCOL = "privateEventOwners";
 
+
+    @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
+            "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = privateEventViewersCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.privateEventsViewedCOL)
+    )
     public List<HumansPrivateEvent> privateEventViewers;
+    final static public String privateEventViewersCOL = "privateEventViewers";
 
+
+    @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
+            "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = privateEventInvitesCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.privateEventsInvitedCOL)
+    )
     public List<HumansPrivateEvent> privateEventInvites;
+    final static public String privateEventInvitesCOL = "privateEventInvites";
 
+
+    @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
+            "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = privateEventRejectsCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.privateEventsRejectedCOL)
+    )
     public List<HumansPrivateEvent> privateEventRejects;
+    final static public String privateEventRejectsCOL = "privateEventRejects";
 
+
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "privateLocationId")
     public PrivateLocation privateLocation;
+    final static public String privateLocationCOL = "privateLocation";
 
+
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "locationId")
     public Location location;
+    final static public String locationCOL = "location";
 
+
+    @_unidirectional
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column
     public Album privateEventAlbum;
+    final static public String privateEventAlbumCOL = "privateEventAlbum";
+
+// --------------------- GETTER / SETTER METHODS ---------------------
 
 // ------------------------ ACCESSORS / MUTATORS ------------------------
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     public Location getLocation() {
         return location;
     }
@@ -71,8 +131,6 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
         this.location = location;
     }
 
-    @UNIDIRECTIONAL
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Album getPrivateEventAlbum() {
         return privateEventAlbum;
     }
@@ -89,8 +147,6 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
         this.privateEventEndDate = privateEventEndDate;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getPrivateEventId() {
         return privateEventId;
     }
@@ -107,10 +163,6 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
         this.privateEventInfo = privateEventInfo;
     }
 
-    @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
-            "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateEvent> getPrivateEventInvites() {
         return privateEventInvites;
     }
@@ -127,12 +179,6 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
         this.privateEventName = privateEventName;
     }
 
-    @NOTE("Viewers of a private event have no implication except that they could be used as 'people who can see shared items' in future. " +
-            "So far, there is no use of this. We are hiding it for this release 2011/09/19 in the user interface")
-    @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
-            "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateEvent> getPrivateEventOwners() {
         return privateEventOwners;
     }
@@ -141,10 +187,6 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
         this.privateEventOwners = privateEventOwners;
     }
 
-    @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
-            "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateEvent> getPrivateEventRejects() {
         return privateEventRejects;
     }
@@ -161,10 +203,6 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
         this.privateEventStartDate = privateEventStartDate;
     }
 
-    @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
-            "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansPrivateEvent> getPrivateEventViewers() {
         return privateEventViewers;
     }
@@ -173,8 +211,6 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
         this.privateEventViewers = privateEventViewers;
     }
 
-    @UNIDIRECTIONAL
-    @OneToOne(cascade = CascadeType.ALL)
     public Wall getPrivateEventWall() {
         return privateEventWall;
     }
@@ -183,8 +219,6 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
         this.privateEventWall = privateEventWall;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.IS)
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     public PrivateLocation getPrivateLocation() {
         return privateLocation;
     }
@@ -199,6 +233,16 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
 
     public void setExtendedAccess(Boolean extendedAccess) {
         this.extendedAccess = extendedAccess;
+    }
+
+// ------------------------ CANONICAL METHODS ------------------------
+
+    @Override
+    public String toString() {
+        return "PrivateEvent{" +
+                ", privateEventId=" + privateEventId +
+                ", privateLocation=" + privateLocation +
+                '}';
     }
 
 // ------------------------ INTERFACE METHODS ------------------------
@@ -223,16 +267,6 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
             throw new DBFetchDataException(e__);
         }
         return this;
-    }
-
-// ------------------------ CANONICAL METHODS ------------------------
-
-    @Override
-    public String toString() {
-        return "PrivateEvent{" +
-                ", privateEventId=" + privateEventId +
-                ", privateLocation=" + privateLocation +
-                '}';
     }
 
 // -------------------------- OTHER METHODS --------------------------

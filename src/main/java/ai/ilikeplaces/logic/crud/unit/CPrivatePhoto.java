@@ -57,7 +57,7 @@ public class CPrivatePhoto implements CPrivatePhotoLocal {
                 .setPrivatePhotoFilePathR(fileName)
                 .setPrivatePhotoDescriptionR(privatePhotoDescription)
                 .setPrivatePhotoURLPathR(privatePhotoURLPath)
-                .setPrivatePhotoWallR(new Wall().setWallRContent(""));
+                .setPrivatePhotoWallR(new Wall().setWallContentR(""));
 
         final HumansPrivatePhoto humansPrivatePhoto =
                 humansPrivatePhotoCrudServiceLocal_.find(HumansPrivatePhoto.class, humanId);
@@ -76,7 +76,7 @@ public class CPrivatePhoto implements CPrivatePhotoLocal {
     public PrivatePhoto doCPrivatePhotoLocal(final String humanId, final String privatePhotoURLPath) {
         final PrivatePhoto privatePhoto = new PrivatePhoto().
                 setPrivatePhotoURLPathR(privatePhotoURLPath)
-                .setPrivatePhotoWallR(new Wall().setWallRContent(""));
+                .setPrivatePhotoWallR(new Wall().setWallContentR(""));
 
         final HumansPrivatePhoto humansPrivatePhoto =
                 humansPrivatePhotoCrudServiceLocal_.find(HumansPrivatePhoto.class, humanId);

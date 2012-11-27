@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.BIDIRECTIONAL;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
@@ -16,26 +16,28 @@ import java.io.Serializable;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "HumansWall", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansWall implements HumanPkJoinFace, Serializable {
+// ------------------------------ FIELDS ------------------------------
 
     private static final long serialVersionUID = 1L;
-    public String humanId;
-    public Human human;
-    public Wall wall;//Convention would be naming this humansWallWall :-(
 
     @Id
-    public String getHumanId() {
-        return humanId;
-    }
+    public String humanId;
 
-    public void setHumanId(final String humanId__) {
-        this.humanId = humanId__;
-    }
 
     @OneToOne(cascade = CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
+    //@PrimaryKeyJoinColumn
+    public Human human;
+
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
+    @OneToOne(cascade = CascadeType.ALL)
+    public Wall wall;//Convention would be naming this humansWallWall :-(
+
+// --------------------- GETTER / SETTER METHODS ---------------------
+
     public Human getHuman() {
         return human;
     }
@@ -44,8 +46,14 @@ public class HumansWall implements HumanPkJoinFace, Serializable {
         this.human = human;
     }
 
-    @BIDIRECTIONAL(ownerside = BIDIRECTIONAL.OWNING.NOT)
-    @OneToOne(cascade = CascadeType.ALL)
+    public String getHumanId() {
+        return humanId;
+    }
+
+    public void setHumanId(final String humanId__) {
+        this.humanId = humanId__;
+    }
+
     public Wall getWall() {
         return wall;
     }
@@ -53,6 +61,8 @@ public class HumansWall implements HumanPkJoinFace, Serializable {
     public void setWall(final Wall wall) {
         this.wall = wall;
     }
+
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public String toString() {

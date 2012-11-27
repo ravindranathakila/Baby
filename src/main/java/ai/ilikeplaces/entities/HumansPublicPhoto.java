@@ -9,31 +9,34 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "HumansPublicPhoto", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansPublicPhoto implements HumanIdFace, Serializable {
+// ------------------------------ FIELDS ------------------------------
 
     private static final long serialVersionUID = 1L;
-    public String humanId;
-    public Human human;
-    public List<PublicPhoto> publicPhotos;
 
     @Id
-    public String getHumanId() {
-        return humanId;
-    }
+    public String humanId;
 
-    public void setHumanId(final String humanId__) {
-        this.humanId = humanId__;
-    }
 
     @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    //@PrimaryKeyJoinColumn
+    public Human human;
+
+    @FIXME(issue = "Fetch type should be lazy, check if callers can do list.size() to refresh list." +
+            "The List of photos can be huge so eager isn't practical")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "humanId")
+    public List<PublicPhoto> publicPhotos;
+
+// --------------------- GETTER / SETTER METHODS ---------------------
+
     public Human getHuman() {
         return human;
     }
@@ -42,9 +45,14 @@ public class HumansPublicPhoto implements HumanIdFace, Serializable {
         this.human = human;
     }
 
-    @FIXME(issue="Fetch type should be lazy, check if callers can do list.size() to refresh list." +
-    "The List of photos can be huge so eager isn't practical")
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.MERGE)
+    public String getHumanId() {
+        return humanId;
+    }
+
+    public void setHumanId(final String humanId__) {
+        this.humanId = humanId__;
+    }
+
     public List<PublicPhoto> getPublicPhotos() {
         return publicPhotos;
     }
@@ -52,6 +60,8 @@ public class HumansPublicPhoto implements HumanIdFace, Serializable {
     public void setPublicPhotos(List<PublicPhoto> publicPhotos) {
         this.publicPhotos = publicPhotos;
     }
+
+// ------------------------ CANONICAL METHODS ------------------------
 
     @Override
     public String toString() {

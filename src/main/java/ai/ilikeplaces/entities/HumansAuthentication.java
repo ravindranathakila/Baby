@@ -8,22 +8,30 @@ import java.io.Serializable;
 
 
 /**
- *
  * @author Ravindranath Akila
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Table(name = "HumansAuthentication", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansAuthentication implements HumanPkJoinFace, Serializable {
 
     private static final long serialVersionUID = 1L;
-    public String humanId;
-    public Human human;
-    public String humanAuthenticationHash;
-    public String humanAuthenticationSalt;
 
     @Id
+    public String humanId;
+
+    @OneToOne(cascade = CascadeType.REFRESH)
+    //@PrimaryKeyJoinColumn
+    public Human human;
+
+    @Column(name = "humanAuthenticationHash")
+    public String humanAuthenticationHash;
+
+    @Column(name = "humanAuthenticationSalt")
+    public String humanAuthenticationSalt;
+
     public String getHumanId() {
         return humanId;
     }
@@ -32,8 +40,7 @@ public class HumansAuthentication implements HumanPkJoinFace, Serializable {
         this.humanId = humanId__;
     }
 
-    @OneToOne(cascade=CascadeType.REFRESH)
-    @PrimaryKeyJoinColumn
+
     public Human getHuman() {
         return human;
     }
