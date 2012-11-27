@@ -1,4 +1,4 @@
-package ai.ilikeplaces.util;
+package ai.ilikeplaces.util.log;
 
 import java.lang.ref.WeakReference;
 
