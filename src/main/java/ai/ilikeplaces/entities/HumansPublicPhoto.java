@@ -2,6 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class HumansPublicPhoto implements HumanIdFace, Serializable {
     @Id
     @Column(name = "humanId")
     public String humanId;
+    public static final String humanIdCOL = "humanId";
 
 
     @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL)
@@ -32,8 +34,9 @@ public class HumansPublicPhoto implements HumanIdFace, Serializable {
 
     @FIXME(issue = "Fetch type should be lazy, check if callers can do list.size() to refresh list." +
             "The List of photos can be huge so eager isn't practical")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "humanId")
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
+    @OneToMany(mappedBy = PublicPhoto.humansPublicPhotoCOL, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = humanIdCOL)
     public List<PublicPhoto> publicPhotos;
 
 // --------------------- GETTER / SETTER METHODS ---------------------

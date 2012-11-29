@@ -60,7 +60,7 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
     @NOTE(note = "MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN.")
     @_unidirectional(note = "Asymmetric Relationship")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "humanId")
+    @JoinColumn(name = humanIdCOL)
     public List<HumansNetPeople> humansNetPeoples;
 
 // --------------------- GETTER / SETTER METHODS ---------------------

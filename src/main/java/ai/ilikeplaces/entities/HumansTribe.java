@@ -28,14 +28,11 @@ public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace, 
     @Id
     @Column(name = "humanId")
     public String humanId;
+    public static final String humanIdCOL = "humanId";
 
 
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = Tribe.tribeMembersCOL, fetch = FetchType.LAZY)
-    @JoinTable(
-            joinColumns = @JoinColumn(name = Tribe.tribeMembersCOL),
-            inverseJoinColumns = @JoinColumn(name = tribesCOL)
-    )
     public Set<Tribe> tribes;
     public static final String tribesCOL = "tribes";
 

@@ -68,7 +68,7 @@ public class PublicEvent implements RefreshData<PublicEvent>, Serializable {
 
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "privateLocationId")
+    @JoinColumn(name = PrivateLocation.privateLocationIdCOL)
     public PrivateLocation privateLocation;
 
     public Location location;

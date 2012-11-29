@@ -56,6 +56,7 @@ public class Location implements Serializable, Clearance, Comparable<Location>, 
     @Column(name = "locationId")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public Long locationId;
+    public static final String locationIdCOL = "locationId";
 
     @Column(name = "clearance")
     public Long clearance = 0L;
@@ -77,8 +78,9 @@ public class Location implements Serializable, Clearance, Comparable<Location>, 
     @Column(name = "locationGeo2", length = 63)
     public String locationGeo2;
 
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @OneToMany(mappedBy = PublicPhoto.locationCOL, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "locationId")
+    @JoinColumn(name = locationIdCOL)
     public List<PublicPhoto> publicPhotos;
 
 
@@ -86,14 +88,14 @@ public class Location implements Serializable, Clearance, Comparable<Location>, 
     @OneToMany(mappedBy = PrivateEvent.locationCOL,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "locationId")
+    @JoinColumn(name = locationIdCOL)
     public List<PrivateEvent> privateEvents;
 
     @RefreshId("longMsgs")
     @_unidirectional
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "locationId")
+    @JoinColumn(name = locationIdCOL)
     public List<LongMsg> longMsgs;
 
 // --------------------- GETTER / SETTER METHODS ---------------------

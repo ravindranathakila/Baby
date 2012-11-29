@@ -62,6 +62,7 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
     @Column(name = "privateLocationId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long privateLocationId;
+    public static final String privateLocationIdCOL = "privateLocationId";
 
     @Column(name = "privateLocationName", unique = false, nullable = false, length = 255)
     public String privateLocationName;
@@ -84,8 +85,9 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
     @WARNING(warning = "Owning as deleting a location should automatically reflect in humans, not vice versa.")
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(
-            joinColumns = @JoinColumn(name = HumansPrivateLocation.privateLocationsOwnedCOL),
-            inverseJoinColumns = @JoinColumn(name = privateLocationOwnersCOL)
+            name = privateLocationOwnersCOL + HumansPrivateLocation.privateLocationsOwnedCOL,
+            joinColumns = @JoinColumn(name = privateLocationIdCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateLocation.humanIdCOL)
     )
     public List<HumansPrivateLocation> privateLocationOwners;
     final static public String privateLocationOwnersCOL = "privateLocationOwners";
@@ -95,20 +97,20 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
     @WARNING(warning = "Owning as deleting a location should automatically reflect in humans, not vice versa.")
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(
-            joinColumns = @JoinColumn(name = HumansPrivateLocation.privateLocationsViewedCOL),
-            inverseJoinColumns = @JoinColumn(name = privateLocationViewersCOL)
+            name = privateLocationViewersCOL + HumansPrivateLocation.privateLocationsViewedCOL,
+            joinColumns = @JoinColumn(name = privateLocationIdCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateLocation.humanIdCOL)
     )
     public List<HumansPrivateLocation> privateLocationViewers;
     final static public String privateLocationViewersCOL = "privateLocationViewers";
 
-    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
+    /*All events are associated to a location*/
+    /*No cascade ALL as we have to return an instance to the user, hence list cascading not possible.*/
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @OneToMany(
             mappedBy = PrivateEvent.privateLocationCOL,
-            /*All events are associated to a location*/
-            /*No cascade ALL as we have to return an instance to the user, hence list cascading not possible.*/
             cascade = {CascadeType.REFRESH, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "privateLocationId")
     public List<PrivateEvent> privateEvents;
 
 // --------------------- GETTER / SETTER METHODS ---------------------

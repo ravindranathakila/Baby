@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,7 +23,24 @@ public class EntityManagerInjector {
 
     public static final ThreadLocal<EntityManager> THREAD_SAFE_ENTITY_MANAGER = new ThreadLocal<EntityManager>() {
 
-        private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ilpMainSchema");
+        //private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ilpMainSchema");
+
+        final EntityManagerFactory entityManagerFactory;
+
+        {
+            final Map<String, String> properties = new HashMap<String, String>();
+            properties.put("kundera.nodes", "localhost");
+            properties.put("kundera.port", "60000");
+            properties.put("kundera.keyspace", "KunderaKeyspace");
+            properties.put("kundera.dialect", "hbase");
+            properties.put("kundera.client.lookup.class", "com.impetus.client.hbase.HBaseClientFactory");
+            properties.put("kundera.cache.provider.class", "com.impetus.kundera.cache.ehcache.EhCacheProvider");
+            properties.put("kundera.cache.config.resource", "/ehcache-test.xml");
+            properties.put("kundera.ddl.auto.prepare", "create");
+
+            entityManagerFactory = Persistence.createEntityManagerFactory("ilpMainSchema", properties);
+        }
+
 
         @Override
         protected EntityManager initialValue() {

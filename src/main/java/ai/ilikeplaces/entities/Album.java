@@ -30,6 +30,7 @@ public class Album implements RefreshData<Album>, Refreshable<Album>, Serializab
     @Column(name = "albumId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long albumId;
+    public static final String albumIdCOL = "albumId";
 
     @Column(name = "albumName", length = 255)
     public String albumName;
@@ -45,16 +46,12 @@ public class Album implements RefreshData<Album>, Refreshable<Album>, Serializab
     @NOTE(note = "ManyToMany because photos can be moved to a different album when deleting events.")
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @ManyToMany(mappedBy = PrivatePhoto.albumsCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinTable(
-            joinColumns = @JoinColumn(name = albumPhotosCOL),
-            inverseJoinColumns = @JoinColumn(name = PrivatePhoto.albumsCOL)
-    )
     public List<PrivatePhoto> albumPhotos;
     final static public String albumPhotosCOL = "albumPhotos";
 
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "albumId")
+    @JoinColumn(name = Album.albumIdCOL)
     public List<HumansAlbum> albumOwners;
     final static public String albumOwnersCOL = "albumOwners";
 
@@ -62,7 +59,7 @@ public class Album implements RefreshData<Album>, Refreshable<Album>, Serializab
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<HumansAlbum> albumVisitors;
-    @JoinColumn(name = "albumId")
+    @JoinColumn(name = Album.albumIdCOL)
     final static public String albumVisitorsCOL = "albumVisitors";
 
 

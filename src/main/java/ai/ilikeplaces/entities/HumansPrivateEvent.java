@@ -30,6 +30,7 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace, 
     @Id
     @Column(name = "humanId")
     public String humanId;
+    public static final String humanIdCOL = "humanId";
 
 
     @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
@@ -38,37 +39,21 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace, 
 
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @ManyToMany(mappedBy = PrivateEvent.privateEventOwnersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinTable(
-            joinColumns = @JoinColumn(name = privateEventsOwnedCOL),
-            inverseJoinColumns = @JoinColumn(name = PrivateEvent.privateEventOwnersCOL)
-    )
     public List<PrivateEvent> privateEventsOwned;
     public static final String privateEventsOwnedCOL = "privateEventsOwned";
 
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @ManyToMany(mappedBy = PrivateEvent.privateEventViewersCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinTable(
-            joinColumns = @JoinColumn(name = privateEventsViewedCOL),
-            inverseJoinColumns = @JoinColumn(name = PrivateEvent.privateEventViewersCOL)
-    )
     public List<PrivateEvent> privateEventsViewed;
     public static final String privateEventsViewedCOL = "privateEventsViewed";
 
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @ManyToMany(mappedBy = PrivateEvent.privateEventInvitesCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinTable(
-            joinColumns = @JoinColumn(name = privateEventsInvitedCOL),
-            inverseJoinColumns = @JoinColumn(name = PrivateEvent.privateEventInvitesCOL)
-    )
     public List<PrivateEvent> privateEventsInvited;
     public static final String privateEventsInvitedCOL = "privateEventsInvited";
 
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @ManyToMany(mappedBy = PrivateEvent.privateEventRejectsCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    @JoinTable(
-            joinColumns = @JoinColumn(name = privateEventsRejectedCOL),
-            inverseJoinColumns = @JoinColumn(name = PrivateEvent.privateEventRejectsCOL)
-    )
     public List<PrivateEvent> privateEventsRejected;
     public static final String privateEventsRejectedCOL = "privateEventsRejected";
 

@@ -27,8 +27,6 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     final static public int wallTypePrivateEvent = 2;
     final static public int wallTypeTribe = 3;
     final static public int wallTypePrivatePhoto = 4;
-    public static String wallIdCOL = "wallId";
-
 
 //    final static public int WALL_LENGTH = 10240;
 
@@ -38,6 +36,7 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     @Column(name = "wallId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long wallId = null;
+    public static final String wallIdCOL = "wallId";
 
     @Column(name = "clearance")
     public Long clearance = 0L;
@@ -56,7 +55,6 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     @OneToMany(
             cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "wallId")
     public List<Msg> wallMsgs = null;
 
     @RefreshId("wallMutes")
@@ -64,7 +62,7 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     @OneToMany(
             cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "wallId")
+    @JoinColumn(name = Wall.wallIdCOL)
     public List<Mute> wallMutes = null;
 
     @Column(name = "wallType")

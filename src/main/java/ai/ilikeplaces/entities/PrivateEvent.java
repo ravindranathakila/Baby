@@ -28,6 +28,7 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
     @Column(name = "privateEventId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long privateEventId;
+    public static final String privateEventIdCOL = "privateEventId";
 
     @Column(name = "privateEventName")
     public String privateEventName;
@@ -57,8 +58,9 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(
-            joinColumns = @JoinColumn(name = privateEventOwnersCOL),
-            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.privateEventsOwnedCOL)
+            name = privateEventOwnersCOL + HumansPrivateEvent.privateEventsOwnedCOL,
+            joinColumns = @JoinColumn(name = privateEventIdCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.humanIdCOL)
     )
     public List<HumansPrivateEvent> privateEventOwners;
     final static public String privateEventOwnersCOL = "privateEventOwners";
@@ -69,8 +71,9 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(
-            joinColumns = @JoinColumn(name = privateEventViewersCOL),
-            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.privateEventsViewedCOL)
+            name = privateEventViewersCOL + HumansPrivateEvent.privateEventsViewedCOL,
+            joinColumns = @JoinColumn(name = privateEventIdCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.humanIdCOL)
     )
     public List<HumansPrivateEvent> privateEventViewers;
     final static public String privateEventViewersCOL = "privateEventViewers";
@@ -81,8 +84,9 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(
-            joinColumns = @JoinColumn(name = privateEventInvitesCOL),
-            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.privateEventsInvitedCOL)
+            name = privateEventInvitesCOL + HumansPrivateEvent.privateEventsInvitedCOL,
+            joinColumns = @JoinColumn(name = privateEventIdCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.humanIdCOL)
     )
     public List<HumansPrivateEvent> privateEventInvites;
     final static public String privateEventInvitesCOL = "privateEventInvites";
@@ -93,8 +97,9 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(
-            joinColumns = @JoinColumn(name = privateEventRejectsCOL),
-            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.privateEventsRejectedCOL)
+            name = privateEventRejectsCOL + HumansPrivateEvent.privateEventsRejectedCOL,
+            joinColumns = @JoinColumn(name = privateEventIdCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansPrivateEvent.humanIdCOL)
     )
     public List<HumansPrivateEvent> privateEventRejects;
     final static public String privateEventRejectsCOL = "privateEventRejects";
@@ -102,14 +107,14 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
 
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "privateLocationId")
+    @JoinColumn(name = PrivateLocation.privateLocationIdCOL)
     public PrivateLocation privateLocation;
     final static public String privateLocationCOL = "privateLocation";
 
 
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "locationId")
+    @JoinColumn(name = Location.locationIdCOL)
     public Location location;
     final static public String locationCOL = "location";
 

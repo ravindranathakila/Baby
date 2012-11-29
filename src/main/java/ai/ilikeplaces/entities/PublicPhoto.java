@@ -66,15 +66,17 @@ public class PublicPhoto implements Serializable {
 
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "locationId")
+    @JoinColumn(name = Location.locationIdCOL)
     public Location location;
 
     @FieldPreamble(description = "Who uploaded this image? Will he request to delete it?")
 
     @WARNING(warning = "The cascade types of HumansPublicPhoto, Location and this method, are very CascadeType sensitive. Any mistake will trigger rollbacks.")
+    @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "humanId")
+    @JoinColumn(name = HumansPublicPhoto.humanIdCOL)
     public HumansPublicPhoto humansPublicPhoto;
+    public static final String humansPublicPhotoCOL = "humansPublicPhoto";
 
     @NOTE(note = "Pre persisted entities will have null ids. hence using pre persisted ids is not practical.")
     final private UUID uUID = UUID.randomUUID();

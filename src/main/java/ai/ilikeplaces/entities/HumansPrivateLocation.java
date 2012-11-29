@@ -33,34 +33,27 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
     @Id
     @Column(name = "humanId")
     public String humanId;
+    public static final String humanIdCOL = "humanId";
 
     @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 
-    @_bidirectional
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @WARNING(warning = "Many",
             warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
                     "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
     @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
     @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationViewersCOL, fetch = FetchType.LAZY)
-    @JoinTable(
-            joinColumns = @JoinColumn(name = PrivateLocation.privateLocationViewersCOL),
-            inverseJoinColumns = @JoinColumn(name = privateLocationsViewedCOL)
-    )
     public List<PrivateLocation> privateLocationsViewed;
     public static final String privateLocationsViewedCOL = "privateLocationsViewed";
 
-    @_bidirectional
+    @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @WARNING(warning = "Many",
             warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
                     "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
     @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
     @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationOwnersCOL, fetch = FetchType.LAZY)
-    @JoinTable(
-            joinColumns = @JoinColumn(name = PrivateLocation.privateLocationOwnersCOL),
-            inverseJoinColumns = @JoinColumn(name = privateLocationsOwnedCOL)
-    )
     public List<PrivateLocation> privateLocationsOwned;
     public static final String privateLocationsOwnedCOL = "privateLocationsOwned";
 

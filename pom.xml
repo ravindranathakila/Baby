@@ -23,7 +23,13 @@
             <groupId>org.apache.openejb</groupId>
             <artifactId>javaee-api</artifactId>
             <version>5.0-1</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openejb</groupId>
+            <artifactId>ejb31-api-experimental</artifactId>
+            <version>3.1.1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
@@ -31,6 +37,7 @@
             <version>1.4.1</version>
         </dependency>
 
+        <!--ItsNat Dependencies-->
         <dependency>
             <groupId>ItsNat</groupId>
             <artifactId>ItsNat</artifactId>
@@ -87,6 +94,7 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/batik-xml.jar</systemPath>
         </dependency>
+        <!--End Of ItsNat Dependencies-->
 
         <dependency>
             <groupId>junit</groupId>
@@ -125,6 +133,8 @@
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/logback-access-0.9.17.jar
             </systemPath>
         </dependency>
+
+        <!--Rackspace Cloud Files Dependencies-->
         <dependency>
             <groupId>rackspace</groupId>
             <artifactId>cloudfiles</artifactId>
@@ -202,17 +212,8 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.openejb</groupId>
-            <artifactId>ejb31-api-experimental</artifactId>
-            <version>3.1.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>session</artifactId>
-            <version>1.0.1</version>
-        </dependency>
+        <!--End Of Rackspace Cloud Files Dependencies-->
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -286,28 +287,12 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--eh cache-->
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache-openjpa</artifactId>
-            <version>0.2.0</version>
-        </dependency>
-
         <!--hazelcast-->
 
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast</artifactId>
             <version>2.0.3</version>
-        </dependency>
-
-        <!--provided with openejb tomee-->
-        <!--we put this here to prevent other libraries inserting openjpa, namely ehcache-->
-        <dependency>
-            <groupId>org.apache.openjpa</groupId>
-            <artifactId>openjpa</artifactId>
-            <version>LATEST</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>

@@ -33,6 +33,7 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
     @Column(name = "privatePhotoId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long privatePhotoId;
+    public static final String privatePhotoIdCOL = "privatePhotoId";
 
     @FieldPreamble(description = "CDN security issue. Put in folders?")
     public String privatePhotoFilePath;
@@ -62,15 +63,16 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
             "Privacy important? " +
             "Lets preserve the info.")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "humanId")
+    @JoinColumn(name = HumansPrivatePhoto.humanIdCOL)
     public HumansPrivatePhoto humansPrivatePhoto;
 
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @WARNING(warning = "Owning as deleting a photo should automatically reflect in albums, not vice versa.")
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(
-            joinColumns = @JoinColumn(name = albumsCOL),
-            inverseJoinColumns = @JoinColumn(name = Album.albumPhotosCOL)
+            name = albumsCOL + Album.albumPhotosCOL,
+            joinColumns = @JoinColumn(name = privatePhotoIdCOL),
+            inverseJoinColumns = @JoinColumn(name = Album.albumIdCOL)
     )
     public List<Album> albums;
     final static public String albumsCOL = "albums";

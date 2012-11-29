@@ -71,6 +71,7 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
     @Column(name = "tribeId")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long tribeId;
+    public static final String tribeIdCOL = "tribeId";
 
     @Column(name = "tribeName", nullable = false, length = 255)
     public String tribeName;
@@ -91,8 +92,9 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(
-            joinColumns = @JoinColumn(name = HumansTribe.tribesCOL),
-            inverseJoinColumns = @JoinColumn(name = tribeMembersCOL)
+            name = tribeMembersCOL + HumansTribe.tribesCOL,
+            joinColumns = @JoinColumn(name = tribeIdCOL),
+            inverseJoinColumns = @JoinColumn(name = HumansTribe.humanIdCOL)
     )
     public Set<HumansTribe> tribeMembers;
     public static final String tribeMembersCOL = "tribeMembers";

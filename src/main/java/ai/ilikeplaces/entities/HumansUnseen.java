@@ -24,11 +24,12 @@ public class HumansUnseen implements Serializable {
     @Id
     @Column(name = "humanId")
     public String humanId;
+    public static final String humanIdCOL = "humanId";
 
 
     @_unidirectional
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "humanId")
+    @JoinColumn(name = humanIdCOL)
     public List<Wall> unseenWalls;
 
 // --------------------- GETTER / SETTER METHODS ---------------------

@@ -28,13 +28,14 @@ public class HumansPrivatePhoto implements HumanIdFace, Serializable {
     @Id
     @Column(name = "humanId")
     public String humanId;
+    public static final String humanIdCOL = "humanId";
 
     @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "humanId")
+    @JoinColumn(name = humanIdCOL)
     public List<PrivatePhoto> privatePhotos;
 
 // --------------------- GETTER / SETTER METHODS ---------------------
