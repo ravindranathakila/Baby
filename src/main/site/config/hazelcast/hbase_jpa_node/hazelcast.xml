@@ -47,8 +47,8 @@
         <interfaces enabled="false">
             <interface>10.10.1.*</interface>
         </interfaces>
-        <ssl enabled="false" />
-        <socket-interceptor enabled="false" />
+        <ssl enabled="false"/>
+        <socket-interceptor enabled="false"/>
         <symmetric-encryption enabled="false">
             <!--
                encryption algorithm such as
@@ -174,13 +174,6 @@
         </map-store>
     </map>
 
-    <map name="ai.ilikeplaces.entities.HumanEmbedded">
-        <map-store enabled="true">
-            <class-name>ai.ilikeplaces.logic.crud.hazelcast.HazelcastHumanEmbeddedMapStore</class-name>
-            <write-delay-seconds>1</write-delay-seconds>
-        </map-store>
-    </map>
-
     <map name="ai.ilikeplaces.entities.Human">
         <map-store enabled="true">
             <class-name>ai.ilikeplaces.logic.crud.hazelcast.HazelcastHumanMapStore</class-name>
@@ -278,8 +271,6 @@
             <write-delay-seconds>1</write-delay-seconds>
         </map-store>
     </map>
-
-
 
 
 </hazelcast>

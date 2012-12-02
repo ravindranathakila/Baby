@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns="http://java.sun.com/xml/ns/persistence">
+<persistence
+        xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="ilpMainSchema" transaction-type="RESOURCE_LOCAL">
         <provider>com.impetus.kundera.KunderaPersistence</provider>
         <class>ai.ilikeplaces.entities.HumansAuthorization</class>
@@ -16,7 +16,6 @@
         <class>ai.ilikeplaces.entities.PublicPhoto</class>
         <class>ai.ilikeplaces.entities.HumansNet</class>
         <class>ai.ilikeplaces.entities.Msg</class>
-        <class>ai.ilikeplaces.entities.HumanEmbedded</class>
         <class>ai.ilikeplaces.entities.Human</class>
         <class>ai.ilikeplaces.entities.HumansTribe</class>
         <class>ai.ilikeplaces.entities.HumansNetPeople</class>

@@ -188,7 +188,6 @@ alias ll='ls -la'
 
 enable 'Album'
 enable 'Human'
-enable 'HumanEmbedded'
 enable 'HumansAlbum'
 enable 'HumansAuthentication'
 enable 'HumansAuthorization'
