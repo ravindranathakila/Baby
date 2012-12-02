@@ -2,12 +2,11 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.Return;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
 

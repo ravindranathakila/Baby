@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.Msg;
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
@@ -10,7 +11,6 @@ import ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

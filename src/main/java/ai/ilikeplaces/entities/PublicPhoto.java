@@ -1,7 +1,6 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,10 +1,6 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.util.jpa.Refresh;
-import ai.ilikeplaces.util.jpa.RefreshException;
-import ai.ilikeplaces.util.jpa.RefreshId;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
-import ai.ilikeplaces.util.jpa.Refreshable;
+import ai.ilikeplaces.entities.*;
 
 import javax.persistence.Transient;
 import java.util.List;

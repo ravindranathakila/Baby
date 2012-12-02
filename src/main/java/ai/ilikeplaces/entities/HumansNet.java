@@ -5,7 +5,6 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -93,7 +92,7 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
     @Column(name = "humanId")
     public String humanId;
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = Human.humansNetCOL, cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 

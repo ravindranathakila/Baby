@@ -4,8 +4,6 @@
  */
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.util.EntityLifeCycleListener;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -23,7 +21,7 @@ public class HumanEmbedded implements HumanPkJoinFace, Serializable {
     private String humanId;
 
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = Human.humansEm, cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     private Human human;
 

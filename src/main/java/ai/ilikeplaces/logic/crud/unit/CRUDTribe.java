@@ -1,17 +1,13 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.Album;
-import ai.ilikeplaces.entities.HumansTribe;
-import ai.ilikeplaces.entities.Tribe;
-import ai.ilikeplaces.entities.Wall;
-import ai.ilikeplaces.jpa.CrudService;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.util.jpa.RefreshException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
-import javax.ejb.*;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

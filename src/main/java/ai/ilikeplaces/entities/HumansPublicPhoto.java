@@ -3,7 +3,6 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc._bidirectional;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,7 +27,7 @@ public class HumansPublicPhoto implements HumanIdFace, Serializable {
     public static final String humanIdCOL = "humanId";
 
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = Human.humansPublicPhotoCOL, cascade = CascadeType.ALL)
     //@PrimaryKeyJoinColumn
     public Human human;
 

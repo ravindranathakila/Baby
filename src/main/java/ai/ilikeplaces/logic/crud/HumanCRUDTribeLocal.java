@@ -3,6 +3,7 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Msg;
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
@@ -11,9 +12,7 @@ import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
 import java.util.Set;
@@ -93,7 +92,6 @@ public interface HumanCRUDTribeLocal extends GeneralCRUDWall {
      * @return
      */
     public Return<Album> uTribeAddEntryToAlbum(final HumanId operator__, final long tribeId__, final RefObj<String> cdnFileName);
-
 
 
     /**

@@ -2,11 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.ExceptionCache;
-import ai.ilikeplaces.util.jpa.RefreshException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
-import ai.ilikeplaces.util.jpa.Refreshable;
 
 import javax.persistence.*;
 import java.io.Serializable;

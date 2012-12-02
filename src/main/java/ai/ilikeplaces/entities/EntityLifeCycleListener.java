@@ -1,6 +1,9 @@
-package ai.ilikeplaces.util;
+package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.Obj;
+import ai.ilikeplaces.util.RefObj;
 
 import javax.persistence.*;
 

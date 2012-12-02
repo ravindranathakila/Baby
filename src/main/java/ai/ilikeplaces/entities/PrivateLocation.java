@@ -5,11 +5,6 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
-import ai.ilikeplaces.util.jpa.Refresh;
-import ai.ilikeplaces.util.jpa.RefreshException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
-import ai.ilikeplaces.util.jpa.Refreshable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

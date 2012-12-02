@@ -2,7 +2,6 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc._bidirectional;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,12 +28,12 @@ public class HumansWall implements HumanPkJoinFace, Serializable {
     public String humanId;
 
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = Human.humansWallCOL, cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = Wall.wallIdCOL, cascade = CascadeType.ALL)
     public Wall wall;//Convention would be naming this humansWallWall :-(
 
 // --------------------- GETTER / SETTER METHODS ---------------------

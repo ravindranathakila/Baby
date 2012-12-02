@@ -2,14 +2,12 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
+import ai.ilikeplaces.entities.RefreshException;
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.util.jpa.RefreshException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 
 /**
  * @author Ravindranath Akila
@@ -19,7 +17,6 @@ import javax.ejb.TransactionAttributeType;
 public interface CRUDAlbumLocal {
 
     /**
-     *
      * @param privateEventId
      * @param humanId
      * @param photoUrl
@@ -51,7 +48,6 @@ public interface CRUDAlbumLocal {
 
 
     /**
-     *
      * @param tribeId
      * @param humanId
      * @param photoUrl
@@ -64,7 +60,7 @@ public interface CRUDAlbumLocal {
 
     /**
      * @param humanId
-     * @param tribeId by which to fetch the album
+     * @param tribeId     by which to fetch the album
      * @param refreshSpec
      * @return
      * @throws DBDishonourCheckedException

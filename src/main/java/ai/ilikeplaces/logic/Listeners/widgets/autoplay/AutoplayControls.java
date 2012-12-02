@@ -1,9 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets.autoplay;
 
-import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.entities.PrivateEvent;
-import ai.ilikeplaces.entities.PrivatePhoto;
-import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
@@ -11,7 +8,6 @@ import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;

@@ -1,4 +1,4 @@
-package ai.ilikeplaces.util.jpa;
+package ai.ilikeplaces.entities;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -14,5 +14,5 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface RefreshId {
-   String value();
+    String value();
 }

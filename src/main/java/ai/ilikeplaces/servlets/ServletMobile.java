@@ -1,9 +1,6 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansAuthentication;
-import ai.ilikeplaces.entities.Tribe;
-import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetTribe;
 import ai.ilikeplaces.logic.crud.DB;
@@ -14,7 +11,6 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;

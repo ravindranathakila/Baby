@@ -1,7 +1,7 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.util.jpa.RefreshException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
+import ai.ilikeplaces.entities.RefreshException;
+import ai.ilikeplaces.entities.RefreshSpec;
 
 import java.util.ArrayList;
 import java.util.List;

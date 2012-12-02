@@ -2,8 +2,8 @@ package ai.ilikeplaces.logic.verify;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.entities.EntityLifeCycleListener;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MethodParams;
 import ai.ilikeplaces.util.MethodTimer;

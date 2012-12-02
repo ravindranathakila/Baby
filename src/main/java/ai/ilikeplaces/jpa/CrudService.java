@@ -118,7 +118,7 @@ public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceL
     public T create(final T t) {
         final EntityManager entityManager = EntityManagerInjector.THREAD_SAFE_ENTITY_MANAGER.get();
         entityManager.persist(t);
-        entityManager.refresh(t);
+        //entityManager.refresh(t);
         return t;
     }
 

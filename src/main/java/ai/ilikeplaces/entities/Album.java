@@ -5,8 +5,6 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
-import ai.ilikeplaces.util.jpa.*;
 
 import javax.persistence.*;
 import java.io.Serializable;

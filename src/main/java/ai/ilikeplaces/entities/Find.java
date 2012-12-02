@@ -1,4 +1,4 @@
-package ai.ilikeplaces.util.jpa;
+package ai.ilikeplaces.entities;
 
 /**
  * Use with JPA entityManager.find

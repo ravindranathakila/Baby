@@ -3,7 +3,6 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,7 +32,7 @@ import java.util.Date;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "FindPaginatedHumansByEmails",
-                query = "SELECT hi FROM HumansIdentity hi WHERE hi.humanId IN(:humansIdentityEmails)")})
+                query = "SELECT hi FROM HumansIdentity hi")})
 
 @EntityListeners({EntityLifeCycleListener.class})
 public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Serializable {
@@ -50,7 +49,7 @@ public class HumansIdentity extends HumanEquals implements HumanPkJoinFace, Seri
     public String humanId;
 
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = Human.humansIdentityCOL, cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 

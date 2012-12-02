@@ -1,17 +1,12 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.Album;
-import ai.ilikeplaces.entities.HumansFriend;
-import ai.ilikeplaces.entities.Msg;
-import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
 
@@ -168,6 +163,7 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall {
      * <br/>
      * Removes the {@link ai.ilikeplaces.entities.HumansPrivateEvent caller} from {@link PrivateEvent event}.
      * <br/>
+     *
      * @param operator__
      * @param privateEventId__
      * @return
@@ -184,7 +180,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall {
     public Return<Album> rPrivateEventReadAlbum(final HumanId operator__, final long privateEventId__);
 
     /**
-     *
      * @param operator__
      * @param privateEventId__
      * @param refreshSpec
@@ -228,7 +223,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall {
     public Return<List<PrivateEvent>> doRPrivateEventsByBoundsAsSystem(final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast);
 
 
-
     /**
      * @param wallId
      * @param numberOfEntriesToFetch
@@ -237,7 +231,6 @@ public interface HumanCRUDPrivateEventLocal extends GeneralCRUDWall {
     public Return<List<Msg>> readWallLastEntries(final HumanId humanId, final Obj<Long> wallId, final Integer numberOfEntriesToFetch, final RefreshSpec refreshSpec__);
 
     /**
-     *
      * @param humanId
      * @return
      */

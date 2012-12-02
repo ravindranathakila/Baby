@@ -1,18 +1,11 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.HumansUnseen;
 import ai.ilikeplaces.entities.Wall;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Ravindranath Akila

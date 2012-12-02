@@ -1,4 +1,4 @@
-package ai.ilikeplaces.util.jpa;
+package ai.ilikeplaces.entities;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.List;
  * Date: 2/6/11
  * Time: 9:24 PM
  */
-public class RefreshSpec  implements Serializable{
+public class RefreshSpec implements Serializable {
 
     final public List<String> fields;
 

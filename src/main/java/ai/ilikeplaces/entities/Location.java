@@ -1,8 +1,6 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
-import ai.ilikeplaces.util.jpa.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,17 +2,13 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.HumansWall;
-import ai.ilikeplaces.entities.Msg;
-import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
-import ai.ilikeplaces.util.jpa.RefreshException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -156,6 +152,7 @@ public class CRUDHumansWall extends AbstractSLBCallbacks implements CRUDHumansWa
 
     /**
      * Waring: Returns an unmanaged instance
+     *
      * @param humanId
      * @param msg
      * @return

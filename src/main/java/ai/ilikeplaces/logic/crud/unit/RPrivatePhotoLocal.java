@@ -2,9 +2,9 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
 import java.util.List;

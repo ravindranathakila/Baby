@@ -5,7 +5,6 @@ import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;

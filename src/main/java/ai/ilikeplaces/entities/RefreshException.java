@@ -1,4 +1,4 @@
-package ai.ilikeplaces.util.jpa;
+package ai.ilikeplaces.entities;
 
 /**
  * Created by IntelliJ IDEA.
@@ -6,7 +6,7 @@ package ai.ilikeplaces.util.jpa;
  * Date: 2/9/11
  * Time: 6:56 PM
  */
-public class RefreshException extends Exception{
+public class RefreshException extends Exception {
     /**
      * Constructs a new exception with the specified cause and a detail
      * message of <tt>(cause==null ? null : cause.toString())</tt> (which

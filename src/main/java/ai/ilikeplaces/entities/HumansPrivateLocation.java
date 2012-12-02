@@ -7,7 +7,6 @@ import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -35,7 +34,7 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
     public String humanId;
     public static final String humanIdCOL = "humanId";
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.REFRESH)
+    @OneToOne(mappedBy = Human.humansPrivateLocationCOL, cascade = CascadeType.REFRESH)
     //@PrimaryKeyJoinColumn
     public Human human;
 

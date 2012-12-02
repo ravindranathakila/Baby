@@ -2,11 +2,11 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.ULocationLocal;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

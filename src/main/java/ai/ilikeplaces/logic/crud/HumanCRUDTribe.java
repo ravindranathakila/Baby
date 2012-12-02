@@ -1,10 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.Album;
-import ai.ilikeplaces.entities.Msg;
-import ai.ilikeplaces.entities.Tribe;
-import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.crud.unit.CRUDAlbumLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDTribeLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
@@ -13,7 +10,6 @@ import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.logic.validators.unit.VTribeName;
 import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

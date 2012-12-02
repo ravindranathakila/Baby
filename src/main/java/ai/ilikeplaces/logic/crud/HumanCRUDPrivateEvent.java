@@ -8,7 +8,6 @@ import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

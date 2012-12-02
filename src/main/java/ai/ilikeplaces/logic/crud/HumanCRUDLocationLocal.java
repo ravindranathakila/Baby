@@ -2,11 +2,10 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
 import java.util.Map;

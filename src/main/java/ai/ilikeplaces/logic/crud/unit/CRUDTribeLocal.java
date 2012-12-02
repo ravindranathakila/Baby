@@ -1,13 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.Album;
-import ai.ilikeplaces.entities.HumansTribe;
-import ai.ilikeplaces.entities.Tribe;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.logic.validators.unit.VLong;
-import ai.ilikeplaces.util.jpa.RefreshException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
+import ai.ilikeplaces.entities.*;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -48,7 +42,6 @@ public interface CRUDTribeLocal {
     public Tribe doRTribe(final Long tribeId);
 
     /**
-     *
      * @param humanId
      * @return
      */
@@ -68,7 +61,6 @@ public interface CRUDTribeLocal {
     public List<Tribe> getHumansTribes(final String humanId);
 
     /**
-     *
      * @param tribeId
      * @return
      */
@@ -82,7 +74,6 @@ public interface CRUDTribeLocal {
     public Tribe removeFromTribe(final String humanId, final Long tribeId);
 
     /**
-     *
      * @param humanId whos permissions to be checked
      * @param tribeId of which the given humanId should be a member of
      * @return if the given humanId is a member of the given tribe
@@ -90,7 +81,6 @@ public interface CRUDTribeLocal {
     public boolean isTribeMember(final String humanId, final Long tribeId);
 
     /**
-     *
      * @param humanId
      * @param tribeId
      * @param refreshSpecInit

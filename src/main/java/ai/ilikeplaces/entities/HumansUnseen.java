@@ -2,7 +2,6 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._unidirectional;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 
 import javax.persistence.*;
 import java.io.Serializable;

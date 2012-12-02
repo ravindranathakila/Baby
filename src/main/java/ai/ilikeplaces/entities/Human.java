@@ -1,16 +1,13 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.util.EntityLifeCycleListener;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * @author Ravindranath Akila
@@ -20,7 +17,7 @@ import java.io.*;
 @Table(name = "Human", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})
-public class Human extends HumanEquals implements HumanIdFace, Serializable, Clearance, HumansFriend, Cloneable {
+public class Human extends HumanEquals implements HumanIdFace, Serializable, Clearance, HumansFriend {
 // ------------------------------ FIELDS ------------------------------
 
     @Id
@@ -39,44 +36,50 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
     @Column(name = "clearance")
     public Long clearance = 0L;
 
-    //@PrimaryKeyJoinColumn
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "humanId")
     public HumansAuthentication humansAuthentication;
+    public static final String humansAuthenticationCOL = "humansAuthentication";
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "humanId")
     public HumansIdentity humansIdentity;
+    public static final String humansIdentityCOL = "humansIdentity";
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "humanId")
     public HumansPublicPhoto humansPublicPhoto;
+    public static final String humansPublicPhotoCOL = "humansPublicPhoto";
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "humanId")
     public HumansPrivatePhoto HumansPrivatePhoto;
+    public static final String humansPrivatePhotoCOL = "humansPrivatePhoto";
 
-    @NOTE(note = "HumansNet is a simple entity with no List based getters and setters.")
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "humanId")
     public HumansNet humansNet;
+    public static final String humansNetCOL = "humansNet";
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "humanId")
     public HumansPrivateLocation humansPrivateLocation;
+    public static final String humansPrivateLocationCOL = "humansPrivateLocation";
 
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "humanId")
     public HumansPrivateEvent humansPrivateEvent;
+    public static final String humansPrivateEventCOL = "humansPrivateEvent";
 
-
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "humanId")
     public HumansAlbum humansAlbum;
+    public static final String humansAlbumCOL = "humansAlbum";
 
-    @WARNING(warning = "DO NOT fetch eager. Wall will pull all the damn messages eager.")
-    @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    //@PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "humanId")
     public HumansWall humansWall;
+    public static final String humansWallCOL = "humansWall";
 
 // --------------------- GETTER / SETTER METHODS ---------------------
 
@@ -164,23 +167,6 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
 
 // ------------------------ CANONICAL METHODS ------------------------
 
-    @Override
-    @Transient
-    protected Object clone() throws CloneNotSupportedException {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(this);
-
-            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            ObjectInputStream ois = new ObjectInputStream(bais);
-            return (Human) ois.readObject();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public boolean equals(final Object o) {

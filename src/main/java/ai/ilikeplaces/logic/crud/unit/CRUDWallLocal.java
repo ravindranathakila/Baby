@@ -2,10 +2,10 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Msg;
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -27,6 +27,7 @@ public interface CRUDWallLocal {
      * @param wallId
      * @return Wall
      * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+     *
      */
     public Wall doDirtyRWall(final long wallId) throws DBDishonourCheckedException;
 
@@ -35,7 +36,9 @@ public interface CRUDWallLocal {
      * @param refreshSpec
      * @return Wall
      * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+     *
      * @throws ai.ilikeplaces.exception.DBFetchDataException
+     *
      */
     public Wall doRWall(final long wallId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException;
 
@@ -54,6 +57,7 @@ public interface CRUDWallLocal {
      * @param contentToBeAppended
      * @return Wall
      * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+     *
      */
     public Wall doUAddEntry(long wallId, final String humanId, String contentToBeAppended) throws DBDishonourCheckedException;
 
@@ -62,6 +66,7 @@ public interface CRUDWallLocal {
      * @param mutee
      * @return Wall
      * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+     *
      */
     public Wall doUAddMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
 
@@ -70,6 +75,7 @@ public interface CRUDWallLocal {
      * @param mutee
      * @return Wall
      * @throws ai.ilikeplaces.exception.DBDishonourCheckedException
+     *
      */
     public Wall doURemoveMuteEntry(long wallId, final String mutee) throws DBDishonourCheckedException;
 

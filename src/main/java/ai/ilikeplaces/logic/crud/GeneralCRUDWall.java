@@ -1,10 +1,10 @@
 package ai.ilikeplaces.logic.crud;
 
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.Return;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,10 +15,9 @@ import ai.ilikeplaces.util.jpa.RefreshSpec;
 public interface GeneralCRUDWall {
 
     /**
-     *
      * @param whosWall
-     * @param msgOwner__ The (usually non-living) entity which owns this wall.
-     * It is usually something like a {@link ai.ilikeplaces.entities.PrivateEvent PrivateEvent}
+     * @param msgOwner__          The (usually non-living) entity which owns this wall.
+     *                            It is usually something like a {@link ai.ilikeplaces.entities.PrivateEvent PrivateEvent}
      * @param wallReference
      * @param contentToBeAppended
      * @return

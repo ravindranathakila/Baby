@@ -3,9 +3,9 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.LongMsg;
+import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
-import ai.ilikeplaces.util.jpa.RefreshSpec;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
