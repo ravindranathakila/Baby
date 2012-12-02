@@ -6,7 +6,10 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.HTMLDocParser;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.cache.SmartCache2String;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -56,7 +59,7 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
     public UserPropertySidebar(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final Object... params) {
         super(request__, Page.UserPropertySidebar, appendToElement__, humanId, params);
 
-        final HumansIdentity hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get((humanId.getHumanId()),"");
+        final HumansIdentity hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get((humanId.getHumanId()), "");
 
         $$(UserPropertySidebarIds.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
         //$$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
@@ -79,7 +82,7 @@ abstract public class UserPropertySidebar extends AbstractWidgetListener {
      */
     public UserPropertySidebar(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumanId humanId, final Object... params) {
         super(request__, Page.UserProperty, appendToElement__, humanId, params);
-        final HumansIdentity hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get((humanId.getHumanId()),"");
+        final HumansIdentity hi = HUMANS_IDENTITY_SIDEBAR_CACHE.get((humanId.getHumanId()), "");
         $$(UserPropertySidebarIds.user_property_sidebar_name).setTextContent(hi.getHuman().getDisplayName());
         //$$(Page.user_property_sidebar_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
         $$(UserPropertySidebarIds.user_property_sidebar_profile_photo).setAttribute(MarkupTag.IMG.title(), profilePhotoURLFinal = formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));

@@ -1,10 +1,6 @@
 package ai.ilikeplaces.ygp.impl;
 
-import com.google.inject.ImplementedBy;
-import org.json.JSONException;
 import where.yahooapis.com.v1.Place;
-
-import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,8 +10,10 @@ import java.io.IOException;
  *
  * @author Ravindranath Akila
  */
-public interface Client{
+public interface Client {
     public String getJsonEndpoint();
+
     public Place getPlace(final String endpointEndValue);
+
     public Object getPlaceValue(String endpointEndValue, String key);
 }

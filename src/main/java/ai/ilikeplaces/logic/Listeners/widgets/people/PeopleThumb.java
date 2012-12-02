@@ -1,7 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets.people;
 
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.HTMLDocParser;

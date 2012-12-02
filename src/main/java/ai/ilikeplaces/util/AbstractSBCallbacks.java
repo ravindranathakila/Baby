@@ -2,7 +2,6 @@ package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

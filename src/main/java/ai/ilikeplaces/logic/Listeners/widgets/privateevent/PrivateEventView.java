@@ -2,13 +2,14 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
-import ai.ilikeplaces.doc.SEE;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.HumansPrivateEvent;
+import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.*;
-import ai.ilikeplaces.logic.Listeners.widgets.people.People;
-import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
+import ai.ilikeplaces.logic.Listeners.widgets.AlbumManager;
+import ai.ilikeplaces.logic.Listeners.widgets.Button;
+import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -27,8 +28,6 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;
@@ -126,7 +125,7 @@ abstract public class PrivateEventView extends AbstractWidgetListener {
                 new AlbumManager(request, $$(PrivateEventViewIds.privateEventViewAlbum), humanId, r.returnValue());
 
                 final GeoCoord gc = new GeoCoord();
-                gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude() , r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
+                gc.setObj(r.returnValue().getPrivateLocation().getPrivateLocationLatitude(), r.returnValue().getPrivateLocation().getPrivateLocationLongitude());
                 gc.validateThrow();
 
                 $$(PrivateEventViewIds.privateEventViewLocationMap).setAttribute(MarkupTag.IMG.src(),

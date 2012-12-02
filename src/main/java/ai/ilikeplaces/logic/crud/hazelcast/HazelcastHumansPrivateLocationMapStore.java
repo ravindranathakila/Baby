@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud.hazelcast;
 
-import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.util.cache.AbstractHCMapStore;
 

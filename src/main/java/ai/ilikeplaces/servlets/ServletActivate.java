@@ -3,16 +3,12 @@ package ai.ilikeplaces.servlets;
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
-import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
-import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.security.SingletonHashing;
-import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
@@ -21,9 +17,6 @@ import net.sf.oval.exception.ConstraintsViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +25,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Enumeration;
-import java.util.Properties;
 
 /**
  * @author Ravindranath Akila

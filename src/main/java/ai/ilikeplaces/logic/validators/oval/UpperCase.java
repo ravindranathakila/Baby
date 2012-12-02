@@ -2,7 +2,6 @@ package ai.ilikeplaces.logic.validators.oval;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.logic.validators.ERRORCODE;
 import ai.ilikeplaces.logic.validators.oval.internal.UpperCaseCheck;
 import net.sf.oval.configuration.annotation.Constraint;
 

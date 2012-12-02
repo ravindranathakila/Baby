@@ -10,22 +10,17 @@ import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
-import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatServletRequest;
-import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static ai.ilikeplaces.servlets.Controller.Page.*;
+import static ai.ilikeplaces.servlets.Controller.Page.PrivateLocationCreateCNotice;
 
 
 /**

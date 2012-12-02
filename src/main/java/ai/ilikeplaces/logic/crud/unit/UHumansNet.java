@@ -4,7 +4,6 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansNet;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

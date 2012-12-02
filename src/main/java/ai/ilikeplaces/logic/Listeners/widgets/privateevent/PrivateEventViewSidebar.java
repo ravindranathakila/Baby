@@ -5,7 +5,8 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar;
+import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -46,16 +47,17 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                 }
             }
     );
-    
+
     private static final String READ_MORE = "read.more";
 
-// --------------------------- CONSTRUCTORS ---------------------------
+    // --------------------------- CONSTRUCTORS ---------------------------
     public PrivateEventViewSidebar(final ItsNatServletRequest request__, final PrivateEventViewSidebarCriteria privateEventViewSidebarCriteria, final Element appendToElement__) {
 
         super(request__, Page.PrivateEventViewSidebar, privateEventViewSidebarCriteria, appendToElement__);
     }
 
 // ------------------------ OVERRIDING METHODS ------------------------
+
     /**
      * @param privateEventViewSidebarCriteria
      *
@@ -110,6 +112,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     href) {
                 private Msg mylastWallEntry;
                 private String myhref;
+
                 protected void init(final Object... initArgs) {
 
                     mylastWallEntry = (Msg) ((Object[]) initArgs[1])[0];
@@ -152,6 +155,7 @@ public class PrivateEventViewSidebar extends AbstractWidgetListener<PrivateEvent
                     "",
                     href) {
                 private String myhref;
+
                 protected void init(final Object... initArgs) {
 
                     myhref = (String) ((Object[]) initArgs[1])[1];

@@ -1,7 +1,10 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
+import ai.ilikeplaces.logic.Listeners.widgets.ForgotPasswordManager;
+import ai.ilikeplaces.logic.Listeners.widgets.PasswordManager;
+import ai.ilikeplaces.logic.Listeners.widgets.Profile;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.ItsNatDocument;
@@ -12,7 +15,7 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.itsnat.core.http.ItsNatHttpSession;
 import org.w3c.dom.html.HTMLDocument;
 
-import static ai.ilikeplaces.servlets.Controller.Page.*;
+import static ai.ilikeplaces.servlets.Controller.Page.Skeleton_center_content;
 
 /**
  * @author Ravindranath Akila

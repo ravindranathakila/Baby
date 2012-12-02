@@ -5,7 +5,6 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.rbs.RBGet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +14,6 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
@@ -42,7 +40,7 @@ public class DPublicPhoto implements DPublicPhotoLocal {
         if (!publicPhoto.getHumansPublicPhoto().getPublicPhotos().remove(publicPhoto)) {
             throw new IllegalStateException("SORRY, I FIND NO SUCH VALUE.");
         }
-        
+
         if (!publicPhoto.getLocation().getPublicPhotos().remove(publicPhoto)) {
             throw new IllegalStateException("SORRY, I FIND NO SUCH VALUE.");
         }
@@ -51,5 +49,6 @@ public class DPublicPhoto implements DPublicPhotoLocal {
 
         return true;
     }
+
     final static Logger logger = LoggerFactory.getLogger(DPublicPhoto.class);
 }

@@ -5,12 +5,7 @@ import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import org.apache.commons.httpclient.URI;
 
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

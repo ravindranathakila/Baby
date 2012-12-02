@@ -2,7 +2,6 @@ package ai.ilikeplaces.security.face;
 
 import ai.ilikeplaces.doc.License;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 
 /**
@@ -13,7 +12,7 @@ import javax.ejb.Remote;
 @Remote
 public interface SingletonHashingRemote {
     final static public String NAME = SingletonHashingRemote.class.getSimpleName();
-    
+
     /**
      * @param plaintext__
      * @param salt__

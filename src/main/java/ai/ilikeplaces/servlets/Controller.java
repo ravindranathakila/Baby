@@ -4,9 +4,6 @@ import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.logic.Listeners.*;
 import ai.ilikeplaces.logic.Listeners.templates.TemplateGeneric;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
-import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Comment;
-import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Event;
-import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.*;
@@ -164,7 +161,7 @@ final public class
     final PageFace info = Page.Info;
 
     final PageFace place = Page.Place;
-    final PageFace comment= Page.Comment;
+    final PageFace comment = Page.Comment;
     final PageFace event = Page.Event;
     final PageFace person = Page.Person;
 

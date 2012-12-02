@@ -6,7 +6,8 @@ import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.LogNull;
+import ai.ilikeplaces.util.MethodTimer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,11 +33,11 @@ final public class DB implements DBLocal {
 
     final static private Properties REMOTE_PROPERTIES = new Properties();
     static private Context REMOTE_CONTEXT = null;
-    
+
     final static private Properties LOCAL_PROPERTIES = new Properties();
     static private Context LOCAL_CONTEXT = null;
-    
-    
+
+
     static private boolean OK_ = false;
     final static private ResourceBundle exceptionMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
     final static Logger logger = LoggerFactory.getLogger(DB.class);
@@ -53,8 +54,8 @@ final public class DB implements DBLocal {
             DB.OK_ = false;
             logger.error(NAMING_EXCEPTION, ex);
         }
-    } 
-    
+    }
+
     static {
         try {
             DB.LOCAL_PROPERTIES.put(Context.INITIAL_CONTEXT_FACTORY, RBGet.globalConfig.getString("oejb.LICF"));
@@ -65,7 +66,6 @@ final public class DB implements DBLocal {
             logger.error(NAMING_EXCEPTION, ex);
         }
     }
-
 
 
     static public void isOK() {

@@ -9,8 +9,6 @@ import ai.ilikeplaces.util.ParamValidator;
 import ai.ilikeplaces.util.jndi.impl.JNDILookupFactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.places.api.impl.impl.GooglePlacesAPIClient;
-import upcoming.yahoo.api.impl.ClientFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -64,7 +62,7 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
         }
     }
 
-    public static ModulesLocal getModules(){
+    public static ModulesLocal getModules() {
         try {
             return (ModulesLocal) (jndiLookupFactory.getInstance(ModulesLocal.NAME)).lookup();
         } catch (final NamingException e) {
@@ -84,7 +82,7 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
         return disqusApiFactory;
     }
 
-    public com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory(){
+    public com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory() {
         return googlePlacesApiFactory;
     }
 

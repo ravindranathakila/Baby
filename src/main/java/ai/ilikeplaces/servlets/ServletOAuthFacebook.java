@@ -11,7 +11,9 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -178,7 +180,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
 
                     if (humanCreateReturn.valid()) {
                         loginUser(request, response, DB.getHumanCRUDHumanLocal(true).doDirtyRHuman(email));
-                    }else{
+                    } else {
                         //Hmmm. Backend would've logged this. We need to notify the user however.
                     }
                 }
@@ -229,7 +231,7 @@ public class ServletOAuthFacebook extends AbstractOAuth {
                 userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.globalConfig.getString("UserSessionIdleInterval")));
             }
 
-            final HumanUserLocal humanUserLocal =  HumanUser.getHumanUserLocal(true);
+            final HumanUserLocal humanUserLocal = HumanUser.getHumanUserLocal(true);
             humanUserLocal.setHumanUserId(existingUser.getHumanId());
             userSession_.setAttribute(ServletLogin.HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 

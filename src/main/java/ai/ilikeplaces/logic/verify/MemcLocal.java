@@ -3,7 +3,6 @@ package ai.ilikeplaces.logic.verify;
 import ai.ilikeplaces.doc.License;
 
 import javax.ejb.Local;
-import javax.persistence.Lob;
 
 /**
  * Created by IntelliJ IDEA.

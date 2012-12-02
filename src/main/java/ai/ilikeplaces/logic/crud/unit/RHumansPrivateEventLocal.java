@@ -2,7 +2,6 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
-import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 
 import javax.ejb.Local;

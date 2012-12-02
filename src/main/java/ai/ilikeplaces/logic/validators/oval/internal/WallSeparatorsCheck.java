@@ -1,13 +1,10 @@
 package ai.ilikeplaces.logic.validators.oval.internal;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.logic.validators.oval.UpperCase;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.AbstractAnnotationCheck;
 import net.sf.oval.context.OValContext;
-
-import static ai.ilikeplaces.util.apache.fixes.StringEscapeUtilsFixed.*;
 
 /**
  * Created by IntelliJ IDEA.

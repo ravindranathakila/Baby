@@ -2,15 +2,14 @@ package ai.ilikeplaces.jpa;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
 
 import javax.ejb.Local;
 import java.util.List;
 import java.util.Map;
 
 /**
- * @author Ravindranath Akila
  * @param <T>
+ * @author Ravindranath Akila
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
@@ -32,7 +31,6 @@ public interface CrudServiceLocal<T> {
     public T find(Class type, Object id);
 
     /**
-     * 
      * @param type
      * @param id
      * @return
@@ -45,11 +43,11 @@ public interface CrudServiceLocal<T> {
      * makes sure you can avoid a null check. If you are doing
      * a null check, you do not need to call this. use find
      * instead.
-     *
+     * <p/>
      * A common approach to using this method is when you are sure a given ID is in the database when looking it up.
      * While this maybe tagged defensive, this approach actually reveals a possible null at the earliest.
      * Noticing a null, which is an attribute of all classes and has no type, at the earliest is best.
-     *
+     * <p/>
      * <p/>
      * Use find if this check is not required.
      * <p/>

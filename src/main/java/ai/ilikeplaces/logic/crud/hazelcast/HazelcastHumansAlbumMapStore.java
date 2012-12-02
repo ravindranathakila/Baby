@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.crud.hazelcast;
 
-import ai.ilikeplaces.entities.Album;
-import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAlbum;
 import ai.ilikeplaces.util.cache.AbstractHCMapStore;
 

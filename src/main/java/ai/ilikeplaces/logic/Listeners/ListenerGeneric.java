@@ -1,12 +1,9 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.event.ItsNatServletRequestListener;
-import org.itsnat.core.html.ItsNatHTMLDocument;
-import org.w3c.dom.html.HTMLDocument;
 
 /**
  * Created by IntelliJ IDEA.

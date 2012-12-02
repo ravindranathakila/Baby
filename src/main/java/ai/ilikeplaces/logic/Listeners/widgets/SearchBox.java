@@ -4,7 +4,6 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.Loggers;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -21,7 +20,7 @@ public class SearchBox extends AbstractWidgetListener {
      * @param itsNatDocument__
      * @param appendToElement__
      */
-    public SearchBox(final ItsNatServletRequest request__,  final Element appendToElement__) {
+    public SearchBox(final ItsNatServletRequest request__, final Element appendToElement__) {
         super(request__, Page.Photo$Description, appendToElement__);
     }
 

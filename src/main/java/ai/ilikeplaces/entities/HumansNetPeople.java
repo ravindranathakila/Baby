@@ -3,12 +3,8 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc._unidirectional;
-import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
-import ai.ilikeplaces.entities.etc.HumanEquals;
-import ai.ilikeplaces.entities.etc.HumanIdFace;
-import ai.ilikeplaces.entities.etc.HumansFriend;
+import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.exception.DBException;
-import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
@@ -135,7 +131,7 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
+        final Return<Boolean> r = FriendUtil.check(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
         if (r.returnStatus() != 0) {
             throw new DBException(r.returnError());
         }

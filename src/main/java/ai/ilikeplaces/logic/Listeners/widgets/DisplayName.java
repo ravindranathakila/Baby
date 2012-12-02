@@ -2,14 +2,14 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.util.*;
-import org.itsnat.core.ItsNatDocument;
+import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.EventType;
+import ai.ilikeplaces.util.MarkupTag;
+import ai.ilikeplaces.util.Return;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -18,8 +18,6 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
-
-import javax.servlet.ServletRequest;
 
 /**
  * @author Ravindranath Akila

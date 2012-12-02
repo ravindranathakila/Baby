@@ -3,7 +3,8 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.Listeners.widgets.legal.PrivacyPolicy;
 import ai.ilikeplaces.logic.Listeners.widgets.legal.TermsOfServices;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.SmartLogger;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -38,8 +39,10 @@ public class ListenerLegal implements ItsNatServletRequestListener {
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
 
-                new TermsOfServices(request__,$(Skeleton_center_content)){};
-                new PrivacyPolicy(request__,$(Skeleton_center_content)){};
+                new TermsOfServices(request__, $(Skeleton_center_content)) {
+                };
+                new PrivacyPolicy(request__, $(Skeleton_center_content)) {
+                };
 
                 SmartLogger.g().complete(Loggers.LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
             }

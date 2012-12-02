@@ -2,11 +2,9 @@ package ai.ilikeplaces.logic.role;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.util.DelegatedObservable;
 import ai.ilikeplaces.util.cache.SmartCache;
 
 import javax.ejb.Local;
-import javax.ejb.Remote;
 import javax.servlet.http.HttpSessionBindingListener;
 import java.io.Serializable;
 

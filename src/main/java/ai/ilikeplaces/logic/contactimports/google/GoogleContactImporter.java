@@ -6,10 +6,11 @@ import ai.ilikeplaces.logic.validators.unit.SimpleName;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Pair;
 import com.google.gdata.client.contacts.ContactsService;
-//import sample.contacts.ContactsExampleParameters.Actions;
 import com.google.gdata.data.Link;
 import com.google.gdata.data.Person;
-import com.google.gdata.data.contacts.*;
+import com.google.gdata.data.contacts.ContactEntry;
+import com.google.gdata.data.contacts.ContactFeed;
+import com.google.gdata.data.contacts.GroupMembershipInfo;
 import com.google.gdata.data.extensions.Email;
 import com.google.gdata.data.extensions.ExtendedProperty;
 import com.google.gdata.data.extensions.Im;
@@ -21,6 +22,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+//import sample.contacts.ContactsExampleParameters.Actions;
 
 /**
  * Created by IntelliJ IDEA.
@@ -53,6 +56,7 @@ public class GoogleContactImporter {
         return new Pair<SimpleName, List<ImportedContact>>(new SimpleName(resultFeed.getAuthors().get(0).getName()), importedContacts);
 
     }
+
     public static Pair<Person, List<ImportedContact>> fetchContactsWithAuthor(final String emailToImportFrom, final String authSubToken) {
 
         final ContactFeed resultFeed = getResultFeed(emailToImportFrom, authSubToken);

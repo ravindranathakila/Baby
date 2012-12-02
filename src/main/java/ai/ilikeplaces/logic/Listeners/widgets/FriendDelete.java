@@ -6,9 +6,7 @@ import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
-import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
-import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -35,7 +33,7 @@ public class FriendDelete extends AbstractWidgetListener {
      * @param page__
      * @param appendToElement__
      */
-    public FriendDelete(final ItsNatServletRequest request__,  final Element appendToElement__, final HumanId humanId, final HumanId caller) {
+    public FriendDelete(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId humanId, final HumanId caller) {
         super(request__, Controller.Page.FriendDelete, appendToElement__, humanId, caller);
     }
 

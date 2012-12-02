@@ -11,7 +11,6 @@ import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.security.SingletonHashing;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.Loggers;

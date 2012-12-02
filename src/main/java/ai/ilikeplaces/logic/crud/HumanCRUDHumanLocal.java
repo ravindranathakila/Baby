@@ -3,7 +3,6 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.*;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -12,7 +11,6 @@ import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
 
@@ -96,7 +94,7 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Return<String> doDirtyProfileFromURL(final String url);
 
-    public Return<List<HumansNetPeople>> doDirtyRHumansBefriends(final  RefObj<String> humanId);
+    public Return<List<HumansNetPeople>> doDirtyRHumansBefriends(final RefObj<String> humanId);
 
 }
 

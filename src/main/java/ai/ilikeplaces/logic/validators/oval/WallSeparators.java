@@ -2,7 +2,6 @@ package ai.ilikeplaces.logic.validators.oval;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.logic.validators.oval.internal.NoXSSAttackCheck;
 import ai.ilikeplaces.logic.validators.oval.internal.WallSeparatorsCheck;
 import net.sf.oval.configuration.annotation.Constraint;
 
@@ -30,5 +29,5 @@ public @interface WallSeparators {
      * @see net.sf.oval.exception.ConstraintsViolatedException
      */
     public abstract String message() default "Wall Separators detected";
-    
+
 }

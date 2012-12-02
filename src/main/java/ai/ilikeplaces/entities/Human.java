@@ -3,7 +3,6 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.exception.DBException;
-import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Return;
 
@@ -212,7 +211,7 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        final Return<Boolean> r = DB.getHumanCRUDHumanLocal(true).doDirtyIsHumansNetPeople(new HumanId(this.humanId), new HumanId(friendsHumanId));
+        final Return<Boolean> r = FriendUtil.check(new HumanId(this.humanId), new HumanId(friendsHumanId));
         if (r.returnStatus() != 0) {
             throw new DBException(r.returnError());
         }

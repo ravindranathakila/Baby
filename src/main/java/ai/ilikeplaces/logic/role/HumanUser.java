@@ -5,7 +5,6 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.crud.DBLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
@@ -49,7 +48,6 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     private transient SmartCache<String, Object> cache;
 
     private Map<String, Object> store = new HashMap<String, Object>(0);
-
 
 
     final static private Properties P_ = new Properties();

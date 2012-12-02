@@ -1,21 +1,11 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.entities.*;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
-import ai.ilikeplaces.logic.validators.unit.Email;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.logic.validators.unit.Password;
-import ai.ilikeplaces.logic.verify.util.Verify;
-import ai.ilikeplaces.util.RefObj;
-import ai.ilikeplaces.util.Return;
+import ai.ilikeplaces.entities.HumansUnseen;
+import ai.ilikeplaces.entities.Wall;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Ravindranath Akila

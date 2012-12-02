@@ -1,7 +1,6 @@
 package ai.ilikeplaces.logic.hotspots;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.util.Pair;
 import com.google.gdata.data.geo.impl.W3CPoint;
 
 /**
@@ -12,11 +11,11 @@ import com.google.gdata.data.geo.impl.W3CPoint;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class Hotspot{
+public class Hotspot {
     private W3CPoint coordinates;
     private String commonName;
     private long hits;
-    
+
 
     public Hotspot(final W3CPoint coordinates, final String commonName, final long hits) {
         this.coordinates = coordinates;

@@ -1,7 +1,10 @@
 package ai.ilikeplaces.servlets.filters;
 
 
-import com.google.code.facebookapi.*;
+import com.google.code.facebookapi.FacebookException;
+import com.google.code.facebookapi.FacebookWebappHelper;
+import com.google.code.facebookapi.FacebookXmlRestClient;
+import com.google.code.facebookapi.IFacebookRestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;

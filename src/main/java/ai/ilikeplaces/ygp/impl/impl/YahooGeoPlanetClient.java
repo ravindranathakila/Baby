@@ -19,7 +19,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +86,7 @@ public class YahooGeoPlanetClient implements Client {
             final JSONArray bboxArray = new JSONArray(placeJson.get(Place.attributes.bbox.toString()).toString());
             System.out.println(bboxArray);
             final List<Coordinates> bbox = new ArrayList<Coordinates>(2);
-            for(int i = 0 ; i < bboxArray.length()  ; i += 2){
+            for (int i = 0; i < bboxArray.length(); i += 2) {
                 bbox.add(new Coordinates(Double.parseDouble(bboxArray.get(i).toString()), Double.parseDouble(bboxArray.get(i + 1).toString())));
                 System.out.println(new Coordinates(Double.parseDouble(bboxArray.get(i).toString()), Double.parseDouble(bboxArray.get(i + 1).toString())));
             }

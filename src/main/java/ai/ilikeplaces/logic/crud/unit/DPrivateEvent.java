@@ -3,12 +3,10 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.EXPECTNULL;
 import ai.ilikeplaces.doc.FORGETNULL;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 
 import javax.ejb.EJB;
@@ -71,9 +69,9 @@ public class DPrivateEvent extends AbstractSLBCallbacks implements DPrivateEvent
                 }
             } else {
                 final List<HumansPrivateEvent> privateEventViewers = privateEvent.getPrivateEventViewers();
-                if(privateEventViewers.contains(humansPrivateEvent)){
+                if (privateEventViewers.contains(humansPrivateEvent)) {
                     privateEventViewers.remove(humansPrivateEvent);
-                }else{
+                } else {
                     throw new NoPrivilegesException(humanId, DELETE_THIS_EVENT);
                 }
             }

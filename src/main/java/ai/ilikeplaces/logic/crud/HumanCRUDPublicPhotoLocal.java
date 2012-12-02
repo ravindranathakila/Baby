@@ -4,12 +4,10 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.util.Return;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import java.util.List;
 
 /**
- *
  * @author Ravindranath Akila
  */
 

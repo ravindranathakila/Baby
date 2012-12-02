@@ -3,20 +3,14 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.validators.Validator;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
-import net.sf.oval.configuration.annotation.IsInvariant;
-import net.sf.oval.constraint.NotNull;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
 import org.w3c.dom.html.HTMLDocument;
-
-import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.

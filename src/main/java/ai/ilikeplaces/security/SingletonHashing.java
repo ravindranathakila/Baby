@@ -2,22 +2,12 @@ package ai.ilikeplaces.security;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
-import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.blowfish.BlowFishLocal;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
-import ai.ilikeplaces.util.LogNull;
-import ai.ilikeplaces.util.Loggers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import java.util.Properties;
 
 /**
  * @author Ravindranath Akila

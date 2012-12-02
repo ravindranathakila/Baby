@@ -5,7 +5,6 @@ import ai.ilikeplaces.util.RefObj;
 import net.sf.oval.configuration.annotation.IsInvariant;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.NotBlank;
-import net.sf.oval.constraint.NotEmpty;
 import net.sf.oval.constraint.NotNull;
 
 /**
@@ -22,7 +21,6 @@ public class DisplayNameString extends RefObj<String> {
     }
 
     /**
-     * 
      * @param displayNameToBeSet
      */
     public DisplayNameString(final String displayNameToBeSet) {
@@ -35,7 +33,7 @@ public class DisplayNameString extends RefObj<String> {
     @NotNull(message = "Sorry! You must enter a value.")
     @Length(min = 2, max = 255)
     @NotBlank
-    public String getObj(){
+    public String getObj() {
         return obj;
     }
 }

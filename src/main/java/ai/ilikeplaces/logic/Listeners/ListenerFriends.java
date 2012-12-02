@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.html.HTMLDocument;
 
-import static ai.ilikeplaces.servlets.Controller.Page.*;
+import static ai.ilikeplaces.servlets.Controller.Page.Skeleton_center_skeleton;
 
 /**
  * @author Ravindranath Akila
@@ -56,13 +56,13 @@ public class ListenerFriends implements ItsNatServletRequestListener {
              */
             @Override
             protected void registerEventListeners
-                    (
-                            final ItsNatHTMLDocument itsNatHTMLDocument__,
-                            final HTMLDocument hTMLDocument__,
-                            final ItsNatDocument itsNatDocument__) {
+            (
+                    final ItsNatHTMLDocument itsNatHTMLDocument__,
+                    final HTMLDocument hTMLDocument__,
+                    final ItsNatDocument itsNatDocument__) {
             }
         }
 
-                ;
+        ;
     }
 }

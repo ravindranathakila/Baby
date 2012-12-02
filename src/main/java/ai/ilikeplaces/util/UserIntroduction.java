@@ -1,6 +1,5 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.crud.DB;
@@ -32,24 +31,24 @@ public class UserIntroduction {
 
 
             DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
-                     newUser,
-                     newUser,
-                     new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
-                     "I can delete this event. With deleting goes all stuff in it!");
+                    newUser,
+                    newUser,
+                    new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
+                    "I can delete this event. With deleting goes all stuff in it!");
 
 
             DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
-                     newUser,
-                     newUser,
-                     new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
-                     "The stuff on this moment is private to it's members only.");
+                    newUser,
+                    newUser,
+                    new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
+                    "The stuff on this moment is private to it's members only.");
 
 
             DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
-                     newUser,
-                     newUser,
-                     new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
-                     "I should add my friends so that I can invite them to this moment (visit http://www.ilikeplaces.com/page/_friends)");
+                    newUser,
+                    newUser,
+                    new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
+                    "I should add my friends so that I can invite them to this moment (visit http://www.ilikeplaces.com/page/_friends)");
 
 
             DB.getHumanCrudPrivateEventLocal(false).addEntryToWall(
@@ -65,7 +64,7 @@ public class UserIntroduction {
                     new Obj<Long>(privateEventReturn.returnValue().getPrivateEventId()),
                     "I just started a moment at Taj Mahal!");
 
-     }
+        }
 
         SettingPersonalWall:
         {

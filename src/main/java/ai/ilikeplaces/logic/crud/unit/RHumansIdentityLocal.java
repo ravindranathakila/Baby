@@ -3,8 +3,6 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.util.RefObj;
-import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -26,7 +24,7 @@ public interface RHumansIdentityLocal {
 
     public HumansIdentity doRHumansIdentity(final String humanId) throws DBDishonourCheckedException;
 
-    public String doDirtyProfileFromURL(final String url);    
+    public String doDirtyProfileFromURL(final String url);
 
     public String test(final String emails);
 }

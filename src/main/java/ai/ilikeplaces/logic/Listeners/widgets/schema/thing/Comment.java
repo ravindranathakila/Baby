@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets.schema.thing;
 
-import ai.ilikeplaces.logic.Listeners.widgets.schema.thing.CommentCriteria;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import org.itsnat.core.ItsNatServletRequest;

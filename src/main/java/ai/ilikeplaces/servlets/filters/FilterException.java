@@ -3,9 +3,7 @@ package ai.ilikeplaces.servlets.filters;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 
 import javax.ejb.NoSuchEJBException;
@@ -14,9 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.

@@ -2,14 +2,13 @@ package ai.ilikeplaces.logic.validators.oval;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.logic.validators.ERRORCODE;
+import ai.ilikeplaces.logic.validators.oval.internal.NoXSSAttackCheck;
 import net.sf.oval.configuration.annotation.Constraint;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import ai.ilikeplaces.logic.validators.oval.internal.NoXSSAttackCheck;
 
 /**
  * Created by IntelliJ IDEA.

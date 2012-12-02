@@ -1,7 +1,6 @@
 package ai.ilikeplaces.logic.modules;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.ygp.impl.ClientFactory;
 
 import javax.ejb.Local;
 
@@ -18,7 +17,7 @@ public interface ModulesLocal {
 
     public upcoming.yahoo.api.impl.ClientFactory getYahooUplcomingFactory();
 
-        public com.disqus.api.impl.ClientFactory getDisqusAPIFactory();
+    public com.disqus.api.impl.ClientFactory getDisqusAPIFactory();
 
     public com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory();
 }
