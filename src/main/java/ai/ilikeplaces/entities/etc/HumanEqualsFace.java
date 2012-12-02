@@ -1,15 +1,15 @@
-package ai.ilikeplaces.entities;
+package ai.ilikeplaces.entities.etc;
 
 import ai.ilikeplaces.doc.License;
 
-import java.io.Serializable;
-
 /**
+ * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
- * Date: Dec 6, 2009
- * Time: 6:19:10 PM
+ * Date: Nov 13, 2010
+ * Time: 5:10:58 PM
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class LocationsEvent implements Serializable {
+public interface HumanEqualsFace {
+    abstract public String getHumanId();
 }

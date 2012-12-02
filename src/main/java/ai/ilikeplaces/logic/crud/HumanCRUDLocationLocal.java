@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.entities.RefreshSpec;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
 

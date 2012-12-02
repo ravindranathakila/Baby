@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
@@ -150,6 +151,8 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
         try {
             r = new ReturnImpl<HumansPrivateLocation>(rHumansPrivateLocation_.doNTxRHumansPrivateLocation(humanId.getObj()), READ_HUMANS_PRIVATE_LOCATION_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<HumansPrivateLocation>(t, READ_HUMANS_PRIVATE_LOCATION_FAILED, true);
+        } catch (final DBRefreshDataException t) {
             r = new ReturnImpl<HumansPrivateLocation>(t, READ_HUMANS_PRIVATE_LOCATION_FAILED, true);
         }
         return r;

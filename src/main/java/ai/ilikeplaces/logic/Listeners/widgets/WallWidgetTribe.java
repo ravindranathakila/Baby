@@ -3,6 +3,8 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.SEE;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.etc.HumanIdFace;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.people.People;
 import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;

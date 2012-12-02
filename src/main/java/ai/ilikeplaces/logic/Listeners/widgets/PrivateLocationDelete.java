@@ -2,16 +2,15 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
-import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
@@ -96,7 +95,7 @@ abstract public class PrivateLocationDelete extends AbstractWidgetListener {
             SetLocationMap:
             {
                 final GeoCoord gc = new GeoCoord();
-                gc.setObj(r.returnValue().getPrivateLocationLatitude() , r.returnValue().getPrivateLocationLongitude());
+                gc.setObj(r.returnValue().getPrivateLocationLatitude(), r.returnValue().getPrivateLocationLongitude());
                 gc.validateThrow();
 
                 $$(privateLocationDeleteLocationMap).setAttribute(MarkupTag.IMG.src(),

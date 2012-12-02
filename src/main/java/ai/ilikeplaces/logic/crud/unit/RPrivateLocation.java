@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
@@ -42,7 +43,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     @Override
-    public PrivateLocation doRPrivateLocationAsAny(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateLocation doRPrivateLocationAsAny(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).refresh();
         //final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -68,14 +69,14 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateLocation doRPrivateLocationAsSystem(final Long privateLocationId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateLocation doRPrivateLocationAsSystem(final Long privateLocationId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         return eager ? privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).refresh() :
-               privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
+                privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId);
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     @Override
-    public boolean doRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {
+    public boolean doRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
 //        return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationOwners()
 //                .contains(humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId));
         return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).refresh().getPrivateLocationOwners()
@@ -84,7 +85,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     @Override
-    public boolean doRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {
+    public boolean doRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
 //        return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).getPrivateLocationViewers()
 //                .contains(humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId));
         return privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).refresh().getPrivateLocationViewers()
@@ -93,7 +94,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     @Override
-    public boolean doRPrivateLocationIsViewerOrOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {
+    public boolean doRPrivateLocationIsViewerOrOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final PrivateLocation pl = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).refresh();
         return pl.getPrivateLocationViewers()
                 .contains(humanCrudServiceLocal_.findBadly(Human.class, humanId)) ||
@@ -103,7 +104,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).refresh();
         // final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -123,7 +124,7 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final PrivateLocation privateLocation_ = privateLocationCrudServiceLocal_.findBadly(PrivateLocation.class, privateLocationId).refresh();
 //        final HumansPrivateLocation humansPrivateLocation_ = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -151,13 +152,13 @@ public class RPrivateLocation extends AbstractSLBCallbacks implements RPrivateLo
 
         return privateLocationCrudServiceLocal_
                 .findWithNamedQuery(PrivateLocation.FindAllPrivateLocationsByBounds,
-                                    QueryParameter
-                                            .newInstance()
-                                            .add(PrivateLocation.PrivateLocationLatitudeSouth, PrivateLocationLatitudeSouth)
-                                            .add(PrivateLocation.PrivateLocationLatitudeNorth, PrivateLocationLatitudeNorth)
-                                            .add(PrivateLocation.PrivateLocationLongitudeWest, PrivateLocationLongitudeWest)
-                                            .add(PrivateLocation.PrivateLocationLongitudeEast, PrivateLocationLongitudeEast)
-                                            .parameters());
+                        QueryParameter
+                                .newInstance()
+                                .add(PrivateLocation.PrivateLocationLatitudeSouth, PrivateLocationLatitudeSouth)
+                                .add(PrivateLocation.PrivateLocationLatitudeNorth, PrivateLocationLatitudeNorth)
+                                .add(PrivateLocation.PrivateLocationLongitudeWest, PrivateLocationLongitudeWest)
+                                .add(PrivateLocation.PrivateLocationLongitudeEast, PrivateLocationLongitudeEast)
+                                .parameters());
     }
 }
 

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.entities.RefreshSpec;
 import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.Return;

@@ -2,9 +2,9 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -25,7 +25,7 @@ public interface RPrivateEventLocal {
      * @return
      * @throws DBFetchDataException
      */
-    public PrivateEvent rPrivateEventBadly(long privateEventId) throws DBFetchDataException;
+    public PrivateEvent rPrivateEventBadly(long privateEventId) throws DBFetchDataException, DBRefreshDataException;
 
 
     /**
@@ -35,7 +35,7 @@ public interface RPrivateEventLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public PrivateEvent doRPrivateEventAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateEvent doRPrivateEventAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * Returns an un-refreshed {@link java.awt.event.PaintEvent}
@@ -46,7 +46,7 @@ public interface RPrivateEventLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public PrivateEvent doRPrivateEventBasicAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateEvent doRPrivateEventBasicAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param privateEventId
@@ -55,7 +55,7 @@ public interface RPrivateEventLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public PrivateEvent doRPrivateEventAsSystem(final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateEvent doRPrivateEventAsSystem(final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -64,7 +64,7 @@ public interface RPrivateEventLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public boolean doRPrivateEventIsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
+    public boolean doRPrivateEventIsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -73,7 +73,7 @@ public interface RPrivateEventLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public boolean doRPrivateEventIsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
+    public boolean doRPrivateEventIsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -82,7 +82,7 @@ public interface RPrivateEventLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -91,7 +91,7 @@ public interface RPrivateEventLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param privateLocationId
@@ -99,7 +99,7 @@ public interface RPrivateEventLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public List<PrivateEvent> doDirtyRPrivateEventsByPrivateLocationAsSystem(final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
+    public List<PrivateEvent> doDirtyRPrivateEventsByPrivateLocationAsSystem(final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param latitudeSouth horizontal bottom of bounding box
@@ -112,7 +112,7 @@ public interface RPrivateEventLocal {
             final double latitudeSouth,
             final double latitudeNorth,
             final double longitudeWest,
-            final double longitudeEast) throws DBFetchDataException, DBDishonourCheckedException;
+            final double longitudeEast) throws DBFetchDataException, DBDishonourCheckedException, DBRefreshDataException;
 
     public List<PrivateEvent> doRPrivateEventsOfHuman(final String humanId);
 }

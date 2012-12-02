@@ -1,7 +1,9 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
+import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
+import ai.ilikeplaces.entities.etc.RefreshData;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -258,18 +260,17 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
     /**
      * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
      *
-     * @throws ai.ilikeplaces.exception.DBFetchDataException
-     *
+     * @throws DBRefreshDataException
      */
     @Override
-    public PrivateEvent refresh() throws DBFetchDataException {
+    public PrivateEvent refresh() throws DBRefreshDataException {
         try {
             this.getPrivateEventInvites().size();
             this.getPrivateEventOwners().size();
             this.getPrivateEventViewers().size();
             this.getPrivateEventRejects().size();
         } catch (final Exception e__) {
-            throw new DBFetchDataException(e__);
+            throw new DBRefreshDataException(e__);
         }
         return this;
     }

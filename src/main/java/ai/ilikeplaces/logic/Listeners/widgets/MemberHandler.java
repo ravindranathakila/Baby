@@ -4,7 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.HumansFriend;
+import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;

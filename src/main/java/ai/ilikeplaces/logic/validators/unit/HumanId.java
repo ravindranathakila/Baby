@@ -1,16 +1,14 @@
 package ai.ilikeplaces.logic.validators.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.HumanEquals;
-import ai.ilikeplaces.entities.HumanEqualsFace;
-import ai.ilikeplaces.entities.HumanIdFace;
-import ai.ilikeplaces.entities.Mute;
+import ai.ilikeplaces.entities.etc.HumanEquals;
+import ai.ilikeplaces.entities.etc.HumanEqualsFace;
+import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.util.RefObj;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.IsInvariant;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.NotNull;
-import net.sf.oval.exception.ConstraintsViolatedException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -58,7 +56,7 @@ public class HumanId extends RefObj<String> implements HumanEqualsFace, HumanIdF
 
     @Override
     public void setHumanId(final String humanId__) {
-       super.setObj(humanId__);
+        super.setObj(humanId__);
     }
 
 
@@ -76,7 +74,7 @@ public class HumanId extends RefObj<String> implements HumanEqualsFace, HumanIdF
             final HumanEqualsFace that = (HumanEqualsFace) o;
             return !(this.getHumanId() == null || that.getHumanId() == null) && this.getHumanId().equals(that.getHumanId());
         } else {
-            return HumanEquals.staticMatchHumanId(this,o);
+            return HumanEquals.staticMatchHumanId(this, o);
         }
     }
 }

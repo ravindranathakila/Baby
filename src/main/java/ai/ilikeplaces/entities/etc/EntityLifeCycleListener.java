@@ -1,9 +1,6 @@
-package ai.ilikeplaces.entities;
+package ai.ilikeplaces.entities.etc;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.Obj;
-import ai.ilikeplaces.util.RefObj;
 
 import javax.persistence.*;
 
@@ -13,45 +10,23 @@ import javax.persistence.*;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class EntityLifeCycleListener {
 
-    public static final RefObj<Boolean> PRE_ACTIONS = new Obj<Boolean>(true) {
+    public static boolean PRE_ACTIONS = false;
 
-        @Override
-        public void setObj(final Boolean status) {
-            if (status != null) {
-                obj = status;
-            } else {
-                throw new SecurityException("SORRY! YOU CANNOT ASSIGN A NULL.");
-            }
-        }
-    };
-
-    public static final RefObj<Boolean> POST_ACTIONS = new Obj<Boolean>(true) {
-
-        @Override
-        public void setObj(final Boolean status) {
-            if (status != null) {
-                obj = status;
-            } else {
-                throw new SecurityException("SORRY! YOU CANNOT ASSIGN A NULL.");
-            }
-        }
-    };
+    public static boolean POST_ACTIONS = false;
 
     public EntityLifeCycleListener() {
     }
 
     @PrePersist
     public void PrePersist(final Object entity) {
-        if (PRE_ACTIONS.getObj()) {
-            Loggers.DEBUG.debug("PrePersist:{}.", entity);
+        if (PRE_ACTIONS) {
             System.out.println("PrePersist:" + entity);//For Hazelcast until proper logging is done
         }
     }
 
     @PostPersist
     public void PostPersist(final Object entity) {
-        if (POST_ACTIONS.getObj()) {
-            Loggers.DEBUG.debug("PostPersist:{}.", entity);
+        if (POST_ACTIONS) {
             System.out.println("PostPersist:" + entity);//For Hazelcast until proper logging is done
         }
 
@@ -59,16 +34,14 @@ final public class EntityLifeCycleListener {
 
     @PostLoad
     public void PostLoad(final Object entity) {
-        if (POST_ACTIONS.getObj()) {
-            Loggers.DEBUG.debug("PostLoad:{}.", entity);
+        if (POST_ACTIONS) {
             System.out.println("PostLoad:" + entity);//For Hazelcast until proper logging is done
         }
     }
 
     @PreUpdate
     public void PreUpdate(final Object entity) {
-        if (PRE_ACTIONS.getObj()) {
-            Loggers.DEBUG.debug("PreUpdate:{}.", entity);
+        if (PRE_ACTIONS) {
             System.out.println("PreUpdate:" + entity);//For Hazelcast until proper logging is done
         }
 
@@ -76,8 +49,7 @@ final public class EntityLifeCycleListener {
 
     @PostUpdate
     public void PostUpdate(final Object entity) {
-        if (POST_ACTIONS.getObj()) {
-            Loggers.DEBUG.debug("PostUpdate:{}.", entity);
+        if (POST_ACTIONS) {
             System.out.println("PostUpdate:" + entity);//For Hazelcast until proper logging is done
         }
 
@@ -85,16 +57,14 @@ final public class EntityLifeCycleListener {
 
     @PreRemove
     public void PreRemove(final Object entity) {
-        if (PRE_ACTIONS.getObj()) {
-            Loggers.DEBUG.debug("PreRemove:{}.", entity);
+        if (PRE_ACTIONS) {
             System.out.println("PreRemove:" + entity);//For Hazelcast until proper logging is done
         }
     }
 
     @PostRemove
     public void PostRemove(final Object entity) {
-        if (POST_ACTIONS.getObj()) {
-            Loggers.DEBUG.debug("PostRemove:{}.", entity);
+        if (POST_ACTIONS) {
             System.out.println("PostRemove:" + entity);//For Hazelcast until proper logging is done
         }
     }

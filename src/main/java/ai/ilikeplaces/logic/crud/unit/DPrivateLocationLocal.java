@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 
 import javax.ejb.Local;
@@ -15,6 +16,6 @@ import javax.ejb.Local;
 @Local
 public interface DPrivateLocationLocal {
 
-    public boolean doNTxDPrivateLocation(final String humanId, final long privateLocationId) throws DBFetchDataException;
+    public boolean doNTxDPrivateLocation(final String humanId, final long privateLocationId) throws DBFetchDataException, DBRefreshDataException;
 
 }

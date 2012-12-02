@@ -1,8 +1,9 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
+import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
@@ -20,7 +21,7 @@ import javax.ejb.Local;
 @Local
 public interface UPrivateEventLocal {
 
-    public PrivateEvent doUPrivateEventData(final String humanId__, final long privateEventId__, final String privateEventName__, final String privateEventInfo__, final String privateEventStartDate__, final String privateEventE) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateEvent doUPrivateEventData(final String humanId__, final long privateEventId__, final String privateEventName__, final String privateEventInfo__, final String privateEventStartDate__, final String privateEventE) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     public PrivateEvent doUPrivateEventAddOwner(final String adder__, final long privateEventId__, final HumansFriend addeee__) throws DBDishonourCheckedException;
 

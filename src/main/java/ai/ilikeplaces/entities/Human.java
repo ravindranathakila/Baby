@@ -1,6 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;

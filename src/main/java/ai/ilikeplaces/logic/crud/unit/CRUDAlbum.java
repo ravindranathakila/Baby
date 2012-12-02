@@ -3,8 +3,9 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.PrivatePhoto;
-import ai.ilikeplaces.entities.RefreshException;
-import ai.ilikeplaces.entities.RefreshSpec;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
+import ai.ilikeplaces.entities.etc.RefreshException;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
@@ -80,7 +81,7 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public Album doUAlbumOfPrivateEventAddEntry(final long privateEventId, final String humanId, final String photoUrl) throws DBDishonourCheckedException, DBFetchDataException {
+    public Album doUAlbumOfPrivateEventAddEntry(final long privateEventId, final String humanId, final String photoUrl) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
 
 
         /**
@@ -121,7 +122,7 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Deprecated
-    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException {
+    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         return eager ?
                 rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, false).getPrivateEventAlbum().refresh() :
                 rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, false).getPrivateEventAlbum();
@@ -136,7 +137,7 @@ public class CRUDAlbum extends AbstractSLBCallbacks implements CRUDAlbumLocal {
      */
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException {
+    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         try {
             return rPrivateEventLocal_.doRPrivateEventAsSystem(privateEventId, false).getPrivateEventAlbum().refresh(refreshSpec);
         } catch (final RefreshException e) {

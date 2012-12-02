@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselCriteria;
 import ai.ilikeplaces.logic.cdn.CDNAlbumTribe;

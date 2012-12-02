@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Msg;
-import ai.ilikeplaces.entities.RefreshSpec;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.util.Obj;

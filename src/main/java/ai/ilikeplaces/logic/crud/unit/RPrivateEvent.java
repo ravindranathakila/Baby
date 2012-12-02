@@ -5,6 +5,7 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
@@ -48,7 +49,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public PrivateEvent doRPrivateEventAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateEvent doRPrivateEventAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final PrivateEvent privateEvent_ = rPrivateEventBadly(privateEventId);
 
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -66,13 +67,13 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public PrivateEvent rPrivateEventBadly(long privateEventId) throws DBFetchDataException {
+    public PrivateEvent rPrivateEventBadly(long privateEventId) throws DBFetchDataException, DBRefreshDataException {
         return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).refresh();
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public PrivateEvent doRPrivateEventBasicAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateEvent doRPrivateEventBasicAsAny(final String humanId, final long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final PrivateEvent privateEvent_ = rPrivateEventBadly(privateEventId);
 
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -89,7 +90,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public PrivateEvent doRPrivateEventAsSystem(final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateEvent doRPrivateEventAsSystem(final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         return eager ?
                 rPrivateEventBadly(privateEventId) :
                 privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId);
@@ -97,7 +98,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public boolean doRPrivateEventIsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
+    public boolean doRPrivateEventIsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
 //        return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).getPrivateEventOwners()
 //                .contains(humansPrivateEventCrudServiceLocal_.findBadly(HumansPrivateEvent.class, humanId));
         return rPrivateEventBadly(privateEventId).getPrivateEventOwners()
@@ -106,7 +107,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     @Override
-    public boolean doRPrivateEventIsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
+    public boolean doRPrivateEventIsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
 //        return privateEventCrudServiceLocal_.findBadly(PrivateEvent.class, privateEventId).getPrivateEventViewers()
 //                .contains(humansPrivateEventCrudServiceLocal_.findBadly(HumansPrivateEvent.class, humanId));
         return rPrivateEventBadly(privateEventId).getPrivateEventViewers()
@@ -115,7 +116,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateEvent doRPrivateEventAsViewer(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId).refresh();
 //        final HumansPrivateEvent humansPrivateEvent_ = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -135,7 +136,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateEvent doRPrivateEventAsOwner(final String humanId, final Long privateEventId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId).refresh();
 //        final HumansPrivateEvent humansPrivateEvent_ = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
         final Human human = humanCrudServiceLocal_.findBadly(Human.class, humanId);
@@ -155,8 +156,8 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public List<PrivateEvent> doRPrivateEventsOfHuman(final String humanId){
-       final HumansPrivateEvent humansPrivateEvent_ = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
+    public List<PrivateEvent> doRPrivateEventsOfHuman(final String humanId) {
+        final HumansPrivateEvent humansPrivateEvent_ = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, humanId);
 
         humansPrivateEvent_.getPrivateEventsViewed().size();
 
@@ -165,7 +166,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public List<PrivateEvent> doDirtyRPrivateEventsByPrivateLocationAsSystem(final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException {
+    public List<PrivateEvent> doDirtyRPrivateEventsByPrivateLocationAsSystem(final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
 
         final PrivateLocation privateLocation__ = rPrivateLocationLocal_.doRPrivateLocationAsSystem(privateLocationId, true);
 
@@ -182,7 +183,7 @@ public class RPrivateEvent extends AbstractSLBCallbacks implements RPrivateEvent
      * @return the list of private events inside a specific bounding box
      */
     @Override
-    public List<PrivateEvent> doRPrivateEventsByBoundingBoxAsSystem(final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast) throws DBFetchDataException, DBDishonourCheckedException {
+    public List<PrivateEvent> doRPrivateEventsByBoundingBoxAsSystem(final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast) throws DBFetchDataException, DBDishonourCheckedException, DBRefreshDataException {
         final List<PrivateEvent> returnVal = new ArrayList<PrivateEvent>();
         final List<PrivateLocation> locationsWithinBox = rPrivateLocationLocal_.doRPrivateLocationsAsGlobal(latitudeSouth, latitudeNorth, longitudeWest, longitudeEast);
 

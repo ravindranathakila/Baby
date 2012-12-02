@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.entities.RefreshSpec;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.ULocationLocal;

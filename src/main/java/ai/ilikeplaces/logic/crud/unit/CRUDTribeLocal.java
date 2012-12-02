@@ -1,7 +1,11 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.Album;
+import ai.ilikeplaces.entities.HumansTribe;
+import ai.ilikeplaces.entities.Tribe;
+import ai.ilikeplaces.entities.etc.RefreshException;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 
 import javax.ejb.Local;
 import java.util.List;

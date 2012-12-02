@@ -1,18 +1,18 @@
-package ai.ilikeplaces.entities;
+package ai.ilikeplaces.entities.etc;
 
 import ai.ilikeplaces.doc.License;
 
 /**
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
- * Date: Jan 3, 2010
- * Time: 4:15:31 PM
+ * Date: Jan 21, 2010
+ * Time: 8:35:05 PM
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public interface HumanIdFace {
+public interface Clearance {
 
-    public String getHumanId();
+    public Long getClearance();
 
-    public void setHumanId(final String humanId__);
+    public void setClearance(final Long clearance);
 }

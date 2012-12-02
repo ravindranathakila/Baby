@@ -1,4 +1,4 @@
-package ai.ilikeplaces.entities;
+package ai.ilikeplaces.entities.etc;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;

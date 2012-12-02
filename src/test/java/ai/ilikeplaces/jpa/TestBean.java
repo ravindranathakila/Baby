@@ -1,6 +1,6 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.etc.*;
 
 import javax.persistence.Transient;
 import java.util.List;

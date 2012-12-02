@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.rbs.RBGet;
@@ -36,7 +37,7 @@ public class DPrivateLocation extends AbstractSLBCallbacks implements DPrivateLo
     @NOTE(note = "Complex Logic", mustsee = "logic.conf.1")
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
-    public boolean doNTxDPrivateLocation(final String humanId, final long privateLocationId) throws DBFetchDataException {
+    public boolean doNTxDPrivateLocation(final String humanId, final long privateLocationId) throws DBFetchDataException, DBRefreshDataException {
 
         boolean returnVal = false;
 
@@ -51,7 +52,7 @@ public class DPrivateLocation extends AbstractSLBCallbacks implements DPrivateLo
                 if (privateLocationOwners.size() == 1) {
                     privateLocationCrudServiceLocal_.delete(PrivateLocation.class, privateLocation.getPrivateLocationId());
                     returnVal = true;
-                }else{
+                } else {
                     List<HumansPrivateLocation> privateLocationViewers = privateLocation.getPrivateLocationViewers();
                     privateLocationOwners.remove(humansPrivateLocation);
                     privateLocationViewers.remove(humansPrivateLocation);

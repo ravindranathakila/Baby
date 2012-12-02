@@ -1,7 +1,6 @@
-package ai.ilikeplaces.entities;
+package ai.ilikeplaces.entities.etc;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.exception.DBFetchDataException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,8 +15,8 @@ public interface RefreshData<T> {
      * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
      *
      * @return T
-     * @throws DBFetchDataException in case the entity fails to refresh something inside it
+     * @throws DBRefreshDataException in case the entity fails to refresh something inside it
      */
     @Deprecated
-    public T refresh() throws DBFetchDataException;
+    public T refresh() throws DBRefreshDataException;
 }

@@ -1,6 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.entities.Tribe;
+import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
@@ -80,7 +83,7 @@ public class TribeWidget extends AbstractWidgetListener<TribeWidgetCriteria> {
 
         SetTribeName:
         {
-           $$(TribeWidgetIds.tribeHomeName).setTextContent(criteria.getTribe().getTribeName());
+            $$(TribeWidgetIds.tribeHomeName).setTextContent(criteria.getTribe().getTribeName());
         }
 
         setTribeStory:

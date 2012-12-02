@@ -1,7 +1,11 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.Album;
+import ai.ilikeplaces.entities.Msg;
+import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.etc.HumansFriend;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.RefObj;

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.HumanEquals;
+import ai.ilikeplaces.entities.etc.HumanEquals;
 
 /**
  * Created by IntelliJ IDEA.

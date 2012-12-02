@@ -2,9 +2,10 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
+import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.exception.*;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -52,7 +53,7 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doUPrivateLocationAddOwner(final String adder, final long privateLocationId__, final HumansFriend addeee) throws NoPrivilegesException, DBFetchDataException {
+    public PrivateLocation doUPrivateLocationAddOwner(final String adder, final long privateLocationId__, final HumansFriend addeee) throws NoPrivilegesException, DBFetchDataException, DBRefreshDataException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee.getHumanId())) {
             throw new NotFriendsException(adder, addeee.getHumanId());
@@ -94,7 +95,7 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doUPrivateLocationRemoveOwner(final String remover, final long privateLocationId__, final HumansFriend removee) throws NoPrivilegesException, DBFetchDataException {
+    public PrivateLocation doUPrivateLocationRemoveOwner(final String remover, final long privateLocationId__, final HumansFriend removee) throws NoPrivilegesException, DBFetchDataException, DBRefreshDataException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removee.getHumanId())) {
             throw new NotFriendsException(remover, removee.getHumanId());
@@ -135,7 +136,7 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public PrivateLocation doUPrivateLocationAddViewer(final String adder, final long privateLocationId__, final HumansFriend addeee) throws NoPrivilegesException, DBFetchDataException {
+    public PrivateLocation doUPrivateLocationAddViewer(final String adder, final long privateLocationId__, final HumansFriend addeee) throws NoPrivilegesException, DBFetchDataException, DBRefreshDataException {
 
 //        if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addee.getHumanId())) {
 //            throw new NotFriendsException(adder, addee.getHumanId());
@@ -178,7 +179,7 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public PrivateLocation doUPrivateLocationAddViewer(final String adder, final long privateLocationId__, final String addeee) throws NoPrivilegesException, DBFetchDataException {
+    public PrivateLocation doUPrivateLocationAddViewer(final String adder, final long privateLocationId__, final String addeee) throws NoPrivilegesException, DBFetchDataException, DBRefreshDataException {
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(adder, addeee)) {
             throw new NotFriendsException(adder, addeee);
         }
@@ -220,7 +221,7 @@ public class UPrivateLocation extends AbstractSLBCallbacks implements UPrivateLo
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doUPrivateLocationRemoveViewer(final String remover, final long privateLocationId__, final HumansFriend removeee) throws DBDishonourCheckedException, DBFetchDataException {
+    public PrivateLocation doUPrivateLocationRemoveViewer(final String remover, final long privateLocationId__, final HumansFriend removeee) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
 
         if (!uHumansNetPeopleLocal.doDirtyIsHumansNetPeople(remover, removeee.getHumanId())) {
             throw new NotFriendsException(remover, removeee.getHumanId());

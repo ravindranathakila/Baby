@@ -2,7 +2,13 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.Album;
+import ai.ilikeplaces.entities.Msg;
+import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
+import ai.ilikeplaces.entities.etc.HumansFriend;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
 import ai.ilikeplaces.logic.crud.unit.*;
@@ -84,6 +90,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<PrivateEvent>(cPrivateEventLocal_.doNTxCPrivateEvent(humanId, privateLocationId, privateEventName, privateEventInfo, startDate, endDate), "Save private event Successful!");
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, SAVE_PRIVATE_EVENT_FAILED, true);
+        } catch (final DBRefreshDataException t) {
+            r = new ReturnImpl<PrivateEvent>(t, SAVE_PRIVATE_EVENT_FAILED, true);
         }
         return r;
 
@@ -115,6 +123,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             }
             r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddOwner(owner__.getObj(), privateEventId__, friend__), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+        } catch (final DBRefreshDataException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
         return r;
@@ -155,6 +165,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddViewer(owner__.getObj(), privateEventId__, friend__), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+        } catch (final DBRefreshDataException t) {
+            r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
         return r;
     }
@@ -193,6 +205,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             }
             r = new ReturnImpl<PrivateEvent>(uPrivateEventLocal_.doUPrivateEventAddInvite(owner__.getObj(), privateEventId__, friend__), UPDATE_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
+        } catch (final DBRefreshDataException t) {
             r = new ReturnImpl<PrivateEvent>(t, UPDATE_PRIVATE_EVENT_FAILED, true);
         }
         return r;
@@ -351,6 +365,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal_.doRPrivateEventAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, VIEW_PRIVATE_EVENT_FAILED, true);
+        } catch (final DBRefreshDataException t) {
+            r = new ReturnImpl<PrivateEvent>(t, VIEW_PRIVATE_EVENT_FAILED, true);
         }
         return r;
 
@@ -377,6 +393,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<PrivateEvent>(rPrivateEventLocal_.doRPrivateEventBasicAsAny(humanId, privateEventId), VIEW_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<PrivateEvent>(t, VIEW_PRIVATE_EVENT_FAILED, true);
+        } catch (final DBRefreshDataException t) {
+            r = new ReturnImpl<PrivateEvent>(t, VIEW_PRIVATE_EVENT_FAILED, true);
         }
         return r;
 
@@ -390,6 +408,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<Boolean>(rPrivateEventLocal_.doRPrivateEventIsOwner(humanId.getObjectAsValid(), privateEventId), CHECK_OWNERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_OWNERSHIP_OF_PRIVATE_EVENT_FAILED, true);
+        } catch (final DBRefreshDataException t) {
+            r = new ReturnImpl<Boolean>(t, CHECK_OWNERSHIP_OF_PRIVATE_EVENT_FAILED, true);
         }
         return r;
     }
@@ -401,6 +421,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         try {
             r = new ReturnImpl<Boolean>(rPrivateEventLocal_.doRPrivateEventIsViewer(humanId.getObjectAsValid(), privateEventId), CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Boolean>(t, CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_FAILED, true);
+        } catch (final DBRefreshDataException t) {
             r = new ReturnImpl<Boolean>(t, CHECK_VIEWERSHIP_OF_PRIVATE_EVENT_FAILED, true);
         }
         return r;
@@ -426,6 +448,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<Album>(crudAlbumLocal_.doRAlbumByPrivateEvent(operator__.getObjectAsValid(), privateEventId__, true), READ_ALBUM_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<Album>(t, READ_ALBUM_FAILED, true);
+        } catch (final DBRefreshDataException t) {
+            r = new ReturnImpl<Album>(t, READ_ALBUM_FAILED, true);
         }
         return r;
     }
@@ -436,7 +460,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         Return<Album> r;
         try {
             r = new ReturnImpl<Album>(crudAlbumLocal_.doRAlbumByPrivateEvent(operator__.getObjectAsValid(), privateEventId__, refreshSpec), READ_ALBUM_SUCCESSFUL);
-        } catch (final AbstractEjbApplicationException t) {
+        } catch (final Throwable t) {
             r = new ReturnImpl<Album>(t, READ_ALBUM_FAILED, true);
         }
         return r;
@@ -448,6 +472,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         try {
             r = new ReturnImpl<Album>(crudAlbumLocal_.doUAlbumOfPrivateEventAddEntry(privateEventId__, operator__.getObjectAsValid(), cdnFileName.getObjectAsValid()), ADD_PHOTO_TO_ALBUM_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<Album>(t, ADD_PHOTO_TO_ALBUM_FAILED, true);
+        } catch (final DBRefreshDataException t) {
             r = new ReturnImpl<Album>(t, ADD_PHOTO_TO_ALBUM_FAILED, true);
         }
         return r;
@@ -461,6 +487,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
             r = new ReturnImpl<List<PrivateEvent>>(rPrivateEventLocal_.doRPrivateEventsByBoundingBoxAsSystem(latitudeSouth, latitudeNorth, longitudeWest, longitudeEast), FETCH_BOUNDED_EVENTS_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
             r = new ReturnImpl<List<PrivateEvent>>(t, FETCH_BOUNDED_EVENTS_FAILED, true);
+        } catch (final DBRefreshDataException t) {
+            r = new ReturnImpl<List<PrivateEvent>>(t, FETCH_BOUNDED_EVENTS_FAILED, true);
         }
         return r;
     }
@@ -472,6 +500,8 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         try {
             r = new ReturnImpl<List<PrivateEvent>>(rPrivateEventLocal_.doRPrivateEventsByBoundingBoxAsSystem(latitudeSouth, latitudeNorth, longitudeWest, longitudeEast), FETCH_BOUNDED_EVENTS_SUCCESSFUL);
         } catch (final AbstractEjbApplicationException t) {
+            r = new ReturnImpl<List<PrivateEvent>>(t, FETCH_BOUNDED_EVENTS_FAILED, true);
+        } catch (final DBRefreshDataException t) {
             r = new ReturnImpl<List<PrivateEvent>>(t, FETCH_BOUNDED_EVENTS_FAILED, true);
         }
         return r;

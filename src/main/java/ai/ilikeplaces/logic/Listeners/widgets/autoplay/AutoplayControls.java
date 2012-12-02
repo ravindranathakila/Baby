@@ -1,6 +1,10 @@
 package ai.ilikeplaces.logic.Listeners.widgets.autoplay;
 
-import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;

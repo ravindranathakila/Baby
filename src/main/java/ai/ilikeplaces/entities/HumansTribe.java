@@ -2,6 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
+import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.crud.DB;

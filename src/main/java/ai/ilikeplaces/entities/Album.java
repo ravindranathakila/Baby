@@ -4,7 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
-import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.entities.etc.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -146,17 +146,16 @@ public class Album implements RefreshData<Album>, Refreshable<Album>, Serializab
     /**
      * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
      *
-     * @throws ai.ilikeplaces.exception.DBFetchDataException
-     *
+     * @throws DBRefreshDataException
      */
     @Override
-    public Album refresh() throws DBFetchDataException {
+    public Album refresh() throws DBRefreshDataException {
         try {
             this.getAlbumPhotos().size();
             this.getAlbumOwners().size();
             this.getAlbumVisitors().size();
         } catch (final Exception e) {
-            throw new DBFetchDataException(e);
+            throw new DBRefreshDataException(e);
         }
         return this;
     }

@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.verify;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.entities.EntityLifeCycleListener;
+import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MethodParams;
@@ -53,8 +53,9 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("7. Verify that the first entry for location \"The Planet Earth\" was set");
         System.out.println("8. Configure tomcat from localhost to domain name, www.ilikeplaces.com");
 
-        EntityLifeCycleListener.POST_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
-        EntityLifeCycleListener.PRE_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
+        EntityLifeCycleListener.POST_ACTIONS = false;
+        EntityLifeCycleListener.PRE_ACTIONS = false;
+
         MethodTimer.DO_LOG.setObj(Loggers.DEBUG.isDebugEnabled());
         MethodParams.DO_LOG.setObj(Loggers.DEBUG.isDebugEnabled());
 
@@ -129,8 +130,8 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
         System.out.println("");
         System.out.println("SETTING PERSISTENCE LOGGING");
 
-        EntityLifeCycleListener.PRE_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
-        EntityLifeCycleListener.POST_ACTIONS.setObj(Loggers.DEBUG.isDebugEnabled());
+        EntityLifeCycleListener.PRE_ACTIONS = Loggers.DEBUG.isDebugEnabled();
+        EntityLifeCycleListener.POST_ACTIONS = Loggers.DEBUG.isDebugEnabled();
 
         MethodTimer.DO_LOG.setObjAsValid(Boolean.getBoolean(RBGet.globalConfig.getString("PROFILE_METHODS")));
 

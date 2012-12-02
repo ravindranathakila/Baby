@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 
@@ -26,7 +27,7 @@ public interface RPrivateLocationLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public PrivateLocation doRPrivateLocationAsAny(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateLocation doRPrivateLocationAsAny(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -35,7 +36,7 @@ public interface RPrivateLocationLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public boolean doRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
+    public boolean doRPrivateLocationIsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -44,7 +45,7 @@ public interface RPrivateLocationLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public boolean doRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
+    public boolean doRPrivateLocationIsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -53,7 +54,7 @@ public interface RPrivateLocationLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public boolean doRPrivateLocationIsViewerOrOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
+    public boolean doRPrivateLocationIsViewerOrOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -62,7 +63,7 @@ public interface RPrivateLocationLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateLocation doRPrivateLocationAsViewer(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -71,7 +72,7 @@ public interface RPrivateLocationLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateLocation doRPrivateLocationAsOwner(final String humanId, final Long privateLocationId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param PrivateLocationLatitudeSouth horizontal bottom of bounding box
@@ -87,12 +88,11 @@ public interface RPrivateLocationLocal {
             final Double PrivateLocationLongitudeEast);
 
     /**
-     *
      * @param privateLocationId
      * @param eager
      * @return
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public PrivateLocation doRPrivateLocationAsSystem(final Long privateLocationId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateLocation doRPrivateLocationAsSystem(final Long privateLocationId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 }

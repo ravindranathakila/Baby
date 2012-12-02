@@ -3,6 +3,8 @@ package ai.ilikeplaces.entities;
 import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc._bidirectional;
+import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
+import ai.ilikeplaces.entities.etc.HumanIdFace;
 
 import javax.persistence.*;
 import java.io.Serializable;

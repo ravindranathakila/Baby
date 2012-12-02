@@ -2,10 +2,8 @@ package ai.ilikeplaces.logic.Listeners.widgets.people;
 
 import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.entities.HumanIdFace;
-import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import org.itsnat.core.ItsNatServletRequest;

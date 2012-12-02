@@ -2,12 +2,11 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +35,7 @@ public class RHumansPrivateLocation extends AbstractSLBCallbacks implements RHum
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public HumansPrivateLocation doNTxRHumansPrivateLocation(String humanId) throws DBDishonourCheckedException, DBFetchDataException {
+    public HumansPrivateLocation doNTxRHumansPrivateLocation(String humanId) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final HumansPrivateLocation hpl = humansPrivateLocationCrudServiceLocal_.findBadly(HumansPrivateLocation.class, humanId).refresh();
         return hpl;
     }

@@ -4,8 +4,8 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
+import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.exception.DBException;
-import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.util.Return;
 
@@ -155,16 +155,16 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
     /**
      * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
      *
-     * @throws ai.ilikeplaces.exception.DBFetchDataException
+     * @throws ai.ilikeplaces.entities.etc.DBRefreshDataException
      *
      */
     @Override
-    public HumansPrivateLocation refresh() throws DBFetchDataException {
+    public HumansPrivateLocation refresh() throws DBRefreshDataException {
         try {
             this.getPrivateLocationsOwned().size();
             this.getPrivateLocationsViewed().size();
         } catch (final Exception e) {
-            throw new DBFetchDataException(e);
+            throw new DBRefreshDataException(e);
         }
         return this;
     }

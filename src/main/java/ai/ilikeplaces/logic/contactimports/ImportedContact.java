@@ -1,7 +1,6 @@
 package ai.ilikeplaces.logic.contactimports;
 
-import ai.ilikeplaces.entities.Human;
-import ai.ilikeplaces.entities.HumanEquals;
+import ai.ilikeplaces.entities.etc.HumanEquals;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 
 /**
@@ -25,6 +24,7 @@ public class ImportedContact extends HumanEquals {
         this.email = email;
         return this;
     }
+
     public ImportedContact setEmailR(final String email) {
         this.email = email;
         return this;
@@ -42,6 +42,7 @@ public class ImportedContact extends HumanEquals {
         this.fullName = fullName;
         return this;
     }
+
     public ImportedContact setFullNameR(final String fullName) {
         this.fullName = fullName;
         return this;

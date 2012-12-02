@@ -1,6 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
+import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.exception.PendingEqualsMethodException;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivatePhoto;
 import org.slf4j.LoggerFactory;

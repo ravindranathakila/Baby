@@ -1,8 +1,9 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
+import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
@@ -22,14 +23,14 @@ public interface UPrivateLocationLocal {
 
     public PrivateLocation doUPrivateLocationData(final String humanId__, final String privateLocationId__, final String privateLocationName__, final String privateLocationInfo__);
 
-    public PrivateLocation doUPrivateLocationAddOwner(final String adder__, final long privateLocationId__, final HumansFriend addeee__) throws NoPrivilegesException, DBFetchDataException;
+    public PrivateLocation doUPrivateLocationAddOwner(final String adder__, final long privateLocationId__, final HumansFriend addeee__) throws NoPrivilegesException, DBFetchDataException, DBRefreshDataException;
 
-    public PrivateLocation doUPrivateLocationRemoveOwner(final String remover__, final long privateLocationId__, final HumansFriend removeee__) throws NoPrivilegesException, DBFetchDataException;
+    public PrivateLocation doUPrivateLocationRemoveOwner(final String remover__, final long privateLocationId__, final HumansFriend removeee__) throws NoPrivilegesException, DBFetchDataException, DBRefreshDataException;
 
-    public PrivateLocation doUPrivateLocationAddViewer(final String adder__, final long privateLocationId__, final HumansFriend addeee__) throws NoPrivilegesException, DBFetchDataException;
+    public PrivateLocation doUPrivateLocationAddViewer(final String adder__, final long privateLocationId__, final HumansFriend addeee__) throws NoPrivilegesException, DBFetchDataException, DBRefreshDataException;
 
-    public PrivateLocation doUPrivateLocationAddViewer(final String adder__, final long privateLocationId__, final String addeee__) throws NoPrivilegesException, DBFetchDataException;
+    public PrivateLocation doUPrivateLocationAddViewer(final String adder__, final long privateLocationId__, final String addeee__) throws NoPrivilegesException, DBFetchDataException, DBRefreshDataException;
 
-    public PrivateLocation doUPrivateLocationRemoveViewer(final String remover__, final long privateLocationId__, final HumansFriend removeee__) throws DBDishonourCheckedException, DBFetchDataException;
+    public PrivateLocation doUPrivateLocationRemoveViewer(final String remover__, final long privateLocationId__, final HumansFriend removeee__) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
 }

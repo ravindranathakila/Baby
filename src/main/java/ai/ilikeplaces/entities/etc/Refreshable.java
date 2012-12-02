@@ -1,4 +1,4 @@
-package ai.ilikeplaces.entities;
+package ai.ilikeplaces.entities.etc;
 
 /**
  * This interface is to be implemented by entities containing {@link java.util.Collection}s.

@@ -2,8 +2,8 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.entities.RefreshException;
-import ai.ilikeplaces.entities.RefreshSpec;
+import ai.ilikeplaces.entities.etc.RefreshException;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;

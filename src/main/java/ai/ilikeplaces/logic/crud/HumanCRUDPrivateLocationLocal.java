@@ -1,15 +1,12 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.entities.HumansFriend;
 import ai.ilikeplaces.entities.PrivateLocation;
-import ai.ilikeplaces.logic.validators.unit.GeoCoord;
+import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.validators.unit.VDouble;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
-import com.google.gdata.data.geo.impl.W3CPoint;
 
-import javax.ejb.Local;
 import javax.ejb.Remote;
 
 

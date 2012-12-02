@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Location;
-import ai.ilikeplaces.entities.RefreshSpec;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.DBFetchDataException;
 
 import javax.ejb.Local;

@@ -4,7 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
-import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.entities.etc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -215,11 +215,11 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
     /**
      * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
      *
-     * @throws ai.ilikeplaces.exception.DBFetchDataException
+     * @throws ai.ilikeplaces.entities.etc.DBRefreshDataException
      *
      */
     @Override
-    public PrivateLocation refresh() throws DBFetchDataException {
+    public PrivateLocation refresh() throws DBRefreshDataException {
         this.getPrivateEvents().size();
         this.getPrivateLocationOwners().size();
         this.getPrivateLocationViewers().size();

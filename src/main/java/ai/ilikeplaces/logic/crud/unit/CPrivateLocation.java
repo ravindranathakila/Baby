@@ -4,6 +4,7 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -36,7 +37,7 @@ public class CPrivateLocation extends AbstractSLBCallbacks implements CPrivateLo
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo) throws DBFetchDataException {
+    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo) throws DBFetchDataException, DBRefreshDataException {
         final Human owner = humanCrudServiceLocal_.findBadly(Human.class, humanId);
 
         final PrivateLocation privateLocation = new PrivateLocation();
@@ -61,7 +62,7 @@ public class CPrivateLocation extends AbstractSLBCallbacks implements CPrivateLo
 
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
-    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo, final Double latitude, final Double longitude) throws DBFetchDataException {
+    public PrivateLocation doNTxCPrivateLocation(final String humanId, final String locationName, final String locationInfo, final Double latitude, final Double longitude) throws DBFetchDataException, DBRefreshDataException {
         final Human owner = humanCrudServiceLocal_.findBadly(Human.class, humanId);
 
         final PrivateLocation privateLocation = new PrivateLocation();

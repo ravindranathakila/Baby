@@ -2,18 +2,18 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.OK;
-import ai.ilikeplaces.doc.SEE;
 import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.Human;
+import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.entities.HumansPrivateEvent;
+import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
-import ai.ilikeplaces.logic.Listeners.widgets.people.People;
-import ai.ilikeplaces.logic.Listeners.widgets.people.PeopleCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import org.itsnat.core.ItsNatServletRequest;
@@ -26,8 +26,6 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static ai.ilikeplaces.servlets.Controller.Page.*;

@@ -1,8 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets.people;
 
-import ai.ilikeplaces.entities.HumanIdFace;
-import ai.ilikeplaces.entities.PrivatePhoto;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.ilikeplaces.entities.etc.HumanIdFace;
 
 import java.util.ArrayList;
 import java.util.List;

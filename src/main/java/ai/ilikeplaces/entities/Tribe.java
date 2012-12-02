@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
-import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.util.ExceptionCache;
 
 import javax.persistence.*;
@@ -175,11 +175,10 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
      * Calling this method will refresh any lazily fetched lists in this entity making them availabe for use.
      *
      * @return T
-     * @throws ai.ilikeplaces.exception.DBFetchDataException
-     *          in case the entity fails to refresh something inside it
+     * @throws DBRefreshDataException in case the entity fails to refresh something inside it
      */
     @Override
-    public Tribe refresh() throws DBFetchDataException {
+    public Tribe refresh() throws DBRefreshDataException {
         this.getTribeMembers().size();
         return this;
     }

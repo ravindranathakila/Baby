@@ -2,8 +2,9 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.entities.Album;
-import ai.ilikeplaces.entities.RefreshException;
-import ai.ilikeplaces.entities.RefreshSpec;
+import ai.ilikeplaces.entities.etc.DBRefreshDataException;
+import ai.ilikeplaces.entities.etc.RefreshException;
+import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 
@@ -24,7 +25,7 @@ public interface CRUDAlbumLocal {
      * @throws DBDishonourCheckedException
      * @throws DBFetchDataException
      */
-    public Album doUAlbumOfPrivateEventAddEntry(final long privateEventId, final String humanId, final String photoUrl) throws DBDishonourCheckedException, DBFetchDataException;
+    public Album doUAlbumOfPrivateEventAddEntry(final long privateEventId, final String humanId, final String photoUrl) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
     /**
      * @param humanId
@@ -34,7 +35,7 @@ public interface CRUDAlbumLocal {
      * @throws DBDishonourCheckedException
      */
     @Deprecated
-    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException;
+    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final boolean eager) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
 
     /**
@@ -44,7 +45,7 @@ public interface CRUDAlbumLocal {
      * @return
      * @throws DBDishonourCheckedException
      */
-    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException;
+    public Album doRAlbumByPrivateEvent(final String humanId, final long privateEventId, final RefreshSpec refreshSpec) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException;
 
 
     /**
