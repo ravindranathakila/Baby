@@ -4,8 +4,6 @@ import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc._unidirectional;
 import ai.ilikeplaces.entities.etc.*;
-import ai.ilikeplaces.exception.DBException;
-import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -131,11 +129,7 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        final Return<Boolean> r = FriendUtil.check(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
-        if (r.returnStatus() != 0) {
-            throw new DBException(r.returnError());
-        }
-        return r.returnValue();
+        return FriendUtil.check(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId)).returnValueBadly();
     }
 
     @Override

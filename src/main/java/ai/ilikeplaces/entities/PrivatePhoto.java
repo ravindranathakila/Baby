@@ -2,13 +2,10 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.etc.*;
-import ai.ilikeplaces.exception.PendingEqualsMethodException;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivatePhoto;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 
@@ -224,50 +221,25 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
         return hash;
     }
 
-    @Override
-    @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "EqualsWhichDoesntCheckParameterClass"})
-    @TODO(task = "DO AS IN PrivatePhoto.class, UUID")
-    public boolean equals(Object object) {
-        throw PendingEqualsMethodException.SINGLETON;
-    }
-
-    /**
-     * @return toString_
-     */
-    @Override
-    public String toString() {
-        String toString_ = getClass().getName();
-        try {
-            final Field[] fields = {getClass().getDeclaredField("locationId"),
-                    getClass().getDeclaredField("locationName"),
-                    getClass().getDeclaredField("locationSuperSet")};
-
-            for (final Field field : fields) {
-                try {
-                    toString_ += "\n{" + field.getName() + "," + field.get(this) + "}";
-                } catch (IllegalArgumentException ex) {
-                    LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
-                } catch (IllegalAccessException ex) {
-                    LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
-                }
-            }
-        } catch (NoSuchFieldException ex) {
-            LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
-        } catch (SecurityException ex) {
-            LoggerFactory.getLogger(Location.class.getName()).error(null, ex);
-        }
-
-        return toString_;
-    }
 
     /**
      * @param showChangeLog__
      * @return changeLog
      */
-    public String toString(final boolean showChangeLog__) {
-        String changeLog = toString() + "\n";
-        changeLog += "20090914 Added this class \n";
-        return showChangeLog__ ? changeLog : toString();
+    @Override
+    public String toString() {
+        return "PrivatePhoto{" +
+                "privatePhotoId=" + privatePhotoId +
+                ", privatePhotoFilePath='" + privatePhotoFilePath + '\'' +
+                ", privatePhotoURLPath='" + privatePhotoURLPath + '\'' +
+                ", privatePhotoName='" + privatePhotoName + '\'' +
+                ", privatePhotoDescription='" + privatePhotoDescription + '\'' +
+                ", privatePhotoUploadDate=" + privatePhotoUploadDate +
+                ", privatePhotoTakenDate=" + privatePhotoTakenDate +
+                ", humansPrivatePhoto=" + humansPrivatePhoto +
+                ", albums=" + albums +
+                ", privatePhotoWall=" + privatePhotoWall +
+                '}';
     }
 
 

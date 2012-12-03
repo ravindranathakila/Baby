@@ -2,8 +2,6 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.etc.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,7 +43,6 @@ public class Location implements Serializable, Clearance, Comparable<Location>, 
     public static final String OF_SPACE = " of ";
     public static final String OF_SCORE = "_of_";
 
-    final static Logger logger = LoggerFactory.getLogger(Location.class.getName());
     final static private long serialVersionUID = 1L;
 
     private static final Refresh<Location> REFRESH = new Refresh<Location>();

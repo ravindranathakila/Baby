@@ -5,8 +5,6 @@ import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
 import ai.ilikeplaces.entities.etc.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -41,8 +39,6 @@ public class PrivateLocation implements Serializable, RefreshData<PrivateLocatio
     public static final String PrivateLocationLatitudeNorth = "privateLocationLatitudeNorth";
     public static final String PrivateLocationLongitudeWest = "privateLocationLongitudeWest";
     public static final String PrivateLocationLongitudeEast = "privateLocationLongitudeEast";
-
-    final static Logger logger = LoggerFactory.getLogger(PrivateLocation.class.getName());
 
     private static final String PRIVATE_LOCATION = "PrivateLocation{";
     private static final String PRIVATE_LOCATION_ID = "privateLocationId=";
