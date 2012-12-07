@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.role;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.cache.SmartCache;
 

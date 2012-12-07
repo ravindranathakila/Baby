@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc._note;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.Email;

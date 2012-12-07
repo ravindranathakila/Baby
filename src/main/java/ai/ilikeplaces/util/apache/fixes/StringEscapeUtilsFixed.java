@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util.apache.fixes;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.util.apache.StringEscapeUtils;
 
 /**
@@ -29,7 +29,7 @@ public class StringEscapeUtilsFixed extends StringEscapeUtils {
         return str.equals(escapeXml(str));
     }
 
-    public static String escapeXSS(final String str){
-         return escapeJavaScript(escapeXml(escapeHtml(str)));
+    public static String escapeXSS(final String str) {
+        return escapeJavaScript(escapeXml(escapeHtml(str)));
     }
 }

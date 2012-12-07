@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.cdn;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.exception.DBOperationException;
 import ai.ilikeplaces.logic.crud.DB;

@@ -1,12 +1,12 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 import java.util.Arrays;
 
 /**
  * Please let us know if you have a faster/memorable :P implementation.
- *
+ * <p/>
  * I doubt if this approach is consistent, but over time, there are no complains :)
  * <p/>
  * Created by IntelliJ IDEA.

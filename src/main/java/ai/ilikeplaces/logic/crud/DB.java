@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._fix;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc._fix;
+import ai.doc._note;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;

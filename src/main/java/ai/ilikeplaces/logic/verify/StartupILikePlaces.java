@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.verify;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc._note;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.FriendUtil;
 import ai.ilikeplaces.exception.DBException;

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.servlets.filters;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
@@ -8,14 +8,14 @@ import java.io.IOException;
 
 /**
  * What we are trying to do here is intercept a request on the Controller and validate if recaptcha is true.
- *
+ * <p/>
  * We will check if a "spam" variable is there in the call.
- *
+ * <p/>
  * If present, then we will see if it is recaptch valid. If valid, then we will let the request pass through.
- *
+ * <p/>
  * If not
- *
- *
+ * <p/>
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: May 29, 2010
@@ -30,7 +30,6 @@ public class FilterRecaptcha implements Filter {
 
 
     /**
-     *
      * @param request
      * @param response
      * @param chain

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.security.face;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 import javax.ejb.Remote;
 

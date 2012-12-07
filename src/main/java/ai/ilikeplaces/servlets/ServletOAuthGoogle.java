@@ -1,6 +1,6 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.WARNING;
+import ai.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
@@ -303,7 +303,7 @@ public class ServletOAuthGoogle extends AbstractOAuth {
                 userSession_.setMaxInactiveInterval(Integer.parseInt(RBGet.globalConfig.getString("UserSessionIdleInterval")));
             }
 
-            final HumanUserLocal humanUserLocal =  HumanUser.getHumanUserLocal(true);
+            final HumanUserLocal humanUserLocal = HumanUser.getHumanUserLocal(true);
             humanUserLocal.setHumanUserId(existingUser.getHumanId());
             userSession_.setAttribute(ServletLogin.HumanUser, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 

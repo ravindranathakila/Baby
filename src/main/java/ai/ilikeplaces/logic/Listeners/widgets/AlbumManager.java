@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._bug;
-import ai.ilikeplaces.doc._doc;
+import ai.doc.License;
+import ai.doc.WARNING;
+import ai.doc._bug;
+import ai.doc._doc;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;

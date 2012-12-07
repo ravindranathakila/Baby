@@ -1,6 +1,6 @@
 package ai.ilikeplaces.exception;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 /**
  * Throw this exception if the DB is being dishonored by callers
@@ -21,7 +21,6 @@ final public class DBOperationException extends RuntimeException {
     }
 
     /**
-     *
      * @param t
      */
     public DBOperationException(final Throwable t) {

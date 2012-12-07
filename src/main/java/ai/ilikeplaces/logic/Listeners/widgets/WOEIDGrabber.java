@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.servlets.Controller;

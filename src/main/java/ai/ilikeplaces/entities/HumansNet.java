@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc.WARNING;
+import ai.doc._note;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.FriendUtil;
 import ai.ilikeplaces.entities.etc.HumanPkJoinFace;

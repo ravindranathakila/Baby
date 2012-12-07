@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._expect_null;
-import ai.ilikeplaces.doc._forget_null;
+import ai.doc.License;
+import ai.doc._expect_null;
+import ai.doc._forget_null;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.exception.NoPrivilegesException;

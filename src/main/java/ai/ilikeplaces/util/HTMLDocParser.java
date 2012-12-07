@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import org.cyberneko.html.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

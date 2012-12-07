@@ -1,18 +1,19 @@
-package ai.ilikeplaces.doc;
+package ai.doc;
 
 import java.lang.annotation.*;
 
 /**
- * Make sure you annotate all classes with this annotation.<br>
+ * Make sure you annotate all methods with this annotation.<br>
  * A Template is given below.<br>
  * <blockquote><pre>
- * \@ClassPreamble(
+ * \@MethodPreamble(
  * authors = {"Ravindranath Akila"},
  * version = 1,
  * description = {""},
  * conventions = {""},
+ * callBackModules = {Class.class},
  * notes = {"Initial Implementation"},
- * TODO =  {"Under Progress"})
+ * TODO =  {"Under Implementation"})
  * </pre></blockquote>
  *
  * @author Ravindranath Akila
@@ -20,9 +21,9 @@ import java.lang.annotation.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.SOURCE)
-public @interface _class_preamble {
+public @interface _method_preamble {
 
     /**
      * @return String array of authors
@@ -32,7 +33,7 @@ public @interface _class_preamble {
     /**
      * @return Version number
      */
-    int version();
+    int version() default 0;
 
     /**
      * @return String array of description
@@ -40,19 +41,19 @@ public @interface _class_preamble {
     String[] description();
 
     /**
+     * @return Array of classes which use this method
+     */
+    Class[] callBackModules();
+
+    /**
      * @return String array of conventions
      */
     String[] conventions() default {"Always specify some convention details"};
 
     /**
-     * @return List of classes which extend this class
+     * @return String array of reviewers
      */
-    Class[] extentions();
-
-    /**
-     * @return List of IMPORTANT classes which instanciate this class
-     */
-    Class[] instances() default {};
+    String[] reviewers() default {"No reviewers"};
 
     /**
      * @return String array of notes

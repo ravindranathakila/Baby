@@ -6,7 +6,7 @@
  */
 package ai.ilikeplaces.logic.validators;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.validators.faces.ValidatorFace;
 import ai.ilikeplaces.util.Factory;
 import ai.ilikeplaces.util.Return;

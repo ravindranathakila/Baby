@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.Listeners.widgets.DisplayName;
 import ai.ilikeplaces.logic.Listeners.widgets.ForgotPasswordManager;
 import ai.ilikeplaces.logic.Listeners.widgets.PasswordManager;

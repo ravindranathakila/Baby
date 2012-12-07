@@ -1,6 +1,6 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc._note;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

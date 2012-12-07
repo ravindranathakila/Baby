@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._fix;
+import ai.doc.License;
+import ai.doc._fix;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlow;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;

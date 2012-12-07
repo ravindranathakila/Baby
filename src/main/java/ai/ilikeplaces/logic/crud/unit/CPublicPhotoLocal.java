@@ -1,12 +1,11 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.entities.PublicPhoto;
 
 import javax.ejb.Local;
 
 /**
- *
  * @author Ravindranath Akila
  */
 
@@ -15,5 +14,5 @@ import javax.ejb.Local;
 @Local
 public interface CPublicPhotoLocal {
 
-    public PublicPhoto doNTxCPublicPhotoLocal(String humanId, long locationId, PublicPhoto publicPhoto );
+    public PublicPhoto doNTxCPublicPhotoLocal(String humanId, long locationId, PublicPhoto publicPhoto);
 }

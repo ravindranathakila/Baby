@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import com.impetus.kundera.persistence.EntityManagerFactoryImpl;
 
 import javax.interceptor.AroundInvoke;

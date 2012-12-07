@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
@@ -94,7 +94,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
     public UserProperty(final ItsNatServletRequest request__, final Element appendToElement__, final Element content, final HumanId humanIdWhosProfileToShow, final Object... params) {
         super(request__, Page.UserProperty, appendToElement__, humanIdWhosProfileToShow, params);
         try {
-            final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(humanIdWhosProfileToShow.getHumanId(),"");
+            final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(humanIdWhosProfileToShow.getHumanId(), "");
 
 
             $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());

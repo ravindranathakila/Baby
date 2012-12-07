@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._bidirectional;
+import ai.doc.WARNING;
+import ai.doc._bidirectional;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 

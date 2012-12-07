@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.modules;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 import javax.ejb.Local;
 

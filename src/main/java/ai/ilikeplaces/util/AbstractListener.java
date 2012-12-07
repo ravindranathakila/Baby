@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;

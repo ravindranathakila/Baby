@@ -1,8 +1,8 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc._doc;
-import ai.ilikeplaces.doc._logic;
-import ai.ilikeplaces.doc._note;
+import ai.doc._doc;
+import ai.doc._logic;
+import ai.doc._note;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Parameter;
 import org.apache.commons.httpclient.Header;

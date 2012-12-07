@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc._todo;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;

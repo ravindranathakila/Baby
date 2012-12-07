@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.cdn;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.SmartLogger;

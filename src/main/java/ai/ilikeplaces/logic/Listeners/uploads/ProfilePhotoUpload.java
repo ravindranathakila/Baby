@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.uploads;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.util.FileUploadListenerFace;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Return;

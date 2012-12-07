@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._doc;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc._doc;
+import ai.doc._note;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;

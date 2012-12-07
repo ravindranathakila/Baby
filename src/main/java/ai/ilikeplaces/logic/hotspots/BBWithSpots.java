@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.hotspots;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc._todo;
 import ai.ilikeplaces.logic.validators.unit.BoundingBox;
 import ai.ilikeplaces.util.Pair;
 import com.google.gdata.data.geo.impl.W3CPoint;

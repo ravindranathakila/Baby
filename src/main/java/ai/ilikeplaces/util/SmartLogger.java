@@ -1,7 +1,5 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.*;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 

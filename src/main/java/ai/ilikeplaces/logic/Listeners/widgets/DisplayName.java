@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
+import ai.doc.License;
+import ai.doc.WARNING;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.HumanId;

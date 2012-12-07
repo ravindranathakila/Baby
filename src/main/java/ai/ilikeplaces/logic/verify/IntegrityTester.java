@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.verify;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc._note;
 import ai.ilikeplaces.logic.crud.HumanCRUDHumanLocal;
 import ai.ilikeplaces.management.MemorySafe;
 import ai.ilikeplaces.management.MemoryWarningSystem;

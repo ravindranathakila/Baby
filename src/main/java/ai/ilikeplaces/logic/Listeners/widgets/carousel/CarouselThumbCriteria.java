@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets.carousel;
 
-import ai.ilikeplaces.doc.WARNING;
+import ai.doc.WARNING;
 import ai.ilikeplaces.entities.PrivatePhoto;
 
 /**

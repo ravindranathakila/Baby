@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._doc;
-import ai.ilikeplaces.doc._logic;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc._doc;
+import ai.doc._logic;
+import ai.doc._note;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;

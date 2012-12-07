@@ -1,9 +1,9 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._bidirectional;
-import ai.ilikeplaces.doc._ok;
+import ai.doc.License;
+import ai.doc.WARNING;
+import ai.doc._bidirectional;
+import ai.doc._ok;
 import ai.ilikeplaces.entities.etc.*;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package ai.ilikeplaces.doc;
+package ai.doc;
 
 import java.lang.annotation.*;
 

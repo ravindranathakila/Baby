@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets.carousel;
 
-import ai.ilikeplaces.doc._doc;
-import ai.ilikeplaces.doc._note;
+import ai.doc._doc;
+import ai.doc._note;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.validators.unit;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.util.RefObj;
 import com.google.gdata.data.geo.impl.W3CPoint;
 import net.sf.oval.Validator;
@@ -87,7 +87,7 @@ public class BoundingBox extends RefObj<GeoCoord[]> {
     }
 
     /**
-     * @return 3.13343,23.23232 format lat,lng
+     * @return 3.13343, 23.23232 format lat,lng
      */
     @Override
     public String toString() {

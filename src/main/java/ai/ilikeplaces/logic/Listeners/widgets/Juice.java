@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc._doc;
-import ai.ilikeplaces.doc._note;
+import ai.doc._doc;
+import ai.doc._note;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;

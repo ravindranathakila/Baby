@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets.legal;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.Loggers;
@@ -17,7 +17,6 @@ import org.w3c.dom.html.HTMLDocument;
 abstract public class PrivacyPolicy extends AbstractWidgetListener {
 
     /**
-     *
      * @param request__
      * @param appendToElement__
      * @param initArgs

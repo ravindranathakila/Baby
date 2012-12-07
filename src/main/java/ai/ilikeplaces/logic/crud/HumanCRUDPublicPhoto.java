@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.crud.unit.CPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.DPublicPhotoLocal;

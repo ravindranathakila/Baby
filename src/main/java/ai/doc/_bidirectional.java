@@ -1,18 +1,22 @@
-package ai.ilikeplaces.doc;
+package ai.doc;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * {@link _bug} might not exactly be a bug. It could also be a performance problem.
- *
  * @author Ravindranath Akila
  */
+
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface _bug {
+public @interface _bidirectional {
+    enum OWNING {
+        IS,
+        NOT,
+        TODO
+    }
 
-    String[] value() default "";
+    public OWNING ownerside() default OWNING.TODO;
 }

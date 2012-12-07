@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.templates;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.LogNull;
 import ai.ilikeplaces.util.Loggers;

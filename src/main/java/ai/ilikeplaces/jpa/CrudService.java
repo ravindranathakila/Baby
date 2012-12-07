@@ -1,9 +1,9 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._convention;
-import ai.ilikeplaces.doc._ok;
+import ai.doc.License;
+import ai.doc.WARNING;
+import ai.doc._convention;
+import ai.doc._ok;
 import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.exception.DBHazelcastRuntimeException;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;

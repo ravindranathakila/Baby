@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc._note;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;

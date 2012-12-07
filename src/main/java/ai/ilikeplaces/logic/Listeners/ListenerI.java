@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
+import ai.doc.License;
+import ai.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.logic.Listeners.widgets.FriendAdd;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;

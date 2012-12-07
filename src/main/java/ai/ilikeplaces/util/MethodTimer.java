@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +46,7 @@ public class MethodTimer {
             try {
                 return invocation.proceed();
             } finally {
-                smartLogger.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG,Loggers.LEVEL.SERVER_STATUS}, Loggers.DONE);
+                smartLogger.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.SERVER_STATUS}, Loggers.DONE);
 //                final long endTime = System.currentTimeMillis() - startTime;
 //                Loggers.STATUS.info("INVOKING:\n" + invocation.getMethod() + "\nTOOK:\n " + endTime + "(millis)");
             }

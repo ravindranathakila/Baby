@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.verify;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._fix;
+import ai.doc.License;
+import ai.doc._fix;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.mail.SendMailLocal;
 import ai.ilikeplaces.management.MemorySafe;

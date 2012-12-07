@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.hotspots;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.validators.unit.BoundingBox;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;

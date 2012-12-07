@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.Listeners.widgets.FindFriend;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Loggers;

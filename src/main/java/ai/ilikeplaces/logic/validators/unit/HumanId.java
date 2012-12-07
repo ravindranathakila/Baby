@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.validators.unit;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.entities.etc.HumanEquals;
 import ai.ilikeplaces.entities.etc.HumanEqualsFace;
 import ai.ilikeplaces.entities.etc.HumanIdFace;

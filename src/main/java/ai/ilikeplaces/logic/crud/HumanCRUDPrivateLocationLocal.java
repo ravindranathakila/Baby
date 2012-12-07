@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.validators.unit.VDouble;

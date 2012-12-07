@@ -1,6 +1,6 @@
 package ai.ilikeplaces.servlets.filters;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 
@@ -107,7 +107,7 @@ public class FilterHeader implements Filter {
 
     /**
      * We expect the client to detect the last modified date. Apart from that, two weaks of caching would be ok for now.
-     * 
+     *
      * @param request
      * @param response
      * @param chain

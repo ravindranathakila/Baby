@@ -1,9 +1,9 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._note;
-import ai.ilikeplaces.doc._ok;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc._note;
+import ai.doc._ok;
+import ai.doc._todo;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;

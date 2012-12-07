@@ -1,9 +1,10 @@
 package ai.ilikeplaces.exception;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 /**
  * Throw this exception if constructor failed to initialize
+ *
  * @author Ravindranath Akila
  */
 
@@ -13,7 +14,6 @@ final public class ConstructorInvokationException extends RuntimeException {
     final static private String SeeLogs = "\nSORRY! I COULD NOT INITIALIZE THIS INSTANCE. PLEASE SEE LOGS FOR MORE DETAILS.";
 
     /**
-     *
      * @param cause
      */
     public ConstructorInvokationException(final Throwable cause) {
@@ -21,7 +21,6 @@ final public class ConstructorInvokationException extends RuntimeException {
     }
 
     /**
-     *
      * @param message
      * @param cause
      */
@@ -30,7 +29,6 @@ final public class ConstructorInvokationException extends RuntimeException {
     }
 
     /**
-     *
      * @param message
      */
     public ConstructorInvokationException(final String message) {

@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._fix;
+import ai.doc.License;
+import ai.doc.WARNING;
+import ai.doc._fix;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;

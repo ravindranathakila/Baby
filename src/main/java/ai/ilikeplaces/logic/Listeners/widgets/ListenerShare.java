@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
+import ai.doc.License;
+import ai.doc.WARNING;
 import ai.ilikeplaces.logic.Listeners.AbstractSkeletonListener;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
@@ -89,7 +89,7 @@ public class ListenerShare implements ItsNatServletRequestListener {
 
                                     @Override
                                     protected void init(final Object... initArgs) {
-                                        final String imageURL =  url != null ? url : RBGet.globalConfig.getString(PROFILE_PHOTO_DEFAULT);
+                                        final String imageURL = url != null ? url : RBGet.globalConfig.getString(PROFILE_PHOTO_DEFAULT);
                                         $$(pd_photo).setAttribute(MarkupTag.IMG.alt(), LOADING);
                                         $$(pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
                                         $$(pd_photo).setAttribute(MarkupTag.IMG.src(), imageURL);//External sites will not support ajax

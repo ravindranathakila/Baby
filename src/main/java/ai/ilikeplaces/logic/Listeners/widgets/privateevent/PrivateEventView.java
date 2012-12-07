@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._ok;
+import ai.doc.License;
+import ai.doc.WARNING;
+import ai.doc._ok;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc._fix;
+import ai.doc._fix;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 

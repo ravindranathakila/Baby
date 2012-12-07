@@ -1,6 +1,6 @@
 package ai.ilikeplaces.exception;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 import javax.ejb.ApplicationException;
 
@@ -26,6 +26,6 @@ final public class DBFetchDataException extends AbstractEjbApplicationException 
      * @param e
      */
     public DBFetchDataException(final Exception e) {
-        super(MSG,e);
+        super(MSG, e);
     }
 }

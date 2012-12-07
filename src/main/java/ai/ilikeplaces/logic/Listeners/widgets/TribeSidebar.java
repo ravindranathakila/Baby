@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._ok;
+import ai.doc.License;
+import ai.doc._ok;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;

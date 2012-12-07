@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._class_preamble;
-import ai.ilikeplaces.doc._method_preamble;
+import ai.doc.License;
+import ai.doc._class_preamble;
+import ai.doc._method_preamble;
 import org.slf4j.LoggerFactory;
 
 import javax.interceptor.AroundInvoke;

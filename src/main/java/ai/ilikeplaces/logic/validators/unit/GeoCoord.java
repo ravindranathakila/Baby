@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.validators.unit;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.util.RefObj;
 import com.google.gdata.data.geo.GeoLat;
 import com.google.gdata.data.geo.GeoLong;
@@ -97,7 +97,7 @@ public class GeoCoord extends RefObj<W3CPoint> {
     }
 
     /**
-     * @return 3.13343,23.23232 format lat,lng
+     * @return 3.13343, 23.23232 format lat,lng
      */
     @Override
     public String toString() {

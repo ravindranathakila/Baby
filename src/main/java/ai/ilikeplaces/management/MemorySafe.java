@@ -1,6 +1,6 @@
 package ai.ilikeplaces.management;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
 

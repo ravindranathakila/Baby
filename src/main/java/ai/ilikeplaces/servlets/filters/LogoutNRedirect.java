@@ -1,6 +1,6 @@
 package ai.ilikeplaces.servlets.filters;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;

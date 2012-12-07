@@ -1,6 +1,6 @@
 package ai.ilikeplaces.exception;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 /**
  * Throw this exception if constructor failed to initialize

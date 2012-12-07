@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._ok;
+import ai.doc.License;
+import ai.doc._ok;
 
 /**
  * @author Ravindranath Akila

@@ -1,9 +1,9 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._fix;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc.WARNING;
+import ai.doc._fix;
+import ai.doc._todo;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.crud.DB;

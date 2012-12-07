@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._fix;
-import ai.ilikeplaces.doc._see;
+import ai.doc.License;
+import ai.doc._fix;
+import ai.doc._see;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.entities.etc.RefreshSpec;

@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc.WARNING;
+import ai.doc._note;
 import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;

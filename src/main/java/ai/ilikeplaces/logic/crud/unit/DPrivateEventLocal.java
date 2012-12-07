@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 
 import javax.ejb.Local;
@@ -26,6 +26,7 @@ public interface DPrivateEventLocal {
      * <br/>
      * Removes the {@link ai.ilikeplaces.entities.HumansPrivateEvent caller} from {@link ai.ilikeplaces.entities.PrivateEvent event}.
      * <br/>
+     *
      * @param humanId
      * @param privateEventId
      * @return

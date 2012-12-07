@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc._todo;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import org.apache.commons.httpclient.URI;
 

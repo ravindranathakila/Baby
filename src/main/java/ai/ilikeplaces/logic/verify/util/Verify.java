@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.verify.util;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._convention;
+import ai.doc.License;
+import ai.doc._convention;
 
 /**
  * Created by IntelliJ IDEA.

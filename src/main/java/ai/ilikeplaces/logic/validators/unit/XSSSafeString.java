@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.validators.unit;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.validators.oval.NoXSSAttack;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.apache.fixes.StringEscapeUtilsFixed;
@@ -21,7 +21,7 @@ public class XSSSafeString extends RefObj<String> {
     }
 
     @Override
-    public void setObj(final String str){
+    public void setObj(final String str) {
         obj = StringEscapeUtilsFixed.escapeXSS(str);
     }
 

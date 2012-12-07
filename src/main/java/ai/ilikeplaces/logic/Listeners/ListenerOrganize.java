@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._doc;
-import ai.ilikeplaces.doc._note;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc._doc;
+import ai.doc._note;
+import ai.doc._todo;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;

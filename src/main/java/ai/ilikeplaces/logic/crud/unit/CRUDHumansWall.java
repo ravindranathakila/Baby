@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
+import ai.doc.License;
+import ai.doc.WARNING;
 import ai.ilikeplaces.entities.HumansWall;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;

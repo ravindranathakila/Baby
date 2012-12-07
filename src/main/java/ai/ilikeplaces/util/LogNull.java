@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._note;
+import ai.doc.License;
+import ai.doc._note;
 import ai.ilikeplaces.rbs.RBGet;
 
 /**

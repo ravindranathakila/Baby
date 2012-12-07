@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc._todo;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;

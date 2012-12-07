@@ -1,6 +1,6 @@
 package ai.ilikeplaces.feasibility;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import twitter4j.*;
 
 /**
@@ -20,12 +20,12 @@ public class Twitter4jTests {
 
         Query query = new Query("fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)");
 
-            final long start = System.currentTimeMillis();
-            QueryResult result = twitter.search(query.geoCode(new GeoLocation(6.876754135813088, 79.93997275829315), 20, Query.MILES));
-            System.out.println("hits:" + result.getMaxId());
-            for (Tweet tweet : result.getTweets()) {
-                System.out.println(tweet.getFromUser() + ":" + tweet.getText());
-            }
-            System.out.println("Time taken:" + (System.currentTimeMillis() - start));
+        final long start = System.currentTimeMillis();
+        QueryResult result = twitter.search(query.geoCode(new GeoLocation(6.876754135813088, 79.93997275829315), 20, Query.MILES));
+        System.out.println("hits:" + result.getMaxId());
+        for (Tweet tweet : result.getTweets()) {
+            System.out.println(tweet.getFromUser() + ":" + tweet.getText());
+        }
+        System.out.println("Time taken:" + (System.currentTimeMillis() - start));
     }
 }

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
@@ -39,7 +39,8 @@ public class ListenerMuster implements ItsNatServletRequestListener {
                 super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
 
 
-                new Bate(request__,$(Skeleton_center_content)){};
+                new Bate(request__, $(Skeleton_center_content)) {
+                };
 
                 SmartLogger.g().complete(Loggers.LEVEL.DEBUG, Loggers.DONE);//Request completed within timeout. If not, goes to LEVEL.SERVER_STATUS
             }

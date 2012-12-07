@@ -1,6 +1,6 @@
 package ai.ilikeplaces.entities.etc;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 

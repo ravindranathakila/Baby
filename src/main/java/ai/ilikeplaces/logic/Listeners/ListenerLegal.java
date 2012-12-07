@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.Listeners.widgets.legal.PrivacyPolicy;
 import ai.ilikeplaces.logic.Listeners.widgets.legal.TermsOfServices;
 import ai.ilikeplaces.util.Loggers;

@@ -1,6 +1,5 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.*;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.util.ExceptionCache;
 

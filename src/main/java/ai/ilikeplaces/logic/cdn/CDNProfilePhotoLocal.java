@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.cdn;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.util.FileUploadListenerFace;
 
 import javax.ejb.Local;
@@ -14,7 +14,7 @@ import java.io.File;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Local
-public interface CDNProfilePhotoLocal extends FileUploadListenerFace<File>{
+public interface CDNProfilePhotoLocal extends FileUploadListenerFace<File> {
 
     public static final String NAME = CDNProfilePhotoLocal.class.getSimpleName();
 }

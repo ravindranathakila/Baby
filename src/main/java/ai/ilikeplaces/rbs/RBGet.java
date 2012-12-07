@@ -1,9 +1,9 @@
 package ai.ilikeplaces.rbs;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._convention;
-import ai.ilikeplaces.doc._note;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc._convention;
+import ai.doc._note;
+import ai.doc._todo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

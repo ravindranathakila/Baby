@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._fix;
+import ai.doc.License;
+import ai.doc._fix;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.PrivateEvent;

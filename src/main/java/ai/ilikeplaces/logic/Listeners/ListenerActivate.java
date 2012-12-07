@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
+import ai.doc.License;
+import ai.doc.WARNING;
 import ai.ilikeplaces.servlets.Controller;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
@@ -35,10 +35,10 @@ public class ListenerActivate implements ItsNatServletRequestListener {
                 super.init(itsNatHTMLDocument__, hTMLDocument__, itsNatDocument__, initArgs);
                 UCShowActivateMSG:
                 {
-                    if(getUsername() == null){
+                    if (getUsername() == null) {
                         $(Controller.Page.Skeleton_notice).setTextContent(GUI.getString("email.activate.your.account"));
                         displayBlock($(Controller.Page.Skeleton_notice_sh));
-                    }else{
+                    } else {
                         itsNatDocument.addCodeToSend(JSCodeToSend.redirectPageWithURL("/"));
                     }
                 }

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.exception;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 /**
  * Created by IntelliJ IDEA.

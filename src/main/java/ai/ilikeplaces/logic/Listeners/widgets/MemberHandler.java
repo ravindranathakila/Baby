@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.WARNING;
-import ai.ilikeplaces.doc._note;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc.WARNING;
+import ai.doc._note;
+import ai.doc._todo;
 import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;

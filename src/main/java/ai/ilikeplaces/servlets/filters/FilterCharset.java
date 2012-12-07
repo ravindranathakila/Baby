@@ -15,7 +15,7 @@ package ai.ilikeplaces.servlets.filters;
  * Time: 12:34:33 PM
  */
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 import javax.servlet.*;
 import java.io.IOException;

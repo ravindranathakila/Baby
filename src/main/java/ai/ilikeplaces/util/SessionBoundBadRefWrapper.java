@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._fix;
-import ai.ilikeplaces.doc._method_preamble;
+import ai.doc.License;
+import ai.doc._fix;
+import ai.doc._method_preamble;
 import ai.ilikeplaces.servlets.ServletLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

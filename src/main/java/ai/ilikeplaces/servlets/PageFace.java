@@ -1,9 +1,8 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 /**
- *
  * @author Ravindranath Akila
  */
 

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.cdn;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets.people;
 
-import ai.ilikeplaces.doc._doc;
-import ai.ilikeplaces.doc._note;
+import ai.doc._doc;
+import ai.doc._note;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.servlets.Controller;

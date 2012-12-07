@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.util.Loggers;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
@@ -19,7 +19,7 @@ public class ListenerGeoBusiness implements ItsNatServletRequestListener {
 
     @Override
     public void processRequest(final ItsNatServletRequest itsNatServletRequest, final ItsNatServletResponse response) {
-        Loggers.INFO.info(getClass().getName()+ CALLED);
+        Loggers.INFO.info(getClass().getName() + CALLED);
     }
 
 }

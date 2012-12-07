@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.mail;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.util.Return;
 
 import javax.ejb.Local;
@@ -41,9 +41,9 @@ public interface SendMailLocal {
                                             final String simpleTextBody);
 
     public Return<Boolean> sendWithAttachmentAsSimpleText(final String recepientEmail,
-                                            final String simpleTextSubject,
-                                            final String simpleTextBody,
-                                            final List<String> files);
+                                                          final String simpleTextSubject,
+                                                          final String simpleTextBody,
+                                                          final List<String> files);
 
     public Return<Boolean> sendAsSimpleTextAsynchronously(final String recepientEmail,
                                                           final String simpleTextSubject,
@@ -54,14 +54,14 @@ public interface SendMailLocal {
                                       final String htmlBody);
 
     public Return<Boolean> sendWithAttachmentAsSimpleTextAsynchronously(final String recepientEmail,
-                                                          final String simpleTextSubject,
-                                                          final String simpleTextBody,
-                                                          final List<String> files);
+                                                                        final String simpleTextSubject,
+                                                                        final String simpleTextBody,
+                                                                        final List<String> files);
 
     public Return<Boolean> sendWithAttachmentAsSimpleTextAsynchronously(final List<GetMailAddress> recepientEmails,
-                                                          final String simpleTextSubject,
-                                                          final String simpleTextBody,
-                                                          final List<String> files);
+                                                                        final String simpleTextSubject,
+                                                                        final String simpleTextBody,
+                                                                        final List<String> files);
 
     public Return<Boolean> sendAsHTMLAsynchronously(
             final String recepientEmail,

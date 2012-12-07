@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.validators.oval.internal;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.validators.oval.UpperCase;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.AbstractAnnotationCheck;

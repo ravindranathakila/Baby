@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.mail;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
 
@@ -123,7 +123,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             {
                 final SmartLogger sl = SmartLogger.start(
                         LEVEL.INFO, Loggers.CODE_MAIL +
-                                "SENDING A MAIL TO THE FOLLOWING USERS:" + Arrays.toString(message.getAllRecipients()),
+                        "SENDING A MAIL TO THE FOLLOWING USERS:" + Arrays.toString(message.getAllRecipients()),
                         3000,
                         "HELLO, I AM ABOUT TO SEND A MAIL TO THE FOLLOWING USERS:" + Arrays.toString(message.getAllRecipients()),
                         true);

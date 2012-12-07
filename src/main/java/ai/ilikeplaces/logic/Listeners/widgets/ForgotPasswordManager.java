@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._note;
-import ai.ilikeplaces.doc._ok;
+import ai.doc.License;
+import ai.doc._note;
+import ai.doc._ok;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;

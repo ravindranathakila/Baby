@@ -1,8 +1,8 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._fix;
-import ai.ilikeplaces.doc._todo;
+import ai.doc.License;
+import ai.doc._fix;
+import ai.doc._todo;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.exception.ConstructorInvokationException;

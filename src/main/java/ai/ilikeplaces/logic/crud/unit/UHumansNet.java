@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.entities.HumansNet;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.validators.unit.HumanId;

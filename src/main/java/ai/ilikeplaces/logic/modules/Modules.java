@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.modules;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import ai.ilikeplaces.logic.modules.conf.JNDILookupModule;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.MethodParams;

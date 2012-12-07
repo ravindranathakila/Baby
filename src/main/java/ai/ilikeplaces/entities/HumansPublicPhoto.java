@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc._bidirectional;
-import ai.ilikeplaces.doc._fix;
+import ai.doc.License;
+import ai.doc._bidirectional;
+import ai.doc._fix;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 

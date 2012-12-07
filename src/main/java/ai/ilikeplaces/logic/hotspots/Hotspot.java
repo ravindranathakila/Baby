@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.hotspots;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 import com.google.gdata.data.geo.impl.W3CPoint;
 
 /**

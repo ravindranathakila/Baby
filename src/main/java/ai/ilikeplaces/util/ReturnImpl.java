@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.License;
+import ai.doc.License;
 
 import java.io.Serializable;
 
@@ -51,7 +51,7 @@ final public class ReturnImpl<T> implements Return<T>, Serializable {
     /**
      * Returns 0 if no error occurred, or a unique error code specific only to this error. This code can be given to
      * the user and can be grepped or resolved in any manner you require, later.
-     *
+     * <p/>
      * The current return implementation had to go by int and expects the system will not exeed integer range. To get
      * the exact error code, check if the return status is greater than zero and if so, get the code separately.
      *
@@ -64,11 +64,12 @@ final public class ReturnImpl<T> implements Return<T>, Serializable {
 
     /**
      * Returns a unique error code for this error, if any, or throws IllegalAccessError if otherwise.
+     *
      * @return Unique ERROR_SEQ_NUMBER
      */
     @Override
-    final public long returnErrorSeqCode(){
-        if(returnStatus == 0){
+    final public long returnErrorSeqCode() {
+        if (returnStatus == 0) {
             throw new IllegalAccessError("SORRY! YOU CANNOT OBTAIN AN ERROR CODE WHEN THERE IS NO ERROR. PLEASE AVOID CALLING THIS METHOD IF NO ERROR IS FOUND.");
         }
         return ERROR_SEQ_NUMBER;
@@ -98,7 +99,7 @@ final public class ReturnImpl<T> implements Return<T>, Serializable {
     }
 
     @Override
-    public boolean valid(){
+    public boolean valid() {
         return returnStatus() == 0;
     }
 
