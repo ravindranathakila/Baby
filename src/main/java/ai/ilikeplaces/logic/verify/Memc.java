@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.verify;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc._fix;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.mail.SendMailLocal;
 import ai.ilikeplaces.management.MemorySafe;
@@ -43,7 +43,7 @@ public class Memc extends AbstractSLBCallbacks implements MemcLocal {
     private static final long MB = 1024 * 1024;
     private static final String NOTIFY_MAIL = "ravindranathakila@gmail.com";
 
-    @FIXME(issue = "SimpleDateFormat is concurrent safe?")
+    @_fix(issue = "SimpleDateFormat is concurrent safe?")
     private final static SimpleDateFormat sdf = new SimpleDateFormat("G-yyyy-MM-dd-HH:mm(ss)");
     private static final int MINUTES_10 = Integer.parseInt(RBGet.globalConfig.getString("SERVER_MEMORY_MAIL"));
     private static final int HOURS_3 = Integer.parseInt(RBGet.globalConfig.getString("SERVER_LOW_MEMORY_MAIL"));

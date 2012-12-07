@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
@@ -21,7 +21,7 @@ import javax.ejb.TransactionAttributeType;
 
 // @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@NOTE(note = "SEE CRUDSERVICE WHERE TO SUPPORT READ AND DIRTY READ, THE TX TYPE IS SUPPORTS.")
+@_note(note = "SEE CRUDSERVICE WHERE TO SUPPORT READ AND DIRTY READ, THE TX TYPE IS SUPPORTS.")
 @Stateless
 public class UHumansAuthentication extends AbstractSLBCallbacks implements UHumansAuthenticationLocal {
 

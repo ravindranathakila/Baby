@@ -1,9 +1,9 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc._fix;
+import ai.ilikeplaces.doc._todo;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.crud.DB;
@@ -124,7 +124,7 @@ final public class ServletFileUploads extends HttpServlet {
                                         String absoluteFileSystemFileName = FilePath;
 
                                         InputStream stream = item.openStream();
-                                        @FIXME(issue = "Handle no extension files")
+                                        @_fix(issue = "Handle no extension files")
                                         String usersFileName = null;
                                         String randomFileName = null;
 
@@ -301,7 +301,7 @@ final public class ServletFileUploads extends HttpServlet {
         return out;
     }
 
-    @FIXME(issue = "Handle exception")
+    @_fix(issue = "Handle exception")
     private void errorTemporarilyDisabled(final PrintWriter out) {
         try {
             flush(out).print(formatTuple(Error, "file_uploading_disabled"));
@@ -311,7 +311,7 @@ final public class ServletFileUploads extends HttpServlet {
 
     }
 
-    @FIXME(issue = "Handle exception")
+    @_fix(issue = "Handle exception")
     private void errorNoLogin(final PrintWriter out) {
         try {
             flush(out).print(formatTuple(Error, "no_login"));
@@ -321,7 +321,7 @@ final public class ServletFileUploads extends HttpServlet {
 
     }
 
-    @FIXME(issue = "Handle exception")
+    @_fix(issue = "Handle exception")
     private void errorBusy(final PrintWriter out) {
         try {
             flush(out).print(formatTuple(Error, "server_busy"));
@@ -331,7 +331,7 @@ final public class ServletFileUploads extends HttpServlet {
 
     }
 
-    @FIXME(issue = "Handle exception")
+    @_fix(issue = "Handle exception")
     private void errorNonMultipart(final PrintWriter out) {
         try {
             flush(out).print(formatTuple(Error, "non_multipart_request"));
@@ -341,8 +341,8 @@ final public class ServletFileUploads extends HttpServlet {
 
     }
 
-    @TODO(task = "Make a key,value implementation to avoid careless indexing errors on client")
-    @FIXME(issue = "Handle exception")
+    @_todo(task = "Make a key,value implementation to avoid careless indexing errors on client")
+    @_fix(issue = "Handle exception")
     private void successFileName(final PrintWriter out,
                                  final String fileName,
                                  final String exposurePublicOrPrivate) {
@@ -354,7 +354,7 @@ final public class ServletFileUploads extends HttpServlet {
 
     }
 
-    @FIXME(issue = "Handle exception")
+    @_fix(issue = "Handle exception")
     private void errorFileType(final PrintWriter out,
                                final String fileName) {
         try {
@@ -365,7 +365,7 @@ final public class ServletFileUploads extends HttpServlet {
 
     }
 
-    @FIXME(issue = "Handle exception")
+    @_fix(issue = "Handle exception")
     private void errorMissingParameters(final PrintWriter out) {
         try {
             flush(out).print(formatTuple(Error, "missing_parameters"));

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.doc._unidirectional;
 import ai.ilikeplaces.entities.etc.*;
 
@@ -54,7 +54,7 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
     //@PrimaryKeyJoinColumn
     public HumansNet humansNet;
 
-    @NOTE(note = "MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN.")
+    @_note(note = "MANY IS THE OWNING SIDE, HENCE REFRESH. SINCE THIS IS SELF REFERENTIAL, A REFRESH WITH SELF SHOULD NOT HAPPEN.")
     @_unidirectional(note = "Asymmetric Relationship")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JoinColumn(name = humanIdCOL)
@@ -119,7 +119,7 @@ public class HumansNetPeople extends HumanEquals implements HumansFriend, HumanI
 
 // --------------------- Interface HumansFriend ---------------------
 
-    @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
+    @_note(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
     @Override
     @Transient
     public String getDisplayName() {

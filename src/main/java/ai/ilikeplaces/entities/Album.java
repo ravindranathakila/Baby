@@ -1,9 +1,9 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.etc.*;
 
 import javax.persistence.*;
@@ -41,7 +41,7 @@ public class Album implements RefreshData<Album>, Refreshable<Album>, Serializab
 
     @WARNING(warning = "Not owner because when a photo is deleted, the albums will automatically reflect it." +
             "The other way round is not feasible because a user will own photos, not albums.")
-    @NOTE(note = "ManyToMany because photos can be moved to a different album when deleting events.")
+    @_note(note = "ManyToMany because photos can be moved to a different album when deleting events.")
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @ManyToMany(mappedBy = PrivatePhoto.albumsCOL, cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     public List<PrivatePhoto> albumPhotos;

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc._fix;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlow;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
@@ -34,7 +34,7 @@ import static ai.ilikeplaces.util.Loggers.EXCEPTION;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@FIXME("The protected methods to be used by extended classes an be used for setting values in this class. It seems the code is dupliated but need to be checked carefully before changing the code.")
+@_fix("The protected methods to be used by extended classes an be used for setting values in this class. It seems the code is dupliated but need to be checked carefully before changing the code.")
 abstract public class AbstractSkeletonListener extends AbstractListener {
     private static final String BN = "bn";
     protected static final ResourceBundle GUI = RBGet.gui();

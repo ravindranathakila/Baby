@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc._todo;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
@@ -39,7 +39,7 @@ import static ai.ilikeplaces.util.MarkupTag.*;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@TODO(task = "RENAME TO LISTENERLOCATION. DO A STRING SEARCH ON LISTENERMAIN TO FIND USAGE FIRST. CURRENT SEARCH SHOWS NO ISSUES. REFAC DELAYED TILL NEXT CHECK")
+@_todo(task = "RENAME TO LISTENERLOCATION. DO A STRING SEARCH ON LISTENERMAIN TO FIND USAGE FIRST. CURRENT SEARCH SHOWS NO ISSUES. REFAC DELAYED TILL NEXT CHECK")
 public class ListenerMain implements ItsNatServletRequestListener {
 // ------------------------------ FIELDS ------------------------------
 
@@ -130,7 +130,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
              */
             @Override
             @SuppressWarnings("unchecked")
-            @TODO(task = "If location is not available, it should be added through a w" + "id" + "get(or fragment maybe?)")
+            @_todo(task = "If location is not available, it should be added through a w" + "id" + "get(or fragment maybe?)")
             protected final void init(final ItsNatHTMLDocument itsNatHTMLDocument__, final HTMLDocument hTMLDocument__, final ItsNatDocument itsNatDocument__, final Object... initArgs) {
                 final SmartLogger sl = SmartLogger.start(
                         Loggers.LEVEL.DEBUG,

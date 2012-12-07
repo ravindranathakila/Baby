@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc._fix;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
@@ -50,7 +50,7 @@ public class CPrivateEvent extends AbstractSLBCallbacks implements CPrivateEvent
 
         @WARNING(warning = "This call will throw an exception if user has not rights to the location So do not move it to AFTER creation of PrivateEvent." +
                 "Even so, the transaction manager will roll this back too, but do it the safe way.")
-        @FIXME(issue = "Make crud classes based on roles. For example, this call should be made to a method, doRPrivateLocationAsOwner")
+        @_fix(issue = "Make crud classes based on roles. For example, this call should be made to a method, doRPrivateLocationAsOwner")
         final PrivateLocation managedPrivateLocation = rPrivateLocationLocal_.doRPrivateLocationAsOwner(humanId, privateLocationId);
 
         final PrivateEvent managedPrivateEvent = privateEventCrudServiceLocal_.create(

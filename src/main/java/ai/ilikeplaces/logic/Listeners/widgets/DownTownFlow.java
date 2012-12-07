@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.FIXME;
+import ai.ilikeplaces.doc._fix;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventViewSidebar;
@@ -52,7 +52,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
     private static final String IS_ALREADY_YOUR_FRIEND = "0.is.already.your.friend";
     private static final String READ_MORE = "read.more";
 
-    @FIXME("We need to move this cache to EJB's, stateless hopefully.")
+    @_fix("We need to move this cache to EJB's, stateless hopefully.")
     public static final SmartCache.RecoverWith<String, Object> BE_FRIENDS = new SmartCache.RecoverWith<String, Object>() {
         @Override
         public Object getValue(final String s) {
@@ -60,7 +60,7 @@ public class DownTownFlow extends AbstractWidgetListener<DownTownFlowCriteria> {
         }
     };
 
-    @FIXME("We need to move this cache to EJB's, stateless hopefully.")
+    @_fix("We need to move this cache to EJB's, stateless hopefully.")
     public static final SmartCache.RecoverWith<String, Object> FRIENDS = new SmartCache.RecoverWith<String, Object>() {
         @Override
         public Object getValue(final String s) {

@@ -33,9 +33,9 @@ import static ai.ilikeplaces.util.Loggers.LEVEL;
  */
 
 
-@DOCUMENTATION(
-        LOGIC = @LOGIC(
-                @NOTE(
+@_doc(
+        LOGIC = @_logic(
+                @_note(
                         {
                                 "scenario 1: no timeout. normal complete> sleep 0 , status false",
                                 "scenario 2: no timeout, 2 normal completes> sleep 0, status true",
@@ -50,7 +50,7 @@ import static ai.ilikeplaces.util.Loggers.LEVEL;
                         }
                 )
         ),
-        TODO = @TODO(task = "Well there is something I noticed recently. Unless something goes wrong, logs are useful only for analytics. " +
+        TODO = @_todo(task = "Well there is something I noticed recently. Unless something goes wrong, logs are useful only for analytics. " +
                 "Hence, if we could implement a logger that logs an entire sequence of monitored events upon an exception, that'd be really cool! " +
                 "FOr example, a user logs in and does A, and B, and while doing C, he gets a server error/or not. " +
                 "If C threw an exception, both A and B get logged. If C didn't, nothing gets logged. " +
@@ -192,7 +192,6 @@ final public class SmartLogger extends Thread {
     }
 
     /**
-     *
      * @return Updates and returns log status to be false if no logging was done before. Subsequent calls will return true;
      */
     private synchronized boolean status() {

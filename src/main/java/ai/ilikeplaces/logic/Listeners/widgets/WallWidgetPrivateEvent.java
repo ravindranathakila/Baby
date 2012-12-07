@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.SEE;
+import ai.ilikeplaces.doc._see;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
@@ -175,7 +175,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
 
         UCFiltering:
         {
-            @SEE(seeClasses = {
+            @_see(seeClasses = {
                     WallWidgetHumansWall.class,
                     PrivateEventDelete.class,
                     PrivateEventView.class,

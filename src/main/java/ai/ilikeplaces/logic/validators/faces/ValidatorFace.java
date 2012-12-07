@@ -25,7 +25,7 @@ public interface ValidatorFace {
 
     public Return isLessThan1000(final String input);
 
-    public Return<ReturnParams> isPriavateEventName(final String input);
+    public Return<ReturnParams> isPrivateEventName(final String input);
 
     public Return<ReturnParams> isPrivateEventInfo(final String input);
 

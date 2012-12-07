@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.DOCUMENTATION;
-import ai.ilikeplaces.doc.LOGIC;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._doc;
+import ai.ilikeplaces.doc._logic;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
@@ -33,8 +33,8 @@ import java.util.Map;
  */
 
 
-@DOCUMENTATION(
-        LOGIC = @LOGIC(@NOTE(
+@_doc(
+        LOGIC = @_logic(@_note(
                 {
                         "FetchToMail Missing - Because photos are discussed AFTER the event. Hence no need interaction for event except during organizing. Just email notification is sufficient.",
                         "Load - Should load upon scroll or click, since loading all walls on album photos is too much load on server, and also diverts user attention.",

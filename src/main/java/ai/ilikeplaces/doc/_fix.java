@@ -11,17 +11,11 @@ import java.lang.annotation.RetentionPolicy;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface NOTE {
+public @interface _fix {
 
-    String[] value() default "";
+    String value() default "";
 
-    @Deprecated String[] note() default "";
+    String issue() default "";
 
-    @Deprecated String[] notes() default {};
-
-    @Deprecated String see() default "";
-
-    @Deprecated String mustsee() default "";
-
-    SEE SEE() default @SEE();
+    String[] issues() default {};
 }

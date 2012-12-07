@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.validators.oval;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.logic.validators.oval.internal.NoXSSAttackCheck;
 import net.sf.oval.configuration.annotation.Constraint;
 
@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
 @Constraint(checkWith = NoXSSAttackCheck.class)
-@NOTE(note = "COPIED FROM OVAL DOCUMENTATION AND FIXED")
+@_note(note = "COPIED FROM OVAL DOCUMENTATION AND FIXED")
 public @interface NoXSSAttack {
     final static public String XSS_ATTACK_DETECTED = "XSS attack detected";
 

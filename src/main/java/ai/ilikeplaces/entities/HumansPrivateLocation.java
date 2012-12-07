@@ -1,12 +1,10 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.etc.*;
-import ai.ilikeplaces.exception.DBException;
-import ai.ilikeplaces.util.Return;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -41,7 +39,7 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
     @WARNING(warning = "Many",
             warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
                     "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
-    @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
+    @_note(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
     @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationViewersCOL, fetch = FetchType.LAZY)
     public List<PrivateLocation> privateLocationsViewed;
     public static final String privateLocationsViewedCOL = "privateLocationsViewed";
@@ -50,7 +48,7 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
     @WARNING(warning = "Many",
             warnings = {"Not owner as deleting a location should automatically reflect in here, not vice versa.",
                     "DO NOT MAKE EAGER WHEN LOADING, WHICH CAUSES A GALACTIC FETCH ON ALMOST THE ENTIRE TABLE. MAKING LAZY MADE A HUGE PERFORMANCE IMPACT OF SCALE 10^2"})
-    @NOTE(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
+    @_note(note = "Locations which this user is INVOLVED with, NOT specifically OWNS.")
     @ManyToMany(cascade = CascadeType.REFRESH, mappedBy = PrivateLocation.privateLocationOwnersCOL, fetch = FetchType.LAZY)
     public List<PrivateLocation> privateLocationsOwned;
     public static final String privateLocationsOwnedCOL = "privateLocationsOwned";
@@ -126,7 +124,7 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
 
 // --------------------- Interface HumansFriend ---------------------
 
-    @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
+    @_note(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
     @Override
     @Transient
     public String getDisplayName() {
@@ -136,11 +134,7 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        final Return<Boolean> r = FriendUtil.check(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId));
-        if (r.returnStatus() != 0) {
-            throw new DBException(r.returnError());
-        }
-        return r.returnValue();
+        return FriendUtil.check(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId)).returnValueBadly();
     }
 
     @Override

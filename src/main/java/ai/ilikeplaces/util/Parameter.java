@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc._todo;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import org.apache.commons.httpclient.URI;
 
@@ -15,7 +15,7 @@ import java.net.URL;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@TODO(task = "Refactor to URLParameter")
+@_todo(task = "Refactor to URLParameter")
 public class Parameter {
     final static private String EQUALS = "=";
     final static private String QMARK = "?";

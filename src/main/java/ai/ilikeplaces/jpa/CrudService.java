@@ -1,9 +1,9 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.doc.CONVENTION;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc._convention;
+import ai.ilikeplaces.doc._ok;
 import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.exception.DBHazelcastRuntimeException;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
@@ -35,9 +35,9 @@ import java.util.Set;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@CONVENTION(convention = "Caller assumes this class methods are of tx scope supports, " +
+@_convention(convention = "Caller assumes this class methods are of tx scope supports, " +
         "but create and updates here are of scope mandatory which will ensure caller does no mistake.")
-@OK
+@_ok
 public class CrudService<T> extends AbstractSLBCallbacks implements CrudServiceLocal<T> {
 
 

@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc._note;
+import ai.ilikeplaces.doc._ok;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
@@ -29,8 +29,8 @@ import java.util.UUID;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@OK
-@NOTE(note = "Password is mailed to the user. However, if another obtains it, according to current logic(2010-05-27) " +
+@_ok
+@_note(note = "Password is mailed to the user. However, if another obtains it, according to current logic(2010-05-27) " +
         "if a hacker obtains this info, he still does not have access to this widgets local copy of that code. " +
         "Hence, he has to get the code and also forge the users http session on the server, which is very hard.")
 abstract public class ForgotPasswordManager extends AbstractWidgetListener {
@@ -134,16 +134,16 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                                     $$displayBlock($$(ForgotPasswordManagerIds.ProfileForgotPasswordEmailRecoverySection));
                                     remove(evt_.getCurrentTarget(), EventType.CLICK, this);
                                 } else {
-                                    $$(ForgotPasswordManagerIds.ProfileForgotPasswordNotice).setTextContent(Return.YIKES_SOMETHING_WENT_WRONG);
+                                    $$(ForgotPasswordManagerIds.ProfileForgotPasswordNotice).setTextContent(PasswordManager.YIKES_SOMETHING_WENT_WRONG);
                                 }
                             } else {
-                                $$(ForgotPasswordManagerIds.ProfileForgotPasswordNotice).setTextContent(Return.YIKES_SOMETHING_WENT_WRONG);
+                                $$(ForgotPasswordManagerIds.ProfileForgotPasswordNotice).setTextContent(PasswordManager.YIKES_SOMETHING_WENT_WRONG);
                             }
                         } else {
                             $$(ForgotPasswordManagerIds.ProfileForgotPasswordNotice).setTextContent("Oh! " + myemail.getObj() + " hasn't signed up. Check for spellings once again please.");
                         }
                     } else {
-                        $$(ForgotPasswordManagerIds.ProfileForgotPasswordNotice).setTextContent(Return.YIKES_SOMETHING_WENT_WRONG);
+                        $$(ForgotPasswordManagerIds.ProfileForgotPasswordNotice).setTextContent(PasswordManager.YIKES_SOMETHING_WENT_WRONG);
                     }
                 } else {
                     $$(ForgotPasswordManagerIds.ProfileForgotPasswordNotice).setTextContent("Enter a proper email address to send the code to!");
@@ -182,6 +182,7 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
             private Password mynewPass = newPass;
 
             private Obj<Boolean> mynewSet = newSet;
+
             @Override
             public void handleEvent(final Event evt_) {
                 final Password profilePasswordNew = new Password($$(evt_).getAttribute(MarkupTag.TEXTAREA.value()));
@@ -199,7 +200,6 @@ abstract public class ForgotPasswordManager extends AbstractWidgetListener {
                 }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
-
 
 
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(ForgotPasswordManagerIds.ProfileForgotPasswordSave), EventType.CLICK.toString(), new EventListener() {

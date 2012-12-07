@@ -12,16 +12,16 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface DOCUMENTATION {
-    SEE SEE()[] default @SEE();
+public @interface _doc {
+    _see SEE()[] default @_see();
 
-    NOTE NOTE()[] default @NOTE(note = "");
+    _note NOTE()[] default @_note(note = "");
 
-    FIXME FIXME()[] default @FIXME();
+    _fix FIXME()[] default @_fix();
 
-    TODO TODO()[] default @TODO();
+    _todo TODO()[] default @_todo();
 
     WARNING WARNING()[] default @WARNING(warning = "");
 
-    LOGIC LOGIC()[] default @LOGIC();
+    _logic LOGIC()[] default @_logic();
 }

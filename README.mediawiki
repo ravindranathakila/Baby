@@ -224,4 +224,34 @@ enable 'tribeMemberstribes'
 
 
 
+disable 'Human'
+disable 'HumansAlbum'
+disable 'HumansAuthentication'
+disable 'HumansAuthorization'
+disable 'HumansIdentity'
+disable 'HumansNet'
+disable 'HumansNetPeople'
+disable 'HumansPrivateEvent'
+disable 'HumansPrivateLocation'
+disable 'HumansPrivatePhoto'
+disable 'HumansPublicPhoto'
+disable 'HumansTribe'
+disable 'HumansUnseen'
+disable 'HumansWall'
+
+
+alter 'Human',{NAME => 'humanId'}
+alter 'HumansAlbum',{NAME => 'humanId'}
+alter 'HumansAuthentication',{NAME => 'humanId'}
+alter 'HumansAuthorization',{NAME => 'humanId'}
+alter 'HumansIdentity',{NAME => 'humanId'}
+alter 'HumansNet',{NAME => 'humanId'}
+alter 'HumansNetPeople',{NAME => 'humanId'}
+alter 'HumansPrivateEvent',{NAME => 'humanId'}
+alter 'HumansPrivateLocation',{NAME => 'humanId'}
+alter 'HumansPrivatePhoto',{NAME => 'humanId'}
+alter 'HumansPublicPhoto',{NAME => 'humanId'}
+alter 'HumansTribe',{NAME => 'humanId'}
+alter 'HumansUnseen',{NAME => 'humanId'}
+alter 'HumansWall',{NAME => 'humanId'}
 

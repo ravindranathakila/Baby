@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._fix;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
@@ -25,8 +25,8 @@ import java.util.ResourceBundle;
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Singleton
-@NOTE(note = "MADE FINAL AS CONSTRUCTOR THROWS EXCEPTION TO PREVENT UNINITIALIZED VARIABLES. SUBCLASSING SINGLETON NO SENSE ANYWAY.")
-@FIXME(issue = "non injected call should be verified if a user sends false")
+@_note(note = "MADE FINAL AS CONSTRUCTOR THROWS EXCEPTION TO PREVENT UNINITIALIZED VARIABLES. SUBCLASSING SINGLETON NO SENSE ANYWAY.")
+@_fix(issue = "non injected call should be verified if a user sends false")
 @Startup
 @Interceptors({MethodTimer.class})
 final public class DB implements DBLocal {

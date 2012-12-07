@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.rbs.RBGet;
 
 /**
@@ -23,7 +23,7 @@ import ai.ilikeplaces.rbs.RBGet;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class LogNull {
 
-    @NOTE(note = "ASSIGNING VALUE TO STATIC STRING TO GAIN SPEED. THESE METHODS SHOULD WORK FAST TO FACILITATE THEIR PURPOSE.")
+    @_note(note = "ASSIGNING VALUE TO STATIC STRING TO GAIN SPEED. THESE METHODS SHOULD WORK FAST TO FACILITATE THEIR PURPOSE.")
     final static private String MSG = RBGet.expMsgs.getString("ai.ilikeplaces.util.LogNull.0001");
 
 

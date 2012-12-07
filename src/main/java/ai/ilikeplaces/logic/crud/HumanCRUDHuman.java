@@ -6,6 +6,7 @@ import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.*;
@@ -51,6 +52,11 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     private static final String IS_NOT_FROM_A_VALID_DOMAIN = " is not from a valid domain";
     private static final String ACTIVATE_PROFILE_SUCCESSFUL = "Activate Profile Successful.";
     private static final String ACTIVATE_PROFILE_FAILED = "Activate Profile FAILED!";
+
+
+    @EJB
+    private CrudServiceLocal crudServiceLocal_;
+
     @EJB
     private RHumanLocal rHumanLocal_;
 
@@ -221,7 +227,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    @VERIFY(item = "Check if list email validation works", against = "MethodParams")
+    @_verify(item = "Check if list email validation works", against = "MethodParams")
     public List<HumansIdentity> doDirtyRHumansIdentitiesByEmails(final List<Email> emails) {
         List<String> emailList = new ArrayList<String>();
         for (final RefObj<String> email : emails) {
@@ -368,7 +374,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
 
     /*BEGINNING OF PREPERATOR METHODS*/
 
-    @TODO(task = "ADD HUMANSIDENTITY VALUES TAKE FROM THE SERVLETSIGNUP. CHANGE ALL NON_CRUDSERVICE CLASSES TO USE NON_TRANSACTIONAL AS REQUIRED")
+    @_todo(task = "ADD HUMANSIDENTITY VALUES TAKE FROM THE SERVLETSIGNUP. CHANGE ALL NON_CRUDSERVICE CLASSES TO USE NON_TRANSACTIONAL AS REQUIRED")
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Return<Boolean> doCHuman(final RefObj<String> humanId, final RefObj<String> password, final RefObj<String> email) {
@@ -397,7 +403,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
                     hid.setHumanId(newUser.getHumanId());
                     hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
 
-                    newUser.setHumansIdentity(hid);
+                    newUser.setHumansIdentity((HumansIdentity) crudServiceLocal_.create(hid));
                 }
 
                 //HumansNet has as many internal primarykeyjoin entities
@@ -410,40 +416,40 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
                     hn.setDisplayName(newUser.getHumanId().split(SYMBOL_AT)[0]);
                     hn.setHumanId(newUser.getHumanId());
 
-                    hn.setHumansNetPeople(hnp);
+                    hn.setHumansNetPeople((HumansNetPeople) crudServiceLocal_.create(hnp));
 
-                    newUser.setHumansNet(hn);
+                    newUser.setHumansNet((HumansNet) crudServiceLocal_.create(hn));
                 }
 
 
                 final HumansPrivateLocation hpl = new HumansPrivateLocation();
                 hpl.setHumanId(newUser.getHumanId());
-                newUser.setHumansPrivateLocation(hpl);
+                newUser.setHumansPrivateLocation((HumansPrivateLocation) crudServiceLocal_.create(hpl));
 
                 final HumansPrivateEvent hpe = new HumansPrivateEvent();
                 hpe.setHumanId(newUser.getHumanId());
-                newUser.setHumansPrivateEvent(hpe);
+                newUser.setHumansPrivateEvent((HumansPrivateEvent) crudServiceLocal_.create(hpe));
 
                 final HumansAlbum hal = new HumansAlbum();
                 hal.setHumanId(newUser.getHumanId());
-                newUser.setHumansAlbum(hal);
+                newUser.setHumansAlbum((HumansAlbum) crudServiceLocal_.create(hal));
 
                 final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
                 hprp.setHumanId(newUser.getHumanId());
-                newUser.setHumansPrivatePhoto(hprp);
+                newUser.setHumansPrivatePhoto((HumansPrivatePhoto) crudServiceLocal_.create(hprp));
 
                 final HumansPublicPhoto hpup = new HumansPublicPhoto();
                 hpup.setHumanId(newUser.getHumanId());
-                newUser.setHumansPublicPhoto(hpup);
+                newUser.setHumansPublicPhoto((HumansPublicPhoto) crudServiceLocal_.create(hpup));
 
                 final HumansWall hw = new HumansWall();
                 hw.setHumanId(newUser.getHumanId());
                 hw.setWall(new Wall().setWallTypeR(Wall.wallTypeHuman));
-                newUser.setHumansWall(hw);
+                newUser.setHumansWall((HumansWall) crudServiceLocal_.create(hw));
 
                 final HumansAlbum halbum = new HumansAlbum();
                 halbum.setHumanId(newUser.getHumanId());
-                newUser.setHumansAlbum(halbum);
+                newUser.setHumansAlbum((HumansAlbum) crudServiceLocal_.create(halbum));
 
                 doNTxCHuman(newUser);
 
@@ -490,8 +496,8 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
      */
     @Override
     @Deprecated
-    @NOTE(note = "Will be centralized", see = "IntegrityTester.class")
-    @FIXME(issue = "Throws exception for duplicate key. Check why.")
+    @_note(note = "Will be centralized", see = "IntegrityTester.class")
+    @_fix(issue = "Throws exception for duplicate key. Check why.")
     public String verify() {
         final String random = this.getClass().getSimpleName() + System.currentTimeMillis();
         DB.getHumanCRUDMapLocal(true).createEntry("verify", random);

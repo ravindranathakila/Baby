@@ -15,7 +15,7 @@ import java.util.UUID;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Table(name = "PublicPhoto", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
-@OK
+@_ok
 @EntityListeners({EntityLifeCycleListener.class})
 public class PublicPhoto implements Serializable {
 // ------------------------------ FIELDS ------------------------------
@@ -32,7 +32,7 @@ public class PublicPhoto implements Serializable {
     @Column(name = "")
     public String publicPhotoFilePath;
 
-    @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
+    @_field_preamble(description = "The path should be very random as it will be exposed to the www." +
             "Also make sure this supports good SEO.")
     @Column(name = "publicPhotoURLPath")
     public String publicPhotoURLPath;
@@ -43,25 +43,25 @@ public class PublicPhoto implements Serializable {
     @Column(name = "publicPhotoDescription", length = 1000)
     public String publicPhotoDescription;
 
-    @FieldPreamble(description = "Required to calculate ranking")
+    @_field_preamble(description = "Required to calculate ranking")
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "publicPhotoUploadDate")
     public Date publicPhotoUploadDate;
 
-    @FieldPreamble(description = "Required to calculate rank position")
+    @_field_preamble(description = "Required to calculate rank position")
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "publicPhotoTakenDate")
     public Date publicPhotoTakenDate;
 
-    @FieldPreamble(description = "Required to calculate rank position")
+    @_field_preamble(description = "Required to calculate rank position")
     @Column(name = "publicPhotoRankUnits")
     public Long publicPhotoRankUnits;
 
-    @FieldPreamble(description = "Required to calculate rank position")
+    @_field_preamble(description = "Required to calculate rank position")
     @Column(name = "publicPhotoRankTurns")
     public Long publicPhotoRankTurns;
 
-    @FieldPreamble(description = "Required when rebuilding a database from scratch someday." +
+    @_field_preamble(description = "Required when rebuilding a database from scratch someday." +
             "Since the whole concept of ilikeplaces relies on content richness, preserving this in this table important.")
 
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
@@ -69,7 +69,7 @@ public class PublicPhoto implements Serializable {
     @JoinColumn(name = Location.locationIdCOL)
     public Location location;
 
-    @FieldPreamble(description = "Who uploaded this image? Will he request to delete it?")
+    @_field_preamble(description = "Who uploaded this image? Will he request to delete it?")
 
     @WARNING(warning = "The cascade types of HumansPublicPhoto, Location and this method, are very CascadeType sensitive. Any mistake will trigger rollbacks.")
     @_bidirectional(ownerside = _bidirectional.OWNING.IS)
@@ -78,7 +78,7 @@ public class PublicPhoto implements Serializable {
     public HumansPublicPhoto humansPublicPhoto;
     public static final String humansPublicPhotoCOL = "humansPublicPhoto";
 
-    @NOTE(note = "Pre persisted entities will have null ids. hence using pre persisted ids is not practical.")
+    @_note(note = "Pre persisted entities will have null ids. hence using pre persisted ids is not practical.")
     final private UUID uUID = UUID.randomUUID();
 
 // --------------------- GETTER / SETTER METHODS ---------------------

@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc._bidirectional;
+import ai.ilikeplaces.doc._fix;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 
@@ -33,7 +33,7 @@ public class HumansPublicPhoto implements HumanIdFace, Serializable {
     //@PrimaryKeyJoinColumn
     public Human human;
 
-    @FIXME(issue = "Fetch type should be lazy, check if callers can do list.size() to refresh list." +
+    @_fix(issue = "Fetch type should be lazy, check if callers can do list.size() to refresh list." +
             "The List of photos can be huge so eager isn't practical")
     @_bidirectional(ownerside = _bidirectional.OWNING.NOT)
     @OneToMany(mappedBy = PublicPhoto.humansPublicPhotoCOL, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

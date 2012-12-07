@@ -23,7 +23,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@CONVENTION(convention = "do all the possible needful9setters etc) before going into the transaction, via an intermediate method. saves resources. " +
+@_convention(convention = "do all the possible needful9setters etc) before going into the transaction, via an intermediate method. saves resources. " +
         "why not let the caller do this? lets do the hard work. give the guy a break! besides, we can enforce him to give us required fields. this also " +
         "facilitates setting granular role permissions.")
 @Interceptors({EntityManagerInjector.class, DBOffline.class, ParamValidator.class, MethodTimer.class, MethodParams.class, RuntimeExceptionWrapper.class})
@@ -58,7 +58,7 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
         return uPublicPhotoLocal_.doUPublicPhotoDescriptionLocal(publicPhotoId, publicPhotoDescription);
     }
 
-    @FIXME(issue = "When adding a location, there cannot be two equal location names such that super locations are equal too. Please update specific CRUD service. Also His As, My As.")
+    @_fix(issue = "When adding a location, there cannot be two equal location names such that super locations are equal too. Please update specific CRUD service. Also His As, My As.")
     @Override
     public Return<PublicPhoto> cPublicPhoto(final String humanId, final long locationId, final String fileName, final String publicPhotoName, final String publicPhotoDescription, final String publicPhotoURLPath, final int retries) {
         Return<PublicPhoto> r;
@@ -83,13 +83,13 @@ final public class HumanCRUDPublicPhoto extends AbstractSLBCallbacks implements 
     /*BEGINING OF NON TRANSACTIONAL METHODS*/
 
     @Override
-    @TODO(task = "verify if it is the right human before deleting")
+    @_todo(task = "verify if it is the right human before deleting")
     public boolean uPublicPhotoDescription(final String humanId, final long publicPhotoId, final String publicPhotoDescription) {
         return doHumanUPublicPhotoDescription(publicPhotoId, publicPhotoDescription);
     }
 
     @Override
-    @TODO(task = "verify if it is the right human before deleting")
+    @_todo(task = "verify if it is the right human before deleting")
     public boolean dPublicPhoto(final String humanId, final long publicPhotoId) {
         return doHumanDPublicPhoto(publicPhotoId);
     }

@@ -31,9 +31,9 @@ import java.util.Enumeration;
  */
 
 // @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@FIXME(issue = "XSS")
+@_fix(issue = "XSS")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@TODO(task = "USE A STATIC METHOD TO GET THE LOGGED ON USER INSTANCE.")
+@_todo(task = "USE A STATIC METHOD TO GET THE LOGGED ON USER INSTANCE.")
 final public class ServletActivate extends HttpServlet {
 // ------------------------------ FIELDS ------------------------------
 
@@ -158,9 +158,9 @@ final public class ServletActivate extends HttpServlet {
                                                 "Adios!"
                                 );
 
-                                @TESTS({
-                                        @TEST(scene = "Check for relative urls such as /page/_org", date = "20111130"),
-                                        @TEST(scene = "Full url with parameters", status = true, date = "20111130")
+                                @_tests({
+                                        @_test(scene = "Check for relative urls such as /page/_org", date = "20111130"),
+                                        @_test(scene = "Full url with parameters", status = true, date = "20111130")
                                 })
                                 final String next = URLDecoder.decode(request__.getParameter(NEXT), "UTF-8");
 

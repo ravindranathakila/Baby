@@ -44,12 +44,12 @@ public class Wall implements Clearance, Refreshable<Wall>, Serializable {
     public String wallContent = null;
 
     @RefreshId("wallMsgs")
-    @DOCUMENTATION(
-            NOTE = @NOTE("Wall msgs are fetched lazy because sometimes private event is required to be loaded fast, and fetches wall, thereby wall msgs.")
+    @_doc(
+            NOTE = @_note("Wall msgs are fetched lazy because sometimes private event is required to be loaded fast, and fetches wall, thereby wall msgs.")
     )
-    @FIXME(issue = "Find out how to limit resultset to say, last 20, in order to limit the results fetched")
+    @_fix(issue = "Find out how to limit resultset to say, last 20, in order to limit the results fetched")
     @_unidirectional
-    @TODO(task = "Move DESC ASC TO SOME STATIC CLASS FOR REUSE")
+    @_todo(task = "Move DESC ASC TO SOME STATIC CLASS FOR REUSE")
     @OrderBy(Msg.msgIdCOL + " DESC")
     @OneToMany(
             cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.entities.Location;
@@ -43,7 +43,7 @@ public class RPublicPhoto implements RPublicPhotoLocal {
         return doCommonRPublicPhotoLocal(humanId, locationId, publicPhoto);
     }
 
-    @NOTE(note = "Avoiding transactions as it is a bulk read")
+    @_note(note = "Avoiding transactions as it is a bulk read")
     @Override
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<PublicPhoto> doRAllPublicPhotos(final String humanId) {

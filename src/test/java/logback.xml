@@ -1,0 +1,182 @@
+<!--
+  ~ @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+  -->
+
+<!--
+    Document   : logback-test.xml.xml
+    Created on : October 15, 2009, 12:15 PM
+    Author     : Ravindranath Akila
+    Description:
+        This should be in the classpath for logback to read configuration from
+-->
+<configuration debug="true">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--Pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n%n</Pattern-->
+            <Pattern>%thread|%date|%logger|%file:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+
+    <appender name="FILE_EXCEPTION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_exception.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_exception.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger|%file:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_USER_EXCEPTION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_user_exception.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_user_exception.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_debug.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger|%file:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_info.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%thread|%date|%logger|%file:%line>%msg%n%n</Pattern>
+        </layout>
+    </appender>
+
+
+    <appender name="FILE_USER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_user.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_user.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%-4level|%date>%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_NON_USER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_non_user.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_non_user.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%-4level|%thread|%date>%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_SERVER_STATUS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_server_status.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_server_status.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%-4level|%thread|%date>%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_FAILED_SIGNUPS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_failed_signups.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_failed_signups.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%-4level|%date>%msg%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE_FAILED_LOGINS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>../logs/ilp_failed_logins.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>../logs/ilp_failed_logins.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%-4level|%date>%msg%n</Pattern>
+        </layout>
+    </appender>
+
+
+    <logger name="USER" level="info">
+        <appender-ref ref="FILE_USER"/>
+    </logger>
+
+    <logger name="NON_USER" level="info">
+        <appender-ref ref="FILE_NON_USER"/>
+    </logger>
+
+    <logger name="EXCEPTION" level="error">
+        <appender-ref ref="FILE_EXCEPTION"/>
+    </logger>
+
+    <logger name="USER_EXCEPTION" level="error">
+        <appender-ref ref="FILE_USER_EXCEPTION"/>
+    </logger>
+
+    <logger name="DEBUG" level="info">
+        <appender-ref ref="FILE_DEBUG"/>
+    </logger>
+
+    <logger name="INFO" level="info">
+        <appender-ref ref="FILE_INFO"/>
+    </logger>
+
+    <logger name="SERVER_STATUS" level="info">
+        <appender-ref ref="FILE_SERVER_STATUS"/>
+    </logger>
+
+    <logger name="FAILED_SIGNUPS" level="info">
+        <appender-ref ref="FILE_FAILED_SIGNUPS"/>
+    </logger>
+
+    <logger name="FAILED_LOGINS" level="info">
+        <appender-ref ref="FILE_FAILED_LOGINS"/>
+    </logger>
+
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>

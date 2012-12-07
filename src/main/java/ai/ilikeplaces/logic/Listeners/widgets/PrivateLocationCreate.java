@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc._ok;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
@@ -28,7 +28,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.PrivateLocationCreateCNoti
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@OK
+@_ok
 abstract public class PrivateLocationCreate extends AbstractWidgetListener {
 
     private static final String SAVING = "Saving...";

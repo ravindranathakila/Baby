@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.BUG;
-import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.License;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc._bug;
+import ai.ilikeplaces.doc._doc;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
@@ -37,7 +37,7 @@ import java.util.List;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@DOCUMENTATION(
+@_doc(
         WARNING = @WARNING("As of 2011-02-04 the private photo widget, if appended dynamically, will thow a javascript error on client side." +
                 "This issue was not fixed despite much effort.")
 )
@@ -107,7 +107,7 @@ public class AlbumManager extends AbstractWidgetListener {
         }
 
 
-        for (@BUG("Adding invitees as prospects might cause privacy leakage") final HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventInvites()) {
+        for (@_bug("Adding invitees as prospects might cause privacy leakage") final HumansPrivateEvent humansNetPeople : privateEvent.getPrivateEventInvites()) {
             emails.add(new Email(humansNetPeople.email()));
         }
 

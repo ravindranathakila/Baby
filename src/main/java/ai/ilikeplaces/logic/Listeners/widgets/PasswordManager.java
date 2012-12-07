@@ -1,9 +1,10 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc._ok;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
@@ -25,8 +26,9 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@OK
+@_ok
 abstract public class PasswordManager extends AbstractWidgetListener {
+    public final static String YIKES_SOMETHING_WENT_WRONG = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
 // ------------------------------ FIELDS ------------------------------
 
     HumanId humanId = null;
@@ -185,10 +187,10 @@ abstract public class PasswordManager extends AbstractWidgetListener {
                                 $$(ProfilePasswordNotice).setTextContent("Password Updated Successfully!");
                                 remove(evt_.getTarget(), EventType.CLICK, this);
                             } else {
-                                $$(ProfilePasswordNotice).setTextContent(Return.YIKES_SOMETHING_WENT_WRONG);
+                                $$(ProfilePasswordNotice).setTextContent(YIKES_SOMETHING_WENT_WRONG);
                             }
                         } else {
-                            $$(ProfilePasswordNotice).setTextContent(Return.YIKES_SOMETHING_WENT_WRONG);
+                            $$(ProfilePasswordNotice).setTextContent(YIKES_SOMETHING_WENT_WRONG);
                         }
                     }
                 }

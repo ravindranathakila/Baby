@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._doc;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
@@ -34,8 +34,8 @@ abstract public class Button extends AbstractWidgetListener<ButtonCriteria> {
      * @param params               [0] should be the img src, if left blank, realized text and will be hidden
      */
     @Deprecated
-    @DOCUMENTATION(
-            NOTE = @NOTE("Depricated because the varargs used here. Super advices that we use a bean instead.")
+    @_doc(
+            NOTE = @_note("Depricated because the varargs used here. Super advices that we use a bean instead.")
     )
     public Button(final ItsNatServletRequest request__, final Element appendToElement__, final String buttonText, final boolean doRefreshPageOnClick, final Object... params) {
         super(request__, Page.GenericButton, appendToElement__, buttonText, doRefreshPageOnClick, params);

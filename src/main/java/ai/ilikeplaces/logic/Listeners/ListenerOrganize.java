@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.ilikeplaces.doc.DOCUMENTATION;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc._doc;
+import ai.ilikeplaces.doc._note;
+import ai.ilikeplaces.doc._todo;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
@@ -138,9 +138,9 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                                 $(SkeletonCPageTitle).setAttribute(MarkupTag.GENERIC.title(), GUI.getString(ORGANIZE_MAIN_INTRO_TITLE));
                                                 */
 
-                                                @DOCUMENTATION(
+                                                @_doc(
                                                         TODO = {
-                                                                @TODO("Move this to a widget to ease themeing etc.")
+                                                                @_todo("Move this to a widget to ease themeing etc.")
                                                         }
                                                 )
                                                 final Node unnecessaryVariable = $(Skeleton_center_skeleton).appendChild(
@@ -167,7 +167,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                 case Controller.Page.DocOrganizeModeOrganize:
                                     UCOrganize:
                                     {
-                                        SmartLogger.g().appendToLogMSG("Mode: " +Controller.Page.DocOrganizeModeOrganize);
+                                        SmartLogger.g().appendToLogMSG("Mode: " + Controller.Page.DocOrganizeModeOrganize);
 
                                         try {
                                             new PrivateLocationCreate(request__, $(Skeleton_center_skeleton), getUsernameAsValid()) {
@@ -201,7 +201,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
 
                                         SmartLogger.g().appendToLogMSG("Mode: " + Controller.Page.DocOrganizeModeLocation);
 
-                                        @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
+                                        @_note(note = "Outside try as this is caught by the outermost common Number format exception.")
                                         final int location = Integer.parseInt(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
                                         try {
                                             final Element intro = $(MarkupTag.P);
@@ -220,7 +220,7 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
                                         SmartLogger.g().appendToLogMSG("Mode: " + Controller.Page.DocOrganizeModePrivateLocation);
 
                                         try {
-                                            @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
+                                            @_note(note = "Outside try as this is caught by the outermost common Number format exception.")
                                             final long requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
                                             final Return<PrivateLocation> r = DB.getHumanCrudPrivateLocationLocal(true).dirtyRPrivateLocationAsAny(new HumanId().setObjAsValid(getUsername()), requestedPrivateLocation);
                                             if (r.returnStatus() == 0) {
@@ -265,10 +265,10 @@ public class ListenerOrganize implements ItsNatServletRequestListener {
 
                                     SmartLogger.g().appendToLogMSG("Mode: " + Controller.Page.DocOrganizeModeEvent);
 
-                                    @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
+                                    @_note(note = "Outside try as this is caught by the outermost common Number format exception.")
                                     final long requestedPrivateLocation = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeLocation));
 
-                                    @NOTE(note = "Outside try as this is caught by the outermost common Number format exception.")
+                                    @_note(note = "Outside try as this is caught by the outermost common Number format exception.")
                                     final long event = Long.parseLong(request__.getServletRequest().getParameter(Controller.Page.DocOrganizeEvent));
                                     final Return<PrivateEvent> r = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventAsAny(getUsernameAsValid(), event);
                                     if (r.returnStatus() == 0) {

@@ -1,9 +1,9 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
 import ai.ilikeplaces.doc._bidirectional;
+import ai.ilikeplaces.doc._ok;
 import ai.ilikeplaces.entities.etc.*;
 
 import javax.persistence.*;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@OK
+@_ok
 @Table(name = "PrivateLocation", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})

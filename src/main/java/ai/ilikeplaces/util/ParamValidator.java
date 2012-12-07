@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc._note;
+import ai.ilikeplaces.doc._todo;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import net.sf.oval.exception.ConstraintsViolatedException;
@@ -21,7 +21,7 @@ import java.util.*;
  * Time: 1:14:18 AM
  */
 
-@TODO(task = "IMPLEMENT RECURRSSIVE VALIDATOR. NOW ITS COMMENTED.")
+@_todo(task = "IMPLEMENT RECURRSSIVE VALIDATOR. NOW ITS COMMENTED.")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class ParamValidator {
     private static final String PARAMETER_VALIDATION_ERROR_MESSAGE = "SORRY! I ENCOUNTERED AN EXCEPTION WITHIN THE PARAMETER VALIDATION INTERCEPTOR. DETAILS ARE AS FOLLOWS. ";
@@ -55,7 +55,7 @@ public class ParamValidator {
         return invocation.proceed();
     }
 
-    @NOTE(note = "This could be possibly simplified")
+    @_note(note = "This could be possibly simplified")
     private List<ConstraintViolation> recursiveCollectionValidator(final Object object, final Validator v) {
         if (object instanceof Collections) {
             final List<ConstraintViolation> violations = new ArrayList<ConstraintViolation>();
@@ -74,7 +74,7 @@ public class ParamValidator {
         }
     }
 
-    @NOTE(note = "This could be possibly simplified")
+    @_note(note = "This could be possibly simplified")
     private List<ConstraintViolation> recurrsiveArrayValidator(final Object object, final Validator v) {
         if (object instanceof Arrays) {
             final List<ConstraintViolation> violations = new ArrayList<ConstraintViolation>();

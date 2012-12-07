@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc._ok;
 import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
@@ -30,7 +30,7 @@ import static ai.ilikeplaces.servlets.Controller.Page.*;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@OK
+@_ok
 abstract public class PrivateLocationDelete extends AbstractWidgetListener {
     private static final String PLD_LIST_ITEM = "PLDListItem";
     private static final String NO_MOMENTS_STARTED_HERE_YET = "No moments started here yet!";

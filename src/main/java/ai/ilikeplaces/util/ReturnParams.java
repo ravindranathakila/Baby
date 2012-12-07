@@ -3,6 +3,7 @@ package ai.ilikeplaces.util;
 import ai.ilikeplaces.doc.License;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,9 +20,7 @@ public class ReturnParams implements ReturnParamsFace {
 
     public ReturnParams(final Object... params) {
         final List<Object> localParams = new ArrayList<Object>();
-        for (final Object param : params) {
-            localParams.add(param);
-        }
+        Collections.addAll(localParams, params);
         this.params = localParams;
     }
 
@@ -30,7 +29,7 @@ public class ReturnParams implements ReturnParamsFace {
     public ReturnParamsFace add(final Object... obj) {
         params.add(obj);
         return this;
-    }    
+    }
 
     @Override
     public ReturnParamsFace set(final int index, final Object... obj) {

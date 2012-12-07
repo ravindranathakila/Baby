@@ -13,9 +13,9 @@ import java.util.List;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@DOCUMENTATION(
-        LOGIC = @LOGIC(
-                SEE = @SEE(WallWidgetPrivatePhoto.class)
+@_doc(
+        LOGIC = @_logic(
+                SEE = @_see(WallWidgetPrivatePhoto.class)
         )
 )
 @Table(name = "PrivatePhoto", schema = "KunderaKeyspace@ilpMainSchema")
@@ -31,10 +31,10 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
     public Long privatePhotoId;
     public static final String privatePhotoIdCOL = "privatePhotoId";
 
-    @FieldPreamble(description = "CDN security issue. Put in folders?")
+    @_field_preamble(description = "CDN security issue. Put in folders?")
     public String privatePhotoFilePath;
 
-    @FieldPreamble(description = "The path should be very random as it will be exposed to the www." +
+    @_field_preamble(description = "The path should be very random as it will be exposed to the www." +
             "Also make sure this supports good SEO.")
     @Column(name = "privatePhotoURLPath")
     public String privatePhotoURLPath;
@@ -45,17 +45,17 @@ public class PrivatePhoto implements Serializable, Comparable<PrivatePhoto>, Ref
     @Column(name = "privatePhotoDescription")
     public String privatePhotoDescription;
 
-    @FieldPreamble(description = "Required to show users")
+    @_field_preamble(description = "Required to show users")
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "privatePhotoUploadDate")
     public Date privatePhotoUploadDate;
 
-    @FieldPreamble(description = "Required to show users")
+    @_field_preamble(description = "Required to show users")
     @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "privatePhotoTakenDate")
     public Date privatePhotoTakenDate;
 
-    @FieldPreamble(description = "Who uploaded this image? Wil he request to delete it? " +
+    @_field_preamble(description = "Who uploaded this image? Wil he request to delete it? " +
             "Privacy important? " +
             "Lets preserve the info.")
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})

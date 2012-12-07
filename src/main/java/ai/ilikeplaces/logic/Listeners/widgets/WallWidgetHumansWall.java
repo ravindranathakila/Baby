@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.SEE;
+import ai.ilikeplaces.doc._fix;
+import ai.ilikeplaces.doc._see;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
@@ -212,7 +212,7 @@ public class WallWidgetHumansWall extends WallWidget {
             final List<HumansNetPeople> beFriends = (List<HumansNetPeople>) $$getHumanUserFromRequest(request)
                     .cache(requestedProfile.getHumanId(), DownTownFlow.FRIENDS);
 
-            @SEE(seeClasses = {
+            @_see(seeClasses = {
                     WallWidgetHumansWall.class,
                     PrivateEventDelete.class,
                     PrivateEventView.class,
@@ -270,7 +270,7 @@ public class WallWidgetHumansWall extends WallWidget {
                 if (wallAppend.validate() == 0) {
                     if (!wallAppend.getObj().equals("")) {
 
-                        @FIXME("THIRD PARAMETER WRONG! SINCE 1 AND 3 PARAMETERS ARE SAME AND BACKEND USES 1, SO FAR NO ISSUE")
+                        @_fix("THIRD PARAMETER WRONG! SINCE 1 AND 3 PARAMETERS ARE SAME AND BACKEND USES 1, SO FAR NO ISSUE")
                         final Return<Wall> r = DB.getHumanCrudWallLocal(true).addEntryToWall(myrequestedProfile, mycurrUserAsVisitor, new Obj<HumanId>(mycurrUserAsVisitor), wallAppend.getObj());
 
 

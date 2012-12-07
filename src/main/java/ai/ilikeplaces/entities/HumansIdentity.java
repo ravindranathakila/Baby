@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.doc.DOCUMENTATION;
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc._doc;
+import ai.ilikeplaces.doc._fix;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.HumanEquals;
 import ai.ilikeplaces.entities.etc.HumanPkJoinFace;
@@ -19,8 +19,8 @@ import java.util.Date;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@DOCUMENTATION(
-        FIXME = @FIXME("Performance Issue: " +
+@_doc(
+        FIXME = @_fix("Performance Issue: " +
                 "Takes upto 16ms" +
                 "7087328  adimpression_ilikeplaces_war_1.6-SNAPSHOTPU  TRACE  [http-8080-3] openjpa.jdbc.SQL - <t 29370034, conn 0> executing prepstmnt 3799741 " +
                 "SELECT t1.humanId, t1.clearance, t1.humanAlive, t2.humanId, t2.displayName, t3.humanId, t3.clearance, t3.humanAlive, t0.humansIdentityDateOfBirth, t0.humansIdentityEmail, t0.humansIdentityFirstName, t0.humansIdentityGUIPreferences, t0.humansIdentityGenderCode, t0.humansIdentityLastName, t0.humansIdentityProfilePhoto, t4.url, t4.metadata, t4.type FROM HumansIdentity t0 " +

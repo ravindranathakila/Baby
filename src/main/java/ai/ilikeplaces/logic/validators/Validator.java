@@ -51,7 +51,7 @@ public class Validator implements ValidatorFace, Factory {
     }
 
     @Override
-    public Return<ReturnParams> isPriavateEventName(final String input) {
+    public Return<ReturnParams> isPrivateEventName(final String input) {
         return new ReturnImpl<ReturnParams>((new ReturnParams(true, input)), "");
     }
 

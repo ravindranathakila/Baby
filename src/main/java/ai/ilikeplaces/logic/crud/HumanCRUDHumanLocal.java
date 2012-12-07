@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -40,7 +40,7 @@ public interface HumanCRUDHumanLocal extends Verify {
 
     public Return<Boolean> doNTxRemoveHumansNetPeople(final RefObj<String> adderHumanId, final RefObj<String> addeeHumanId);
 
-    @NOTE(note = "Triple e's were intentional. Two e's confuses er with ee.")
+    @_note(note = "Triple e's were intentional. Two e's confuses er with ee.")
     public Return<Boolean> doNTxIsHumansNetPeople(final RefObj<String> checkerHumanId, final RefObj<String> checkeeeHumanId);
 
     public Return<Boolean> doNTxUDisplayName(final HumanId humanId, DisplayNameString displayName);

@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc._bidirectional;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.mail.GetMailAddress;
 
@@ -137,7 +137,7 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace, 
 
 // --------------------- Interface HumansFriend ---------------------
 
-    @NOTE(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
+    @_note(note = "This implementation will be fast a.l.a the Human entity has lazy in its getters.")
     @Override
     @Transient
     public String getDisplayName() {

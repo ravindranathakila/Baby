@@ -1,8 +1,8 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.DOCUMENTATION;
-import ai.ilikeplaces.doc.LOGIC;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._doc;
+import ai.ilikeplaces.doc._logic;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Parameter;
 import org.apache.commons.httpclient.Header;
@@ -32,14 +32,14 @@ import java.util.Map;
  * Date: 1/7/12
  * Time: 10:52 AM
  */
-@DOCUMENTATION(
-        NOTE = @NOTE(
+@_doc(
+        NOTE = @_note(
                 "This class was specifically designed to be vendor independent." +
                         "Much effort was made to build it by looking at http://tools.ietf.org/html/draft-ietf-oauth-v2 . " +
                         "Please immediately report any bugs you find at https://www.pivotaltracker.com/projects/304913 . " +
                         "Thank you!"),
-        LOGIC = @LOGIC(
-                @NOTE("A servlet is a shared resource." +
+        LOGIC = @_logic(
+                @_note("A servlet is a shared resource." +
                         "Hence this class can contain only shared details of a the application as a client. " +
                         "It shall under no circumstance, contain data related to a specific user." +
                         "Since it is abstract, this class however, can have data related to a specific OAuth facilitator such as Facebook, Twitter and Google " +
@@ -143,8 +143,8 @@ public abstract class AbstractOAuth extends HttpServlet {
      * <p/>
      * Host: server.example.com
      */
-    @LOGIC(
-            @NOTE("Here our main focus ist to initialize data related to " +
+    @_logic(
+            @_note("Here our main focus ist to initialize data related to " +
                     "<a href='http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1'>http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.1</a> . "))
     public AbstractOAuth() {
         this.oAuthEndpoint = oAuthProvider().oAuthEndpoint;
@@ -618,8 +618,8 @@ public abstract class AbstractOAuth extends HttpServlet {
      * <p/>
      * Host: server.example.com
      */
-    @LOGIC(
-            @NOTE("By nature, we don't want this object to be modified after construction."))
+    @_logic(
+            @_note("By nature, we don't want this object to be modified after construction."))
     public final class OAuthAuthorizationRequest {
 // ------------------------------ FIELDS (NON-STATIC)--------------------
 
@@ -653,8 +653,8 @@ public abstract class AbstractOAuth extends HttpServlet {
          */
         final String state;
 
-        @LOGIC(
-                @NOTE("By nature, we don't want this object to be modified after construction."))
+        @_logic(
+                @_note("By nature, we don't want this object to be modified after construction."))
         public OAuthAuthorizationRequest(final String response_type,
                                          final String client_id,
                                          final String redirect_uri,
@@ -716,8 +716,8 @@ public abstract class AbstractOAuth extends HttpServlet {
      * value sizes.  The authorization server should document the size of
      * any value it issues.
      */
-    @LOGIC(
-            @NOTE("By nature, we don't want this object to be modified after construction."))
+    @_logic(
+            @_note("By nature, we don't want this object to be modified after construction."))
     public final class OAuthAuthorizationResponse {
 // ------------------------------ FIELDS (NON-STATIC)--------------------
 
@@ -812,8 +812,8 @@ public abstract class AbstractOAuth extends HttpServlet {
          */
         final String redirect_uri;
 
-        @LOGIC(
-                @NOTE("By nature, we don't want this object to be modified after construction."))
+        @_logic(
+                @_note("By nature, we don't want this object to be modified after construction."))
         public OAuthAccessTokenRequest(final String grant_type, final String code, final String redirect_uri) {
             this.grant_type = grant_type != null ? grant_type : AbstractOAuth.EMPTY;
             this.code = code != null ? code : AbstractOAuth.EMPTY;
@@ -887,8 +887,8 @@ public abstract class AbstractOAuth extends HttpServlet {
          */
         final String parameters;
 
-        @LOGIC(
-                @NOTE("By nature, we don't want this object to be modified after construction."))
+        @_logic(
+                @_note("By nature, we don't want this object to be modified after construction."))
         public OAuthAccessTokenResponse(final String access_token,
                                         final String token_type,
                                         final String expires_in,
@@ -967,8 +967,8 @@ public abstract class AbstractOAuth extends HttpServlet {
         final public String redirect_uri;
 
 
-        @LOGIC(
-                @NOTE("By nature, we don't want this object to be modified after construction."))
+        @_logic(
+                @_note("By nature, we don't want this object to be modified after construction."))
         public ClientAuthentication(final String client_id, final String client_secret, final String redirect_uri) {
             this.client_id = client_id;
             this.client_secret = client_secret;
@@ -1005,7 +1005,7 @@ public abstract class AbstractOAuth extends HttpServlet {
             }
         } else {//tricky. we need to get refer but do this just once to avoid refer being updated with internal urls upon consecutive calls
             if (request.getSession(true).getAttribute(ILP_DESTINATION) == null) {//checking if previous calls set refer in session
-                request.getSession().setAttribute(ILP_DESTINATION,  request.getHeader(ServletLogin.HEADER_REFERER));
+                request.getSession().setAttribute(ILP_DESTINATION, request.getHeader(ServletLogin.HEADER_REFERER));
             }
         }
 
@@ -1050,8 +1050,8 @@ public abstract class AbstractOAuth extends HttpServlet {
      * @param request
      * @param response
      */
-    @LOGIC(
-            @NOTE(
+    @_logic(
+            @_note(
                     "As of now, this method is where we get a redirect from the OAuth server with the related data below: (<a href='http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.2'>http://tools.ietf.org/html/draft-ietf-oauth-v2-22#section-4.1.2</a> " +
                             "   code\n" +
                             "         REQUIRED.  The authorization code generated by the\n" +

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities.etc;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 
 /**
  * This class is to be used with the equals method in objects.
@@ -58,7 +58,7 @@ public abstract class HumanEquals implements HumanEqualsFace {
      * @return
      */
     @Deprecated
-    @NOTE(note = "Use an interface based equals matching approach if you are using this. Logic is" +
+    @_note(note = "Use an interface based equals matching approach if you are using this. Logic is" +
             "If the two classes of of different types, but instanceof same interface, then match humanid." +
             "This approach avoids necessity to extend a class.")
     static public boolean staticMatchHumanId(final HumanEqualsFace main, final Object other) {

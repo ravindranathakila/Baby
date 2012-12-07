@@ -1,9 +1,9 @@
 package ai.ilikeplaces.rbs;
 
-import ai.ilikeplaces.doc.CONVENTION;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc._convention;
+import ai.ilikeplaces.doc._note;
+import ai.ilikeplaces.doc._todo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,13 +16,13 @@ import java.util.Set;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@NOTE(note = "THIS PROVIDES DEFAULT RB ACCESS THROUGH VARIABLES. EXCEPTION IS MADE FOR GUI WHERE" +
+@_note(note = "THIS PROVIDES DEFAULT RB ACCESS THROUGH VARIABLES. EXCEPTION IS MADE FOR GUI WHERE" +
         "CALLER IS THE ONE WHO KNOWS THE DIALECT." +
         "IN THE CASE OF logMsgs THE DEVELOPER CAN SET THE APPLICATION SPECIFIC LOCALIZAION IN THE" +
         "STARTUP SERVLET. config WILL ALWAYS HAVE NO DIALECT.")
 public class RBGet {
 
-    @CONVENTION(convention = "THIS SHOULD BE AN IDENTICAL COPY OF Config.properties. IDEALLY GlobalConfig SHOULD BE IN THE SERVER PATH SO THAT IT CAN BE EDITED DURING RUNTIME.")
+    @_convention(convention = "THIS SHOULD BE AN IDENTICAL COPY OF Config.properties. IDEALLY GlobalConfig SHOULD BE IN THE SERVER PATH SO THAT IT CAN BE EDITED DURING RUNTIME.")
     static public ResourceBundle globalConfig;
     final static public ResourceBundle logMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
     final static public ResourceBundle expMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.ExceptionMsgs");
@@ -35,7 +35,7 @@ public class RBGet {
     static {
         try {
             globalConfig = ResourceBundle.getBundle("GlobalConfig");//This should be a copy of config.properties put in the classpath in name GlobalConfig.properties
-        } catch (@NOTE(note = "WE DON'T NEED THE STACK TRACE")
+        } catch (@_note(note = "WE DON'T NEED THE STACK TRACE")
         final MissingResourceException e_) {
             logger.error("PLEASE INCLUDE GLOBALCONFIG.PROPERTIES IN WEB SERVER CLASSPATH. FALLING BACK TO USING INTERNAL CONFIG.", e_);
             globalConfig = ResourceBundle.getBundle("ai.ilikeplaces.rbs.Config");
@@ -61,7 +61,7 @@ public class RBGet {
         return returnVal;
     }
 
-    @TODO(task = "IF A KEY STARTS WITH ai.ilikeplaces, LOAD PACKAGE AND SEE IF THE KEY IS VALID.")
+    @_todo(task = "IF A KEY STARTS WITH ai.ilikeplaces, LOAD PACKAGE AND SEE IF THE KEY IS VALID.")
     final static public String verify() {
         final StringBuilder result_ = new StringBuilder();
         try {

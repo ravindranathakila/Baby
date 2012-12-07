@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc._fix;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.PrivateEvent;
@@ -479,7 +479,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         return r;
     }
 
-    @FIXME(issue = "Use human, or move to a different class")
+    @_fix(issue = "Use human, or move to a different class")
     @Override
     public Return<List<PrivateEvent>> doRPrivateEventsByBounds(final HumanId operator__, final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast) {
         Return<List<PrivateEvent>> r;
@@ -493,7 +493,7 @@ public class HumanCRUDPrivateEvent extends AbstractSLBCallbacks implements Human
         return r;
     }
 
-    @FIXME(issue = "Use human, or move to a different class")
+    @_fix(issue = "Use human, or move to a different class")
     @Override
     public Return<List<PrivateEvent>> doRPrivateEventsByBoundsAsSystem(final double latitudeSouth, final double latitudeNorth, final double longitudeWest, final double longitudeEast) {
         Return<List<PrivateEvent>> r;

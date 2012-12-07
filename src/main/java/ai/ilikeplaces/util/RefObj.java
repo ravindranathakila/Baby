@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import net.sf.oval.exception.ConstraintsViolatedException;
@@ -21,7 +21,7 @@ import java.util.List;
  * Date: Jan 21, 2010
  * Time: 6:03:22 PM
  */
-public abstract class RefObj<T> implements Serializable{
+public abstract class RefObj<T> implements Serializable {
 
     protected T obj = null;
 
@@ -85,7 +85,7 @@ public abstract class RefObj<T> implements Serializable{
         this.obj = valueToBeSetToObj;
     }
 
-    @NOTE(note = "This approach is specially used when internally creating objects that should be valid as opposed to a web user." +
+    @_note(note = "This approach is specially used when internally creating objects that should be valid as opposed to a web user." +
             "This approach will prevent the code from setting null values and other violated states.")
     public RefObj<T> setObjAsValid(final T obj) {
         constraintViolations = null;//So that validation is consistent

@@ -5,14 +5,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * {@link TESTS} might not exactly be a bug. It could also be a performance problem.
+ * Indicates field can be null at certain times
  *
  * @author Ravindranath Akila
  */
+
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface TESTS {
+public @interface _expect_null {
 
-    TEST[] value();
+    public abstract String hint() default "A null value is possible to be assigned to this";
 }

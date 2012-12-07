@@ -1,7 +1,6 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.rbs.RBGet;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,8 +11,6 @@ import ai.ilikeplaces.rbs.RBGet;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public interface Return<T> {
-
-    final static public String YIKES_SOMETHING_WENT_WRONG = RBGet.gui().getString("YIKES_SOMETHING_WENT_WRONG");
 
     public int returnStatus();
 
@@ -34,7 +31,6 @@ public interface Return<T> {
     public String returnMsg();
 
     /**
-     *
      * @return true if value of {@link #returnStatus()} == 0
      */
     public boolean valid();

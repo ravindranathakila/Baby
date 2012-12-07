@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.ClassPreamble;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._class_preamble;
+import ai.ilikeplaces.doc._note;
 
 import java.io.Serializable;
 import java.util.Observable;
@@ -13,7 +13,7 @@ import java.util.Observer;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@ClassPreamble(
+@_class_preamble(
         authors = {"Ravindranath Akila"},
         description = {"Delegated Object which helpes the observer pattern"},
         extentions = {},
@@ -32,13 +32,13 @@ public class DelegatedObservable extends Observable implements Serializable {
         public void deleteObserver(Observer o);
     }
 
-    @NOTE(note = "This override is necessary as the parent method is protected.")
+    @_note(note = "This override is necessary as the parent method is protected.")
     @Override
     public void setChanged() {
         super.setChanged();
     }
 
-    @NOTE(note = "This override is necessary as the parent method is protected.")
+    @_note(note = "This override is necessary as the parent method is protected.")
     @Override
     public void clearChanged() {
         super.clearChanged();

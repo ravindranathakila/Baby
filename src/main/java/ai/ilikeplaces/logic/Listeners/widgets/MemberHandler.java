@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.TODO;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc._note;
+import ai.ilikeplaces.doc._todo;
 import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
@@ -28,7 +28,7 @@ import java.util.Set;
  * @author Ravindranath Akila
  */
 
-@TODO(task = "Operation fail notification target should be sent in with object creation as parameter so that notifications can be appended")
+@_todo(task = "Operation fail notification target should be sent in with object creation as parameter so that notifications can be appended")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class MemberHandler<M extends HumansFriend, T extends Collection<HumansFriend>, RETURN_TYPE> extends AbstractWidgetListener {
 // ------------------------------ FIELDS ------------------------------
@@ -62,11 +62,11 @@ public class MemberHandler<M extends HumansFriend, T extends Collection<HumansFr
      */
     public MemberHandler(
             final ItsNatServletRequest request__, final Element appendToElement__,
-            @NOTE(note = "The member owning everything")
+            @_note(note = "The member owning everything")
             final M m,
-            @NOTE(note = "The list containing possible adds to be added.")
+            @_note(note = "The list containing possible adds to be added.")
             final List<? extends HumansFriend> possibilities,
-            @NOTE(note = "The list of existing users contains users this guy does not know.")
+            @_note(note = "The list of existing users contains users this guy does not know.")
             final Collection<? extends HumansFriend> existingAll,
             final Save<RETURN_TYPE> saveAdd,
             final Save<RETURN_TYPE> saveRemove) {

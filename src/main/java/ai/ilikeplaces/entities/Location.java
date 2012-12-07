@@ -202,7 +202,7 @@ public class Location implements Serializable, Clearance, Comparable<Location>, 
         this.privateEvents = privateEvents;
     }
 
-    @FIXME(issue = "Break Location table by this field or use lazy fetching(better). i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction. Use secondary tables PrimaryKeyJoinTable")
+    @_fix(issue = "Break Location table by this field or use lazy fetching(better). i.e. LocationsPublicPhoto(P.K. = locationId), as that will ease transaction. Use secondary tables PrimaryKeyJoinTable")
     public List<PublicPhoto> getPublicPhotos() {
         return publicPhotos;
     }

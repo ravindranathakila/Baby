@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.MethodPreamble;
+import ai.ilikeplaces.doc._fix;
+import ai.ilikeplaces.doc._method_preamble;
 import ai.ilikeplaces.servlets.ServletLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,9 @@ import java.util.Observer;
 /**
  * Initially this class was designed to help the nosuchejb exception bein thrown when the session
  * bound variable is attempted to be removed, but has already been discarded by the container.
- *
+ * <p/>
  * Since the role of this class is confusing, and also hard to remember, they have been enlisted below.
- *
+ * <p/>
  * 1. Mainly, to maintain the EJB session with the client(http) session.
  * 2. EJB can die or be disked out(passivated). HTTP session will be active due ot
  *
@@ -29,7 +29,7 @@ import java.util.Observer;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@FIXME(issue = "MANY",
+@_fix(issue = "MANY",
         issues =
                 {"This class can be broken in several. One for suppressing NoSuchEJBException, one for Notifications and one for httpsessionbinding. Kind of in the form of a pipeline. If this is Pipe and notification needy classes are A & B, then Pipe pipelines notifications between A and B.",
                         "i18n"})
@@ -41,7 +41,7 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
 
     private boolean isAlive = false;
 
-    @FIXME(issue = "You will have to verify what happens if a huge amount of session timeouts happen\n" +
+    @_fix(issue = "You will have to verify what happens if a huge amount of session timeouts happen\n" +
             "This was made static to avoid a huge amount of references. i.e. Reference per user!")
     final static Logger logger = LoggerFactory.getLogger(SessionBoundBadRefWrapper.class.getName());
 
@@ -53,7 +53,7 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
         this.isAlive = true;
     }
 
-    public synchronized T getBoundInstance(){
+    public synchronized T getBoundInstance() {
         return boundInstance;
     }
 
@@ -66,13 +66,13 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
 //        this.isAlive = false;
 //    }
 
-    @MethodPreamble(description = "This return will be a new reference so no risk of caller modifying live state", authors = {"Ravindranth Akila"}, callBackModules = {})
+    @_method_preamble(description = "This return will be a new reference so no risk of caller modifying live state", authors = {"Ravindranth Akila"}, callBackModules = {})
     final public boolean isAlive() {
         return isAlive;
     }
 
     @Override
-    @FIXME(issue = "This class should be a pipeline between the two objects expecting notification. Split split!!!")
+    @_fix(issue = "This class should be a pipeline between the two objects expecting notification. Split split!!!")
     public void update(Observable o, Object dying) {
         final SmartLogger smartLogger = SmartLogger.start(Loggers.LEVEL.SERVER_STATUS, "Update received on observable", 60000, null, true);
         if (dying instanceof Boolean && (Boolean) dying) {

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.jpa;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc._fix;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -26,7 +26,6 @@ final public class QueryParameter {
     }
 
     /**
-     *
      * Use {@link #newInstance()} instead
      *
      * @param name__
@@ -34,7 +33,7 @@ final public class QueryParameter {
      * @return QueryParameter
      */
     @Deprecated
-    @FIXME(issue = "Bug prone as a user might iteratively use with.with.with and forget he has to use and on consecutive calls. Use with() instead")
+    @_fix(issue = "Bug prone as a user might iteratively use with.with.with and forget he has to use and on consecutive calls. Use with() instead")
     public static QueryParameter with(final String name__, final Object value__) {
         return newInstance().and(name__, value__);
     }
@@ -48,6 +47,7 @@ final public class QueryParameter {
 
     /**
      * Use {@link #add(String, Object)} instead
+     *
      * @param name__
      * @param value__
      * @return QueryParameter

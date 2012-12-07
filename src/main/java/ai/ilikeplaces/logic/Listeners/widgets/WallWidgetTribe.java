@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.SEE;
+import ai.ilikeplaces.doc._see;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
@@ -172,7 +172,7 @@ public class WallWidgetTribe extends WallWidget<WallWidgetTribeCriteria> {
             final ArrayList<HumansTribe> humansTribes = new ArrayList<HumansTribe>(tribe.getTribeMembers());
             final boolean remove = humansTribes.remove(criteria.getHumanId());
 
-            @SEE(seeClasses = {
+            @_see(seeClasses = {
                     WallWidgetHumansWall.class,
                     PrivateEventDelete.class,
                     PrivateEventView.class,

@@ -33,20 +33,20 @@ import static ai.ilikeplaces.servlets.Controller.Page;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@DOCUMENTATION(
-        LOGIC = @LOGIC({
-                @NOTE("Each widget itself knows its functionality." +
+@_doc(
+        LOGIC = @_logic({
+                @_note("Each widget itself knows its functionality." +
                         "Hence, each widget should register its own event listeners. " +
                         "But there will be several copies of the same widget in the same page. " +
                         "Therefore, the widget ids should be different. " +
                         "Each widget has to have its own class. "
                 ),
-                @NOTE("Each widget has it's own vaiable names." +
+                @_note("Each widget has it's own vaiable names." +
                         "However, since there can be multiple copies of the same widget in a page, a static long values is appended to the element ids." +
                         "This makes the element IDs unique within a page."
                 )}),
 
-        FIXME = @FIXME(
+        FIXME = @_fix(
                 issues = {"Nested widgets have issues registering themselves upon DOM events.",
                         "ItsNat html document fragment templates appear to be needed to only loaded once and then reused."}),
 
@@ -500,7 +500,7 @@ public abstract class AbstractWidgetListener<T> {
         } else {
             for (String elementId__ : widgetElements) {
                 if (!elementId__.equals(toggleLink)) {
-                    @FIXME(issue = "this is wrong. css can have necessary spaces. e.g. backgroound-image:0% 0% url(/path/image.png);")
+                    @_fix(issue = "this is wrong. css can have necessary spaces. e.g. backgroound-image:0% 0% url(/path/image.png);")
                     final String existingVal = $$(elementId__).getAttribute(STYLE).replace(" ", EMPTY);
 
                     if (existingVal.contains(AbstractWidgetListener.DISPLAY_NONE_)) {
@@ -515,13 +515,13 @@ public abstract class AbstractWidgetListener<T> {
     }
 
     @Deprecated
-    @DOCUMENTATION(
+    @_doc(
             WARNING = @WARNING("Overrides existing values withing the style. " +
                     "Needed by fetchToEmail of WallWidgetHumansWall though since it fails on the other."),
-            SEE = @SEE(
+            SEE = @_see(
                     {AbstractWidgetListener.class, WallWidgetHumansWall.class}
             ),
-            NOTE = @NOTE("ai.ilikeplaces.AbstractWidgetListener#$$displayBlock . " +
+            NOTE = @_note("ai.ilikeplaces.AbstractWidgetListener#$$displayBlock . " +
                     "Also note that this method is needed by " +
                     "ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args)")
 
@@ -531,13 +531,13 @@ public abstract class AbstractWidgetListener<T> {
     }
 
     @Deprecated
-    @DOCUMENTATION(
+    @_doc(
             WARNING = @WARNING("Overrides existing values withing the style. " +
                     "Needed by fetchToEmail of WallWidgetHumansWall though since it fails on the other."),
-            SEE = @SEE(
+            SEE = @_see(
                     {AbstractWidgetListener.class, WallWidgetHumansWall.class}
             ),
-            NOTE = @NOTE("ai.ilikeplaces.AbstractWidgetListener#$$displayNone . " +
+            NOTE = @_note("ai.ilikeplaces.AbstractWidgetListener#$$displayNone . " +
                     "Also note that this method is needed by " +
                     "ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args)")
 

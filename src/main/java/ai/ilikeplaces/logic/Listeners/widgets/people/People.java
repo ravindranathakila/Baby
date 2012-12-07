@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets.people;
 
-import ai.ilikeplaces.doc.DOCUMENTATION;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._doc;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.servlets.Controller;
@@ -17,8 +17,8 @@ import org.w3c.dom.html.HTMLDocument;
  * Date: 1/1/12
  * Time: 12:21 PM
  */
-@DOCUMENTATION(
-        NOTE = @NOTE(
+@_doc(
+        NOTE = @_note(
                 "A People cannot exist without an album since it does not know what to show."
         )
 )

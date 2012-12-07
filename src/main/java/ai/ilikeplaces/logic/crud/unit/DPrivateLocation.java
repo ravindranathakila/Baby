@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
@@ -34,7 +34,7 @@ public class DPrivateLocation extends AbstractSLBCallbacks implements DPrivateLo
     @EJB
     private CrudServiceLocal<HumansPrivateLocation> humansPrivateLocationCrudServiceLocal;
 
-    @NOTE(note = "Complex Logic", mustsee = "logic.conf.1")
+    @_note(note = "Complex Logic", mustsee = "logic.conf.1")
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRES_NEW)
     public boolean doNTxDPrivateLocation(final String humanId, final long privateLocationId) throws DBFetchDataException, DBRefreshDataException {

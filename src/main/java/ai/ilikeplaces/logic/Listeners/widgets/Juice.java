@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.DOCUMENTATION;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._doc;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
@@ -22,16 +22,16 @@ import org.w3c.dom.html.HTMLDocument;
  * Date: 2/17/12
  * Time: 6:47 PM
  */
-@DOCUMENTATION(
+@_doc(
         NOTE = {
-                @NOTE("The term JUICE was coined up from Seth Godin's book Unleashing the Idea Virus."),
-                @NOTE("The idea is to provide so much positive Juice into a HIVE which we believe can get infected by our idea virus."),
-                @NOTE("We have a pitfall though. We have four sections, Talk, Tribes, Moments and Snaps. This needs 4 ideas(or do we?)"),
-                @NOTE("Having four ideas might confuse the user."),
-                @NOTE("This also gives us Mixed Fruit Juice rather than a fine blend of one:-/."),
+                @_note("The term JUICE was coined up from Seth Godin's book Unleashing the Idea Virus."),
+                @_note("The idea is to provide so much positive Juice into a HIVE which we believe can get infected by our idea virus."),
+                @_note("We have a pitfall though. We have four sections, Talk, Tribes, Moments and Snaps. This needs 4 ideas(or do we?)"),
+                @_note("Having four ideas might confuse the user."),
+                @_note("This also gives us Mixed Fruit Juice rather than a fine blend of one:-/."),
 
-                @NOTE("Excitement: http://www.psychologytoday.com/blog/learning-play/200912/the-nature-excitement"),
-                @NOTE("Excitement (more depth): http://worldcupcollege.com/2010/06/the-psychology-of-excitement/")
+                @_note("Excitement: http://www.psychologytoday.com/blog/learning-play/200912/the-nature-excitement"),
+                @_note("Excitement (more depth): http://worldcupcollege.com/2010/06/the-psychology-of-excitement/")
         }
 )
 public class Juice extends AbstractWidgetListener<JuiceCriteria> {

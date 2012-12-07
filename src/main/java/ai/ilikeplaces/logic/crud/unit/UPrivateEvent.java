@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.doc.EXPECTNULL;
-import ai.ilikeplaces.doc.FORGETNULL;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc._expect_null;
+import ai.ilikeplaces.doc._forget_null;
+import ai.ilikeplaces.doc._ok;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
@@ -46,7 +46,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
     private static final String UPDATE_EVENT_DATA_OF = "update event data of ";
 
-    @OK
+    @_ok
     @Override
     public PrivateEvent doUPrivateEventData(final String humanId__, final long privateEventId__, final String privateEventName__, final String privateEventInfo__, final String privateEventStartDate__, final String privateEventEndDate__) throws DBDishonourCheckedException, DBFetchDataException, DBRefreshDataException {
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
@@ -70,7 +70,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
     }
 
 
-    @OK
+    @_ok
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public PrivateEvent doUPrivateEventAddOwner(final String adder, final long privateEventId__, final HumansFriend addeee) throws DBDishonourCheckedException {
@@ -79,13 +79,13 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             throw new NotFriendsException(adder, addeee.getHumanId());
         }
 
-        @EXPECTNULL
+        @_expect_null
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
 
         //also safe to keep adder scoped within
         checkAuthority:
         {
-            @EXPECTNULL
+            @_expect_null
             final HumansPrivateEvent adderhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, adder);
 
             if (!privateEvent_.getPrivateEventOwners().contains(adderhumansPrivateEvent)) {
@@ -97,7 +97,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
         wiringBothSides:
         {
 
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addeee.getHumanId());
 
             if (!privateEvent_.getPrivateEventOwners().contains(adeehumansPrivateEvent)) {//Concurrent update safe
@@ -125,13 +125,13 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             throw new NotFriendsException(remover, removeee.getHumanId());
         }
 
-        @EXPECTNULL
+        @_expect_null
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
 
         //also safe to keep adder scoped within
         checkAuthority:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, remover);
 
             if (!privateEvent_.getPrivateEventOwners().contains(removerhumansPrivateEvent)) {
@@ -141,7 +141,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
         wiringBothSides:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removeee.getHumanId());
 
             if (privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {//Concurrent update safe
@@ -169,14 +169,14 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             throw new NotFriendsException(adder, addeee.getHumanId());
         }
 
-        @EXPECTNULL
+        @_expect_null
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
 
 
         //also safe to keep adder scoped within
         checkAuthority:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent adderhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, adder);
 
             if (!privateEvent_.getPrivateEventViewers().contains(adderhumansPrivateEvent)) {
@@ -187,7 +187,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
         wiringBothSides:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addeee.getHumanId());
 
             if (!privateEvent_.getPrivateEventViewers().contains(adeehumansPrivateEvent)) {//Concurrent update safe
@@ -215,13 +215,13 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             throw new NotFriendsException(remover, removeee.getHumanId());
         }
 
-        @EXPECTNULL
+        @_expect_null
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
 
         //also safe to keep adder scoped within
         checkAuthority:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, remover);
 
             if (!privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {
@@ -231,7 +231,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
         wiringBothSides:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removeee.getHumanId());
 
             if (privateEvent_.getPrivateEventViewers().contains(removerhumansPrivateEvent)) {//Concurrent update safe
@@ -259,14 +259,14 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             throw new NotFriendsException(adder, addeee.getHumanId());
         }
 
-        @EXPECTNULL
+        @_expect_null
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
 
 
         //also safe to keep adder scoped within
         checkAuthority:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent adderhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, adder);
 
             if (!privateEvent_.getPrivateEventInvites().contains(adderhumansPrivateEvent)) {
@@ -277,7 +277,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
         wiringBothSides:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addeee.getHumanId());
 
             if (!privateEvent_.getPrivateEventInvites().contains(adeehumansPrivateEvent)) {//Concurrent update safe
@@ -305,13 +305,13 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             throw new NotFriendsException(remover, removeee.getHumanId());
         }
 
-        @EXPECTNULL
+        @_expect_null
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
 
         //also safe to keep adder scoped within
         checkAuthority:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, remover);
 
             if (!privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {
@@ -321,7 +321,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
         wiringBothSides:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removeee.getHumanId());
 
             if (privateEvent_.getPrivateEventInvites().contains(removerhumansPrivateEvent)) {//Concurrent update safe
@@ -349,14 +349,14 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             throw new NotFriendsException(adder, addeee.getHumanId());
         }
 
-        @EXPECTNULL
+        @_expect_null
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
 
 
         //also safe to keep adder scoped within
         checkAuthority:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent adderhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, adder);
 
             if (!privateEvent_.getPrivateEventRejects().contains(adderhumansPrivateEvent)) {
@@ -367,7 +367,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
         wiringBothSides:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent adeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, addeee.getHumanId());
 
             if (!privateEvent_.getPrivateEventRejects().contains(adeehumansPrivateEvent)) {//Concurrent update safe
@@ -395,13 +395,13 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
             throw new NotFriendsException(remover, removeee.getHumanId());
         }
 
-        @EXPECTNULL
+        @_expect_null
         final PrivateEvent privateEvent_ = privateEventCrudServiceLocal_.find(PrivateEvent.class, privateEventId__);
 
         //also safe to keep adder scoped within
         checkAuthority:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent removeehumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, remover);
 
             if (!privateEvent_.getPrivateEventOwners().contains(removeehumansPrivateEvent)) {
@@ -411,7 +411,7 @@ public class UPrivateEvent extends AbstractSLBCallbacks implements UPrivateEvent
 
         wiringBothSides:
         {
-            @FORGETNULL
+            @_forget_null
             final HumansPrivateEvent removerhumansPrivateEvent = humansPrivateEventCrudServiceLocal_.find(HumansPrivateEvent.class, removeee.getHumanId());
 
             if (privateEvent_.getPrivateEventRejects().contains(removerhumansPrivateEvent)) {//Concurrent update safe

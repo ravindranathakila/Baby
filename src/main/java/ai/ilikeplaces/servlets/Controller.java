@@ -25,7 +25,7 @@ import java.util.*;
  * @author Ravindranath Akila
  */
 
-@TODO(task = "Code to disable url calls with itsnat_doc_name=### type urls if possible")
+@_todo(task = "Code to disable url calls with itsnat_doc_name=### type urls if possible")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class
         Controller extends HttpServletWrapper {
@@ -193,7 +193,7 @@ final public class
 
 // -------------------------- ENUMERATIONS --------------------------
 
-    @NOTE(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
+    @_note(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
         TermsOfServices("ai/ilikeplaces/widgets/legal/terms_of_services.xhtml"
         ) {
@@ -2202,7 +2202,7 @@ final public class
      * @param URL__
      * @return boolean
      */
-    @FIXME(issue = "Location should not contain underscores")
+    @_fix(issue = "Location should not contain underscores")
     static private boolean isCorrectLocationFormat(final String URL__) {
         /*"_" (underscore) check first is vital as the photo and me urls might have "/"*/
         return !(URL__.startsWith("_") || URL__.contains(","));

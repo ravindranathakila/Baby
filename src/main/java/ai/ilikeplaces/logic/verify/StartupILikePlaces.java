@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.verify;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.FriendUtil;
 import ai.ilikeplaces.exception.DBException;
@@ -25,7 +25,7 @@ import javax.ejb.Startup;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Startup
 @Singleton
-@NOTE(note = "USE s.o.p FOR LOGGING AS LOGGER MIGHT FAIL TOO!")
+@_note(note = "USE s.o.p FOR LOGGING AS LOGGER MIGHT FAIL TOO!")
 public class StartupILikePlaces implements StartupILikePlacesLocal {
 //    @EJB
 //    private HumanCRUDHumanLocal humanCRUDHumanLocal_;

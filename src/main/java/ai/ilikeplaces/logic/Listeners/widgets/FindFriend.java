@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
+import ai.ilikeplaces.doc._ok;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
@@ -53,7 +53,7 @@ import java.util.*;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@OK
+@_ok
 abstract public class FindFriend extends AbstractWidgetListener {
 
     private static final String PASSWORD_DETAILS = "_passwordDetails";
@@ -283,7 +283,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
                                     .$ElementSetHref("#")
                                     .$ElementSetText("Invite")
                                     .$ElementSetClasses("cursor_link")
-                                    .$ElementSetAttribute("style","text-decoration:underline;")
+                                    .$ElementSetAttribute("style", "text-decoration:underline;")
                                     .get();
 
                             new UserProperty(request, $$(Controller.Page.friendFindSearchInvites), userPropertyContent,

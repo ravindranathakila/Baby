@@ -1,8 +1,8 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc._fix;
+import ai.ilikeplaces.doc._todo;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
@@ -36,9 +36,9 @@ import java.util.Properties;
  * @author Ravindranath Akila
  */
 
-@FIXME(issue = "XSS")
+@_fix(issue = "XSS")
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@TODO(task = "USE A STATIC METHOD TO GET THE LOGGED ON USER INSTANCE.")
+@_todo(task = "USE A STATIC METHOD TO GET THE LOGGED ON USER INSTANCE.")
 final public class ServletLogin extends HttpServlet {
 
     /**

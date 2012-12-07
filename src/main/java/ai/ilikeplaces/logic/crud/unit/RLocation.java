@@ -27,7 +27,7 @@ import static ai.ilikeplaces.entities.Location.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
-@TODO(task = "i18n")
+@_todo(task = "i18n")
 public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
 
     @EJB
@@ -109,7 +109,7 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
             superLocationMatchLoop:
             {
                 for (final Location location : existingLocations) {
-                    @NOTE(note = "THIS CAN NEVER BE NULL")
+                    @_note(note = "THIS CAN NEVER BE NULL")
                     final Location superLocation = location.getLocationSuperSet();
                     if (superLocation.getLocationName().equals(superLocationName)) {
                         tempVal = location;
@@ -171,7 +171,7 @@ public class RLocation extends AbstractSLBCallbacks implements RLocationLocal {
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<Location> doNTxRLocationsBySuperLocation(final Location locationSuperset) {
-        @FIXME(issue = "The list JPA returns in read only. Using orderby makes it a db ordering. This uses shallow copy")
+        @_fix(issue = "The list JPA returns in read only. Using orderby makes it a db ordering. This uses shallow copy")
         final List<Location> sort = new ArrayList<Location>(crudServiceLocation_.findWithNamedQuery(FindAllLocationsBySuperLocation,
                 QueryParameter.with(LocationSuperSet, doRLocation(locationSuperset.getLocationId())).parameters()));
         Collections.sort(sort);

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc._todo;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
@@ -116,7 +116,7 @@ public class ListenerPhoto implements ItsNatServletRequestListener {
 
                                         final HumanId mymyhumanId = new HumanId(getUsername());
 
-                                        @TODO(task = "Expecting itsnat does not serialize these values. Bulky. Verify with Jose.")
+                                        @_todo(task = "Expecting itsnat does not serialize these values. Bulky. Verify with Jose.")
                                         final PrivatePhoto mymyprivatePhoto = privatePhoto;
 
                                         @Override

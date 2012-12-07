@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.role;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.OK;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc._fix;
+import ai.ilikeplaces.doc._ok;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
@@ -35,7 +35,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
 
     public static final IllegalStateException ILLEGAL_STATE_EXCEPTION = new IllegalStateException("SORRY! THE CODE REFLECTING THIS CALL SHOULD ONLY WORK IF THE USER IS LOGGED IN, BUT ACTUALLY IS NOT.");
     private String humanUserId_ = null;
-    @FIXME(issue = "transient",
+    @_fix(issue = "transient",
             issues = {"is marking this transient consistent?",
                     "Will this field make the session variable huge? There could be millions of users!"})
     @WARNING(warning = "DO NOT MAKE TRANSIENT AS PASSIVATION MAKES THE VALUE OF THIS NULL.")
@@ -176,7 +176,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     /**
      *
      */
-    @OK(details = "Properly being called by container according to logs as of 20100323")
+    @_ok(details = "Properly being called by container according to logs as of 20100323")
     @PrePassivate
     @Override
     public void prePassivate() {
@@ -212,7 +212,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     /**
      * @param event
      */
-    @OK(details = "According to logs, this is being called upon binding as of 20100323")
+    @_ok(details = "According to logs, this is being called upon binding as of 20100323")
     @Override
     public void valueBound(final HttpSessionBindingEvent event) {
         Loggers.DEBUG.debug((RBGet.logMsgs.getString("javax.servlet.http.HttpSessionBindingEvent.valuBound")));
@@ -221,7 +221,7 @@ public class HumanUser extends AbstractSFBCallbacks implements HumanUserLocal, M
     /**
      * @param event
      */
-    @OK(details = "According to logs, this is being called upon unbinding as of 20100323")
+    @_ok(details = "According to logs, this is being called upon unbinding as of 20100323")
     @Override
     public void valueUnbound(final HttpSessionBindingEvent event) {
         Loggers.DEBUG.debug(RBGet.logMsgs.getString("javax.servlet.http.HttpSessionBindingEvent.valueUnbound"));

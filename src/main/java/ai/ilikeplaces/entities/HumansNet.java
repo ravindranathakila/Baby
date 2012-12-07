@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
 import ai.ilikeplaces.doc.WARNING;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.FriendUtil;
 import ai.ilikeplaces.entities.etc.HumanPkJoinFace;
@@ -97,7 +97,7 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
     //@PrimaryKeyJoinColumn
     public Human human;
 
-    @NOTE(note = "Display name is used for adding removing users etc. This can also be the nick name." +
+    @_note(note = "Display name is used for adding removing users etc. This can also be the nick name." +
             "The compulsory requirement for this name is that others know the user by this name." +
             "This name is important for us as it helps DB performance(instead of loading identity bean." +
             "This is one place where the benefit breaking table with PK is elaborated.(we made this displayName entry much " +

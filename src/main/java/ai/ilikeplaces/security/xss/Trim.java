@@ -1,7 +1,7 @@
 package ai.ilikeplaces.security.xss;
 
-import ai.ilikeplaces.doc.FIXME;
 import ai.ilikeplaces.doc.License;
+import ai.ilikeplaces.doc._fix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@FIXME(issue = "trim before db and after db. say trimallin trimallout. reason: sql escape only upon in")
+@_fix(issue = "trim before db and after db. say trimallin trimallout. reason: sql escape only upon in")
 public class Trim {
 
     private Trim() {

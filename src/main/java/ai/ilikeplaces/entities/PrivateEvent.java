@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@CREATED_BY(who = {PrivateEvent.class},
+@_created_by(who = {PrivateEvent.class},
         note = "We need to return this entity to the user for CRUD, hence cascade creation not possible.")
 @Table(name = "PrivateEvent", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
@@ -52,7 +52,7 @@ public class PrivateEvent implements RefreshData<PrivateEvent>, Serializable {
     public Wall privateEventWall;
 
 
-    @NOTE("Viewers of a private event have no implication except that they could be used as 'people who can see shared items' in future. " +
+    @_note("Viewers of a private event have no implication except that they could be used as 'people who can see shared items' in future. " +
             "So far, there is no use of this. We are hiding it for this release 2011/09/19 in the user interface")
     @WARNING(warning = "Owner because once an event needs to be deleted, deleting this entity is easier if owner." +
             "If this entity is not the owner, individual owner viewer accepteee rejectee will have to delete their events individually.")

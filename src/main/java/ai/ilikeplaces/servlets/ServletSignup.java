@@ -1,9 +1,9 @@
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
-import ai.ilikeplaces.doc.OK;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc._note;
+import ai.ilikeplaces.doc._ok;
+import ai.ilikeplaces.doc._todo;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@OK(details = "Reviewed:20100620")
+@_ok(details = "Reviewed:20100620")
 final public class ServletSignup extends HttpServlet {
 
     final Logger logger = LoggerFactory.getLogger(ServletSignup.class.getName());
@@ -76,7 +76,7 @@ final public class ServletSignup extends HttpServlet {
      * @throws ServletException
      * @throws IOException      if an I/O error occurs
      */
-    @TODO(task = "GET USERS NAME IN JSP. SET THE OTHER PARAMETERS TAKEN FROM THE USER!")
+    @_todo(task = "GET USERS NAME IN JSP. SET THE OTHER PARAMETERS TAKEN FROM THE USER!")
     protected void processRequest(final HttpServletRequest request__, final HttpServletResponse response__)
             throws ServletException, IOException {
 
@@ -224,7 +224,7 @@ final public class ServletSignup extends HttpServlet {
                     }
                 }
             } catch (
-                    @NOTE(note = "COINCIDENCE. ANOTHER USER SIGNED UP IN SAME NAME WHILE THIS USER WAS DOING IT.")
+                    @_note(note = "COINCIDENCE. ANOTHER USER SIGNED UP IN SAME NAME WHILE THIS USER WAS DOING IT.")
                     final Throwable e) {
                 userSession_.setAttribute(UsernameError, ErrorStatusTrue);
                 userSession_.setAttribute(UsernameErrorMsg, gUI.getString("ai.ilikeplaces.servlets.ServletSignup.0001") + username);

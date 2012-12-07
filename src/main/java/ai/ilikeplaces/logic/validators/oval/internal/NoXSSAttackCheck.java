@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.validators.oval.internal;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 import ai.ilikeplaces.logic.validators.oval.UpperCase;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.AbstractAnnotationCheck;
@@ -17,7 +17,7 @@ import static ai.ilikeplaces.util.apache.fixes.StringEscapeUtilsFixed.*;
  */
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@NOTE(note = "USE OWASP ANTISAMY")
+@_note(note = "USE OWASP ANTISAMY")
 public class NoXSSAttackCheck extends AbstractAnnotationCheck<UpperCase> {
 
 

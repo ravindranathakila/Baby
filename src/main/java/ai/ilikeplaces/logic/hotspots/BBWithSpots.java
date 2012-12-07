@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.hotspots;
 
 import ai.ilikeplaces.doc.License;
-import ai.ilikeplaces.doc.TODO;
+import ai.ilikeplaces.doc._todo;
 import ai.ilikeplaces.logic.validators.unit.BoundingBox;
 import ai.ilikeplaces.util.Pair;
 import com.google.gdata.data.geo.impl.W3CPoint;
@@ -56,10 +56,10 @@ public class BBWithSpots extends Pair<BoundingBox, RawspotElasticArray> {
      *
      * @return common name of this area
      */
-    @TODO(tasks = {"Use random fetching for large datasets", "Greedy fetching of nearby locations"})
+    @_todo(tasks = {"Use random fetching for large datasets", "Greedy fetching of nearby locations"})
     final String modeName() {
 
-        if(getValue().array.length < 2){
+        if (getValue().array.length < 2) {
             return "Unpopular";
         }
 

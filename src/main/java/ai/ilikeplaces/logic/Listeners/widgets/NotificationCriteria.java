@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.doc.NOTE;
+import ai.ilikeplaces.doc._note;
 
 /**
  * Created by IntelliJ IDEA.
@@ -8,7 +8,7 @@ import ai.ilikeplaces.doc.NOTE;
  * Date: 10/13/11
  * Time: 9:19 PM
  */
-@NOTE("Use this class with one type of NotificationAction* ONLY. " +
+@_note("Use this class with one type of NotificationAction* ONLY. " +
         "Only one should be populated and others should be null. ")
 public class NotificationCriteria {
 // ------------------------------ FIELDS ------------------------------
