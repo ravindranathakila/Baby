@@ -4,8 +4,8 @@ import ai.doc.License;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.util.Obj;
-import ai.ilikeplaces.util.Return;
 import ai.util.HumanId;
+import ai.util.Return;
 
 import javax.ejb.Remote;
 import java.util.List;

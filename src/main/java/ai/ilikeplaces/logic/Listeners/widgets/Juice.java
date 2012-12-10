@@ -9,7 +9,7 @@ import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AIEventListener;
 import ai.ilikeplaces.util.AbstractWidgetListener;
-import ai.ilikeplaces.util.Return;
+import ai.util.Return;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;

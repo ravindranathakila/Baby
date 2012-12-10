@@ -7,6 +7,7 @@ import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import ai.ilikeplaces.logic.validators.unit.VDouble;
 import ai.util.HumanId;
+import ai.util.Return;
 
 public class UserIntroduction {
     public static void createIntroData(HumanId newUser) {

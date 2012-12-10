@@ -11,6 +11,8 @@ import ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
 import ai.ilikeplaces.util.*;
 import ai.util.HumanId;
+import ai.util.Return;
+import ai.util.ReturnImpl;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

@@ -1,4 +1,4 @@
-package ai.ilikeplaces.util;
+package ai.util;
 
 import ai.doc.License;
 

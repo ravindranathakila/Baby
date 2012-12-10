@@ -9,9 +9,9 @@ package ai.ilikeplaces.logic.validators;
 import ai.doc.License;
 import ai.ilikeplaces.logic.validators.faces.ValidatorFace;
 import ai.ilikeplaces.util.Factory;
-import ai.ilikeplaces.util.Return;
-import ai.ilikeplaces.util.ReturnImpl;
 import ai.ilikeplaces.util.ReturnParams;
+import ai.util.Return;
+import ai.util.ReturnImpl;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class Validator implements ValidatorFace, Factory {

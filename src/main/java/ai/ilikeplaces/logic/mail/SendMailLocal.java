@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.mail;
 
 import ai.doc.License;
-import ai.ilikeplaces.util.Return;
+import ai.util.Return;
 
 import javax.ejb.Local;
 import java.io.File;

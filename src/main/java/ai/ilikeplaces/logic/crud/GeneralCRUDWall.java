@@ -3,8 +3,8 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.util.Obj;
-import ai.ilikeplaces.util.Return;
 import ai.util.HumanId;
+import ai.util.Return;
 
 /**
  * Created by IntelliJ IDEA.

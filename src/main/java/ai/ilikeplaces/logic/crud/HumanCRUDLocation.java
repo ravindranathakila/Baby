@@ -7,6 +7,8 @@ import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.ULocationLocal;
 import ai.ilikeplaces.util.*;
+import ai.util.Return;
+import ai.util.ReturnImpl;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

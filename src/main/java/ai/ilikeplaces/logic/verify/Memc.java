@@ -8,8 +8,8 @@ import ai.ilikeplaces.management.MemorySafe;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.SmartLogger;
+import ai.util.Return;
 
 import javax.annotation.Resource;
 import javax.ejb.*;

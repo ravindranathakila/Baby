@@ -2,8 +2,8 @@ package ai.ilikeplaces.logic.validators.faces;
 
 import ai.ilikeplaces.logic.validators.Validator;
 import ai.ilikeplaces.util.Factory;
-import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.util.ReturnParams;
+import ai.util.Return;
 
 /**
  * Created by IntelliJ IDEA.

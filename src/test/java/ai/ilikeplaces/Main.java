@@ -1,15 +1,13 @@
 package ai.ilikeplaces;
 
-import ai.ilikeplaces.util.Return;
-import ai.ilikeplaces.util.ReturnImpl;
+import ai.util.Return;
+import ai.util.ReturnImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.

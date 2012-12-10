@@ -1,6 +1,7 @@
-package ai.ilikeplaces.util;
+package ai.util;
 
 import ai.doc.License;
+import ai.ilikeplaces.util.Loggers;
 
 import java.io.Serializable;
 

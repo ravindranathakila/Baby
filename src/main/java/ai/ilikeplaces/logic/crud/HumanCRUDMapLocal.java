@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.doc.License;
-import ai.ilikeplaces.util.Return;
+import ai.util.Return;
 
 /**
  * Created by IntelliJ IDEA.
