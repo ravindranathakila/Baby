@@ -8,9 +8,9 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
-import ai.util.HumanId;
-import ai.util.Return;
-import ai.util.ReturnImpl;
+import ai.reaver.HumanId;
+import ai.reaver.Return;
+import ai.reaver.ReturnImpl;
 import com.rackspacecloud.client.cloudfiles.FilesConstants;
 
 import javax.annotation.PostConstruct;

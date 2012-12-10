@@ -5,8 +5,8 @@ import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.util.Obj;
-import ai.util.HumanId;
-import ai.util.Return;
+import ai.reaver.HumanId;
+import ai.reaver.Return;
 
 import javax.ejb.Remote;
 import java.util.List;

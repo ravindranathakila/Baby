@@ -13,7 +13,7 @@ import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

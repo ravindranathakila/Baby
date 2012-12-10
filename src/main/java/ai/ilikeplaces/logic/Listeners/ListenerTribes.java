@@ -7,7 +7,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribeCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.servlets.Controller;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;

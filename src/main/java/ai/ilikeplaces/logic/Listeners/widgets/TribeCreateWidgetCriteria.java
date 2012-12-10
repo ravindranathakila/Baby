@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.logic.validators.unit.VTribeName;
 import ai.ilikeplaces.logic.validators.unit.VTribeStory;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

@@ -3,8 +3,8 @@ package ai.ilikeplaces.logic.mail;
 import ai.doc.License;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
-import ai.util.Return;
-import ai.util.ReturnImpl;
+import ai.reaver.Return;
+import ai.reaver.ReturnImpl;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;

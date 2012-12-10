@@ -2,7 +2,7 @@ package ai.ilikeplaces.util;
 
 import ai.doc.License;
 import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
-import ai.util.ReturnImpl;
+import ai.reaver.ReturnImpl;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;

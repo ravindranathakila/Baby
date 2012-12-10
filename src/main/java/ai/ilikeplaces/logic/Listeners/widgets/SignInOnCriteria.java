@@ -3,7 +3,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import ai.ilikeplaces.util.Obj;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

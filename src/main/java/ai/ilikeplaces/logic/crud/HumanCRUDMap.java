@@ -4,8 +4,8 @@ import ai.doc.License;
 import ai.ilikeplaces.entities.Map;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.*;
-import ai.util.Return;
-import ai.util.ReturnImpl;
+import ai.reaver.Return;
+import ai.reaver.ReturnImpl;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

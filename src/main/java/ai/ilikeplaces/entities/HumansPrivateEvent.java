@@ -5,7 +5,7 @@ import ai.doc._bidirectional;
 import ai.doc._note;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.mail.GetMailAddress;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 import javax.persistence.*;
 import java.io.Serializable;

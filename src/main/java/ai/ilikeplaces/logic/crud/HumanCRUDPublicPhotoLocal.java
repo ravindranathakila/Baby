@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.doc.License;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.util.Return;
+import ai.reaver.Return;
 
 import javax.ejb.Remote;
 import java.util.List;

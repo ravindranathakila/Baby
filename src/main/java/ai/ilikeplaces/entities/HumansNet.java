@@ -7,7 +7,7 @@ import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.FriendUtil;
 import ai.ilikeplaces.entities.etc.HumanPkJoinFace;
 import ai.ilikeplaces.entities.etc.HumansFriend;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 import javax.persistence.*;
 import java.io.Serializable;

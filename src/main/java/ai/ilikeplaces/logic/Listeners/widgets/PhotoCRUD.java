@@ -7,10 +7,10 @@
 //import ai.ilikeplaces.jpa.CrudServiceLocal;
 //import ai.ilikeplaces.logic.crud.DB;
 //import ai.ilikeplaces.servlets.Controller.Page;
-//import ai.ilikeplaces.util.AbstractWidgetListener;
-//import ai.ilikeplaces.util.EventType;
-//import ai.ilikeplaces.util.Loggers;
-//import ai.ilikeplaces.util.MarkupTag;
+//import ai.ilikeplaces.reaver.AbstractWidgetListener;
+//import ai.ilikeplaces.reaver.EventType;
+//import ai.ilikeplaces.reaver.Loggers;
+//import ai.ilikeplaces.reaver.MarkupTag;
 //import org.itsnat.core.ItsNatDocument;
 //import org.itsnat.core.ItsNatServletRequest;
 //import org.itsnat.core.event.NodePropertyTransport;
@@ -24,7 +24,7 @@
 //import org.w3c.dom.html.HTMLDocument;
 //
 //import javax.naming.Context;
-//import java.util.Properties;
+//import java.reaver.Properties;
 //
 //import static ai.ilikeplaces.servlets.Controller.Page.*;
 //

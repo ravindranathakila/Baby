@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities.etc;
 
 
-import ai.util.HumanId;
-import ai.util.Return;
+import ai.reaver.HumanId;
+import ai.reaver.Return;
 
 /**
  * Somebody has to register the checking mechanism here. If not each check will throw an exception.

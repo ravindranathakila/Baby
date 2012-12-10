@@ -2,7 +2,7 @@ package ai.ilikeplaces.entities;
 
 import ai.doc.License;
 import ai.ilikeplaces.entities.etc.*;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 import javax.persistence.*;
 import java.io.Serializable;

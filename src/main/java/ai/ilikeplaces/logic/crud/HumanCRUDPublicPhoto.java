@@ -6,8 +6,8 @@ import ai.ilikeplaces.logic.crud.unit.DPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.RPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.UPublicPhotoLocal;
 import ai.ilikeplaces.util.*;
-import ai.util.Return;
-import ai.util.ReturnImpl;
+import ai.reaver.Return;
+import ai.reaver.ReturnImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

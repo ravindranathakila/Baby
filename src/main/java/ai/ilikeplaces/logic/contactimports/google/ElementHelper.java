@@ -71,16 +71,16 @@
 //import com.google.gdata.data.extensions.StructuredPostalAddress;
 //import com.google.gdata.data.extensions.When;
 //import com.google.gdata.data.extensions.Where;
-//import com.google.gdata.util.XmlBlob;
+//import com.google.gdata.reaver.XmlBlob;
 //
 //import java.io.BufferedReader;
 //import java.io.File;
 //import java.io.FileReader;
 //import java.io.IOException;
 //import java.io.PrintStream;
-//import java.util.List;
-//import java.util.regex.Matcher;
-//import java.util.regex.Pattern;
+//import java.reaver.List;
+//import java.reaver.regex.Matcher;
+//import java.reaver.regex.Pattern;
 //
 ///**
 // * Helper class to parse, update and display a contact.

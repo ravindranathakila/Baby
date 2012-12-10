@@ -4,7 +4,7 @@ import ai.doc.WARNING;
 import ai.doc._bidirectional;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 import javax.persistence.*;
 import java.io.Serializable;

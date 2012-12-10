@@ -11,8 +11,8 @@ import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MethodParams;
 import ai.ilikeplaces.util.MethodTimer;
 import ai.ilikeplaces.ygp.impl.ClientFactory;
-import ai.util.HumanId;
-import ai.util.Return;
+import ai.reaver.HumanId;
+import ai.reaver.Return;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;

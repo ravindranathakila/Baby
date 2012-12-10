@@ -4,7 +4,7 @@ import ai.doc.License;
 import ai.ilikeplaces.entities.HumansNet;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

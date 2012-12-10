@@ -9,7 +9,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
-import ai.util.Return;
+import ai.reaver.Return;
 
 import javax.annotation.Resource;
 import javax.ejb.*;

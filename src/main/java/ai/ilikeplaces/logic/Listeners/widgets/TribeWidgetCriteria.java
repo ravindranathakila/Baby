@@ -3,7 +3,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.VLong;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

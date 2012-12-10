@@ -4,7 +4,7 @@ import ai.doc.License;
 import ai.doc._note;
 import ai.doc._unidirectional;
 import ai.ilikeplaces.entities.etc.*;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 import javax.persistence.*;
 import java.io.Serializable;

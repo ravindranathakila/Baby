@@ -9,8 +9,8 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache2String;
-import ai.util.HumanId;
-import ai.util.Return;
+import ai.reaver.HumanId;
+import ai.reaver.Return;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;
@@ -209,7 +209,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
     }
 
     /**
-     * You can also use {@link #getUserPropertyHtmlFor(ai.util.HumanId, String, String)}
+     * You can also use {@link #getUserPropertyHtmlFor(ai.reaver.HumanId, String, String)}
      *
      * @param usersName
      * @param usersUrl

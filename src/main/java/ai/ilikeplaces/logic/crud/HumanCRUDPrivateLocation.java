@@ -11,8 +11,8 @@ import ai.ilikeplaces.logic.crud.unit.RPrivateLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.UPrivateLocationLocal;
 import ai.ilikeplaces.logic.validators.unit.VDouble;
 import ai.ilikeplaces.util.*;
-import ai.util.Return;
-import ai.util.ReturnImpl;
+import ai.reaver.Return;
+import ai.reaver.ReturnImpl;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

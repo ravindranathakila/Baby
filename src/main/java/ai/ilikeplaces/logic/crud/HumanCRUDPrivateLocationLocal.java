@@ -5,7 +5,7 @@ import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.validators.unit.VDouble;
 import ai.ilikeplaces.util.RefObj;
-import ai.util.Return;
+import ai.reaver.Return;
 
 import javax.ejb.Remote;
 

@@ -1,7 +1,7 @@
 package ai.ilikeplaces;
 
-import ai.util.Return;
-import ai.util.ReturnImpl;
+import ai.reaver.Return;
+import ai.reaver.ReturnImpl;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;

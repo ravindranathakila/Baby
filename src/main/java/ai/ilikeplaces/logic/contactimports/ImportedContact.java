@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.contactimports;
 
 import ai.ilikeplaces.entities.etc.HumanEquals;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

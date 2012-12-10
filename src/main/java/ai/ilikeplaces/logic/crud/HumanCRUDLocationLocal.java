@@ -4,7 +4,7 @@ import ai.doc.License;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.util.RefObj;
-import ai.util.Return;
+import ai.reaver.Return;
 
 import javax.ejb.Remote;
 import java.util.List;

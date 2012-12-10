@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

@@ -3,7 +3,7 @@ package ai.ilikeplaces.logic.cdn;
 import ai.doc.License;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
-import ai.util.Return;
+import ai.reaver.Return;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

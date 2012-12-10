@@ -10,7 +10,7 @@ import ai.ilikeplaces.util.HTMLDocParser;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.cache.SmartCache2String;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;

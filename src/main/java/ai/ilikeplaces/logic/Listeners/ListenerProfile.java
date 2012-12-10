@@ -6,7 +6,7 @@ import ai.ilikeplaces.logic.Listeners.widgets.ForgotPasswordManager;
 import ai.ilikeplaces.logic.Listeners.widgets.PasswordManager;
 import ai.ilikeplaces.logic.Listeners.widgets.Profile;
 import ai.ilikeplaces.util.Loggers;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;

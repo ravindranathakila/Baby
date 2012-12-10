@@ -2,7 +2,7 @@ package ai.ilikeplaces.util;
 
 import ai.doc.License;
 import ai.ilikeplaces.entities.etc.HumansFriend;
-import ai.util.HumanId;
+import ai.reaver.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

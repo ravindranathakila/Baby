@@ -18,7 +18,7 @@ public class Refresh<T> implements Serializable {
     private static final String COUNLDN_T_FIND_IN_THE_BEAN = "COULDN'T FIND IN THE BEAN: ";
     private static final String THE_JAVA_UTIL_COLLECTION_FIELD_NAMED = " THE FIELD NAMED: ";
     private static final String GIVEN_FIELD_VALUE_IS_NULL = "GIVEN FIELDS VALUE IS NULL. FIELD IDENTIFIER:";
-    private static final String GIVEN_FIELD_IS_NOT_OF_TYPE_JAVA_UTIL_COLLECTION = "GIVEN FIELD IS NOT OF TYPE type java.util.Collection!";
+    private static final String GIVEN_FIELD_IS_NOT_OF_TYPE_JAVA_UTIL_COLLECTION = "GIVEN FIELD IS NOT OF TYPE type java.reaver.Collection!";
     private static final String RECEIVED_BEAN = "Received bean:{}";
     private static final String RECEIVED_SPEC = "Received spec:{}";
     private static final String MULTIPLE_FIELDS_HAVE_THE_SAME_FIELD_NAME_ANNOTATION_VALUE = "MULTIPLE FIELDS HAVE THE SAME @RefreshId ANNOTATION VALUE:";
