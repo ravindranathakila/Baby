@@ -2,8 +2,8 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.logic.validators.unit.Email;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
+import ai.util.HumanId;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,42 +16,47 @@ public class TribeWidgetCriteria {
 
 
 // ------------------------------ FIELDS (NON-STATIC)--------------------
- 
+
 
     private HumanId humanId;
     private VLong tribeId;
     private Tribe tribe;
-    
+
     private InviteData inviteData;
 
-// ------------------------ ACCESSORS / MUTATORS ------------------------
+    // ------------------------ ACCESSORS / MUTATORS ------------------------
     public HumanId getHumanId() {
 
         return humanId;
     }
+
     public Tribe getTribe() {
 
         return tribe;
     }
+
     public void setTribe(final Tribe tribe) {
 
         this.tribe = tribe;
     }
+
     public VLong getTribeId() {
 
         return tribeId;
     }
 
-// -------------------------- OTHER METHODS --------------------------
-        public InviteData getInviteData() {
+    // -------------------------- OTHER METHODS --------------------------
+    public InviteData getInviteData() {
 
         return inviteData == null ? (inviteData = new InviteData()) : inviteData;
     }
+
     public TribeWidgetCriteria setHumanId(HumanId humanId) {
 
         this.humanId = humanId;
         return this;
     }
+
     public TribeWidgetCriteria setTribeId(VLong tribeId) {
 
         this.tribeId = tribeId;
@@ -65,17 +70,17 @@ public class TribeWidgetCriteria {
 
 
 // ------------------------------ FIELDS (NON-STATIC)--------------------
- 
+
 
         private Email email;
 
-// ------------------------ ACCESSORS / MUTATORS ------------------------
+        // ------------------------ ACCESSORS / MUTATORS ------------------------
         public Email getEmail() {
 
             return email;
         }
 
-// -------------------------- OTHER METHODS --------------------------
+        // -------------------------- OTHER METHODS --------------------------
         public InviteData setEmail(final Email email) {
 
             this.email = email;

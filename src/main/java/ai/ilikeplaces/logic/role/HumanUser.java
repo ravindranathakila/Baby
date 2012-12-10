@@ -5,10 +5,10 @@ import ai.doc.WARNING;
 import ai.doc._fix;
 import ai.doc._ok;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
+import ai.util.HumanId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

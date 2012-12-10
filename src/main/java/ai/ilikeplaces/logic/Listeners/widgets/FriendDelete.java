@@ -2,11 +2,11 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.doc.License;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.Return;
+import ai.util.HumanId;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;

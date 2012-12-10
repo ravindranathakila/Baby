@@ -2,7 +2,7 @@ package ai.ilikeplaces.util;
 
 import ai.doc.License;
 import ai.ilikeplaces.entities.etc.HumansFriend;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.util.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

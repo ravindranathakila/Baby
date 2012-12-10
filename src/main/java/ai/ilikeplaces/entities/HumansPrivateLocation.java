@@ -5,6 +5,7 @@ import ai.doc.WARNING;
 import ai.doc._bidirectional;
 import ai.doc._note;
 import ai.ilikeplaces.entities.etc.*;
+import ai.util.HumanId;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -134,7 +135,7 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        return FriendUtil.check(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId)).returnValueBadly();
+        return FriendUtil.check(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
     }
 
     @Override

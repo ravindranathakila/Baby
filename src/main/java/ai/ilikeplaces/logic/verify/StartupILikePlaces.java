@@ -6,13 +6,13 @@ import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.FriendUtil;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MethodParams;
 import ai.ilikeplaces.util.MethodTimer;
 import ai.ilikeplaces.util.Return;
 import ai.ilikeplaces.ygp.impl.ClientFactory;
+import ai.util.HumanId;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;

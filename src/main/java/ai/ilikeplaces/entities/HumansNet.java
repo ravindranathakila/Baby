@@ -7,6 +7,7 @@ import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.FriendUtil;
 import ai.ilikeplaces.entities.etc.HumanPkJoinFace;
 import ai.ilikeplaces.entities.etc.HumansFriend;
+import ai.util.HumanId;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -138,7 +139,7 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        return FriendUtil.check(new ai.ilikeplaces.logic.validators.unit.HumanId(this.humanId), new ai.ilikeplaces.logic.validators.unit.HumanId(friendsHumanId)).returnValueBadly();
+        return FriendUtil.check(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
     }
 
     @Override

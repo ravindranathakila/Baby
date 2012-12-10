@@ -11,10 +11,10 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.util.*;
+import ai.util.HumanId;
 import com.google.gson.Gson;
 
 import javax.servlet.ServletException;

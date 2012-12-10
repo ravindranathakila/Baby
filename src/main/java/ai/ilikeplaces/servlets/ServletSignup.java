@@ -7,13 +7,13 @@ import ai.doc._todo;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Parameter;
 import ai.ilikeplaces.util.Return;
+import ai.util.HumanId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

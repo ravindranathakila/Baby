@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets.teach;
 
 import ai.ilikeplaces.logic.validators.unit.Email;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.util.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

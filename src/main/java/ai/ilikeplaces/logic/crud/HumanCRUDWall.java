@@ -9,8 +9,8 @@ import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.logic.crud.unit.CRUDHumansWallLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
+import ai.util.HumanId;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

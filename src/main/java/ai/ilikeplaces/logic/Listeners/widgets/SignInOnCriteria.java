@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import ai.ilikeplaces.util.Obj;
+import ai.util.HumanId;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,7 +38,7 @@ public class SignInOnCriteria {
     }
 
     public SignInOnCriteria setHumanId(final HumanId humanId) {
-         this.humanId = humanId;
+        this.humanId = humanId;
         return this;
     }
 

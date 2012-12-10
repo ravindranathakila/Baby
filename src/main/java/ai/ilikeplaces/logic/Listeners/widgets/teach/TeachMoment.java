@@ -6,12 +6,12 @@ import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletActivate;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
+import ai.util.HumanId;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -168,7 +168,7 @@ public class TeachMoment extends AbstractWidgetListener<TeachMomentCriteria> {
                                                                 .returnValue()
                                                                 .getHumanAuthenticationHash())
                                                 .append(ServletActivate.NEXT, URLEncoder.encode(parameter.toURL(), "UTF8"))
-                                                        .get();
+                                                .get();
                                     } catch (UnsupportedEncodingException e) {
                                         throw new RuntimeException(e);
                                     }

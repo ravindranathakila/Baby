@@ -12,8 +12,8 @@ import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.util.HumanId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

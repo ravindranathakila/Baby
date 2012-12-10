@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.role;
 
 import ai.doc.License;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.cache.SmartCache;
+import ai.util.HumanId;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpSessionBindingListener;

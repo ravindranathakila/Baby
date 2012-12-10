@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.doc.License;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.util.HumanId;
 
 import javax.ejb.Local;
 

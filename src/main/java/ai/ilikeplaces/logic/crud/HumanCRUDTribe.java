@@ -9,11 +9,11 @@ import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.crud.unit.CRUDAlbumLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDTribeLocal;
 import ai.ilikeplaces.logic.crud.unit.CRUDWallLocal;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.logic.validators.unit.VTribeName;
 import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 import ai.ilikeplaces.util.*;
+import ai.util.HumanId;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

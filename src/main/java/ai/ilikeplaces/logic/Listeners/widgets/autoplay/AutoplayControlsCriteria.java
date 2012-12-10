@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets.autoplay;
 
 import ai.ilikeplaces.logic.role.HumanUserLocal;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.Loggers;
+import ai.util.HumanId;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,7 +13,8 @@ import ai.ilikeplaces.util.Loggers;
 public class AutoplayControlsCriteria {
     private HumanId humanId;
     private HumanUserLocal humanUserLocal;
-    public enum AUTOPLAY_STATE{
+
+    public enum AUTOPLAY_STATE {
         PLAYING,
         PAUSED,
     }

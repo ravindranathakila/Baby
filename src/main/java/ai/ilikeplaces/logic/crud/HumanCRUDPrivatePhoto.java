@@ -8,8 +8,8 @@ import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.logic.crud.unit.*;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.*;
+import ai.util.HumanId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.doc._fix;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.util.HumanId;
 
 /**
  * Given a requirement to invite someone onboard, this class is a container of the information required to do the invite

@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.contactimports;
 
 import ai.ilikeplaces.entities.etc.HumanEquals;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
+import ai.util.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

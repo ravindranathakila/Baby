@@ -3,8 +3,8 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.doc.License;
 import ai.ilikeplaces.entities.HumansNet;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.util.HumanId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

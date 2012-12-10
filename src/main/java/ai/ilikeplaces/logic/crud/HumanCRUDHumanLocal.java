@@ -5,11 +5,11 @@ import ai.doc._note;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.Email;
-import ai.ilikeplaces.logic.validators.unit.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.util.RefObj;
 import ai.ilikeplaces.util.Return;
+import ai.util.HumanId;
 
 import javax.ejb.Remote;
 import java.util.List;
