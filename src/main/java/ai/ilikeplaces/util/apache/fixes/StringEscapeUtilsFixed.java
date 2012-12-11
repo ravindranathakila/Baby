@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util.apache.fixes;
 
-import ai.doc.License;
 import ai.ilikeplaces.util.apache.StringEscapeUtils;
+import ai.scribble.License;
 
 /**
  * Created by IntelliJ IDEA.

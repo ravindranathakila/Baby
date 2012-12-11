@@ -1,10 +1,10 @@
 package ai.ilikeplaces.servlets.filters;
 
-import ai.doc.License;
 import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
+import ai.scribble.License;
 
 import javax.ejb.NoSuchEJBException;
 import javax.servlet.*;

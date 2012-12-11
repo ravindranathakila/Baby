@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.scribble.License;
 
 import javax.ejb.Local;
 import java.util.Map;

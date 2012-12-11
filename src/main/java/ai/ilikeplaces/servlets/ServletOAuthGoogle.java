@@ -1,6 +1,5 @@
 package ai.ilikeplaces.servlets;
 
-import ai.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
@@ -17,6 +16,7 @@ import ai.ilikeplaces.util.Parameter;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.WARNING;
 import com.google.gdata.data.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

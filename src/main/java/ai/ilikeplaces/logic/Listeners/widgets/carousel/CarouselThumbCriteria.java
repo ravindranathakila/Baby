@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets.carousel;
 
-import ai.doc.WARNING;
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.scribble.WARNING;
 
 /**
  * Created by IntelliJ IDEA.

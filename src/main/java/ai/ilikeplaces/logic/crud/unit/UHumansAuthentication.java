@@ -1,12 +1,12 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
-import ai.doc._note;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.scribble.License;
+import ai.scribble._note;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

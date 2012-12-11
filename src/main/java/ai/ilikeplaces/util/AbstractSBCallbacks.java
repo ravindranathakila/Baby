@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
+import ai.scribble.License;
 import org.slf4j.Logger;
 
 import javax.annotation.PostConstruct;

@@ -1,12 +1,12 @@
 package ai.ilikeplaces.logic.verify;
 
-import ai.doc.License;
-import ai.doc._note;
 import ai.ilikeplaces.logic.crud.HumanCRUDHumanLocal;
 import ai.ilikeplaces.management.MemorySafe;
 import ai.ilikeplaces.management.MemoryWarningSystem;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
+import ai.scribble.License;
+import ai.scribble._note;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;

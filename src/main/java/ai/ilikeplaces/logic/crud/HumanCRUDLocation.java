@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
@@ -9,6 +8,7 @@ import ai.ilikeplaces.logic.crud.unit.ULocationLocal;
 import ai.ilikeplaces.util.*;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

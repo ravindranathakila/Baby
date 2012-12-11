@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.hotspots;
 
-import ai.doc.License;
 import ai.ilikeplaces.util.ElasticArray;
+import ai.scribble.License;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
-import ai.doc._note;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -10,6 +8,8 @@ import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.util.RefObj;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._note;
 
 import javax.ejb.Remote;
 import java.util.List;

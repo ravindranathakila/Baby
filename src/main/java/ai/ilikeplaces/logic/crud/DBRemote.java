@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
+import ai.scribble.License;
 
 import javax.ejb.Remote;
 

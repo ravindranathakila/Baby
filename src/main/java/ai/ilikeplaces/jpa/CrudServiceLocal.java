@@ -1,7 +1,7 @@
 package ai.ilikeplaces.jpa;
 
-import ai.doc.License;
-import ai.doc._ok;
+import ai.scribble.License;
+import ai.scribble._ok;
 
 import javax.ejb.Local;
 import java.util.List;

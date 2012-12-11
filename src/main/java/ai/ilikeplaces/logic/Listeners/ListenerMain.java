@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.doc.License;
-import ai.doc._todo;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
@@ -17,6 +15,8 @@ import ai.ilikeplaces.ygp.impl.ClientFactory;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
+import ai.scribble._todo;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;

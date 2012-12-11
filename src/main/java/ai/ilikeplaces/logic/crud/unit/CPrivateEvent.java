@@ -1,14 +1,14 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
-import ai.doc.WARNING;
-import ai.doc._fix;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.scribble.License;
+import ai.scribble.WARNING;
+import ai.scribble._fix;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

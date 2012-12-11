@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.verify;
 
-import ai.doc.License;
-import ai.doc._fix;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.mail.SendMailLocal;
 import ai.ilikeplaces.management.MemorySafe;
@@ -10,6 +8,8 @@ import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._fix;
 
 import javax.annotation.Resource;
 import javax.ejb.*;

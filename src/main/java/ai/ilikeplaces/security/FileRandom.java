@@ -1,7 +1,7 @@
 package ai.ilikeplaces.security;
 
-import ai.doc._fix;
-import ai.doc._ok;
+import ai.scribble._fix;
+import ai.scribble._ok;
 
 import java.util.Random;
 import java.util.WeakHashMap;

@@ -1,10 +1,10 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.HumansUnseen;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.logic.crud.unit.CRUDHumansUnseenLocal;
 import ai.ilikeplaces.util.*;
+import ai.scribble.License;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

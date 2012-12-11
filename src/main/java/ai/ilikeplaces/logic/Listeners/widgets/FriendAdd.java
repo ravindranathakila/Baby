@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
@@ -9,6 +8,7 @@ import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;

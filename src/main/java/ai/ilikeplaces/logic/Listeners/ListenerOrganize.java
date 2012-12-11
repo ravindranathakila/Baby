@@ -1,9 +1,5 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.doc.License;
-import ai.doc._doc;
-import ai.doc._note;
-import ai.doc._todo;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
@@ -21,6 +17,10 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._doc;
+import ai.scribble._note;
+import ai.scribble._todo;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;

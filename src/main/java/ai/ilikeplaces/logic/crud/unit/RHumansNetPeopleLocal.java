@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.scribble.License;
 
 import javax.ejb.Local;
 import java.util.List;

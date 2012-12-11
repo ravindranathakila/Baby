@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.doc.License;
-import ai.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.logic.Listeners.widgets.FriendAdd;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
@@ -14,6 +12,8 @@ import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.SmartLogger;
 import ai.reaver.HumanId;
+import ai.scribble.License;
+import ai.scribble.WARNING;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;

@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
@@ -11,6 +10,7 @@ import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache2String;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;

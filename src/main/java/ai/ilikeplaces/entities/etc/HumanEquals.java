@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities.etc;
 
-import ai.doc.License;
-import ai.doc._note;
+import ai.scribble.License;
+import ai.scribble._note;
 
 /**
  * This class is to be used with the equals method in objects.

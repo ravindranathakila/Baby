@@ -1,8 +1,8 @@
 package ai.ilikeplaces.management;
 
-import ai.doc.License;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
+import ai.scribble.License;
 
 /**
  * A class having static methods and static variables.

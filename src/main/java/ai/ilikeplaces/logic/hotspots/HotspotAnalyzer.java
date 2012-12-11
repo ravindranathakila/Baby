@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.hotspots;
 
-import ai.doc.License;
 import ai.ilikeplaces.logic.validators.unit.BoundingBox;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
+import ai.scribble.License;
 import com.google.gdata.data.geo.impl.W3CPoint;
 import net.sf.oval.Validator;
 

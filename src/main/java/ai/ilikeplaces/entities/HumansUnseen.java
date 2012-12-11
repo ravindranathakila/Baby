@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
-import ai.doc.WARNING;
-import ai.doc._unidirectional;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
+import ai.scribble.WARNING;
+import ai.scribble._unidirectional;
 
 import javax.persistence.*;
 import java.io.Serializable;

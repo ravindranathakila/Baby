@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
-import ai.doc._note;
-import ai.doc._todo;
+import ai.scribble.License;
+import ai.scribble._note;
+import ai.scribble._todo;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
 import net.sf.oval.exception.ConstraintsViolatedException;

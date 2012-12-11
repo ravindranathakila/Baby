@@ -1,8 +1,5 @@
 package ai.ilikeplaces.servlets;
 
-import ai.doc.License;
-import ai.doc._fix;
-import ai.doc._todo;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
@@ -16,6 +13,9 @@ import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._fix;
+import ai.scribble._todo;
 import net.sf.oval.exception.ConstraintsViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

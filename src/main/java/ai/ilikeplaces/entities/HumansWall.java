@@ -1,9 +1,9 @@
 package ai.ilikeplaces.entities;
 
-import ai.doc.License;
-import ai.doc._bidirectional;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.HumanPkJoinFace;
+import ai.scribble.License;
+import ai.scribble._bidirectional;
 
 import javax.persistence.*;
 import java.io.Serializable;

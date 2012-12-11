@@ -1,10 +1,10 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
 import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.scribble.License;
 
 import javax.ejb.Local;
 

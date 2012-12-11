@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.etc.*;
 import ai.reaver.HumanId;
+import ai.scribble.License;
 
 import javax.persistence.*;
 import java.io.Serializable;

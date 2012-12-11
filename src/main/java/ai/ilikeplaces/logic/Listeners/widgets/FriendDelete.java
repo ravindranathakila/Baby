@@ -1,12 +1,12 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;

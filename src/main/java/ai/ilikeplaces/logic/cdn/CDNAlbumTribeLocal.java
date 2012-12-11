@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.cdn;
 
-import ai.doc.License;
 import ai.ilikeplaces.util.FileUploadListenerFace;
+import ai.scribble.License;
 
 import javax.ejb.Local;
 import java.io.File;

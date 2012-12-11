@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.templates;
 
-import ai.doc.License;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.LogNull;
 import ai.ilikeplaces.util.Loggers;
+import ai.scribble.License;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;
 import org.itsnat.core.tmpl.TemplateSource;

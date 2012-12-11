@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.PrivateEvent;
@@ -10,6 +9,7 @@ import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.RefObj;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
 
 import javax.ejb.Remote;
 import java.util.List;

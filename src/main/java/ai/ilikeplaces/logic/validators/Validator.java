@@ -6,12 +6,12 @@
  */
 package ai.ilikeplaces.logic.validators;
 
-import ai.doc.License;
 import ai.ilikeplaces.logic.validators.faces.ValidatorFace;
 import ai.ilikeplaces.util.Factory;
 import ai.ilikeplaces.util.ReturnParams;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class Validator implements ValidatorFace, Factory {

@@ -1,13 +1,13 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
-import ai.doc._fix;
-import ai.doc._note;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.LogNull;
 import ai.ilikeplaces.util.MethodTimer;
+import ai.scribble.License;
+import ai.scribble._fix;
+import ai.scribble._note;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

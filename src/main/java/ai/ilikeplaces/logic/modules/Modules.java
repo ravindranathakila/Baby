@@ -1,12 +1,12 @@
 package ai.ilikeplaces.logic.modules;
 
-import ai.doc.License;
 import ai.ilikeplaces.logic.modules.conf.JNDILookupModule;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.MethodParams;
 import ai.ilikeplaces.util.MethodTimer;
 import ai.ilikeplaces.util.ParamValidator;
 import ai.ilikeplaces.util.jndi.impl.JNDILookupFactory;
+import ai.scribble.License;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 

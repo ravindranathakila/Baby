@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.entities.etc.HumansFriend;
@@ -13,6 +12,7 @@ import ai.ilikeplaces.logic.validators.unit.VDouble;
 import ai.ilikeplaces.util.*;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

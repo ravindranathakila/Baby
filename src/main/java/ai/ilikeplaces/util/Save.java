@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.reaver.HumanId;
+import ai.scribble.License;
 
 /**
  * Created by IntelliJ IDEA.

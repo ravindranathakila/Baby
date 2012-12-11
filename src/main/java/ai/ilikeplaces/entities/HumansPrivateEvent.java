@@ -1,11 +1,11 @@
 package ai.ilikeplaces.entities;
 
-import ai.doc.License;
-import ai.doc._bidirectional;
-import ai.doc._note;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.mail.GetMailAddress;
 import ai.reaver.HumanId;
+import ai.scribble.License;
+import ai.scribble._bidirectional;
+import ai.scribble._note;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.cdn;
 
-import ai.doc.License;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;
+import ai.scribble.License;
 import com.rackspacecloud.client.cloudfiles.FilesClient;
 
 import javax.imageio.ImageIO;

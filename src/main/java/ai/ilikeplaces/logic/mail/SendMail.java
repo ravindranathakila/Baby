@@ -1,10 +1,10 @@
 package ai.ilikeplaces.logic.mail;
 
-import ai.doc.License;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;

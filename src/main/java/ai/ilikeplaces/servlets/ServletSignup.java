@@ -1,9 +1,5 @@
 package ai.ilikeplaces.servlets;
 
-import ai.doc.License;
-import ai.doc._note;
-import ai.doc._ok;
-import ai.doc._todo;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -14,6 +10,10 @@ import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Parameter;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._note;
+import ai.scribble._ok;
+import ai.scribble._todo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.feasibility;
 
-import ai.doc.License;
+import ai.scribble.License;
 import twitter4j.*;
 
 /**

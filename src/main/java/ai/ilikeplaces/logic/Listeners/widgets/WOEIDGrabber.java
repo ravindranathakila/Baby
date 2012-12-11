@@ -1,10 +1,10 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
+import ai.scribble.License;
 import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;

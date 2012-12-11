@@ -1,10 +1,10 @@
 package ai.ilikeplaces.security;
 
-import ai.doc.License;
-import ai.doc._ok;
 import ai.ilikeplaces.security.blowfish.BlowFishLocal;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
+import ai.scribble.License;
+import ai.scribble._ok;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;

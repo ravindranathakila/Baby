@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Location;
 
-import ai.doc.License;
-import ai.doc._todo;
+import ai.scribble.License;
+import ai.scribble._todo;
 
 /**
  * @author Ravindranath Akila

@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
-import ai.doc.WARNING;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.entities.HumansIdentity;
@@ -23,6 +21,8 @@ import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble.WARNING;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.verify;
 
-import ai.doc.License;
+import ai.scribble.License;
 
 import javax.ejb.Local;
 

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.mail;
 
-import ai.doc.License;
+import ai.scribble.License;
 
 /**
  * Created by IntelliJ IDEA.

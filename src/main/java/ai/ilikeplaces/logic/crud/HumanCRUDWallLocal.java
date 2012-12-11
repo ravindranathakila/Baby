@@ -1,12 +1,12 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.util.Obj;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
 
 import javax.ejb.Remote;
 import java.util.List;

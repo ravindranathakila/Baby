@@ -1,6 +1,6 @@
 package ai.ilikeplaces.entities.etc;
 
-import ai.doc.License;
+import ai.scribble.License;
 
 import javax.ejb.ApplicationException;
 

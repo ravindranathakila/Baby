@@ -1,7 +1,7 @@
 package ai.ilikeplaces.security.xss;
 
-import ai.doc.License;
-import ai.doc._fix;
+import ai.scribble.License;
+import ai.scribble._fix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,5 @@
 package ai.ilikeplaces.servlets;
 
-import ai.doc.*;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.logic.crud.DB;
@@ -13,6 +12,7 @@ import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.*;
 import net.sf.oval.exception.ConstraintsViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

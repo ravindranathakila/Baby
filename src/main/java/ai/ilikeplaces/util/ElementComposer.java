@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
+import ai.scribble.License;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;

@@ -1,14 +1,14 @@
 package ai.ilikeplaces.jpa;
 
-import ai.doc.License;
-import ai.doc.WARNING;
-import ai.doc._convention;
-import ai.doc._ok;
 import ai.ilikeplaces.exception.DBDishonourException;
 import ai.ilikeplaces.exception.DBHazelcastRuntimeException;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.EntityManagerInjector;
 import ai.ilikeplaces.util.Loggers;
+import ai.scribble.License;
+import ai.scribble.WARNING;
+import ai.scribble._convention;
+import ai.scribble._ok;
 import com.hazelcast.client.ClientConfig;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.IMap;

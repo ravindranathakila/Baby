@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.role;
 
-import ai.doc.License;
 import ai.ilikeplaces.util.cache.SmartCache;
 import ai.reaver.HumanId;
+import ai.scribble.License;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpSessionBindingListener;

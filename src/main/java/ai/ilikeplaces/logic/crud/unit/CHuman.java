@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.scribble.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

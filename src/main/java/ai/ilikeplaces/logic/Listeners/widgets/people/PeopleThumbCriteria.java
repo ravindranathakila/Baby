@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets.people;
 
-import ai.doc.WARNING;
+import ai.scribble.WARNING;
 
 /**
  * Created by IntelliJ IDEA.

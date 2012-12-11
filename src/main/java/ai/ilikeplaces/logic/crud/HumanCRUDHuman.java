@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.*;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
@@ -19,6 +18,7 @@ import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.*;
 import net.sf.oval.exception.ConstraintsViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

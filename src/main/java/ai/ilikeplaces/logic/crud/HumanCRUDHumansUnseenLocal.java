@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.HumansUnseen;
 import ai.ilikeplaces.entities.Wall;
+import ai.scribble.License;
 
 import javax.ejb.Remote;
 import java.util.List;

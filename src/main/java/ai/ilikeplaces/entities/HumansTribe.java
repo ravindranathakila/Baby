@@ -1,10 +1,10 @@
 package ai.ilikeplaces.entities;
 
-import ai.doc.WARNING;
-import ai.doc._bidirectional;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.reaver.HumanId;
+import ai.scribble.WARNING;
+import ai.scribble._bidirectional;
 
 import javax.persistence.*;
 import java.io.Serializable;

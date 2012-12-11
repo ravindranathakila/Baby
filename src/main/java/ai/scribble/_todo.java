@@ -1,6 +1,5 @@
-package ai.doc;
+package ai.scribble;
 
-import javax.ejb.TransactionAttributeType;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -12,7 +11,11 @@ import java.lang.annotation.RetentionPolicy;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface _transaction {
+public @interface _todo {
 
-    TransactionAttributeType value();
+    String value() default "";
+
+    String task() default "";
+
+    String[] tasks() default {};
 }

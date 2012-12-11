@@ -1,10 +1,10 @@
 package ai.ilikeplaces.servlets;
 
-import ai.doc._doc;
-import ai.doc._logic;
-import ai.doc._note;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Parameter;
+import ai.scribble._doc;
+import ai.scribble._logic;
+import ai.scribble._note;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;

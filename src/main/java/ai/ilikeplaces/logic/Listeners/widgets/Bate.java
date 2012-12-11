@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
@@ -18,6 +17,7 @@ import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
 import com.google.gdata.data.Person;
 import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatServletRequest;

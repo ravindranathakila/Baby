@@ -1,12 +1,12 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
-import ai.doc._note;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.scribble.License;
+import ai.scribble._note;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

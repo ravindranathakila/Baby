@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.verify;
 
-import ai.doc.License;
-import ai.doc._note;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.FriendUtil;
 import ai.ilikeplaces.exception.DBException;
@@ -13,6 +11,8 @@ import ai.ilikeplaces.util.MethodTimer;
 import ai.ilikeplaces.ygp.impl.ClientFactory;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._note;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;

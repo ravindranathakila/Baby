@@ -1,8 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
-import ai.doc.WARNING;
-import ai.doc._doc;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
@@ -22,6 +19,9 @@ import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.MarkupTag;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble.WARNING;
+import ai.scribble._doc;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.slf4j.Logger;

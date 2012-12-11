@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.*;
+import ai.scribble.*;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
-import ai.doc._ok;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
@@ -17,6 +15,8 @@ import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._ok;
 import net.sf.oval.exception.ConstraintsViolatedException;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;

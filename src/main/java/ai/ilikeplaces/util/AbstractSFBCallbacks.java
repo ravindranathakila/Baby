@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
+import ai.scribble.License;
 
 import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;

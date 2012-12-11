@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
@@ -16,6 +15,7 @@ import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
 import com.google.gdata.data.geo.impl.W3CPoint;
 import net.sf.oval.Validator;
 import org.itsnat.core.ItsNatDocument;

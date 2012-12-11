@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.Listeners;
 
-import ai.doc.License;
-import ai.doc._todo;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
@@ -13,6 +11,8 @@ import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.SmartLogger;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._todo;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;

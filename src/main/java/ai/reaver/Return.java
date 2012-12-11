@@ -1,6 +1,6 @@
 package ai.reaver;
 
-import ai.doc.License;
+import ai.scribble.License;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,10 +1,10 @@
 package ai.reaver;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.etc.HumanEquals;
 import ai.ilikeplaces.entities.etc.HumanEqualsFace;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.util.RefObj;
+import ai.scribble.License;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.IsInvariant;
 import net.sf.oval.constraint.Length;

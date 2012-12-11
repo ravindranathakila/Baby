@@ -1,8 +1,5 @@
 package ai.ilikeplaces.servlets;
 
-import ai.doc.License;
-import ai.doc._fix;
-import ai.doc._todo;
 import ai.ilikeplaces.logic.cdn.CDNAlbumPrivateEvent;
 import ai.ilikeplaces.logic.cdn.CDNAlbumTribe;
 import ai.ilikeplaces.logic.cdn.CDNProfilePhoto;
@@ -11,6 +8,9 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
+import ai.scribble._fix;
+import ai.scribble._todo;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;

@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.cdn;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.exception.DBOperationException;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
@@ -11,6 +10,7 @@ import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
 import com.rackspacecloud.client.cloudfiles.FilesConstants;
 
 import javax.annotation.PostConstruct;

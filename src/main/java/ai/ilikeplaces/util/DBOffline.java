@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;

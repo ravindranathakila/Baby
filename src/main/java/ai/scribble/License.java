@@ -1,4 +1,4 @@
-package ai.doc;
+package ai.scribble;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

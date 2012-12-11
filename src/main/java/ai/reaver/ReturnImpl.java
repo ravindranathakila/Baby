@@ -1,7 +1,7 @@
 package ai.reaver;
 
-import ai.doc.License;
 import ai.ilikeplaces.util.Loggers;
+import ai.scribble.License;
 
 import java.io.Serializable;
 

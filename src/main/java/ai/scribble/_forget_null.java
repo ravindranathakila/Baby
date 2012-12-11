@@ -1,12 +1,11 @@
-package ai.doc;
+package ai.scribble;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * This is just a utility annotation to indicate a class is in working condition along with
- * an ok for a review by anybody.
+ * Indicates field will not be null generally
  *
  * @author Ravindranath Akila
  */
@@ -14,9 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface _logic {
+public @interface _forget_null {
 
-    public _note[] value() default @_note();
-
-    public _see SEE() default @_see();
+    public abstract String hint() default "A null value is not logically possible here";
 }

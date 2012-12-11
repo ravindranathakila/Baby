@@ -1,11 +1,11 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.HumansUnseen;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.exception.DBException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.scribble.License;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

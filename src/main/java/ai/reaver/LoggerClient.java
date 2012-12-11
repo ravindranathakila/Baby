@@ -1,4 +1,5 @@
-package ai;
+package ai.reaver;
+
 
 /**
  * Created by IntelliJ IDEA.
@@ -8,6 +9,6 @@ package ai;
  *
  * @author Ravindranath Akila
  */
-public interface LoggerClientFactory {
-    public LoggerClient getInstance(final String loggerName);
+public interface LoggerClient {
+    public void log(final String message, final Object objectOfWhichToStringWillBeCalledButPermitsNull);
 }

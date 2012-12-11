@@ -1,4 +1,4 @@
-package ai.doc;
+package ai.scribble;
 
 import java.lang.annotation.*;
 
@@ -20,9 +20,19 @@ import java.lang.annotation.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
-public @interface _field_preamble {
+public @interface _class_preamble {
+
+    /**
+     * @return String array of authors
+     */
+    String[] authors();
+
+    /**
+     * @return Version number
+     */
+    int version();
 
     /**
      * @return String array of description
@@ -33,6 +43,11 @@ public @interface _field_preamble {
      * @return String array of conventions
      */
     String[] conventions() default {"Always specify some convention details"};
+
+    /**
+     * @return List of classes which extend this class
+     */
+    Class[] extentions();
 
     /**
      * @return List of IMPORTANT classes which instanciate this class

@@ -1,8 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
-import ai.doc._note;
-import ai.doc._ok;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
@@ -17,6 +14,9 @@ import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.Obj;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._note;
+import ai.scribble._ok;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;

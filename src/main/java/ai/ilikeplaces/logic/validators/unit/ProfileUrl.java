@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.validators.unit;
 
-import ai.doc.License;
 import ai.ilikeplaces.util.RefObj;
+import ai.scribble.License;
 import net.sf.oval.configuration.annotation.IsInvariant;
 import net.sf.oval.constraint.MatchPattern;
 import net.sf.oval.constraint.NotEmpty;

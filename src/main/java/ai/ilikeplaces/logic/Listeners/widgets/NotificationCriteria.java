@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc._note;
+import ai.scribble._note;
 
 /**
  * Created by IntelliJ IDEA.

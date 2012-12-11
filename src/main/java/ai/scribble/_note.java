@@ -1,4 +1,4 @@
-package ai.doc;
+package ai.scribble;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -11,11 +11,17 @@ import java.lang.annotation.RetentionPolicy;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface _fix {
+public @interface _note {
 
-    String value() default "";
+    String[] value() default "";
 
-    String issue() default "";
+    @Deprecated String[] note() default "";
 
-    String[] issues() default {};
+    @Deprecated String[] notes() default {};
+
+    @Deprecated String see() default "";
+
+    @Deprecated String mustsee() default "";
+
+    _see SEE() default @_see();
 }

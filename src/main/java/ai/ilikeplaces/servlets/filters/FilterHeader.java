@@ -1,8 +1,8 @@
 package ai.ilikeplaces.servlets.filters;
 
-import ai.doc.License;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
+import ai.scribble.License;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;

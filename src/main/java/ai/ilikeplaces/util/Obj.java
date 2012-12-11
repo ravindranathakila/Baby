@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
+import ai.scribble.License;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.IsInvariant;
 import net.sf.oval.constraint.NotNull;

@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
-import ai.doc._note;
 import ai.ilikeplaces.rbs.RBGet;
+import ai.scribble.License;
+import ai.scribble._note;
 
 /**
  * LogNull does not always log a null. instead, it outputs exceptions or dumps

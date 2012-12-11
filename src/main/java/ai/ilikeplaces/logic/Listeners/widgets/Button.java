@@ -1,14 +1,14 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
-import ai.doc._doc;
-import ai.doc._note;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.MarkupTag;
+import ai.scribble.License;
+import ai.scribble._doc;
+import ai.scribble._note;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;

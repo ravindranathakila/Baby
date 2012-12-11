@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Tribe;
@@ -16,6 +15,7 @@ import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

@@ -1,8 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
-import ai.doc._fix;
-import ai.doc._see;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
@@ -20,6 +17,9 @@ import ai.ilikeplaces.util.cache.SmartCache;
 import ai.ilikeplaces.util.cache.SmartCache3;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._fix;
+import ai.scribble._see;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Document;

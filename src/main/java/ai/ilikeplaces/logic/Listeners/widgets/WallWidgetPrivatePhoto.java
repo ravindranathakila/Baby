@@ -1,9 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc.License;
-import ai.doc._doc;
-import ai.doc._logic;
-import ai.doc._note;
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
@@ -13,6 +9,10 @@ import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble._doc;
+import ai.scribble._logic;
+import ai.scribble._note;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.event.NodePropertyTransport;
 import org.itsnat.core.html.ItsNatHTMLDocument;

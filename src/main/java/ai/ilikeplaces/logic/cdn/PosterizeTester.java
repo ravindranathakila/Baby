@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.cdn;
 
-import ai.doc.License;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
 import ai.reaver.Return;
+import ai.scribble.License;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

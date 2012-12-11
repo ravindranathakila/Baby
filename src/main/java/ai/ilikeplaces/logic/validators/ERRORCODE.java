@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.validators;
 
-import ai.doc.License;
+import ai.scribble.License;
 
 /**
  * Created by IntelliJ IDEA.

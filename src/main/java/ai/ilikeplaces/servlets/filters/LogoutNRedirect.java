@@ -1,9 +1,9 @@
 package ai.ilikeplaces.servlets.filters;
 
-import ai.doc.License;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
+import ai.scribble.License;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

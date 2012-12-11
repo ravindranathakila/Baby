@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.verify.util;
 
-import ai.doc.License;
-import ai.doc._convention;
+import ai.scribble.License;
+import ai.scribble._convention;
 
 /**
  * Created by IntelliJ IDEA.

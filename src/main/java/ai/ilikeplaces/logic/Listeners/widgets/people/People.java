@@ -1,11 +1,11 @@
 package ai.ilikeplaces.logic.Listeners.widgets.people;
 
-import ai.doc._doc;
-import ai.doc._note;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.scribble._doc;
+import ai.scribble._note;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;

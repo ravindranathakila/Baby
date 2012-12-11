@@ -1,4 +1,4 @@
-package ai;
+package ai.reaver;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryProvider;

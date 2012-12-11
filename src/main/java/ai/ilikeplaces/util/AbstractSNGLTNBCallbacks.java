@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
-import ai.doc._ok;
+import ai.scribble.License;
+import ai.scribble._ok;
 
 /**
  * @author Ravindranath Akila

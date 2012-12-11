@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc._doc;
-import ai.doc._note;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.crud.DB;
@@ -10,6 +8,8 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AIEventListener;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.reaver.Return;
+import ai.scribble._doc;
+import ai.scribble._note;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;

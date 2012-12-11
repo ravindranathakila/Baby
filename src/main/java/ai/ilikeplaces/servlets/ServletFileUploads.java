@@ -1,9 +1,5 @@
 package ai.ilikeplaces.servlets;
 
-import ai.doc.License;
-import ai.doc.WARNING;
-import ai.doc._fix;
-import ai.doc._todo;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.crud.DB;
@@ -12,6 +8,10 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import ai.reaver.Return;
+import ai.scribble.License;
+import ai.scribble.WARNING;
+import ai.scribble._fix;
+import ai.scribble._todo;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;

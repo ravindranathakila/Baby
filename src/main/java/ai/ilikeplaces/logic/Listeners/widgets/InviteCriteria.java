@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
-import ai.doc._fix;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.reaver.HumanId;
+import ai.scribble._fix;
 
 /**
  * Given a requirement to invite someone onboard, this class is a container of the information required to do the invite

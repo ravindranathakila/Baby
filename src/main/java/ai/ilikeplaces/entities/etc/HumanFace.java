@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities.etc;
 
-import ai.doc.License;
 import ai.ilikeplaces.entities.Human;
+import ai.scribble.License;
 
 /**
  * Created by IntelliJ IDEA.

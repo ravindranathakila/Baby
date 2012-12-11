@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.License;
-import ai.doc.WARNING;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
@@ -13,6 +11,8 @@ import ai.ilikeplaces.util.*;
 import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.License;
+import ai.scribble.WARNING;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

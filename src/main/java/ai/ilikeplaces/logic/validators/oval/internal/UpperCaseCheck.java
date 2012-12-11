@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.validators.oval.internal;
 
-import ai.doc.License;
-import ai.doc._note;
 import ai.ilikeplaces.logic.validators.oval.UpperCase;
+import ai.scribble.License;
+import ai.scribble._note;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.AbstractAnnotationCheck;
 import net.sf.oval.context.OValContext;

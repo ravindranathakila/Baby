@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
 import ai.reaver.Return;
+import ai.scribble.License;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;

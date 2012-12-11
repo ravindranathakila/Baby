@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud;
 
-import ai.doc.*;
 import ai.ilikeplaces.entities.PublicPhoto;
 import ai.ilikeplaces.logic.crud.unit.CPublicPhotoLocal;
 import ai.ilikeplaces.logic.crud.unit.DPublicPhotoLocal;
@@ -9,6 +8,7 @@ import ai.ilikeplaces.logic.crud.unit.UPublicPhotoLocal;
 import ai.ilikeplaces.util.*;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
+import ai.scribble.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

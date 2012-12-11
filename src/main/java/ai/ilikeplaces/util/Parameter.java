@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
-import ai.doc._todo;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
+import ai.scribble.License;
+import ai.scribble._todo;
 import org.apache.commons.httpclient.URI;
 
 import java.net.URL;

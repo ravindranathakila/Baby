@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
 import ai.ilikeplaces.exception.PendingEqualsMethodException;
+import ai.scribble.License;
 
 /**
  * Reusable exceptions

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
+import ai.scribble.License;
 
 /**
  * Just a wrapper around StringBuilder, which gives 2 additional features.

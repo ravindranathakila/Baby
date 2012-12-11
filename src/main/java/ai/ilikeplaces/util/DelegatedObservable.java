@@ -1,8 +1,8 @@
 package ai.ilikeplaces.util;
 
-import ai.doc.License;
-import ai.doc._class_preamble;
-import ai.doc._note;
+import ai.scribble.License;
+import ai.scribble._class_preamble;
+import ai.scribble._note;
 
 import java.io.Serializable;
 import java.util.Observable;

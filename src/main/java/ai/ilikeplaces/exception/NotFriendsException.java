@@ -1,6 +1,6 @@
 package ai.ilikeplaces.exception;
 
-import ai.doc.License;
+import ai.scribble.License;
 
 /**
  * Throw this exception if constructor failed to initialize

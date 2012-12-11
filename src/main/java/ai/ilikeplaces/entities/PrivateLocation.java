@@ -1,10 +1,10 @@
 package ai.ilikeplaces.entities;
 
-import ai.doc.License;
-import ai.doc.WARNING;
-import ai.doc._bidirectional;
-import ai.doc._ok;
 import ai.ilikeplaces.entities.etc.*;
+import ai.scribble.License;
+import ai.scribble.WARNING;
+import ai.scribble._bidirectional;
+import ai.scribble._ok;
 
 import javax.persistence.*;
 import java.io.Serializable;

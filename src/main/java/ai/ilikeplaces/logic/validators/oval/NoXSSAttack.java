@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.validators.oval;
 
-import ai.doc.License;
-import ai.doc._note;
 import ai.ilikeplaces.logic.validators.oval.internal.NoXSSAttackCheck;
+import ai.scribble.License;
+import ai.scribble._note;
 import net.sf.oval.configuration.annotation.Constraint;
 
 import java.lang.annotation.ElementType;

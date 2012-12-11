@@ -1,7 +1,7 @@
 package ai.ilikeplaces.jpa;
 
-import ai.doc.License;
-import ai.doc._fix;
+import ai.scribble.License;
+import ai.scribble._fix;
 
 import java.util.IdentityHashMap;
 import java.util.Map;

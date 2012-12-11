@@ -1,7 +1,5 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
-import ai.doc.WARNING;
 import ai.ilikeplaces.entities.HumansWall;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Wall;
@@ -13,6 +11,8 @@ import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.scribble.License;
+import ai.scribble.WARNING;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

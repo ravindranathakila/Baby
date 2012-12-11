@@ -1,6 +1,5 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.*;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.etc.RefreshException;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
@@ -8,6 +7,7 @@ import ai.ilikeplaces.exception.DBFetchDataException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.jpa.QueryParameter;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.scribble.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

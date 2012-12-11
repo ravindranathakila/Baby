@@ -1,19 +1,18 @@
-package ai.doc;
+package ai.scribble;
 
 import java.lang.annotation.*;
 
 /**
- * Make sure you annotate all methods with this annotation.<br>
+ * Make sure you annotate all classes with this annotation.<br>
  * A Template is given below.<br>
  * <blockquote><pre>
- * \@MethodPreamble(
+ * \@ClassPreamble(
  * authors = {"Ravindranath Akila"},
  * version = 1,
  * description = {""},
  * conventions = {""},
- * callBackModules = {Class.class},
  * notes = {"Initial Implementation"},
- * TODO =  {"Under Implementation"})
+ * TODO =  {"Under Progress"})
  * </pre></blockquote>
  *
  * @author Ravindranath Akila
@@ -21,19 +20,9 @@ import java.lang.annotation.*;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Documented
-@Target(ElementType.METHOD)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.SOURCE)
-public @interface _method_preamble {
-
-    /**
-     * @return String array of authors
-     */
-    String[] authors();
-
-    /**
-     * @return Version number
-     */
-    int version() default 0;
+public @interface _field_preamble {
 
     /**
      * @return String array of description
@@ -41,19 +30,14 @@ public @interface _method_preamble {
     String[] description();
 
     /**
-     * @return Array of classes which use this method
-     */
-    Class[] callBackModules();
-
-    /**
      * @return String array of conventions
      */
     String[] conventions() default {"Always specify some convention details"};
 
     /**
-     * @return String array of reviewers
+     * @return List of IMPORTANT classes which instanciate this class
      */
-    String[] reviewers() default {"No reviewers"};
+    Class[] instances() default {};
 
     /**
      * @return String array of notes

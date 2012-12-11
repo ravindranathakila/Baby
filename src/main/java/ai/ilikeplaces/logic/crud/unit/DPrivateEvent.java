@@ -1,13 +1,13 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.doc.License;
-import ai.doc._expect_null;
-import ai.doc._forget_null;
 import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
+import ai.scribble.License;
+import ai.scribble._expect_null;
+import ai.scribble._forget_null;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

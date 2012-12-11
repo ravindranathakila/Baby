@@ -1,8 +1,8 @@
 package ai.ilikeplaces.entities;
 
-import ai.doc.*;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.util.ExceptionCache;
+import ai.scribble.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
