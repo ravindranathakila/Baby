@@ -1,7 +1,5 @@
 package com.google.contacts.api.impl;
 
-import com.google.contacts.api.impl.Client;
-
 /**
  * Created by IntelliJ IDEA.
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>

@@ -1,7 +1,5 @@
 package com.google.contacts.api.impl;
 
-import org.json.JSONObject;
-
 import java.net.URI;
 import java.util.Map;
 
@@ -13,6 +11,6 @@ import java.util.Map;
  *
  * @author Ravindranath Akila
  */
-public interface Client{
+public interface Client {
     public URI get(final String endpointEndValue, final Map<String, String> parameters);
 }

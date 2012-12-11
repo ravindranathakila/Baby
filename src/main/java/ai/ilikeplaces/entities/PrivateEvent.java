@@ -1,5 +1,6 @@
 package ai.ilikeplaces.entities;
 
+import ai.doc.*;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.RefreshData;

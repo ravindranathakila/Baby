@@ -29,7 +29,7 @@ public class Info extends AbstractWidgetListener<InfoCriteria> {
     public Info(final ItsNatServletRequest request__, final InfoCriteria infoCriteria, final Element appendToElement__) {
         super(request__, Controller.Page.Info, infoCriteria, appendToElement__);
 
-        if(!infoCriteria.getTitle().isEmpty()){
+        if (!infoCriteria.getTitle().isEmpty()) {
             $$(InfoIds.InfoTitle).setTextContent(infoCriteria.getTitle());
         }
 

@@ -88,7 +88,8 @@ public class TemplateSourceGeoBusiness implements TemplateSource {
             @Override
             public String toString() {
                 return "http:" + SLASH + "/www.ilikeplaces.com/cdn/FullyImplementedHTML/";
-            }},
+            }
+        },
 
         PiratesAttackingUsPirates() {
             /**
@@ -97,7 +98,8 @@ public class TemplateSourceGeoBusiness implements TemplateSource {
             @Override
             public String toString() {
                 throw ExceptionCache.UNSUPPORTED_OPERATION_EXCEPTION;//This should be the url of the pirate caught page
-            }};
+            }
+        };
 
         /**
          * @return the url of this template, starting with http: if web based, or file: if local.

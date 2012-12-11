@@ -6,11 +6,11 @@ import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.NotNull;
 
 /**
-* Created by IntelliJ IDEA.
-* User: Ravindranath Akila
-* Date: 10/29/11
-* Time: 10:02 AM
-*/
+ * Created by IntelliJ IDEA.
+ * User: Ravindranath Akila
+ * Date: 10/29/11
+ * Time: 10:02 AM
+ */
 public class VTribeName extends RefObj<String> {
 
     @IsInvariant

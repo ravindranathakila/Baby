@@ -14,6 +14,7 @@ public class ButtonCriteria implements InterWidgetMetadata<ButtonCriteria> {
         this.buttonText = buttonText;
         this.buttonImage = buttonImage;
     }
+
     public ButtonCriteria(final boolean doRefreshPageOnClick, final String buttonText, final String buttonImage, final String buttonWidthCss) {
         this.doRefreshPageOnClick = doRefreshPageOnClick;
         this.buttonText = buttonText;

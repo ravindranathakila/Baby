@@ -1,5 +1,6 @@
 package ai.ilikeplaces.util;
 
+import ai.doc.*;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.role.HumanUser;

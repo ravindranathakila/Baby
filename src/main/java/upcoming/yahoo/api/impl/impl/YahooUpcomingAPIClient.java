@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -51,7 +50,6 @@ public class YahooUpcomingAPIClient implements Client {
     public String getJsonEndpoint() {
         return jsonEndpoint;
     }
-
 
 
     public JSONObject get(final String endpointEndValue, final Map<String, String> parameters) {

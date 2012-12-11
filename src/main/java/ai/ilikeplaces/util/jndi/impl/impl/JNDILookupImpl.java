@@ -16,7 +16,7 @@ import java.util.Properties;
  * Date: 12/19/10
  * Time: 7:25 AM
  */
-public class JNDILookupImpl implements JNDILookup{
+public class JNDILookupImpl implements JNDILookup {
 
     final private Properties properties_;
     final private Context context_;
@@ -31,6 +31,6 @@ public class JNDILookupImpl implements JNDILookup{
     }
 
     public Object lookup() throws NamingException {
-        return  context_.lookup(lookupValue_);
+        return context_.lookup(lookupValue_);
     }
 }

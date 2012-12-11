@@ -8,7 +8,7 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
  */
 public class PrivateEventViewSidebarCriteria {
     String humanId__;
-    long privateEventId__ ;
+    long privateEventId__;
 
     public String getHumanId__() {
         return humanId__;

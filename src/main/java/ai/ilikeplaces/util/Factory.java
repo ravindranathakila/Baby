@@ -12,10 +12,11 @@ public interface Factory<T> {
 
     /**
      * Returns a factory object of the given type
+     *
      * @param initArgs
      * @return a factory object of the given type
      */
-    public Factory getFactory(final Object ... initArgs);
+    public Factory getFactory(final Object... initArgs);
 
-    public T getInstance(final Object ... initArgs);
+    public T getInstance(final Object... initArgs);
 }

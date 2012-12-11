@@ -9,7 +9,7 @@ import ai.ilikeplaces.util.jndi.conf.AbstractJNDILookupModule;
  * Date: 12/19/10
  * Time: 9:30 AM
  */
-public class JNDILookupModule extends AbstractJNDILookupModule{
+public class JNDILookupModule extends AbstractJNDILookupModule {
 
     private static final String INITIAL_CONTEXT_FACTORY = RBGet.globalConfig.getString("oejb.LICF");
 

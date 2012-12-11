@@ -1,11 +1,11 @@
 package com.google.places.api.conf;
 
-import com.google.places.api.impl.ClientFactory;
-import com.google.places.api.impl.impl.GooglePlacesAPIClient;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryProvider;
 import com.google.inject.name.Named;
+import com.google.places.api.impl.ClientFactory;
+import com.google.places.api.impl.impl.GooglePlacesAPIClient;
 
 /**
  * Created by IntelliJ IDEA.

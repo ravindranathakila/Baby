@@ -13,7 +13,7 @@ import org.w3c.dom.html.HTMLDocument;
  * Date: 10/13/11
  * Time: 9:18 PM
  */
-public class Notification extends AbstractWidgetListener<NotificationCriteria>{
+public class Notification extends AbstractWidgetListener<NotificationCriteria> {
 
     public Notification(final ItsNatServletRequest request__, final NotificationCriteria notificationCriteria, final Element appendToElement__) {
         super(request__, Controller.Page.Notification, notificationCriteria, appendToElement__);

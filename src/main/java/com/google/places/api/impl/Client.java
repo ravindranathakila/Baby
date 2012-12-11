@@ -12,7 +12,8 @@ import java.util.Map;
  *
  * @author Ravindranath Akila
  */
-public interface Client{
+public interface Client {
     public String getJsonEndpoint();
+
     public JSONObject get(final String endpointEndValue, final Map<String, String> parameters);
 }

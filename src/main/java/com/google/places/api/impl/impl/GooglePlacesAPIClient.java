@@ -1,9 +1,9 @@
 package com.google.places.api.impl.impl;
 
-import com.google.places.api.impl.Client;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.name.Named;
+import com.google.places.api.impl.Client;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -49,7 +49,6 @@ public class GooglePlacesAPIClient implements Client {
     public String getJsonEndpoint() {
         return jsonEndpoint;
     }
-
 
 
     public JSONObject get(final String endpointEndValue, final Map<String, String> parameters) {

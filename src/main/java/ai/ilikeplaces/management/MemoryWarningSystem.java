@@ -87,7 +87,7 @@ public class MemoryWarningSystem {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public MemoryWarningSystem() {
-        if(MemoryNormalValue + MemoryThreshold < 1){
+        if (MemoryNormalValue + MemoryThreshold < 1) {
             throw ILLEGAL_STATE_EXCEPTION;
         }
 

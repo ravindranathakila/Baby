@@ -24,7 +24,7 @@ public class SmartCache<K, V> {
     }
 
     public V get(final K key) {
-        if(recoverWith == null){
+        if (recoverWith == null) {
             throw ILLEGAL_ACCESS_ERROR;
         }
         if (!(MAP.containsKey(key) && (MAP.get(key)) != null)) {

@@ -29,7 +29,6 @@ import java.io.IOException;
  * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
  * Date: Jun 10, 2010
  * Time: 3:27:18 PM
- *
  */
 
 public class ProfileRedirect implements Filter {

@@ -1,7 +1,6 @@
 package ai.ilikeplaces.fragments;
 
 /**
- *
  * @author Ravindranath Akila
  */
 @Deprecated

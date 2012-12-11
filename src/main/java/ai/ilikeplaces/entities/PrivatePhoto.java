@@ -1,5 +1,6 @@
 package ai.ilikeplaces.entities;
 
+import ai.doc.*;
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivatePhoto;
 

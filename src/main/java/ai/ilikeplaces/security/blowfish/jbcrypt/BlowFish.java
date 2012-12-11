@@ -7,8 +7,8 @@ import javax.ejb.Singleton;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import java.security.SecureRandom;
+
 /**
- *
  * @author Ravindranath Akila
  */
 
@@ -19,10 +19,11 @@ public class BlowFish extends AbstractSNGLTNBCallbacks implements BlowFishLocal 
 
     /**
      * Hash a password using the OpenBSD bcrypt scheme
-     * @param password	the password to hash
-     * @param salt	the salt to hash with (perhaps generated
-     * using BCrypt.gensalt)
-     * @return	the hashed password
+     *
+     * @param password the password to hash
+     * @param salt     the salt to hash with (perhaps generated
+     *                 using BCrypt.gensalt)
+     * @return the hashed password
      */
     public String hashpw(final String password, final String salt) {
         return BCrypt.hashpw(password, salt);
@@ -30,11 +31,12 @@ public class BlowFish extends AbstractSNGLTNBCallbacks implements BlowFishLocal 
 
     /**
      * Generate a salt for use with the BCrypt.hashpw() method
-     * @param log_rounds	the log2 of the number of rounds of
-     * hashing to apply - the work factor therefore increases as
-     * 2**log_rounds.
-     * @param random		an instance of SecureRandom to use
-     * @return	an encoded salt value
+     *
+     * @param log_rounds the log2 of the number of rounds of
+     *                   hashing to apply - the work factor therefore increases as
+     *                   2**log_rounds.
+     * @param random     an instance of SecureRandom to use
+     * @return an encoded salt value
      */
     public String gensalt(final int log_rounds, final SecureRandom random) {
         return BCrypt.gensalt(log_rounds, random);
@@ -42,10 +44,11 @@ public class BlowFish extends AbstractSNGLTNBCallbacks implements BlowFishLocal 
 
     /**
      * Generate a salt for use with the BCrypt.hashpw() method
-     * @param log_rounds	the log2 of the number of rounds of
-     * hashing to apply - the work factor therefore increases as
-     * 2**log_rounds.
-     * @return	an encoded salt     @Override value
+     *
+     * @param log_rounds the log2 of the number of rounds of
+     *                   hashing to apply - the work factor therefore increases as
+     *                   2**log_rounds.
+     * @return an encoded salt     @Override value
      */
     public String gensalt(final int log_rounds) {
         return BCrypt.gensalt(log_rounds);
@@ -55,7 +58,8 @@ public class BlowFish extends AbstractSNGLTNBCallbacks implements BlowFishLocal 
      * Generate a salt for use with the BCrypt.hashpw() method,
      * selecting a reasonable default for the number of hashing
      * rounds to apply
-     * @return	an encoded salt value
+     *
+     * @return an encoded salt value
      */
     public String gensalt() {
         return BCrypt.gensalt();
@@ -64,9 +68,10 @@ public class BlowFish extends AbstractSNGLTNBCallbacks implements BlowFishLocal 
     /**
      * Check that a plaintext password matches a previously hashed
      * one
-     * @param plaintext	the plaintext password to verify
-     * @param hashed	the previously-hashed password
-     * @return	true if the passwords match, false otherwise
+     *
+     * @param plaintext the plaintext password to verify
+     * @param hashed    the previously-hashed password
+     * @return true if the passwords match, false otherwise
      */
     public boolean checkpw(final String plaintext, final String hashed) {
         return BCrypt.checkpw(plaintext, hashed);
@@ -74,18 +79,19 @@ public class BlowFish extends AbstractSNGLTNBCallbacks implements BlowFishLocal 
 
     /**
      * General Call on Any BlowFish library. Wrapper method.
+     *
      * @param passWord
-     * @param salt 
+     * @param salt
      * @return
      */
     @Override
-    public String getHash(final String passWord, final String salt){
+    public String getHash(final String passWord, final String salt) {
         final String hash = new String(BCrypt.hashpw(new String(passWord), salt));
-        if(!BCrypt.checkpw(new String(passWord), new String(hash))){
+        if (!BCrypt.checkpw(new String(passWord), new String(hash))) {
             throw new java.lang.RuntimeException("SORRY! I AM ENCOUNTERING A HASHING ERROR!");
         } else {
-            INFO.info("HASH:"+hash);
-            INFO.info("SALT:"+salt);
+            INFO.info("HASH:" + hash);
+            INFO.info("SALT:" + salt);
         }
         return hash;
     }

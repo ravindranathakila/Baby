@@ -1,5 +1,6 @@
 package ai.ilikeplaces.servlets;
 
+import ai.doc.*;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.logic.crud.DB;

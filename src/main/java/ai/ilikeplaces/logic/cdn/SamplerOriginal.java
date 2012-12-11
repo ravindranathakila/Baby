@@ -50,11 +50,11 @@ public class SamplerOriginal extends Frame {
         float[] blurKernel = {ninth, ninth, ninth, ninth, ninth, ninth, ninth,
                 ninth, ninth};
         mOps.put("Blur", new ConvolveOp(new Kernel(3, 3, blurKernel),
-                                        ConvolveOp.EDGE_NO_OP, null));
+                ConvolveOp.EDGE_NO_OP, null));
 
         float[] edge = {0f, -1f, 0f, -1f, 4f, -1f, 0f, -1f, 0f};
         mOps.put("Edge detector", new ConvolveOp(new Kernel(3, 3, edge),
-                                                 ConvolveOp.EDGE_NO_OP, null));
+                ConvolveOp.EDGE_NO_OP, null));
 
         float[] sharp = {0f, -1f, 0f, -1f, 5f, -1f, 0f, -1f, 0f};
         mOps.put("Sharpen", new ConvolveOp(new Kernel(3, 3, sharp)));
@@ -94,30 +94,30 @@ public class SamplerOriginal extends Frame {
             zero[i] = (short) 0;
         }
         mOps.put("Brighten", new LookupOp(new ShortLookupTable(0, brighten),
-                                          null));
+                null));
         mOps.put("Better Brighten", new LookupOp(new ShortLookupTable(0,
-                                                                      betterBrighten), null));
+                betterBrighten), null));
         mOps.put("Posterize", new LookupOp(new ShortLookupTable(0, posterize),
-                                           null));
+                null));
         mOps.put("Invert", new LookupOp(new ShortLookupTable(0, invert), null));
 
         short[][] redOnly = {invert, straight, straight};
         short[][] greenOnly = {straight, invert, straight};
         short[][] blueOnly = {straight, straight, invert};
         mOps.put("Red invert", new LookupOp(new ShortLookupTable(0, redOnly),
-                                            null));
+                null));
         mOps.put("Green invert", new LookupOp(
                 new ShortLookupTable(0, greenOnly), null));
         mOps.put("Blue invert", new LookupOp(new ShortLookupTable(0, blueOnly),
-                                             null));
+                null));
 
         short[][] redRemove = {zero, straight, straight};
         short[][] greenRemove = {straight, zero, straight};
         short[][] blueRemove = {straight, straight, zero};
         mOps.put("Red remove", new LookupOp(new ShortLookupTable(0, redRemove),
-                                            null));
+                null));
         mOps.put("Green remove", new LookupOp(new ShortLookupTable(0,
-                                                                   greenRemove), null));
+                greenRemove), null));
         mOps.put("Blue remove", new LookupOp(
                 new ShortLookupTable(0, blueRemove), null));
     }
@@ -304,7 +304,7 @@ public class SamplerOriginal extends Frame {
             // to be on the right side of the split.
             if (mSplitX != 0 && mSecondImage != null) {
                 Rectangle firstClip = new Rectangle(mSplitX, 0, width - mSplitX,
-                                                    height);
+                        height);
                 g2.setClip(firstClip);
             }
             g2.drawImage(getImage(), 0, 0, null);
@@ -384,7 +384,7 @@ public class SamplerOriginal extends Frame {
         }
 
         BufferedImage bufferedImage = new BufferedImage(image.getWidth(null),
-                                                        image.getHeight(null), imageType);
+                image.getHeight(null), imageType);
         Graphics2D g2 = bufferedImage.createGraphics();
         g2.drawImage(image, null, null);
         return bufferedImage;

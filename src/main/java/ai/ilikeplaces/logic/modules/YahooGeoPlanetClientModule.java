@@ -8,7 +8,7 @@ import ai.ilikeplaces.ygp.conf.AbstractYGPClientModule;
  * Date: 12/18/10
  * Time: 11:32 PM
  */
-public class YahooGeoPlanetClientModule extends AbstractYGPClientModule{
+public class YahooGeoPlanetClientModule extends AbstractYGPClientModule {
 
     @Override
     public String appidProvider() {

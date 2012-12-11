@@ -139,44 +139,44 @@
 
 
     <logger name="USER" level="info">
-            <appender-ref ref="FILE_USER" />
+        <appender-ref ref="FILE_USER"/>
     </logger>
 
     <logger name="NON_USER" level="info">
-            <appender-ref ref="FILE_NON_USER" />
+        <appender-ref ref="FILE_NON_USER"/>
     </logger>
 
     <logger name="EXCEPTION" level="error">
-            <appender-ref ref="FILE_EXCEPTION" />
+        <appender-ref ref="FILE_EXCEPTION"/>
     </logger>
 
     <logger name="USER_EXCEPTION" level="error">
-            <appender-ref ref="FILE_USER_EXCEPTION" />
+        <appender-ref ref="FILE_USER_EXCEPTION"/>
     </logger>
 
     <logger name="DEBUG" level="info">
-            <appender-ref ref="FILE_DEBUG" />
+        <appender-ref ref="FILE_DEBUG"/>
     </logger>
 
     <logger name="INFO" level="info">
-            <appender-ref ref="FILE_INFO" />
+        <appender-ref ref="FILE_INFO"/>
     </logger>
 
     <logger name="SERVER_STATUS" level="info">
-            <appender-ref ref="FILE_SERVER_STATUS" />
+        <appender-ref ref="FILE_SERVER_STATUS"/>
     </logger>
 
     <logger name="FAILED_SIGNUPS" level="info">
-            <appender-ref ref="FILE_FAILED_SIGNUPS" />
+        <appender-ref ref="FILE_FAILED_SIGNUPS"/>
     </logger>
 
     <logger name="FAILED_LOGINS" level="info">
-            <appender-ref ref="FILE_FAILED_LOGINS" />
+        <appender-ref ref="FILE_FAILED_LOGINS"/>
     </logger>
 
 
     <root level="info">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDOUT"/>
     </root>
 
 </configuration>
