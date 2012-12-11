@@ -78,7 +78,7 @@ public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace, 
     @Override
     @Transient
     public String getDisplayName() {
-        return FriendUtil.getHumanCachedHuman(getHumanId()).getHuman().getDisplayName();
+        return FriendUtil.getCachedHuman(getHumanId()).getHuman().getDisplayName();
     }
 
     @Override

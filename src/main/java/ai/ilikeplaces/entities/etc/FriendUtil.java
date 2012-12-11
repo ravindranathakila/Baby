@@ -23,7 +23,7 @@ public class FriendUtil {
         return APPROACH_FOR_CHECKING_HUMANS_FRIEND.check(me, other);
     }
 
-    public static HumansIdentity getHumanCachedHuman(final String humanId) {
+    public static HumansIdentity getCachedHuman(final String humanId) {
         return APPROACH_FOR_GETTING_CACHED_HUMAN.getCachedHuman(humanId);
     }
 

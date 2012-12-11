@@ -1,7 +1,6 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.entities.etc.*;
-import ai.ilikeplaces.util.ExceptionCache;
 import ai.scribble.*;
 
 import javax.persistence.*;
@@ -187,7 +186,7 @@ public class Tribe implements Serializable, Refreshable<Tribe>, RefreshData<Trib
 
     @Override
     public Tribe refresh(RefreshSpec refreshSpec) throws RefreshException {
-        throw ExceptionCache.METHOD_NOT_IMPLEMENTED;
+        throw new UnsupportedOperationException();
     }
 
 // -------------------------- OTHER METHODS --------------------------
