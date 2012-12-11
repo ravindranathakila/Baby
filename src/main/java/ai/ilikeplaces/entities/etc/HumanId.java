@@ -1,6 +1,6 @@
 package ai.ilikeplaces.entities.etc;
 
-import ai.ilikeplaces.util.RefObj;
+import ai.reaver.RefObj;
 import ai.scribble.License;
 import net.sf.oval.Validator;
 import net.sf.oval.configuration.annotation.IsInvariant;

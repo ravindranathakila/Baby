@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
-import ai.ilikeplaces.util.RefObj;
+import ai.reaver.RefObj;
 import ai.reaver.Return;
 import ai.scribble.License;
 

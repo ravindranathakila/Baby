@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.validators.unit;
 
-import ai.ilikeplaces.util.RefObj;
+import ai.reaver.RefObj;
 import ai.scribble.License;
 import com.google.gdata.data.geo.impl.W3CPoint;
 import net.sf.oval.Validator;

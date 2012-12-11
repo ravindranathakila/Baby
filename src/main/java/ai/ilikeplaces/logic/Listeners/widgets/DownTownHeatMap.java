@@ -14,6 +14,7 @@ import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
+import ai.reaver.RefObj;
 import ai.reaver.Return;
 import ai.scribble.License;
 import com.google.gdata.data.geo.impl.W3CPoint;

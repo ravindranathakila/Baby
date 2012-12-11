@@ -7,7 +7,7 @@ import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.util.Obj;
-import ai.ilikeplaces.util.RefObj;
+import ai.reaver.RefObj;
 import ai.reaver.Return;
 import ai.scribble.License;
 

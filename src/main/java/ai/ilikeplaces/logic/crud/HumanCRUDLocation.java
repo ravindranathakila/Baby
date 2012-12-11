@@ -6,6 +6,7 @@ import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.logic.crud.unit.RLocationLocal;
 import ai.ilikeplaces.logic.crud.unit.ULocationLocal;
 import ai.ilikeplaces.util.*;
+import ai.reaver.RefObj;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
 import ai.scribble.License;

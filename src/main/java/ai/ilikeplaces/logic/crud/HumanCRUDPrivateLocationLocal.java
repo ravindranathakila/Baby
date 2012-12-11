@@ -3,7 +3,7 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.etc.HumansFriend;
 import ai.ilikeplaces.logic.validators.unit.VDouble;
-import ai.ilikeplaces.util.RefObj;
+import ai.reaver.RefObj;
 import ai.reaver.Return;
 import ai.scribble.License;
 
