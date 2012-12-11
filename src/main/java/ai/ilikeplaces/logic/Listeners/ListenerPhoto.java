@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.Photo$Description;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
@@ -9,7 +10,6 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.SmartLogger;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 import ai.scribble._todo;

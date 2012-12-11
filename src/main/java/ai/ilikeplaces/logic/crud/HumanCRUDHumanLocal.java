@@ -1,12 +1,12 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.verify.util.Verify;
 import ai.ilikeplaces.util.RefObj;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 import ai.scribble._note;

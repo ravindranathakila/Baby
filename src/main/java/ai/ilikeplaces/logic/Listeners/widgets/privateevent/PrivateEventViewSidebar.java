@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar;
 import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivateEvent;
@@ -11,7 +12,6 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache3;
-import ai.reaver.HumanId;
 import ai.scribble.License;
 import ai.scribble._ok;
 import org.itsnat.core.ItsNatServletRequest;

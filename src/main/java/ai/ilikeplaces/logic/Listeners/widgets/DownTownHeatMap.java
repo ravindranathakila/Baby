@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.hotspots.Hotspot;
@@ -13,7 +14,6 @@ import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 import com.google.gdata.data.geo.impl.W3CPoint;

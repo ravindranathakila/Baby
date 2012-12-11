@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Tribe;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.VLong;
@@ -9,7 +10,6 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache3;
-import ai.reaver.HumanId;
 import ai.scribble.License;
 import ai.scribble._ok;
 import org.itsnat.core.ItsNatServletRequest;

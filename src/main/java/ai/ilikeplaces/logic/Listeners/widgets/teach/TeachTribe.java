@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets.teach;
 
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.crud.DB;
@@ -10,7 +11,6 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletActivate;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;

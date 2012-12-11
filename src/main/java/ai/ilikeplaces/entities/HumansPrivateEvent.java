@@ -2,7 +2,6 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.mail.GetMailAddress;
-import ai.reaver.HumanId;
 import ai.scribble.License;
 import ai.scribble._bidirectional;
 import ai.scribble._note;

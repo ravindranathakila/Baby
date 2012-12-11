@@ -1,8 +1,5 @@
-package ai.reaver;
+package ai.ilikeplaces.entities.etc;
 
-import ai.ilikeplaces.entities.etc.HumanEquals;
-import ai.ilikeplaces.entities.etc.HumanEqualsFace;
-import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.util.RefObj;
 import ai.scribble.License;
 import net.sf.oval.Validator;

@@ -1,7 +1,6 @@
 package ai.ilikeplaces.entities.etc;
 
 
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 
 /**

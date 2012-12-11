@@ -1,10 +1,10 @@
 package ai.ilikeplaces.logic.role;
 
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
-import ai.reaver.HumanId;
 import ai.scribble.License;
 import ai.scribble.WARNING;
 import ai.scribble._fix;

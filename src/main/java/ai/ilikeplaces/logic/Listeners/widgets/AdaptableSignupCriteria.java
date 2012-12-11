@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.validators.unit.Email;
-import ai.reaver.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.Listeners.widgets.autoplay;
 
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.util.Loggers;
-import ai.reaver.HumanId;
 
 /**
  * Created by IntelliJ IDEA.

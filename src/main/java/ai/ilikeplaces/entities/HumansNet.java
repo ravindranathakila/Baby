@@ -1,10 +1,6 @@
 package ai.ilikeplaces.entities;
 
-import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
-import ai.ilikeplaces.entities.etc.FriendUtil;
-import ai.ilikeplaces.entities.etc.HumanPkJoinFace;
-import ai.ilikeplaces.entities.etc.HumansFriend;
-import ai.reaver.HumanId;
+import ai.ilikeplaces.entities.etc.*;
 import ai.scribble.License;
 import ai.scribble.WARNING;
 import ai.scribble._note;

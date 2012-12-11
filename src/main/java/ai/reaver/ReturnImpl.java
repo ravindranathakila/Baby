@@ -1,7 +1,8 @@
 package ai.reaver;
 
-import ai.ilikeplaces.util.Loggers;
 import ai.scribble.License;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 import java.io.Serializable;
 
@@ -16,15 +17,12 @@ import java.io.Serializable;
 final public class ReturnImpl<T> implements Return<T>, Serializable {
 
     final static private String logMsgBeginning = "SORRY! I ENCOUNTERED AN EXCEPTION! HOWEVER, THE APPLICATION SHOULD REMAIN INTACT. SEE BELOW FOR MORE DETAILS.\n\n";
-
     static private long ERROR_SEQ_NUMBER = 1;
-
+    final Injector loggerModule = Guice.createInjector(new LoggerModule());
+    final LoggerClient logger = loggerModule.getInstance(LoggerClientFactory.class).getInstance(this.getClass().getName());
     private int returnStatus = 1;
-
     private T returnValue = null;
-
     private Throwable returnError = null;
-
     private String returnMsg = null;
 
     public ReturnImpl(final int returnStatus, final T returnValue, final Throwable returnError, final String returnMsg) {
@@ -42,7 +40,7 @@ final public class ReturnImpl<T> implements Return<T>, Serializable {
 
     public ReturnImpl(final Throwable returnError, final String returnMsg, final boolean shouldLog) {
         if (shouldLog) {
-            Loggers.EXCEPTION.error(logMsgBeginning + returnMsg + "\n", returnError);
+            logger.log(logMsgBeginning + returnMsg + "\n", returnError);
         }
         this.returnStatus = 1;
         this.returnError = returnError;

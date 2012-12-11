@@ -2,12 +2,12 @@ package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.Wall;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.NoPrivilegesException;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.util.*;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
 import ai.scribble.License;

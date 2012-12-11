@@ -1,6 +1,7 @@
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.entities.Human;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.exception.ConstructorInvokationException;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.crud.DB;
@@ -12,7 +13,6 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import org.json.JSONException;
 import org.json.JSONObject;

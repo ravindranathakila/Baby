@@ -1,13 +1,13 @@
 package ai.ilikeplaces.logic.Listeners.widgets.privateevent;
 
 import ai.ilikeplaces.entities.PrivateEvent;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.Info;
 import ai.ilikeplaces.logic.validators.unit.SimpleName;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 import ai.scribble._ok;

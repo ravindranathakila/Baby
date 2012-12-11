@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.Location;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
@@ -12,7 +13,6 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.ygp.impl.Client;
 import ai.ilikeplaces.ygp.impl.ClientFactory;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
 import ai.scribble.License;

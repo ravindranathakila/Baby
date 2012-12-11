@@ -2,7 +2,6 @@ package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.entities.etc.*;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
-import ai.reaver.HumanId;
 import ai.scribble.WARNING;
 import ai.scribble._bidirectional;
 

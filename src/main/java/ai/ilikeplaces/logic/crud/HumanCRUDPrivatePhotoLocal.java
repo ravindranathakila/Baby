@@ -1,9 +1,9 @@
 package ai.ilikeplaces.logic.crud;
 
 import ai.ilikeplaces.entities.PrivatePhoto;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.util.Obj;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 

@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
@@ -9,7 +10,6 @@ import ai.ilikeplaces.util.HTMLDocParser;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
 import ai.ilikeplaces.util.cache.SmartCache2String;
-import ai.reaver.HumanId;
 import ai.scribble.License;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;

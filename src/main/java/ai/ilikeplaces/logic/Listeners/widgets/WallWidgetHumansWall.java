@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.entities.*;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.entities.etc.HumanIdFace;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
@@ -15,7 +16,6 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
 import ai.ilikeplaces.util.cache.SmartCache3;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 import ai.scribble._fix;

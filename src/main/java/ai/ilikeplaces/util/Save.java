@@ -1,7 +1,7 @@
 package ai.ilikeplaces.util;
 
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.entities.etc.HumansFriend;
-import ai.reaver.HumanId;
 import ai.scribble.License;
 
 /**

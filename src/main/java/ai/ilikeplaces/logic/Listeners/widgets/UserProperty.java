@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
@@ -8,7 +9,6 @@ import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache2String;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 import org.itsnat.core.ItsNatServletRequest;
@@ -209,7 +209,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
     }
 
     /**
-     * You can also use {@link #getUserPropertyHtmlFor(ai.reaver.HumanId, String, String)}
+     * You can also use {@link #getUserPropertyHtmlFor(ai.ilikeplaces.entities.etc.HumanId, String, String)}
      *
      * @param usersName
      * @param usersUrl

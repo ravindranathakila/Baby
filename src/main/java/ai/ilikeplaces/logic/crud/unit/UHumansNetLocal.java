@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.reaver.HumanId;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.scribble.License;
 
 import javax.ejb.Local;

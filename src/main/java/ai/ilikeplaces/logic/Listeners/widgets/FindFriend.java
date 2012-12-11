@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.HumansNetPeople;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.contactimports.ImportedContact;
 import ai.ilikeplaces.logic.contactimports.google.GoogleContactImporter;
@@ -13,7 +14,6 @@ import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 import ai.scribble._ok;

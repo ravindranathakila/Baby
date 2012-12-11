@@ -3,13 +3,13 @@ package ai.ilikeplaces.logic.crud;
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.Msg;
 import ai.ilikeplaces.entities.Tribe;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.logic.validators.unit.VTribeName;
 import ai.ilikeplaces.logic.validators.unit.VTribeStory;
 import ai.ilikeplaces.util.Obj;
 import ai.ilikeplaces.util.RefObj;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 

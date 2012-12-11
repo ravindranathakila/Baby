@@ -2,11 +2,11 @@ package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.GeoCoord;
 import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import ai.ilikeplaces.logic.validators.unit.VDouble;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 
 public class UserIntroduction {

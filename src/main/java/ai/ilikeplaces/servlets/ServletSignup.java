@@ -1,5 +1,6 @@
 package ai.ilikeplaces.servlets;
 
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
@@ -8,7 +9,6 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.Parameter;
-import ai.reaver.HumanId;
 import ai.reaver.Return;
 import ai.scribble.License;
 import ai.scribble._note;

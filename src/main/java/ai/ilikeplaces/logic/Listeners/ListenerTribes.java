@@ -1,13 +1,13 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.Tribe;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribe;
 import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribeCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.servlets.Controller;
-import ai.reaver.HumanId;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.ItsNatServletResponse;

@@ -1,6 +1,7 @@
 package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.HumansIdentity;
+import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlow;
 import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
@@ -12,7 +13,6 @@ import ai.ilikeplaces.util.AbstractListener;
 import ai.ilikeplaces.util.ExceptionCache;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MarkupTag;
-import ai.reaver.HumanId;
 import ai.scribble.License;
 import ai.scribble._fix;
 import org.itsnat.core.ItsNatDocument;
