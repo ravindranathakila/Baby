@@ -208,7 +208,7 @@ public class Human extends HumanEquals implements HumanIdFace, Serializable, Cle
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        return FriendUtil.check(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
+        return FriendUtil.checkIfFriend(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
     }
 
     /**

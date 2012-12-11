@@ -1,7 +1,6 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.entities.etc.*;
-import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetPrivatePhoto;
 import ai.scribble.*;
 
 import javax.persistence.*;
@@ -13,11 +12,6 @@ import java.util.List;
  * @author Ravindranath Akila
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-@_doc(
-        LOGIC = @_logic(
-                SEE = @_see(WallWidgetPrivatePhoto.class)
-        )
-)
 @Table(name = "PrivatePhoto", schema = "KunderaKeyspace@ilpMainSchema")
 @Entity
 @EntityListeners({EntityLifeCycleListener.class})

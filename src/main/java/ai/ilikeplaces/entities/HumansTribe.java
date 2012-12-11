@@ -1,7 +1,6 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.entities.etc.*;
-import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.scribble.WARNING;
 import ai.scribble._bidirectional;
 
@@ -79,13 +78,13 @@ public class HumansTribe implements HumansFriend, HumanIdFace, HumanEqualsFace, 
     @Override
     @Transient
     public String getDisplayName() {
-        return UserProperty.HUMANS_IDENTITY_CACHE.get(getHumanId(), "").getHuman().getDisplayName();
+        return FriendUtil.getHumanCachedHuman(getHumanId()).getHuman().getDisplayName();
     }
 
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        return FriendUtil.check(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
+        return FriendUtil.checkIfFriend(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
     }
 
     @Override

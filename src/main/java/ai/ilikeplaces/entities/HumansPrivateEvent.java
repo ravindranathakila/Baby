@@ -1,7 +1,7 @@
 package ai.ilikeplaces.entities;
 
 import ai.ilikeplaces.entities.etc.*;
-import ai.ilikeplaces.logic.mail.GetMailAddress;
+import ai.reaver.GetMailAddress;
 import ai.scribble.License;
 import ai.scribble._bidirectional;
 import ai.scribble._note;
@@ -147,7 +147,7 @@ public class HumansPrivateEvent extends HumanEquals implements HumanPkJoinFace, 
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        return FriendUtil.check(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
+        return FriendUtil.checkIfFriend(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
     }
 
     @Override

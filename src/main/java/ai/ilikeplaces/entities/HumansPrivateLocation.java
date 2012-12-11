@@ -134,7 +134,7 @@ public class HumansPrivateLocation extends HumanEquals implements HumanPkJoinFac
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        return FriendUtil.check(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
+        return FriendUtil.checkIfFriend(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
     }
 
     @Override

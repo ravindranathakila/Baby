@@ -1,10 +1,11 @@
 package ai.ilikeplaces.entities.etc;
 
 
+import ai.ilikeplaces.entities.HumansIdentity;
 import ai.reaver.Return;
 
 /**
- * Somebody has to register the checking mechanism here. If not each check will throw an exception.
+ * Somebody has to register the checking mechanism here. If not each checkIfFriend will throw an exception.
  * This was done to separate this module from any other module in the project.
  * <p/>
  * Created with IntelliJ IDEA Ultimate.
@@ -14,13 +15,24 @@ import ai.reaver.Return;
  */
 public class FriendUtil {
 
+
+    public static CheckHumanApproach APPROACH_FOR_CHECKING_HUMANS_FRIEND = null;
+    public static GetDisplayName APPROACH_FOR_GETTING_CACHED_HUMAN = null;
+
+    public static Return<Boolean> checkIfFriend(final HumanId me, final HumanId other) {
+        return APPROACH_FOR_CHECKING_HUMANS_FRIEND.check(me, other);
+    }
+
+    public static HumansIdentity getHumanCachedHuman(final String humanId) {
+        return APPROACH_FOR_GETTING_CACHED_HUMAN.getCachedHuman(humanId);
+    }
+
     public interface CheckHumanApproach {
         Return<Boolean> check(final HumanId me, final HumanId other);
     }
 
-    public static CheckHumanApproach APPROACH_FOR_CHECKING_HUMANS_FRIEND = null;
-
-    public static Return<Boolean> check(final HumanId me, final HumanId other) {
-        return APPROACH_FOR_CHECKING_HUMANS_FRIEND.check(me, other);
+    public interface GetDisplayName {
+        HumansIdentity getCachedHuman(final String humanId);
     }
+
 }

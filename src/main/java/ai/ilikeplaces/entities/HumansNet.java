@@ -103,8 +103,8 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
     public String displayName;
 
     @WARNING(warning = "Do not change LAZY loading.",
-            warnings = {"If you are changing, check with Human which fetches this eager.",
-                    "If you are changing, check how to efficiently fetch displayName.",
+            warnings = {"If you are changing, checkIfFriend with Human which fetches this eager.",
+                    "If you are changing, checkIfFriend how to efficiently fetch displayName.",
                     "You could use pkjoincolumn between HumansNet and the requiring entity."})
     @OneToOne(mappedBy = "humanId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn
@@ -135,7 +135,7 @@ public class HumansNet implements HumanPkJoinFace, HumansFriend, Serializable {
     @Override
     @Transient
     public boolean ifFriend(final String friendsHumanId) {
-        return FriendUtil.check(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
+        return FriendUtil.checkIfFriend(new HumanId(this.humanId), new HumanId(friendsHumanId)).returnValueBadly();
     }
 
     @Override

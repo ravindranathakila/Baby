@@ -2,6 +2,7 @@ package ai.ilikeplaces.logic.mail;
 
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.*;
+import ai.reaver.GetMailAddress;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
 import ai.scribble.License;
