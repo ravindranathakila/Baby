@@ -158,7 +158,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                     Loggers.debug("" + hopefullyLastWall.getWallType());
                                     switch (hopefullyLastWall.getWallType()) {
                                         case Wall.wallTypeHuman: {
-                                            final String otherHumansId = hopefullyLastWall.metadataValueFor(Wall.WallMetadataKey.HUMAN);
+                                            final String otherHumansId = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.HUMAN);
                                             final HumansIdentity humansIdentity = ai.ilikeplaces.logic.Listeners.widgets.UserProperty.HUMANS_IDENTITY_CACHE.get(otherHumansId, "");
 
                                             $$sendJS(JSCodeToSend.redirectPageWithURL(
@@ -168,7 +168,7 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                             break;
                                         }
                                         case Wall.wallTypeTribe: {
-                                            final String tribeIdAsString = hopefullyLastWall.metadataValueFor(Wall.WallMetadataKey.TRIBE);
+                                            final String tribeIdAsString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.TRIBE);
                                             final long tribeId = Long.parseLong(tribeIdAsString);
 
                                             final String href = new Parameter(Tribes.getURL())
@@ -183,8 +183,8 @@ public class AutoplayControls extends AbstractWidgetListener<AutoplayControlsCri
                                             break;
                                         }
                                         default: {//Private Event is default. Humans set metadata
-                                            final String privateEventString = hopefullyLastWall.metadataValueFor(Wall.WallMetadataKey.PRIVATE_EVENT);
-                                            final String privatePhotoString = hopefullyLastWall.metadataValueFor(Wall.WallMetadataKey.PRIVATE_PHOTO);
+                                            final String privateEventString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.PRIVATE_EVENT);
+                                            final String privatePhotoString = hopefullyLastWall.getMetadataValueFor(Wall.WallMetadataKey.PRIVATE_PHOTO);
                                             Loggers.debug("" + privateEventString);
                                             Loggers.debug("" + privatePhotoString);
 

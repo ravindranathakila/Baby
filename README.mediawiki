@@ -257,3 +257,18 @@ alter 'HumansTribe',{NAME => 'humanId'}
 alter 'HumansUnseen',{NAME => 'humanId'}
 alter 'HumansWall',{NAME => 'humanId'}
 
+enable 'Human'
+enable 'HumansAlbum'
+enable 'HumansAuthentication'
+enable 'HumansAuthorization'
+enable 'HumansIdentity'
+enable 'HumansNet'
+enable 'HumansNetPeople'
+enable 'HumansPrivateEvent'
+enable 'HumansPrivateLocation'
+enable 'HumansPrivatePhoto'
+enable 'HumansPublicPhoto'
+enable 'HumansTribe'
+enable 'HumansUnseen'
+enable 'HumansWall'
+

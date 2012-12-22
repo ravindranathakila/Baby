@@ -1,14 +1,13 @@
 package ai.ilikeplaces.util;
 
 import ai.scribble.License;
-import com.impetus.kundera.persistence.EntityManagerFactoryImpl;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import java.util.HashMap;
+import javax.persistence.Persistence;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,8 +21,8 @@ public class EntityManagerInjector {
 
     public static final ThreadLocal<EntityManager> THREAD_SAFE_ENTITY_MANAGER = new ThreadLocal<EntityManager>() {
 
-        //private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ilpMainSchema");
-        private final EntityManagerFactory entityManagerFactory = new EntityManagerFactoryImpl("ilpMainSchema", new HashMap<String, Object>());
+        private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ilpMainSchema");
+//        private final EntityManagerFactory entityManagerFactory = new EntityManagerFactoryImpl("ilpMainSchema", new HashMap<String, Object>());
 
 //        final EntityManagerFactory entityManagerFactory;
 //

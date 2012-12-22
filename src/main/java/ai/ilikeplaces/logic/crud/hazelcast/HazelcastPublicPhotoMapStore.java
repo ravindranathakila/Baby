@@ -12,7 +12,6 @@ import ai.ilikeplaces.util.cache.AbstractHCMapStore;
 public class HazelcastPublicPhotoMapStore extends AbstractHCMapStore {
 
     private Class<PublicPhoto> type = PublicPhoto.class;
-    ;
 
     @Override
     public void store(Object o, Object o1) {
