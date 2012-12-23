@@ -34,13 +34,16 @@
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+            <property name="openjpa.ConnectionURL" value="jdbc:derby://localhost:1527/ilp;create=true"/>
+            <property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="openjpa.ConnectionUserName" value="ilp"/>
+            <property name="openjpa.ConnectionPassword" value="ilp"/>
             <property name="openjpa.Log" value="File=..\logs\openjpa.log, DefaultLevel=INFO, Runtime=INFO, SQL=INFO"/>
-            <property name="openjpa.QueryCache" value="net.sf.ehcache.openjpa.datacache.EhCacheQueryCache"/>
-            <property name="openjpa.DataCache" value="net.sf.ehcache.openjpa.datacache.EhCacheDataCache"/>
-            <property name="openjpa.RemoteCommitProvider"
-                      value="net.sf.ehcache.openjpa.datacache.NoOpRemoteCommitProvider"/>
-            <property name="openjpa.DataCacheManager" value="net.sf.ehcache.openjpa.datacache.EhCacheDataCacheManager"/>
-            <property name="openjpa.FlushBeforeQueries" value="true"/>
+            <!--<property name="openjpa.QueryCache" value="net.sf.ehcache.openjpa.datacache.EhCacheQueryCache"/>-->
+            <!--<property name="openjpa.DataCache" value="net.sf.ehcache.openjpa.datacache.EhCacheDataCache"/>-->
+            <!--<property name="openjpa.RemoteCommitProvider" value="net.sf.ehcache.openjpa.datacache.NoOpRemoteCommitProvider"/>-->
+            <!--<property name="openjpa.DataCacheManager" value="net.sf.ehcache.openjpa.datacache.EhCacheDataCacheManager"/>-->
+            <!--<property name="openjpa.FlushBeforeQueries" value="true"/>-->
         </properties>
     </persistence-unit>
 </persistence>
