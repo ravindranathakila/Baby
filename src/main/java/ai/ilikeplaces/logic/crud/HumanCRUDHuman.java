@@ -6,7 +6,6 @@ import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.exception.AbstractEjbApplicationException;
 import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
 import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
 import ai.ilikeplaces.logic.crud.unit.*;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.DisplayNameString;
@@ -59,11 +58,6 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
     private static final String IS_NOT_FROM_A_VALID_DOMAIN = " is not from a valid domain";
     private static final String ACTIVATE_PROFILE_SUCCESSFUL = "Activate Profile Successful.";
     private static final String ACTIVATE_PROFILE_FAILED = "Activate Profile FAILED!";
-
-
-    @EJB
-    private CrudServiceLocal crudServiceLocal_;
-
     @EJB
     private RHumanLocal rHumanLocal_;
 
@@ -410,7 +404,7 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
                     hid.setHumanId(newUser.getHumanId());
                     hid.setUrl(new Url().setUrlR(humanId.getObj()).setMetadataR(humanId.getObj()));//Yes, the default url is his/her email
 
-                    newUser.setHumansIdentity((HumansIdentity) crudServiceLocal_.create(hid));
+                    newUser.setHumansIdentity(hid);
                 }
 
                 //HumansNet has as many internal primarykeyjoin entities
@@ -423,40 +417,40 @@ public class HumanCRUDHuman extends AbstractSLBCallbacks implements HumanCRUDHum
                     hn.setDisplayName(newUser.getHumanId().split(SYMBOL_AT)[0]);
                     hn.setHumanId(newUser.getHumanId());
 
-                    hn.setHumansNetPeople((HumansNetPeople) crudServiceLocal_.create(hnp));
+                    hn.setHumansNetPeople(hnp);
 
-                    newUser.setHumansNet((HumansNet) crudServiceLocal_.create(hn));
+                    newUser.setHumansNet(hn);
                 }
 
 
                 final HumansPrivateLocation hpl = new HumansPrivateLocation();
                 hpl.setHumanId(newUser.getHumanId());
-                newUser.setHumansPrivateLocation((HumansPrivateLocation) crudServiceLocal_.create(hpl));
+                newUser.setHumansPrivateLocation(hpl);
 
                 final HumansPrivateEvent hpe = new HumansPrivateEvent();
                 hpe.setHumanId(newUser.getHumanId());
-                newUser.setHumansPrivateEvent((HumansPrivateEvent) crudServiceLocal_.create(hpe));
+                newUser.setHumansPrivateEvent(hpe);
 
                 final HumansAlbum hal = new HumansAlbum();
                 hal.setHumanId(newUser.getHumanId());
-                newUser.setHumansAlbum((HumansAlbum) crudServiceLocal_.create(hal));
+                newUser.setHumansAlbum(hal);
 
                 final HumansPrivatePhoto hprp = new HumansPrivatePhoto();
                 hprp.setHumanId(newUser.getHumanId());
-                newUser.setHumansPrivatePhoto((HumansPrivatePhoto) crudServiceLocal_.create(hprp));
+                newUser.setHumansPrivatePhoto(hprp);
 
                 final HumansPublicPhoto hpup = new HumansPublicPhoto();
                 hpup.setHumanId(newUser.getHumanId());
-                newUser.setHumansPublicPhoto((HumansPublicPhoto) crudServiceLocal_.create(hpup));
+                newUser.setHumansPublicPhoto(hpup);
 
                 final HumansWall hw = new HumansWall();
                 hw.setHumanId(newUser.getHumanId());
                 hw.setWall(new Wall().setWallTypeR(Wall.wallTypeHuman));
-                newUser.setHumansWall((HumansWall) crudServiceLocal_.create(hw));
+                newUser.setHumansWall(hw);
 
                 final HumansAlbum halbum = new HumansAlbum();
                 halbum.setHumanId(newUser.getHumanId());
-                newUser.setHumansAlbum((HumansAlbum) crudServiceLocal_.create(halbum));
+                newUser.setHumansAlbum(halbum);
 
                 doNTxCHuman(newUser);
 

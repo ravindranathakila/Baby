@@ -2,7 +2,6 @@ package ai.ilikeplaces.util;
 
 import ai.scribble.License;
 
-import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -60,7 +59,7 @@ public class EntityManagerInjector {
         }
     };
 
-    @AroundInvoke
+    //@AroundInvoke
     public Object injectEntityManager(final InvocationContext invocation) throws Exception {
         boolean joinedTransaction = false;
 
