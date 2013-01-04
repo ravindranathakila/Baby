@@ -15,10 +15,13 @@ package ai.ilikeplaces.servlets.filters;
  * Time: 12:34:33 PM
  */
 
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.SmartLogger;
 import ai.scribble.License;
 
 import javax.servlet.*;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 public class FilterCharset implements Filter {
@@ -36,21 +39,24 @@ public class FilterCharset implements Filter {
 
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain next)
             throws IOException, ServletException {
-        // Respect the client-specified character encoding
-        // (see HTTP specification section 3.4.1)
-        if (null == request.getCharacterEncoding()) {
-            request.setCharacterEncoding(encoding);
+        try {
+            // Respect the client-specified character encoding
+            // (see HTTP specification section 3.4.1)
+            if (null == request.getCharacterEncoding()) {
+                request.setCharacterEncoding(encoding);
+            }
+
+            /**
+             * Set the default response content type and encoding
+             */
+            response.setContentType(TEXT_HTML_CHARSET_UTF_8);
+            response.setCharacterEncoding(UTF_8);
+        } catch (final UnsupportedEncodingException e) {
+            SmartLogger.g().l("Error in setting character-set", e);
+            SmartLogger.g().complete(Loggers.LEVEL.ERROR, Loggers.FAILED);
+        } finally {
+            next.doFilter(request, response);
         }
-
-
-        /**
-         * Set the default response content type and encoding
-         */
-        response.setContentType(TEXT_HTML_CHARSET_UTF_8);
-        response.setCharacterEncoding(UTF_8);
-
-
-        next.doFilter(request, response);
     }
 
     public void destroy() {
