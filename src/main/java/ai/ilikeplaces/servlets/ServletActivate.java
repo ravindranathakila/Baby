@@ -158,18 +158,23 @@ final public class ServletActivate extends HttpServlet {
                                                 "Adios!"
                                 );
 
-                                @_tests({
-                                        @_test(scene = "Check for relative urls such as /page/_org", date = "20111130"),
-                                        @_test(scene = "Full url with parameters", status = true, date = "20111130")
-                                })
-                                final String next = URLDecoder.decode(request__.getParameter(NEXT), "UTF-8");
+                                final String _encodedNext = request__.getParameter(NEXT);
+                                if (_encodedNext != null) {
+                                    @_tests({
+                                            @_test(scene = "Check for relative urls such as /page/_org", date = "20111130"),
+                                            @_test(scene = "Full url with parameters", status = true, date = "20111130")
+                                    })
+                                    final String next = URLDecoder.decode(_encodedNext, "UTF-8");
 
-                                if (organize.getURL().equals(next)) {
-                                    response__.sendRedirect(organize.getURL());
-                                } else if (tribes.getURL().equals(next)) {
-                                    response__.sendRedirect(tribes.getURL());
-                                } else if (next != null && !"".equals(next)) {
-                                    response__.sendRedirect(next);
+                                    if (organize.getURL().equals(next)) {
+                                        response__.sendRedirect(organize.getURL());
+                                    } else if (tribes.getURL().equals(next)) {
+                                        response__.sendRedirect(tribes.getURL());
+                                    } else if (next != null && !"".equals(next)) {
+                                        response__.sendRedirect(next);
+                                    } else {//This condition eventually became useless, but a good fallback in case of an unseen scenario
+                                        response__.sendRedirect(HOME);
+                                    }
                                 } else {//This condition eventually became useless, but a good fallback in case of an unseen scenario
                                     response__.sendRedirect(HOME);
                                 }

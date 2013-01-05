@@ -115,8 +115,8 @@ public class FilterHeader implements Filter {
      * @throws ServletException
      */
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
-        final HttpServletResponse servletResponse = (HttpServletResponse) response;
         try {
+            final HttpServletResponse servletResponse = (HttpServletResponse) response;
             if (headersMap != null) {
                 // Add the header to the response
                 Set<Map.Entry<String, String>> headers = headersMap.entrySet();
@@ -129,7 +129,7 @@ public class FilterHeader implements Filter {
         } catch (final Throwable t) {
             Loggers.EXCEPTION.error("", t);
         } finally {
-            chain.doFilter(request, servletResponse);
+            chain.doFilter(request, response);
         }
     }
 

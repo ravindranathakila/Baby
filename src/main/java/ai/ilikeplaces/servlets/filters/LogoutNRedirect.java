@@ -1,11 +1,12 @@
 package ai.ilikeplaces.servlets.filters;
 
-import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
 import ai.scribble.License;
 
-import javax.servlet.*;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -33,50 +34,38 @@ import java.io.IOException;
  * Time: 3:27:18 PM
  */
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
-public class LogoutNRedirect implements Filter {
-    private static final String SLASH = "/";
-    private static final String LOG_OUT_REQUEST_FORMAT = "/page/_so";
+public class LogoutNRedirect extends HttpServlet {
     private static final String HEADER_REFERER = "Referer";
-    private static final String LOG_OUT_REQUEST_RECEIVED = "Log-out Request Received.";
-    private static final String SESSION_REMOVED = "Session Removed.";
-    private static final String REDIRECTING_USER_TO_WHERE_REFERRER_PAGE = "Redirecting User To Where Referrer Page";
 
     @Override
-    public void init(final FilterConfig filterConfig) throws ServletException {
-        //So far nothing to put here
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        process(req, resp);
     }
 
     @Override
-    public void doFilter(final ServletRequest request, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
-        try {
-            if (((HttpServletRequest) request).getRequestURL().toString().endsWith(LOG_OUT_REQUEST_FORMAT)) {
-                final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, LOG_OUT_REQUEST_RECEIVED, 100, null, true);
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        process(req, resp);
+    }
 
-                final HttpServletRequest httpServletRequest = ((HttpServletRequest) request);
+    private void process(final ServletRequest request, final ServletResponse servletResponse) throws IOException, ServletException {
+        final SmartLogger sl = SmartLogger.g();
 
-                final HttpSession httpSession = httpServletRequest.getSession(false);
-                if (httpSession != null) {
-                    httpSession.invalidate();
-                    sl.appendToLogMSG(SESSION_REMOVED);
-                } else {
-                    sl.appendToLogMSG("No Session To Be Removed.");
-                }
+        final HttpServletRequest httpServletRequest = ((HttpServletRequest) request);
 
-                sl.appendToLogMSG(REDIRECTING_USER_TO_WHERE_REFERRER_PAGE + Controller.LOCATION_HUB);
-
-                ((HttpServletResponse) servletResponse).sendRedirect(httpServletRequest.getHeader(HEADER_REFERER));
-
-                sl.complete(Loggers.DONE);
-            } else {
-                filterChain.doFilter(request, servletResponse);
-            }
-        } catch (final Throwable e) {
-            Loggers.EXCEPTION.error(Loggers.EMBED, e);
+        final HttpSession httpSession = httpServletRequest.getSession(false);
+        if (httpSession != null) {
+            httpSession.invalidate();
+            sl.appendToLogMSG("Session Removed.");
+        } else {
+            sl.appendToLogMSG("No Session To Be Removed.");
         }
+
+        sl.appendToLogMSG("Redirecting User To Where Referrer Page");
+
+        ((HttpServletResponse) servletResponse).sendRedirect(httpServletRequest.getHeader(HEADER_REFERER));
+
+        sl.complete("Logout and Redirect processing successful");
+
     }
 
-    @Override
-    public void destroy() {
-        //So far nothing to put here
-    }
 }

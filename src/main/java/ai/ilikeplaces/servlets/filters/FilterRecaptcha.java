@@ -3,7 +3,6 @@ package ai.ilikeplaces.servlets.filters;
 import ai.scribble.License;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -37,7 +36,7 @@ public class FilterRecaptcha implements Filter {
      * @throws javax.servlet.ServletException
      */
     public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain chain) throws IOException, ServletException {
-        final HttpServletResponse servletResponse = (HttpServletResponse) response;
+        chain.doFilter(request, response);
     }
 
     public void destroy() {

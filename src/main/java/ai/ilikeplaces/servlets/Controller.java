@@ -17,7 +17,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -55,7 +54,7 @@ final public class
     private static final String DOWNTOWN = "downtown";
     private static final String UNDERSCORE = "_";
     private static final String HASH = "#";
-    private static final String _SO = "_so";
+    private static final String _SO = "/so/_so";
     private static final String _PHOTO_ = "_photo_";
     private static final String _ME = "_me";
     private static final String _ORG = "_org";
@@ -1776,19 +1775,32 @@ final public class
         Loggers.INFO.info(RBGet.logMsgs.getString("ai.ilikeplaces.servlets.Controller.0003"), Locale.getDefault().toString());
 
 
-        /*Add a listner to convert pretty urls to proper urls*/
+        /*Add a listener to convert pretty urls to proper urls*/
         inhs__.addItsNatServletRequestListener(new ItsNatServletRequestListener() {
             @Override
             public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
-                final ItsNatDocument itsNatDocument__ = request__.getItsNatDocument();
+                try {
+                    final ItsNatDocument itsNatDocument__ = request__.getItsNatDocument();
                 /*if(itsNatDocument != null && ((HttpServletRequest) request__.getServletRequest()).getPathInfo().contains("itsnat_doc_name")){
                 throw new java.lang.RuntimeException("INVALID URL");//This code does not seem to work, please verify.
                 }*/
-                if (itsNatDocument__ == null && request__.getServletRequest().getAttribute(ITSNAT_DOC_NAME) == null) {
-                    final HttpServletRequest httpServletRequest = (HttpServletRequest) request__.getServletRequest();
-                    pathResolver(request__, response__);
-                    parameterResolver(request__);
-                    request__.getItsNatServlet().processRequest(httpServletRequest, response__.getServletResponse());
+                    if (itsNatDocument__ == null && request__.getServletRequest().getAttribute(ITSNAT_DOC_NAME) == null) {
+                        final HttpServletRequest httpServletRequest = (HttpServletRequest) request__.getServletRequest();
+                        pathResolver(request__, response__);
+                        parameterResolver(request__);
+                        request__.getItsNatServlet().processRequest(httpServletRequest, response__.getServletResponse());
+                    }
+                } catch (final Throwable t) {
+                    Loggers.error("FATAL ERROR. ITSNAT WAS UNABLE TO PROCESS THE REQUEST. DETAILS AS FOLLOWS.", t);
+                    try {
+                        request__.getServletRequest().getRequestDispatcher("/500.jsp").forward(request__.getServletRequest(), response__.getServletResponse());
+                    } catch (ServletException e) {
+                        Loggers.error("FATAL ERROR. ITSNAT WAS UNABLE TO PROCESS THE REQUEST. DETAILS AS FOLLOWS.", t);
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        Loggers.error("FATAL ERROR. ITSNAT WAS UNABLE TO PROCESS THE REQUEST. DETAILS AS FOLLOWS.", t);
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -2013,22 +2025,7 @@ final public class
             return;//let's be paranoid
         } else {
             if (isNonLocationPage(URL__)) {/*i.e. starts with underscore*/
-                final HttpSession httpSession = ((HttpServletRequest) request__.getServletRequest()).getSession(false);
-                if (isSignOut(URL__)) {//This can never happen, as there is a filter in place for this
-                    if (httpSession != null) {
-                        try {
-                            ((HttpServletRequest) request__.getServletRequest()).getSession(false).invalidate();
-                        } finally {
-                            request__.getServletRequest().setAttribute(LOCATION, Controller.EMPTY);
-                            request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
-                            try {
-                                ((HttpServletResponse) response__.getServletResponse()).sendRedirect(LOCATION_HUB);
-                            } catch (final IOException e) {
-                                Loggers.EXCEPTION.error(Loggers.EMBED, e);
-                            }
-                        }
-                    }
-                } else if (isPhotoPage(URL__)) {
+                if (isPhotoPage(URL__)) {
                     request__.getServletRequest().setAttribute(RBGet.globalConfig.getString(HTTP_SESSION_ATTR_LOCATION), getPhotoLocation(URL__));
                     request__.getServletRequest().setAttribute(PHOTO_URL, getPhotoURL(URL__));
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, PHOTO);/*Framework specific*/

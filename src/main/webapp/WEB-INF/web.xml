@@ -4,8 +4,7 @@
     <display-name>ilikeplaces</display-name>
 
 
-
-<!-- #################################### SERVLETS ################################################################ -->
+    <!-- #################################### SERVLETS ################################################################ -->
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>ai.ilikeplaces.servlets.Controller</servlet-class>
@@ -45,6 +44,27 @@
     <servlet>
         <servlet-name>AccessViewStatusMessages</servlet-name>
         <servlet-class>ch.qos.logback.access.ViewStatusMessagesServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GreatWallOfExceptionsEtc</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.StatusEtc</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GreatWallOfExceptions500</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.Status500</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GreatWallOfExceptions404</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.Status404</servlet-class>
+    </servlet>
+    <servlet>
+        <display-name>ProfileRedirect</display-name>
+        <servlet-name>ProfileRedirect</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.filters.ProfileRedirect</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutNRedirect</servlet-name>
+        <servlet-class>ai.ilikeplaces.servlets.filters.LogoutNRedirect</servlet-class>
     </servlet>
 
     <!-- #################### END OF SERVLETS #############################-->
@@ -88,6 +108,26 @@
         <servlet-name>ServletOAuthGoogle</servlet-name>
         <url-pattern>/oauth2gg</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GreatWallOfExceptionsEtc</servlet-name>
+        <url-pattern>/errorEtc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GreatWallOfExceptions500</servlet-name>
+        <url-pattern>/error500</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GreatWallOfExceptions404</servlet-name>
+        <url-pattern>/error404</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileRedirect</servlet-name>
+        <url-pattern>/i/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutNRedirect</servlet-name>
+        <url-pattern>/so/(</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>default</servlet-name>
@@ -119,37 +159,19 @@
         <servlet-name>Home</servlet-name>
         <url-pattern>/page/*</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Home</servlet-name>
-        <url-pattern>/downton</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Home</servlet-name>
-        <url-pattern>/dt</url-pattern>
-    </servlet-mapping>
     <!-- ##################### END OF SERVLET MAPPINGS ####################-->
 
 
     <!--###################### FILTERS ####################################-->
-    <filter>
-        <description>Profile Redirect Filter.</description>
-        <filter-name>ProfileFilter</filter-name>
-        <filter-class>ai.ilikeplaces.servlets.filters.ProfileRedirect</filter-class>
-    </filter>
-    <filter>
-        <description>Logout And Redirect Filter.</description>
-        <filter-name>LogoutNRedirect</filter-name>
-        <filter-class>ai.ilikeplaces.servlets.filters.LogoutNRedirect</filter-class>
-    </filter>
-    <filter>
-        <description>Subdomain Filter.</description>
-        <filter-name>SubdomainForward</filter-name>
-        <filter-class>ai.ilikeplaces.servlets.filters.SubdomainForward</filter-class>
-        <init-param>
-            <param-name>ON</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
+    <!--<filter>-->
+    <!--<description>Subdomain Filter.</description>-->
+    <!--<filter-name>SubdomainForward</filter-name>-->
+    <!--<filter-class>ai.ilikeplaces.servlets.filters.SubdomainForward</filter-class>-->
+    <!--<init-param>-->
+    <!--<param-name>ON</param-name>-->
+    <!--<param-value>true</param-value>-->
+    <!--</init-param>-->
+    <!--</filter>-->
     <filter>
         <description>Set HTTP headers for a mapping.</description>
         <filter-name>HeaderFilter</filter-name>
@@ -169,119 +191,120 @@
         </init-param>
     </filter>
     <filter>
-        <description>Mainly to catch our long lived javax.ejb.NoSuchEJBException</description>
-        <filter-name>FilterException</filter-name>
-        <filter-class>ai.ilikeplaces.servlets.filters.FilterException</filter-class>
+        <filter-name>Debug</filter-name>
+        <filter-class>ai.ilikeplaces.servlets.filters.Debug</filter-class>
     </filter>
     <!--<filter>-->
-        <!--<filter-name>FacebookUserFilter</filter-name>-->
-        <!--<filter-class>ai.ilikeplaces.servlets.filters.FacebookUserFilter</filter-class>-->
-        <!--<init-param>-->
-            <!--<param-name>facebook_api_key</param-name>-->
-            <!--<param-value>139373316127498</param-value>-->
-        <!--</init-param>-->
-        <!--<init-param>-->
-            <!--<param-name>facebook_secret</param-name>-->
-            <!--<param-value>56a2340af5eb11db36258f9f7a07b2b9</param-value>-->
-        <!--</init-param>-->
+    <!--<filter-name>FacebookUserFilter</filter-name>-->
+    <!--<filter-class>ai.ilikeplaces.servlets.filters.FacebookUserFilter</filter-class>-->
+    <!--<init-param>-->
+    <!--<param-name>facebook_api_key</param-name>-->
+    <!--<param-value>139373316127498</param-value>-->
+    <!--</init-param>-->
+    <!--<init-param>-->
+    <!--<param-name>facebook_secret</param-name>-->
+    <!--<param-value>56a2340af5eb11db36258f9f7a07b2b9</param-value>-->
+    <!--</init-param>-->
     <!--</filter>-->
     <!--###################### ENF OF FILTERS ####################################-->
 
 
     <!--###################### FILTER MAPPINGS ####################################-->
 
+
+    <filter-mapping>
+        <filter-name>Debug</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>*.jpg</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>*.jpeg</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>*.css</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>*.png</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>*.gif</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>*.js</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-
-
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>/js/miniquarry/all_skeleton.js</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>/js/miniquarry/all_aarrr.js</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
         <url-pattern>/css/miniquarry/layout.css</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 
     <filter-mapping>
         <filter-name>FilterCharset</filter-name>
         <url-pattern>/page/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>ProfileFilter</filter-name>
-        <url-pattern>/i/*</url-pattern>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>LogoutNRedirect</filter-name>
-        <url-pattern>/page/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>FilterException</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-    </filter-mapping>
+
+
     <!--<filter-mapping>-->
-        <!--<filter-name>SubdomainForward</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-        <!--<dispatcher>REQUEST</dispatcher>-->
+    <!--<filter-name>SubdomainForward</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--<dispatcher>REQUEST</dispatcher>-->
     <!--</filter-mapping>-->
     <!--<filter-mapping>-->
-        <!--<filter-name>FacebookUserFilter</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-        <!--<dispatcher>REQUEST</dispatcher>-->
+    <!--<filter-name>FacebookUserFilter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--<dispatcher>REQUEST</dispatcher>-->
     <!--</filter-mapping>-->
 
     <!--###################### END OF FILTER MAPPINGS ####################################-->
 
     <error-page>
         <error-code>500</error-code>
-        <location>/500.jsp</location>
+        <location>/error404</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/404.jsp</location>
+        <location>/error500</location>
     </error-page>
-
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/500.jsp</location>
+        <location>/errorEtc</location>
     </error-page>
 
 </web-app>

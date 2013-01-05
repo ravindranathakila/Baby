@@ -1,13 +1,14 @@
 package ai.ilikeplaces.servlets.filters;
 
-import ai.ilikeplaces.logic.Listeners.ListenerI;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
 
-import javax.servlet.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Okay this class if for the profiles. However, still we do not support "very" short urls.
@@ -31,47 +32,56 @@ import java.io.IOException;
  * Time: 3:27:18 PM
  */
 
-public class ProfileRedirect implements Filter {
-    private static final String SLASH = "/";
-    private static final String PROFILE_PAGE_FORMAT = "/page/_i?" + ListenerI.USER_PROFILE + "=";
+public class ProfileRedirect extends HttpServlet {
     public static final String PROFILE_URL = "/i/";
+    private static final String SLASH = "/";
+    private static final String PROFILE_PAGE_FORMAT = "/page/_i?" + "up" + "=";
     private static final String REDIRECTING_USER_TO = "Redirecting User To:";
     private static final String REQUESTED_PATH = "Requested Path:";
 
     @Override
-    public void init(final FilterConfig filterConfig) throws ServletException {
-        //So far nothing to put here
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        process(req, resp);
     }
 
     @Override
-    public void doFilter(final ServletRequest request, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
-        final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.DEBUG, "Processing Profile Redirect", 100, null, true);
-        try {
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        process(req, resp);
+    }
 
-            final String unformattedurl = ((HttpServletRequest) request).getRequestURL().toString();
+    private void process(final HttpServletRequest request, final HttpServletResponse servletResponse) throws IOException, ServletException {
+        final SmartLogger sl = SmartLogger.g();
+        sl.l("Processing Profile Redirect");
+
+        final String unformattedurl = request.getRequestURI();
+
+        sl.l("unformattedurl:" + unformattedurl);
+
+        if (unformattedurl.length() > 3 && unformattedurl.startsWith("/i/")) {// So the url could be /a/ too... but now we can safely proceed on splitting
+
+            sl.l("Profile Redirect basic format matched");
+
             sl.appendToLogMSG(REQUESTED_PATH + unformattedurl);
 
-            final int index = unformattedurl.lastIndexOf(SLASH);
 
-            final String url = unformattedurl.substring(index + 1);
+            final String[] _split = unformattedurl.split("/i/");
 
-            //final String userURL = url.substring(3);// that is, "/i/username" becomes "username"
 
-            sl.appendToLogMSG(REDIRECTING_USER_TO + url);
+            Loggers.info(Arrays.toString(_split));
+
+            sl.appendToLogMSG(REDIRECTING_USER_TO + _split[_split.length - 1]);
 
             /**
              * Check if moving the DB.getHumanCRUDHumanLocal to a class variable during init is sensible. The only concern is
              * does the container destroy the bean without warning?
              */
-            ((HttpServletResponse) servletResponse).sendRedirect(PROFILE_PAGE_FORMAT + url);
-            sl.complete(Loggers.DONE);
-        } catch (final Throwable e) {
-            sl.multiComplete(new Loggers.LEVEL[]{Loggers.LEVEL.DEBUG, Loggers.LEVEL.ERROR}, Loggers.FAILED);
+            final String _profilePageFormat = PROFILE_PAGE_FORMAT;
+            servletResponse.sendRedirect(_profilePageFormat + _split[1]);
+            sl.complete("Profile Redirect successful:" + _profilePageFormat);
+        } else {
+            servletResponse.sendRedirect("/");
+            sl.complete("Not a profile redirect. Sending back home.");
         }
     }
 
-    @Override
-    public void destroy() {
-        //So far nothing to put here
-    }
 }
