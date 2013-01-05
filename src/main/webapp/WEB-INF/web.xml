@@ -126,7 +126,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogoutNRedirect</servlet-name>
-        <url-pattern>/so/(</url-pattern>
+        <url-pattern>/so/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
