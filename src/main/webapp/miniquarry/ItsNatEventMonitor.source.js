@@ -1,13 +1,12 @@
-    bef =  function(){
-		$.blockUI()
-		};
+bef = function () {
+    $.blockUI()
+};
 
-    aft = function(){
-		$.unblockUI()
-		};
+aft = function () {
+    $.unblockUI()
+};
 
-function EventMonitor()
-{
+function EventMonitor() {
     this.before = before;
     this.after = after;
 
@@ -15,17 +14,16 @@ function EventMonitor()
     this.count = 0;
 
     post_fun_arg = {
-                  msg:"Your Request Was Completed Successfully!"
-                };
+        msg: "Your Request Was Completed Successfully!"
+    };
 
-    post_fun = function(obj){
-                 //alert(obj.msg);
-                };
+    post_fun = function (obj) {
+        //alert(obj.msg);
+    };
 
 
-    function before(evt)
-    {
-        if (this.count == 0){
+    function before(evt) {
+        if (this.count == 0) {
             //this.monitor.style.position = "relative";
             //this.monitor.style.pixelTop= event.clientX;
             //this.monitor.style.pixelLeft = event.clientY;
@@ -37,9 +35,8 @@ function EventMonitor()
         //bef();
     }
 
-    function after(evt)
-    {
-        if (this.count == 0){
+    function after(evt) {
+        if (this.count == 0) {
             return; // to avoid some pending event before registering
         }
 
@@ -54,9 +51,9 @@ function EventMonitor()
     }
 
     post_fun_arg = {
-                };
+    };
 
-    post_fun = function(obj){
-                };
+    post_fun = function (obj) {
+    };
 
 }

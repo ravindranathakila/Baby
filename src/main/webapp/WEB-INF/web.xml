@@ -256,13 +256,13 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
-        <url-pattern>/js/miniquarry/all_skeleton.js</url-pattern>
+        <url-pattern>/miniquarry/all_skeleton.js</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
     <filter-mapping>
         <filter-name>HeaderFilter</filter-name>
-        <url-pattern>/js/miniquarry/all_aarrr.js</url-pattern>
+        <url-pattern>/miniquarry/all_aarrr.js</url-pattern>
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
