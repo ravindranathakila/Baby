@@ -460,7 +460,7 @@
                 <version>1.3.2</version>
                 <configuration>
                     <sourceDirectory>src/main/webapp/js/</sourceDirectory>
-                    <outputDirectory>src/main/webapp/js/miniquarry</outputDirectory>
+                    <outputDirectory>src/main/webapp/miniquarry</outputDirectory>
                     <nosuffix>true</nosuffix>
                 </configuration>
                 <executions>
