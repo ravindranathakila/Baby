@@ -1,20 +1,20 @@
-function trimInput(b, a) {
-    return b.length > a ? b.toString().slice(0, a) : b
+function trimInput(c, d) {
+    return c.length > d ? c.toString().slice(0, d) : c
 }
-function ilpAlert(b, a, c) {
-    $.prompt(c.photoDescriptionAlert)
+function ilpAlert(d, e, f) {
+    $.prompt(f.photoDescriptionAlert)
 }
 var dataReady = false;
 function checkIfDtaReady() {
     if (!dataReady) {
-        var a = window.setTimeout("checkIfDtaReady()", 1000);
+        var b = window.setTimeout("checkIfDtaReady()", 1000);
         return false
     } else {
         return true
     }
 }
-function getExt(a) {
-    return(/[.]/.exec(a)) ? /[^.]+$/.exec(a.toLowerCase()) : ""
+function getExt(b) {
+    return(/[.]/.exec(b)) ? /[^.]+$/.exec(b.toLowerCase()) : ""
 }
 $(document).ready(function () {
     vtip()

@@ -4,19 +4,19 @@ function hasParams() {
 function hasNavHash() {
     return(window.location.href + "").indexOf("#") != -1
 }
-function makeParam(a, b) {
-    return(hasParams() ? "&" : "?") + a + "=" + b
+function makeParam(d, c) {
+    return(hasParams() ? "&" : "?") + d + "=" + c
 }
 function setDisplayName() {
-    $.prompt({state0: {html: 'Enter a display name your friends know you as<br /> <input type="text" id="NameInput" name="NameInput" value="" />', buttons: {Cancel: false, Save: true}, submit: function (b, a, c) {
-        if (b) {
-            window.location = (window.location.href + "").replace(/displayname/g, "displaynameold") + makeParam("displayname", c.NameInput)
+    $.prompt({state0: {html: 'Enter a display name your friends know you as<br /> <input type="text" id="NameInput" name="NameInput" value="" />', buttons: {Cancel: false, Save: true}, submit: function (d, e, f) {
+        if (d) {
+            window.location = (window.location.href + "").replace(/displayname/g, "displaynameold") + makeParam("displayname", f.NameInput)
         }
         return true
     }}})
 }
-function ygeoarea(a) {
-    switch (a) {
+function ygeoarea(b) {
+    switch (b) {
         case 29:
             return 3;
             break;

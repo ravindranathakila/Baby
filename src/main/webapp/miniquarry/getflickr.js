@@ -1,87 +1,87 @@
-getFlickr = {html: [], tags: [], triggerClass: "getflickrphotos", loadingMessage: "loading...", viewerID: "flickrgetviewer", closeMessage: "close", closePhotoMessage: "click to close", leech: function (a, c) {
-    getFlickr.func = c;
-    getFlickr.tag = a;
-    var b = document.createElement("script");
-    b.src = "http://flickr.com/services/feeds/photos_public.gne?tags=" + a + "&format=json";
-    document.getElementsByTagName("head")[0].appendChild(b)
+getFlickr = {html: [], tags: [], triggerClass: "getflickrphotos", loadingMessage: "loading...", viewerID: "flickrgetviewer", closeMessage: "close", closePhotoMessage: "click to close", leech: function (e, f) {
+    getFlickr.func = f;
+    getFlickr.tag = e;
+    var d = document.createElement("script");
+    d.src = "http://flickr.com/services/feeds/photos_public.gne?tags=" + e + "&format=json";
+    document.getElementsByTagName("head")[0].appendChild(d)
 }, getLinks: function () {
-    var a = document.getElementsByTagName("a");
-    for (var c = 0, b = a.length; c < b; c++) {
-        if (a[c].className.indexOf(getFlickr.triggerClass) != -1) {
-            getFlickr.addEvent(a[c], "click", getFlickr.getData);
+    var e = document.getElementsByTagName("a");
+    for (var f = 0, d = e.length; f < d; f++) {
+        if (e[f].className.indexOf(getFlickr.triggerClass) != -1) {
+            getFlickr.addEvent(e[f], "click", getFlickr.getData);
             if ((/Safari|Konqueror|KHTML/gi).test(navigator.userAgent)) {
-                a[c].onclick = function () {
+                e[f].onclick = function () {
                     return false
                 }
             }
         }
     }
-}, getData: function (c) {
-    var b = getFlickr.getTarget(c);
-    if (b.nodeName.toLowerCase() != "a") {
-        b = b.parentNode
+}, getData: function (f) {
+    var d = getFlickr.getTarget(f);
+    if (d.nodeName.toLowerCase() != "a") {
+        d = d.parentNode
     }
-    var a = b.href.match(/([\w|\+]+)?\/?$/);
-    getFlickr.currentLink = b;
-    getFlickr.currentText = b.innerHTML;
-    b.innerHTML = getFlickr.loadingMessage;
-    getFlickr.leech(a, "getFlickr.feedLink");
-    getFlickr.cancelClick(c)
+    var e = d.href.match(/([\w|\+]+)?\/?$/);
+    getFlickr.currentLink = d;
+    getFlickr.currentText = d.innerHTML;
+    d.innerHTML = getFlickr.loadingMessage;
+    getFlickr.leech(e, "getFlickr.feedLink");
+    getFlickr.cancelClick(f)
 }, feedLink: function () {
     getFlickr.currentLink.innerHTML = getFlickr.currentText;
-    var b = document.getElementById(getFlickr.viewerID);
-    if (b === null) {
-        var b = document.createElement("div");
-        b.id = getFlickr.viewerID;
-        document.body.appendChild(b)
+    var e = document.getElementById(getFlickr.viewerID);
+    if (e === null) {
+        var e = document.createElement("div");
+        e.id = getFlickr.viewerID;
+        document.body.appendChild(e)
     } else {
-        b.innerHTML = ""
+        e.innerHTML = ""
     }
-    var d = document.createElement("a");
-    d.href = "#";
-    d.innerHTML = getFlickr.closeMessage;
-    d.onclick = function () {
+    var g = document.createElement("a");
+    g.href = "#";
+    g.innerHTML = getFlickr.closeMessage;
+    g.onclick = function () {
         this.parentNode.parentNode.removeChild(this.parentNode);
         return false
     };
-    b.appendChild(d);
-    var a = document.createElement("ul");
-    a.innerHTML = getFlickr.html[getFlickr.tag].replace(/_m/g, "_s");
-    b.appendChild(a);
-    var c = 0;
+    e.appendChild(g);
+    var f = document.createElement("ul");
+    f.innerHTML = getFlickr.html[getFlickr.tag].replace(/_m/g, "_s");
+    e.appendChild(f);
+    var h = 0;
     if (self.pageYOffset) {
-        c = self.pageYOffset
+        h = self.pageYOffset
     } else {
         if (document.documentElement && document.documentElement.scrollTop) {
-            c = document.documentElement.scrollTop
+            h = document.documentElement.scrollTop
         } else {
             if (document.body) {
-                c = document.body.scrollTop
+                h = document.body.scrollTop
             }
         }
     }
-    b.style.top = c + "px";
-    getFlickr.addEvent(a, "click", getFlickr.showPic)
-}, showPic: function (g) {
-    var c = getFlickr.getTarget(g);
-    if (c.nodeName.toLowerCase() === "img") {
-        var f = document.getElementById("flickrgetviewer");
-        var d = c.src.replace("_s", "_m");
-        var b = c.parentNode.cloneNode(false);
-        var a = document.createElement("div");
-        b.innerHTML = '<img src="' + d + '" title="Click to Close" />';
-        a.appendChild(b);
-        if (f.getElementsByTagName("div").length > 0) {
-            f.replaceChild(a, f.getElementsByTagName("div")[0])
+    e.style.top = h + "px";
+    getFlickr.addEvent(f, "click", getFlickr.showPic)
+}, showPic: function (i) {
+    var l = getFlickr.getTarget(i);
+    if (l.nodeName.toLowerCase() === "img") {
+        var j = document.getElementById("flickrgetviewer");
+        var k = l.src.replace("_s", "_m");
+        var e = l.parentNode.cloneNode(false);
+        var h = document.createElement("div");
+        e.innerHTML = '<img src="' + k + '" title="Click to Close" />';
+        h.appendChild(e);
+        if (j.getElementsByTagName("div").length > 0) {
+            j.replaceChild(h, j.getElementsByTagName("div")[0])
         } else {
-            f.appendChild(a)
+            j.appendChild(h)
         }
-        a.onclick = function () {
+        h.onclick = function () {
             this.parentNode.removeChild(this);
             return false
         }
     }
-    getFlickr.cancelClick(g)
+    getFlickr.cancelClick(i)
 }, returnList: function (feed) {
     var x = feed.items;
     var t;
@@ -102,38 +102,38 @@ getFlickr = {html: [], tags: [], triggerClass: "getflickrphotos", loadingMessage
     if (getFlickr.func !== undefined) {
         eval(getFlickr.func + "()")
     }
-}, getTarget: function (b) {
-    var a = window.event ? window.event.srcElement : b ? b.target : null;
-    if (!a) {
+}, getTarget: function (c) {
+    var d = window.event ? window.event.srcElement : c ? c.target : null;
+    if (!d) {
         return false
     }
-    while (a.nodeType != 1 && a.nodeName.toLowerCase() != "body") {
-        a = a.parentNode
+    while (d.nodeType != 1 && d.nodeName.toLowerCase() != "body") {
+        d = d.parentNode
     }
-    return a
-}, cancelClick: function (a) {
+    return d
+}, cancelClick: function (b) {
     if (window.event) {
         window.event.cancelBubble = true;
         window.event.returnValue = false
     }
-    if (a && a.stopPropagation && a.preventDefault) {
-        a.stopPropagation();
-        a.preventDefault()
+    if (b && b.stopPropagation && b.preventDefault) {
+        b.stopPropagation();
+        b.preventDefault()
     }
-}, addEvent: function (e, d, b, a) {
-    if (e.addEventListener) {
-        e.addEventListener(d, b, a);
+}, addEvent: function (h, i, f, g) {
+    if (h.addEventListener) {
+        h.addEventListener(i, f, g);
         return true
     } else {
-        if (e.attachEvent) {
-            var c = e.attachEvent("on" + d, b);
-            return c
+        if (h.attachEvent) {
+            var j = h.attachEvent("on" + i, f);
+            return j
         } else {
-            e["on" + d] = b
+            h["on" + i] = f
         }
     }
 }};
-function jsonFlickrFeed(a) {
-    getFlickr.returnList(a)
+function jsonFlickrFeed(b) {
+    getFlickr.returnList(b)
 }
 getFlickr.addEvent(window, "load", getFlickr.getLinks);

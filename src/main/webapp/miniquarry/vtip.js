@@ -5,36 +5,36 @@ function ilp_getRandomTagLine() {
 this.vtip = function () {
     this.xOffset = -5;
     this.yOffset = 30;
-    $(".vtip").unbind().hover(function (a) {
+    $(".vtip").unbind().hover(function (b) {
         this.t = (this.title == undefined || this.title == "undefined" || this.title == "") ? ilp_getRandomTagLine() : this.title;
         this.title = "";
-        this.top = (a.pageY + yOffset);
-        this.left = (a.pageX + xOffset);
+        this.top = (b.pageY + yOffset);
+        this.left = (b.pageX + xOffset);
         $("body").append('<p id="vtip"><img id="vtipArrow" />' + this.t + "</p>");
         $("p#vtip #vtipArrow").attr("src", "/images/vtip_arrow.png");
         $("p#vtip").css("top", this.top + "px").css("left", this.left + "px").fadeIn("slow")
     },function () {
         this.title = this.t;
         $("p#vtip").fadeOut("slow").remove()
-    }).mousemove(function (a) {
-        this.top = (a.pageY + yOffset);
-        this.left = (a.pageX + xOffset);
+    }).mousemove(function (b) {
+        this.top = (b.pageY + yOffset);
+        this.left = (b.pageX + xOffset);
         $("p#vtip").css("top", this.top + "px").css("left", this.left + "px")
     });
-    $(".ilp_tagl").unbind().hover(function (a) {
+    $(".ilp_tagl").unbind().hover(function (b) {
         this.t = ilp_getRandomTagLine();
         this.title = "";
-        this.top = (a.pageY + yOffset);
-        this.left = (a.pageX + xOffset);
+        this.top = (b.pageY + yOffset);
+        this.left = (b.pageX + xOffset);
         $("body").append('<p id="vtip"><img id="vtipArrow" />' + this.t + "</p>");
         $("p#vtip #vtipArrow").attr("src", "/images/vtip_arrow.png");
         $("p#vtip").css("top", this.top + "px").css("left", this.left + "px").fadeIn("slow")
     },function () {
         this.title = ilp_getRandomTagLine();
         $("p#vtip").fadeOut("slow").remove()
-    }).mousemove(function (a) {
-        this.top = (a.pageY + yOffset);
-        this.left = (a.pageX + xOffset);
+    }).mousemove(function (b) {
+        this.top = (b.pageY + yOffset);
+        this.left = (b.pageX + xOffset);
         $("p#vtip").css("top", this.top + "px").css("left", this.left + "px")
     })
 };

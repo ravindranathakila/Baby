@@ -5,22 +5,22 @@ aft = function () {
     $.unblockUI()
 };
 function EventMonitor() {
-    this.before = a;
-    this.after = b;
+    this.before = d;
+    this.after = c;
     this.monitor = document.getElementById("monitorId");
     this.count = 0;
     post_fun_arg = {msg: "Your Request Was Completed Successfully!"};
-    post_fun = function (c) {
+    post_fun = function (a) {
     };
-    function a(c) {
+    function d(a) {
         if (this.count == 0) {
             $("#monitorId").show();
-            alert(c.pageX + "," + c.pageY)
+            alert(a.pageX + "," + a.pageY)
         }
         this.count++
     }
 
-    function b(c) {
+    function c(a) {
         if (this.count == 0) {
             return
         }
@@ -32,6 +32,6 @@ function EventMonitor() {
     }
 
     post_fun_arg = {};
-    post_fun = function (c) {
+    post_fun = function (a) {
     }
 };

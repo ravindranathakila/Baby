@@ -1,27 +1,27 @@
-(function (a) {
-    a.fn.filestyle = function (b) {
-        var c = {width: 250};
-        if (b) {
-            a.extend(c, b)
+(function (b) {
+    b.fn.filestyle = function (a) {
+        var d = {width: 250};
+        if (a) {
+            b.extend(d, a)
         }
         return this.each(function () {
-            var e = this;
-            var f = a("<div>").css({width: c.imagewidth + "px", height: c.imageheight + "px", background: "url(" + c.image + ") 0 0 no-repeat", "background-position": "right", display: "inline", position: "absolute", overflow: "hidden"});
-            var d = a('<input class="file">').addClass(a(e).attr("class")).css({display: "inline", width: c.width + "px"});
-            a(e).before(d);
-            a(e).wrap(f);
-            a(e).css({position: "relative", height: c.imageheight + "px", width: c.width + "px", display: "inline", cursor: "pointer", opacity: "0.0"});
-            if (a.browser.mozilla) {
+            var g = this;
+            var c = b("<div>").css({width: d.imagewidth + "px", height: d.imageheight + "px", background: "url(" + d.image + ") 0 0 no-repeat", "background-position": "right", display: "inline", position: "absolute", overflow: "hidden"});
+            var h = b('<input class="file">').addClass(b(g).attr("class")).css({display: "inline", width: d.width + "px"});
+            b(g).before(h);
+            b(g).wrap(c);
+            b(g).css({position: "relative", height: d.imageheight + "px", width: d.width + "px", display: "inline", cursor: "pointer", opacity: "0.0"});
+            if (b.browser.mozilla) {
                 if (/Win/.test(navigator.platform)) {
-                    a(e).css("margin-left", "-142px")
+                    b(g).css("margin-left", "-142px")
                 } else {
-                    a(e).css("margin-left", "-168px")
+                    b(g).css("margin-left", "-168px")
                 }
             } else {
-                a(e).css("margin-left", c.imagewidth - c.width + "px")
+                b(g).css("margin-left", d.imagewidth - d.width + "px")
             }
-            a(e).bind("change", function () {
-                d.val(a(e).val())
+            b(g).bind("change", function () {
+                h.val(b(g).val())
             })
         })
     }

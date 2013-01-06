@@ -108,7 +108,7 @@
                                    border: 0 #46a1ff solid;border-bottom-width: 5px;
                                    background:url('/images/Metal_translucent.png') repeat;font-size:25px;"
                                    class="use100"
-                                   onkeydown="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchButtonMap').click();$('#searchboxmap').delay(500).focus();$('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());"
+                                   onkeydown="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#searchButtonMap').click();$('#searchboxmap').delay(5000).focus();"
                                    onclick="suggestPlace();"
                                     />
                         </div>
@@ -118,7 +118,7 @@
                                      title="You need to enter a place|Click search|You will be redirected to map"
                                      alt="" class="use100 vtip click_indicator"
                                      style="overflow: hidden; cursor: pointer;"
-                                     onclick="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchButtonMap').click();$('#searchboxmap').delay(500).focus();$('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$"/>
+                                     onclick="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#searchButtonMap').click();$('#searchboxmap').delay(5000).focus();"/>
                             </div>
                             <div class="use100" style="height: 20px;">
                                 &nbsp;
