@@ -105,6 +105,7 @@
                                    border: 0 #46a1ff solid;border-bottom-width: 5px;
                                    background:url('/images/Metal_translucent.png') repeat;font-size:25px;"
                                    class="use100"
+                                   onkeydown="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchButtonMap').click();"
                                    onclick="suggestPlace();"
                                     />
                         </div>

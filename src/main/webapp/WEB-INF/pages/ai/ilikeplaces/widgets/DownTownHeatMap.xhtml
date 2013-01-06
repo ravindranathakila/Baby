@@ -19,45 +19,45 @@
 //var rooze = [{featureType:"all",elementType:"all",stylers:[{hue:"#ffbb00"}]},{featureType:"poi",elementType:"all",stylers:[{hue:"#ff3300"}]},{featureType:"landscape.man_made",elementType:"all", stylers:[{hue:"#ff3300"}]},{ featureType:"landscape.natural", elementType:"all", stylers:[{hue:"#b2ff00"}]}];
 var rooze = [
     {
-        featureType:"water",
-        elementType:"all",
-        stylers:[
-            { saturation:-100 },
-            { lightness:100 }
+        featureType: "water",
+        elementType: "all",
+        stylers: [
+            { saturation: -100 },
+            { lightness: 100 }
         ]
     },
     {
-        featureType:"transit",
-        elementType:"all",
-        stylers:[
+        featureType: "transit",
+        elementType: "all",
+        stylers: [
         ]
     },
     {
-        featureType:"road",
-        elementType:"all",
-        stylers:[
-            { saturation:-100 }
+        featureType: "road",
+        elementType: "all",
+        stylers: [
+            { saturation: -100 }
         ]
     },
     {
-        featureType:"poi",
-        elementType:"all",
-        stylers:[
-            { saturation:-98 }
+        featureType: "poi",
+        elementType: "all",
+        stylers: [
+            { saturation: -98 }
         ]
     },
     {
-        featureType:"landscape",
-        elementType:"all",
-        stylers:[
-            { saturation:-100 }
+        featureType: "landscape",
+        elementType: "all",
+        stylers: [
+            { saturation: -100 }
         ]
     },
     {
-        featureType:"administrative",
-        elementType:"all",
-        stylers:[
-            { saturation:-100 }
+        featureType: "administrative",
+        elementType: "all",
+        stylers: [
+            { saturation: -100 }
         ]
     }
 ];
@@ -71,18 +71,18 @@ focusLng = 0;
 zoom = 5;
 
 lastSelectedLocation = {
-    name:'',
-    desc:'',
-    lat:undefined,
-    lng:undefined
+    name: '',
+    desc: '',
+    lat: undefined,
+    lng: undefined
 };
 
 function clearLastSelectedLocation() {
     lastSelectedLocation = {
-        name:'',
-        desc:'',
-        lat:undefined,
-        lng:undefined
+        name: '',
+        desc: '',
+        lat: undefined,
+        lng: undefined
     };
 }
 
@@ -94,8 +94,8 @@ lastSelectionInfoWindowContent = "<div id=\'lastSelectionInfoWindowTitle\' style
 function getLastSelectionInfoWindow() {
     if (!lastSelectionInfoWindow) {
         lastSelectionInfoWindow = new google.maps.InfoWindow({
-            content:lastSelectionInfoWindowContent,
-            disableAutoPan:false
+            content: lastSelectionInfoWindowContent,
+            disableAutoPan: false
         });
         lastSelectionInfoWindow.open(GAIA);
     }
@@ -122,7 +122,7 @@ function getGeocoder() {
 function getAddress(latLng, callback) {
     getGeocoder().geocode(
             {
-                location:latLng
+                location: latLng
             },
             function (geocoderResult, geocoderStatus) {
                 if (geocoderStatus == google.maps.GeocoderStatus.OK) {
@@ -285,9 +285,9 @@ function renderRoute(toLat, toLng) {
 
     var from = prompt('Where are you starting your journey from?');
     directionWorker.route({
-                origin:from,
-                destination:new google.maps.LatLng(toLat, toLng),
-                travelMode:google.maps.TravelMode.DRIVING
+                origin: from,
+                destination: new google.maps.LatLng(toLat, toLng),
+                travelMode: google.maps.TravelMode.DRIVING
             },
             function (response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
@@ -305,7 +305,7 @@ function renderRoute(toLat, toLng) {
 
 function setUpDirectionStuff() {//Chose stuff over handler, manager, initializer. Lately starting to hate too techy words;)
     directionWorker = ((directionWorker == undefined) ? (new google.maps.DirectionsService()) : directionWorker);
-    directionsDisplay = ((directionsDisplay == undefined) ? (new google.maps.DirectionsRenderer({draggable:true})) : directionsDisplay);
+    directionsDisplay = ((directionsDisplay == undefined) ? (new google.maps.DirectionsRenderer({draggable: true})) : directionsDisplay);
     directionsDisplay.setMap(GAIA);
 }
 
@@ -402,22 +402,22 @@ function initialize_DownTownHeatMap_map() {
 
     myLatlng = new google.maps.LatLng(focusLat, focusLng);
     var myOptions = {
-        zoom:5,
-        center:myLatlng,
-        mapTypeId:DWN_TWN_ID,
-        mapTypeControl:false,
-        mapTypeControlOptions:{
-            style:google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-            position:google.maps.ControlPosition.TOP_LEFT,
-            mapTypeIds:[DWN_TWN_ID, google.maps.MapTypeId.SATELLITE]
+        zoom: 5,
+        center: myLatlng,
+        mapTypeId: DWN_TWN_ID,
+        mapTypeControl: false,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            position: google.maps.ControlPosition.TOP_LEFT,
+            mapTypeIds: [DWN_TWN_ID, google.maps.MapTypeId.SATELLITE]
 
         },
-        zoomControl:false,
-        navigationControlOptions:{
-            style:google.maps.NavigationControlStyle.SMALL,
-            position:google.maps.ControlPosition.TOP_RIGHT
+        zoomControl: false,
+        navigationControlOptions: {
+            style: google.maps.NavigationControlStyle.SMALL,
+            position: google.maps.ControlPosition.TOP_RIGHT
         },
-        streetViewControl:false
+        streetViewControl: false
     };
 
     map = new google.maps.Map(document.getElementById("DownTownHeatMap_map"), myOptions);
@@ -425,9 +425,9 @@ function initialize_DownTownHeatMap_map() {
     GAIA = map;
 
 
-    panoramioLayerOpts = {suppressInfoWindows:true, clickable:false, map:map};
-    panoramioLayerOptsInfo = {suppressInfoWindows:false, clickable:true};
-    panoramioLayerOptsNoInfo = {suppressInfoWindows:true, clickable:false};
+    panoramioLayerOpts = {suppressInfoWindows: true, clickable: false, map: map};
+    panoramioLayerOptsInfo = {suppressInfoWindows: false, clickable: true};
+    panoramioLayerOptsNoInfo = {suppressInfoWindows: true, clickable: false};
 
     panoramioLayer = new google.maps.panoramio.PanoramioLayer(panoramioLayerOpts);
     panoramioLayer.setMap(null);
@@ -508,11 +508,11 @@ function initialize_DownTownHeatMap_map() {
     } else {
         var adUnitDiv = document.getElementById('mapCustomControlsAdUnit');
         var adUnitOptions = {
-            format:google.maps.adsense.AdFormat.SQUARE,
-            position:google.maps.ControlPosition.RIGHT_BOTTOM,
-            map:GAIA,
-            visible:true,
-            publisherId:'pub-6582809080416673'
+            format: google.maps.adsense.AdFormat.SQUARE,
+            position: google.maps.ControlPosition.RIGHT_BOTTOM,
+            map: GAIA,
+            visible: true,
+            publisherId: 'pub-6582809080416673'
         }
         //adUnit = new google.maps.adsense.AdUnit(adUnitDiv, adUnitOptions);
     }
@@ -551,7 +551,7 @@ function initialize_DownTownHeatMap_map() {
 
 
     var styledMapOptions = {
-        name:"DownTown"
+        name: "DownTown"
     };
 
     var dwntwnMapTyp = new google.maps.StyledMapType(rooze, styledMapOptions);
@@ -566,9 +566,9 @@ function initialize_DownTownHeatMap_map() {
 
     //WE NEED TO DO THIS HERE BECAUSE SOMETIMES THIS ISN'T INITIALIZED UPON FIRST CALL AT getLastSelectionInfoWindow()
     lastSelectionInfoWindow = new google.maps.InfoWindow({
-        content:lastSelectionInfoWindowContent,
-        maxWidth:200,
-        disableAutoPan:false
+        content: lastSelectionInfoWindowContent,
+        maxWidth: 200,
+        disableAutoPan: false
     });
     lastSelectionInfoWindow.open(GAIA);
 
@@ -704,7 +704,7 @@ function initialize_DownTownHeatMap_map() {
     });
 
     google.maps.event.addListener(map, 'idle', function () {
-        if (GAIA.getZoom() >= 18) {
+        if (GAIA.getZoom() >= 19) {
             GAIA.setMapTypeId(google.maps.MapTypeId.SATELLITE); //Setting the map to sattelite mode for user to see where the building is properly
             setNotification('Map is now in satellite mode so that you can see actual places to choose from.');
         } else {
@@ -761,7 +761,7 @@ function initialize_gmap_scripts_transparently() {//wise any changes also to ini
 function setMapToLocation(value) {
     try {
         getGeocoder().geocode(
-                {address:value},
+                {address: value},
                 function (geocoderResult, geocoderStatus) {
                     if (geocoderStatus == google.maps.GeocoderStatus.OK) {
                         if (!(zoomInHint = !zoomInHint)) {
