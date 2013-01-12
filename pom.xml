@@ -22,7 +22,7 @@
         <dependency>
             <groupId>scribble</groupId>
             <artifactId>scribble</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -69,14 +69,14 @@
             <artifactId>serializer</artifactId>
             <version>1.1.2</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/serializer.jar</systemPath>
+            <systemPath>${catalina.home}/lib/serializer-2.7.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ItsNat</groupId>
             <artifactId>xercesImpl</artifactId>
             <version>1.1.2</version>
             <scope>system</scope>
-            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/xercesImpl.jar</systemPath>
+            <systemPath>${catalina.home}/lib/xercesImpl-2.9.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ItsNat</groupId>
@@ -106,6 +106,8 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/batik-xml.jar</systemPath>
         </dependency>
+
+
         <!--End Of ItsNat Dependencies-->
 
         <dependency>
@@ -462,6 +464,7 @@
                     <sourceDirectory>src/main/webapp/js/</sourceDirectory>
                     <outputDirectory>src/main/webapp/miniquarry</outputDirectory>
                     <nosuffix>true</nosuffix>
+                    <jswarn>false</jswarn>
                 </configuration>
                 <executions>
                     <execution>
