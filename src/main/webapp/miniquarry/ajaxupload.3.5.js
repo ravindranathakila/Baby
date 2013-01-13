@@ -1,149 +1,149 @@
 (function () {
-    var v = document, r = window;
+    var h = document, l = window;
 
-    function A(a) {
-        if (typeof a == "string") {
-            a = v.getElementById(a)
+    function b(d) {
+        if (typeof d == "string") {
+            d = h.getElementById(d)
         }
-        return a
+        return d
     }
 
-    function y(b, c, e) {
-        if (r.addEventListener) {
-            b.addEventListener(c, e, false)
+    function e(q, p, d) {
+        if (l.addEventListener) {
+            q.addEventListener(p, d, false)
         } else {
-            if (r.attachEvent) {
-                var a = function () {
-                    e.call(b, r.event)
+            if (l.attachEvent) {
+                var r = function () {
+                    d.call(q, l.event)
                 };
-                b.attachEvent("on" + c, a)
+                q.attachEvent("on" + p, r)
             }
         }
     }
 
-    var z = function () {
-        var a = v.createElement("div");
-        return function (c) {
-            a.innerHTML = c;
-            var b = a.childNodes[0];
-            a.removeChild(b);
-            return b
+    var c = function () {
+        var d = h.createElement("div");
+        return function (p) {
+            d.innerHTML = p;
+            var q = d.childNodes[0];
+            d.removeChild(q);
+            return q
         }
     }();
 
-    function x(a, b) {
-        return a.className.match(new RegExp("(\\s|^)" + b + "(\\s|$)"))
+    function f(p, d) {
+        return p.className.match(new RegExp("(\\s|^)" + d + "(\\s|$)"))
     }
 
-    function w(a, b) {
-        if (!x(a, b)) {
-            a.className += " " + b
+    function g(p, d) {
+        if (!f(p, d)) {
+            p.className += " " + d
         }
     }
 
-    function q(a, c) {
-        var b = new RegExp("(\\s|^)" + c + "(\\s|$)");
-        a.className = a.className.replace(b, " ")
+    function m(q, d) {
+        var p = new RegExp("(\\s|^)" + d + "(\\s|$)");
+        q.className = q.className.replace(p, " ")
     }
 
     if (document.documentElement.getBoundingClientRect) {
-        var p = function (e) {
-            var k = e.getBoundingClientRect(), g = e.ownerDocument, j = g.body, c = g.documentElement, l = c.clientTop || j.clientTop || 0, i = c.clientLeft || j.clientLeft || 0, f = 1;
-            if (j.getBoundingClientRect) {
-                var a = j.getBoundingClientRect();
-                f = (a.right - a.left) / j.clientWidth
+        var n = function (d) {
+            var t = d.getBoundingClientRect(), x = d.ownerDocument, u = x.body, p = x.documentElement, s = p.clientTop || u.clientTop || 0, v = p.clientLeft || u.clientLeft || 0, y = 1;
+            if (u.getBoundingClientRect) {
+                var r = u.getBoundingClientRect();
+                y = (r.right - r.left) / u.clientWidth
             }
-            if (f > 1) {
-                l = 0;
-                i = 0
+            if (y > 1) {
+                s = 0;
+                v = 0
             }
-            var h = k.top / f + (window.pageYOffset || c && c.scrollTop / f || j.scrollTop / f) - l, b = k.left / f + (window.pageXOffset || c && c.scrollLeft / f || j.scrollLeft / f) - i;
-            return{top: h, left: b}
+            var w = t.top / y + (window.pageYOffset || p && p.scrollTop / y || u.scrollTop / y) - s, q = t.left / y + (window.pageXOffset || p && p.scrollLeft / y || u.scrollLeft / y) - v;
+            return{top: w, left: q}
         }
     } else {
-        var p = function (c) {
-            if (r.jQuery) {
-                return jQuery(c).offset()
+        var n = function (d) {
+            if (l.jQuery) {
+                return jQuery(d).offset()
             }
-            var a = 0, b = 0;
+            var q = 0, p = 0;
             do {
-                a += c.offsetTop || 0;
-                b += c.offsetLeft || 0
-            } while (c = c.offsetParent);
-            return{left: b, top: a}
+                q += d.offsetTop || 0;
+                p += d.offsetLeft || 0
+            } while (d = d.offsetParent);
+            return{left: p, top: q}
         }
     }
-    function B(e) {
-        var b, f, c, g;
-        var a = p(e);
-        b = a.left;
-        c = a.top;
-        f = b + e.offsetWidth;
-        g = c + e.offsetHeight;
-        return{left: b, right: f, top: c, bottom: g}
+    function a(q) {
+        var s, p, r, d;
+        var t = n(q);
+        s = t.left;
+        r = t.top;
+        p = s + q.offsetWidth;
+        d = r + q.offsetHeight;
+        return{left: s, right: p, top: r, bottom: d}
     }
 
-    function t(a) {
-        if (!a.pageX && a.clientX) {
-            var b = 1;
-            var e = document.body;
-            if (e.getBoundingClientRect) {
-                var c = e.getBoundingClientRect();
-                b = (c.right - c.left) / e.clientWidth
+    function j(r) {
+        if (!r.pageX && r.clientX) {
+            var q = 1;
+            var d = document.body;
+            if (d.getBoundingClientRect) {
+                var p = d.getBoundingClientRect();
+                q = (p.right - p.left) / d.clientWidth
             }
-            return{x: a.clientX / b + v.body.scrollLeft + v.documentElement.scrollLeft, y: a.clientY / b + v.body.scrollTop + v.documentElement.scrollTop}
+            return{x: r.clientX / q + h.body.scrollLeft + h.documentElement.scrollLeft, y: r.clientY / q + h.body.scrollTop + h.documentElement.scrollTop}
         }
-        return{x: a.pageX, y: a.pageY}
+        return{x: r.pageX, y: r.pageY}
     }
 
-    var u = function () {
-        var a = 0;
+    var i = function () {
+        var d = 0;
         return function () {
-            return"ValumsAjaxUpload" + a++
+            return"ValumsAjaxUpload" + d++
         }
     }();
 
-    function d(a) {
-        return a.replace(/.*(\/|\\)/, "")
+    function o(d) {
+        return d.replace(/.*(\/|\\)/, "")
     }
 
-    function s(a) {
-        return(/[.]/.exec(a)) ? /[^.]+$/.exec(a.toLowerCase()) : ""
+    function k(d) {
+        return(/[.]/.exec(d)) ? /[^.]+$/.exec(d.toLowerCase()) : ""
     }
 
-    Ajax_upload = AjaxUpload = function (b, e) {
-        if (b.jquery) {
-            b = b[0]
+    Ajax_upload = AjaxUpload = function (q, d) {
+        if (q.jquery) {
+            q = q[0]
         } else {
-            if (typeof b == "string" && /^#.*/.test(b)) {
-                b = b.slice(1)
+            if (typeof q == "string" && /^#.*/.test(q)) {
+                q = q.slice(1)
             }
         }
-        b = A(b);
+        q = b(q);
         this._input = null;
-        this._button = b;
+        this._button = q;
         this._disabled = false;
         this._submitting = false;
         this._justClicked = false;
-        this._parentDialog = v.body;
+        this._parentDialog = h.body;
         if (window.jQuery && jQuery.ui && jQuery.ui.dialog) {
-            var a = jQuery(this._button).parents(".ui-dialog");
-            if (a.length) {
-                this._parentDialog = a[0]
+            var r = jQuery(this._button).parents(".ui-dialog");
+            if (r.length) {
+                this._parentDialog = r[0]
             }
         }
-        this._settings = {action: "upload.php", name: "userfile", data: {}, autoSubmit: true, responseType: false, onChange: function (g, f) {
-        }, onSubmit: function (g, f) {
-        }, onComplete: function (f, g) {
+        this._settings = {action: "upload.php", name: "userfile", data: {}, autoSubmit: true, responseType: false, onChange: function (s, t) {
+        }, onSubmit: function (s, t) {
+        }, onComplete: function (t, s) {
         }};
-        for (var c in e) {
-            this._settings[c] = e[c]
+        for (var p in d) {
+            this._settings[p] = d[p]
         }
         this._createInput();
         this._rerouteClicks()
     };
-    AjaxUpload.prototype = {setData: function (a) {
-        this._settings.data = a
+    AjaxUpload.prototype = {setData: function (d) {
+        this._settings.data = d
     }, disable: function () {
         this._disabled = true
     }, enable: function () {
@@ -156,149 +156,149 @@
             this._input = null
         }
     }, _createInput: function () {
-        var c = this;
-        var e = v.createElement("input");
-        e.setAttribute("type", "file");
-        e.setAttribute("name", this._settings.name);
-        var a = {position: "absolute", margin: "-5px 0 0 -175px", padding: 0, width: "220px", height: "30px", fontSize: "14px", opacity: 0, cursor: "pointer", display: "none", zIndex: 2147483583};
-        for (var b in a) {
-            e.style[b] = a[b]
+        var p = this;
+        var d = h.createElement("input");
+        d.setAttribute("type", "file");
+        d.setAttribute("name", this._settings.name);
+        var r = {position: "absolute", margin: "-5px 0 0 -175px", padding: 0, width: "220px", height: "30px", fontSize: "14px", opacity: 0, cursor: "pointer", display: "none", zIndex: 2147483583};
+        for (var q in r) {
+            d.style[q] = r[q]
         }
-        if (!(e.style.opacity === "0")) {
-            e.style.filter = "alpha(opacity=0)"
+        if (!(d.style.opacity === "0")) {
+            d.style.filter = "alpha(opacity=0)"
         }
-        this._parentDialog.appendChild(e);
-        y(e, "change", function () {
-            var f = d(this.value);
-            if (c._settings.onChange.call(c, f, s(f)) == false) {
+        this._parentDialog.appendChild(d);
+        e(d, "change", function () {
+            var s = o(this.value);
+            if (p._settings.onChange.call(p, s, k(s)) == false) {
                 return
             }
-            if (c._settings.autoSubmit) {
-                c.submit()
+            if (p._settings.autoSubmit) {
+                p.submit()
             }
         });
-        y(e, "click", function () {
-            c.justClicked = true;
+        e(d, "click", function () {
+            p.justClicked = true;
             setTimeout(function () {
-                c.justClicked = false
+                p.justClicked = false
             }, 3000)
         });
-        this._input = e
+        this._input = d
     }, _rerouteClicks: function () {
-        var c = this;
-        var b, e = {top: 0, left: 0}, a = false;
-        y(c._button, "mouseover", function (f) {
-            if (!c._input || a) {
+        var p = this;
+        var q, d = {top: 0, left: 0}, r = false;
+        e(p._button, "mouseover", function (s) {
+            if (!p._input || r) {
                 return
             }
-            a = true;
-            b = B(c._button);
-            if (c._parentDialog != v.body) {
-                e = p(c._parentDialog)
+            r = true;
+            q = a(p._button);
+            if (p._parentDialog != h.body) {
+                d = n(p._parentDialog)
             }
         });
-        y(document, "mousemove", function (g) {
-            var h = c._input;
-            if (!h || !a) {
+        e(document, "mousemove", function (t) {
+            var s = p._input;
+            if (!s || !r) {
                 return
             }
-            if (c._disabled) {
-                q(c._button, "hover");
-                h.style.display = "none";
+            if (p._disabled) {
+                m(p._button, "hover");
+                s.style.display = "none";
                 return
             }
-            var f = t(g);
-            if ((f.x >= b.left) && (f.x <= b.right) && (f.y >= b.top) && (f.y <= b.bottom)) {
-                h.style.top = f.y - e.top + "px";
-                h.style.left = f.x - e.left + "px";
-                h.style.display = "block";
-                w(c._button, "hover")
+            var u = j(t);
+            if ((u.x >= q.left) && (u.x <= q.right) && (u.y >= q.top) && (u.y <= q.bottom)) {
+                s.style.top = u.y - d.top + "px";
+                s.style.left = u.x - d.left + "px";
+                s.style.display = "block";
+                g(p._button, "hover")
             } else {
-                a = false;
-                if (!c.justClicked) {
-                    h.style.display = "none"
+                r = false;
+                if (!p.justClicked) {
+                    s.style.display = "none"
                 }
-                q(c._button, "hover")
+                m(p._button, "hover")
             }
         })
     }, _createIframe: function () {
-        var a = u();
-        var b = z('<iframe src="javascript:false;" name="' + a + '" />');
-        b.id = a;
-        b.style.display = "none";
-        v.body.appendChild(b);
-        return b
+        var p = i();
+        var d = c('<iframe src="javascript:false;" name="' + p + '" />');
+        d.id = p;
+        d.style.display = "none";
+        h.body.appendChild(d);
+        return d
     }, submit: function () {
-        var g = this, c = this._settings;
+        var d = this, r = this._settings;
         if (this._input.value === "") {
             return
         }
-        var f = d(this._input.value);
-        if (!(c.onSubmit.call(this, f, s(f)) == false)) {
-            var e = this._createIframe();
-            var a = this._createForm(e);
-            a.appendChild(this._input);
-            a.submit();
-            v.body.removeChild(a);
-            a = null;
+        var p = o(this._input.value);
+        if (!(r.onSubmit.call(this, p, k(p)) == false)) {
+            var q = this._createIframe();
+            var t = this._createForm(q);
+            t.appendChild(this._input);
+            t.submit();
+            h.body.removeChild(t);
+            t = null;
             this._input = null;
             this._createInput();
-            var b = false;
-            y(e, "load", function (h) {
-                if (e.src == "javascript:'%3Chtml%3E%3C/html%3E';" || e.src == "javascript:'<html></html>';") {
-                    if (b) {
+            var s = false;
+            e(q, "load", function (w) {
+                if (q.src == "javascript:'%3Chtml%3E%3C/html%3E';" || q.src == "javascript:'<html></html>';") {
+                    if (s) {
                         setTimeout(function () {
-                            v.body.removeChild(e)
+                            h.body.removeChild(q)
                         }, 0)
                     }
                     return
                 }
-                var i = e.contentDocument ? e.contentDocument : frames[e.id].document;
-                if (i.readyState && i.readyState != "complete") {
+                var v = q.contentDocument ? q.contentDocument : frames[q.id].document;
+                if (v.readyState && v.readyState != "complete") {
                     return
                 }
-                if (i.body && i.body.innerHTML == "false") {
+                if (v.body && v.body.innerHTML == "false") {
                     return
                 }
-                var j;
-                if (i.XMLDocument) {
-                    j = i.XMLDocument
+                var u;
+                if (v.XMLDocument) {
+                    u = v.XMLDocument
                 } else {
-                    if (i.body) {
-                        j = i.body.innerHTML;
-                        if (c.responseType && c.responseType.toLowerCase() == "json") {
-                            if (i.body.firstChild && i.body.firstChild.nodeName.toUpperCase() == "PRE") {
-                                j = i.body.firstChild.firstChild.nodeValue
+                    if (v.body) {
+                        u = v.body.innerHTML;
+                        if (r.responseType && r.responseType.toLowerCase() == "json") {
+                            if (v.body.firstChild && v.body.firstChild.nodeName.toUpperCase() == "PRE") {
+                                u = v.body.firstChild.firstChild.nodeValue
                             }
-                            if (j) {
-                                j = window["eval"]("(" + j + ")")
+                            if (u) {
+                                u = window["eval"]("(" + u + ")")
                             } else {
-                                j = {}
+                                u = {}
                             }
                         }
                     } else {
-                        var j = i
+                        var u = v
                     }
                 }
-                c.onComplete.call(g, f, j);
-                b = true;
-                e.src = "javascript:'<html></html>';"
+                r.onComplete.call(d, p, u);
+                s = true;
+                q.src = "javascript:'<html></html>';"
             })
         }
-    }, _createForm: function (c) {
-        var e = this._settings;
-        var b = z('<form method="post" enctype="multipart/form-data"></form>');
-        b.style.display = "none";
-        b.action = e.action;
-        b.target = c.name;
-        v.body.appendChild(b);
-        for (var a in e.data) {
-            var f = v.createElement("input");
-            f.type = "hidden";
-            f.name = a;
-            f.value = e.data[a];
-            b.appendChild(f)
+    }, _createForm: function (q) {
+        var p = this._settings;
+        var r = c('<form method="post" enctype="multipart/form-data"></form>');
+        r.style.display = "none";
+        r.action = p.action;
+        r.target = q.name;
+        h.body.appendChild(r);
+        for (var s in p.data) {
+            var d = h.createElement("input");
+            d.type = "hidden";
+            d.name = s;
+            d.value = p.data[s];
+            r.appendChild(d)
         }
-        return b
+        return r
     }}
 })();
