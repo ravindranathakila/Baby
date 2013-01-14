@@ -1,0 +1,21 @@
+Download and extract TomEE
+Upload ROOT.war
+Copy JTA and NON_JTA data sources to tomee.xml in conf
+Check if /tomee is protected in tomcat-users.xml in conf
+Copy cloudfiles.properties and log4j.properties to lib
+Run tests of TomEE
+Move ROOT of TomEE to a backup
+Copy favicon.ico webapps
+Backup existing GlobalConfig.properties in previous TomEE/OpenEJB
+copy derby client jar
+delete seriializer and xercece both jars form ROOT/WI/
+xerce and serializer will have to be deleted from project itself since TomEE keeps using them
+all api keys need to be updated in Config.properties. Best is to use GlobalConfig, since that is what it was put in place for anyway
+
+
+
+
+
+
+
+

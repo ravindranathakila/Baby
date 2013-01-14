@@ -39,8 +39,7 @@
             </div>
         </div>
         <div class="use62" id="Juice_Content"
-             style="height:100%;background:url('/images/Talk_home_page_5.jpg') center;overflow:hidden;">
-
+             style="height:100%;background:url('/sample.jpeg') no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover; overflow:hidden;">
             <div class="use100" style="height:100%;background-color:transparent;">
                 <div class="use100" id="Juice_Noti"
                      style="font-size:30px;font-family:'Comic Sans MS',serif;color:#00eeee;">
@@ -108,7 +107,7 @@
                                    border: 0 #46a1ff solid;border-bottom-width: 5px;
                                    background:url('/images/Metal_translucent.png') repeat;font-size:25px;"
                                    class="use100"
-                                   onkeydown="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#searchButtonMap').click();$('#searchboxmap').delay(5000).focus();"
+                                   onblur="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());"
                                    onclick="suggestPlace();"
                                     />
                         </div>
@@ -118,7 +117,8 @@
                                      title="You need to enter a place|Click search|You will be redirected to map"
                                      alt="" class="use100 vtip click_indicator"
                                      style="overflow: hidden; cursor: pointer;"
-                                     onclick="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#searchButtonMap').click();$('#searchboxmap').delay(5000).focus();"/>
+                                     onclick="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());"
+                                        />
                             </div>
                             <div class="use100" style="height: 20px;">
                                 &nbsp;
@@ -134,7 +134,7 @@
                         <div class="use100" style="height: 70px;">
                             &nbsp;
                         </div>
-                        <img src="/images/are_you_looking_for_excitement__lets_do_it_in_your_style.png"
+                        <img src="/images/are_you_looking_for_excitement.png"
                              alt="Sign up.. It's free!" class="use100"
                              style="vertical-align: bottom;"/>
                     </div>
