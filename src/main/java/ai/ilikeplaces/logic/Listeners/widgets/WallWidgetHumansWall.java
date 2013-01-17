@@ -15,7 +15,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.ilikeplaces.util.cache.SmartCache;
-import ai.ilikeplaces.util.cache.SmartCache3;
+import ai.ilikeplaces.util.cache.SmartCache2;
 import ai.reaver.Return;
 import ai.scribble.License;
 import ai.scribble._fix;
@@ -55,8 +55,8 @@ public class WallWidgetHumansWall extends WallWidget {
         }
     });
 
-    final static public SmartCache3<String, Msg, String> LAST_WALL_ENTRY = new SmartCache3<String, Msg, String>(
-            new SmartCache3.RecoverWith<String, Msg, String>() {
+    final static public SmartCache2<String, Msg, String> LAST_WALL_ENTRY = new SmartCache2<String, Msg, String>(
+            new SmartCache2.RecoverWith<String, Msg, String>() {
 
                 @Override
                 public Msg getValue(final String whosWall, final String visitor) {

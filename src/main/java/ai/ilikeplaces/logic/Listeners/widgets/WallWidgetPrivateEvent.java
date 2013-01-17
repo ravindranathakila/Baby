@@ -14,7 +14,7 @@ import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.WallEntry;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.cache.SmartCache3;
+import ai.ilikeplaces.util.cache.SmartCache2;
 import ai.reaver.Return;
 import ai.scribble.License;
 import ai.scribble._see;
@@ -63,8 +63,8 @@ public class WallWidgetPrivateEvent extends WallWidget {
     private static final String LOCATION = "location";
     private static final String EVENT = "event";
 
-    final static public SmartCache3<Long, Msg, String> LAST_WALL_ENTRY = new SmartCache3<Long, Msg, String>(
-            new SmartCache3.RecoverWith<Long, Msg, String>() {
+    final static public SmartCache2<Long, Msg, String> LAST_WALL_ENTRY = new SmartCache2<Long, Msg, String>(
+            new SmartCache2.RecoverWith<Long, Msg, String>() {
 
                 @Override
                 public Msg getValue(final Long whichWall, final String requester) {

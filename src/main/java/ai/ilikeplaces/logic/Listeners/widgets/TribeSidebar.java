@@ -9,7 +9,7 @@ import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.*;
-import ai.ilikeplaces.util.cache.SmartCache3;
+import ai.ilikeplaces.util.cache.SmartCache2;
 import ai.scribble.License;
 import ai.scribble._ok;
 import org.itsnat.core.ItsNatServletRequest;
@@ -35,8 +35,8 @@ public class TribeSidebar extends AbstractWidgetListener<TribeSidebarCriteria> {
 
 // ------------------------------ FIELDS STATIC --------------------------
 
-    public static final SmartCache3<Long, Tribe, HumanId> TRIBE_BASIC_INFO_CACHE = new SmartCache3<Long, Tribe, HumanId>(
-            new SmartCache3.RecoverWith<Long, Tribe, HumanId>() {
+    public static final SmartCache2<Long, Tribe, HumanId> TRIBE_BASIC_INFO_CACHE = new SmartCache2<Long, Tribe, HumanId>(
+            new SmartCache2.RecoverWith<Long, Tribe, HumanId>() {
                 @Override
                 public Tribe getValue(final Long tribeId, HumanId humanId) {
 

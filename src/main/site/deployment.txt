@@ -14,6 +14,16 @@ all api keys need to be updated in Config.properties. Best is to use GlobalConfi
 
 
 
+content of $CATALINA_HOME/bin/deploy.sh - what happens when run
+
+mkdir ../backup/`date +%Y%m%d`
+kill -9 `ps -aex | grep catalina | grep -v "skip catalina" | awk '{print $1}'`
+mv ../webapps/ROOT* ../backup/`date +%Y%m%d`
+cp ../upload/ROOT.war ../webapps/
+./startup.sh
+
+
+
 
 
 
