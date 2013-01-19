@@ -438,7 +438,7 @@ function initialize_DownTownHeatMap_map() {
     panoramioLayerOptsNoInfo = {suppressInfoWindows: true, clickable: false};
 
     panoramioLayer = new google.maps.panoramio.PanoramioLayer(panoramioLayerOpts);
-    panoramioLayer.setMap(null);
+    panoramioLayer.setMap(GAIA);
 
     google.maps.event.addListener(map, 'zoom_changed', function () {
         if (GAIA.getZoom() > 16) {
