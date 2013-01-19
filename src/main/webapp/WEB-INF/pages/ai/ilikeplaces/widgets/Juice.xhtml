@@ -119,7 +119,7 @@
                                  id="JSJuicePlaceSubmit"
                                  alt="" class="use100 vtip click_indicator"
                                  style="overflow: hidden; cursor: pointer;"
-                                 onclick="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');('#searchboxmap').val($('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());"
+                                 onclick="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchboxmap').attr('value',$('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#searchButtonMap').click();"
                                     />
                         </div>
                         <div class="use100" style="height: 20px;">

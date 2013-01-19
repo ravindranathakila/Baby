@@ -530,7 +530,7 @@ function initialize_DownTownHeatMap_map() {
 
     GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsSignupForm'));
 
-    GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsPersonIntros'));
+    GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsBackTopTop'));
 
     google.maps.event.addDomListener(document.getElementById('mapCustomControlsNEWSZoomInMain'), 'click', function () {
         GAIA.setZoom(GAIA.getZoom() + 1);
@@ -811,28 +811,12 @@ function setMapToLocation(value) {
     </div>
 </div>
 <div style="display:none;">
-    <div id="mapCustomControlsPersonIntros"
-         style="width:19.1%;background-color:#ffffff;opacity:0.7; filter:alpha(opacity=70);padding: 5px 5px 5px 5px;display:none;"
+    <div id="mapCustomControlsBackTopTop"
+         style="width:19.1%;background-color:transparent;opacity:0.7; filter:alpha(opacity=70);padding: 5px 5px 5px 5px;display:block;"
          class="lose_attn">
-        <div class="use100" id="impromptuRealityAmandaPopupLink" style="cursor:pointer;display:none;">
-            <div class="use191 center">
-                <img src="http://c0560252.cdn.cloudfiles.rackspacecloud.com/user_alt.JPG"
-                     class="use90 use5p use5a ajax_image" alt="Loading..."
-                     title="/images/amanda_jane_profile_pic_th.jpg"
-                     style="padding: 3px 3px 3px 3px; background-color:#eeeeee;"/>
-            </div>
-            <div class="use618 center"
-                 style="font-size:16px;font-weight:900;text-transform: uppercase;color:#919090;padding: 5px 0px 0px 0px;">
-                Amanda Jane
-            </div>
-            <div class="use618 center" style="font-size:12px;font-weight:900;padding: 5px 0px 0px 0px;">
-                Her trip to Cudillero!
-            </div>
-            <div class="use191">
-                &nbsp;
-            </div>
-        </div>
-        <div class="use100" style="height:5px;background-color:none;">&nbsp;</div>
+        <a href="#" onclick="javascript:$(window).scrollTop();">Back to top</a>
+
+        <div class="use100" style="height:5px;">&nbsp;</div>
     </div>
 </div>
 <div style="display:none;">
@@ -1076,7 +1060,7 @@ function setMapToLocation(value) {
                 <div class="use50 use25a use25p center vtip"
                      id="searchButtonMap"
                      title="This is for searching for a place|Enter place name in the Go Fetch box and click search|The map will focus the place if it is found"
-                     onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);"
+                     onclick="javascript:setMapToLocation(document.getElementById('searchboxmap').value);$(window).scrollTop($(document).height());"
                      style="height:100%;cursor:pointer;opacity:0.8;filter:alpha(opacity=80);">
                     <img src="/images/circle.gif" alt="Go Fetch!" class="ajax_image" title="/images/Go Fetch_Button.png"
                          style="width:100%;"/>
