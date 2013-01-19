@@ -62,7 +62,7 @@ var rooze = [
     }
 ];
 
-rooze = [];
+//rooze = [];
 
 markerIcon = "http://chart.apis.google.com/chart?chst=d_simple_text_icon_below&chld=1|14|000|glyphish_map-marker|16|4bf202|892e40";
 
@@ -315,33 +315,41 @@ function hotSpotMouseEnter(hotspotMouseEnterDetails) {//WARNING! used in java
 
 function processMarker(markerInfo) {
     document.getElementById('mapCustomControlsSolidLinksWidget').style.zIndex = '11';//Main notifications overlaps this div. Doing this immediately after pushing won't work either.
+    var skip = false;
+    $('#mapCustomControlsSolidLinks').children().each(function () {
+        if ($(this).attr('title') == markerInfo.commonName) {
+            skip = true;
+        }
+    });
 
-    $('#mapCustomControlsSolidLinks').append('<span style=\'cursor:pointer;text-decoration:underline;font-size:13px;\'>' + markerInfo.commonName + '</span><div style=\'width:100%;height:5px;\'>&nbsp;</div> ');
+    if (!skip) { //We are yet to fix duplicated "markers" being rendered, and has to be done on java side first. This is just the link fix
+        $('#mapCustomControlsSolidLinks').append('<span title=\'' + markerInfo.commonName + '\' style=\'cursor:pointer;text-decoration:underline;font-size:13px;\'>' + markerInfo.commonName + '</span><div style=\'width:100%;height:5px;\'>&nbsp;</div> ');
 
-    var currentMarker = listOfHotSpots[0];
+        var currentMarker = listOfHotSpots[0];
 
-    $('#mapCustomControlsSolidLinks').children(':last').prev().click(
-            function () {
-                GAIA.setCenter(new google.maps.LatLng(markerInfo.latitude, markerInfo.longitude));
-                if (GAIA.getZoom() < 16) {
-                    GAIA.setZoom(GAIA.getZoom() + 2);
-                } else {
-                    GAIA.setZoom(GAIA.getZoom() + 2);
+        $('#mapCustomControlsSolidLinks').children(':last').prev().click(
+                function () {
+                    GAIA.setCenter(new google.maps.LatLng(markerInfo.latitude, markerInfo.longitude));
+                    if (GAIA.getZoom() < 16) {
+                        GAIA.setZoom(GAIA.getZoom() + 2);
+                    } else {
+                        GAIA.setZoom(GAIA.getZoom() + 2);
+                    }
                 }
-            }
-    );
+        );
 
-    $('#mapCustomControlsSolidLinks').children(':last').prev()
-            .mouseenter(
-            function () {
-                currentMarker.setAnimation(google.maps.Animation.BOUNCE);
-            }
-    )
-            .mouseleave(
-            function () {
-                currentMarker.setAnimation(null);
-            }
-    );
+        $('#mapCustomControlsSolidLinks').children(':last').prev()
+                .mouseenter(
+                function () {
+                    currentMarker.setAnimation(google.maps.Animation.BOUNCE);
+                }
+        )
+                .mouseleave(
+                function () {
+                    currentMarker.setAnimation(null);
+                }
+        );
+    }
 }
 
 function getColoredMarkerWithIntensity(intensity, title) {
@@ -779,6 +787,16 @@ function setMapToLocation(value) {
 }
 
 </script>
+<div class="by center" style="height:1%;overflow:hidden;">
+    <div class="by2 center">
+        <input type="text" class="by center" id="DownTownHeatMapWOEID" value="0,0" readonly="readonly"
+               style="background-color:transparent;color:transparent;border:none;"/>
+    </div>
+    <div class="by2 center">
+        <input type="text" class="by center" id="DownTownHeatMapBB" value="0,0" readonly="readonly"
+               style="background-color:transparent;color:transparent;border:none;"/>
+    </div>
+</div>
 <div class="by" style="overflow:hidden;height:99%;" id="DownTownHeatMap_load_click">
     <div></div>
     <div class="by center" style="cursor:pointer;">
@@ -790,18 +808,6 @@ function setMapToLocation(value) {
 </div>
 <div class="by" style="overflow:hidden;display:none;height:99%;" id="DownTownHeatMap_map_wrapper">
     <div id="DownTownHeatMap_map" class="by" style="height:100%;font-size:12px;">
-    </div>
-</div>
-<div class="by center" style="height:1%;overflow:hidden;">
-    <div class="by2 center">
-        <input type="text" class="by center" id="DownTownHeatMapWOEID" value="0,0" readonly="readonly"
-               style="background-color:transparent;color:transparent;border:none;"
-               onfocus="javascript:$(window).scrollTop($(document).height());"/>
-    </div>
-    <div class="by2 center">
-        <input type="text" class="by center" id="DownTownHeatMapBB" value="0,0" readonly="readonly"
-               style="background-color:transparent;color:transparent;border:none;"
-               onfocus="javascript:$(window).scrollTop($(document).height());"/>
     </div>
 </div>
 <div style="display:none;">

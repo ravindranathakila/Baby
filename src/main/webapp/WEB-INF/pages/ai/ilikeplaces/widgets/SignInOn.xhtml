@@ -9,12 +9,18 @@
 <div class="use100 signinon_header" id="signinonBG">
 <div class="use100" style="background:url(/images/Metal_translucent.png) repeat;" id="signinon_power_off">
     <div class="use100" style="height:78px;display:block;">
-        <div class="use10 use90p" style="height: 68px;">
+        <div class="use10 use80a" style="height: 68px;">
+            <img id="Juice_Signup_Show" src="/images/Sign_up.png" alt="Sign up.. It's free!" class="height_total"
+                 style="cursor:pointer;"
+                 onclick="$('#PowerOnOff').click();$('#jsSignupFiller').fadeOut();$('#jsSignupBox').fadeIn();"/>
+        </div>
+        <div class="use10" style="height: 68px;">
             <div class="use100" style="height: 10px;">
                 &nbsp;
             </div>
             <div class="use100" style="height: 58px;">
                 <img src="/images/Power_off_Off.png" alt="Login"
+                     id="PowerOnOff"
                      style="height:58px;cursor:pointer;" class="click_indicator"
                      onclick="$('#signinon_power_off').slideUp();$('#signinon_power_on').slideDown();"/>
             </div>

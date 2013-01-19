@@ -25,6 +25,12 @@ cp ../upload/ROOT.war ../webapps/
 
 
 
+Warning: bad ps syntax, perhaps a bogus '-'? See http://procps.sf.net/faq.html
+./deploy.sh: line 2: kill: (16444) - No such process
+
+
+
+
 
 
 
