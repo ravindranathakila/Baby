@@ -171,8 +171,16 @@ function setNotificationFetchPositive() {//WARNING! used in java
     setNotification('Wag Wag.. Look what I found!!');
 }
 
+firstTimeEmptyCheck = false;
+
 function setNotificationFetchNegative() {//WARNING! used in java
-    setNotification('Puff puff!!.. Nothing here for us... Nobody\'s been here in ages!');
+    if (!firstTimeEmptyCheck) {
+        firstTimeEmptyCheck = true;//We zoom out only once since the user might be trying to mark a new location
+        setNotification('Puff puff!!.. Nothing here for us... Nobody\'s been here in ages!');
+        GAIA.setZoom(GAIA.getZoom() - 1);
+    } else {
+        setNotification('Puff puff!!.. Nothing here for us... Nobody\'s been here in ages!');
+    }
 }
 
 simpleMomentAlertCount = 0;
