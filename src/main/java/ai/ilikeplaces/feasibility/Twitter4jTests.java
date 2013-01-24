@@ -3,6 +3,8 @@ package ai.ilikeplaces.feasibility;
 import ai.scribble.License;
 import twitter4j.*;
 
+import java.util.Map;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Ravindranath Akila
@@ -13,18 +15,15 @@ import twitter4j.*;
 public class Twitter4jTests {
     public static void main(final String args[]) throws TwitterException {
         Twitter twitter = new TwitterFactory().getInstance();
-        final RateLimitStatus r = twitter.getRateLimitStatus();
-
-        System.out.println("Hourly Limit:" + r.getHourlyLimit());
-        System.out.println("Hits Left:" + r.getRemainingHits());
+        final Map<String, RateLimitStatus> r = twitter.getRateLimitStatus();
 
         Query query = new Query("fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)");
 
         final long start = System.currentTimeMillis();
         QueryResult result = twitter.search(query.geoCode(new GeoLocation(6.876754135813088, 79.93997275829315), 20, Query.MILES));
         System.out.println("hits:" + result.getMaxId());
-        for (Tweet tweet : result.getTweets()) {
-            System.out.println(tweet.getFromUser() + ":" + tweet.getText());
+        for (Status tweet : result.getTweets()) {
+            System.out.println(tweet.getUser() + ":" + tweet.getText());
         }
         System.out.println("Time taken:" + (System.currentTimeMillis() - start));
     }

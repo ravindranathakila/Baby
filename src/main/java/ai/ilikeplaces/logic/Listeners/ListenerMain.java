@@ -36,6 +36,8 @@ import java.util.*;
 import static ai.ilikeplaces.servlets.Controller.Page.*;
 import static ai.ilikeplaces.util.MarkupTag.*;
 
+import where.yahooapis.com.v1.Place;
+
 /**
  * @author Ravindranath Akila
  */
@@ -102,8 +104,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String CREATED_AT = "createdAt";
     private static final String ERROR_IN_UC_SET_PROFILE_LINK = "Error in UC setProfileLink";
     private static final String PIPE = "|";
-
-    final static Query QUERY = new Query("fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)");
 
     final static Twitter TWITTER = new TwitterFactory().getInstance();
     private static final String AT_SIGN = "@";
@@ -364,14 +364,18 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     TWITTER_WIDGETS:
                     {
                         try {
-                            final QueryResult result = TWITTER.search(QUERY.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
+                            final Query _query = new Query("fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)");
+                            _query.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES);
+                            _query.setResultType(Query.POPULAR);
+                            final QueryResult result = TWITTER.search(_query);
+
                             //final QueryResult result = TWITTER.search(new Query("Happy").geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
-                            for (Tweet tweet : result.getTweets()) {
+                            for (Status tweet : result.getTweets()) {
                                 new ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person(
                                         request__,
                                         new PersonCriteria()
-                                                .setPersonName(tweet.getFromUser())
-                                                .setPersonPhoto(tweet.getProfileImageUrl())
+                                                .setPersonName(tweet.getUser().getName())
+                                                .setPersonPhoto(tweet.getUser().getProfileImageURL())
                                                 .setPersonData(tweet.getText()),
                                         $(Main_right_column)
                                 );
