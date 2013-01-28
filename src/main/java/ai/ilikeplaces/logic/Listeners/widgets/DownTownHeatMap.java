@@ -31,7 +31,6 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
-import twitter4j.org.json.JSONException;
 
 import java.util.*;
 
@@ -547,7 +546,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
     }
 
-    public static JSONObject getGooglePlaces(final double latitude, final double longitude, final long radiusInMeters, final String placeTypes) throws JSONException {
+    public static JSONObject getGooglePlaces(final double latitude, final double longitude, final long radiusInMeters, final String placeTypes) {
         final Map<String, String> params = new HashMap<String, String>();
         params.put(LOCATION, latitude + "," + longitude);
         params.put(RADIUS, Double.toString(radiusInMeters));

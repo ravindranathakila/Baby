@@ -17,7 +17,8 @@ public class Twitter4jTests {
         Twitter twitter = new TwitterFactory().getInstance();
         final Map<String, RateLimitStatus> r = twitter.getRateLimitStatus();
 
-        Query query = new Query("fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)");
+        Query query = new Query("fun OR happeni" +
+                "ng OR enjoy OR nightclub OR restaurant OR party OR travel :)");
 
         final long start = System.currentTimeMillis();
         QueryResult result = twitter.search(query.geoCode(new GeoLocation(6.876754135813088, 79.93997275829315), 20, Query.MILES));

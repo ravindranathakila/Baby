@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.html.HTMLDocument;
 import twitter4j.*;
+import twitter4j.conf.ConfigurationBuilder;
 import where.yahooapis.com.v1.Place;
 
 import java.text.MessageFormat;
@@ -65,8 +66,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";
     private static final String THIS_IS = "This is ";
     private static final String BACK_TO = "Back to";
-    private static final String AT = "At ";
-    private static final String YOU_CAN_VISIT = " you can visit";
     private static final String SPACE = " ";
     private static final String PLACE_LIST = "place_list";
     private static final String TRAVEL_TO = "Travel to ";
@@ -105,7 +104,13 @@ public class ListenerMain implements ItsNatServletRequestListener {
     private static final String ERROR_IN_UC_SET_PROFILE_LINK = "Error in UC setProfileLink";
     private static final String PIPE = "|";
 
-    final static Twitter TWITTER = new TwitterFactory().getInstance();
+    final Twitter TWITTER = new TwitterFactory(new ConfigurationBuilder()
+            .setOAuthConsumerKey("7h8258DVTL7DJBstoyjoXw")
+            .setOAuthConsumerSecret("KjKfC124nB5CAmgvCV9AN64yNymJIIYRdafdWO3mAQ")
+            .setOAuthAccessToken("170591510-3kqDPKxqfTHNQHlT5DgLyGOH8bJzJ18N5Ozonr98")
+            .setOAuthAccessTokenSecret("sJpOU5bXO9dIPZIXE0vIQuZZTejb9Of5PxJRaMunsk")
+            .build()).getInstance();
+
     private static final String AT_SIGN = "@";
     private static final String EMPTY = "";
 
@@ -365,8 +370,8 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     {
                         try {
                             final Query _query = new Query("fun OR happening OR enjoy OR nightclub OR restaurant OR party OR travel :)");
-                            _query.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES);
-                            _query.setResultType(Query.POPULAR);
+                            _query.geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 40, Query.MILES);
+                            _query.setResultType(Query.MIXED);
                             final QueryResult result = TWITTER.search(_query);
 
                             //final QueryResult result = TWITTER.search(new Query("Happy").geoCode(new GeoLocation(Double.parseDouble(existingLocation_.getLocationGeo1()), Double.parseDouble(existingLocation_.getLocationGeo2())), 160, Query.MILES));
@@ -444,8 +449,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                             final String finalTitle = title.toString();
 
                             $(Main_center_main_location_title).setTextContent(finalTitle.isEmpty() ? (THIS_IS + existingLocation_.getLocationName() + OF + locationSuperSet) : finalTitle);
-                            $(Main_center_content).appendChild(($(P).appendChild(hTMLDocument__.createTextNode(AT + existingLocation_.getLocationName() + YOU_CAN_VISIT + COLON + SPACE))));
-
 
                             for (final Element element : generateLocationLinks(DB.getHumanCRUDLocationLocal(true).doDirtyRLocationsBySuperLocation(existingLocation_))) {
                                 $(Main_location_list).appendChild(element);
