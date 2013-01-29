@@ -14,6 +14,13 @@ all api keys need to be updated in Config.properties. Best is to use GlobalConfi
 
 
 
+Troubleshooting
+
+1. Gerenimo - Mail Not Going
+
+Include the Sun's mail-xxx.jar in the endoresed directory of TomEE. Sometimes, the code might work on TomEE locally, but not work on server.
+This is the fix that works with Ubuntu Server so far.
+
 content of $CATALINA_HOME/bin/deploy.sh - what happens when run
 
 mkdir ../backup/`date +%Y%m%d`
@@ -23,10 +30,6 @@ cp ../upload/ROOT.war ../webapps/
 ./startup.sh
 
 
-
-
-Warning: bad ps syntax, perhaps a bogus '-'? See http://procps.sf.net/faq.html
-./deploy.sh: line 2: kill: (16444) - No such process
 
 
 
