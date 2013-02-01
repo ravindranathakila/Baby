@@ -167,6 +167,8 @@ final public class
     final PageFace teachTribe = Page.TeachTribe;
     final PageFace teachMoment = Page.TeachMoment;
 
+    final PageFace subscribe = Page.Subscribe;
+
     final PageFace carousel = Page.Carousel;
     final PageFace carouselThumb = Page.CarouselThumb;
 
@@ -198,7 +200,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocTermsOfServices;
+                return "DocTermsOfServices";
             }
 
             @Override
@@ -210,7 +212,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocPrivacyPolicy;
+                return "DocPrivacyPolicy";
             }
 
             @Override
@@ -233,7 +235,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocBate;
+                return "DocBate";
             }
 
             @Override
@@ -247,7 +249,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocHelp;
+                return "DocHelp";
             }
 
             @Override
@@ -262,7 +264,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocPlace;
+                return "DocPlace";
             }
 
             @Override
@@ -276,7 +278,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocComment;
+                return "DocComment";
             }
 
             @Override
@@ -291,7 +293,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocEvent;
+                return "DocEvent";
             }
 
             @Override
@@ -306,7 +308,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocPerson;
+                return "DocPerson";
             }
 
             @Override
@@ -321,7 +323,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocInfo;
+                return "DocInfo";
             }
 
             @Override
@@ -335,7 +337,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocTeachTribe;
+                return "DocTeachTribe";
             }
 
             @Override
@@ -349,7 +351,21 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocTeachMoment;
+                return "DocTeachMoment";
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
+        Subscribe("ai/ilikeplaces/widgets/subscribe/subscribe.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.subscribe.Subscribe.SubscribeIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return "DocSubscribe";
             }
 
             @Override
@@ -363,7 +379,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocCarousel;
+                return "DocCarousel";
             }
 
             @Override
@@ -377,7 +393,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocCarouselThumb;
+                return "DocCarouselThumb";
             }
 
             @Override
@@ -391,7 +407,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocPeople;
+                return "DocPeople";
             }
 
             @Override
@@ -405,7 +421,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocPeopleThumb;
+                return "DocPeopleThumb";
             }
 
             @Override
@@ -419,7 +435,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocAutoplayControls;
+                return "DocAutoplayControls";
             }
 
             @Override
@@ -433,7 +449,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocAlbum;
+                return "DocAlbum";
             }
 
             @Override
@@ -447,7 +463,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocAlbumTribe;
+                return "DocAlbumTribe";
             }
 
             @Override
@@ -464,7 +480,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocUserProperty;
+                return "DocUserProperty";
             }
 
             @Override
@@ -498,7 +514,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocProfileWidget;
+                return "DocProfileWidget";
             }
 
             @Override
@@ -512,7 +528,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocForgotPasswordChange;
+                return "DocForgotPasswordChange";
             }
 
             @Override
@@ -530,7 +546,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocPasswordChange;
+                return "DocPasswordChange";
             }
 
             @Override
@@ -543,7 +559,7 @@ final public class
         ) {
             @Override
             public String toString() {
-                return DocWall;
+                return "DocWall";
             }
 
             @Override
@@ -558,7 +574,7 @@ final public class
                 Controller.Page.DisplayNameNotice) {
             @Override
             public String toString() {
-                return DocDisplayName;
+                return "DocDisplayName";
             }
 
             @Override
@@ -593,7 +609,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocPrivateEventView;
+                return "PrivateEventView";
             }
         },
 
@@ -641,7 +657,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocTribeSidebar;
+                return "DocTribeSidebar";
             }
         },
 
@@ -656,7 +672,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocWOEIDGrabber;
+                return "DocWOEIDGrabber";
             }
         },
 
@@ -677,7 +693,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocDownTownHeatMap;
+                return "DocDownTownHeatMap";
             }
         },
 
@@ -695,7 +711,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocFindFriend;
+                return "DocFindFriend";
             }
         },
 
@@ -710,7 +726,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocFriendAdd;
+                return "DocFriendAdd";
             }
         },
 
@@ -725,7 +741,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocFriendDelete;
+                return "DocFriendDelete";
             }
         },
 
@@ -740,7 +756,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocFriendList;
+                return "DocFriendList";
             }
         },
 
@@ -758,7 +774,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocGenericButton;
+                return "DocGenericButton";
             }
         },
 
@@ -873,7 +889,7 @@ final public class
 
             @Override
             public String toString() {
-                return DocProfile;
+                return "DocProfile";
             }
         },
 
@@ -1277,17 +1293,7 @@ final public class
 
         private static final String APP_ROOT = RBGet.getGlobalConfigKey("AppRoot");
 
-        /*TermsOfServices Page*/
-        final static public String DocTermsOfServices = "DocTermsOfServices";
-        /*DocTermsOfServices IDs*/
 
-        /*PrivacyPolicy Page*/
-        final static public String DocPrivacyPolicy = "DocPrivacyPolicy";
-        /*PrivacyPolicy IDs*/
-        //Nothing here
-
-        /*Bate Page*/
-        final static public String DocBate = "DocBate";
         /*Bate IDs*/
         final static public String BateSignup = "BateSignup";
         final static public String BateSignupEmail = "BateSignupEmail";
@@ -1299,62 +1305,6 @@ final public class
         final static public String BateOmg = "BateOmg";
         final static public String BateOmgSuccessMsg = "BateOmgSuccessMsg";
 
-        /*Info Page*/
-        final static public String DocInfo = "DocInfo";
-        /*Info IDs*/
-        //Nothing here
-
-        /*TeachTribe Page*/
-        final static public String DocTeachTribe = "DocTeachTribe";
-        /*TeachTribe IDs*/
-        //Nothing here
-
-        /*TeachTribe Page*/
-        final static public String DocTeachMoment = "DocTeachMoment";
-        /*TeachTribe IDs*/
-        //Nothing here
-
-        /*Place Page*/
-        final static public String DocPlace = "DocPlace";
-
-        /*Comment Page*/
-        final static public String DocComment = "DocComment";
-
-        /*Event Page*/
-        final static public String DocEvent = "DocEvent";
-
-        /*Person Page*/
-        final static public String DocPerson = "DocPerson";
-
-
-        /*Help Page*/
-        final static public String DocHelp = "DocHelp";
-        /*Help IDs*/
-        //Nothing here
-
-        /*Carousel*/
-        final static public String DocCarousel = "DocCarousel";
-
-        /*PeopleThumb*/
-        final static public String DocPeopleThumb = "DocPeopleThumb";
-
-        /*AutoplayControls*/
-        final static public String DocAutoplayControls = "DocAutoplayControls";
-
-        /*People*/
-        final static public String DocPeople = "DocPeople";
-
-        /*CarouselThumb*/
-        final static public String DocCarouselThumb = "DocCarouselThumb";
-
-        /*Album Page*/
-        final static public String DocAlbum = "DocAlbum";
-
-        /*AlbumTribe Page*/
-        final static public String DocAlbumTribe = "DocAlbumTribe";
-
-        /*ProfileWidget Page*/
-        final static public String DocUserProperty = "DocUserProperty";
         /*ProfileWidget IDs*/
         final static public String user_property_profile_photo = "user_property_profile_photo";
         final static public String user_property_name = "user_property_name";
@@ -1364,21 +1314,12 @@ final public class
         /*UserPropertySidebar Page*/
         final static public String DocUserPropertySidebar = "DocUserPropertySidebar";
 
-
-        /*ProfileWidget Page*/
-        final static public String DocProfileWidget = "DocProfileWidget";
         /*ProfileWidget IDs*/
         final static public String ProfileNotice = "ProfileNotice";
         final static public String ProfileURLChange = "ProfileURLChange";
         final static public String ProfileURL = "ProfileURL";
         final static public String ProfileURLUpdate = "ProfileURLUpdate";
 
-        /*Forgot Password Page*/
-        final static public String DocForgotPasswordChange = "DocForgotPasswordChange";
-
-
-        /*Password Page*/
-        final static public String DocPasswordChange = "DocPasswordChange";
         /*Password IDs*/
         final static public String ProfilePasswordWidget = "ProfilePasswordWidget";
         final static public String ProfilePasswordNotice = "ProfilePasswordNotice";
@@ -1387,19 +1328,11 @@ final public class
         final static public String ProfilePasswordNew = "ProfilePasswordNew";
         final static public String ProfilePasswordSave = "ProfilePasswordSave";
 
-        /*WallHandler Page*/
-        final static public String DocWall = "DocWall";
-
-        /*DisplayName Page*/
-        final static public String DocDisplayName = "DocDisplayName";
         /*DisplayName IDs*/
         final static public String DisplayNameDisplay = "DisplayNameDisplay";
         final static public String DisplayNameInput = "DisplayNameInput";
         final static public String DisplayNameSave = "DisplayNameSave";
         final static public String DisplayNameNotice = "DisplayNameNotice";
-
-        /*Private Event Page*/
-        final static public String DocPrivateEventView = "PrivateEventView";
 
         /*Private Event Page*/
         final static public String DocPrivateEventCreate = "PrivateEventCreate";
@@ -1412,7 +1345,6 @@ final public class
         /*Private Event Page*/
         final static public String DocPrivateEventDelete = "PrivateEventDelete";
 
-
         /*Private Event View Sidebar Page*/
         final static public String DocPrivateEventViewSidebar = "DocPrivateEventViewSidebar";
         /*Private Event View Sidebar IDs*/
@@ -1420,20 +1352,14 @@ final public class
         final static public String private_event_view_sidebar_content = "private_event_view_sidebar_content";
         final static public String private_event_view_sidebar_profile_photo = "private_event_view_sidebar_profile_photo";
 
-        /*Tribe Sidebar Page*/
-        final static public String DocTribeSidebar = "DocTribeSidebar";
         /*Tribe Sidebar IDs*/
         final static public String tribe_sidebar_name = "tribe_sidebar_name";
         final static public String tribe_sidebar_content = "tribe_sidebar_content";
         final static public String tribe_sidebar_profile_photo = "tribe_sidebar_profile_photo";
 
-        /*WOIEDGrabber Page*/
-        final static public String DocWOEIDGrabber = "DocWOEIDGrabber";
         /*WOIEDGrabber IDs*/
         final static public String WOEIDGrabberWOEID = "WOEIDGrabberWOEID";
 
-        /*DownTownHeatMap Page*/
-        final static public String DocDownTownHeatMap = "DocDownTownHeatMap";
         /*DownTownHeatMap IDs*/
         final static public String DownTownHeatMapWOEID = "DownTownHeatMapWOEID";
         final static public String DownTownHeatMapBB = "DownTownHeatMapBB";
@@ -1443,8 +1369,6 @@ final public class
         final static public String DownTownHeatMapSignupNotifications = "DownTownHeatMapSignupNotifications";
         final static public String DownTownHeatMapSignupButton = "DownTownHeatMapSignupButton";
 
-        /*FindFriend Page*/
-        final static public String DocFindFriend = "DocFindFriend";
         /*FindFriend IDs*/
         final static public String friendFindSearchTextInput = "friendFindSearchTextInput";
         final static public String friendFindSearchButtonInput = "friendFindSearchButtonInput";
@@ -1452,33 +1376,23 @@ final public class
         final static public String friendFindSearchNotice = "friendFindSearchNotice";
         final static public String friendFindSearchInvites = "friendFindSearchInvites";
 
-        /*AddFriend Page*/
-        final static public String DocFriendAdd = "DocFriendAdd";
         /*AddFriend IDs*/
         final static public String friendAddDisplayNameLabel = "friendAddDisplayNameLabel";
         final static public String friendAddAddButton = "friendAddAddButton";
 
-        /*DeleteFriend Page*/
-        final static public String DocFriendDelete = "DocFriendDelete";
         /*DeleteFriend IDs*/
         final static public String friendDeleteDisplayNameLabel = "friendDeleteDisplayNameLabel";
         final static public String friendDeleteAddButton = "friendDeleteDeleteButton";
 
-        /*FriendList Page*/
-        final static public String DocFriendList = "DocFriendList";
         /*FriendList IDs*/
         final static public String FriendListList = "FriendListList";
 
-        /*FriendList Page*/
-        final static public String DocGenericButton = "DocGenericButton";
         /*FriendList IDs*/
         final static public String GenericButtonLink = "GenericButtonLink";
         final static public String GenericButtonText = "GenericButtonText";
         final static public String GenericButtonImage = "GenericButtonImage";
         final static public String GenericButtonWidth = "GenericButtonWidth";
 
-        /*Profile Page*/
-        final static public String DocProfile = "DocProfile";
         /*Profile IDs*/
         final static public String ProfilePhotoChange = "ProfilePhotoChange";
 
@@ -1916,6 +1830,8 @@ final public class
 
             inhs__.registerItsNatDocFragmentTemplate(teachMoment.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(teachMoment));
 
+            inhs__.registerItsNatDocFragmentTemplate(subscribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(subscribe));
+
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
 
             inhs__.registerItsNatDocFragmentTemplate(carousel.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(carousel));
@@ -2051,7 +1967,7 @@ final public class
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocTribes);/*Framework specific*/
                     Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0025));
                 } else if (isProfilePage(URL__)) {
-                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocProfile);/*Framework specific*/
+                    request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, "DocProfile");/*Framework specific*/
                     Loggers.DEBUG.debug(RBGet.logMsgs.getString(AI_ILIKEPLACES_SERVLETS_CONTROLLER_0016));
                 } else if (isIPage(URL__)) {
                     request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Controller.Page.DocI);/*Framework specific*/

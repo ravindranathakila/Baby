@@ -9,8 +9,9 @@ import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletActivate;
-import ai.ilikeplaces.servlets.ServletLogin;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.AIEventListener;
+import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.UserIntroduction;
 import ai.reaver.Return;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -26,14 +27,6 @@ import org.w3c.dom.html.HTMLDocument;
  */
 public class TeachTribe extends AbstractWidgetListener<TeachTribeCriteria> {
 // ------------------------------ FIELDS ------------------------------
-
-
-// ------------------------------ FIELDS STATIC --------------------------
-
-
-    private static final String PASSWORD_DETAILS = "_passwordDetails";
-    private static final String PASSWORD_ADVICE = "_passwordAdvice";
-    private static final String URL = "_url";
 
 // -------------------------- ENUMERATIONS --------------------------
 
@@ -122,7 +115,7 @@ public class TeachTribe extends AbstractWidgetListener<TeachTribeCriteria> {
 
                         if (myemail.valid()) {
                             if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
-                                final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+                                final String randomPassword = ServletActivate.getRandomPassword();
 
                                 final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
                                         new HumanId().setObjAsValid(myemail.getObj()),
@@ -132,21 +125,10 @@ public class TeachTribe extends AbstractWidgetListener<TeachTribeCriteria> {
                                 if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
                                     UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
 
-                                    final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                            .append(ServletLogin.Username, myemail.getObj(), true)
-                                            .append(ServletLogin.Password,
-                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                            .returnValue()
-                                                            .getHumanAuthenticationHash())
-                                            .append(ServletActivate.NEXT, Controller.Page.Tribes.getURL())
-                                            .get();
+                                    final String activationURL = ServletActivate.getActivateLink(myemail);
 
 
-                                    String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
-
-                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
-                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
+                                    String htmlBody = Bate.getHTMLStringForOfflineFriendInvite(myemail, randomPassword, activationURL);
 
                                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                             myemail.getObj(),
@@ -171,4 +153,5 @@ public class TeachTribe extends AbstractWidgetListener<TeachTribeCriteria> {
                 }
         );
     }
+
 }

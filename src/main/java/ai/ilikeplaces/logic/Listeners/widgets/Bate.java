@@ -54,32 +54,25 @@ import java.util.Set;
 abstract public class Bate extends AbstractWidgetListener {
     public static final String PASSWORD_DETAILS = "_passwordDetails";
     public static final String PASSWORD_ADVICE = "_passwordAdvice";
+    public static final String DEFAULT = "default";
     private static final String URL = "_url";
     private static final String OMG_GOOGLE_INVITE = "omg_gi";
-    private Email email;
-    private Password password;
-
     private static final String ACCESS_TOKEN = "access_token";
     private static final String HASH = "#";
-    public static final String DEFAULT = "default";
     final private Logger logger = LoggerFactory.getLogger(FindFriend.class.getName());
-
     HumanId humanId;
     SimpleName humansName;
-
     RefObj<List<HumansIdentity>> matches = null;
-
     Set<Email> emails;
-
+    private Email email;
+    private Password password;
     /**
      * Thank you for not refactoring to "inviteCount" and not confusing the coder that it is the number of invites
      * that a user has available instead of the number of invites he sent.
      */
     private Integer invitedCount = 0;
-
     private Element bate = null;
     private ItsNatHttpSession userSession;
-
 
     /**
      * @param request__
@@ -88,6 +81,104 @@ abstract public class Bate extends AbstractWidgetListener {
      */
     public Bate(final ItsNatServletRequest request__, final Element appendToElement__, final Object... initArgs) {
         super(request__, Page.Bate, appendToElement__, initArgs);
+    }
+
+    public static String getHTMLStringForOfflineFriendInvite(final Email myemail, final String randomPassword, final String activationURL) {
+        String htmlBody = getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
+
+        htmlBody = htmlBody.replace("_url", ElementComposer.generateSimpleLinkTo(activationURL));
+        htmlBody = htmlBody.replace("_passwordDetails", "Your temporary password is " + randomPassword);
+        htmlBody = htmlBody.replace("_passwordAdvice", "Make sure you change it.");
+        return htmlBody;
+    }
+
+    /**
+     * Offline, implies the inviter is offline
+     *
+     * @param inviter
+     * @param invitee
+     * @return
+     */
+    final static public String getHTMLStringForOfflineFriendInvite(final String inviter, final String invitee) {
+        try {
+
+            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
+
+            $$static(Controller.Page.user_property_name, document).setTextContent(inviter);
+            $$static(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
+            $$static(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
+            $$static(Controller.Page.user_property_content, document).appendChild(
+                    document.importNode(
+                            ElementComposer.compose(
+                                    document.createElement(MarkupTag.DIV.toString())
+                            ).$ElementSetText(
+                                    "Hey! " + inviter + " has just invited you to I LIKE PLACES! " +
+                                            "The website is for meeting people you care at interesting places. " +
+                                            "In it, you can find interesting places and organize moments with your friends and family. " +
+                                            "You can join I Like Places only through an invite. " +
+                                            "Now that " + inviter + " has gotten you in, use the following link to access I Like Places. " +
+                                            URL + " . " +
+                                            PASSWORD_DETAILS + " " +
+                                            PASSWORD_ADVICE + " " +
+                                            "All the best and Have Fun! "
+                            ).getAsNode(),
+                            true)
+            );
+
+
+            return HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, document));
+        } catch (final Throwable e) {
+            throw LogNull.getRuntimeException(e);
+        }
+
+    }
+
+    final static public Return<Boolean> sendInviteToOfflineInvite(final String invitersName, final ImportedContact inviteee) {
+        Return<Boolean> returnVal;
+        try {
+            final String randomPassword = getRandomPassword();
+
+            final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                    new HumanId().setObjAsValid(inviteee.getEmail()),
+                    new Password(randomPassword),
+                    new Email(inviteee.getEmail()));
+
+            if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
+
+                UserIntroduction.createIntroData(new HumanId(inviteee.getEmail()));
+
+                final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                        .append(ServletLogin.Username, inviteee.getEmail(), true)
+                        .append(ServletLogin.Password,
+                                DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(inviteee.getEmail()))
+                                        .returnValue()
+                                        .getHumanAuthenticationHash())
+                        .get();
+
+
+                String htmlBody = getHTMLStringForOfflineFriendInvite(invitersName, inviteee.getFullName());
+
+                htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + "\"" + randomPassword + "\"" + "(without quotes)");
+                htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
+
+                final Return<Boolean> mailReturn = SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                        inviteee.getHumanId(),
+                        "Invitation from " + invitersName,
+                        htmlBody);
+                returnVal = new ReturnImpl<Boolean>(true, "User Creation and Email Send Successful!");
+            } else {
+                returnVal = new ReturnImpl<Boolean>(humanCreateReturn.returnError(), "User Creation and Email Send FAILED!", false);
+            }
+        } catch (final Throwable t) {
+            returnVal = new ReturnImpl<Boolean>(t, "User Creation and Email Send FAILED!", true);
+        }
+        return returnVal;
+
+    }
+
+    public static final String getRandomPassword() {
+        return Long.toHexString(Double.doubleToLongBits(Math.random()));
     }
 
     /**
@@ -272,7 +363,6 @@ abstract public class Bate extends AbstractWidgetListener {
         }
     }
 
-
     private void generateFriendDeleteWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
         new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
             protected void init(final Object... initArgs) {
@@ -290,7 +380,6 @@ abstract public class Bate extends AbstractWidgetListener {
             }
         };
     }
-
 
     private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser, final SimpleName humansName) {
         new UserProperty(
@@ -325,7 +414,6 @@ abstract public class Bate extends AbstractWidgetListener {
                     private Integer mymyinvitedCount = myinvitedCount;
                     private Element mymybate = mybate;
 
-
                     @Override
                     protected void init(final ButtonCriteria buttonCriteria) {
                         inviter = (HumanId) buttonCriteria.getMetadata()[0];
@@ -342,7 +430,6 @@ abstract public class Bate extends AbstractWidgetListener {
                             private String myinvitersName = invitersName;
                             private Integer mymymyinvitedCount = mymyinvitedCount;
                             private Element mymymybate = mymybate;
-
 
                             @Override
                             public void handleEvent(final Event evt) {
@@ -385,95 +472,6 @@ abstract public class Bate extends AbstractWidgetListener {
 
             }
         };
-    }
-
-    /**
-     * Offline, implies the inviter is offline
-     *
-     * @param inviter
-     * @param invitee
-     * @return
-     */
-    final static public String getHTMLStringForOfflineFriendInvite(final String inviter, final String invitee) {
-        try {
-
-            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
-
-            $$static(Controller.Page.user_property_name, document).setTextContent(inviter);
-            $$static(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
-            $$static(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
-            $$static(Controller.Page.user_property_content, document).appendChild(
-                    document.importNode(
-                            ElementComposer.compose(
-                                    document.createElement(MarkupTag.DIV.toString())
-                            ).$ElementSetText(
-                                    "Hey! " + inviter + " has just invited you to I LIKE PLACES! " +
-                                            "The website is for meeting people you care at interesting places. " +
-                                            "In it, you can find interesting places and organize moments with your friends and family. " +
-                                            "You can join I Like Places only through an invite. " +
-                                            "Now that " + inviter + " has gotten you in, use the following link to access I Like Places. " +
-                                            URL + " . " +
-                                            PASSWORD_DETAILS + " " +
-                                            PASSWORD_ADVICE + " " +
-                                            "All the best and Have Fun! "
-                            ).getAsNode(),
-                            true)
-            );
-
-
-            return HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, document));
-        } catch (final Throwable e) {
-            throw LogNull.getRuntimeException(e);
-        }
-
-    }
-
-    final static public Return<Boolean> sendInviteToOfflineInvite(final String invitersName, final ImportedContact inviteee) {
-        Return<Boolean> returnVal;
-        try {
-            final String randomPassword = getRandomPassword();
-
-            final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                    new HumanId().setObjAsValid(inviteee.getEmail()),
-                    new Password(randomPassword),
-                    new Email(inviteee.getEmail()));
-
-            if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
-
-                UserIntroduction.createIntroData(new HumanId(inviteee.getEmail()));
-
-                final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                        .append(ServletLogin.Username, inviteee.getEmail(), true)
-                        .append(ServletLogin.Password,
-                                DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(inviteee.getEmail()))
-                                        .returnValue()
-                                        .getHumanAuthenticationHash())
-                        .get();
-
-
-                String htmlBody = getHTMLStringForOfflineFriendInvite(invitersName, inviteee.getFullName());
-
-                htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + "\"" + randomPassword + "\"" + "(without quotes)");
-                htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
-
-                final Return<Boolean> mailReturn = SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                        inviteee.getHumanId(),
-                        "Invitation from " + invitersName,
-                        htmlBody);
-                returnVal = new ReturnImpl<Boolean>(true, "User Creation and Email Send Successful!");
-            } else {
-                returnVal = new ReturnImpl<Boolean>(humanCreateReturn.returnError(), "User Creation and Email Send FAILED!", false);
-            }
-        } catch (final Throwable t) {
-            returnVal = new ReturnImpl<Boolean>(t, "User Creation and Email Send FAILED!", true);
-        }
-        return returnVal;
-
-    }
-
-    public static final String getRandomPassword() {
-        return Long.toHexString(Double.doubleToLongBits(Math.random()));
     }
 
 }

@@ -6,10 +6,12 @@ import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
+import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.Parameter;
 import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
 import ai.reaver.Return;
 import ai.scribble.*;
@@ -66,6 +68,21 @@ final public class ServletActivate extends HttpServlet {
     final PageFace organize = Page.Organize;
     final PageFace signup = Page.signup;
     private PageFace tribes = Page.Tribes;
+
+    public static String getActivateLink(final Email myemail) {
+        return new Parameter("http://www.ilikeplaces.com/" + "activate")
+                .append(ServletLogin.Username, myemail.getObj(), true)
+                .append(ServletLogin.Password,
+                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                .returnValue()
+                                .getHumanAuthenticationHash())
+                .append(NEXT, Page.Tribes.getURL())
+                .get();
+    }
+
+    public static String getRandomPassword() {
+        return Long.toHexString(Double.doubleToLongBits(Math.random()));
+    }
 
     // ------------------------ OVERRIDING METHODS ------------------------
 
