@@ -30,7 +30,7 @@ import java.net.URLEncoder;
  * Date: 11/27/11
  * Time: 8:07 AM
  */
-public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> implements Controller.Ids {
+public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 // ------------------------------ FIELDS ------------------------------
 
 

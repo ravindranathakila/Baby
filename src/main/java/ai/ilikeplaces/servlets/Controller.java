@@ -1853,7 +1853,7 @@ final public class
 
             inhs__.registerItsNatDocFragmentTemplate(teachMoment.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(teachMoment));
 
-            inhs__.registerItsNatDocFragmentTemplate(subscribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(subscribe));
+            inhs__.registerItsNatDocFragmentTemplate(Page.Subscribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(Page.Subscribe));
 
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
 
@@ -2162,10 +2162,5 @@ final public class
                 throw new SecurityException("SORRY! THIS KEY IS ALREADY IN REGISTRY:" + id_);
             }
         }
-    }
-
-
-    public interface Ids {
-        public Enum[] values();
     }
 }
