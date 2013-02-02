@@ -1,10 +1,6 @@
 package ai.ilikeplaces.logic.verify;
 
 import ai.ilikeplaces.logic.crud.HumanCRUDHumanLocal;
-import ai.ilikeplaces.management.MemorySafe;
-import ai.ilikeplaces.management.MemoryWarningSystem;
-import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.util.Loggers;
 import ai.scribble.License;
 import ai.scribble._note;
 
@@ -35,25 +31,25 @@ public class IntegrityTester implements IntegrityTesterLocal {
     @PostConstruct
     public void postConstruct() {
         memcLocal_.logTime();
-
-        MemoryWarningSystem.setPercentageUsageThreshold(Double.parseDouble(RBGet.globalConfig.getString("MEMORY_THRESHOLD")));
-        MemoryWarningSystem.setPercentageUsageNormal(Double.parseDouble(RBGet.globalConfig.getString("MEMORY_NORMAL")));
-        MemorySafe.allocate(Runtime.getRuntime().freeMemory());
-
-        MemoryWarningSystem mws = new MemoryWarningSystem();
-        mws.addListener(new MemoryWarningSystem.MemoryListener() {
-
-            public void memoryUsageLow(long usedMemory, long maxMemory) {
-                Loggers.STATUS.warn("MEMORY USAGE TOO HIGH!!!");
-                MemorySafe.deallocate();
-                Memc.sendAlertMail("MEMORY USAGE TOO HIGH!!!");
-            }
-
-            public void memoryUsageNormal(long usedMemory, long maxMemory) {
-                Loggers.STATUS.info("Memory usage back to normal.");
-                MemorySafe.allocate(maxMemory - usedMemory);
-            }
-        });
+//
+//        MemoryWarningSystem.setPercentageUsageThreshold(Double.parseDouble(RBGet.globalConfig.getString("MEMORY_THRESHOLD")));
+//        MemoryWarningSystem.setPercentageUsageNormal(Double.parseDouble(RBGet.globalConfig.getString("MEMORY_NORMAL")));
+//        MemorySafe.allocate(Runtime.getRuntime().freeMemory());
+//
+//        MemoryWarningSystem mws = new MemoryWarningSystem();
+//        mws.addListener(new MemoryWarningSystem.MemoryListener() {
+//
+//            public void memoryUsageLow(long usedMemory, long maxMemory) {
+//                Loggers.STATUS.warn("MEMORY USAGE TOO HIGH!!!");
+//                MemorySafe.deallocate();
+//                Memc.sendAlertMail("MEMORY USAGE TOO HIGH!!!");
+//            }
+//
+//            public void memoryUsageNormal(long usedMemory, long maxMemory) {
+//                Loggers.STATUS.info("Memory usage back to normal.");
+//                MemorySafe.allocate(maxMemory - usedMemory);
+//            }
+//        });
     }
 
     @Override

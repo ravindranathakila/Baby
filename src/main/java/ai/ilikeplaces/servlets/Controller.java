@@ -360,7 +360,7 @@ final public class
             }
         },
 
-        Subscribe("ai/ilikeplaces/widgets/subscribe/subscribe.xhtml",
+        Subscribe(ai.ilikeplaces.logic.Listeners.widgets.subscribe.Subscribe.class,
                 ai.ilikeplaces.logic.Listeners.widgets.subscribe.Subscribe.SubscribeIds.values()
         ) {
             @Override
@@ -1630,13 +1630,36 @@ final public class
 /*End of common definitions*/
 
 
-        private Page(final String path__, final Object... ids__) {
+        private Page(final Class widget, final Enum[] ids) {
             try {
-                Loggers.DEBUG.debug("HELLO, ENUM VAL:" + this.name());
-                Loggers.DEBUG.debug("HELLO, ENUM PATH:" + path__);
-                Loggers.DEBUG.debug("HELLO, ENUM IDS:" + Arrays.toString(ids__));
-                Loggers.DEBUG.debug("HELLO, ADDING ELEMENTS TO PRETTYURL MAP");
-                PrettyURLMap_.put(this, path__);
+                Loggers.INFO.info("HELLO, USING CLASS APPROACH ON:" + this.name());
+                Loggers.INFO.info("HELLO, ENUM VAL:" + widget.getName());
+                Loggers.INFO.info("HELLO, ENUM PATH:" + widget);
+                Loggers.INFO.info("HELLO, ENUM IDS:" + Arrays.toString(ids));
+                Loggers.INFO.info("HELLO, ADDING ELEMENTS TO PRETTYURL MAP");
+                final String path__ = widget.getName().replaceAll("\\.", "/") + ".xhtml";
+                Loggers.INFO.info("HELLO, REALIZED PATH FOR WIDGET AS:" + path__);
+
+                PrettyURLMap_.put(this, path__); //ai/ilikeplaces/widgets/DownTownFlow.xhtml
+                Loggers.DEBUG.debug("HELLO, ADDING ELEMENTS TO ALLPAGEELEMENTS");
+                PutAllPageElementIds(ids);
+                Loggers.DEBUG.debug("HELLO, ADDING ELEMENTS TO ALLPAGEELEMENTS BY PAGE");
+                PutAllPageElementIdsByPage(this, ids);
+            } catch (
+                    @WARNING(warning = "Don't remove this catch. You'll not see any duplicate id exceptions etc. anywhere if you do so.")
+                    final Exception e) {
+                Loggers.EXCEPTION.error("SORRY! SOMETHING WENT WRONG DURING INITIALIZATION. THIS SHOULD EXPECTED TO BE FATAL.", e);
+            }
+        }
+
+        private Page(final String path__, final Object... ids__) {//NEVER USE VARARGS!
+            try {
+                Loggers.INFO.info("HELLO, USING STRING APPROACH ON:" + this.name());
+                Loggers.INFO.info("HELLO, ENUM VAL:" + this.name());
+                Loggers.INFO.info("HELLO, ENUM PATH:" + path__);
+                Loggers.INFO.info("HELLO, ENUM IDS:" + Arrays.toString(ids__));
+                Loggers.INFO.info("HELLO, ADDING ELEMENTS TO PRETTYURL MAP");
+                PrettyURLMap_.put(this, path__); //ai/ilikeplaces/widgets/DownTownFlow.xhtml
                 Loggers.DEBUG.debug("HELLO, ADDING ELEMENTS TO ALLPAGEELEMENTS");
                 PutAllPageElementIds(ids__);
                 Loggers.DEBUG.debug("HELLO, ADDING ELEMENTS TO ALLPAGEELEMENTS BY PAGE");
@@ -2139,5 +2162,10 @@ final public class
                 throw new SecurityException("SORRY! THIS KEY IS ALREADY IN REGISTRY:" + id_);
             }
         }
+    }
+
+
+    public interface Ids {
+        public Enum[] values();
     }
 }

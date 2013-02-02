@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.Listeners.widgets.subscribe;
 
+import ai.ilikeplaces.entities.WoeidSubscribe;
 import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
@@ -29,7 +30,7 @@ import java.net.URLEncoder;
  * Date: 11/27/11
  * Time: 8:07 AM
  */
-public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
+public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> implements Controller.Ids {
 // ------------------------------ FIELDS ------------------------------
 
 
@@ -42,6 +43,11 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
     private String woehint;
     private String placeName;
     private String placeDetails;
+
+    @Override
+    public Enum[] values() {
+        return SubscribeIds.values();
+    }
 
 // -------------------------- ENUMERATIONS --------------------------
 
@@ -135,8 +141,12 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 
                         final Email myemail = criteria.getSignupCriteria().getEmail();
 
+
                         if (myemail.valid()) {
                             if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
+                                final WoeidSubscribe _woeidSubscribe = WoeidSubscribe.newBuilder().setEmailId(myemail.getObjectAsValid()).setWoeid(0).build();
+                                Loggers.debug(_woeidSubscribe.toString());
+
                                 final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
                                 final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(

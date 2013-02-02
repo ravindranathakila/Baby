@@ -30,6 +30,9 @@ cp ../upload/ROOT.war ../webapps/
 ./startup.sh
 
 
+If you see so many TomEE error messages on startup which indicates manager and tomee is not starting up and also a @Path annotation, this means hbase hadoop is in the classpath. Remove it.
+
+
 
 
 
