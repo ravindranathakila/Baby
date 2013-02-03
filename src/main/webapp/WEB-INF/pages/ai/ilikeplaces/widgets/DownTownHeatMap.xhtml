@@ -536,7 +536,9 @@ function initialize_DownTownHeatMap_map() {
 
     GAIA.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(document.getElementById('mapCustomControlsSolidActionsWidget'));
 
-    GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsSignupForm'));
+//    GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsSignupForm'));
+
+    GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsSubscribeForm'));
 
     GAIA.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(document.getElementById('mapCustomControlsBackTopTop'));
 
@@ -828,6 +830,13 @@ function setMapToLocation(value) {
     </div>
 </div>
 <div style="display:none;">
+<div id="mapCustomControlsSubscribeForm" style="width:30.9%;display:block;">
+    <div id="DownTownHeatMapSubscribeWidget" class="use100">
+        <a href="#" onclick="$('.AarrrSubscribe').show();$('.AarrrDownTownHeatMap').hide();$('.AarrrJuice').hide();">
+            Subscribe for Events In This Area
+        </a>
+    </div>
+</div>
 <div id="mapCustomControlsSignupForm" style="width:30.9%;display:block;">
     <div id="DownTownHeatMapSignupWidget" class="use90 use5p use5a" style="padding:4px solid #dddddd;">
         <div class="use80 use10a use10p">

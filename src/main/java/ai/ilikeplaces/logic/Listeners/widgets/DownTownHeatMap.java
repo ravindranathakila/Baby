@@ -48,6 +48,7 @@ import java.util.*;
 public class DownTownHeatMap extends AbstractWidgetListener {
 // ------------------------------ FIELDS ------------------------------
 
+    public static final String ERROR_PROCESSING_YAHOO_UPCOMING_DATA = "ERROR PROCESSING YAHOO UPCOMING DATA!";
     private static final String WOEIDUPDATE_TOKEN = "WOEIDUPDATE_TOKEN";
     private static final String OPEN_BRACKET = "(";
     private static final String CLOSE_BRACKET = ")";
@@ -58,7 +59,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String QUOTE = "\"";
     private static final String DownTownHeatMapWOEIDUpdate =
             "\nDownTownHeatMapWOEIDUpdate = function" + OPEN_BRACKET + "lat,lng" + CLOSE_BRACKET + OPEN_BRACE + "document.getElementById(" + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".value = " + SINGLE_QUOTE + "' + lat + ',' + lng" + SEMI_COLON + " document.getElementById" + OPEN_BRACKET + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".focus" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + " return document.getElementById(" + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + "\n";
-
     private static final String BBUPDATE_TOKEN = "BBUPDATE_TOKEN";
     private static final String DownTownHeatMapBBUpdate =
             "\nDownTownHeatMapBBUpdate = function" + OPEN_BRACKET + "swlat,swlng,nelat,nelng" + CLOSE_BRACKET + OPEN_BRACE + "document.getElementById(" + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".value = " + SINGLE_QUOTE + "' + swlat + ',' + swlng + ',' + nelat + ',' + nelng" + SEMI_COLON + " document.getElementById" + OPEN_BRACKET + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".focus" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + " return document.getElementById(" + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + "\n";
@@ -70,7 +70,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String ICON_GET_COLORED_MARKER_WITH_INTENSITY = "icon" + COLON + " getColoredMarkerWithIntensity" + OPEN_BRACKET;
     private static final String ICON_GET_MY_COLORED_MARKER_WITH_INTENSITY = "icon" + COLON + " getMyColoredMarkerWithIntensity" + OPEN_BRACKET;
     private static final String X2 = CLOSE_BRACKET + "  " + CLOSE_BRACE + "))" + SEMI_COLON;
-
     private static final com.google.places.api.impl.ClientFactory GOOGLE_API_CLIENT_FACTORY = Modules.getModules().getGooglePlacesAPIFactory();
     private static final String LOCATION_JSON_OBJ_KEY = "location";
     private static final String LOCATION = LOCATION_JSON_OBJ_KEY;
@@ -141,13 +140,22 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     private static final String APOSTROPHIE = "'";
     private static final String JS_ESCAPTED_APOSTROPHIE = "\'";
     private static final String TITLE = "title";
-    public static final String ERROR_PROCESSING_YAHOO_UPCOMING_DATA = "ERROR PROCESSING YAHOO UPCOMING DATA!";
-
-
     private Element elementToUpdateWithWOEID;
     private HumanId humanId;
     private Email email;
     private Password password;
+
+
+    public static enum DownTownHeatMapIds implements WidgetIds {
+        DownTownHeatMapWOEID,
+        DownTownHeatMapBB,
+        DownTownHeatMapSignupWidget,
+        DownTownHeatMapSubscribeWidget,
+        DownTownHeatMapSignupEmail,
+        DownTownHeatMapSignupPassword,
+        DownTownHeatMapSignupNotifications,
+        DownTownHeatMapSignupButton
+    }
 
 // --------------------------- CONSTRUCTORS ---------------------------
 
@@ -161,6 +169,15 @@ public class DownTownHeatMap extends AbstractWidgetListener {
         super(request__, Controller.Page.DownTownHeatMap, appendToElement__, elementToUpdateWithWOEID, humanId__);
     }
 
+    public static JSONObject getGooglePlaces(final double latitude, final double longitude, final long radiusInMeters, final String placeTypes) {
+        final Map<String, String> params = new HashMap<String, String>();
+        params.put(LOCATION, latitude + "," + longitude);
+        params.put(RADIUS, Double.toString(radiusInMeters));
+        params.put(PLACE_TYPES, placeTypes);
+        params.put(SENSOR, TRUE);
+        return GOOGLE_API_CLIENT_FACTORY.getInstance(GOOGLE_PLACES_JSON_ENDPOINT).get("", params);
+    }
+
     @Override
     protected void init(final Object... initArgs) {
         elementToUpdateWithWOEID = (Element) initArgs[0];
@@ -168,18 +185,18 @@ public class DownTownHeatMap extends AbstractWidgetListener {
         email = new Email("");
         password = new Password("");
 
-        $$displayNone($$(Controller.Page.DownTownHeatMapSignupWidget));
+        $$displayNone($$(DownTownHeatMapIds.DownTownHeatMapSignupWidget));
 
         itsNatDocument_.addCodeToSend(
                 DownTownHeatMapWOEIDUpdate.replace(
                         WOEIDUPDATE_TOKEN,
-                        $$(Controller.Page.DownTownHeatMapWOEID).getAttribute(MarkupTag.GENERIC.id()))
+                        $$(DownTownHeatMapIds.DownTownHeatMapWOEID).getAttribute(MarkupTag.GENERIC.id()))
         );
 
         itsNatDocument_.addCodeToSend(
                 DownTownHeatMapBBUpdate.replace(
                         BBUPDATE_TOKEN,
-                        $$(Controller.Page.DownTownHeatMapBB).getAttribute(MarkupTag.GENERIC.id()))
+                        $$(DownTownHeatMapIds.DownTownHeatMapBB).getAttribute(MarkupTag.GENERIC.id()))
         );
     }
 
@@ -195,7 +212,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
         UCSignup:
         {
-            itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupEmail), EventType.BLUR.toString(), new EventListener() {
+            itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapSignupEmail), EventType.BLUR.toString(), new EventListener() {
                 final Validator v = new Validator();
                 final Email myemail = email;
 
@@ -203,13 +220,13 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 public void handleEvent(final Event evt_) {
                     myemail.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
                     if (myemail.validate(v) == 0) {
-                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email Valid!");
+                        $$(DownTownHeatMapIds.DownTownHeatMapSignupNotifications).setTextContent("Email Valid!");
                     } else {
-                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
+                        $$(DownTownHeatMapIds.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
                     }
                 }
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
-            itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupPassword), EventType.BLUR.toString(), new EventListener() {
+            itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapSignupPassword), EventType.BLUR.toString(), new EventListener() {
                 final Validator v = new Validator();
                 final Password mypassword = password;
 
@@ -217,14 +234,14 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 public void handleEvent(final Event evt_) {
                     mypassword.setObj(((Element) evt_.getCurrentTarget()).getAttribute(MarkupTag.INPUT.value()));
                     if (mypassword.validate(v) == 0) {
-                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Password Valid!");
+                        $$(DownTownHeatMapIds.DownTownHeatMapSignupNotifications).setTextContent("Password Valid!");
                     } else {
-                        $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Password INVALID!");
+                        $$(DownTownHeatMapIds.DownTownHeatMapSignupNotifications).setTextContent("Password INVALID!");
                     }
                 }
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
-            itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapSignupButton), EventType.CLICK.toString(), new EventListener() {
+            itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapSignupButton), EventType.CLICK.toString(), new EventListener() {
                 final Validator v = new Validator();
                 final Email myemail = email;
                 final Password mypassword = password;
@@ -264,7 +281,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                                 $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                             } else {
-                                $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
+                                $$(DownTownHeatMapIds.DownTownHeatMapSignupNotifications).setTextContent("Email INVALID!");
                             }
 
                             /*final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
@@ -291,7 +308,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                                 $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                             }*/
                         } else {
-                            $$(Controller.Page.DownTownHeatMapSignupNotifications).setTextContent("This email is TAKEN!:(");
+                            $$(DownTownHeatMapIds.DownTownHeatMapSignupNotifications).setTextContent("This email is TAKEN!:(");
                         }
                     } else {
                         //Ignored as the individual validators would've reported the error by now
@@ -300,7 +317,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
         }
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapWOEID), EventType.BLUR.toString(), new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapWOEID), EventType.BLUR.toString(), new EventListener() {
             final Validator v = new Validator();
             RefObj<String> woeid;
 
@@ -316,7 +333,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
 
 
-        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.DownTownHeatMapBB), EventType.BLUR.toString(), new EventListener() {
+        itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapBB), EventType.BLUR.toString(), new EventListener() {
             final Validator v = new Validator();
             final GeoCoord geoCoordSW = new GeoCoord();
             final GeoCoord geoCoordNE = new GeoCoord();
@@ -544,15 +561,6 @@ public class DownTownHeatMap extends AbstractWidgetListener {
                 }
             }
         }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
-    }
-
-    public static JSONObject getGooglePlaces(final double latitude, final double longitude, final long radiusInMeters, final String placeTypes) {
-        final Map<String, String> params = new HashMap<String, String>();
-        params.put(LOCATION, latitude + "," + longitude);
-        params.put(RADIUS, Double.toString(radiusInMeters));
-        params.put(PLACE_TYPES, placeTypes);
-        params.put(SENSOR, TRUE);
-        return GOOGLE_API_CLIENT_FACTORY.getInstance(GOOGLE_PLACES_JSON_ENDPOINT).get("", params);
     }
 
     private void generateMarker(Double latitude, Double longitude, String commonName, long hits) {

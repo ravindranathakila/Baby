@@ -678,13 +678,7 @@ final public class
 
 
         DownTownHeatMap("ai/ilikeplaces/widgets/DownTownHeatMap.xhtml",
-                Controller.Page.DownTownHeatMapWOEID,
-                Controller.Page.DownTownHeatMapBB,
-                Controller.Page.DownTownHeatMapSignupWidget,
-                Controller.Page.DownTownHeatMapSignupEmail,
-                Controller.Page.DownTownHeatMapSignupPassword,
-                Controller.Page.DownTownHeatMapSignupNotifications,
-                Controller.Page.DownTownHeatMapSignupButton
+                ai.ilikeplaces.logic.Listeners.widgets.DownTownHeatMap.DownTownHeatMapIds.values()
         ) {
             @Override
             public String getURL() {
@@ -1099,6 +1093,7 @@ final public class
                 "ai/ilikeplaces/AARRR.xhtml",
                 Controller.Page.AarrrDownTownHeatMap,
                 Controller.Page.AarrrJuice,
+                Controller.Page.AarrrSubscribe,
                 Controller.Page.AarrrWOEID,
                 Controller.Page.AarrrHeader
         ) {
@@ -1360,15 +1355,6 @@ final public class
         /*WOIEDGrabber IDs*/
         final static public String WOEIDGrabberWOEID = "WOEIDGrabberWOEID";
 
-        /*DownTownHeatMap IDs*/
-        final static public String DownTownHeatMapWOEID = "DownTownHeatMapWOEID";
-        final static public String DownTownHeatMapBB = "DownTownHeatMapBB";
-        final static public String DownTownHeatMapSignupWidget = "DownTownHeatMapSignupWidget";
-        final static public String DownTownHeatMapSignupEmail = "DownTownHeatMapSignupEmail";
-        final static public String DownTownHeatMapSignupPassword = "DownTownHeatMapSignupPassword";
-        final static public String DownTownHeatMapSignupNotifications = "DownTownHeatMapSignupNotifications";
-        final static public String DownTownHeatMapSignupButton = "DownTownHeatMapSignupButton";
-
         /*FindFriend IDs*/
         final static public String friendFindSearchTextInput = "friendFindSearchTextInput";
         final static public String friendFindSearchButtonInput = "friendFindSearchButtonInput";
@@ -1519,6 +1505,7 @@ final public class
         /*Aarrr Specific IDs*/
         final static public String AarrrDownTownHeatMap = "AarrrDownTownHeatMap";
         final static public String AarrrJuice = "AarrrJuice";
+        final static public String AarrrSubscribe = "AarrrSubscribe";
         final static public String AarrrWOEID = "AarrrWOEID";
         final static public String AarrrHeader = "AarrrHeader";
 

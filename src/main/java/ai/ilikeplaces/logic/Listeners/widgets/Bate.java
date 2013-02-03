@@ -112,15 +112,14 @@ abstract public class Bate extends AbstractWidgetListener {
                             ElementComposer.compose(
                                     document.createElement(MarkupTag.DIV.toString())
                             ).$ElementSetText(
-                                    "Hey! " + inviter + " has just invited you to I LIKE PLACES! " +
-                                            "The website is for meeting people you care at interesting places. " +
-                                            "In it, you can find interesting places and organize moments with your friends and family. " +
-                                            "You can join I Like Places only through an invite. " +
-                                            "Now that " + inviter + " has gotten you in, use the following link to access I Like Places. " +
+                                    "It seems " + inviter + " has just invited you! " +
+                                            "We've given you free access to www.ILikePlaces.com. " +
+                                            "Now you can find exciting events around you and share them with your friends and family, privately!" +
+                                            "To activate, click the link below: " +
                                             URL + " . " +
                                             PASSWORD_DETAILS + " " +
                                             PASSWORD_ADVICE + " " +
-                                            "All the best and Have Fun! "
+                                            "All the best, take care and see ya soon! "
                             ).getAsNode(),
                             true)
             );
@@ -159,7 +158,7 @@ abstract public class Bate extends AbstractWidgetListener {
                 String htmlBody = getHTMLStringForOfflineFriendInvite(invitersName, inviteee.getFullName());
 
                 htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + "\"" + randomPassword + "\"" + "(without quotes)");
+                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your password is " + "\"" + randomPassword + "\"" + "(without quotes)");
                 htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
 
                 final Return<Boolean> mailReturn = SendMail.getSendMailLocal().sendAsHTMLAsynchronously(

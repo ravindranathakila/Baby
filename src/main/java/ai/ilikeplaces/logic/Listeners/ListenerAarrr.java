@@ -2,6 +2,8 @@ package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
+import ai.ilikeplaces.logic.Listeners.widgets.subscribe.Subscribe;
+import ai.ilikeplaces.logic.Listeners.widgets.subscribe.SubscribeCriteria;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.AbstractListener;
@@ -58,6 +60,8 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                 };
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
+
+                new Subscribe(request__, new SubscribeCriteria(), $(Controller.Page.AarrrSubscribe));
 
                 if (getUsername() != null) {
                     displayNone($(Controller.Page.AarrrJuice));

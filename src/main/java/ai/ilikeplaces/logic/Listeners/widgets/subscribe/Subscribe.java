@@ -1,7 +1,9 @@
 package ai.ilikeplaces.logic.Listeners.widgets.subscribe;
 
+import ai.ilikeplaces.entities.Subscriber;
 import ai.ilikeplaces.entities.WoeidSubscribe;
 import ai.ilikeplaces.entities.etc.HumanId;
+import ai.ilikeplaces.hbase.AvroCreate;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
@@ -21,6 +23,7 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.html.HTMLDocument;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -44,24 +47,8 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
     private String placeName;
     private String placeDetails;
 
-    @Override
-    public Enum[] values() {
-        return SubscribeIds.values();
-    }
 
 // -------------------------- ENUMERATIONS --------------------------
-
-    public static enum SubscribeIds implements WidgetIds {
-        subscribe_widget,
-        subscribe_noti,
-        subscribe_signed_in,
-        subscribe_signed_out,
-        subscribe_signup_section,
-        subscribe_signup_input,
-        subscribe_signup_click,
-    }
-
-// --------------------------- CONSTRUCTORS ---------------------------
 
     /**
      * @param request__
@@ -71,6 +58,25 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
     public Subscribe(final ItsNatServletRequest request__, final SubscribeCriteria subscribeCriteria, final Element appendToElement__) {
 
         super(request__, Controller.Page.Subscribe, subscribeCriteria, appendToElement__);
+    }
+
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    public static String getCurrentUrl(final HttpServletRequest req) {
+        final String contextPath = req.getContextPath();   // /mywebapp
+        final String servletPath = req.getServletPath();   // /servlet/MyServlet
+        final String pathInfo = req.getPathInfo();         // /a/b;c=123
+        final String queryString = req.getQueryString();          // d=789
+
+        // Reconstruct original requesting URL
+        String url = contextPath + servletPath;
+        if (pathInfo != null) {
+            url += pathInfo;
+        }
+        if (queryString != null) {
+            url += "?" + queryString;
+        }
+        return url;
     }
 
 // ------------------------ OVERRIDING METHODS ------------------------
@@ -154,6 +160,12 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
                                         new Password(randomPassword),
                                         myemail);
 
+                                try {
+                                    AvroCreate.writeData(Subscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).build());
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+
                                 if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
                                     UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
 
@@ -215,20 +227,13 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
         );
     }
 
-    public static String getCurrentUrl(final HttpServletRequest req) {
-        final String contextPath = req.getContextPath();   // /mywebapp
-        final String servletPath = req.getServletPath();   // /servlet/MyServlet
-        final String pathInfo = req.getPathInfo();         // /a/b;c=123
-        final String queryString = req.getQueryString();          // d=789
-
-        // Reconstruct original requesting URL
-        String url = contextPath + servletPath;
-        if (pathInfo != null) {
-            url += pathInfo;
-        }
-        if (queryString != null) {
-            url += "?" + queryString;
-        }
-        return url;
+    public static enum SubscribeIds implements WidgetIds {
+        subscribe_widget,
+        subscribe_noti,
+        subscribe_signed_in,
+        subscribe_signed_out,
+        subscribe_signup_section,
+        subscribe_signup_input,
+        subscribe_signup_click,
     }
 }
