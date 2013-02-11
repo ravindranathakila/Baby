@@ -37,12 +37,12 @@ import org.slf4j.LoggerFactory;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 final public class Loggers {
-    private static final String NULL = "null";
-    private static final UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = new UnsupportedOperationException("Static usage only");
-    private static final String CAUSED = " caused ";
+// ------------------------------ FIELDS ------------------------------
 
     final static public String EMBED = "{}";
+
     final static public String DONE = "done. ";
+
     final static public String FAILED = "FAILED! ";
 
     /**
@@ -50,26 +50,18 @@ final public class Loggers {
      * bring in unwanted lines. Here for mail, I used mds to imply mail delivery system
      */
     final static public String CODE_GFG = "[GFG]";//Code for Generic File Grabber servlet
+
     final static public String CODE_MEMC = "[MEMC]";//Code for Memc
+
     final static public String CODE_MAIL = "[MDS]";//Code to indicate mail delivery system
+
     final static public String CODE_HC = "[HC]";//Code to indicate Hazelcast
 
-    public enum LEVEL {
-        DEBUG,
-        INFO,
-        WARN,
-        ERROR,
-        SERVER_STATUS,
-        USER,
-        USER_EXCEPTION,
-        NON_USER,
-        FAILED_SIGNUPS,
-        FAILED_LOGINS
-    }
+    final static public String CODE_INIT = "[INIT]";//Code to indicate construction
 
-    private Loggers() {
-        throw UNSUPPORTED_OPERATION_EXCEPTION;
-    }
+    final static public String CODE_CONF = "[CONF]";//Code to indicate configuration
+
+    final static public String CODE_INVOKE = "[INVOKE]";//Code to indicate invokation
 
     /**
      * For the purpose of logging user activity
@@ -86,37 +78,21 @@ final public class Loggers {
      */
     final static public Logger FAILED_SIGNUPS = LoggerFactory.getLogger("FAILED_SIGNUPS");
 
-
     /**
      * For the purpose of logging failed logins
      */
     final static public Logger FAILED_LOGINS = LoggerFactory.getLogger("FAILED_LOGINS");
-
 
     /**
      * Exceptions and Errors in one logger is easy for monitoring
      */
     final static public Logger ERROR = LoggerFactory.getLogger("EXCEPTION");
 
-    final static public void error(final String message, final Throwable throwable) {
-        ERROR.error(message, throwable);
-    }
-
-    final static public void error(final String message) {
-        ERROR.error(message);
-    }
-
-
     /**
      * Exceptions and Errors in one logger is easy for monitoring
      * DO NOT ASSIGN THIS TO A NEW LOGGER. POINT TO {@link #ERROR ERROR} INSTEAD.
      */
     final static public Logger EXCEPTION = ERROR;
-
-    final static public void exception(final String message, final Exception exception) {
-        EXCEPTION.error(message, exception);
-    }
-
 
     /**
      * Log server status/performance logs here
@@ -135,23 +111,59 @@ final public class Loggers {
      */
     final static public Logger DEBUG = LoggerFactory.getLogger("DEBUG");
 
-    final static public void debug(final String message) {
-        DEBUG.debug(message);
-    }
-
     /**
      * Just for ease of user instead of creating loggers everywhere
      */
     final static public Logger INFO = LoggerFactory.getLogger("INFO");
 
-    final static public void info(final String message) {
-        INFO.info(message);
-    }
-
     /**
      * Just for ease of user instead of creating loggers everywhere
      */
     final static public Logger WARN = LoggerFactory.getLogger("WARN");
+
+    private static final String NULL = "null";
+
+    private static final UnsupportedOperationException UNSUPPORTED_OPERATION_EXCEPTION = new UnsupportedOperationException("Static usage only");
+
+    private static final String CAUSED = " caused ";
+
+// -------------------------- STATIC METHODS --------------------------
+
+    private Loggers() {
+        throw UNSUPPORTED_OPERATION_EXCEPTION;
+    }
+
+    final static public void error(final String message) {
+        ERROR.error(message);
+    }
+
+    final static public void error(final String message, final Throwable throwable) {
+        ERROR.error(message, throwable);
+    }
+
+    final static public void exception(final String message, final Exception exception) {
+        EXCEPTION.error(message, exception);
+    }
+
+    final static public void debug(final String message) {
+        DEBUG.debug(message);
+    }
+
+    final static public void constructed(final Object __object) {
+        DEBUG.debug(CODE_INIT + __object.toString());
+    }
+
+    final static public void configured(final Object __object) {
+        DEBUG.debug(CODE_INVOKE + __object.toString());
+    }
+
+    final static public void invoked(final Object __object) {
+        DEBUG.debug(CODE_INVOKE + __object.toString());
+    }
+
+    final static public void info(final String message) {
+        INFO.info(message);
+    }
 
     final static public void warn(final String message) {
         WARN.warn(message);
@@ -172,50 +184,6 @@ final public class Loggers {
      */
     static public void finalized(final String msg) {
         //DEBUG.debug(msg);
-    }
-
-    /**
-     * Note that in the case of exception, the object will be/should be able to be,
-     * cast to {@link Throwable}
-     *
-     * @param level
-     * @param message
-     * @param obj
-     */
-    static public void log(final LEVEL level, final String message, final Object obj) {
-        switch (level) {
-            case DEBUG:
-                Loggers.DEBUG.debug(message, obj);
-                break;
-            case INFO:
-                Loggers.INFO.info(message, obj);
-                break;
-            case WARN:
-                Loggers.WARN.warn(message, obj);
-                break;
-            case ERROR:
-                Loggers.EXCEPTION.error(message, obj instanceof Throwable ? (Throwable) obj : new Throwable(obj.toString()));
-                break;
-            case SERVER_STATUS:
-                Loggers.STATUS.info(message, obj);
-                break;
-            case USER:
-                Loggers.USER.info(message, obj);
-                break;
-            case USER_EXCEPTION:
-                Loggers.USER_EXCEPTION.error(message, obj instanceof Throwable ? (Throwable) obj : new Throwable(obj.toString()));
-                break;
-            case NON_USER:
-                Loggers.NON_USER.info(message, obj);
-                break;
-            case FAILED_SIGNUPS:
-                Loggers.FAILED_SIGNUPS.info(message);
-                break;
-            default:
-                Loggers.DEBUG.debug(
-                        message + "(WARNING:MSG DEFAULTED DUE TO INAPPROPRIATE USAGE OF THIS METHOD",
-                        obj);
-        }
     }
 
     /**
@@ -261,5 +229,66 @@ final public class Loggers {
                 Loggers.DEBUG.debug(
                         message + "(WARNING:MSG DEFAULTED DUE TO INAPPROPRIATE USAGE OF THIS METHOD");
         }
+    }
+
+// --------------------------- CONSTRUCTORS ---------------------------
+
+    /**
+     * Note that in the case of exception, the object will be/should be able to be,
+     * cast to {@link Throwable}
+     *
+     * @param level
+     * @param message
+     * @param obj
+     */
+    static public void log(final LEVEL level, final String message, final Object obj) {
+        switch (level) {
+            case DEBUG:
+                Loggers.DEBUG.debug(message, obj);
+                break;
+            case INFO:
+                Loggers.INFO.info(message, obj);
+                break;
+            case WARN:
+                Loggers.WARN.warn(message, obj);
+                break;
+            case ERROR:
+                Loggers.EXCEPTION.error(message, obj instanceof Throwable ? (Throwable) obj : new Throwable(obj.toString()));
+                break;
+            case SERVER_STATUS:
+                Loggers.STATUS.info(message, obj);
+                break;
+            case USER:
+                Loggers.USER.info(message, obj);
+                break;
+            case USER_EXCEPTION:
+                Loggers.USER_EXCEPTION.error(message, obj instanceof Throwable ? (Throwable) obj : new Throwable(obj.toString()));
+                break;
+            case NON_USER:
+                Loggers.NON_USER.info(message, obj);
+                break;
+            case FAILED_SIGNUPS:
+                Loggers.FAILED_SIGNUPS.info(message);
+                break;
+            default:
+                Loggers.DEBUG.debug(
+                        message + "(WARNING:MSG DEFAULTED DUE TO INAPPROPRIATE USAGE OF THIS METHOD",
+                        obj);
+        }
+    }
+
+// -------------------------- ENUMERATIONS --------------------------
+
+    public enum LEVEL {
+        DEBUG,
+        INFO,
+        WARN,
+        ERROR,
+        SERVER_STATUS,
+        USER,
+        USER_EXCEPTION,
+        NON_USER,
+        FAILED_SIGNUPS,
+        FAILED_LOGINS
     }
 }

@@ -31,6 +31,10 @@
             <version>2.0.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-core</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.apache.hbase</groupId>
                     <artifactId>hbase</artifactId>
                 </exclusion>
@@ -241,12 +245,6 @@
         <!--End Of Rackspace Cloud Files Dependencies-->
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>net.sf.oval</groupId>
             <artifactId>oval</artifactId>
             <version>1.4</version>
@@ -349,22 +347,46 @@
         </dependency>
         <!--End of Avro Dependencies-->
 
-        <!--HBase as client dependencies -->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.hbase</groupId>-->
+        <!--<artifactId>hbase</artifactId>-->
+        <!--<version>0.92.1</version>-->
+        <!--<scope>system</scope>-->
+        <!--<systemPath>${catalina.home}/lib/hbase-0.92.1.jar</systemPath>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.hadoop</groupId>-->
+        <!--<artifactId>hadoop-core</artifactId>-->
+        <!--<version>1.0.2</version>-->
+        <!--<scope>system</scope>-->
+        <!--<systemPath>${catalina.home}/lib/hadoop-core-1.0.0.jar</systemPath>-->
+        <!--</dependency>-->
+
+
+        <!--GEO Hash Dependencies-->
         <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase</artifactId>
-            <version>0.92.1</version>
-            <scope>provided</scope>
-            <!--Provided in TomEE lib since if not TomEE encounters strange errors-->
+            <groupId>org.clojars.ndimiduk</groupId>
+            <artifactId>geohash-java</artifactId>
+            <version>1.0.6</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-core</artifactId>
-            <version>1.0.2</version>
-            <scope>provided</scope>
-            <!--Provided in TomEE lib since if not TomEE encounters strange errors-->
+            <groupId>com.vividsolutions</groupId>
+            <artifactId>jts</artifactId>
+            <version>1.12</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>xerces</groupId>
+                    <artifactId>xercesImpl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <!--HBase as client dependencies -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>13.0.1</version>
+        </dependency>
+        <!-- End of GEO Hash Dependencies-->
+
 
         <dependency>
             <groupId>org.apache.openjpa</groupId>
@@ -516,6 +538,11 @@
         <repository>
             <id>mvn</id>
             <url>repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+            <!--For GeoSpatial-->
+            <id>clojars.org</id>
+            <url>http://clojars.org/repo/</url>
         </repository>
     </repositories>
 </project>

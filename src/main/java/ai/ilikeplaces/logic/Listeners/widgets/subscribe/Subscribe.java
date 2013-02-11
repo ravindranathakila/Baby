@@ -16,6 +16,7 @@ import ai.ilikeplaces.servlets.ServletActivate;
 import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import ai.reaver.Return;
+import ch.hsr.geohash.GeoHash;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
@@ -41,10 +42,15 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 
 
     private static final String PASSWORD_DETAILS = "_passwordDetails";
+
     private static final String PASSWORD_ADVICE = "_passwordAdvice";
+
     private static final String URL = "_url";
+
     private String woehint;
+
     private String placeName;
+
     private String placeDetails;
 
 
@@ -161,7 +167,16 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
                                         myemail);
 
                                 try {
-                                    AvroCreate.writeData(Subscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).build());
+                                    final String boundingBox = $(Controller.Page.AarrrWOEID).getAttribute(MarkupTag.INPUT.value());
+                                    Loggers.INFO.info("LAT LNG:" + boundingBox);
+                                    final String[] boundingBoxLatLngs = boundingBox.split(",");
+                                    final double latitude = (Double.parseDouble(boundingBoxLatLngs[0]) + Double.parseDouble(boundingBoxLatLngs[2])) / 2;
+                                    final double longitude = (Double.parseDouble(boundingBoxLatLngs[1]) + Double.parseDouble(boundingBoxLatLngs[3])) / 2;
+
+                                    final GeoHash _geoHash = GeoHash.withCharacterPrecision(latitude, longitude, 12);
+                                    final String rowKey = _geoHash.toBase32();
+
+                                    AvroCreate.writeData(rowKey, Subscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).build());
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
