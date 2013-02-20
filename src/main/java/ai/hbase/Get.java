@@ -1,4 +1,4 @@
-package ai.ilikeplaces.hbase;
+package ai.hbase;
 
 import ai.ilikeplaces.entities.Subscriber;
 import org.apache.avro.Schema;
@@ -22,7 +22,7 @@ import java.io.IOException;
  * Date: 26/1/13
  * Time: 7:52 PM
  */
-public class AvroRead {
+public class Get {
 
     public static void readData(final Subscriber subscriber) throws IOException {
         final Schema schema = ReflectData.get().getSchema(Subscriber.class);

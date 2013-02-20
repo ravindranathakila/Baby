@@ -1,9 +1,10 @@
 package ai.ilikeplaces.logic.Listeners.widgets.subscribe;
 
+import ai.hbase.HBaseCrudService;
+import ai.hbase.RowKey;
+import ai.ilikeplaces.entities.GeohashSubscriber;
 import ai.ilikeplaces.entities.Subscriber;
-import ai.ilikeplaces.entities.WoeidSubscribe;
 import ai.ilikeplaces.entities.etc.HumanId;
-import ai.ilikeplaces.hbase.AvroCreate;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
 import ai.ilikeplaces.logic.Listeners.widgets.Bate;
 import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
@@ -24,7 +25,6 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.html.HTMLDocument;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -156,8 +156,6 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 
                         if (myemail.valid()) {
                             if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
-                                final WoeidSubscribe _woeidSubscribe = WoeidSubscribe.newBuilder().setEmailId(myemail.getObjectAsValid()).setWoeid(0).build();
-                                Loggers.debug(_woeidSubscribe.toString());
 
                                 final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
@@ -174,10 +172,19 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
                                     final double longitude = (Double.parseDouble(boundingBoxLatLngs[1]) + Double.parseDouble(boundingBoxLatLngs[3])) / 2;
 
                                     final GeoHash _geoHash = GeoHash.withCharacterPrecision(latitude, longitude, 12);
-                                    final String rowKey = _geoHash.toBase32();
+                                    final String rowKey = _geoHash.toBase32() + "-" + myemail.getObjectAsValid();
 
-                                    AvroCreate.writeData(rowKey, Subscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).build());
-                                } catch (IOException e) {
+                                    final Subscriber _subscriber = Subscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).build();
+                                    final GeohashSubscriber _geohashSubscriber = GeohashSubscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).setLatitude(latitude).setLongitude(longitude).build();
+
+                                    new HBaseCrudService<GeohashSubscriber>().create(new RowKey() {
+                                        @Override
+                                        public String getRowKey() {
+                                            return rowKey;
+                                        }
+                                    }, _geohashSubscriber);
+
+                                } catch (final Throwable e) {
                                     throw new RuntimeException(e);
                                 }
 

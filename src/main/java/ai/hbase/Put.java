@@ -1,4 +1,4 @@
-package ai.ilikeplaces.hbase;
+package ai.hbase;
 
 import ai.ilikeplaces.entities.Subscriber;
 import ai.ilikeplaces.util.Loggers;
@@ -6,6 +6,7 @@ import org.apache.avro.io.BinaryEncoder;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.specific.SpecificDatumWriter;
+import org.apache.avro.specific.SpecificRecord;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
 import org.apache.commons.httpclient.methods.PutMethod;
@@ -18,7 +19,7 @@ import java.io.*;
  * Date: 26/1/13
  * Time: 7:53 PM
  */
-public class AvroCreate {
+public class Put<T extends SpecificRecord> {
 // ------------------------------ FIELDS ------------------------------
 
     public static final String SUBSCRIBER = "Subscriber";
@@ -129,7 +130,7 @@ public class AvroCreate {
 
 //
 //
-//package ai.ilikeplaces.hbase;
+//package ai.hbase;
 //
 //import ai.ilikeplaces.entities.Subscriber;
 //import org.apache.avro.io.BinaryEncoder;
