@@ -40,7 +40,7 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
     @Timeout
     synchronized public void timeout(final Timer timer) {
         final HBaseCrudService<GeohashSubscriber> _geohashSubscriberHBaseCrudService = new HBaseCrudService<GeohashSubscriber>();
-        final HBaseCrudService<GeohashSubscriber>.Scanner _scanner = _geohashSubscriberHBaseCrudService.scan(new GeohashSubscriber(), 100).returnValueBadly();
+        final HBaseCrudService<GeohashSubscriber>.Scanner _scanner = _geohashSubscriberHBaseCrudService.scan(new GeohashSubscriber(), 1).returnValueBadly();
 
         while (_scanner.getNewValue() != null) {
             Loggers.debug("Scanned value:" + _scanner.getNewValue());
