@@ -1,11 +1,13 @@
 package ai.ilikeplaces.logic.sits9;
 
 import ai.hbase.HBaseCrudService;
+import ai.hbase.RowResponse;
 import ai.ilikeplaces.entities.GeohashSubscriber;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
 import ai.scribble.License;
+import com.google.gson.Gson;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
@@ -43,7 +45,10 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
         final HBaseCrudService<GeohashSubscriber>.Scanner _scanner = _geohashSubscriberHBaseCrudService.scan(new GeohashSubscriber(), 1).returnValueBadly();
 
         while (_scanner.getNewValue() != null) {
-            Loggers.debug("Scanned value:" + _scanner.getNewValue());
+            final String _newValue = _scanner.getNewValue();
+            Loggers.debug("Scanned value:" + _newValue);
+            final RowResponse _rowResponse = new Gson().fromJson(_newValue, RowResponse.class);
+            Loggers.debug("Scanned as GSON:" + _rowResponse.toString());
             _geohashSubscriberHBaseCrudService.scan(new GeohashSubscriber(), _scanner);
         }
 
