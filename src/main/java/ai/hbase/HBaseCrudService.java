@@ -1,6 +1,8 @@
 package ai.hbase;
 
 import ai.ilikeplaces.util.Loggers;
+import ai.reaver.Return;
+import ai.reaver.ReturnImpl;
 import org.apache.avro.io.BinaryEncoder;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.EncoderFactory;
@@ -91,115 +93,95 @@ public class HBaseCrudService<T extends SpecificRecord> {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public Scanner scan(final T t, final Scanner... scanner) {
-        System.out.println("Attempting to scan:" + t.toString());
+    public Return<Scanner> scan(final T t, final int batchAmount) {
 
-        Scanner returnVal = null;
+        Return<Scanner> returnVal;
 
-        if (scanner.length == 0) {
+        try {
             final org.apache.commons.httpclient.HttpClient httpClient = new org.apache.commons.httpclient.HttpClient();
 
             final String _uri = "http://localhost:9090/" + t.getClass().getSimpleName() + "/" + "scanner";
             Loggers.debug("Calling:" + _uri);
             final PutMethod _putMethod = new PutMethod(_uri);
             _putMethod.setRequestHeader("Content-Type", "text/xml");
-            _putMethod.setRequestEntity(new StringRequestEntity("<Scanner batch=\"100\"/>"));
+            _putMethod.setRequestHeader("Accept", "application/json");
+            _putMethod.setRequestEntity(new StringRequestEntity("<Scanner batch=\"" + batchAmount + "\"/>"));
 
 
             int statusCode = 0;
-            try {
-                statusCode = httpClient.executeMethod(_putMethod);
-            } catch (final IOException e) {
-                throw new RuntimeException(e);
-            }
+            statusCode = httpClient.executeMethod(_putMethod);
 
-            if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED) {
+            if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED && statusCode != HttpStatus.SC_NO_CONTENT) {
                 throw new RuntimeException(String.valueOf("Http request ended up with status code:" + statusCode));
             }
             InputStream inputStream = null;
 
-            try {
-                inputStream = _putMethod.getResponseBodyAsStream();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            inputStream = _putMethod.getResponseBodyAsStream();
 
             final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             String accumulator = "";
-            try {
-                while ((line = br.readLine()) != null) {
-                    accumulator += line;
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            while ((line = br.readLine()) != null) {
+                accumulator += line;
             }
-            try {
-                br.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            br.close();
             Loggers.debug(accumulator);
 
             final Header _responseHeader = _putMethod.getResponseHeader("Location");
             final String _location = _responseHeader.getValue();
 
-            returnVal = scan(t, new Scanner()/*Since varargs length is 0*/
+            final Return<Scanner> _scan = scan(t, new Scanner()/*Since varargs length is 0*/
                     .setNewScanUrl(_location)
                     .setNewValue(null));
-        } else {
 
-            final org.apache.commons.httpclient.HttpClient httpClient = new org.apache.commons.httpclient.HttpClient();
-
-            Loggers.debug("Calling:" + scanner[0].getNewScanUrl());
-
-            final GetMethod _getMethod = new GetMethod(scanner[0].getNewScanUrl());
-            _getMethod.setRequestHeader("Content-Type", "text/xml");
-
-            int statusCode = 0;
-            try {
-                statusCode = httpClient.executeMethod(_getMethod);
-            } catch (final IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            if (statusCode != HttpStatus.SC_OK) {
-                throw new RuntimeException(String.valueOf(statusCode));
-            }
-            InputStream inputStream = null;
-
-            try {
-                inputStream = _getMethod.getResponseBodyAsStream();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            String accumulator = "";
-            try {
-                while ((line = br.readLine()) != null) {
-                    accumulator += line;
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            try {
-                br.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Loggers.debug(accumulator);
-
-            final Header _responseHeader = _getMethod.getResponseHeader("Location");
-            final String _location = _responseHeader.getValue();
-            Loggers.debug(_location);
-
-            returnVal = scanner[0]
-                    .setNewScanUrl(_location)
-                    .setNewValue(accumulator);
+            returnVal = new ReturnImpl<Scanner>(_scan.returnValueBadly(), "SUCCESS");
+        } catch (final Throwable throwable) {
+            returnVal = new ReturnImpl<Scanner>(throwable, "ERROR", true);
         }
 
+        return returnVal;
+
+    }
+
+    public Return<Scanner> scan(final T t, final Scanner scanner) {
+        Return<Scanner> returnVal;
+        try {
+            final org.apache.commons.httpclient.HttpClient httpClient = new org.apache.commons.httpclient.HttpClient();
+
+            Loggers.debug("Calling:" + scanner.getNewScanUrl());
+
+            final GetMethod _getMethod = new GetMethod(scanner.getNewScanUrl());
+            _getMethod.setRequestHeader("Content-Type", "text/xml");
+            _getMethod.setRequestHeader("Accept", "application/json");
+
+            int statusCode = 0;
+            statusCode = httpClient.executeMethod(_getMethod);
+
+            if (statusCode != HttpStatus.SC_OK && statusCode != HttpStatus.SC_CREATED && statusCode != HttpStatus.SC_NO_CONTENT) {
+                throw new RuntimeException(String.valueOf(statusCode));
+            }
+//            InputStream inputStream = null;
+//
+//            inputStream = _getMethod.getResponseBodyAsStream();
+//
+//            final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+//            String line;
+            String accumulator = "";
+//            while ((line = br.readLine()) != null) {
+//                accumulator += line;
+//            }
+//            br.close();
+//
+            accumulator = _getMethod.getResponseBodyAsString();
+            Loggers.debug("Row:" + accumulator);
+
+
+            returnVal = new ReturnImpl<Scanner>(scanner
+                    .setNewValue(accumulator), "SUCCESS");
+
+        } catch (final Throwable throwable) {
+            returnVal = new ReturnImpl<Scanner>(throwable, "FAILURE", true);
+        }
 
         return returnVal;
 
