@@ -3,6 +3,7 @@ package ai.ilikeplaces.util;
 import ai.scribble.License;
 import org.cyberneko.html.parsers.DOMParser;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
@@ -60,4 +61,17 @@ public class HTMLDocParser {
             child = child.getNextSibling();
         }
     }
+
+
+    /**
+     * Fetches the element disregarding widget behavior. i.e. ignores dynamic nature of ID's
+     *
+     * @param key__
+     * @param document__
+     * @return
+     */
+    public static Element $(final String key__, final Document document__) {
+        return document__.getElementById(key__);
+    }
+
 }
