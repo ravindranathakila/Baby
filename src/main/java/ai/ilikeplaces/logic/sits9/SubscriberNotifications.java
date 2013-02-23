@@ -6,6 +6,7 @@ import ai.hbase.Row;
 import ai.hbase.RowResponse;
 import ai.ilikeplaces.entities.GeohashSubscriber;
 import ai.ilikeplaces.logic.mail.SendMailLocal;
+import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.HTMLDocParser;
@@ -17,6 +18,9 @@ import org.apache.avro.io.BinaryDecoder;
 import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.DecoderFactory;
 import org.apache.avro.specific.SpecificDatumReader;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import sun.misc.BASE64Decoder;
@@ -25,6 +29,7 @@ import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -38,6 +43,12 @@ import java.io.IOException;
 public class SubscriberNotifications extends AbstractSLBCallbacks implements SubscriberNotificationsRemote {
     private static final String SUBSCRIBER_EMAIL = "ai/ilikeplaces/logic/Listeners/widgets/subscribe/SubscriberEventEmail.html";
 
+    private static final String NAME = "name";
+
+    private static final String LATITUDE = "latitude";
+
+    private static final String LONGITUDE = "longitude";
+
     @Resource
     private TimerService timerService;
 
@@ -47,16 +58,16 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
     @Override
     public void startTimer() {
         final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.INFO, Loggers.CODE_MEMC +
-                "HELLO, STARTING " + this.getClass().getSimpleName() + " TIMER  WITH TIMER INTERVAL:" + 5000,
+                "HELLO, STARTING " + this.getClass().getSimpleName() + " TIMER  WITH TIMER INTERVAL:" + 10000,
                 60000,
                 null,
                 true);
-        timerService.createTimer(0, 5000, null);
+        timerService.createTimer(0, 10000, null);
         sl.complete(Loggers.LEVEL.INFO, Loggers.DONE);
     }
 
     @Timeout
-    synchronized public void timeout(final Timer timer) throws IOException, SAXException, TransformerException {
+    synchronized public void timeout(final Timer timer) throws IOException, SAXException, TransformerException, JSONException {
         final HBaseCrudService<GeohashSubscriber> _geohashSubscriberHBaseCrudService = new HBaseCrudService<GeohashSubscriber>();
         final HBaseCrudService<GeohashSubscriber>.Scanner _scanner = _geohashSubscriberHBaseCrudService.scan(new GeohashSubscriber(), 1).returnValueBadly();
 
@@ -84,6 +95,29 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                     final BinaryDecoder _binaryDecoder = DecoderFactory.get().binaryDecoder(_valueBytes, null);
                     final GeohashSubscriber _read = _geohashSubscriberSpecificDatumReader.read(_geohashSubscriber, _binaryDecoder);
                     Loggers.debug("Decoded value avro:" + _read.toString());
+
+
+                    final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
+                            .getInstance("http://upcoming.yahooapis.com/services/rest/")
+                            .get("",
+                                    new HashMap<String, String>() {
+                                        {//Don't worry, this is a static initializer of this map :)
+                                            put("method", "event.search");
+                                            put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
+                                            put("radius", "" + 100);
+                                            put("format", "json");
+                                        }
+                                    }
+
+                            );
+                    final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
+                    for (int i = 0; i < events.length(); i++) {
+                        final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
+                        Double.parseDouble(eventJSONObject.getString(LATITUDE));
+                        Double.parseDouble(eventJSONObject.getString(LONGITUDE));
+                        final String eventName = eventJSONObject.getString(NAME).toLowerCase();
+                        Loggers.debug("Event name:" + eventName);
+                    }
                 }
 
 
