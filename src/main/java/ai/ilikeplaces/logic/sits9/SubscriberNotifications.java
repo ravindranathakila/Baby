@@ -111,20 +111,23 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
                             );
                     final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
+                    final StringBuffer eventList = new StringBuffer("");
+
                     for (int i = 0; i < events.length(); i++) {
                         final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
                         Double.parseDouble(eventJSONObject.getString(LATITUDE));
                         Double.parseDouble(eventJSONObject.getString(LONGITUDE));
                         final String eventName = eventJSONObject.getString(NAME).toLowerCase();
                         Loggers.debug("Event name:" + eventName);
+                        eventList.append(eventName).append("<br/>");
                     }
+                    final Document document = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
+                    final String _content = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", document));
+                    final String finalEmail = _content.replace(" ___||_", eventList.toString());
+                    Loggers.debug("Final email:" + finalEmail);
+                    sendMailLocal.sendAsHTML(_read.getEmailId().toString(), "Thank God It's Friday!", finalEmail);
                 }
 
-
-                final Document document = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
-
-
-                final String _content = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", document));
 
             }
 
