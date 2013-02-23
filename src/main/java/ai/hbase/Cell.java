@@ -12,11 +12,14 @@ public class Cell {
 
     public String column;
 
+    public String $;//Bad bad bad B-(
+
     @Override
     public String toString() {
         return "Cell{" +
                 "timestamp='" + timestamp + '\'' +
                 ", column='" + column + '\'' +
+                ", $='" + $ + '\'' +
                 '}';
     }
 }

@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.sits9;
 
+import ai.hbase.Cell;
 import ai.hbase.HBaseCrudService;
 import ai.hbase.Row;
 import ai.hbase.RowResponse;
@@ -12,6 +13,10 @@ import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.SmartLogger;
 import ai.scribble.License;
 import com.google.gson.Gson;
+import org.apache.avro.io.BinaryDecoder;
+import org.apache.avro.io.DatumReader;
+import org.apache.avro.io.DecoderFactory;
+import org.apache.avro.specific.SpecificDatumReader;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import sun.misc.BASE64Decoder;
@@ -63,10 +68,23 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
             for (final Row _row : _rowResponse.Row) {
 
-                final BASE64Decoder _base64Decoder = new BASE64Decoder();
-                final byte[] _bytes = _base64Decoder.decodeBuffer(_row.key);
+                final BASE64Decoder _base64DecoderRowKey = new BASE64Decoder();
+                final byte[] _bytes = _base64DecoderRowKey.decodeBuffer(_row.key);
                 final String rowKey = new String(_bytes);
                 Loggers.debug("Decoded row key:" + rowKey);
+
+                for (final Cell _cell : _row.Cell) {
+                    final BASE64Decoder _base64DecoderValue = new BASE64Decoder();
+                    final byte[] _valueBytes = _base64DecoderValue.decodeBuffer(_cell.$);
+                    final String _cellAsString = new String(_valueBytes);
+                    Loggers.debug("Cell as string:" + _cellAsString);
+                    final GeohashSubscriber _geohashSubscriber = new GeohashSubscriber();
+
+                    final DatumReader<GeohashSubscriber> _geohashSubscriberSpecificDatumReader = new SpecificDatumReader<GeohashSubscriber>(_geohashSubscriber.getSchema());
+                    final BinaryDecoder _binaryDecoder = DecoderFactory.get().binaryDecoder(_valueBytes, null);
+                    final GeohashSubscriber _read = _geohashSubscriberSpecificDatumReader.read(_geohashSubscriber, _binaryDecoder);
+                    Loggers.debug("Decoded value avro:" + _read.toString());
+                }
 
 
                 final Document document = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
