@@ -43,6 +43,8 @@ import java.util.HashMap;
 public class SubscriberNotifications extends AbstractSLBCallbacks implements SubscriberNotificationsRemote {
     private static final String SUBSCRIBER_EMAIL = "ai/ilikeplaces/logic/Listeners/widgets/subscribe/SubscriberEventEmail.html";
 
+    private static final String SUBSCRIBER_EMAIL_EVENT = "ai/ilikeplaces/logic/Listeners/widgets/subscribe/SubscriberEventEmailEvent.html";
+
     private static final String NAME = "name";
 
     private static final String LATITUDE = "latitude";
@@ -113,16 +115,26 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                     final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
                     final StringBuffer eventList = new StringBuffer("");
 
+                    final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
+                    final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
+
                     for (int i = 0; i < events.length(); i++) {
                         final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
                         Double.parseDouble(eventJSONObject.getString(LATITUDE));
                         Double.parseDouble(eventJSONObject.getString(LONGITUDE));
-                        final String eventName = eventJSONObject.getString(NAME).toLowerCase();
+                        final String eventName = eventJSONObject.getString(NAME);
+                        final String eventDate = eventJSONObject.getString("start_date");
+                        final String eventVenue = eventJSONObject.getString("venue_name");
                         Loggers.debug("Event name:" + eventName);
-                        eventList.append(eventName).append("<br/>");
+                        eventList.append(eventTemplate
+                                .replace("_name_", eventName)
+                                .replace("_place_", eventVenue)
+                                .replace("_date_", eventDate));
                     }
-                    final Document document = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
-                    final String _content = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", document));
+
+                    final Document email = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
+                    final Document event = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
+                    final String _content = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", email));
                     final String finalEmail = _content.replace(" ___||_", eventList.toString());
                     Loggers.debug("Final email:" + finalEmail);
                     sendMailLocal.sendAsHTML(_read.getEmailId().toString(), "Thank God It's Friday!", finalEmail);
