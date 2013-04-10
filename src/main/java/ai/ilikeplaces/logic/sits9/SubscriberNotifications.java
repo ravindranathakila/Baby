@@ -29,6 +29,9 @@ import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -41,6 +44,9 @@ import java.util.HashMap;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Stateless
 public class SubscriberNotifications extends AbstractSLBCallbacks implements SubscriberNotificationsRemote {
+
+    public static final int TGIF_TIMING = Integer.parseInt(RBGet.getGlobalConfigKey("TGIF_TIMING"));
+
     private static final String SUBSCRIBER_EMAIL = "ai/ilikeplaces/logic/Listeners/widgets/subscribe/SubscriberEventEmail.html";
 
     private static final String SUBSCRIBER_EMAIL_EVENT = "ai/ilikeplaces/logic/Listeners/widgets/subscribe/SubscriberEventEmailEvent.html";
@@ -59,12 +65,35 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
     @Override
     public void startTimer() {
+        final int timeout = TGIF_TIMING == 0
+                ? 7 //Days of Week
+                * 24 //Hour of Day
+                * 60 //Minutes of Hour
+                * 60 //Seconds of Minute
+                * 1000 //Milliseconds of Second
+                : TGIF_TIMING;
+
         final SmartLogger sl = SmartLogger.start(Loggers.LEVEL.INFO, Loggers.CODE_MEMC +
-                "HELLO, STARTING " + this.getClass().getSimpleName() + " TIMER  WITH TIMER INTERVAL:" + 10000,
+                "HELLO, STARTING " + this.getClass().getSimpleName() + " TIMER  WITH TIMER INTERVAL:" + timeout,
                 60000,
                 null,
                 true);
-        timerService.createTimer(0, 10000, null);
+
+        final Calendar _calendar = Calendar.getInstance();
+        final int todayDay = _calendar.get(Calendar.DAY_OF_WEEK);
+        if (todayDay != Calendar.FRIDAY) {
+            _calendar.add(Calendar.DAY_OF_YEAR, (Calendar.SATURDAY - todayDay + 6) % 7);
+        }
+
+        if (TGIF_TIMING == 0) {
+            final Date _time = _calendar.getTime();
+            timerService.createTimer(_time, timeout, null);
+            String format = new SimpleDateFormat("yyyy/MM/dd").format(_time);
+            sl.appendToLogMSG("Starting timer on " + format);
+        } else {
+            timerService.createTimer(0, timeout, null);
+        }
+
         sl.complete(Loggers.LEVEL.INFO, Loggers.DONE);
     }
 
@@ -99,6 +128,12 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                     Loggers.debug("Decoded value avro:" + _read.toString());
 
 
+                    final Date now = new Date();
+                    final Calendar _week = Calendar.getInstance();
+                    _week.setTimeInMillis(now.getTime() + (7 * 24 * 60 * 60 * 1000));
+                    final SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    _simpleDateFormat.format(_week.getTime());
+
                     final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
                             .getInstance("http://upcoming.yahooapis.com/services/rest/")
                             .get("",
@@ -108,6 +143,7 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                                             put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
                                             put("radius", "" + 100);
                                             put("format", "json");
+                                            put("max_date", _simpleDateFormat.format(_week.getTime()));
                                         }
                                     }
 

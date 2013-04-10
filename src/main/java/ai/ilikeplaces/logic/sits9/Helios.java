@@ -1,5 +1,6 @@
 package ai.ilikeplaces.logic.sits9;
 
+import ai.ilikeplaces.util.Loggers;
 import ai.scribble.License;
 import ai.scribble._note;
 
@@ -27,6 +28,10 @@ public class Helios implements HeliosRemote {
 
     @PostConstruct
     public void postConstruct() {
-        subscriberNotificationsRemote.startTimer();
+        try {
+            subscriberNotificationsRemote.startTimer();
+        } catch (final Exception e) {
+            Loggers.error("Error starting subscriber notification timer", e);
+        }
     }
 }

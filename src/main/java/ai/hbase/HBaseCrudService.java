@@ -1,5 +1,6 @@
 package ai.hbase;
 
+import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
@@ -17,6 +18,9 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 
 import java.io.*;
 
+//{NAME => 'Subscriber', FAMILIES => [{NAME => 'value', BLOOMFILTER => 'NONE', REPLICATION_SCOPE => '0' true, VERSIONS => '3', COMPRESSION => 'NONE', MIN_VERSIONS => '0', TTL => '2147483647', BLOCKSIZE => '65536', IN_MEMORY => 'false', BLOCKCACHE => 'true'}]}
+//curl -H "Content-Type: application/json" --data "{ NAME=> 'GeohashSubscriber', IS_META => 'false', IS_ROOT => 'false', COLUMNS => [ { NAME => 'value', BLOCKSIZE => '65536', BLOOMFILTER => 'NONE', MIN_VERSIONS => '0', BLOCKCACHE => 'true', COMPRESSION => 'NONE', VERSIONS => '3', REPLICATION_SCOPE => '0', TTL => '2147483647', IN_MEMORY => 'false' } ] }" http://166.78.125.227:9090/GeohashSubscriber/schema
+
 /**
  * Created with IntelliJ IDEA Ultimate.
  * User: http://www.ilikeplaces.com
@@ -25,6 +29,8 @@ import java.io.*;
  */
 public class HBaseCrudService<T extends SpecificRecord> {
 
+
+    public static final String HBASE_REST_SERVER = RBGet.getGlobalConfigKey("HBASE_REST_SERVER");
 
     public T create(final RowKey rowKey, final T t) {
         try {
@@ -44,7 +50,7 @@ public class HBaseCrudService<T extends SpecificRecord> {
 
             //curl -H "Content-Type: application/octet-stream" --data '[Sample Data]' http://localhost:9090/Subscriber/samplerow1/value:value
 
-            final PutMethod _putMethod = new PutMethod("http://localhost:9090/" + t.getClass().getSimpleName() + "/" + rowKey.getRowKey() + "/value:value");
+            final PutMethod _putMethod = new PutMethod("http://" + HBASE_REST_SERVER + ":9090/" + t.getClass().getSimpleName() + "/" + rowKey.getRowKey() + "/value:value");
             _putMethod.setRequestHeader("Content-Type", "application/octet-stream");
             _putMethod.setRequestEntity(new ByteArrayRequestEntity(dataByteArray));
 
@@ -100,7 +106,7 @@ public class HBaseCrudService<T extends SpecificRecord> {
         try {
             final org.apache.commons.httpclient.HttpClient httpClient = new org.apache.commons.httpclient.HttpClient();
 
-            final String _uri = "http://localhost:9090/" + t.getClass().getSimpleName() + "/" + "scanner";
+            final String _uri = "http://" + HBASE_REST_SERVER + ":9090/" + t.getClass().getSimpleName() + "/" + "scanner";
             Loggers.debug("Calling:" + _uri);
             final PutMethod _putMethod = new PutMethod(_uri);
             _putMethod.setRequestHeader("Content-Type", "text/xml");
@@ -184,7 +190,7 @@ public class HBaseCrudService<T extends SpecificRecord> {
         try {
             final org.apache.commons.httpclient.HttpClient httpClient = new org.apache.commons.httpclient.HttpClient();
 
-            final String _uri = "http://localhost:9090/" + t.getClass().getSimpleName() + "/" + "scanner";
+            final String _uri = "http://" + HBASE_REST_SERVER + ":9090/" + t.getClass().getSimpleName() + "/" + "scanner";
             Loggers.debug("Calling:" + _uri);
             final PutMethod _putMethod = new PutMethod(_uri);
             _putMethod.setRequestHeader("Content-Type", "text/xml");
