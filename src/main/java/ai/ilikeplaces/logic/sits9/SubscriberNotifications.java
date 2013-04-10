@@ -159,10 +159,13 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                         Double.parseDouble(eventJSONObject.getString(LATITUDE));
                         Double.parseDouble(eventJSONObject.getString(LONGITUDE));
                         final String eventName = eventJSONObject.getString(NAME);
+                        final String eventUrl = eventJSONObject.getString("url");
                         final String eventDate = eventJSONObject.getString("start_date");
                         final String eventVenue = eventJSONObject.getString("venue_name");
                         Loggers.debug("Event name:" + eventName);
                         eventList.append(eventTemplate
+                                .replace("_name_link_", !(("" + eventUrl).isEmpty()) ? eventUrl : ("https://www.google.com/search?q=" + eventName.replaceAll(" ", "+").replaceAll("-", "+")))
+                                .replace("_place_link_", "https://maps.googleapis.com/maps/api/staticmap?sensor=false&size=600x600&markers=color:blue%7Clabel:S%7C" + _read.getLatitude().toString() + "," + _read.getLongitude().toString())
                                 .replace("_name_", eventName)
                                 .replace("_place_", eventVenue)
                                 .replace("_date_", eventDate));
