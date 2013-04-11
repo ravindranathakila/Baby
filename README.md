@@ -1,34 +1,38 @@
-Help!!! We need help :-)
+### Help!!! We need help :-)
 
-What we do,
+#### What we do,
 
 We make people happy by showing them what is interesting around them. Be it a movie or a theatrical show, be it a grand game or night party, we want people to know, participate in them and have fun.
 
-How do we do it,
+#### How do we do it,
 
 We have set up a TGIF mail, to which anybody can subscribe to events in any area she likes. Every Friday she will receive an email saying Thank God It Is Friday. This email will contain interesting events to attend over the weekend until next Friday.
 
 Well, this is definitely not the only way to do it. That's where you are important to us. Help us do a more meaningful job. Give us ideas. Implement some or give your own spin to it. Make things happen!
 
-What is it all about?
+#### What is it all about?
 
 Make happy people. We want to make more and more happy people. If you can do a better job than us, well then come join us, or beat us to it (we love a challenge!). 
 
 
-
-
-== Attributions ==
-
-=== Eye - Thank you http://findicons.com/pack/2448/wpzoom_developer ===
-=== Denise(Font) - Thank you Denise! http://budeni.com/  http://www.dafont.com/denise-b.d2982?l[]=10 ===
-=== Image on home page - http://www.flickr.com/photos/widerbergs/5859028739/sizes/l/in/photostream/ ===
-=== Wikipedia (Lock Image) - Thank you https://commons.wikimedia.org/wiki/File:Ambox_padlock_red.svg ===
+___
 
 
 
-=== Just a huge dump of stuff we need from time to time. No specific order or correlation. ===
+Attribution
 
-<code>
+ Eye - Thank you http://findicons.com/pack/2448/wpzoom_developer 
+ 
+ Denise(Font) - Thank you Denise! http://budeni.com/  http://www.dafont.com/denise-b.d2982?l[]=10 
+ 
+ Image on home page - http://www.flickr.com/photos/widerbergs/5859028739/sizes/l/in/photostream/ 
+ 
+ Wikipedia (Lock Image) - Thank you https://commons.wikimedia.org/wiki/File:Ambox_padlock_red.svg 
+
+
+Just a huge dump of stuff we need from time to time. No specific order or correlation. 
+
+```
 
   //MAKE SURE LOCATIONID IS PRIMARY KEY, MODIFY FOLLOWING SCRIPT
         CREATE TABLE location(LOCATIONID BIGINT,CLEARANCE BIGINT,LOCATIONGEO1 VARCHAR(128),LOCATIONGEO2 VARCHAR(128),LOCATIONINFO VARCHAR(128),LOCATIONNAME VARCHAR(128), LOCATIONSUPERSET_LOCATION BIGINT, PRIMARY KEY (LOCATIONID) )
@@ -189,4 +193,4 @@ enable 'HumansUnseen'
 enable 'HumansWall'
 
 
-</code>
+```
