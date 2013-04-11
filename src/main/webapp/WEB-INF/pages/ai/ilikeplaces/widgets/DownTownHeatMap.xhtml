@@ -456,16 +456,16 @@ function initialize_DownTownHeatMap_map() {
         }
     });
 
-    google.maps.event.addDomListener(document.getElementById('mapCustomControlsShowHide'), 'click', function () {
-        var mapCustomControlsShowHideText = document.getElementById('mapCustomControlsShowHideText');
-        if (panoramioLayer.getMap() == map) {
-            panoramioLayer.setMap(null);
-            mapCustomControlsShowHideText.innerHTML = 'Show Pics';
-        } else {
-            panoramioLayer.setMap(map);
-            mapCustomControlsShowHideText.innerHTML = 'Hide Pics';
-        }
-    });
+//    google.maps.event.addDomListener(document.getElementById('mapCustomControlsShowHide'), 'click', function () {
+//        var mapCustomControlsShowHideText = document.getElementById('mapCustomControlsShowHideText');
+//        if (panoramioLayer.getMap() == map) {
+//            panoramioLayer.setMap(null);
+//            mapCustomControlsShowHideText.innerHTML = 'Show Pics';
+//        } else {
+//            panoramioLayer.setMap(map);
+//            mapCustomControlsShowHideText.innerHTML = 'Hide Pics';
+//        }
+//    });
 
     GAIA.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(document.getElementById('mapCustomControlsShowHide'));
 
@@ -831,11 +831,6 @@ function setMapToLocation(value) {
 </div>
 <div style="display:none;">
 <div id="mapCustomControlsSubscribeForm" style="width:30.9%;display:block;">
-    <div id="DownTownHeatMapSubscribeWidget" class="use100">
-        <a href="#" onclick="$('.AarrrSubscribe').show();$('.AarrrDownTownHeatMap').hide();$('.AarrrJuice').hide();">
-            Subscribe for Events In This Area
-        </a>
-    </div>
 </div>
 <div id="mapCustomControlsSignupForm" style="width:30.9%;display:block;">
     <div id="DownTownHeatMapSignupWidget" class="use90 use5p use5a" style="padding:4px solid #dddddd;">
@@ -959,9 +954,18 @@ function setMapToLocation(value) {
     </div>
     <div class="by" style="height:5px;">&nbsp;</div>
 </div>
-<div id="mapCustomControlsShowHide" style="width:140px;;" class="lose_attn">
-    <div style="display:none;">
-        <img src="/images/circle.gif" alt="Show Pics" title="/images/Show Pics_Button.png" class="use100 ajax_image"/>
+<div id="mapCustomControlsShowHide" class="by3">
+    <div style="display:block;">
+        <div id="DownTownHeatMapSubscribeWidget" class="use100" style="text-align: center;">
+            <a href="#"
+               onclick="$('.AarrrSubscribe').show();$('.AarrrDownTownHeatMap').hide();$('.AarrrJuice').hide();"
+               style="text-align: center;">
+                <span style="font-size: 23px;text-align: center;text-decoration: underline;color:#001100;">Get Alerts Of Events In Focused Area</span>
+            </a>
+        </div>
+        <div class="use100">
+            &nbsp;
+        </div>
     </div>
 </div>
 <div id="mapCustomControlsNEWS" class="by5" style="height:200px;width:144px;">
