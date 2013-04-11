@@ -1,93 +1,34 @@
-[[File:http://9fb755195f5195b6c980-6921fb340d095e535a285f2d514557aa.r42.cf1.rackcdn.com/idea.png]]
+Help!!! We need help :-)
 
-== Hello Code Hacker! ==
-How have you been? What brought you here?
+What we do,
 
+We make people happy by showing them what is interesting around them. Be it a movie or a theatrical show, be it a grand game or night party, we want people to know, participate in them and have fun.
 
-=== 0) WWW, You and Us ===
-==== 0.1) The links ====
+How do we do it,
 
-For now, it's just three links for us, and a million web pages for a million locations on Earth
+We have set up a TGIF mail, to which anybody can subscribe to events in any area she likes. Every Friday she will receive an email saying Thank God It Is Friday. This email will contain interesting events to attend over the weekend until next Friday.
 
-* [http://www.ilikeplaces.com  I Like Places]
-* [http://www.facebook.com Facebook Fan Page]
-* [https://www.pivotaltracker.com/projects/304913 Project Manager, where you can find out what really is going on in the code]
+Well, this is definitely not the only way to do it. That's where you are important to us. Help us do a more meaningful job. Give us ideas. Implement some or give your own spin to it. Make things happen!
 
-==== 0.2) How may we serve you? ====
-* 0.2.1) Can we interest you in finding out what interesting places to visit, given any location on earth?
-If so, head over to [http://www.ilikeplaces.com www.iLikePlaces.com] and search for any location on Earth.
-You'll see a map with makers of interesting places in that area. Now, go visit them! Tell a friend!
-* 0.2.2) Can we interest you in finding out, given any moment, the most interesting place to be?
-We wish we could! Well, we have that bad habbit of pursuing our wishes '''With All We've Got'''. Stay tuned!
-* 0.2.3) Can we interest you in planning out private events with close friends and family?
-No, if you click "like", things aren't going to be all public exposing you to a lot of embarrassment.
-Instead, head over to [http://www.ilikeplaces.com www.iLikePlaces.com] and '''Start a Moment'''.
-Once you've done that, invite your friends and family to it.
-'''Now you've got your own private moment'''. It's got a '''Talk Page''' to discuss your event stuff.
-Hey, you can upload photos too!
-* 0.2.4) Can we interest you in starting a movement on something you believe in something very badly?
-Start a Tribe! Ah you guessed it right. You just have to visit  [http://www.ilikeplaces.com www.iLikePlaces.com].
+What is it all about?
 
-There you go. That much we can offer you. Tell a friend!
-
-[[#Hello_Code_Hacker|Back to Top^]]
-----
+Make happy people. We want to make more and more happy people. If you can do a better job than us, well then come join us, or beat us to it (we love a challenge!). 
 
 
-=== 1) Looking for some code to use in your project? ===
-==== 1.1) Try our Gists! ====
-'''Go [https://gist.github.com/ravindranathakila here]'''. If you like what you see, share 'em all! If not, tell us where in comments :-)
-==== 1.2) Still Unhappy? ====
-Give us some time, we will update this section with a code walk through. Meanwhile maybe you'd like to '''have a look at [http://www.innowhere.com:8080/itsnat/feashow_servlet?itsnat_doc_name=feashow.main ItsNat]''' .
-Make sure you'll not come back to us complaining how AWESOME ItsNat is!
-
-[[#Hello_Code_Hacker|Back to Top^]]
-----
-
-
-=== 2) Sniffing around for some internal secrets? ===
-We can help you. But who knows, we might lead you down a wrong trail ;-)
-Okay, '''go [https://www.pivotaltracker.com/projects/304913 here]'''. Don't tell!
-
-[[#Hello_Code_Hacker|Back to Top^]]
-----
-
-
-=== 3) Want to find the philosophy behind this project? ===
-And you thought we just built [http://www.ilikeplaces.com www.ilikeplaces.com]? No way, there's a lot of thinking, passion and belief behind it!
-==== 3.1) Very Very Very Very Private Socializing On Down Town ====
-'''DT is a social network hysterically focused on privacy.'''
-If you want only your family to see an event(called Moments) on DT, you can do it.
-If it's just friends the secrets of that moment are safe with, you can make that happen.
-'''It's very very very very very private!'''
-==== 3.1) Down Town knows socializing is best done offline ====
-DT wants you to use the website as less as possible.
-Compare that with other social networks who are hungry to keep you online to click their ads.
-DT just wants you to find ways to socialize in real life.
-Once you've done that, you just head out and have fun with your friends and family.
-Yes you can come back to discuss stuff before and after the event.
-But mostly, Down Town makes a maximum effort to chase you out to socialize.
-This is why updates can be '''autoplayed'''.
-If a friend updates a photo or moment talk, you are automatically send there unless you '''pause''' the autoupdate.
-See? We want you to get moving fast.
-'''What's more fabulous than a social network that autoplays in front of your eyes, the latest updates!'''
-==== 3.3) So What Is Down Town? ====
-'''You tell us the time, even if its "now" and we'll tell you the most exciting place to be!'''
-
-[[#Hello_Code_Hacker|Back to Top^]]
-----
 
 
 == Attributions ==
 
 === Eye - Thank you http://findicons.com/pack/2448/wpzoom_developer ===
 === Denise(Font) - Thank you Denise! http://budeni.com/  http://www.dafont.com/denise-b.d2982?l[]=10 ===
-=== Image on home page - http://www.flickr.com/photos/widerbergs/5859028739/sizes/l/in/photostream/
+=== Image on home page - http://www.flickr.com/photos/widerbergs/5859028739/sizes/l/in/photostream/ ===
 === Wikipedia (Lock Image) - Thank you https://commons.wikimedia.org/wiki/File:Ambox_padlock_red.svg ===
 
 
 
 === Just a huge dump of stuff we need from time to time. No specific order or correlation. ===
+
+<code>
 
   //MAKE SURE LOCATIONID IS PRIMARY KEY, MODIFY FOLLOWING SCRIPT
         CREATE TABLE location(LOCATIONID BIGINT,CLEARANCE BIGINT,LOCATIONGEO1 VARCHAR(128),LOCATIONGEO2 VARCHAR(128),LOCATIONINFO VARCHAR(128),LOCATIONNAME VARCHAR(128), LOCATIONSUPERSET_LOCATION BIGINT, PRIMARY KEY (LOCATIONID) )
@@ -247,3 +188,5 @@ enable 'HumansTribe'
 enable 'HumansUnseen'
 enable 'HumansWall'
 
+
+</code>
