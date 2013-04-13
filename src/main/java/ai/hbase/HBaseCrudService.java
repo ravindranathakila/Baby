@@ -11,10 +11,7 @@ import org.apache.avro.specific.SpecificDatumWriter;
 import org.apache.avro.specific.SpecificRecord;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.ByteArrayRequestEntity;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.methods.*;
 
 import java.io.*;
 
@@ -241,8 +238,53 @@ public class HBaseCrudService<T extends SpecificRecord> {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void delete(final Class type, final Object id) {
-        throw new UnsupportedOperationException();
+    public void delete(final RowKey rowKey, final T t) {
+
+        System.out.println("Attempting to delete:" + t.toString());
+
+
+        final org.apache.commons.httpclient.HttpClient httpClient = new org.apache.commons.httpclient.HttpClient();
+
+        //curl -H "Content-Type: application/octet-stream" --data '[Sample Data]' http://localhost:9090/Subscriber/samplerow1/value:value
+
+        final DeleteMethod _putMethod = new DeleteMethod("http://" + HBASE_REST_SERVER + ":9090/" + t.getClass().getSimpleName() + "/" + rowKey.getRowKey());
+        _putMethod.setRequestHeader("Content-Type", "application/octet-stream");
+//            _putMethod.setRequestEntity(new ByteArrayRequestEntity(dataByteArray));
+
+        int statusCode = 0;
+        try {
+            statusCode = httpClient.executeMethod(_putMethod);
+        } catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (statusCode != HttpStatus.SC_OK) {
+            throw new RuntimeException(String.valueOf(statusCode));
+        }
+        InputStream inputStream = null;
+
+        try {
+            inputStream = _putMethod.getResponseBodyAsStream();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        final BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        String accumulator = "";
+        try {
+            while ((line = br.readLine()) != null) {
+                accumulator += line;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            br.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Loggers.debug(accumulator);
     }
 
     public class Scanner {

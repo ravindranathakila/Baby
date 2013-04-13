@@ -8,10 +8,8 @@ import ai.ilikeplaces.entities.GeohashSubscriber;
 import ai.ilikeplaces.logic.mail.SendMailLocal;
 import ai.ilikeplaces.logic.modules.Modules;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.util.AbstractSLBCallbacks;
-import ai.ilikeplaces.util.HTMLDocParser;
-import ai.ilikeplaces.util.Loggers;
-import ai.ilikeplaces.util.SmartLogger;
+import ai.ilikeplaces.servlets.Unsubscribe;
+import ai.ilikeplaces.util.*;
 import ai.scribble.License;
 import com.google.gson.Gson;
 import org.apache.avro.io.BinaryDecoder;
@@ -174,7 +172,10 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                     final Document email = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
                     final Document event = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
                     final String _content = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", email));
-                    final String finalEmail = _content.replace(" ___||_", eventList.toString());
+                    final Parameter _unsubscribeLink = new Parameter("http://localhost:8080/unsubscribe/").append(Unsubscribe.TYPE, Unsubscribe.Type.GeohashSubscribe.name(), true)
+                            .append(Unsubscribe.VALUE, rowKey);
+                    final String finalEmail = _content.replace(" ___||_", eventList.toString())
+                            .replace("_unsubscribe_link_", _unsubscribeLink.get());
                     Loggers.debug("Final email:" + finalEmail);
                     sendMailLocal.sendAsHTML(_read.getEmailId().toString(), "Thank God It's Friday!", finalEmail);
                 }
