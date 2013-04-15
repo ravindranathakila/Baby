@@ -42,12 +42,20 @@
             </div>
         </div>
         <div class="use62" id="Juice_Content"
-             style="height:100%;overflow:hidden;">
-            <div class="use100" style="height:100%;background-color:transparent;">
+             style="height:100%;overflow:hidden;padding: 10px;background:url('/images/Metal_translucent_dull.png') repeat;">
+            <div class="use100" style="height:100%;background:url('/images/Metal_translucent_dull.png') repeat;">
                 <div class="use100" id="Juice_Noti"
                      style="font-size:30px;font-family:'Comic Sans MS',serif;color:#00eeee;">
                 </div>
                 <div class="use100" style="height:35%; vertical-align: middle;">
+                    <div class="use100" style="vertical-align: middle;">
+                        <img src="/images/find_fun_around_you.png"
+                             style="padding-top: 90px;"
+                             onclick="suggestPlace();$('#JSJuicePlaceInput').focus();"
+                             alt="Find exciting stuff around you" class="use100 cursor_pointer"/>
+                    </div>
+                </div>
+                <div class="use100 hidden" style="height:35%; vertical-align: middle;">
                     <div class="use100" style="vertical-align: middle;">
                         <img src="/images/are_you_looking_for_fun_around_you.png"
                              style="padding-top: 50px;"
@@ -99,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="use100 hidden" id="jsSignupFiller" style="height:45%;">
+                <div class="use100" id="jsSignupFiller" style="height:45%;">
                     <div class="use90 use5p use5a" style="height:20%;display: block;">
 
                     </div>
@@ -121,7 +129,7 @@
                                    id="JSJuicePlaceInput"
                                    style="height:100%;font-family:'Comic Sans MS',serif;color:#f928c7;text-align:center;
                                    border: 0 #46a1ff solid;border-bottom-width: 5px;
-                                   background:url('/images/Metal_translucent.png') repeat;font-size:25px;"
+                                   background:url('/images/Metal_translucent.png') repeat;font-size:31px;"
                                    class="use100"
                                    onclick="suggestPlace();"
                                     />
@@ -216,6 +224,23 @@
             $('#JSJuicePlaceSubmit').click();
         }
     });
+
+    try {//Attempting to geo locate the user based on ip
+        // Build the URL to query
+        var url = 'http://www.geoplugin.net/json.gp?jsoncallback=?';
+        // Utilize the JSONP API
+        $.getJSON(url, function (data) {
+            focusLng = data.geoplugin_longitude;
+            focusLat = data.geoplugin_latitude;
+            zoom = data.geoplugin_city != null ? 11 : (data.geoplugin_region != null ? 9 : (data.geoplugin_countryName ? 6 : 2 ) );
+            browserLocation = (data.geoplugin_city != null ? data.geoplugin_city + ',' : '')
+                    + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
+                    + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
+            $("#searchboxmap").val(browserLocation).text(browserLocation);
+            $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation)
+        });
+    } catch (err) {
+    }
 </script>
 </div>
 </body>
