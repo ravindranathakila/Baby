@@ -153,7 +153,8 @@
                     </div>
                 </div>
                 <div class="use80 use10p use10a cursor_pointer" style="height:15%;">
-                    <img src="/images/get_updates.png" class="use100" alt="Get Updates!"/>
+                    <img src="/images/get_updates.png" class="use100" alt="Get Updates!"
+                         onclick="setMapToLocation($('#JSJuicePlaceInput').val());$('.AarrrSubscribe').show();$('.AarrrDownTownHeatMap').hide();$('.AarrrJuice').hide();"/>
                 </div>
                 <div class="use100" style="height: 10%;">
                     &nbsp;
@@ -193,6 +194,7 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (location) {
                 var googleLatLong = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
+                $('#AarrrWOEID').val(location.coords.latitude + "," + location.coords.longitude + "," + location.coords.latitude + "," + location.coords.longitude);
                 getAddress(
                         googleLatLong,
                         function (desc) {
@@ -214,7 +216,8 @@
                             + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
                             + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
                     $("#searchboxmap").val(browserLocation).text(browserLocation);
-                    $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation)
+                    $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation);
+                    $('#AarrrWOEID').val(data.geoplugin_latitude + "," + data.geoplugin_longitude + "," + data.geoplugin_latitude + "," + data.geoplugin_longitude);
                 });
             } catch (err) {
             }
@@ -242,7 +245,8 @@
                     + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
                     + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
             $("#searchboxmap").val(browserLocation).text(browserLocation);
-            $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation)
+            $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation);
+            $('#AarrrWOEID').val(data.geoplugin_latitude + "," + data.geoplugin_longitude + "," + data.geoplugin_latitude + "," + data.geoplugin_longitude);
         });
     } catch (err) {
     }
