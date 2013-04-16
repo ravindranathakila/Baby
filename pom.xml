@@ -436,7 +436,7 @@
                 <version>2.3</version>
                 <configuration>
                     <outputDirectory>
-                        ${catalina.home}/webapps/
+                        ${basedir}/
                     </outputDirectory>
                     <webappDirectory>
                         ${catalina.home}/webapps/${project.build.finalName}
