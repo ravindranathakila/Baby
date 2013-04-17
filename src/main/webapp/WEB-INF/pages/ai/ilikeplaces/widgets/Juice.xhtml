@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="use100 juice" style="height:62%;">
+    <div class="use100 juice" style="height:62%; overflow: hidden;">
         <div class="use19" id="Juice_Snap_Content" style="height:100%;">
             <div class="use100" style="height:100%;">
                 <div class="use100 rise100 overflow_hidden">
@@ -42,8 +42,9 @@
             </div>
         </div>
         <div class="use62" id="Juice_Content"
-             style="height:100%;overflow:hidden;padding: 10px;background:url('/images/Metal_translucent_dull.png') repeat;">
-            <div class="use100" style="height:100%;background:url('/images/Metal_translucent_dull.png') repeat;">
+             style="height:100%;padding: 10px;background:url('/images/Metal_translucent_dull.png') repeat;">
+            <div class="use90 use5p use5a"
+                 style="height:100%;background:url('/images/Metal_translucent_dull.png') repeat;">
                 <div class="use100" id="Juice_Noti"
                      style="font-size:30px;font-family:'Comic Sans MS',serif;color:#00eeee;">
                 </div>
@@ -55,23 +56,7 @@
                              alt="Find exciting stuff around you" class="use100 cursor_pointer"/>
                     </div>
                 </div>
-                <div class="use100 hidden" style="height:35%; vertical-align: middle;">
-                    <div class="use100" style="vertical-align: middle;">
-                        <img src="/images/are_you_looking_for_fun_around_you.png"
-                             style="padding-top: 50px;"
-                             onclick="suggestPlace();$('#JSJuicePlaceInput').focus();"
-                             alt="Find exciting stuff around you" class="use100 cursor_pointer"/>
-                    </div>
-                    <div class="use20 use25p use5a right">
-                        <img src="/images/yes.png" alt="Yes" class="cursor_pointer"
-                             onclick="$('#jsSignupFiller').fadeIn(520);"/>
-                    </div>
-                    <div class="use20 use25a use5a left">
-                        <img src="/images/no.png" alt="No" class="cursor_pointer"
-                             onclick="$('#jsSignupFiller').fadeOut(1500);"/>
-                    </div>
-                </div>
-                <div class="use100 hidden" id="jsSignupBox" style="height:40%;">
+                <div class="use100 hidden" id="jsSignupBox" style="height:35%;">
                     <div class="use100" style="height:20%;">
                         <div class="use20 use5p right" style="height:100%;vertical-align: top;">
                             <img src="/images/Sign_up_Email.png" alt="Sign Up Email"
@@ -89,8 +74,6 @@
                                  style="cursor:pointer;"/>
                         </div>
                     </div>
-                    <div class="use100" style="height:20%;">
-                    </div>
                     <div class="use100" style="height:20%; overflow:hidden;">
                         <div class="use60 use20p use20a">
                             <img src="/images/Sign_up_Or.png" alt="Or" class="use40 use30p use30a"/>
@@ -107,9 +90,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="use100" id="jsSignupFiller" style="height:40%;">
+                <div class="use100" id="jsSignupFiller" style="height:35%;">
                     <div class="use90 use5p use5a" style="height:20%;display: block;">
-
+                        &nbsp;
                     </div>
                     <div class="use100" style="height:80%;">
                         <div class="use19">
@@ -121,15 +104,12 @@
                             </div>
                         </div>
                         <div class="use62">
-                            <div class="use100" style="height: 10px;">
-                                &nbsp;
-                            </div>
                             <div class="use90 use5p use5a">
                                 <input type="text"
                                        value=""
                                        id="JSJuicePlaceInput"
-                                       style="height:100%;font-family:'Comic Sans MS',serif;color:#f928c7;text-align:center;
-                                   border: 0 #46a1ff dotted;border-bottom-width: 5px;
+                                       style="height:100%;font-family:'Comic Sans MS',serif;color:#0372d9;text-align:center;
+                                   border: 0 #0372d9 dotted;border-bottom-width: 5px;
                                    background:url('/images/Metal_translucent.png') repeat;font-size:31px;"
                                        class="use80 use10p use10a"
                                        onclick="suggestPlace();"
@@ -152,11 +132,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="use80 use10p use10a cursor_pointer" style="height:15%;">
+                <div class="use80 use10p use10a cursor_pointer" style="height:10%;">
                     <img src="/images/get_updates.png" class="use100" alt="Get Updates!"
                          onclick="setMapToLocation($('#JSJuicePlaceInput').val());$('.AarrrSubscribe').show();$('.AarrrDownTownHeatMap').hide();$('.AarrrJuice').hide();"/>
                 </div>
-                <div class="use100" style="height: 10%;">
+                <div class="use100" style="height: 20%;">
                     &nbsp;
                 </div>
             </div>
@@ -195,6 +175,7 @@
             navigator.geolocation.getCurrentPosition(function (location) {
                 var googleLatLong = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
                 $('#AarrrWOEID').val(location.coords.latitude + "," + location.coords.longitude + "," + location.coords.latitude + "," + location.coords.longitude);
+                generalCallOnDownTownHeatMapBBUpdate(location.coords.latitude, location.coords.longitude, location.coords.latitude, location.coords.longitude);
                 getAddress(
                         googleLatLong,
                         function (desc) {
@@ -218,6 +199,7 @@
                     $("#searchboxmap").val(browserLocation).text(browserLocation);
                     $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation);
                     $('#AarrrWOEID').val(data.geoplugin_latitude + "," + data.geoplugin_longitude + "," + data.geoplugin_latitude + "," + data.geoplugin_longitude);
+                    generalCallOnDownTownHeatMapBBUpdate(data.geoplugin_latitude, data.geoplugin_longitude, data.geoplugin_latitude, data.geoplugin_longitude);
                 });
             } catch (err) {
             }
@@ -233,6 +215,21 @@
         }
     });
 
+
+    function generalCallOnDownTownHeatMapBBUpdate(latSW, lngSW, latNE, lngNE) {
+        var curr = DownTownHeatMapBBUpdate(
+                latSW,
+                lngSW,
+                latNE,
+                lngNE
+        );
+        clearHotSpots();
+        $('.AarrrDownTownHeatMap').show();//focus/blur will not work if not
+        curr.focus();//To update ItsNat
+        curr.blur();//To update ItsNat
+        $('.AarrrDownTownHeatMap').hide();//focus/blur will not work if not
+    }
+
     try {//Attempting to geo locate the user based on ip
         // Build the URL to query
         var url = 'http://www.geoplugin.net/json.gp?jsoncallback=?';
@@ -247,6 +244,7 @@
             $("#searchboxmap").val(browserLocation).text(browserLocation);
             $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation);
             $('#AarrrWOEID').val(data.geoplugin_latitude + "," + data.geoplugin_longitude + "," + data.geoplugin_latitude + "," + data.geoplugin_longitude);
+            generalCallOnDownTownHeatMapBBUpdate(data.geoplugin_latitude, data.geoplugin_longitude, data.geoplugin_latitude, data.geoplugin_longitude);
         });
     } catch (err) {
     }
