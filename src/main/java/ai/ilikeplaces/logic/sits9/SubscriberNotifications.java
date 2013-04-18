@@ -172,7 +172,7 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                     final Document email = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
                     final Document event = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
                     final String _content = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", email));
-                    final Parameter _unsubscribeLink = new Parameter("http://localhost:8080/unsubscribe/").append(Unsubscribe.TYPE, Unsubscribe.Type.GeohashSubscribe.name(), true)
+                    final Parameter _unsubscribeLink = new Parameter("http://www.ilikeplaces.com/unsubscribe/").append(Unsubscribe.TYPE, Unsubscribe.Type.GeohashSubscribe.name(), true)
                             .append(Unsubscribe.VALUE, rowKey);
                     final String finalEmail = _content.replace(" ___||_", eventList.toString())
                             .replace("_unsubscribe_link_", _unsubscribeLink.get());
