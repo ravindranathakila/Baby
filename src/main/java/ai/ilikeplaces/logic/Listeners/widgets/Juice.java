@@ -37,10 +37,15 @@ import org.w3c.dom.html.HTMLDocument;
 public class Juice extends AbstractWidgetListener<JuiceCriteria> {
 
     private static final String ENTER_A_VALID_EMAIL = "enter.a.valid.email";
+
     private static final String INVITED_ADDED_0 = "invited.added.0";
+
     private static final String COULD_NOT_INVITE_AND_ADD_TRY_AGAIN = "could.not.invite.and.add.try.again";
+
     private static final String MESSAGE_ADDING_SELF_AS_FRIEND = "message.adding.self.as.friend";
+
     private static final String IS_ALREADY_YOUR_FRIEND = "0.is.already.your.friend";
+
     private static final String READ_MORE = "read.more";
 
     public static enum JuiceIds implements WidgetIds {
@@ -60,6 +65,10 @@ public class Juice extends AbstractWidgetListener<JuiceCriteria> {
         Juice_Email,
         Juice_Signup_Click,
         Juice_Noti,
+
+        Juice_Place_Input,
+        Juice_Place_Submit,
+        Juice_Get_Updates,
 
     }
 

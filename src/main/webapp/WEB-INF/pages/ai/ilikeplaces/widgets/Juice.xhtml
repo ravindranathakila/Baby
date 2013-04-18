@@ -52,9 +52,10 @@
                     <div class="use100" style="vertical-align: middle;">
                         <img src="/images/find_fun_around_you.png"
                              style="padding-top: 90px;"
-                             onclick="suggestPlace();$('#JSJuicePlaceInput').focus();"
+                             onclick="suggestPlace();$('.JSJuicePlaceInput').focus();"
                              alt="Find exciting stuff around you" class="use100 cursor_pointer"/>
                     </div>
+                    `
                 </div>
                 <div class="use100 hidden" id="jsSignupBox" style="height:35%;">
                     <div class="use100" style="height:20%;">
@@ -107,11 +108,12 @@
                             <div class="use90 use5p use5a">
                                 <input type="text"
                                        value=""
-                                       id="JSJuicePlaceInput"
+                                       title="You need to enter a place|Click search|You will be redirected to map"
+                                       id="Juice_Place_Input"
                                        style="height:100%;font-family:'Comic Sans MS',serif;color:#0372d9;text-align:center;
-                                   border: 0 #0372d9 dotted;border-bottom-width: 5px;
-                                   background:url('/images/Metal_translucent.png') repeat;font-size:31px;"
-                                       class="use80 use10p use10a"
+                                                border: 0 #0372d9 dotted;border-bottom-width: 5px;
+                                                background:url('/images/Metal_translucent.png') repeat;font-size:31px;"
+                                       class="use80 use10p use10a vtip JSJuicePlaceInput"
                                        onclick="suggestPlace();"
                                         />
                             </div>
@@ -120,10 +122,10 @@
                             <div class="use100">
                                 <img src="/images/Search.png"
                                      title="You need to enter a place|Click search|You will be redirected to map"
-                                     id="JSJuicePlaceSubmit"
-                                     alt="" class="use100 vtip click_indicator"
+                                     id="Juice_Place_Submit"
+                                     alt="" class="use100 vtip click_indicator JSJuicePlaceSubmit"
                                      style="overflow: hidden; cursor: pointer;"
-                                     onclick="if($('#JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchboxmap').attr('value',$('#JSJuicePlaceInput').val()).text($('#JSJuicePlaceInput').val());$('#searchButtonMap').click();"
+                                     onclick="if($('.JSJuicePlaceInput').val() == ''){suggestPlace();} $('#AarrrJuice').fadeOut();$('#AarrrDownTownHeatMap').fadeIn();google.maps.event.trigger(GAIA, 'resize');$('#searchboxmap').attr('value',$('.JSJuicePlaceInput').val()).text($('.JSJuicePlaceInput').val());$('#searchButtonMap').click();"
                                         />
                             </div>
                             <div class="use100" style="height: 20px;">
@@ -133,8 +135,10 @@
                     </div>
                 </div>
                 <div class="use80 use10p use10a cursor_pointer" style="height:10%;">
-                    <img src="/images/get_updates.png" class="use100" alt="Get Updates!"
-                         onclick="setMapToLocation($('#JSJuicePlaceInput').val());$('.AarrrSubscribe').show();$('.AarrrDownTownHeatMap').hide();$('.AarrrJuice').hide();"/>
+                    <img class="use100 vtip" alt="Get Updates!" src="/images/get_updates.png"
+                         title="You need to enter a place|Click Get Updates|You will be emailed updates"
+                         id="Juice_Get_Updates"
+                         onclick="setMapToLocation($('.JSJuicePlaceInput').val());$('.AarrrSubscribe').show();$('.AarrrDownTownHeatMap').hide();$('.AarrrJuice').hide();"/>
                 </div>
                 <div class="use100" style="height: 20%;">
                     &nbsp;
@@ -180,7 +184,7 @@
                         googleLatLong,
                         function (desc) {
                             $("#searchboxmap").val(desc).text(desc);
-                            $("#JSJuicePlaceInput").val(desc).text(desc);
+                            $(".JSJuicePlaceInput").val(desc).text(desc);
                         }
                 );
             });
@@ -197,7 +201,7 @@
                             + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
                             + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
                     $("#searchboxmap").val(browserLocation).text(browserLocation);
-                    $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation);
+                    $(".JSJuicePlaceInput").val(browserLocation).text(browserLocation);
                     $('#AarrrWOEID').val(data.geoplugin_latitude + "," + data.geoplugin_longitude + "," + data.geoplugin_latitude + "," + data.geoplugin_longitude);
                     generalCallOnDownTownHeatMapBBUpdate(data.geoplugin_latitude, data.geoplugin_longitude, data.geoplugin_latitude, data.geoplugin_longitude);
                 });
@@ -207,11 +211,11 @@
 
     }
 
-    $('#JSJuicePlaceInput').delay(500).focus();
+    $('.JSJuicePlaceInput').delay(500).focus();
 
-    $('#JSJuicePlaceInput').keydown(function (e) {
+    $('.JSJuicePlaceInput').keydown(function (e) {
         if (e.keyCode == 13) {
-            $('#JSJuicePlaceSubmit').click();
+            $('.JSJuicePlaceSubmit').click();
         }
     });
 
@@ -242,7 +246,7 @@
                     + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
                     + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
             $("#searchboxmap").val(browserLocation).text(browserLocation);
-            $("#JSJuicePlaceInput").val(browserLocation).text(browserLocation);
+            $(".JSJuicePlaceInput").val(browserLocation).text(browserLocation);
             $('#AarrrWOEID').val(data.geoplugin_latitude + "," + data.geoplugin_longitude + "," + data.geoplugin_latitude + "," + data.geoplugin_longitude);
             generalCallOnDownTownHeatMapBBUpdate(data.geoplugin_latitude, data.geoplugin_longitude, data.geoplugin_latitude, data.geoplugin_longitude);
         });
