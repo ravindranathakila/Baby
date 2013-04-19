@@ -140,41 +140,46 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                     final SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     _simpleDateFormat.format(_week.getTime());
 
-                    final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
-                            .getInstance("http://upcoming.yahooapis.com/services/rest/")
-                            .get("",
-                                    new HashMap<String, String>() {
-                                        {//Don't worry, this is a static initializer of this map :)
-                                            put("method", "event.search");
-                                            put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
-                                            put("radius", "" + 100);
-                                            put("format", "json");
-                                            put("max_date", _simpleDateFormat.format(_week.getTime()));
-                                        }
-                                    }
-
-                            );
-                    final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
                     final StringBuffer eventList = new StringBuffer("");
 
-                    final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
-                    final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
+                    try {
+                        final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
+                                .getInstance("http://upcoming.yahooapis.com/services/rest/")
+                                .get("",
+                                        new HashMap<String, String>() {
+                                            {//Don't worry, this is a static initializer of this map :)
+                                                put("method", "event.search");
+                                                put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
+                                                put("radius", "" + 100);
+                                                put("format", "json");
+                                                put("max_date", _simpleDateFormat.format(_week.getTime()));
+                                            }
+                                        }
 
-                    for (int i = 0; i < events.length(); i++) {
-                        final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
-                        Double.parseDouble(eventJSONObject.getString(LATITUDE));
-                        Double.parseDouble(eventJSONObject.getString(LONGITUDE));
-                        final String eventName = eventJSONObject.getString(NAME);
-                        final String eventUrl = eventJSONObject.getString("url");
-                        final String eventDate = eventJSONObject.getString("start_date");
-                        final String eventVenue = eventJSONObject.getString("venue_name");
-                        Loggers.debug("Event name:" + eventName);
-                        eventList.append(eventTemplate
-                                .replace("_name_link_", !(("" + eventUrl).isEmpty()) ? eventUrl : ("https://www.google.com/search?q=" + eventName.replaceAll(" ", "+").replaceAll("-", "+")))
-                                .replace("_place_link_", "https://maps.googleapis.com/maps/api/staticmap?sensor=false&size=600x600&markers=color:blue%7Clabel:S%7C" + _read.getLatitude().toString() + "," + _read.getLongitude().toString())
-                                .replace("_name_", eventName)
-                                .replace("_place_", eventVenue)
-                                .replace("_date_", eventDate));
+                                );
+                        final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
+
+                        final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
+                        final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
+
+                        for (int i = 0; i < events.length(); i++) {
+                            final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
+                            Double.parseDouble(eventJSONObject.getString(LATITUDE));
+                            Double.parseDouble(eventJSONObject.getString(LONGITUDE));
+                            final String eventName = eventJSONObject.getString(NAME);
+                            final String eventUrl = eventJSONObject.getString("url");
+                            final String eventDate = eventJSONObject.getString("start_date");
+                            final String eventVenue = eventJSONObject.getString("venue_name");
+                            Loggers.debug("Event name:" + eventName);
+                            eventList.append(eventTemplate
+                                    .replace("_name_link_", !(("" + eventUrl).isEmpty()) ? eventUrl : ("https://www.google.com/search?q=" + eventName.replaceAll(" ", "+").replaceAll("-", "+")))
+                                    .replace("_place_link_", "https://maps.googleapis.com/maps/api/staticmap?sensor=false&size=600x600&markers=color:blue%7Clabel:S%7C" + _read.getLatitude().toString() + "," + _read.getLongitude().toString())
+                                    .replace("_name_", eventName)
+                                    .replace("_place_", eventVenue)
+                                    .replace("_date_", eventDate));
+                        }
+                    } catch (final Throwable t) {
+                        Loggers.error("Error appending Yahoo Upcoming data to Geohash Subscriber", t);
                     }
 
                     final Document email = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
