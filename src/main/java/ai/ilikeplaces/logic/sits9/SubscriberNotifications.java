@@ -45,6 +45,8 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
     public static final int TGIF_TIMING = Integer.parseInt(RBGet.getGlobalConfigKey("TGIF_TIMING"));
 
+    public static final int TGIF_ON_STARTUP = Integer.parseInt(RBGet.getGlobalConfigKey("TGIF_ON_STARTUP"));
+
     private static final String SUBSCRIBER_EMAIL = "ai/ilikeplaces/logic/Listeners/widgets/subscribe/SubscriberEventEmail.html";
 
     private static final String SUBSCRIBER_EMAIL_EVENT = "ai/ilikeplaces/logic/Listeners/widgets/subscribe/SubscriberEventEmailEvent.html";
@@ -90,6 +92,12 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
             sl.appendToLogMSG("Starting timer on " + format);
         } else {
             timerService.createTimer(0, timeout, null);
+        }
+
+        if (TGIF_ON_STARTUP == 1) {
+            final Calendar now = Calendar.getInstance();
+            now.add(Calendar.MINUTE, 1);
+            timerService.createTimer(now.getTime(), timeout, null);
         }
 
         sl.complete(Loggers.LEVEL.INFO, Loggers.DONE);
