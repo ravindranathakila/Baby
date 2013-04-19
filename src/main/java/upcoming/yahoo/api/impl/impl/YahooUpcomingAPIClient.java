@@ -29,15 +29,25 @@ import java.util.Map;
 public class YahooUpcomingAPIClient implements Client {
 
     private static final String QUESTION_MARK = "?";
+
     private static final String GOT_ERROR_CODE = "Got error code:";
+
     private static final String DOT_JASON = ".json";
+
     private static final String EQUALS = "=";
+
     private static final String API_KEY = "api_key" + EQUALS;
+
     private static final String AMPERSAND = "&";
+
     private static final String OPEN_SQR_BRCKT = "[";
+
     private static final String CLOSE_SQR_BRCKT = "]";
+
     private static final String EMPTY = "";
+
     final private String api_key;
+
     final private String jsonEndpoint;
 
     @Inject
@@ -46,11 +56,9 @@ public class YahooUpcomingAPIClient implements Client {
         this.jsonEndpoint = jsonEndpoint;
     }
 
-
     public String getJsonEndpoint() {
         return jsonEndpoint;
     }
-
 
     public JSONObject get(final String endpointEndValue, final Map<String, String> parameters) {
         final StringBuilder sb = new StringBuilder(EMPTY);
@@ -59,12 +67,16 @@ public class YahooUpcomingAPIClient implements Client {
         }
 
         JSONObject jsonObject;
+
+        String _json = null;
+
         try {
-            jsonObject = new JSONObject(getJson(endpointEndValue, sb.toString()));
+            _json = getJson(endpointEndValue, sb.toString());
+            jsonObject = new JSONObject(_json);
         } catch (JSONException e) {
             //throw new RuntimeException(e);
             jsonObject = new JSONObject();
-            Loggers.ERROR.error("Error parsing this to JSON:" + sb.toString());
+            Loggers.ERROR.error("Error parsing this to JSON:" + _json);
         }
 
         return jsonObject;
