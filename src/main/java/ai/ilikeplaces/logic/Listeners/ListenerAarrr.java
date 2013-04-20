@@ -61,7 +61,7 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
 
                 new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 
-                new Subscribe(request__, new SubscribeCriteria(), $(Controller.Page.AarrrSubscribe));
+                new Subscribe(request__, new SubscribeCriteria().setHumanId(new HumanId(getUsername())), $(Controller.Page.AarrrSubscribe));
 
                 if (getUsername() != null) {
                     displayNone($(Controller.Page.AarrrJuice));

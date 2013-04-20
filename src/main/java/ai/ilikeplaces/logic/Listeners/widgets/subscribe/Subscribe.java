@@ -24,7 +24,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.html.HTMLDocument;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -66,25 +65,6 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
         super(request__, Controller.Page.Subscribe, subscribeCriteria, appendToElement__);
     }
 
-// --------------------------- CONSTRUCTORS ---------------------------
-
-    public static String getCurrentUrl(final HttpServletRequest req) {
-        final String contextPath = req.getContextPath();   // /mywebapp
-        final String servletPath = req.getServletPath();   // /servlet/MyServlet
-        final String pathInfo = req.getPathInfo();         // /a/b;c=123
-        final String queryString = req.getQueryString();          // d=789
-
-        // Reconstruct original requesting URL
-        String url = contextPath + servletPath;
-        if (pathInfo != null) {
-            url += pathInfo;
-        }
-        if (queryString != null) {
-            url += "?" + queryString;
-        }
-        return url;
-    }
-
 // ------------------------ OVERRIDING METHODS ------------------------
 
     /**
@@ -100,10 +80,10 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 
         ShowHideWidgetAreaBasedOnLoggedInState:
         {
-            if (subscribeCriteria.getHumanId() == null) {
-                $$displayBlock($$(SubscribeIds.subscribe_signed_out));
-            } else {
+            if (subscribeCriteria.getHumanId().valid()) {
                 $$displayBlock($$(SubscribeIds.subscribe_signed_in));
+            } else {
+                $$displayBlock($$(SubscribeIds.subscribe_signed_out));
             }
         }
 
@@ -151,99 +131,132 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
                     @Override
                     protected void onFire(Event evt) {
 
-                        final Email myemail = criteria.getSignupCriteria().getEmail();
+                        final HumanId _humanId = criteria.getHumanId();
+                        final boolean isUserLoggedOut = _humanId.getObj() == null;
 
+                        if (isUserLoggedOut) {
+                            Loggers.debug("isUserLoggedOut:" + isUserLoggedOut);
 
-                        if (myemail.valid()) {
-                            if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
+                            final Email myemail = criteria.getSignupCriteria().getEmail();
 
-                                final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
+                            if (myemail.valid()) {
 
-                                final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
-                                        new HumanId().setObjAsValid(myemail.getObj()),
-                                        new Password(randomPassword),
-                                        myemail);
+                                if (!DB.getHumanCRUDHumanLocal(true).doDirtyCheckHuman(myemail.getObj()).returnValue()) {
 
-                                try {
-                                    final String boundingBox = $(Controller.Page.AarrrWOEID).getAttribute(MarkupTag.INPUT.value());
-                                    Loggers.INFO.info("LAT LNG:" + boundingBox);
-                                    final String[] boundingBoxLatLngs = boundingBox.split(",");
-                                    final double latitude = (Double.parseDouble(boundingBoxLatLngs[0]) + Double.parseDouble(boundingBoxLatLngs[2])) / 2;
-                                    final double longitude = (Double.parseDouble(boundingBoxLatLngs[1]) + Double.parseDouble(boundingBoxLatLngs[3])) / 2;
+                                    final String randomPassword = Long.toHexString(Double.doubleToLongBits(Math.random()));
 
-                                    final GeoHash _geoHash = GeoHash.withCharacterPrecision(latitude, longitude, 12);
-                                    final String rowKey = _geoHash.toBase32() + "-" + myemail.getObjectAsValid();
+                                    final Return<Boolean> humanCreateReturn = DB.getHumanCRUDHumanLocal(true).doCHuman(
+                                            new HumanId().setObjAsValid(myemail.getObj()),
+                                            new Password(randomPassword),
+                                            myemail);
 
-                                    final Subscriber _subscriber = Subscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).build();
-                                    final GeohashSubscriber _geohashSubscriber = GeohashSubscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).setLatitude(latitude).setLongitude(longitude).build();
-
-                                    new HBaseCrudService<GeohashSubscriber>().create(new RowKey() {
-                                        @Override
-                                        public String getRowKey() {
-                                            return rowKey;
-                                        }
-                                    }, _geohashSubscriber);
-
-                                } catch (final Throwable e) {
-                                    throw new RuntimeException(e);
-                                }
-
-                                if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
-                                    UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
-
-                                    final Parameter parameter;
-                                    if (woehint != null && placeName != null && placeDetails != null) {
-                                        parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143")
-                                                .append(PrivateLocationCreate.WOEHINT,
-                                                        woehint)
-                                                .append(PrivateLocationCreate.PLACENAME,
-                                                        placeName)
-                                                .append(PrivateLocationCreate.PLACEDETAILS,
-                                                        placeDetails);
-                                    } else {
-                                        parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143");
-                                    }
-
-                                    final String activationURL;
                                     try {
-                                        activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                                .append(ServletLogin.Username, myemail.getObj(), true)
-                                                .append(ServletLogin.Password,
-                                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                                .returnValue()
-                                                                .getHumanAuthenticationHash())
-                                                .append(ServletActivate.NEXT, URLEncoder.encode(parameter.toURL(), "UTF8"))
-                                                .get();
-                                    } catch (UnsupportedEncodingException e) {
+                                        final String boundingBox = $(Controller.Page.AarrrWOEID).getAttribute(MarkupTag.INPUT.value());
+                                        Loggers.debug("LAT LNG:" + boundingBox);
+                                        final String[] boundingBoxLatLngs = boundingBox.split(",");
+                                        final double latitude = (Double.parseDouble(boundingBoxLatLngs[0]) + Double.parseDouble(boundingBoxLatLngs[2])) / 2;
+                                        final double longitude = (Double.parseDouble(boundingBoxLatLngs[1]) + Double.parseDouble(boundingBoxLatLngs[3])) / 2;
+
+                                        final GeoHash _geoHash = GeoHash.withCharacterPrecision(latitude, longitude, 12);
+                                        final String rowKey = _geoHash.toBase32() + "-" + myemail.getObjectAsValid();
+
+                                        final Subscriber _subscriber = Subscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).build();
+                                        final GeohashSubscriber _geohashSubscriber = GeohashSubscriber.newBuilder().setEmailId(myemail.getObjectAsValid()).setLatitude(latitude).setLongitude(longitude).build();
+
+                                        new HBaseCrudService<GeohashSubscriber>().create(new RowKey() {
+                                            @Override
+                                            public String getRowKey() {
+                                                return rowKey;
+                                            }
+                                        }, _geohashSubscriber);
+
+                                    } catch (final Throwable e) {
                                         throw new RuntimeException(e);
                                     }
 
+                                    if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
+                                        UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
 
-                                    String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
+                                        final Parameter parameter;
+                                        if (woehint != null && placeName != null && placeDetails != null) {
+                                            parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143")
+                                                    .append(PrivateLocationCreate.WOEHINT,
+                                                            woehint)
+                                                    .append(PrivateLocationCreate.PLACENAME,
+                                                            placeName)
+                                                    .append(PrivateLocationCreate.PLACEDETAILS,
+                                                            placeDetails);
+                                        } else {
+                                            parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143");
+                                        }
 
-                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
-                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
+                                        final String activationURL;
+                                        try {
+                                            activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+                                                    .append(ServletLogin.Username, myemail.getObj(), true)
+                                                    .append(ServletLogin.Password,
+                                                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+                                                                    .returnValue()
+                                                                    .getHumanAuthenticationHash())
+                                                    .append(ServletActivate.NEXT, URLEncoder.encode(parameter.toURL(), "UTF8"))
+                                                    .get();
+                                        } catch (UnsupportedEncodingException e) {
+                                            throw new RuntimeException(e);
+                                        }
 
-                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                            myemail.getObj(),
-                                            "I Like Places prides you with an Exclusive Invite!",
-                                            htmlBody);
 
-                                    $$displayNone($$(SubscribeIds.subscribe_signup_section));
+                                        String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
 
-                                    Subscribe.this.notifyUser("Great! Check your email now!");
+                                        htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                                        htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
+                                        htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
 
-                                    $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                                myemail.getObj(),
+                                                "I Like Places prides you with an Exclusive Invite!",
+                                                htmlBody);
+
+                                        $$displayNone($$(SubscribeIds.subscribe_signup_section));
+
+                                        Subscribe.this.notifyUser("Great! Check your email now!");
+
+                                        $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
+                                    } else {
+                                        Subscribe.this.notifyUser("Email INVALID!");
+                                    }
                                 } else {
-                                    Subscribe.this.notifyUser("Email INVALID!");
+                                    Subscribe.this.notifyUser("This email is TAKEN!:(");
                                 }
+
                             } else {
-                                Subscribe.this.notifyUser("This email is TAKEN!:(");
+                                Subscribe.this.notifyUser("Email seems to be wrong :-(");
                             }
                         } else {
-                            Subscribe.this.notifyUser("Email seems to be wrong :-(");
+                            Loggers.debug("isUserLoggedOut:" + isUserLoggedOut);
+
+                            final String boundingBox = $(Controller.Page.AarrrWOEID).getAttribute(MarkupTag.INPUT.value());
+                            Loggers.debug("LAT LNG:" + boundingBox);
+                            final String[] boundingBoxLatLngs = boundingBox.split(",");
+                            final double latitude = (Double.parseDouble(boundingBoxLatLngs[0]) + Double.parseDouble(boundingBoxLatLngs[2])) / 2;
+                            final double longitude = (Double.parseDouble(boundingBoxLatLngs[1]) + Double.parseDouble(boundingBoxLatLngs[3])) / 2;
+
+                            final GeoHash _geoHash = GeoHash.withCharacterPrecision(latitude, longitude, 12);
+                            final String rowKey = _geoHash.toBase32() + "-" + _humanId.getObjectAsValid();
+
+                            final Subscriber _subscriber = Subscriber.newBuilder().setEmailId(_humanId.getObjectAsValid()).build();
+                            final GeohashSubscriber _geohashSubscriber = GeohashSubscriber.newBuilder().setEmailId(_humanId.getObjectAsValid()).setLatitude(latitude).setLongitude(longitude).build();
+
+                            new HBaseCrudService<GeohashSubscriber>().create(new RowKey() {
+                                @Override
+                                public String getRowKey() {
+                                    return rowKey;
+                                }
+                            }, _geohashSubscriber);
+
+                            Subscribe.this.notifyUser("Great! You'll get updates of this place every Friday!");
+
                         }
+
                     }
                 }
         );
