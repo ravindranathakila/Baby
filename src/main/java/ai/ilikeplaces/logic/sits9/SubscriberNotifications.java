@@ -116,8 +116,8 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
     @Timeout
     synchronized public void timeout(final Timer timer) throws IOException, SAXException, TransformerException, JSONException, SQLException {
 
-//        final CSVReader reader = new CSVReader(new FileReader("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.sql"));
-        final CSVReader reader = new CSVReader(new FileReader("/Users/ravindranathakila/ilikeplaces/apache-tomee-plus-1.5.0/lib/Location.sql"));
+        final CSVReader reader = new CSVReader(new FileReader("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.sql"));
+//        final CSVReader reader = new CSVReader(new FileReader("/Users/ravindranathakila/ilikeplaces/apache-tomee-plus-1.5.0/lib/Location.sql"));
         String[] nextLine;
         final Connection _connection = dataSource.getConnection();
         while ((nextLine = reader.readNext()) != null) {
