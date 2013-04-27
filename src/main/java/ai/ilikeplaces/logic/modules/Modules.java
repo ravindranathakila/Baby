@@ -7,6 +7,7 @@ import ai.ilikeplaces.util.MethodTimer;
 import ai.ilikeplaces.util.ParamValidator;
 import ai.ilikeplaces.util.jndi.impl.JNDILookupFactory;
 import ai.scribble.License;
+import api.eventful.com.impl.ClientFactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -38,9 +39,15 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
     final static JNDILookupFactory jndiLookupFactory = jndiLookupFactoryInjector.getInstance(JNDILookupFactory.class);
 
     private final ai.ilikeplaces.ygp.impl.ClientFactory yahooGeoPlanetFactory;
+
     private final com.disqus.api.impl.ClientFactory disqusApiFactory;
+
     private final com.google.places.api.impl.ClientFactory googlePlacesApiFactory;
+
+    @Deprecated
     private final upcoming.yahoo.api.impl.ClientFactory yahooUplcomingFactory;
+
+    private final ClientFactory eventulFactory;
 
     public Modules() {
         {
@@ -58,7 +65,10 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
         {
             final Injector yahooUpcomingFactoryInjector = Guice.createInjector(new YahooUpcomingClientModule());
             yahooUplcomingFactory = yahooUpcomingFactoryInjector.getInstance(upcoming.yahoo.api.impl.ClientFactory.class);
-
+        }
+        {
+            final Injector eventfulFactoryInjector = Guice.createInjector(new EventfulClientModule());
+            eventulFactory = eventfulFactoryInjector.getInstance(api.eventful.com.impl.ClientFactory.class);
         }
     }
 
@@ -84,6 +94,10 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
 
     public com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory() {
         return googlePlacesApiFactory;
+    }
+
+    public api.eventful.com.impl.ClientFactory getEventulFactory() {
+        return eventulFactory;
     }
 
     @PostConstruct

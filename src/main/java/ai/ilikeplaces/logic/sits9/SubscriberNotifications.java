@@ -11,6 +11,7 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Unsubscribe;
 import ai.ilikeplaces.util.*;
 import ai.scribble.License;
+import au.com.bytecode.opencsv.CSVReader;
 import com.google.gson.Gson;
 import org.apache.avro.io.BinaryDecoder;
 import org.apache.avro.io.DatumReader;
@@ -25,9 +26,15 @@ import sun.misc.BASE64Decoder;
 
 import javax.annotation.Resource;
 import javax.ejb.*;
+import javax.sql.DataSource;
 import javax.xml.transform.TransformerException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -62,6 +69,9 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
     @EJB
     private SendMailLocal sendMailLocal;
+
+    @Resource(name = "ilpUn")
+    private DataSource dataSource;
 
     @Override
     public void startTimer() {
@@ -104,7 +114,30 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
     }
 
     @Timeout
-    synchronized public void timeout(final Timer timer) throws IOException, SAXException, TransformerException, JSONException {
+    synchronized public void timeout(final Timer timer) throws IOException, SAXException, TransformerException, JSONException, SQLException {
+
+        final CSVReader reader = new CSVReader(new FileReader("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.sql"));
+        String[] nextLine;
+        while ((nextLine = reader.readNext()) != null) {
+            // nextLine[] is an array of values from the line
+            System.out.println(Arrays.toString(nextLine));
+            if (nextLine.length == 7) {
+                final Connection _connection = dataSource.getConnection();
+                final Statement _statement = _connection.createStatement();
+                String sql = "INSERT INTO Location " +
+                        "VALUES ("
+                        + nextLine[0] + ","
+                        + 1 + ",'"
+                        + nextLine[2] + "','"
+                        + nextLine[3] + "','"
+                        + nextLine[4] + "','"
+                        + nextLine[5] + "',"
+                        + nextLine[6] + ")";
+                _statement.executeUpdate(sql);
+            }
+        }
+
+
         final HBaseCrudService<GeohashSubscriber> _geohashSubscriberHBaseCrudService = new HBaseCrudService<GeohashSubscriber>();
         final HBaseCrudService<GeohashSubscriber>.Scanner _scanner = _geohashSubscriberHBaseCrudService.scan(new GeohashSubscriber(), 1).returnValueBadly();
 
@@ -142,22 +175,67 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
                     final StringBuffer eventList = new StringBuffer("");
 
+//                    try {
+//                        final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
+//                                .getInstance("http://upcoming.yahooapis.com/services/rest/")
+//                                .get("",
+//                                        new HashMap<String, String>() {
+//                                            {//Don't worry, this is a static initializer of this map :)
+//                                                put("method", "event.search");
+//                                                put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
+//                                                put("radius", "" + 100);
+//                                                put("format", "json");
+//                                                put("max_date", _simpleDateFormat.format(_week.getTime()));
+//                                            }
+//                                        }
+//
+//                                );
+//                        final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
+//
+//                        final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
+//                        final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
+//
+//                        for (int i = 0; i < events.length(); i++) {
+//                            final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
+//                            Double.parseDouble(eventJSONObject.getString(LATITUDE));
+//                            Double.parseDouble(eventJSONObject.getString(LONGITUDE));
+//                            final String eventName = eventJSONObject.getString(NAME);
+//                            final String eventUrl = eventJSONObject.getString("url");
+//                            final String eventDate = eventJSONObject.getString("start_date");
+//                            final String eventVenue = eventJSONObject.getString("venue_name");
+//                            Loggers.debug("Event name:" + eventName);
+//                            eventList.append(eventTemplate
+//                                    .replace("_name_link_", !(("" + eventUrl).isEmpty()) ? eventUrl : ("https://www.google.com/search?q=" + eventName.replaceAll(" ", "+").replaceAll("-", "+")))
+//                                    .replace("_place_link_", "https://maps.googleapis.com/maps/api/staticmap?sensor=false&size=600x600&markers=color:blue%7Clabel:S%7C" + _read.getLatitude().toString() + "," + _read.getLongitude().toString())
+//                                    .replace("_name_", eventName)
+//                                    .replace("_place_", eventVenue)
+//                                    .replace("_date_", eventDate));
+//                        }
+//                    } catch (final Throwable t) {
+//                        Loggers.error("Error appending Yahoo Upcoming data to Geohash Subscriber", t);
+//                    }
+
                     try {
-                        final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
-                                .getInstance("http://upcoming.yahooapis.com/services/rest/")
+
+                        final SimpleDateFormat eventfulDate = new SimpleDateFormat("yyyyMMdd00");
+                        _simpleDateFormat.format(_week.getTime());
+
+                        final JSONObject jsonObject = Modules.getModules().getEventulFactory()
+                                .getInstance("http://api.eventful.com/json/events/search/")
                                 .get("",
                                         new HashMap<String, String>() {
                                             {//Don't worry, this is a static initializer of this map :)
-                                                put("method", "event.search");
                                                 put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
-                                                put("radius", "" + 100);
-                                                put("format", "json");
-                                                put("max_date", _simpleDateFormat.format(_week.getTime()));
+                                                put("within", "" + 100);
+                                                put("date", eventfulDate.format(Calendar.getInstance().getTime()) + "-" + eventfulDate.format(_week.getTime()));
                                             }
                                         }
 
                                 );
-                        final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
+
+                        Loggers.debug("Eventful Reply:" + jsonObject.toString());
+
+                        final JSONArray events = jsonObject.getJSONObject("events").getJSONArray("event");
 
                         final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
                         final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
@@ -166,9 +244,9 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                             final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
                             Double.parseDouble(eventJSONObject.getString(LATITUDE));
                             Double.parseDouble(eventJSONObject.getString(LONGITUDE));
-                            final String eventName = eventJSONObject.getString(NAME);
+                            final String eventName = eventJSONObject.getString("title");
                             final String eventUrl = eventJSONObject.getString("url");
-                            final String eventDate = eventJSONObject.getString("start_date");
+                            final String eventDate = eventJSONObject.getString("start_time");
                             final String eventVenue = eventJSONObject.getString("venue_name");
                             Loggers.debug("Event name:" + eventName);
                             eventList.append(eventTemplate
@@ -179,7 +257,7 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                                     .replace("_date_", eventDate));
                         }
                     } catch (final Throwable t) {
-                        Loggers.error("Error appending Yahoo Upcoming data to Geohash Subscriber", t);
+                        Loggers.error("Error appending Eventful data to Geohash Subscriber", t);
                     }
 
                     final Document email = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
