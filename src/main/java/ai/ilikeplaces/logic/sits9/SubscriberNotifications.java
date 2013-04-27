@@ -106,7 +106,7 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
         if (TGIF_ON_STARTUP == 1) {
             final Calendar now = Calendar.getInstance();
-            now.add(Calendar.MINUTE, 1);
+            now.add(Calendar.SECOND, 30);
             timerService.createTimer(now.getTime(), timeout, null);
         }
 
@@ -116,14 +116,15 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
     @Timeout
     synchronized public void timeout(final Timer timer) throws IOException, SAXException, TransformerException, JSONException, SQLException {
 
-        final CSVReader reader = new CSVReader(new FileReader("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.sql"));
+//        final CSVReader reader = new CSVReader(new FileReader("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.sql"));
+        final CSVReader reader = new CSVReader(new FileReader("/Users/ravindranathakila/ilikeplaces/apache-tomee-plus-1.5.0/lib/Location.sql"));
         String[] nextLine;
+        final Connection _connection = dataSource.getConnection();
         while ((nextLine = reader.readNext()) != null) {
             // nextLine[] is an array of values from the line
             System.out.println(Arrays.toString(nextLine));
             if (nextLine.length == 7) {
                 try {
-                    final Connection _connection = dataSource.getConnection();
                     final Statement _statement = _connection.createStatement();
                     String sql = "INSERT INTO Location " +
                             "VALUES ("
@@ -135,8 +136,8 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                             + nextLine[5] + "',"
                             + nextLine[6] + ")";
                     _statement.executeUpdate(sql);
-                } catch (SQLException e) {
-                    System.out.println("Failed:" + Arrays.toString(nextLine));
+                } catch (final Throwable e) {
+                    System.out.println("Failed:" + Arrays.toString(nextLine) + " due to " + e.getMessage());
                 }
             }
         }
