@@ -122,18 +122,22 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
             // nextLine[] is an array of values from the line
             System.out.println(Arrays.toString(nextLine));
             if (nextLine.length == 7) {
-                final Connection _connection = dataSource.getConnection();
-                final Statement _statement = _connection.createStatement();
-                String sql = "INSERT INTO Location " +
-                        "VALUES ("
-                        + nextLine[0] + ","
-                        + 1 + ",'"
-                        + nextLine[2] + "','"
-                        + nextLine[3] + "','"
-                        + nextLine[4] + "','"
-                        + nextLine[5] + "',"
-                        + nextLine[6] + ")";
-                _statement.executeUpdate(sql);
+                try {
+                    final Connection _connection = dataSource.getConnection();
+                    final Statement _statement = _connection.createStatement();
+                    String sql = "INSERT INTO Location " +
+                            "VALUES ("
+                            + nextLine[0] + ","
+                            + 1 + ",'"
+                            + nextLine[2] + "','"
+                            + nextLine[3] + "','"
+                            + nextLine[4] + "','"
+                            + nextLine[5] + "',"
+                            + nextLine[6] + ")";
+                    _statement.executeUpdate(sql);
+                } catch (SQLException e) {
+                    System.out.println("Failed:" + Arrays.toString(nextLine));
+                }
             }
         }
 
