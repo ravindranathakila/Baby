@@ -414,7 +414,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                 new Event(request__, new EventCriteria()
                                         .setEventName(eventJSONObject.get("title").toString())
                                         .setEventStartDate(eventJSONObject.get("start_time").toString())
-                                        .setEventPhoto(eventJSONObject.getJSONObject("image").get("url").toString())
+//                                        .setEventPhoto(eventJSONObject.getJSONObject("image").get("url").toString())
                                         .setPlaceCriteria(
                                                 new PlaceCriteria()
                                                         .setPlaceNamePre("This event is taking place in ")

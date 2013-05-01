@@ -128,7 +128,7 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
         final Connection _connection = dataSource.getConnection();
         while ((nextLine = reader.readNext()) != null) {
             // nextLine[] is an array of values from the line
-            //System.out.println(Arrays.toString(nextLine));
+            System.out.println(Arrays.toString(nextLine));
             if (nextLine.length == 7) {
                 try {
                     final Statement stmt = _connection.createStatement();
