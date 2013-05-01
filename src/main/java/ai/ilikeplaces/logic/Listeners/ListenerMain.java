@@ -364,7 +364,6 @@ public class ListenerMain implements ItsNatServletRequestListener {
                         };
                     }
 
-                    final StringBuilder eventNames = new StringBuilder("");
                     final List<String> titleManifest = new ArrayList<String>();
 
                     EVENTS_WIDGETS:
@@ -398,19 +397,24 @@ public class ListenerMain implements ItsNatServletRequestListener {
 
                             Loggers.debug("Eventful Reply:" + jsonObject.toString());
 
+
+//                            final String eventName = eventJSONObject.getString("title");
+//                            final String eventUrl = eventJSONObject.getString("url");
+//                            final String eventDate = eventJSONObject.getString("start_time");
+//                            final String eventVenue = eventJSONObject.getString("venue_name");
+
                             final JSONArray events = jsonObject.getJSONObject("events").getJSONArray("event");
 
 
                             for (int i = 0; i < events.length(); i++) {
                                 final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
 
-                                eventNames.append(eventJSONObject.get("name").toString().replaceAll(" AND ", " OR ") + " OR ");
-                                titleManifest.add(eventJSONObject.get("name").toString());
+                                titleManifest.add(eventJSONObject.get("title").toString());
 
                                 new Event(request__, new EventCriteria()
-                                        .setEventName(eventJSONObject.get("name").toString())
-                                        .setEventStartDate(eventJSONObject.get("start_date").toString())
-                                        .setEventPhoto(eventJSONObject.get("photo_url").toString())
+                                        .setEventName(eventJSONObject.get("title").toString())
+                                        .setEventStartDate(eventJSONObject.get("start_time").toString())
+                                        .setEventPhoto(eventJSONObject.getJSONObject("image").get("url").toString())
                                         .setPlaceCriteria(
                                                 new PlaceCriteria()
                                                         .setPlaceNamePre("This event is taking place in ")
