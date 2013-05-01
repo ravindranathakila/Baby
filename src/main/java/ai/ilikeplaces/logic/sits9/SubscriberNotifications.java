@@ -12,6 +12,7 @@ import ai.ilikeplaces.servlets.Unsubscribe;
 import ai.ilikeplaces.util.*;
 import ai.scribble.License;
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 import com.google.gson.Gson;
 import org.apache.avro.io.BinaryDecoder;
 import org.apache.avro.io.DatumReader;
@@ -29,8 +30,10 @@ import javax.ejb.*;
 import javax.sql.DataSource;
 import javax.xml.transform.TransformerException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -118,29 +121,40 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
         final CSVReader reader = new CSVReader(new FileReader("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.sql"));
 //        final CSVReader reader = new CSVReader(new FileReader("/Users/ravindranathakila/ilikeplaces/apache-tomee-plus-1.5.0/lib/Location.sql"));
+
+        final CSVWriter writer = new CSVWriter(new FileWriter("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.next.sql"), ',');
+
         String[] nextLine;
         final Connection _connection = dataSource.getConnection();
         while ((nextLine = reader.readNext()) != null) {
             // nextLine[] is an array of values from the line
-            System.out.println(Arrays.toString(nextLine));
+            //System.out.println(Arrays.toString(nextLine));
             if (nextLine.length == 7) {
                 try {
-                    final Statement _statement = _connection.createStatement();
-                    String sql = "INSERT INTO Location " +
-                            "VALUES ("
-                            + nextLine[0] + ","
-                            + 1 + ",'"
-                            + nextLine[2] + "','"
-                            + nextLine[3] + "','"
-                            + nextLine[4] + "','"
-                            + nextLine[5] + "',"
-                            + nextLine[6] + ")";
-                    _statement.executeUpdate(sql);
+                    final Statement stmt = _connection.createStatement();
+                    final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM Location where locationId=" + nextLine[0]);
+                    if (rs.next()) {
+                        final Statement _statement = _connection.createStatement();
+                        String sql = "INSERT INTO Location " +
+                                "VALUES ("
+                                + nextLine[0] + ","
+                                + 1 + ",'"
+                                + nextLine[2] + "','"
+                                + nextLine[3] + "','"
+                                + nextLine[4] + "','"
+                                + nextLine[5] + "',"
+                                + nextLine[6] + ")";
+                        _statement.executeUpdate(sql);
+                    }
                 } catch (final Throwable e) {
                     System.out.println("Failed:" + Arrays.toString(nextLine) + " due to " + e.getMessage());
+                    writer.writeNext(nextLine);
                 }
             }
         }
+
+        writer.close();
+        reader.close();
 
 
         final HBaseCrudService<GeohashSubscriber> _geohashSubscriberHBaseCrudService = new HBaseCrudService<GeohashSubscriber>();

@@ -49,59 +49,108 @@ public class ListenerMain implements ItsNatServletRequestListener {
 // ------------------------------ FIELDS ------------------------------
 
     public static final String NUMBER_OF_PHOTOS_FOR = "Number of photos for ";
+
     public static final String COLON = ":";
 
 
     final static protected String LocationId = RBGet.globalConfig.getString("LOCATIONID");
+
     private static final String RETURNING_LOCATION = "Returning location ";
+
     private static final String TO_USER = " to user";
+
     private static final String WRONG_WOEID_FORMAT = "SORRY! WRONG WOEID FORMAT";
+
     private static final String HTTP_SESSION_ATTR_LOCATION = "HttpSessionAttr.location";
+
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0004 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0004";
+
     private static final String AI_ILIKEPLACES_LOGIC_LISTENERS_LISTENER_MAIN_0005 = "ai.ilikeplaces.logic.Listeners.ListenerMain.0005";
+
     private static final String HTTP_TRAVEL_ILIKEPLACES_COM_INDEX_JSP_CID_317285_PAGE_NAME_HOT_SEARCH_SUBMITTED_TRUE_VALIDATE_CITY_TRUE_CITY = "http://travel.ilikeplaces.com/index.jsp?c" + "id" + "=317285&pageName=hotSearch&submitted=true&validateCity=true&city=";
+
     private static final String QUERIES_FOR_LOCATION = " queries for location ";
+
     private static final String OF = " of ";
+
     private static final String AI_ILIKEPLACES_RBS_GUI = "ai.ilikeplaces.rbs.GUI";
+
     private static final String PROFILE_PHOTOS = "PROFILE_PHOTOS";
+
     private static final String THIS_IS = "This is ";
+
     private static final String BACK_TO = "Back to";
+
     private static final String SPACE = " ";
+
     private static final String PLACE_LIST = "place_list";
+
     private static final String TRAVEL_TO = "Travel to ";
+
     private static final String PAGE = "/page/";
+
     private static final String _OF_ = "_of_";
+
     private static final String CLICK_TO_EXPLORE = "Click to explore ";
+
     private static final String VTIP = "vtip";
+
     private static final String WIDTH = "w" + "id" + "th";
+
     private static final String PX = "110px;";
+
     private static final String UNLOADING_BODY_TIME_SPENT = "Unloading body. Time spent:";
+
     private static final String COMMA = ",";
+
     private static final ClientFactory YAHOO_GEO_PLANET_FACTORY = Modules.getModules().getYahooGeoPlanetFactory();
+
     private static final com.disqus.api.impl.ClientFactory DISQUS_API_FACTORY = Modules.getModules().getDisqusAPIFactory();
+
     private static final String HTTP_DISQUS_COM_API_3_0_THREADS = "http://disqus.com/api/3.0/threads/";
+
     private static final String HTTP_DISQUS_COM_API_3_0_POSTS = "http://disqus.com/api/3.0/posts/";
+
     private static final String IDENT_WOEID = "id" + "ent:WOEID=";
+
     private static final String THREAD = "thread";
+
     private static final String LIST = "list";
+
     private static final String RESPONSE = "response";
+
     private static final String ID = "id";
+
     private static final String NUMBER_OF_ITEMS_AT_DISQUS_IN_THREAD = "Number of Items At Disqus in Thread:";
+
     private static final String RAW__MESSAGE = "raw_message";
+
     private static final String ERROR_IN_UC_DISQUS = "Error in UC DISQUS";
+
     private static final String ERROR_IN_UC_SET_LOGIN_WIDGET = "Error in UC setLoginW" + "id" + "get";
+
     private static final String ERROR_IN_UC_SEO = "Error in UC SEO";
+
     private static final String ERROR_IN_UC_SIGN_ON_DISPLAY_LINK = "Error in UC signOnDisplayLink";
+
     private static final String ERROR_IN_UC_SET_PROFILE_PHOTO_LINK = "Error in UC setProfilePhotoLink";
+
     private static final String ERROR_IN_UC_SET_LOCATION_ID_FOR_JSREFERENCE = "Error in UC setLocationIdForJSReference";
+
     private static final String ERROR_IN_UC_SHOW_UPLOAD_FILE_LINK = "Error in UC showUploadFileLink";
+
     private static final String ERROR_IN_UC_SET_LOCATION_NAME_FOR_JSREFERENCE = "Error in UC setLocationNameForJSReference";
+
     private static final String ERROR_IN_UC_SET_LOCATION_AS_PAGE_TOPIC = "Error in UC setLocationAsPageTopic";
+
     private static final String ERROR_IN_UC_NO_SUPPORT_FOR_NEW_LOCATIONS = "Error in UC noSupportForNewLocations";
 
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("longMsgs");
+
     private static final String CREATED_AT = "createdAt";
+
     private static final String ERROR_IN_UC_SET_PROFILE_LINK = "Error in UC setProfileLink";
+
     private static final String PIPE = "|";
 
     final Twitter TWITTER = new TwitterFactory(new ConfigurationBuilder()
@@ -112,6 +161,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
             .build()).getInstance();
 
     private static final String AT_SIGN = "@";
+
     private static final String EMPTY = "";
 
 // ------------------------ INTERFACE METHODS ------------------------
@@ -320,7 +370,7 @@ public class ListenerMain implements ItsNatServletRequestListener {
                     EVENTS_WIDGETS:
                     {
                         try {
-                            final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
+                           /* final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
                                     .getInstance("http://upcoming.yahooapis.com/services/rest/")
                                     .get("",
                                             new HashMap<String, String>() {
@@ -332,7 +382,25 @@ public class ListenerMain implements ItsNatServletRequestListener {
                                             }
 
                                     );
-                            final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
+                            final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");*/
+
+                            final JSONObject jsonObject = Modules.getModules().getEventulFactory()
+                                    .getInstance("http://api.eventful.com/json/events/search/")
+                                    .get("",
+                                            new HashMap<String, String>() {
+                                                {//Don't worry, this is a static initializer of this map :)
+                                                    put("location", "" + existingLocation_.getLocationGeo1() + "," + existingLocation_.getLocationGeo2());
+                                                    put("within", "" + 100);
+                                                }
+                                            }
+
+                                    );
+
+                            Loggers.debug("Eventful Reply:" + jsonObject.toString());
+
+                            final JSONArray events = jsonObject.getJSONObject("events").getJSONArray("event");
+
+
                             for (int i = 0; i < events.length(); i++) {
                                 final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
 
