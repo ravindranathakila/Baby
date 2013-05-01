@@ -33,9 +33,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -126,25 +126,38 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
         String[] nextLine;
         final Connection _connection = dataSource.getConnection();
+        //_connection.setAutoCommit(false);
+        ResultSet rs = null;
+        final String check = "SELECT COUNT(*) FROM Location where locationId=?";
+        final String sql = "INSERT INTO Location " +
+                "VALUES ("
+                + "?" + ","
+                + "?" + ","
+                + "?" + ","
+                + "?" + ","
+                + "?" + ","
+                + "?" + ","
+                + "?" + ")";
+
+
+        final PreparedStatement _checkPreparedStatement = _connection.prepareStatement(check);
+        final PreparedStatement _insertPreparedStatement = _connection.prepareStatement(sql);
+
         while ((nextLine = reader.readNext()) != null) {
-            // nextLine[] is an array of values from the line
             System.out.println(Arrays.toString(nextLine));
             if (nextLine.length == 7) {
                 try {
-                    final Statement stmt = _connection.createStatement();
-                    final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM Location where locationId=" + nextLine[0]);
+                    _checkPreparedStatement.setLong(1, Long.parseLong(nextLine[0]));
+                    rs = _checkPreparedStatement.executeQuery();
                     if (!rs.next()) {
-                        final Statement _statement = _connection.createStatement();
-                        String sql = "INSERT INTO Location " +
-                                "VALUES ("
-                                + nextLine[0] + ","
-                                + 1 + ",'"
-                                + nextLine[2] + "','"
-                                + nextLine[3] + "','"
-                                + nextLine[4] + "','"
-                                + nextLine[5] + "',"
-                                + nextLine[6] + ")";
-                        _statement.executeUpdate(sql);
+                        _insertPreparedStatement.setLong(1, Long.parseLong(nextLine[0]));
+                        _insertPreparedStatement.setLong(2, 1L);
+                        _insertPreparedStatement.setString(3, nextLine[2]);
+                        _insertPreparedStatement.setString(4, nextLine[3]);
+                        _insertPreparedStatement.setString(5, nextLine[4]);
+                        _insertPreparedStatement.setString(6, nextLine[5]);
+                        _insertPreparedStatement.setString(7, nextLine[6]);
+                        _insertPreparedStatement.executeUpdate(sql);
                     }
                 } catch (final Throwable e) {
                     System.out.println("Failed:" + Arrays.toString(nextLine) + " due to " + e.getMessage());
