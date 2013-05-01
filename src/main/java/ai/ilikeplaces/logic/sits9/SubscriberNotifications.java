@@ -133,7 +133,7 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                 try {
                     final Statement stmt = _connection.createStatement();
                     final ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM Location where locationId=" + nextLine[0]);
-                    if (rs.next()) {
+                    if (!rs.next()) {
                         final Statement _statement = _connection.createStatement();
                         String sql = "INSERT INTO Location " +
                                 "VALUES ("
