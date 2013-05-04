@@ -11,8 +11,6 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Unsubscribe;
 import ai.ilikeplaces.util.*;
 import ai.scribble.License;
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
 import com.google.gson.Gson;
 import org.apache.avro.io.BinaryDecoder;
 import org.apache.avro.io.DatumReader;
@@ -29,15 +27,9 @@ import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.sql.DataSource;
 import javax.xml.transform.TransformerException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -119,55 +111,55 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
     @Timeout
     synchronized public void timeout(final Timer timer) throws IOException, SAXException, TransformerException, JSONException, SQLException {
 
-        final CSVReader reader = new CSVReader(new FileReader("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.sql"));
-//        final CSVReader reader = new CSVReader(new FileReader("/Users/ravindranathakila/ilikeplaces/apache-tomee-plus-1.5.0/lib/Location.sql"));
-
-        final CSVWriter writer = new CSVWriter(new FileWriter("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.next.sql"), ',');
-
-        String[] nextLine;
-        final Connection _connection = dataSource.getConnection();
-        //_connection.setAutoCommit(false);
-        ResultSet rs = null;
-        final String check = "SELECT COUNT(*) FROM Location where locationId=?";
-        final String sql = "INSERT INTO Location " +
-                "VALUES ("
-                + "?" + ","
-                + "?" + ","
-                + "?" + ","
-                + "?" + ","
-                + "?" + ","
-                + "?" + ","
-                + "?" + ")";
-
-
-        final PreparedStatement _checkPreparedStatement = _connection.prepareStatement(check);
-        final PreparedStatement _insertPreparedStatement = _connection.prepareStatement(sql);
-
-        while ((nextLine = reader.readNext()) != null) {
-            System.out.println(Arrays.toString(nextLine));
-            if (nextLine.length == 7) {
-                try {
-                    _checkPreparedStatement.setLong(1, Long.parseLong(nextLine[0]));
-                    rs = _checkPreparedStatement.executeQuery();
-                    if (!rs.next()) {
-                        _insertPreparedStatement.setLong(1, Long.parseLong(nextLine[0]));
-                        _insertPreparedStatement.setLong(2, 1L);
-                        _insertPreparedStatement.setString(3, nextLine[2]);
-                        _insertPreparedStatement.setString(4, nextLine[3]);
-                        _insertPreparedStatement.setString(5, nextLine[4]);
-                        _insertPreparedStatement.setString(6, nextLine[5]);
-                        _insertPreparedStatement.setString(7, nextLine[6]);
-                        _insertPreparedStatement.executeUpdate(sql);
-                    }
-                } catch (final Throwable e) {
-                    System.out.println("Failed:" + Arrays.toString(nextLine) + " due to " + e.getMessage());
-                    writer.writeNext(nextLine);
-                }
-            }
-        }
-
-        writer.close();
-        reader.close();
+//        final CSVReader reader = new CSVReader(new FileReader("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.sql"));
+////        final CSVReader reader = new CSVReader(new FileReader("/Users/ravindranathakila/ilikeplaces/apache-tomee-plus-1.5.0/lib/Location.sql"));
+//
+//        final CSVWriter writer = new CSVWriter(new FileWriter("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.next.sql"), ',');
+//
+//        String[] nextLine;
+//        final Connection _connection = dataSource.getConnection();
+//        //_connection.setAutoCommit(false);
+//        ResultSet rs = null;
+//        final String check = "SELECT COUNT(*) FROM Location where locationId=?";
+//        final String sql = "INSERT INTO Location " +
+//                "VALUES ("
+//                + "?" + ","
+//                + "?" + ","
+//                + "?" + ","
+//                + "?" + ","
+//                + "?" + ","
+//                + "?" + ","
+//                + "?" + ")";
+//
+//
+//        final PreparedStatement _checkPreparedStatement = _connection.prepareStatement(check);
+//        final PreparedStatement _insertPreparedStatement = _connection.prepareStatement(sql);
+//
+//        while ((nextLine = reader.readNext()) != null) {
+//            System.out.println(Arrays.toString(nextLine));
+//            if (nextLine.length == 7) {
+//                try {
+//                    _checkPreparedStatement.setLong(1, Long.parseLong(nextLine[0]));
+//                    rs = _checkPreparedStatement.executeQuery();
+//                    if (!rs.next()) {
+//                        _insertPreparedStatement.setLong(1, Long.parseLong(nextLine[0]));
+//                        _insertPreparedStatement.setLong(2, 1L);
+//                        _insertPreparedStatement.setString(3, nextLine[2]);
+//                        _insertPreparedStatement.setString(4, nextLine[3]);
+//                        _insertPreparedStatement.setString(5, nextLine[4]);
+//                        _insertPreparedStatement.setString(6, nextLine[5]);
+//                        _insertPreparedStatement.setString(7, nextLine[6]);
+//                        _insertPreparedStatement.executeUpdate(sql);
+//                    }
+//                } catch (final Throwable e) {
+//                    System.out.println("Failed:" + Arrays.toString(nextLine) + " due to " + e.getMessage());
+//                    writer.writeNext(nextLine);
+//                }
+//            }
+//        }
+//
+//        writer.close();
+//        reader.close();
 
 
         final HBaseCrudService<GeohashSubscriber> _geohashSubscriberHBaseCrudService = new HBaseCrudService<GeohashSubscriber>();
@@ -207,90 +199,105 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
                     final StringBuffer eventList = new StringBuffer("");
 
-//                    try {
-//                        final JSONObject jsonObject = Modules.getModules().getYahooUplcomingFactory()
-//                                .getInstance("http://upcoming.yahooapis.com/services/rest/")
-//                                .get("",
-//                                        new HashMap<String, String>() {
-//                                            {//Don't worry, this is a static initializer of this map :)
-//                                                put("method", "event.search");
-//                                                put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
-//                                                put("radius", "" + 100);
-//                                                put("format", "json");
-//                                                put("max_date", _simpleDateFormat.format(_week.getTime()));
-//                                            }
-//                                        }
-//
-//                                );
-//                        final JSONArray events = jsonObject.getJSONObject("rsp").getJSONArray("event");
-//
-//                        final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
-//                        final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
-//
-//                        for (int i = 0; i < events.length(); i++) {
-//                            final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
-//                            Double.parseDouble(eventJSONObject.getString(LATITUDE));
-//                            Double.parseDouble(eventJSONObject.getString(LONGITUDE));
-//                            final String eventName = eventJSONObject.getString(NAME);
-//                            final String eventUrl = eventJSONObject.getString("url");
-//                            final String eventDate = eventJSONObject.getString("start_date");
-//                            final String eventVenue = eventJSONObject.getString("venue_name");
-//                            Loggers.debug("Event name:" + eventName);
-//                            eventList.append(eventTemplate
-//                                    .replace("_name_link_", !(("" + eventUrl).isEmpty()) ? eventUrl : ("https://www.google.com/search?q=" + eventName.replaceAll(" ", "+").replaceAll("-", "+")))
-//                                    .replace("_place_link_", "https://maps.googleapis.com/maps/api/staticmap?sensor=false&size=600x600&markers=color:blue%7Clabel:S%7C" + _read.getLatitude().toString() + "," + _read.getLongitude().toString())
-//                                    .replace("_name_", eventName)
-//                                    .replace("_place_", eventVenue)
-//                                    .replace("_date_", eventDate));
-//                        }
-//                    } catch (final Throwable t) {
-//                        Loggers.error("Error appending Yahoo Upcoming data to Geohash Subscriber", t);
-//                    }
+                    {//Eventful
 
-                    try {
+                        try {
 
-                        final SimpleDateFormat eventfulDate = new SimpleDateFormat("yyyyMMdd00");
-                        _simpleDateFormat.format(_week.getTime());
+                            final SimpleDateFormat eventfulDate = new SimpleDateFormat("yyyyMMdd00");
+                            _simpleDateFormat.format(_week.getTime());
 
-                        final JSONObject jsonObject = Modules.getModules().getEventulFactory()
-                                .getInstance("http://api.eventful.com/json/events/search/")
-                                .get("",
-                                        new HashMap<String, String>() {
-                                            {//Don't worry, this is a static initializer of this map :)
-                                                put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
-                                                put("within", "" + 100);
-                                                put("date", eventfulDate.format(Calendar.getInstance().getTime()) + "-" + eventfulDate.format(_week.getTime()));
+                            final JSONObject jsonObject = Modules.getModules().getEventulFactory()
+                                    .getInstance("http://api.eventful.com/json/events/search/")
+                                    .get("",
+                                            new HashMap<String, String>() {
+                                                {//Don't worry, this is a static initializer of this map :)
+                                                    put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
+                                                    put("within", "" + 100);
+                                                    put("date", eventfulDate.format(Calendar.getInstance().getTime()) + "-" + eventfulDate.format(_week.getTime()));
+                                                }
                                             }
-                                        }
 
-                                );
+                                    );
 
-                        Loggers.debug("Eventful Reply:" + jsonObject.toString());
+                            Loggers.debug("Eventful Reply:" + jsonObject.toString());
 
-                        final JSONArray events = jsonObject.getJSONObject("events").getJSONArray("event");
+                            final JSONArray events = jsonObject.getJSONObject("events").getJSONArray("event");
 
-                        final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
-                        final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
+                            final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
+                            final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
 
-                        for (int i = 0; i < events.length(); i++) {
-                            final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
-                            Double.parseDouble(eventJSONObject.getString(LATITUDE));
-                            Double.parseDouble(eventJSONObject.getString(LONGITUDE));
-                            final String eventName = eventJSONObject.getString("title");
-                            final String eventUrl = eventJSONObject.getString("url");
-                            final String eventDate = eventJSONObject.getString("start_time");
-                            final String eventVenue = eventJSONObject.getString("venue_name");
-                            Loggers.debug("Event name:" + eventName);
-                            eventList.append(eventTemplate
-                                    .replace("_name_link_", !(("" + eventUrl).isEmpty()) ? eventUrl : ("https://www.google.com/search?q=" + eventName.replaceAll(" ", "+").replaceAll("-", "+")))
-                                    .replace("_place_link_", "https://maps.googleapis.com/maps/api/staticmap?sensor=false&size=600x600&markers=color:blue%7Clabel:S%7C" + _read.getLatitude().toString() + "," + _read.getLongitude().toString())
-                                    .replace("_name_", eventName)
-                                    .replace("_place_", eventVenue)
-                                    .replace("_date_", eventDate));
+                            for (int i = 0; i < events.length(); i++) {
+                                final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
+                                Double.parseDouble(eventJSONObject.getString(LATITUDE));
+                                Double.parseDouble(eventJSONObject.getString(LONGITUDE));
+                                final String eventName = eventJSONObject.getString("title");
+                                final String eventUrl = eventJSONObject.getString("url");
+                                final String eventDate = eventJSONObject.getString("start_time");
+                                final String eventVenue = eventJSONObject.getString("venue_name");
+                                Loggers.debug("Event name:" + eventName);
+                                eventList.append(eventTemplate
+                                        .replace("_name_link_", !(("" + eventUrl).isEmpty()) ? eventUrl : ("https://www.google.com/search?q=" + eventName.replaceAll(" ", "+").replaceAll("-", "+")))
+                                        .replace("_place_link_", "https://maps.googleapis.com/maps/api/staticmap?sensor=false&size=600x600&markers=color:blue%7Clabel:S%7C" + _read.getLatitude().toString() + "," + _read.getLongitude().toString())
+                                        .replace("_name_", eventName)
+                                        .replace("_place_", eventVenue)
+                                        .replace("_date_", eventDate));
+                            }
+                        } catch (final Throwable t) {
+                            Loggers.error("Error appending Eventful data to Geohash Subscriber", t);
                         }
-                    } catch (final Throwable t) {
-                        Loggers.error("Error appending Eventful data to Geohash Subscriber", t);
                     }
+
+                    {//Foursquare
+
+                        try {
+
+                            final SimpleDateFormat eventfulDate = new SimpleDateFormat("yyyyMMdd00");
+                            _simpleDateFormat.format(_week.getTime());
+
+                            final JSONObject jsonObject = Modules.getModules().getEventulFactory()
+                                    .getInstance("https://api.foursquare.com/v2/venues/explore")
+                                    .get("",
+                                            new HashMap<String, String>() {
+                                                {//Don't worry, this is a static initializer of this map :)
+                                                    put("ll", "" + _read.getLatitude() + "," + _read.getLongitude());
+                                                    put("radius", "" + 50000);//meters
+                                                    put("intent", "browse");
+                                                    put("section", "topPicks");
+                                                    put("client_secret", "PODRX5YWBSLAKAYRQ5CLPEPS3WHCXWFIJ3LXF3AKH4U1BDNI");
+                                                    put("client_id", "25JZAK3TQPLIPUUXPIJWXQ5NSKSPTP4SYZLUZSCTZF3UJ4YX");
+                                                }
+                                            }
+
+                                    );
+
+                            Loggers.debug("Foursquare Reply:" + jsonObject.toString());
+
+                            final JSONArray referralArray = jsonObject.getJSONObject("response").getJSONArray("groups").getJSONObject(0).getJSONArray("items");
+
+                            final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
+                            final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
+
+                            for (int i = 0; i < referralArray.length(); i++) {
+
+                                final JSONObject referral = referralArray.getJSONObject(i);
+                                referral.getJSONObject("venue").getJSONObject("location").getDouble("lng");
+                                referral.getJSONObject("venue").getJSONObject("location").getDouble("lat");
+                                final String eventName = referral.getJSONObject("venue").getString("name");
+                                final String eventUrl = referral.getJSONObject("venue").optString("url");
+                                final String eventVenue = referral.getJSONObject("venue").getJSONObject("location").getString("address");
+                                Loggers.debug("Event name:" + eventName);
+                                eventList.append(eventTemplate
+                                        .replace("_name_link_", !(("" + eventUrl).isEmpty()) ? eventUrl : ("https://www.google.com/search?q=" + eventName.replaceAll(" ", "+").replaceAll("-", "+")))
+                                        .replace("_place_link_", "https://maps.googleapis.com/maps/api/staticmap?sensor=false&size=600x600&markers=color:blue%7Clabel:S%7C" + _read.getLatitude().toString() + "," + _read.getLongitude().toString())
+                                        .replace("_name_", eventName)
+                                        .replace("_place_", eventVenue)
+                                        .replace("_date_", eventName));
+                            }
+                        } catch (final Throwable t) {
+                            Loggers.error("Error appending Foursquare data to Geohash Subscriber", t);
+                        }
+                    }
+
 
                     final Document email = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
                     final Document event = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);

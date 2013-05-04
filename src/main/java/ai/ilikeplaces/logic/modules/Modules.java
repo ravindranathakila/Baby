@@ -49,6 +49,8 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
 
     private final ClientFactory eventulFactory;
 
+    private final api.foursquare.com.impl.ClientFactory foursquareFactory;
+
     public Modules() {
         {
             final Injector yahooGeoPlanetFactoryInjector = Guice.createInjector(new YahooGeoPlanetClientModule());
@@ -69,6 +71,10 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
         {
             final Injector eventfulFactoryInjector = Guice.createInjector(new EventfulClientModule());
             eventulFactory = eventfulFactoryInjector.getInstance(api.eventful.com.impl.ClientFactory.class);
+        }
+        {
+            final Injector foursquareFactoryInjector = Guice.createInjector(new FoursquareClientModule());
+            foursquareFactory = foursquareFactoryInjector.getInstance(api.foursquare.com.impl.ClientFactory.class);
         }
     }
 
@@ -98,6 +104,10 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
 
     public api.eventful.com.impl.ClientFactory getEventulFactory() {
         return eventulFactory;
+    }
+
+    public api.foursquare.com.impl.ClientFactory getFoursquareFactory() {
+        return foursquareFactory;
     }
 
     @PostConstruct
