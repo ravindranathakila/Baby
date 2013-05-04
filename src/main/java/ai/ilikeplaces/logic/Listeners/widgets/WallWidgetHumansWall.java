@@ -45,7 +45,9 @@ import java.util.List;
 public class WallWidgetHumansWall extends WallWidget {
 
     private static final String WALL_SUBIT_FROM_EMAIL = "ai/ilikeplaces/widgets/WallSubmitFromEmail.xhtml";
+
     private static final RefreshSpec REFRESH_SPEC = new RefreshSpec("wallMutes");
+
     private static final RefreshSpec REFRESH_SPEC_EMPTY = new RefreshSpec();
 
     final static public SmartCache<Pair<String, String>, Long> HUMANS_WALL_ID = new SmartCache<Pair<String, String>, Long>(new SmartCache.RecoverWith<Pair<String, String>, Long>() {
@@ -74,6 +76,7 @@ public class WallWidgetHumansWall extends WallWidget {
 
 
     HumanId requestedProfile;
+
     HumanId currUserAsVisitor;
 
     public WallWidgetHumansWall(final ItsNatServletRequest request__, final Element appendToElement__, final HumanId requestedProfile, final HumanId currUserAsVisitor) {
@@ -105,7 +108,7 @@ public class WallWidgetHumansWall extends WallWidget {
 
                     $$displayNone(WallWidgetIds.wallWidget);
 
-                    String title = "You need at least 2 followers to unlock your talk page";
+                    String title = "Without followers your updates will be useless";
 
                     //https://upload.wikimedia.org/wikipedia/commons/8/8d/Ambox_padlock_red.svg
                     new Info(request,
@@ -119,9 +122,7 @@ public class WallWidgetHumansWall extends WallWidget {
                             $$(WallWidgetIds.wallGame));
 
                     new Info(request,
-                            new InfoCriteria()
-                                    .setTitle(title)
-                                    .setImage("/images/Locked.png"),
+                            new InfoCriteria(),
                             $$(WallWidgetIds.wallGame)) {
                         /**
                          * Use this only in conjunction with
@@ -136,7 +137,7 @@ public class WallWidgetHumansWall extends WallWidget {
                                 String addFollowerTitle = "";
 
                                 if (friendCount == 0) {
-                                    addFollowerTitle = "Add 2 Followers To Start Posting!";
+                                    addFollowerTitle = "Add 2 Follower emails To Start Posting!";
                                 } else if (friendCount == 1) {
                                     addFollowerTitle = "Almost there! Add 1 More Follower To Posting!";
                                 }
@@ -263,6 +264,7 @@ public class WallWidgetHumansWall extends WallWidget {
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallSubmit), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myrequestedProfile = requestedProfile;
+
             private HumanId mycurrUserAsVisitor = currUserAsVisitor;
 
             @Override
@@ -296,9 +298,13 @@ public class WallWidgetHumansWall extends WallWidget {
                             new Thread(new Runnable() {
 
                                 private HumanId mymyrequestedProfile = myrequestedProfile;
+
                                 private HumanId mycurrUserAsVisitor = currUserAsVisitor;
+
                                 private String myfetchToEmail = WallWidgetHumansWall.this.fetchToEmail;
+
                                 private StringBuilder myb = b;
+
                                 private Wall mywall = wall;
 
 
@@ -333,6 +339,7 @@ public class WallWidgetHumansWall extends WallWidget {
         itsNatHTMLDocument__.addEventListener((EventTarget) $$(WallWidgetIds.wallMute), EventType.CLICK.toString(), new EventListener() {
 
             private HumanId myrequestedProfile = requestedProfile;
+
             private HumanId mycurrUserAsVisitor = currUserAsVisitor;
 
             @Override
