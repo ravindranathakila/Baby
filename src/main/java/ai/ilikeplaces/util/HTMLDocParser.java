@@ -45,6 +45,12 @@ public class HTMLDocParser {
         return domParser.getDocument();
     }
 
+    public static String getDocumentAsString(final String filePath) throws IOException, SAXException, TransformerException {
+        final DOMParser domParser = new DOMParser();
+        domParser.parse(filePath);
+        return convertNodeToHtml(domParser.getDocument());
+    }
+
     public static String convertNodeToHtml(final Node node) throws TransformerException {
         Transformer t = TransformerFactory.newInstance().newTransformer();
         t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");

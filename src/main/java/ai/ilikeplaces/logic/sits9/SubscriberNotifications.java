@@ -53,6 +53,10 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
     private static final String SUBSCRIBER_EMAIL_EVENT = "ai/ilikeplaces/logic/Listeners/widgets/subscribe/SubscriberEventEmailEvent.html";
 
+    private static final String SUBSCRIBER_EMAIL_PLACE = "ai/ilikeplaces/logic/Listeners/widgets/subscribe/SubscriberEventEmailPlace.html";
+
+    private static final String EMAIL_FRAME = "ai/ilikeplaces/EmailFrame.xhtml";
+
     private static final String NAME = "name";
 
     private static final String LATITUDE = "latitude";
@@ -110,57 +114,6 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
     @Timeout
     synchronized public void timeout(final Timer timer) throws IOException, SAXException, TransformerException, JSONException, SQLException {
-
-//        final CSVReader reader = new CSVReader(new FileReader("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.sql"));
-////        final CSVReader reader = new CSVReader(new FileReader("/Users/ravindranathakila/ilikeplaces/apache-tomee-plus-1.5.0/lib/Location.sql"));
-//
-//        final CSVWriter writer = new CSVWriter(new FileWriter("/opt/java/db/db-derby-10.5.3.0-bin/bin/Location.next.sql"), ',');
-//
-//        String[] nextLine;
-//        final Connection _connection = dataSource.getConnection();
-//        //_connection.setAutoCommit(false);
-//        ResultSet rs = null;
-//        final String check = "SELECT COUNT(*) FROM Location where locationId=?";
-//        final String sql = "INSERT INTO Location " +
-//                "VALUES ("
-//                + "?" + ","
-//                + "?" + ","
-//                + "?" + ","
-//                + "?" + ","
-//                + "?" + ","
-//                + "?" + ","
-//                + "?" + ")";
-//
-//
-//        final PreparedStatement _checkPreparedStatement = _connection.prepareStatement(check);
-//        final PreparedStatement _insertPreparedStatement = _connection.prepareStatement(sql);
-//
-//        while ((nextLine = reader.readNext()) != null) {
-//            System.out.println(Arrays.toString(nextLine));
-//            if (nextLine.length == 7) {
-//                try {
-//                    _checkPreparedStatement.setLong(1, Long.parseLong(nextLine[0]));
-//                    rs = _checkPreparedStatement.executeQuery();
-//                    if (!rs.next()) {
-//                        _insertPreparedStatement.setLong(1, Long.parseLong(nextLine[0]));
-//                        _insertPreparedStatement.setLong(2, 1L);
-//                        _insertPreparedStatement.setString(3, nextLine[2]);
-//                        _insertPreparedStatement.setString(4, nextLine[3]);
-//                        _insertPreparedStatement.setString(5, nextLine[4]);
-//                        _insertPreparedStatement.setString(6, nextLine[5]);
-//                        _insertPreparedStatement.setString(7, nextLine[6]);
-//                        _insertPreparedStatement.executeUpdate(sql);
-//                    }
-//                } catch (final Throwable e) {
-//                    System.out.println("Failed:" + Arrays.toString(nextLine) + " due to " + e.getMessage());
-//                    writer.writeNext(nextLine);
-//                }
-//            }
-//        }
-//
-//        writer.close();
-//        reader.close();
-
 
         final HBaseCrudService<GeohashSubscriber> _geohashSubscriberHBaseCrudService = new HBaseCrudService<GeohashSubscriber>();
         final HBaseCrudService<GeohashSubscriber>.Scanner _scanner = _geohashSubscriberHBaseCrudService.scan(new GeohashSubscriber(), 1).returnValueBadly();
@@ -251,7 +204,6 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
                         try {
 
-                            final SimpleDateFormat eventfulDate = new SimpleDateFormat("yyyyMMdd00");
                             _simpleDateFormat.format(_week.getTime());
 
                             final JSONObject jsonObject = Modules.getModules().getEventulFactory()
@@ -274,7 +226,7 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
                             final JSONArray referralArray = jsonObject.getJSONObject("response").getJSONArray("groups").getJSONObject(0).getJSONArray("items");
 
-                            final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
+                            final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_PLACE);
                             final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
 
                             for (int i = 0; i < referralArray.length(); i++) {
@@ -299,15 +251,15 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
                     }
 
 
+                    final String template = HTMLDocParser.getDocumentAsString(RBGet.getGlobalConfigKey("PAGEFILES") + EMAIL_FRAME);
                     final Document email = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL);
-                    final Document event = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
                     final String _content = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", email));
                     final Parameter _unsubscribeLink = new Parameter("http://www.ilikeplaces.com/unsubscribe/").append(Unsubscribe.TYPE, Unsubscribe.Type.GeohashSubscribe.name(), true)
                             .append(Unsubscribe.VALUE, rowKey);
-                    final String finalEmail = _content.replace(" ___||_", eventList.toString())
-                            .replace("_unsubscribe_link_", _unsubscribeLink.get());
+                    final String finalEmail = template.replace("_FrameContent_", _content.replace(" ___||_", eventList.toString())
+                            .replace("_unsubscribe_link_", _unsubscribeLink.get()));
                     Loggers.debug("Final email:" + finalEmail);
-                    sendMailLocal.sendAsHTML(_read.getEmailId().toString(), "Thank God It's Friday!", finalEmail);
+                    sendMailLocal.sendAsHTML(_read.getEmailId().toString(), "Thank God it's Friday!", finalEmail);
                 }
 
 
