@@ -41,9 +41,13 @@ import static ai.ilikeplaces.util.Loggers.*;
 public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
 
     final static private Properties P_ = new Properties();
+
     static private Context Context_ = null;
+
     static private boolean OK_ = false;
+
     final static private String ICF = RBGet.globalConfig.getString("oejb.LICF");
+
     private static final String M_A_I_L_S_E_R_V_E_R = RBGet.globalConfig.getString("mail.server");
 
     static {
@@ -75,12 +79,17 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
     }
 
     private static final String U_S_E_R_N_A_M_E = RBGet.globalConfig.getString("noti_mail");
+
     private static final String P_A_S_S_W_O_R_D = RBGet.globalConfig.getString("noti_parsewerd");
 
     Properties props;
+
     Session mailSession;
+
     Transport transport;
+
     private static final String TEXT_PLAIN = "text/plain";
+
     private static final String TEXT_HTML = "text/html; charset=ISO-8859-1";
 
     @PostConstruct
@@ -295,6 +304,7 @@ public class SendMail extends AbstractSLBCallbacks implements SendMailLocal {
             message.setContent(htmlBody, TEXT_HTML);
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(recepientEmail));
             message.addRecipient(Message.RecipientType.CC, new InternetAddress(RBGet.globalConfig.getString("noti_app_mail")));
+            message.setReplyTo(new Address[]{new InternetAddress("feedback@ilikeplaces.com")});
 
             r = new ReturnImpl<Boolean>(finalSend(message), "Mail sending to " + recepientEmail + " successful!");
 
