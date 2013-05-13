@@ -6,7 +6,7 @@ We make people happy by showing them what is interesting around them. Be it a mo
 
 #### How do we do it,
 
-We have set up a TGIF mail, to which anybody can subscribe to events in any area she likes. Every Friday she will receive an email saying Thank God It Is Friday. This email will contain interesting events to attend over the weekend until next Friday.
+We have set up a [TGIF mail](http://www.ilikeplaces.com), to which anybody can subscribe to events in any area she likes. Every Friday she will receive an email saying Thank God It Is Friday. This email will contain interesting events to attend over the weekend until next Friday.
 
 Well, this is definitely not the only way to do it. That's where you are important to us. Help us do a more meaningful job. Give us ideas. Implement some or give your own spin to it. Make things happen!
 
