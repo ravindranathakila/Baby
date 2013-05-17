@@ -34,6 +34,8 @@ final public class
 
     public static final String WEB_INF_PAGES = "WEB-INF/pages/";
 
+    public static final String EMAIL_FRAME = "ai/ilikeplaces/EmailFrame.xhtml";
+
     public static String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
 
     public static String PEOPLE_EMAIL_XHTML = "ai/ilikeplaces/widgets/people/people_thumb_email.xhtml";
