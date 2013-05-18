@@ -53,25 +53,41 @@ import java.util.Set;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class Bate extends AbstractWidgetListener {
     public static final String PASSWORD_DETAILS = "_passwordDetails";
+
     public static final String PASSWORD_ADVICE = "_passwordAdvice";
+
     public static final String DEFAULT = "default";
+
     private static final String URL = "_url";
+
     private static final String OMG_GOOGLE_INVITE = "omg_gi";
+
     private static final String ACCESS_TOKEN = "access_token";
+
     private static final String HASH = "#";
+
     final private Logger logger = LoggerFactory.getLogger(FindFriend.class.getName());
+
     HumanId humanId;
+
     SimpleName humansName;
+
     RefObj<List<HumansIdentity>> matches = null;
+
     Set<Email> emails;
+
     private Email email;
+
     private Password password;
+
     /**
      * Thank you for not refactoring to "inviteCount" and not confusing the coder that it is the number of invites
      * that a user has available instead of the number of invites he sent.
      */
     private Integer invitedCount = 0;
+
     private Element bate = null;
+
     private ItsNatHttpSession userSession;
 
     /**
@@ -102,30 +118,33 @@ abstract public class Bate extends AbstractWidgetListener {
     final static public String getHTMLStringForOfflineFriendInvite(final String inviter, final String invitee) {
         try {
 
-            final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
+            final Document userProperty = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
+            final Document frame = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + "ai/ilikeplaces/EmailFrame.xhtml");
+            final String frameString = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", frame));
 
-            $$static(Controller.Page.user_property_name, document).setTextContent(inviter);
-            $$static(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
-            $$static(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
-            $$static(Controller.Page.user_property_content, document).appendChild(
-                    document.importNode(
+            $$static(Controller.Page.user_property_name, userProperty).setTextContent(inviter);
+            $$static(Controller.Page.user_property_name, userProperty).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
+            $$static(Controller.Page.user_property_profile_photo, userProperty).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
+            $$static(Controller.Page.user_property_content, userProperty).appendChild(
+                    userProperty.importNode(
                             ElementComposer.compose(
-                                    document.createElement(MarkupTag.DIV.toString())
+                                    userProperty.createElement(MarkupTag.DIV.toString())
                             ).$ElementSetText(
-                                    "It seems " + inviter + " has just invited you! " +
-                                            "We've given you free access to www.ILikePlaces.com. " +
-                                            "Now you can find exciting events around you and share them with your friends and family, privately!" +
-                                            "To activate, click the link below: " +
+                                    "It seems " + inviter + " has just invited you to join www.ILikePlaces.com. " +
+                                            "To activate your account, click the link below: " +
                                             URL + " . " +
                                             PASSWORD_DETAILS + " " +
-                                            PASSWORD_ADVICE + " " +
-                                            "All the best, take care and see ya soon! "
+                                            PASSWORD_ADVICE + " "
                             ).getAsNode(),
                             true)
             );
 
 
-            return HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, document));
+            final String emailContent = HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, userProperty));
+
+            final String fullEmail = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", frame)).replace("_FrameContent_", emailContent);
+
+            return fullEmail;
         } catch (final Throwable e) {
             throw LogNull.getRuntimeException(e);
         }
@@ -160,6 +179,7 @@ abstract public class Bate extends AbstractWidgetListener {
                 htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
                 htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your password is " + "\"" + randomPassword + "\"" + "(without quotes)");
                 htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
+
 
                 final Return<Boolean> mailReturn = SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                         inviteee.getHumanId(),
@@ -263,6 +283,7 @@ abstract public class Bate extends AbstractWidgetListener {
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.BateSignupEmail), EventType.BLUR.toString(), new EventListener() {
 
                 final Validator v = new Validator();
+
                 final Email myemail = email;
 
                 @Override
@@ -279,6 +300,7 @@ abstract public class Bate extends AbstractWidgetListener {
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.BateSignupPassword), EventType.BLUR.toString(), new EventListener() {
 
                 final Validator v = new Validator();
+
                 final Password mypassword = password;
 
                 @Override
@@ -295,7 +317,9 @@ abstract public class Bate extends AbstractWidgetListener {
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.BateSignupButton), EventType.CLICK.toString(), new EventListener() {
 
                 final Validator v = new Validator();
+
                 final Email myemail = email;
+
                 final Password mypassword = password;
 
                 @Override
@@ -351,7 +375,9 @@ abstract public class Bate extends AbstractWidgetListener {
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(Controller.Page.BateOmg), EventType.CLICK.toString(), new EventListener() {
 
                 final Validator v = new Validator();
+
                 final Password mypassword = password;
+
                 final ItsNatHttpSession myuserSession = userSession;
 
                 @Override
@@ -393,6 +419,7 @@ abstract public class Bate extends AbstractWidgetListener {
                         importedContact)) {
 
             private Integer myinvitedCount = invitedCount;
+
             private Element mybate = bate;
 
             protected void init(final Object... initArgs) {
@@ -408,9 +435,13 @@ abstract public class Bate extends AbstractWidgetListener {
                                         myInviteCritria.getInviterDisplayName()))) {
 
                     private HumanId inviter;
+
                     private ImportedContact invitee;
+
                     private String invitersName;
+
                     private Integer mymyinvitedCount = myinvitedCount;
+
                     private Element mymybate = mybate;
 
                     @Override
@@ -425,9 +456,13 @@ abstract public class Bate extends AbstractWidgetListener {
 
                         itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
                             private HumanId myinviter = inviter;
+
                             private ImportedContact myinvitee = invitee;
+
                             private String myinvitersName = invitersName;
+
                             private Integer mymymyinvitedCount = mymyinvitedCount;
+
                             private Element mymymybate = mymybate;
 
                             @Override
