@@ -23,7 +23,10 @@ import org.itsnat.core.html.ItsNatHTMLDocument;
 import org.w3c.dom.Element;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.html.HTMLDocument;
+import org.xml.sax.SAXException;
 
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -34,7 +37,7 @@ import java.net.URLEncoder;
  * Time: 8:07 AM
  */
 public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
-// ------------------------------ FIELDS ------------------------------
+    // ------------------------------ FIELDS ------------------------------
 
 
 // ------------------------------ FIELDS STATIC --------------------------
@@ -211,10 +214,24 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
                                         htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
                                         htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
 
-                                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                                myemail.getObj(),
-                                                "I Like Places prides you with an Exclusive Invite!",
-                                                htmlBody);
+
+                                        try {
+                                            final String frame = HTMLDocParser.getDocumentAsString(Controller.getPagesPath() + Controller.EMAIL_FRAME);
+
+                                            final String fullEmail = frame.replace("_FrameContent_", htmlBody);
+
+                                            SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                                    myemail.getObj(),
+                                                    "Thank God it's Friday!",
+                                                    fullEmail);
+
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        } catch (SAXException e) {
+                                            throw new RuntimeException(e);
+                                        } catch (TransformerException e) {
+                                            throw new RuntimeException(e);
+                                        }
 
                                         $$displayNone($$(SubscribeIds.subscribe_signup_section));
 

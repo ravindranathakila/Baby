@@ -32,8 +32,11 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.html.HTMLDocument;
+import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
@@ -48,11 +51,15 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
     private static final String ISSIGNUP = "issignup";
 
     private HumanId username = null;
+
     private Password password = null;
 
     private SimpleString dbHash = null;
+
     private SimpleString dbSalt = null;
+
     private Obj<Boolean> userOk = null;
+
     private Obj<Boolean> existButNotActive = null;
 
 // -------------------------- ENUMERATIONS --------------------------
@@ -250,10 +257,25 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
                                                     final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
                                                             .replace("activationURL", "<a href='" +
                                                                     activationURL + "' >" + activationURL + "</a>");
-                                                    SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
-                                                            criteria.username.getSelfAsValid().getHumanId(),
-                                                            RBGet.gui().getString("SIGNUP_HEADER"),
-                                                            mail);
+
+                                                    try {
+                                                        final String frame = HTMLDocParser.getDocumentAsString(Controller.REAL_PATH + Controller.WEB_INF_PAGES + "ai/ilikeplaces/EmailFrame.xhtml");
+
+                                                        final String fullEmail = frame.replace("_FrameContent_", mail);
+
+
+                                                        SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
+                                                                criteria.username.getSelfAsValid().getHumanId(),
+                                                                RBGet.gui().getString("SIGNUP_HEADER"),
+                                                                fullEmail);
+                                                    } catch (IOException e) {
+
+                                                        throw new RuntimeException(e);
+                                                    } catch (SAXException e) {
+                                                        throw new RuntimeException(e);
+                                                    } catch (TransformerException e) {
+                                                        throw new RuntimeException(e);
+                                                    }
                                                 }
                                             }).start();
 
