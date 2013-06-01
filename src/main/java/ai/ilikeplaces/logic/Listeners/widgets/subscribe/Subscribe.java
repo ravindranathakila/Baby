@@ -45,8 +45,6 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 
     private static final String PASSWORD_DETAILS = "_passwordDetails";
 
-    private static final String PASSWORD_ADVICE = "_passwordAdvice";
-
     private static final String URL = "_url";
 
     private String woehint;
@@ -210,9 +208,8 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 
                                         String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
 
-                                        htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                        htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
-                                        htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
+                                        htmlBody = htmlBody.replace(URL, activationURL);
+                                        htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword + " .");
 
 
                                         try {

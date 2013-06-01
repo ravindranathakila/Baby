@@ -49,32 +49,57 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 // ------------------------------ FIELDS ------------------------------
 
     public static final String ERROR_PROCESSING_YAHOO_UPCOMING_DATA = "ERROR PROCESSING YAHOO UPCOMING DATA!";
+
     private static final String WOEIDUPDATE_TOKEN = "WOEIDUPDATE_TOKEN";
+
     private static final String OPEN_BRACKET = "(";
+
     private static final String CLOSE_BRACKET = ")";
+
     private static final String SINGLE_QUOTE = "'";
+
     private static final String CLOSE_BRACE = "}";
+
     private static final String SEMI_COLON = ";";
+
     private static final String OPEN_BRACE = "{";
+
     private static final String QUOTE = "\"";
+
     private static final String DownTownHeatMapWOEIDUpdate =
             "\nDownTownHeatMapWOEIDUpdate = function" + OPEN_BRACKET + "lat,lng" + CLOSE_BRACKET + OPEN_BRACE + "document.getElementById(" + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".value = " + SINGLE_QUOTE + "' + lat + ',' + lng" + SEMI_COLON + " document.getElementById" + OPEN_BRACKET + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".focus" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + " return document.getElementById(" + SINGLE_QUOTE + WOEIDUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + "\n";
+
     private static final String BBUPDATE_TOKEN = "BBUPDATE_TOKEN";
+
     private static final String DownTownHeatMapBBUpdate =
             "\nDownTownHeatMapBBUpdate = function" + OPEN_BRACKET + "swlat,swlng,nelat,nelng" + CLOSE_BRACKET + OPEN_BRACE + "document.getElementById(" + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".value = " + SINGLE_QUOTE + "' + swlat + ',' + swlng + ',' + nelat + ',' + nelng" + SEMI_COLON + " document.getElementById" + OPEN_BRACKET + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + ".focus" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON + " return document.getElementById(" + SINGLE_QUOTE + BBUPDATE_TOKEN + SINGLE_QUOTE + CLOSE_BRACKET + SEMI_COLON + CLOSE_BRACE + "\n";
+
     private static final String COMMA = ",";
+
     private static final String COMMA_SPACE = ", ";
+
     private static final String X1 = CLOSE_BRACKET + COMMA_SPACE;
+
     private static final String COLON = ":";
+
     private static final String MAP_MAP = "map" + COLON + " map, ";
+
     private static final String ICON_GET_COLORED_MARKER_WITH_INTENSITY = "icon" + COLON + " getColoredMarkerWithIntensity" + OPEN_BRACKET;
+
     private static final String ICON_GET_MY_COLORED_MARKER_WITH_INTENSITY = "icon" + COLON + " getMyColoredMarkerWithIntensity" + OPEN_BRACKET;
+
     private static final String X2 = CLOSE_BRACKET + "  " + CLOSE_BRACE + "))" + SEMI_COLON;
+
     private static final com.google.places.api.impl.ClientFactory GOOGLE_API_CLIENT_FACTORY = Modules.getModules().getGooglePlacesAPIFactory();
+
     private static final String LOCATION_JSON_OBJ_KEY = "location";
+
     private static final String LOCATION = LOCATION_JSON_OBJ_KEY;
+
     private static final String RADIUS = "radius";
+
     private static final String PLACE_TYPES = "types";
+
     private static final String COMMON_PLACE_TYPES = "amusement_park%7C" +
             "aquarium%7C" +
             "art_gallery%7C" +
@@ -103,46 +128,87 @@ public class DownTownHeatMap extends AbstractWidgetListener {
             "train_station%7C" +
             "travel_agency%7C" +
             "zoo";
+
     private static final String SENSOR = "sensor";
+
     private static final String TRUE = "true";
+
     private static final String LIST_OF_HOT_SPOTS_UNSHIFT_NEW_GOOGLE_MAPS_MARKER = "listOfHotSpots.unshift" + OPEN_BRACKET + "new google.maps.Marker(" + OPEN_BRACE + " ";
+
     private static final String POSITION_NEW_GOOGLE_MAPS_LAT_LNG = "position" + COLON + " new google.maps.LatLng" + OPEN_BRACKET;
+
     private static final String GOOGLE_MAPS_EVENT_ADD_LISTENER = "google.maps.event.addListener";
+
     private static final String GOOGLE_MAPS_EVENT_ADD_LISTENER_LIST_OF_HOT_SPOTS_0_CLICK_FUNCTION = GOOGLE_MAPS_EVENT_ADD_LISTENER + OPEN_BRACKET + "listOfHotSpots[0], " + QUOTE + "click', function(" + CLOSE_BRACKET + " " + OPEN_BRACE + "\n";
+
     private static final String X4 = CLOSE_BRACE + CLOSE_BRACKET + SEMI_COLON;
+
     private static final String GOOGLE_PLACES_JSON_ENDPOINT = "https" + COLON + "//maps.googleapis.com/maps/api/place/search/json";
+
     private static final String FAILED_TO_FETCH_GOOGLE_PLACES_DATA = "Failed to fetch Google Places Data";
+
     private static final String RESULTS = "results";
+
     private static final String GEOMETRY = "geometry";
+
     private static final String LAT = "lat";
+
     private static final String LNG = "lng";
+
     private static final String NAME = "name";
+
     private static final double APPROX_LENGTH_OF_ONE_LAT = 111325;
+
     private static final String SQUOTE = SINGLE_QUOTE;
+
     private static final String URL_SPACE = "%20";
+
     private static final String SPACE = " ";
+
     private static final String NOTIFY_USER_POSITIVE = "setNotificationFetchPositive" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON;
+
     private static final String NOTIFY_USER_NEGATIVE = "setNotificationFetchNegative" + OPEN_BRACKET + CLOSE_BRACKET + SEMI_COLON;
+
     private static final String FUNCTION = "function";
+
     private static final String HOT_SPOT_CLICKED = "hotSpotClicked";
+
     private static final String LATITUDE = "latitude";
+
     private static final String LONGITUDE = "longitude";
+
     private static final String URL = "url";
+
     private static final String LIST_OF_HOT_SPOTS_0 = "listOfHotSpots[0]";
+
     private static final String CLICK = "click";
+
     private static final String MOUSEOVER = "mouseover";
+
     private static final String SET_NOTIFICATION = "setNotification";
+
     private static final String HOT_SPOT_MOUSE_ENTER = "hotSpotMouseEnter";
+
     private static final String COMMON_NAME = "commonName";
+
     private static final String PROCESS_MARKER = "processMarker";
+
     private static final String HTIS = "htis";
+
     private static final String THIS = "this";
+
     private static final String APOSTROPHIE = "'";
+
     private static final String JS_ESCAPTED_APOSTROPHIE = "\'";
+
     private static final String TITLE = "title";
+
     private Element elementToUpdateWithWOEID;
+
     private HumanId humanId;
+
     private Email email;
+
     private Password password;
 
 
@@ -214,6 +280,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
         {
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapSignupEmail), EventType.BLUR.toString(), new EventListener() {
                 final Validator v = new Validator();
+
                 final Email myemail = email;
 
                 @Override
@@ -228,6 +295,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
             }, false, new NodePropertyTransport(MarkupTag.TEXTAREA.value()));
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapSignupPassword), EventType.BLUR.toString(), new EventListener() {
                 final Validator v = new Validator();
+
                 final Password mypassword = password;
 
                 @Override
@@ -243,7 +311,9 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
             itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapSignupButton), EventType.CLICK.toString(), new EventListener() {
                 final Validator v = new Validator();
+
                 final Email myemail = email;
+
                 final Password mypassword = password;
 
                 @Override
@@ -270,7 +340,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
                                 String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", email.getObj());
 
-                                htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                                htmlBody = htmlBody.replace(URL, activationURL);
                                 htmlBody = htmlBody.replace(Bate.PASSWORD_ADVICE, "");
                                 htmlBody = htmlBody.replace(Bate.PASSWORD_DETAILS, "");
 
@@ -319,6 +389,7 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapWOEID), EventType.BLUR.toString(), new EventListener() {
             final Validator v = new Validator();
+
             RefObj<String> woeid;
 
             @Override
@@ -335,9 +406,13 @@ public class DownTownHeatMap extends AbstractWidgetListener {
 
         itsNatHTMLDocument_.addEventListener((EventTarget) $$(DownTownHeatMapIds.DownTownHeatMapBB), EventType.BLUR.toString(), new EventListener() {
             final Validator v = new Validator();
+
             final GeoCoord geoCoordSW = new GeoCoord();
+
             final GeoCoord geoCoordNE = new GeoCoord();
+
             final ItsNatDocument ind = itsNatDocument_;
+
             final HumanId myhumanId = humanId;
 
             @Override

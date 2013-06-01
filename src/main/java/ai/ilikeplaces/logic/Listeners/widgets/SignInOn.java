@@ -256,7 +256,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
                                                             .get();
                                                     final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
                                                             .replace("activationURL", "<a href='" +
-                                                                    activationURL + "' >" + activationURL + "</a>");
+                                                                    activationURL + "' >" + "here" + "</a>.");
 
                                                     try {
                                                         final String frame = HTMLDocParser.getDocumentAsString(Controller.REAL_PATH + Controller.WEB_INF_PAGES + "ai/ilikeplaces/EmailFrame.xhtml");

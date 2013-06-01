@@ -2,6 +2,7 @@ package ai.ilikeplaces.security.blowfish.jbcrypt;
 
 import ai.ilikeplaces.security.blowfish.BlowFishLocal;
 import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
+import ai.ilikeplaces.util.Loggers;
 
 import javax.ejb.Singleton;
 import javax.ejb.TransactionAttribute;
@@ -90,8 +91,8 @@ public class BlowFish extends AbstractSNGLTNBCallbacks implements BlowFishLocal 
         if (!BCrypt.checkpw(new String(passWord), new String(hash))) {
             throw new java.lang.RuntimeException("SORRY! I AM ENCOUNTERING A HASHING ERROR!");
         } else {
-            INFO.info("HASH:" + hash);
-            INFO.info("SALT:" + salt);
+            Loggers.debug("HASH:" + hash);
+            Loggers.debug("SALT:" + salt);
         }
         return hash;
     }

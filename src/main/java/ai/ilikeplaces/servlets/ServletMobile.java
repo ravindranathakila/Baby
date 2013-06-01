@@ -14,7 +14,10 @@ import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.logic.validators.unit.VLong;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.Loggers;
+import ai.ilikeplaces.util.Parameter;
+import ai.ilikeplaces.util.SessionBoundBadRefWrapper;
+import ai.ilikeplaces.util.UserIntroduction;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
 import com.google.gson.Gson;
@@ -114,8 +117,7 @@ public class ServletMobile extends HttpServlet {
 
                             String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
 
-                            htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                            htmlBody = htmlBody.replace(Bate.PASSWORD_ADVICE, "");
+                            htmlBody = htmlBody.replace(URL, activationURL);
                             htmlBody = htmlBody.replace(Bate.PASSWORD_DETAILS, "");
 
                             SendMail.getSendMailLocal().sendAsHTMLAsynchronously(

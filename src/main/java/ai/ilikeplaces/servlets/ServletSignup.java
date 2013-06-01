@@ -39,28 +39,49 @@ final public class ServletSignup extends HttpServlet {
 
     /*Session related static id references*/
     final static private String Username = "Username";
+
     final static private String Password = "Password";
+
     final static private String ConfirmPassword = "ConfirmPassword";
+
     final static private String Email = "Email";
+
     final static private String Gender = "Gender";
+
     final static private String DateOfBirth = "DateOfBirth";
+
     final static private String UsernameError = "UsernameError";
+
     final static private String PasswordError = "PasswordError";
+
     final static private String ConfirmPasswordError = "ConfirmPasswordError";
+
     final static private String EmailError = "EmailError";
+
     final static private String GenderError = "GenderError";
+
     final static private String DateOfBirthError = "DateOfBirthError";
+
     final static private String UsernameErrorMsg = "UsernameErrorMsg";
+
     final static private String PasswordErrorMsg = "PasswordErrorMsg";
+
     final static private String ConfirmPasswordErrorMsg = "ConfirmPasswordErrorMsg";
+
     final static private String EmailErrorMsg = "EmailErrorMsg";
+
     final static private String GenderErrorMsg = "GenderErrorMsg";
+
     final static private String DateOfBirthErrorMsg = "DateOfBirthErrorMsg";
+
     private static final String TRUE = "true";
+
     final static private String ErrorStatusTrue = TRUE;
 
     private ResourceBundle logMsgs = ResourceBundle.getBundle("ai.ilikeplaces.rbs.LogMsgs");
+
     private static final String JS_NULL = "null";
+
     private static final String EMPTY = "";
 
     @Override
@@ -213,7 +234,7 @@ final public class ServletSignup extends HttpServlet {
                                 .get();
                         final String mail = MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
                                 .replace("activationURL", "<a href='" +
-                                        activationURL + "' >" + activationURL + "</a>");
+                                        activationURL + "' >" + "here" + "</a>. ");
                         SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                 username,
                                 gUI.getString("SIGNUP_HEADER"),

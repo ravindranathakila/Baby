@@ -102,9 +102,8 @@ abstract public class Bate extends AbstractWidgetListener {
     public static String getHTMLStringForOfflineFriendInvite(final Email myemail, final String randomPassword, final String activationURL) {
         String htmlBody = getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
 
-        htmlBody = htmlBody.replace("_url", ElementComposer.generateSimpleLinkTo(activationURL));
-        htmlBody = htmlBody.replace("_passwordDetails", "Your temporary password is " + randomPassword);
-        htmlBody = htmlBody.replace("_passwordAdvice", "Make sure you change it.");
+        htmlBody = htmlBody.replace("_url", activationURL);
+        htmlBody = htmlBody.replace("_passwordDetails", "Your temporary password is " + randomPassword + " .");
         return htmlBody;
     }
 
@@ -127,14 +126,27 @@ abstract public class Bate extends AbstractWidgetListener {
             $$static(Controller.Page.user_property_profile_photo, userProperty).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
             $$static(Controller.Page.user_property_content, userProperty).appendChild(
                     userProperty.importNode(
-                            ElementComposer.compose(
+                            ElementComposer.compose(//Main DIV
                                     userProperty.createElement(MarkupTag.DIV.toString())
-                            ).$ElementSetText(
-                                    "It seems " + inviter + " has just invited you to join www.ILikePlaces.com. " +
-                                            "To activate your account, click the link below: " +
-                                            URL + " . " +
-                                            PASSWORD_DETAILS + " " +
-                                            PASSWORD_ADVICE + " "
+                            ).wrapThis(//Div with text
+                                    ElementComposer.compose(
+                                            userProperty.createElement(MarkupTag.DIV.toString())
+                                    ).$ElementSetText(
+                                            inviter + " has invited you to I Like Places. "
+                                                    + PASSWORD_DETAILS + " ")
+                                            .get()
+                            ).wrapThis(//Div with link
+                                    ElementComposer.compose(
+                                            userProperty.createElement(MarkupTag.DIV.toString())
+                                    ).wrapThis(
+
+                                            ElementComposer.compose(
+                                                    userProperty.createElement(MarkupTag.A.toString())
+                                            )
+                                                    .$ElementSetText("Click here to confirm your invitation")
+                                                    .$ElementSetHref(URL)
+                                                    .get()
+                                    ).get()
                             ).getAsNode(),
                             true)
             );
@@ -176,9 +188,8 @@ abstract public class Bate extends AbstractWidgetListener {
 
                 String htmlBody = getHTMLStringForOfflineFriendInvite(invitersName, inviteee.getFullName());
 
-                htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your password is " + "\"" + randomPassword + "\"" + "(without quotes)");
-                htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it. ");
+                htmlBody = htmlBody.replace(URL, activationURL);
+                htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword + " .");
 
 
                 final Return<Boolean> mailReturn = SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
@@ -276,6 +287,128 @@ abstract public class Bate extends AbstractWidgetListener {
 
     }
 
+    private void generateFriendDeleteWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
+        new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
+            protected void init(final Object... initArgs) {
+                new FriendDelete(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
+                };
+            }
+        };
+    }
+
+    private void generateFriendAddWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
+        new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
+            protected void init(final Object... initArgs) {
+                new FriendAdd(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
+                };
+            }
+        };
+    }
+
+    private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser, final SimpleName humansName) {
+        new UserProperty(
+                request,
+                $$(Page.BateImportResults),
+                ElementComposer.compose($$(MarkupTag.BR)).get(),
+                new InviteCriteria(
+                        humansName.getObjectAsValid(),//This name is of the person being invited(invitee), not the inviter
+                        "#",
+                        "#",
+                        currentUser,
+                        importedContact)) {
+
+            private Integer myinvitedCount = invitedCount;
+
+            private Element mybate = bate;
+
+            protected void init(final Object... initArgs) {
+
+                final InviteCriteria myInviteCritria = (InviteCriteria) initArgs[1];
+                new Button(
+                        request,
+                        $$(Page.user_property_content),
+                        (new ButtonCriteria(false, "Invite", "#", "padding-left:0%; width:20%; padding-right:80%;")
+                                .setMetadata(
+                                        myInviteCritria.getInviter(),
+                                        myInviteCritria.getInvitee(),
+                                        myInviteCritria.getInviterDisplayName()))) {
+
+                    private HumanId inviter;
+
+                    private ImportedContact invitee;
+
+                    private String invitersName;
+
+                    private Integer mymyinvitedCount = myinvitedCount;
+
+                    private Element mymybate = mybate;
+
+                    @Override
+                    protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
+
+                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
+                            private HumanId myinviter = inviter;
+
+                            private ImportedContact myinvitee = invitee;
+
+                            private String myinvitersName = invitersName;
+
+                            private Integer mymymyinvitedCount = mymyinvitedCount;
+
+                            private Element mymymybate = mymybate;
+
+                            @Override
+                            public void handleEvent(final Event evt) {
+
+                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(myinvitersName, myinvitee);
+
+                                if (booleanReturn.returnStatus() == 0 && booleanReturn.returnValue()) {
+                                    /**
+                                     * What happens if I do mymymyinvitedCount++ ? Will the referenc be updated? or do I get a new int? No time to check that :)
+                                     */
+                                    mymymyinvitedCount = mymymyinvitedCount + 1;
+
+                                    if (mymymyinvitedCount > 1) {
+                                        $$displayBlock(mymymybate);
+                                    }
+
+                                    $$(Page.GenericButtonText).setTextContent("Invited!");
+
+                                    $$remove(evt, EventType.CLICK, this);
+                                } else {
+                                    $$(Page.GenericButtonText).setTextContent("Failed! Retry..");
+                                }
+                            }
+                        }, false);
+                    }
+
+                    @Override
+                    protected void init(final ButtonCriteria buttonCriteria) {
+                        inviter = (HumanId) buttonCriteria.getMetadata()[0];
+                        invitee = (ImportedContact) buttonCriteria.getMetadata()[1];
+                        invitersName = (String) buttonCriteria.getMetadata()[2];
+                    }
+
+
+                };
+            }
+
+            @Override
+            protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
+
+                itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), new EventListener() {
+
+                    @Override
+                    public void handleEvent(final Event evt) {
+                        //$$displayNone($$(Page.user_property_widget));
+                        $$sendJS(JSCodeToSend.jqueryHide($$getId(Page.user_property_widget)));
+                    }
+                }, false);
+
+            }
+        };
+    }
+
     @Override
     protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
         UCSignup:
@@ -347,7 +480,7 @@ abstract public class Bate extends AbstractWidgetListener {
 
                                 String htmlBody = getHTMLStringForOfflineFriendInvite("I Like Places", email.getObj());
 
-                                htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
+                                htmlBody = htmlBody.replace(URL, activationURL);
                                 htmlBody = htmlBody.replace(PASSWORD_ADVICE, "");
                                 htmlBody = htmlBody.replace(PASSWORD_DETAILS, "");
 
@@ -388,124 +521,5 @@ abstract public class Bate extends AbstractWidgetListener {
         }
     }
 
-    private void generateFriendDeleteWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
-        new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
-            protected void init(final Object... initArgs) {
-                new FriendDelete(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
-                };
-            }
-        };
-    }
-
-    private void generateFriendAddWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
-        new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
-            protected void init(final Object... initArgs) {
-                new FriendAdd(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
-                };
-            }
-        };
-    }
-
-    private void generateFriendInviteWidgetFor(final ImportedContact importedContact, final HumanId currentUser, final SimpleName humansName) {
-        new UserProperty(
-                request,
-                $$(Page.BateImportResults),
-                ElementComposer.compose($$(MarkupTag.BR)).get(),
-                new InviteCriteria(
-                        humansName.getObjectAsValid(),//This name is of the person being invited(invitee), not the inviter
-                        "#",
-                        "#",
-                        currentUser,
-                        importedContact)) {
-
-            private Integer myinvitedCount = invitedCount;
-
-            private Element mybate = bate;
-
-            protected void init(final Object... initArgs) {
-
-                final InviteCriteria myInviteCritria = (InviteCriteria) initArgs[1];
-                new Button(
-                        request,
-                        $$(Page.user_property_content),
-                        (new ButtonCriteria(false, "Invite", "#", "padding-left:0%; width:20%; padding-right:80%;")
-                                .setMetadata(
-                                        myInviteCritria.getInviter(),
-                                        myInviteCritria.getInvitee(),
-                                        myInviteCritria.getInviterDisplayName()))) {
-
-                    private HumanId inviter;
-
-                    private ImportedContact invitee;
-
-                    private String invitersName;
-
-                    private Integer mymyinvitedCount = myinvitedCount;
-
-                    private Element mymybate = mybate;
-
-                    @Override
-                    protected void init(final ButtonCriteria buttonCriteria) {
-                        inviter = (HumanId) buttonCriteria.getMetadata()[0];
-                        invitee = (ImportedContact) buttonCriteria.getMetadata()[1];
-                        invitersName = (String) buttonCriteria.getMetadata()[2];
-                    }
-
-                    @Override
-                    protected void registerEventListeners(final ItsNatHTMLDocument itsNatHTMLDocument_, final HTMLDocument hTMLDocument_) {
-
-                        itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.GenericButtonLink), EventType.CLICK.toString(), new EventListener() {
-                            private HumanId myinviter = inviter;
-
-                            private ImportedContact myinvitee = invitee;
-
-                            private String myinvitersName = invitersName;
-
-                            private Integer mymymyinvitedCount = mymyinvitedCount;
-
-                            private Element mymymybate = mymybate;
-
-                            @Override
-                            public void handleEvent(final Event evt) {
-
-                                final Return<Boolean> booleanReturn = sendInviteToOfflineInvite(myinvitersName, myinvitee);
-
-                                if (booleanReturn.returnStatus() == 0 && booleanReturn.returnValue()) {
-                                    /**
-                                     * What happens if I do mymymyinvitedCount++ ? Will the referenc be updated? or do I get a new int? No time to check that :)
-                                     */
-                                    mymymyinvitedCount = mymymyinvitedCount + 1;
-
-                                    if (mymymyinvitedCount > 1) {
-                                        $$displayBlock(mymymybate);
-                                    }
-
-                                    $$(Page.GenericButtonText).setTextContent("Invited!");
-
-                                    $$remove(evt, EventType.CLICK, this);
-                                } else {
-                                    $$(Page.GenericButtonText).setTextContent("Failed! Retry..");
-                                }
-                            }
-                        }, false);
-                    }
-                };
-            }
-
-            @Override
-            protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
-
-                itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), new EventListener() {
-
-                    @Override
-                    public void handleEvent(final Event evt) {
-                        //$$displayNone($$(Page.user_property_widget));
-                        $$sendJS(JSCodeToSend.jqueryHide($$getId(Page.user_property_widget)));
-                    }
-                }, false);
-
-            }
-        };
-    }
 
 }

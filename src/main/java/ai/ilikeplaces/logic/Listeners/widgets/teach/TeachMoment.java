@@ -11,7 +11,10 @@ import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.ServletActivate;
 import ai.ilikeplaces.servlets.ServletLogin;
-import ai.ilikeplaces.util.*;
+import ai.ilikeplaces.util.AIEventListener;
+import ai.ilikeplaces.util.AbstractWidgetListener;
+import ai.ilikeplaces.util.Parameter;
+import ai.ilikeplaces.util.UserIntroduction;
 import ai.reaver.Return;
 import org.itsnat.core.ItsNatServletRequest;
 import org.itsnat.core.html.ItsNatHTMLDocument;
@@ -37,10 +40,13 @@ public class TeachMoment extends AbstractWidgetListener<TeachMomentCriteria> {
 
 
     private static final String PASSWORD_DETAILS = "_passwordDetails";
-    private static final String PASSWORD_ADVICE = "_passwordAdvice";
+
     private static final String URL = "_url";
+
     private String woehint;
+
     private String placeName;
+
     private String placeDetails;
 
 // -------------------------- ENUMERATIONS --------------------------
@@ -177,9 +183,8 @@ public class TeachMoment extends AbstractWidgetListener<TeachMomentCriteria> {
 
                                     String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
 
-                                    htmlBody = htmlBody.replace(URL, ElementComposer.generateSimpleLinkTo(activationURL));
-                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword);
-                                    htmlBody = htmlBody.replace(PASSWORD_ADVICE, "Make sure you change it.");
+                                    htmlBody = htmlBody.replace(URL, activationURL);
+                                    htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword + " .");
 
                                     SendMail.getSendMailLocal().sendAsHTMLAsynchronously(
                                             myemail.getObj(),
