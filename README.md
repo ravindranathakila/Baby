@@ -1,4 +1,5 @@
 ### Help!!! We need help :-)
+#### Hey! Drop us a mail at 'getintouch@adimpression.mobi' please, and we'd be happy to explain further. Thanks!
 
 #### What we do,
 
