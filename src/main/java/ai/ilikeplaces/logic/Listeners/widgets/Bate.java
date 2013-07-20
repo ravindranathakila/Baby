@@ -121,10 +121,10 @@ abstract public class Bate extends AbstractWidgetListener {
             final Document frame = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + "ai/ilikeplaces/EmailFrame.xhtml");
             final String frameString = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", frame));
 
-            $$static(Controller.Page.user_property_name, userProperty).setTextContent(inviter);
-            $$static(Controller.Page.user_property_name, userProperty).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
-            $$static(Controller.Page.user_property_profile_photo, userProperty).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
-            $$static(Controller.Page.user_property_content, userProperty).appendChild(
+            $$static(UserProperty.UserPropertyWidgetIds.user_property_name, userProperty).setTextContent(inviter);
+            $$static(UserProperty.UserPropertyWidgetIds.user_property_name, userProperty).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
+            $$static(UserProperty.UserPropertyWidgetIds.user_property_profile_photo, userProperty).setAttribute(MarkupTag.IMG.src(), RBGet.getGlobalConfigKey("PROFILE_PHOTO_DEFAULT"));
+            $$static(UserProperty.UserPropertyWidgetIds.user_property_content, userProperty).appendChild(
                     userProperty.importNode(
                             ElementComposer.compose(//Main DIV
                                     userProperty.createElement(MarkupTag.DIV.toString())
@@ -152,7 +152,7 @@ abstract public class Bate extends AbstractWidgetListener {
             );
 
 
-            final String emailContent = HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, userProperty));
+            final String emailContent = HTMLDocParser.convertNodeToHtml($$static(UserProperty.UserPropertyWidgetIds.user_property_widget, userProperty));
 
             final String fullEmail = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", frame)).replace("_FrameContent_", emailContent);
 
@@ -290,7 +290,7 @@ abstract public class Bate extends AbstractWidgetListener {
     private void generateFriendDeleteWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
         new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
             protected void init(final Object... initArgs) {
-                new FriendDelete(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
+                new FriendDelete(request, $$(UserPropertyWidgetIds.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
                 };
             }
         };
@@ -299,7 +299,7 @@ abstract public class Bate extends AbstractWidgetListener {
     private void generateFriendAddWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
         new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
             protected void init(final Object... initArgs) {
-                new FriendAdd(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
+                new FriendAdd(request, $$(UserPropertyWidgetIds.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
                 };
             }
         };
@@ -326,7 +326,7 @@ abstract public class Bate extends AbstractWidgetListener {
                 final InviteCriteria myInviteCritria = (InviteCriteria) initArgs[1];
                 new Button(
                         request,
-                        $$(Page.user_property_content),
+                        $$(UserPropertyWidgetIds.user_property_content),
                         (new ButtonCriteria(false, "Invite", "#", "padding-left:0%; width:20%; padding-right:80%;")
                                 .setMetadata(
                                         myInviteCritria.getInviter(),
@@ -396,12 +396,12 @@ abstract public class Bate extends AbstractWidgetListener {
             @Override
             protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), new EventListener() {
+                itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertyWidgetIds.user_property_content), EventType.CLICK.toString(), new EventListener() {
 
                     @Override
                     public void handleEvent(final Event evt) {
                         //$$displayNone($$(Page.user_property_widget));
-                        $$sendJS(JSCodeToSend.jqueryHide($$getId(Page.user_property_widget)));
+                        $$sendJS(JSCodeToSend.jqueryHide($$getId(UserPropertyWidgetIds.user_property_widget)));
                     }
                 }, false);
 

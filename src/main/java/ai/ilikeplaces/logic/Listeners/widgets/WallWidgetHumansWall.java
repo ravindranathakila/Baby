@@ -199,7 +199,7 @@ public class WallWidgetHumansWall extends WallWidget {
         for (final Msg msg : wallEntries) {
             new UserProperty(request, $$(WallWidgetIds.wallContent), new HumanId(msg.getMsgMetadata())) {
                 protected void init(final Object... initArgs) {
-                    $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
+                    $$(UserPropertyWidgetIds.user_property_content).setTextContent(msg.getMsgContent());
                 }
             };
         }

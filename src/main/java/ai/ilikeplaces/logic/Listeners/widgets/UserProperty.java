@@ -37,6 +37,12 @@ abstract public class UserProperty extends AbstractWidgetListener {
     private static final String EXT_GIF = ".gif";
     public static final String SENDER_NAME = "_senderName_";
 
+    public enum UserPropertyWidgetIds implements WidgetIds {
+        user_property_profile_photo,
+        user_property_name, user_property_widget,
+        user_property_content
+    }
+
     final static public SmartCache2String<HumansIdentity, String> HUMANS_IDENTITY_CACHE = new SmartCache2String<HumansIdentity, String>(new SmartCache2String.RecoverWith<HumansIdentity, String>() {
 
         @Override
@@ -64,10 +70,10 @@ abstract public class UserProperty extends AbstractWidgetListener {
         try {
             final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(humanIdWhosProfileToShow.getHumanId(), "");
 
-            $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
-            $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
-            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), hi.getHuman().getDisplayName());
+            $$(UserPropertyWidgetIds.user_property_name).setTextContent(hi.getHuman().getDisplayName());
+            $$(UserPropertyWidgetIds.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+            $$(UserPropertyWidgetIds.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(UserPropertyWidgetIds.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), hi.getHuman().getDisplayName());
 
 
             /*  fetchToEmail(//WARNING! This does not append the content.
@@ -98,11 +104,11 @@ abstract public class UserProperty extends AbstractWidgetListener {
             final HumansIdentity hi = HUMANS_IDENTITY_CACHE.get(humanIdWhosProfileToShow.getHumanId(), "");
 
 
-            $$(Page.user_property_name).setTextContent(hi.getHuman().getDisplayName());
-            $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
-            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), hi.getHuman().getDisplayName());
-            $$(Page.user_property_content).appendChild(content);
+            $$(UserPropertyWidgetIds.user_property_name).setTextContent(hi.getHuman().getDisplayName());
+            $$(UserPropertyWidgetIds.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
+            $$(UserPropertyWidgetIds.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
+            $$(UserPropertyWidgetIds.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), hi.getHuman().getDisplayName());
+            $$(UserPropertyWidgetIds.user_property_content).appendChild(content);
 
             this.fetchToEmail(
                     hi.getHuman().getDisplayName(),
@@ -131,11 +137,11 @@ abstract public class UserProperty extends AbstractWidgetListener {
         super(request__, Page.UserProperty, appendToElement__, humanIdWhosProfileToShow, params);
 
         try {
-            $$(Page.user_property_name).setTextContent(humanIdWhosProfileToShow.getHuman().getDisplayName());
-            $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + humanIdWhosProfileToShow.getUrl().getUrl());
-            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(humanIdWhosProfileToShow.getHumansIdentityProfilePhoto()));
-            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), humanIdWhosProfileToShow.getHuman().getDisplayName());
-            $$(Page.user_property_content).appendChild(content);
+            $$(UserPropertyWidgetIds.user_property_name).setTextContent(humanIdWhosProfileToShow.getHuman().getDisplayName());
+            $$(UserPropertyWidgetIds.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + humanIdWhosProfileToShow.getUrl().getUrl());
+            $$(UserPropertyWidgetIds.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(humanIdWhosProfileToShow.getHumansIdentityProfilePhoto()));
+            $$(UserPropertyWidgetIds.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), humanIdWhosProfileToShow.getHuman().getDisplayName());
+            $$(UserPropertyWidgetIds.user_property_content).appendChild(content);
 
             this.fetchToEmail(
                     humanIdWhosProfileToShow.getHuman().getDisplayName(),
@@ -164,11 +170,11 @@ abstract public class UserProperty extends AbstractWidgetListener {
         try {
             String fullName = inviteCriteria.getInvitee().getFullName();
             fullName = fullName != null ? fullName + SPACED_HYPHEN : EMPTY;
-            $$(Page.user_property_name).setTextContent(fullName + inviteCriteria.getInvitee().getEmail());
-            $$(Page.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + inviteCriteria.getProfileUrl());
-            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(inviteCriteria.getProfilePhoto()));
-            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), fullName + inviteCriteria.getInvitee().getEmail());
-            $$(Page.user_property_content).appendChild(content);
+            $$(UserPropertyWidgetIds.user_property_name).setTextContent(fullName + inviteCriteria.getInvitee().getEmail());
+            $$(UserPropertyWidgetIds.user_property_name).setAttribute(MarkupTag.A.href(), ProfileRedirect.PROFILE_URL + inviteCriteria.getProfileUrl());
+            $$(UserPropertyWidgetIds.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), formatProfilePhotoUrl(inviteCriteria.getProfilePhoto()));
+            $$(UserPropertyWidgetIds.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), fullName + inviteCriteria.getInvitee().getEmail());
+            $$(UserPropertyWidgetIds.user_property_content).appendChild(content);
 
             this.fetchToEmail(
                     inviteCriteria.getInviterDisplayName(),
@@ -189,16 +195,16 @@ abstract public class UserProperty extends AbstractWidgetListener {
     protected void fetchToEmail(final Object... args) {
         try {
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + USER_PROPERTY_EMAIL_XHTML);
-            $$(Controller.Page.user_property_name, document).setTextContent((String) args[0]);
-            $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), (String) args[1]);
-            $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), (String) args[2]);
-            $$(Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), (String) args[0]);
-            $$(Controller.Page.user_property_content, document).appendChild(
+            $$(UserPropertyWidgetIds.user_property_name, document).setTextContent((String) args[0]);
+            $$(UserPropertyWidgetIds.user_property_name, document).setAttribute(MarkupTag.A.href(), (String) args[1]);
+            $$(UserPropertyWidgetIds.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(), (String) args[2]);
+            $$(UserPropertyWidgetIds.user_property_profile_photo).setAttribute(MarkupTag.IMG.title(), (String) args[0]);
+            $$(UserPropertyWidgetIds.user_property_content, document).appendChild(
                     document.importNode(((Element) args[3]), true)
             );
 
 
-            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(Controller.Page.user_property_widget, document));
+            fetchToEmail = HTMLDocParser.convertNodeToHtml($$(UserPropertyWidgetIds.user_property_widget, document));
         } catch (final TransformerException e) {
             Loggers.EXCEPTION.error("", e);
         } catch (final SAXException e) {
@@ -220,10 +226,10 @@ abstract public class UserProperty extends AbstractWidgetListener {
     public static String fetchToEmailStatically(final String usersName, final String usersUrl, final String usersPhoto, final Element content) {
         try {
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + USER_PROPERTY_EMAIL_XHTML);
-            document.getElementById(Controller.Page.user_property_name).setTextContent(usersName);
-            document.getElementById(Controller.Page.user_property_name).setAttribute(MarkupTag.A.href(), usersUrl);
-            document.getElementById(Controller.Page.user_property_profile_photo).setAttribute(MarkupTag.IMG.src(), usersPhoto);
-            document.getElementById(Controller.Page.user_property_content).appendChild(document.importNode(content, true));
+            document.getElementById(UserPropertyWidgetIds.user_property_name.toString()).setTextContent(usersName);
+            document.getElementById(UserPropertyWidgetIds.user_property_name.toString()).setAttribute(MarkupTag.A.href(), usersUrl);
+            document.getElementById(UserPropertyWidgetIds.user_property_profile_photo.toString()).setAttribute(MarkupTag.IMG.src(), usersPhoto);
+            document.getElementById(UserPropertyWidgetIds.user_property_content.toString()).appendChild(document.importNode(content, true));
 
             return HTMLDocParser.convertNodeToHtml(document);
         } catch (final TransformerException e) {
@@ -289,14 +295,14 @@ abstract public class UserProperty extends AbstractWidgetListener {
             final HumansIdentity hi = r.returnValue();
 
             final String displayName = hi.getHuman().getDisplayName();
-            $$static(Controller.Page.user_property_name, document).setTextContent(displayName);
-            $$static(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(),
+            $$static(UserPropertyWidgetIds.user_property_name.toString(), document).setTextContent(displayName);
+            $$static(UserPropertyWidgetIds.user_property_name.toString(), document).setAttribute(MarkupTag.A.href(),
                     "http://www.ilikeplaces.com" + ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$static(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
+            $$static(UserPropertyWidgetIds.user_property_profile_photo.toString(), document).setAttribute(MarkupTag.IMG.src(),
                     formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
 
 
-            $$static(Controller.Page.user_property_content, document).appendChild(
+            $$static(UserPropertyWidgetIds.user_property_content.toString(), document).appendChild(
                     document.importNode(
                             ElementComposer.compose(
                                     document.createElement(MarkupTag.DIV.toString())
@@ -307,7 +313,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             );
 
 
-            return HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, document));
+            return HTMLDocParser.convertNodeToHtml($$static(UserPropertyWidgetIds.user_property_widget.toString(), document));
         } catch (final Throwable e) {
             throw LogNull.getRuntimeException(e);
         }
@@ -330,14 +336,14 @@ abstract public class UserProperty extends AbstractWidgetListener {
             final HumansIdentity hi = r.returnValue();
 
             final String displayName = hi.getHuman().getDisplayName();
-            $$static(Controller.Page.user_property_name, document).setTextContent(displayName);
-            $$static(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(),
+            $$static(UserPropertyWidgetIds.user_property_name.toString(), document).setTextContent(displayName);
+            $$static(UserPropertyWidgetIds.user_property_name.toString(), document).setAttribute(MarkupTag.A.href(),
                     "http://www.ilikeplaces.com" + ProfileRedirect.PROFILE_URL + hi.getUrl().getUrl());
-            $$static(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
+            $$static(UserPropertyWidgetIds.user_property_profile_photo.toString(), document).setAttribute(MarkupTag.IMG.src(),
                     formatProfilePhotoUrl(hi.getHumansIdentityProfilePhoto()));
 
 
-            $$static(Controller.Page.user_property_content, document).appendChild(
+            $$static(UserPropertyWidgetIds.user_property_content.toString(), document).appendChild(
                     document.importNode(
                             ElementComposer.compose(
                                     document.createElement(MarkupTag.DIV.toString())
@@ -348,7 +354,7 @@ abstract public class UserProperty extends AbstractWidgetListener {
             );
 
 
-            return HTMLDocParser.convertNodeToHtml($$static(Page.user_property_widget, document));
+            return HTMLDocParser.convertNodeToHtml($$static(UserPropertyWidgetIds.user_property_widget.toString(), document));
         } catch (final Throwable e) {
             throw LogNull.getRuntimeException(e);
         }

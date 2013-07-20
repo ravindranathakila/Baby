@@ -113,11 +113,11 @@ public class MemberHandler<M extends HumansFriend, T extends Collection<HumansFr
 
             final UserProperty userProperty = new UserProperty(request, $$(Controller.Page.FriendListList), new HumanId(possibility.getHumanId())) {
                 protected void init(final Object... initArgs) {
-                    $$(Controller.Page.user_property_content).appendChild(div);
+                    $$(UserPropertyWidgetIds.user_property_content).appendChild(div);
                 }
             };
 
-            $$setClass(userProperty.$$(Controller.Page.user_property_widget), (isExists ? STR_ALIGN_POSITIVE : STR_ALIGN_NEGATIVE), false);
+            $$setClass(userProperty.$$(UserProperty.UserPropertyWidgetIds.user_property_widget), (isExists ? STR_ALIGN_POSITIVE : STR_ALIGN_NEGATIVE), false);
 
 
             itsNatHTMLDocument__.addEventListener((EventTarget) div, EventType.CLICK.toString(), new EventListener() {
@@ -134,7 +134,7 @@ public class MemberHandler<M extends HumansFriend, T extends Collection<HumansFr
                             ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getDisplayName() + Added);
                             final String existingClasses = "" + $$(evt_).getAttribute(MarkupTag.GENERIC.classs());
                             $$(evt_).setAttribute(MarkupTag.GENERIC.classs(), existingClasses.replace(NEGATIVE, "") + " " + POSITIVE);
-                            $$setClass(myuserProperty.$$(Controller.Page.user_property_widget), STR_ALIGN_POSITIVE, true);
+                            $$setClass(myuserProperty.$$(UserProperty.UserPropertyWidgetIds.user_property_widget), STR_ALIGN_POSITIVE, true);
                         }
 
                     } else {
@@ -144,7 +144,7 @@ public class MemberHandler<M extends HumansFriend, T extends Collection<HumansFr
                             ((Element) evt_.getCurrentTarget()).setTextContent(possibility.getDisplayName() + Removed);
                             final String existingClasses = "" + $$(evt_).getAttribute(MarkupTag.GENERIC.classs());
                             $$(evt_).setAttribute(MarkupTag.GENERIC.classs(), existingClasses.replace(POSITIVE, "") + " " + NEGATIVE);
-                            $$setClass(myuserProperty.$$(Controller.Page.user_property_widget), STR_ALIGN_NEGATIVE, true);
+                            $$setClass(myuserProperty.$$(UserProperty.UserPropertyWidgetIds.user_property_widget), STR_ALIGN_NEGATIVE, true);
                         }
                     }
                 }

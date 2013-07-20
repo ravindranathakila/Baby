@@ -449,6 +449,17 @@ public abstract class AbstractWidgetListener<T> {
 
     /**
      * Fetches the element disregarding widget behavior. i.e. ignores dynamic nature of ID's
+     *
+     * @param key__
+     * @param document__
+     * @return
+     */
+    final protected Element $$(final WidgetIds key__, final Document document__) {
+        return document__.getElementById(key__.toString());
+    }
+
+    /**
+     * Fetches the element disregarding widget behavior. i.e. ignores dynamic nature of ID's
      * Static version of {@link #$$(String, org.w3c.dom.Document)}
      *
      * @param key__

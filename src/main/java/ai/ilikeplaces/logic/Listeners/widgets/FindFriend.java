@@ -302,7 +302,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
                                 @Override
                                 protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
-                                    itsNatDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), new EventListener() {
+                                    itsNatDocument_.addEventListener((EventTarget) $$(UserPropertyWidgetIds.user_property_content), EventType.CLICK.toString(), new EventListener() {
                                         @Override
                                         public void handleEvent(final Event evt_) {
                                             final SmartLogger inviteSL = SmartLogger.start(Loggers.LEVEL.USER,
@@ -318,8 +318,8 @@ abstract public class FindFriend extends AbstractWidgetListener {
                                                     )
                                             );
                                             inviteSL.complete(Loggers.LEVEL.USER, Loggers.DONE);
-                                            $$clear($$(Page.user_property_content));
-                                            $$(Page.user_property_content).setTextContent("Invited!");
+                                            $$clear($$(UserPropertyWidgetIds.user_property_content));
+                                            $$(UserPropertyWidgetIds.user_property_content).setTextContent("Invited!");
                                             remove(evt_.getTarget(), EventType.CLICK, this);
                                         }
                                     }, false);
@@ -369,7 +369,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
     private void generateFriendDeleteWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
         new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
             protected void init(final Object... initArgs) {
-                new FriendDelete(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
+                new FriendDelete(request, $$(UserPropertyWidgetIds.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
                 };
             }
         };
@@ -378,7 +378,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
     private void generateFriendAddWidgetFor(final HumanId humanIdWhosProfileToShow, final HumanId currentUser) {
         new UserProperty(request, $$(Page.friendFindSearchResults), humanIdWhosProfileToShow, currentUser) {
             protected void init(final Object... initArgs) {
-                new FriendAdd(request, $$(Page.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
+                new FriendAdd(request, $$(UserPropertyWidgetIds.user_property_content), (HumanId) initArgs[0], (HumanId) ((Object[]) initArgs[1])[0]) {//This var args thingy is an awesome way to flexibility, except when not careful!
                 };
             }
         };
@@ -401,7 +401,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
                 new Button(
                         request,
-                        $$(Page.user_property_content),
+                        $$(UserPropertyWidgetIds.user_property_content),
                         (new ButtonCriteria(false, "Invite", "#", "padding-left:0%; width:20%; padding-right:80%;")
                                 .setMetadata(
                                         ((InviteCriteria) initArgs[1]).getInviter(),
@@ -477,12 +477,12 @@ abstract public class FindFriend extends AbstractWidgetListener {
             @Override
             protected void registerEventListeners(ItsNatHTMLDocument itsNatHTMLDocument_, HTMLDocument hTMLDocument_) {
 
-                itsNatHTMLDocument_.addEventListener((EventTarget) $$(Page.user_property_content), EventType.CLICK.toString(), new EventListener() {
+                itsNatHTMLDocument_.addEventListener((EventTarget) $$(UserPropertyWidgetIds.user_property_content), EventType.CLICK.toString(), new EventListener() {
 
                     @Override
                     public void handleEvent(final Event evt) {
                         //$$displayNone($$(Page.user_property_widget));
-                        $$sendJS(JSCodeToSend.jqueryHide($$getId(Page.user_property_widget)));
+                        $$sendJS(JSCodeToSend.jqueryHide($$getId(UserPropertyWidgetIds.user_property_widget)));
                     }
                 }, false);
 
@@ -502,17 +502,17 @@ abstract public class FindFriend extends AbstractWidgetListener {
 
             final Document document = HTMLDocParser.getDocument(Controller.REAL_PATH + Controller.WEB_INF_PAGES + Controller.USER_PROPERTY_EMAIL_XHTML);
 
-            $$(Controller.Page.user_property_name, document).setTextContent(inviterName);
-            $$(Controller.Page.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
+            $$(UserProperty.UserPropertyWidgetIds.user_property_name, document).setTextContent(inviterName);
+            $$(UserProperty.UserPropertyWidgetIds.user_property_name, document).setAttribute(MarkupTag.A.href(), "http://www.ilikeplaces.com");
 
 
             final String profilePhotoUrl = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansProfilePhoto(inviterEmail).returnValueBadly();
 
-            $$(Controller.Page.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
+            $$(UserProperty.UserPropertyWidgetIds.user_property_profile_photo, document).setAttribute(MarkupTag.IMG.src(),
                     UserProperty.formatProfilePhotoUrlStatic(profilePhotoUrl));
 
 
-            $$(Controller.Page.user_property_content, document).appendChild(
+            $$(UserProperty.UserPropertyWidgetIds.user_property_content, document).appendChild(
                     document.importNode(
                             ElementComposer.compose(
                                     document.createElement(MarkupTag.DIV.toString())
@@ -531,7 +531,7 @@ abstract public class FindFriend extends AbstractWidgetListener {
             );
 
 
-            return HTMLDocParser.convertNodeToHtml($$(Page.user_property_widget, document));
+            return HTMLDocParser.convertNodeToHtml($$(UserProperty.UserPropertyWidgetIds.user_property_widget, document));
         } catch (final Throwable e) {
             throw LogNull.getRuntimeException(e);
         }

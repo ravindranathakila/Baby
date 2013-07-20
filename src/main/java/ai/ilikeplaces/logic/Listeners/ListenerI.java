@@ -127,10 +127,10 @@ public class ListenerI implements ItsNatServletRequestListener {
                                                 /*Other*/ && me.notFriend(requestedProfile)) {
                                             new UserProperty(request__, $(Skeleton_center_content), new HumanId(requestedProfile)) {
                                                 protected void init(final Object... initArgs) {
-                                                    $$(Controller.Page.user_property_content).appendChild(
+                                                    $$(UserPropertyWidgetIds.user_property_content).appendChild(
                                                             ElementComposer.compose($$(MarkupTag.DIV))
                                                                     .$ElementSetText(NOT_YET_YOUR_FRIEND).get());
-                                                    new FriendAdd(request__, $$(Controller.Page.user_property_content), new HumanId(requestedProfile).getSelfAsValid(), new HumanId(getUsernameAsValid()).getSelfAsValid()) {
+                                                    new FriendAdd(request__, $$(UserPropertyWidgetIds.user_property_content), new HumanId(requestedProfile).getSelfAsValid(), new HumanId(getUsernameAsValid()).getSelfAsValid()) {
                                                     };
                                                 }
                                             };

@@ -1,7 +1,6 @@
 package ai.ilikeplaces.servlets;
 
 import ai.ilikeplaces.logic.Listeners.*;
-import ai.ilikeplaces.logic.Listeners.templates.TemplateGeneric;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
@@ -10,8 +9,6 @@ import org.itsnat.core.*;
 import org.itsnat.core.event.ItsNatServletRequestListener;
 import org.itsnat.core.http.HttpServletWrapper;
 import org.itsnat.core.http.ItsNatHttpServlet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -29,8 +26,6 @@ import java.util.*;
 final public class
         Controller extends HttpServletWrapper {
 // ------------------------------ FIELDS ------------------------------
-
-    public static final String LOCATION_HUB = "/page/Earth_of_Earth?WOEID=1";
 
     public static final String WEB_INF_PAGES = "WEB-INF/pages/";
 
@@ -54,8 +49,6 @@ final public class
     public static String REAL_PATH;//Weak implementation but suffices
 
     private final static Map<PageFace, String> PrettyURLMap_ = new IdentityHashMap<PageFace, String>();//Please read javadoc before making any changes to this implementation
-
-    final static private Logger staticLogger = LoggerFactory.getLogger(Controller.class.getName());
 
     private static final String ITSNAT_DOC_NAME = "itsnat_doc_name";
 
@@ -152,136 +145,18 @@ final public class
 
     public static final String PAGE_ORG = "/page/_org";
 
-    final PageFace locationMain = Page.LocationMain;
 
     final PageFace aarrr = Page.Aarrr;
 
-    //    final PageFace photoCRUD = Page.PhotoCRUD;
-    final PageFace photo$Description = Page.Photo$Description;
-
-    final PageFace signInOn = Page.SignInOn;
-
-    final PageFace notification = Page.Notification;
-
-    final PageFace downTownFlow = Page.DownTownFlow;
-
-    final PageFace tribeHome = Page.TribeHome;
-
-    final PageFace tribeCreateHome = Page.TribeCreateHome;
-
-    final PageFace privateLocationCreate = Page.PrivateLocationCreate;
-
-    final PageFace privateLocationView = Page.PrivateLocationView;
-
-    final PageFace privateLocationDelete = Page.PrivateLocationDelete;
-
-    final PageFace tribeSidebar = Page.TribeSidebar;
-
-    final PageFace privateEventCreate = Page.PrivateEventCreate;
-
-    final PageFace privateEventView = Page.PrivateEventView;
-
-    final PageFace privateEventDelete = Page.PrivateEventDelete;
-
-    final PageFace privateEventViewSidebar = Page.PrivateEventViewSidebar;
-
-    final PageFace wOIEDGrabber = Page.WOEIDGrabber;
-
-    final PageFace downTownHeatMap = Page.DownTownHeatMap;
-
-    final PageFace skeleton = Page.Skeleton;
-
-    final PageFace organize = Page.Organize;
-
-    final PageFace findFriend = Page.Friends;
-
-    final PageFace book = Page.Bookings;
-
     final PageFace tribes = Page.Tribes;
 
-    final PageFace profile = Page.Profile;
-
-    final PageFace i = Page.I;
-
-    final PageFace activate = Page.Activate;
-
-    final PageFace share = Page.Share;
-
-    final PageFace geoBusiness = Page.GeoBusiness;
-
-    final PageFace photos = Page.Photos;
-
-    final PageFace legal = Page.Legal;
-
-    final PageFace muster = Page.Muster;
-
-    final PageFace helpPage = Page.HelpPage;
-
-    final PageFace findFriendWidget = Page.FindFriend;
-
-    final PageFace friendAdd = Page.FriendAdd;
-
-    final PageFace friendDelete = Page.FriendDelete;
-
-    final PageFace friendList = Page.FriendList;
-
-    final PageFace genericButton = Page.GenericButton;
-
-    final PageFace templateGeneric = Page.TemplateGeneric;
-
-    final PageFace displayName = Page.DisplayName;
-
-    final PageFace wallHanlder = Page.WallHandler;
-
-    final PageFace passwordChange = Page.PasswordChange;
-
-    final PageFace forgotPasswordChange = Page.ForgotPasswordChange;
-
-    final PageFace profileWidget = Page.ProfileWidget;
-
-    final PageFace info = Page.Info;
-
-    final PageFace place = Page.Place;
-
-    final PageFace comment = Page.Comment;
-
-    final PageFace event = Page.Event;
-
-    final PageFace person = Page.Person;
-
-    final PageFace teachTribe = Page.TeachTribe;
-
-    final PageFace teachMoment = Page.TeachMoment;
-
-    final PageFace subscribe = Page.Subscribe;
-
-    final PageFace carousel = Page.Carousel;
-
-    final PageFace carouselThumb = Page.CarouselThumb;
-
-    final PageFace people = Page.People;
-
-    final PageFace peopleThumb = Page.PeopleThumb;
-
-    final PageFace autoplayControls = Page.AutoplayControls;
+    final PageFace skeleton = Page.Skeleton;
 
     final PageFace album = Page.Album;
 
     final PageFace albumTribe = Page.AlbumTribe;
 
     final PageFace userProperty = Page.UserProperty;
-
-    final PageFace userPropertySidebar = Page.UserPropertySidebar;
-
-    final PageFace termsOfServices = Page.TermsOfServices;
-
-    final PageFace privacyPolicy = Page.PrivacyPolicy;
-
-    final PageFace bate = Page.Bate;
-
-    final PageFace help = Page.Help;
-
-    final PageFace juice = Page.Juice;
 
     final PageFace adaptableSignup = Page.AdaptableSignup;
 
@@ -299,251 +174,23 @@ final public class
 
     @_note(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
-        TermsOfServices("ai/ilikeplaces/widgets/legal/terms_of_services.xhtml"
+
+        Aarrr(
+                "ai/ilikeplaces/AARRR.xhtml",
+                Controller.Page.AarrrDownTownHeatMap,
+                Controller.Page.AarrrJuice,
+                Controller.Page.AarrrSubscribe,
+                Controller.Page.AarrrWOEID,
+                Controller.Page.AarrrHeader
         ) {
             @Override
-            public String toString() {
-                return "DocTermsOfServices";
+            public String getURL() {
+                return APP_ROOT + "page/";
             }
 
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-        PrivacyPolicy("ai/ilikeplaces/widgets/legal/privacy_policy.xhtml"
-        ) {
             @Override
             public String toString() {
-                return "DocPrivacyPolicy";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-
-        Bate("ai/ilikeplaces/widgets/bate.xhtml",
-                Controller.Page.BateSignup,
-                Controller.Page.BateSignupEmail,
-                Controller.Page.BateSignupPassword,
-                Controller.Page.BateSignupNotifications,
-                Controller.Page.BateSignupButton,
-                Controller.Page.BateImportResults,
-                Controller.Page.BateIntroduction,
-                Controller.Page.BateOmg,
-                Controller.Page.BateOmgSuccessMsg
-        ) {
-            @Override
-            public String toString() {
-                return "DocBate";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-
-        Help("ai/ilikeplaces/widgets/help.xhtml"
-        ) {
-            @Override
-            public String toString() {
-                return "DocHelp";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-
-        Place("ai/ilikeplaces/widgets/schema/thing/place.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Place.PlaceIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocPlace";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-        Comment("ai/ilikeplaces/widgets/schema/thing/comment.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Comment.CommentIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocComment";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-
-        Event("ai/ilikeplaces/widgets/schema/thing/event.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Event.EventIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocEvent";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-
-        Person("ai/ilikeplaces/widgets/schema/thing/person.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.schema.thing.Person.PersonIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocPerson";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-
-        Info("ai/ilikeplaces/widgets/info.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.Info.InfoIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocInfo";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-        TeachTribe("ai/ilikeplaces/widgets/teach/teach_tribe.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribe.TeachTribeIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocTeachTribe";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-        TeachMoment("ai/ilikeplaces/widgets/teach/teach_moment.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.teach.TeachMoment.TeachMomentIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocTeachMoment";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-        Subscribe(ai.ilikeplaces.logic.Listeners.widgets.subscribe.Subscribe.class,
-                ai.ilikeplaces.logic.Listeners.widgets.subscribe.Subscribe.SubscribeIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocSubscribe";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-        Carousel("ai/ilikeplaces/widgets/carousel/carousel.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel.CarouselIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocCarousel";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-        CarouselThumb("ai/ilikeplaces/widgets/carousel/carousel_thumb.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselThumb.CarouselThumbIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocCarouselThumb";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-        People("ai/ilikeplaces/widgets/people/people.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.people.People.PeopleIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocPeople";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-        PeopleThumb("ai/ilikeplaces/widgets/people/people_thumb.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.people.PeopleThumb.PeopleThumbIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocPeopleThumb";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-        AutoplayControls("ai/ilikeplaces/widgets/autoplay/controls.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControls.AutoplayControlsIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocAutoplayControls";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+                return DocAarrr;
             }
         },
 
@@ -575,10 +222,10 @@ final public class
             }
         },
         UserProperty("ai/ilikeplaces/widgets/UserProperty.xhtml",
-                Controller.Page.user_property_profile_photo,
-                Controller.Page.user_property_name,
-                Controller.Page.user_property_widget,
-                Controller.Page.user_property_content
+                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.UserPropertyWidgetIds.user_property_profile_photo,
+                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.UserPropertyWidgetIds.user_property_name,
+                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.UserPropertyWidgetIds.user_property_widget,
+                ai.ilikeplaces.logic.Listeners.widgets.UserProperty.UserPropertyWidgetIds.user_property_content
 
         ) {
             @Override
@@ -592,452 +239,6 @@ final public class
             }
         },
 
-
-        UserPropertySidebar("ai/ilikeplaces/widgets/UserProperty_sidebar.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.UserPropertySidebar.UserPropertySidebarIds.values()
-
-        ) {
-            @Override
-            public String toString() {
-                return DocUserPropertySidebar;
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-
-
-        ProfileWidget("ai/ilikeplaces/widgets/profile.xhtml",
-                Controller.Page.ProfileNotice,
-                Controller.Page.ProfileURLChange,
-                Controller.Page.ProfileURL,
-                Controller.Page.ProfileURLUpdate
-        ) {
-            @Override
-            public String toString() {
-                return "DocProfileWidget";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-        ForgotPasswordChange("ai/ilikeplaces/widgets/password.xhtml",
-                ForgotPasswordManager.ForgotPasswordManagerIds.values()
-
-        ) {
-            @Override
-            public String toString() {
-                return "DocForgotPasswordChange";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-        PasswordChange("ai/ilikeplaces/widgets/password.xhtml",
-                Controller.Page.ProfilePasswordWidget,
-                Controller.Page.ProfilePasswordNotice,
-                Controller.Page.ProfilePasswordCurrent,
-                Controller.Page.ProfilePasswordNewConfirm,
-                Controller.Page.ProfilePasswordNew,
-                Controller.Page.ProfilePasswordSave
-        ) {
-            @Override
-            public String toString() {
-                return "DocPasswordChange";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-        WallHandler("ai/ilikeplaces/widgets/wall.xhtml",
-                WallWidget.WallWidgetIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocWall";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-        DisplayName("ai/ilikeplaces/widgets/DisplayName.xhtml",
-                Controller.Page.DisplayNameDisplay,
-                Controller.Page.DisplayNameInput,
-                Controller.Page.DisplayNameSave,
-                Controller.Page.DisplayNameNotice) {
-            @Override
-            public String toString() {
-                return "DocDisplayName";
-            }
-
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
-        PrivateEventCreate("ai/ilikeplaces/widgets/privateevent/private_event_create.xhtml",
-                Controller.Page.privateEventCreateName,
-                Controller.Page.privateEventCreateInfo,
-                Controller.Page.privateEventCreateSave,
-                Controller.Page.privateEventCreateNotice
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocPrivateEventCreate;
-            }
-        },
-
-        PrivateEventView("ai/ilikeplaces/widgets/privateevent/private_event_view.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventView.PrivateEventViewIds.values()
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "PrivateEventView";
-            }
-        },
-
-
-        PrivateEventDelete("ai/ilikeplaces/widgets/privateevent/private_event_delete.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.privateevent.PrivateEventDelete.PrivateEventDeleteIds.values()
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocPrivateEventDelete;
-            }
-        },
-
-
-        PrivateEventViewSidebar("ai/ilikeplaces/widgets/privateevent/private_event_view_sidebar.xhtml",
-                Controller.Page.private_event_view_sidebar_name,
-                Controller.Page.private_event_view_sidebar_content,
-                Controller.Page.private_event_view_sidebar_profile_photo
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocPrivateEventViewSidebar;
-            }
-        },
-
-        TribeSidebar("ai/ilikeplaces/widgets/tribe_sidebar.xhtml",
-                Controller.Page.tribe_sidebar_name,
-                Controller.Page.tribe_sidebar_content,
-                Controller.Page.tribe_sidebar_profile_photo
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "DocTribeSidebar";
-            }
-        },
-
-
-        WOEIDGrabber("ai/ilikeplaces/widgets/WOEIDGrabber.xhtml",
-                Controller.Page.WOEIDGrabberWOEID
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "DocWOEIDGrabber";
-            }
-        },
-
-
-        DownTownHeatMap("ai/ilikeplaces/widgets/DownTownHeatMap.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.DownTownHeatMap.DownTownHeatMapIds.values()
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "DocDownTownHeatMap";
-            }
-        },
-
-        FindFriend("ai/ilikeplaces/widgets/friend/friend_find.xhtml",
-                Controller.Page.friendFindSearchTextInput,
-                Controller.Page.friendFindSearchButtonInput,
-                Controller.Page.friendFindSearchResults,
-                Controller.Page.friendFindSearchNotice,
-                Controller.Page.friendFindSearchInvites
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "DocFindFriend";
-            }
-        },
-
-        FriendAdd("ai/ilikeplaces/widgets/friend/friend_add.xhtml",
-                Controller.Page.friendAddAddButton,
-                Controller.Page.friendAddDisplayNameLabel
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "DocFriendAdd";
-            }
-        },
-
-        FriendDelete("ai/ilikeplaces/widgets/friend/friend_delete.xhtml",
-                Controller.Page.friendDeleteAddButton,
-                Controller.Page.friendDeleteDisplayNameLabel
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "DocFriendDelete";
-            }
-        },
-
-        FriendList("ai/ilikeplaces/widgets/friend/friend_list.xhtml",
-                Controller.Page.FriendListList
-
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "DocFriendList";
-            }
-        },
-
-        GenericButton("ai/ilikeplaces/widgets/button.xhtml",
-                Controller.Page.GenericButtonLink,
-                Controller.Page.GenericButtonText,
-                Controller.Page.GenericButtonImage,
-                Controller.Page.GenericButtonWidth
-
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "DocGenericButton";
-            }
-        },
-
-        Organize(null
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_org";
-            }
-
-            @Override
-            public String toString() {
-                return DocOrganize;
-            }
-        },
-
-        Legal(null
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_legal";
-            }
-
-            @Override
-            public String toString() {
-                return DocLegal;
-            }
-        },
-
-        Muster(null
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_muster";
-            }
-
-            @Override
-            public String toString() {
-                return DocMuster;
-            }
-        },
-
-
-        HelpPage(null
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_help";
-            }
-
-            @Override
-            public String toString() {
-                return DocHelpPage;
-            }
-        },
-
-        Activate(null
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_activate";
-            }
-
-            @Override
-            public String toString() {
-                return DocActivate;
-            }
-        },
-
-        Share(null
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_share";
-            }
-
-            @Override
-            public String toString() {
-                return DocShare;
-            }
-        },
-
-        GeoBusiness(null) {
-            public String getURL() {
-                return APP_ROOT + "page/_geobusiness";
-            }
-
-            @Override
-            public String toString() {
-                return DocGeoBusiness;
-            }
-        },
-
-        TemplateGeneric(null) {
-            public String getURL() {
-                return APP_ROOT + "page/_public";
-            }
-
-            @Override
-            public String toString() {
-                return DocPublic;
-            }
-        },
-
-        Profile(null,
-                Controller.Page.ProfilePhotoChange
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_profile";
-            }
-
-            @Override
-            public String toString() {
-                return "DocProfile";
-            }
-        },
-
-        I(null) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_i";
-            }
-
-            @Override
-            public String toString() {
-                return DocI;
-            }
-        },
-
-        Photos(null) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_me";
-            }
-
-            @Override
-            public String toString() {
-                return DocPhotos;
-            }
-        },
-
-        Friends(null
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_friends";
-            }
-
-            @Override
-            public String toString() {
-                return DocFriends;
-            }
-        },
-        Bookings(null
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/_book";
-            }
-
-            @Override
-            public String toString() {
-                return DocBook;
-            }
-        },
         Tribes(null
         ) {
             @Override
@@ -1081,301 +282,14 @@ final public class
                 return DocSkeleton;
             }
         },
-        PrivateLocationCreate("ai/ilikeplaces/widgets/privatelocation/private_location_create.xhtml",
-                Controller.Page.privateLocationCreateName,
-                Controller.Page.privateLocationCreateInfo,
-                Controller.Page.privateLocationCreateWOEID,
-                Controller.Page.privateLocationCreateWOEIDGrabber,
-                Controller.Page.privateLocationCreateSave,
-                Controller.Page.PrivateLocationCreateCNotice,
-                Controller.Page.PrivateLocaionCreateCTitle,
-                Controller.Page.PrivateLocaionCreateCIntro
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocPrivateLocationCreate;
-            }
-        },
-
-        PrivateLocationView("ai/ilikeplaces/widgets/privatelocation/private_location_view.xhtml",
-                Controller.Page.privateLocationViewNotice,
-                Controller.Page.privateLocationViewName,
-                Controller.Page.privateLocationViewInfo,
-                Controller.Page.privateLocationViewLocationMap,
-                Controller.Page.privateLocationViewOwners,
-                Controller.Page.privateLocationViewVisitors,
-                Controller.Page.privateLocationViewLink,
-                Controller.Page.privateLocationViewEventList
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocPrivateLocationView;
-            }
-        },
 
 
-        PrivateLocationDelete("ai/ilikeplaces/widgets/privatelocation/private_location_delete.xhtml",
-                Controller.Page.privateLocationDeleteName,
-                Controller.Page.privateLocationDeleteInfo,
-                Controller.Page.privateLocationDeleteLocationMap,
-                Controller.Page.privateLocationDeleteNotice,
-                Controller.Page.privateLocationDelete,
-                Controller.Page.privateLocationDeleteOwners,
-                Controller.Page.privateLocationDeleteVisitors,
-                Controller.Page.privateLocationDeleteEventList
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
 
-            @Override
-            public String toString() {
-                return DocPrivateLocationDelete;
-            }
-        },
-
-        home(
-                null) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + Controller.EMPTY;
-            }
-
-            @Override
-            public String toString() {
-                return Controller.EMPTY;
-            }
-        },
-        LocationMain(
-                "ai/ilikeplaces/Main.xhtml",
-                Controller.Page.body,
-                Controller.Page.mainTitle,
-                Controller.Page.mainMetaDesc,
-                Controller.Page.Main_ICBM,
-                Controller.Page.Main_geoposition,
-                Controller.Page.Main_geoplacename,
-                Controller.Page.Main_georegion,
-                Controller.Page.Main_othersidebar_identity,
-                Controller.Page.Main_profile_photo,
-                Controller.Page.Main_othersidebar_profile_link,
-                Controller.Page.Main_notice_sh,
-                Controller.Page.Main_center_main,
-                Controller.Page.Main_notice,
-                Controller.Page.Main_center_main_location_title,
-                Controller.Page.Main_center_content,
-                Controller.Page.Main_left_column,
-                Controller.Page.Main_right_column,
-                Controller.Page.Main_sidebar,
-                Controller.Page.Main_login_widget,
-                Controller.Page.Main_location_list,
-                Controller.Page.Main_super_location_name,
-                Controller.Page.Main_location_name
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/main";
-            }
-
-            @Override
-            public String toString() {
-                return DocLocation;
-            }
-        },
-        Aarrr(
-                "ai/ilikeplaces/AARRR.xhtml",
-                Controller.Page.AarrrDownTownHeatMap,
-                Controller.Page.AarrrJuice,
-                Controller.Page.AarrrSubscribe,
-                Controller.Page.AarrrWOEID,
-                Controller.Page.AarrrHeader
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/";
-            }
-
-            @Override
-            public String toString() {
-                return DocAarrr;
-            }
-        }, Global(
-                Controller.EMPTY,
-                Page.CPageType
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS THE ENUM FOR GLOBAL KEYS ONLY");
-            }
-
-            @Override
-            public String toString() {
-                throw new IllegalAccessError("SORRY! THIS IS THE ENUM FOR GLOBAL KEYS ONLY");
-            }
-        },
-
-        Photo$Description(
-                "ai/ilikeplaces/widgets/Photo-Description.xhtml",
-                Controller.Page.pd,
-                Controller.Page.close,
-                Controller.Page.pd_photo_permalink,
-                Controller.Page.pd_photo,
-                Controller.Page.pd_photo_description,
-                Controller.Page.pd_photo_delete,
-                Controller.Page.pd_photo_wall,
-                Controller.Page.pd_photo_sequence_number
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return "Photo-Description";
-            }
-        },
-        PhotoUpload(
-                "ai/ilikeplaces/widgets/PhotoUpload.xhtml") {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/main";
-            }
-
-            @Override
-            public String toString() {
-                return "PhotoUpload";
-            }
-        },
-        signup(
-                null) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "signup";
-            }
-
-            @Override
-            public String toString() {
-                return APP_ROOT + "signup";
-            }
-        },
-        login(
-                null) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "login";
-            }
-
-            @Override
-            public String toString() {
-                return APP_ROOT + "login";
-            }
-        },
-        SignInOn(
-                "ai/ilikeplaces/widgets/SignInOn.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.SignInOn.SignInOnIds.values()
-        ) {
-            @Override
-            public String getURL() {
-                return APP_ROOT + "page/main";
-            }
-
-            @Override
-            public String toString() {
-                return DocSignInOn;
-            }
-        },
-        Notification(
-                "ai/ilikeplaces/widgets/notification.xhtml",
-                Controller.Page.notification_simple
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocNotification;
-            }
-        },
-        DownTownFlow(
-                "ai/ilikeplaces/widgets/DownTownFlow.xhtml",
-                Controller.Page.DownTownFlowWidget,
-                Controller.Page.DownTownFlowTalks,
-                Controller.Page.DownTownFlowMoments,
-                Controller.Page.DownTownFlowMomentsMoments,
-                Controller.Page.DownTownFlowTribes,
-                Controller.Page.DownTownFlowTribesTribes,
-                Controller.Page.DownTownFlowTalksFriends,
-                Controller.Page.DownTownFlowInviteNoti,
-                Controller.Page.DownTownFlowInviteEmail,
-                Controller.Page.DownTownFlowInviteClick
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocDownTownFlow;
-            }
-        },
-        TribeHome(
-                "ai/ilikeplaces/widgets/TribeHome.xhtml",
-                TribeWidget.TribeWidgetIds.values()
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocTribeHome;
-            }
-        },
-        TribeCreateHome(
-                "ai/ilikeplaces/widgets/TribeHomeCreate.xhtml",
-                Page.tribeHomeCreateWidget,
-                Page.tribeHomeCreateName,
-                Page.tribeHomeCreateStory,
-                Page.tribeHomeCreateSave,
-                Page.tribeHomeCreateNoti
-        ) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocTribeCreateHome;
-            }
-        }, Juice(
-                "ai/ilikeplaces/widgets/Juice.xhtml",
-                ai.ilikeplaces.logic.Listeners.widgets.Juice.JuiceIds.values()) {
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-
-            @Override
-            public String toString() {
-                return DocJuice;
-            }
-        }, AdaptableSignup(
+        /**
+         * As we will need sign up on almost all deployments.
+         * As we will need sign a widget for cloning based on the embedded enum.
+         */
+        AdaptableSignup(
                 "ai/ilikeplaces/widgets/AdaptableSignup.xhtml",
                 ai.ilikeplaces.logic.Listeners.widgets.AdaptableSignup.AdaptableSignupIds.values()) {
             @Override
@@ -1410,15 +324,6 @@ final public class
         final static public String BateOmg = "BateOmg";
 
         final static public String BateOmgSuccessMsg = "BateOmgSuccessMsg";
-
-        /*ProfileWidget IDs*/
-        final static public String user_property_profile_photo = "user_property_profile_photo";
-
-        final static public String user_property_name = "user_property_name";
-
-        final static public String user_property_widget = "user_property_widget";
-
-        final static public String user_property_content = "user_property_content";
 
         /*UserPropertySidebar Page*/
         final static public String DocUserPropertySidebar = "DocUserPropertySidebar";
@@ -1852,27 +757,15 @@ final public class
 
         final static public String SkeletonCPageTitle = CPageTitle;
 
-        final static public String MainCPageTitle = CPageTitle;//NOT IMPLEMENTED YET, UPDATE HTML AND CONSTRUCTOR PLS
-
-        final static public String PrivateLocaionCreateCTitle = "PrivateLocationCreateTitle";
 
         final static public String SkeletonCPageIntro = CPageIntro;
 
-        final static public String MainCPageIntro = CPageIntro;//NOT IMPLEMENTED YET, UPDATE HTML AND CONSTRUCTOR PLS
-
-        final static public String PrivateLocaionCreateCIntro = "PrivateLocationCreateIntro";
 
         final static public String SkeletonCPageNotice = CPageNotice;
 
-        final static public String MainCPageNotice = CPageNotice;//NOT IMPLEMENTED YET, UPDATE HTML AND CONSTRUCTOR PLS
 
         final static public String PrivateLocationCreateCNotice = "PrivateLocationCreateNotice";
 
-        final static public String Skeleton_pageType = CPageType;
-
-        final static public String AARRR_pageType = CPageType;
-
-        final static public String Main_pageType = CPageType;
 
 /*End of common definitions*/
 
@@ -1971,7 +864,6 @@ final public class
                     if (itsNatDocument__ == null && request__.getServletRequest().getAttribute(ITSNAT_DOC_NAME) == null) {
                         final HttpServletRequest httpServletRequest = (HttpServletRequest) request__.getServletRequest();
                         pathResolver(request__, response__);
-                        parameterResolver(request__);
                         request__.getItsNatServlet().processRequest(httpServletRequest, response__.getServletResponse());
                     }
                 } catch (final Throwable t) {
@@ -1999,136 +891,17 @@ final public class
         {
             inhs__.registerItsNatDocumentTemplate(aarrr.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(aarrr)).addItsNatServletRequestListener(new ListenerAarrr());
 
-            inhs__.registerItsNatDocumentTemplate(locationMain.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(locationMain)).addItsNatServletRequestListener(new ListenerMain());
-
-            inhs__.registerItsNatDocumentTemplate(photos.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerPhoto());
-
-            inhs__.registerItsNatDocumentTemplate(organize.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerOrganize());
-
-            inhs__.registerItsNatDocumentTemplate(findFriend.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerFriends());
-
-            inhs__.registerItsNatDocumentTemplate(book.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerBookings());
-
             inhs__.registerItsNatDocumentTemplate(tribes.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerTribes());
 
-            inhs__.registerItsNatDocumentTemplate(profile.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerProfile());
-
-            inhs__.registerItsNatDocumentTemplate(i.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerI());
-
-            inhs__.registerItsNatDocumentTemplate(activate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerActivate());
-
-            inhs__.registerItsNatDocumentTemplate(share.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerShare());
-
-            inhs__.registerItsNatDocumentTemplate(legal.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerLegal());
-
-            inhs__.registerItsNatDocumentTemplate(muster.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerMuster());
-
-            inhs__.registerItsNatDocumentTemplate(helpPage.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(skeleton)).addItsNatServletRequestListener(new ListenerHelp());
-
-            inhs__.registerItsNatDocumentTemplate(geoBusiness.toString(), "text/html", new TemplateSourceGeoBusiness()).addItsNatServletRequestListener(new ListenerGeoBusiness());
-
-            inhs__.registerItsNatDocumentTemplate(templateGeneric.toString(), "text/html", new TemplateGeneric(true));
         }
 
         registerDocumentFragmentTemplatesAKAWidgets:
         {
-//            inhs__.registerItsNatDocFragmentTemplate(photoCRUD.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photoCRUD));
-
-            inhs__.registerItsNatDocFragmentTemplate(photo$Description.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(photo$Description));
-
-            inhs__.registerItsNatDocFragmentTemplate(signInOn.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(signInOn));
-
-            inhs__.registerItsNatDocFragmentTemplate(notification.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(notification));
-
-            inhs__.registerItsNatDocFragmentTemplate(downTownFlow.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(downTownFlow));
-
-            inhs__.registerItsNatDocFragmentTemplate(tribeHome.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(tribeHome));
-
-            inhs__.registerItsNatDocFragmentTemplate(tribeCreateHome.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(tribeCreateHome));
-
-            inhs__.registerItsNatDocFragmentTemplate(privateLocationCreate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationCreate));
-
-            inhs__.registerItsNatDocFragmentTemplate(privateLocationView.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationView));
-
-            inhs__.registerItsNatDocFragmentTemplate(privateLocationDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateLocationDelete));
-
-            inhs__.registerItsNatDocFragmentTemplate(privateEventCreate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventCreate));
-
-            inhs__.registerItsNatDocFragmentTemplate(privateEventView.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventView));
-
-            inhs__.registerItsNatDocFragmentTemplate(privateEventDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventDelete));
-
-            inhs__.registerItsNatDocFragmentTemplate(privateEventViewSidebar.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privateEventViewSidebar));
-
-            inhs__.registerItsNatDocFragmentTemplate(tribeSidebar.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(tribeSidebar));
-
-            inhs__.registerItsNatDocFragmentTemplate(wOIEDGrabber.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(wOIEDGrabber));
-
-            inhs__.registerItsNatDocFragmentTemplate(downTownHeatMap.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(downTownHeatMap));
-
-            inhs__.registerItsNatDocFragmentTemplate(findFriendWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(findFriendWidget));
-
-            inhs__.registerItsNatDocFragmentTemplate(friendAdd.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendAdd));
-
-            inhs__.registerItsNatDocFragmentTemplate(friendDelete.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendDelete));
-
-            inhs__.registerItsNatDocFragmentTemplate(friendList.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(friendList));
-
-            inhs__.registerItsNatDocFragmentTemplate(genericButton.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(genericButton));
-
-            inhs__.registerItsNatDocFragmentTemplate(displayName.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(displayName));
-
-            inhs__.registerItsNatDocFragmentTemplate(wallHanlder.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(wallHanlder));
-
-            inhs__.registerItsNatDocFragmentTemplate(passwordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(passwordChange));
-
-            inhs__.registerItsNatDocFragmentTemplate(forgotPasswordChange.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(forgotPasswordChange));
-
-            inhs__.registerItsNatDocFragmentTemplate(profileWidget.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(profileWidget));
-
-            inhs__.registerItsNatDocFragmentTemplate(comment.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(comment));
-
-            inhs__.registerItsNatDocFragmentTemplate(place.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(place));
-
-            inhs__.registerItsNatDocFragmentTemplate(event.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(event));
-
-            inhs__.registerItsNatDocFragmentTemplate(person.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(person));
-
-            inhs__.registerItsNatDocFragmentTemplate(info.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(info));
-
-            inhs__.registerItsNatDocFragmentTemplate(teachTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(teachTribe));
-
-            inhs__.registerItsNatDocFragmentTemplate(teachMoment.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(teachMoment));
-
-            inhs__.registerItsNatDocFragmentTemplate(Page.Subscribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(Page.Subscribe));
-
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
-
-            inhs__.registerItsNatDocFragmentTemplate(carousel.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(carousel));
-
-            inhs__.registerItsNatDocFragmentTemplate(carouselThumb.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(carouselThumb));
-
-            inhs__.registerItsNatDocFragmentTemplate(people.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(people));
-
-            inhs__.registerItsNatDocFragmentTemplate(peopleThumb.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(peopleThumb));
-
-            inhs__.registerItsNatDocFragmentTemplate(autoplayControls.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(autoplayControls));
 
             inhs__.registerItsNatDocFragmentTemplate(albumTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(albumTribe));
 
             inhs__.registerItsNatDocFragmentTemplate(userProperty.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userProperty));
-
-            inhs__.registerItsNatDocFragmentTemplate(userPropertySidebar.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userPropertySidebar));
-
-            inhs__.registerItsNatDocFragmentTemplate(termsOfServices.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(termsOfServices));
-
-            inhs__.registerItsNatDocFragmentTemplate(privacyPolicy.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(privacyPolicy));
-
-            inhs__.registerItsNatDocFragmentTemplate(bate.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(bate));
-
-            inhs__.registerItsNatDocFragmentTemplate(help.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(help));
-
-            inhs__.registerItsNatDocFragmentTemplate(juice.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(juice));
 
             inhs__.registerItsNatDocFragmentTemplate(adaptableSignup.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(adaptableSignup));
         }
@@ -2149,28 +922,6 @@ final public class
         GlobalPageIdRegistry.put(page__, ids_);
     }
 
-    /**
-     * Some nested widgets have no access to the request. instead of passing the request along the widget chain,
-     * we store it in the users session.
-     * <p/>
-     * While this implementation may consume a bit more memory(could be an issue), it allows the widget to set the
-     * value to null on a per request basis.
-     *
-     * @param request__
-     */
-    private static void parameterResolver(final ItsNatServletRequest request__) {
-        wallEntryRelated:
-        {
-            final String wall_entry = request__.getServletRequest().getParameter(WallWidget.PARAM_WALL_ENTRY);
-            if (wall_entry != null) {
-                request__.getItsNatSession().setAttribute(WallWidget.PARAM_WALL_ENTRY, wall_entry);
-            }
-        }
-
-        others:
-        {
-        }
-    }
 
     /**
      * We have a URL of type say www.ilikeplaces.com/page/Egypt

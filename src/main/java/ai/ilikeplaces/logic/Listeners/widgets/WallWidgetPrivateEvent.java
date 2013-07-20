@@ -157,7 +157,7 @@ public class WallWidgetPrivateEvent extends WallWidget {
             for (final Msg msg : aReturn.returnValueBadly().getWallMsgs()) {
                 new UserProperty(request, $$(WallWidgetIds.wallContent), new HumanId(msg.getMsgMetadata())) {
                     protected void init(final Object... initArgs) {
-                        $$(Controller.Page.user_property_content).setTextContent(msg.getMsgContent());
+                        $$(UserPropertyWidgetIds.user_property_content).setTextContent(msg.getMsgContent());
                     }
                 };//No use of fetching email content or initializing it
             }
