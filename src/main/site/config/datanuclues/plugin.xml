@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<plugin id="ai.ilikeplaces.util.OpenEJBJTALocatorForDatanucleus" name="DataNucleus plug-ins" provider-name="www.ilikeplaces.com">
-    <extension point="org.datanucleus.jta_locator">
-        <jta_locator name="openejb" class-name="ai.ilikeplaces.util.OpenEJBJTALocatorForDatanucleus"/>
-    </extension>
-</plugin>
