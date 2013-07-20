@@ -145,7 +145,7 @@ final public class ServletSignup extends HttpServlet {
              */
             final HttpSession oldUserSession_ = request__.getSession(false);
             if (oldUserSession_ != null) {
-                oldUserSession_.removeAttribute(ServletLogin.HumanUser);
+                oldUserSession_.removeAttribute(Controller.HumanUser);
                 oldUserSession_.invalidate();
             }
 
@@ -226,11 +226,11 @@ final public class ServletSignup extends HttpServlet {
                 } else {
                     try {
                         final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                .append(ServletLogin.Username, username, true)
-                                .append(ServletLogin.Password,
-                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username)))
-                                                .returnValue()
-                                                .getHumanAuthenticationHash())
+//                                .append(ServletLogin.Username, username, true)
+//                                .append(ServletLogin.Password,
+//                                        DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(request__.getParameter(Username)))
+//                                                .returnValue()
+//                                                .getHumanAuthenticationHash())
                                 .get();
                         final String mail = MessageFormat.format(gUI.getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
                                 .replace("activationURL", "<a href='" +
@@ -239,7 +239,7 @@ final public class ServletSignup extends HttpServlet {
                                 username,
                                 gUI.getString("SIGNUP_HEADER"),
                                 mail);
-                        response__.sendRedirect(Page.Activate.getURL());
+//                        response__.sendRedirect(Page.Activate.getURL());
                     } catch (final Throwable t) {
                         Loggers.EXCEPTION.error("{}", t);
                     }

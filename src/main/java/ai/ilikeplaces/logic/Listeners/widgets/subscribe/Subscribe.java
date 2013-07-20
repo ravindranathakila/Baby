@@ -6,15 +6,11 @@ import ai.ilikeplaces.entities.GeohashSubscriber;
 import ai.ilikeplaces.entities.Subscriber;
 import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.Bate;
-import ai.ilikeplaces.logic.Listeners.widgets.PrivateLocationCreate;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.logic.validators.unit.Password;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.servlets.ServletActivate;
-import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.util.*;
 import ai.reaver.Return;
 import ch.hsr.geohash.GeoHash;
@@ -69,7 +65,7 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 // ------------------------ OVERRIDING METHODS ------------------------
 
     /**
-     * Use this only in conjunction with {@link #AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.ilikeplaces.servlets.Controller.Page, Object, org.w3c.dom.Element)}
+     * Use this only in conjunction with
      * GENERIC constructor.
      *
      * @param subscribeCriteria
@@ -88,12 +84,6 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
             }
         }
 
-        GetUrlParametersIfPresent:
-        {
-            woehint = Subscribe.this.$$(request, PrivateLocationCreate.WOEHINT);
-            placeName = Subscribe.this.$$(request, PrivateLocationCreate.PLACENAME);
-            placeDetails = Subscribe.this.$$(request, PrivateLocationCreate.PLACEDETAILS);
-        }
     }
 
     /**
@@ -180,33 +170,30 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 
                                         final Parameter parameter;
                                         if (woehint != null && placeName != null && placeDetails != null) {
-                                            parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143")
-                                                    .append(PrivateLocationCreate.WOEHINT,
-                                                            woehint)
-                                                    .append(PrivateLocationCreate.PLACENAME,
-                                                            placeName)
-                                                    .append(PrivateLocationCreate.PLACEDETAILS,
-                                                            placeDetails);
+                                            parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143");
+//                                                    .append(PrivateLocationCreate.WOEHINT,
+//                                                            woehint)
+//                                                    .append(PrivateLocationCreate.PLACENAME,
+//                                                            placeName)
+//                                                    .append(PrivateLocationCreate.PLACEDETAILS,
+//                                                            placeDetails);
                                         } else {
                                             parameter = new Parameter("http://www.ilikeplaces.com/page/_org?category=143");
                                         }
 
                                         final String activationURL;
-                                        try {
-                                            activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                                    .append(ServletLogin.Username, myemail.getObj(), true)
-                                                    .append(ServletLogin.Password,
-                                                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
-                                                                    .returnValue()
-                                                                    .getHumanAuthenticationHash())
-                                                    .append(ServletActivate.NEXT, URLEncoder.encode(parameter.toURL(), "UTF8"))
-                                                    .get();
-                                        } catch (UnsupportedEncodingException e) {
-                                            throw new RuntimeException(e);
-                                        }
+                                        activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
+//                                                    .append(ServletLogin.Username, myemail.getObj(), true)
+//                                                    .append(ServletLogin.Password,
+//                                                            DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(new HumanId(myemail.getObj()))
+//                                                                    .returnValue()
+//                                                                    .getHumanAuthenticationHash())
+//                                                    .append(ServletActivate.NEXT, URLEncoder.encode(parameter.toURL(), "UTF8"))
+                                                .get();
 
 
-                                        String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
+//                                       String htmlBody = Bate.getHTMLStringForOfflineFriendInvite("I Like Places", myemail.getObj());
+                                       String htmlBody = "REMOVED, SEE SOURCES";
 
                                         htmlBody = htmlBody.replace(URL, activationURL);
                                         htmlBody = htmlBody.replace(PASSWORD_DETAILS, "Your temporary password is " + randomPassword + " .");
@@ -234,7 +221,6 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
 
                                         Subscribe.this.notifyUser("Great! Check your email now!");
 
-                                        $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                                     } else {
                                         Subscribe.this.notifyUser("Email INVALID!");
                                     }

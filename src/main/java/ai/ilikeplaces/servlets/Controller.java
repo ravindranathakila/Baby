@@ -145,6 +145,8 @@ final public class
 
     public static final String PAGE_ORG = "/page/_org";
 
+    public static final String HumanUser = "HumanUser";
+
 
     final PageFace aarrr = Page.Aarrr;
 
@@ -154,7 +156,9 @@ final public class
 
     final PageFace album = Page.Album;
 
-    final PageFace albumTribe = Page.AlbumTribe;
+    final PageFace subscribe = Page.Subscribe;
+
+    final PageFace signInOn = Page.SignInOn;
 
     final PageFace userProperty = Page.UserProperty;
 
@@ -194,6 +198,20 @@ final public class
             }
         },
 
+        Subscribe(ai.ilikeplaces.logic.Listeners.widgets.subscribe.Subscribe.class,
+                ai.ilikeplaces.logic.Listeners.widgets.subscribe.Subscribe.SubscribeIds.values()
+        ) {
+            @Override
+            public String toString() {
+                return "DocSubscribe";
+            }
+
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
+            }
+        },
+
         Album("ai/ilikeplaces/widgets/Album.xhtml",
                 AlbumManager.AlbumManagerIds.values()
         ) {
@@ -208,19 +226,7 @@ final public class
             }
         },
 
-        AlbumTribe("ai/ilikeplaces/widgets/AlbumTribe.xhtml",
-                AlbumManagerTribe.AlbumManagerTribeIds.values()
-        ) {
-            @Override
-            public String toString() {
-                return "DocAlbumTribe";
-            }
 
-            @Override
-            public String getURL() {
-                throw new IllegalAccessError("SORRY! THIS IS A TEMPLATE WITH NO SPECIFIC PAGE OF WHICH YOU WANT THE URL.");
-            }
-        },
         UserProperty("ai/ilikeplaces/widgets/UserProperty.xhtml",
                 ai.ilikeplaces.logic.Listeners.widgets.UserProperty.UserPropertyWidgetIds.user_property_profile_photo,
                 ai.ilikeplaces.logic.Listeners.widgets.UserProperty.UserPropertyWidgetIds.user_property_name,
@@ -280,6 +286,21 @@ final public class
             @Override
             public String toString() {
                 return DocSkeleton;
+            }
+        },
+
+        SignInOn(
+                "ai/ilikeplaces/widgets/SignInOn.xhtml",
+                ai.ilikeplaces.logic.Listeners.widgets.SignInOn.SignInOnIds.values()
+        ) {
+            @Override
+            public String getURL() {
+                return APP_ROOT + "page/main";
+            }
+
+            @Override
+            public String toString() {
+                return DocSignInOn;
             }
         },
 
@@ -899,9 +920,11 @@ final public class
         {
             inhs__.registerItsNatDocFragmentTemplate(album.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(album));
 
-            inhs__.registerItsNatDocFragmentTemplate(albumTribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(albumTribe));
+            inhs__.registerItsNatDocFragmentTemplate(signInOn.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(signInOn));
 
             inhs__.registerItsNatDocFragmentTemplate(userProperty.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(userProperty));
+
+            inhs__.registerItsNatDocFragmentTemplate(Page.Subscribe.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(Page.Subscribe));
 
             inhs__.registerItsNatDocFragmentTemplate(adaptableSignup.toString(), "text/html", pathPrefix__ + PrettyURLMap_.get(adaptableSignup));
         }
@@ -947,7 +970,7 @@ final public class
             request__.getServletRequest().setAttribute(ITSNAT_DOC_NAME, Page.DocAarrr);/*Framework specific*/
 
 //            final ItsNatHttpSession itsNatHttpSession = (ItsNatHttpSession) request__.getItsNatSession();
-//            final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
+//            final Object attribute__ = itsNatHttpSession.getAttribute(Controller.HumanUser);
 //            final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper = attribute__ == null ? null : (SessionBoundBadRefWrapper<HumanUserLocal>) attribute__;
 //
 //            if (sessionBoundBadRefWrapper != null && sessionBoundBadRefWrapper.boundInstance.getHumanUserId() != null) {

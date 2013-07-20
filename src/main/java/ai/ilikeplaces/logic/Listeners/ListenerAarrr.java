@@ -59,7 +59,6 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                                 .setSignInOnDisplayComponent(SignInOnCriteria.SignInOnDisplayComponent.HOME)) {
                 };
 
-                new DownTownHeatMap(request__, $(Controller.Page.AarrrDownTownHeatMap), $(Controller.Page.AarrrWOEID), getUsername());
 
                 new Subscribe(request__, new SubscribeCriteria().setHumanId(new HumanId(getUsername())), $(Controller.Page.AarrrSubscribe));
 
@@ -67,9 +66,6 @@ public class ListenerAarrr implements ItsNatServletRequestListener {
                     displayNone($(Controller.Page.AarrrJuice));
                     displayBlock($(Controller.Page.AarrrDownTownHeatMap));
                 } else {
-                    new Juice(request__, new JuiceCriteria(), $(Controller.Page.AarrrJuice));
-                    displayBlock($(Controller.Page.AarrrJuice));
-                    displayNone($(Controller.Page.AarrrDownTownHeatMap));
                 }
 
 

@@ -3,8 +3,6 @@ package ai.ilikeplaces.logic.Listeners;
 import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.widgets.*;
-import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribe;
-import ai.ilikeplaces.logic.Listeners.widgets.teach.TeachTribeCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.validators.unit.VLong;
 import ai.ilikeplaces.servlets.Controller;
@@ -58,7 +56,6 @@ public class ListenerTribes implements ItsNatServletRequestListener {
                     }
                     sideBarFriends:
                     {
-                        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TRIBES);
                     }
                     signinupActionNotice:
                     {
@@ -83,7 +80,6 @@ public class ListenerTribes implements ItsNatServletRequestListener {
                     }
                     switch (mode) {
                         case Controller.Page.DocTribesModeCreate: {
-                            showTribeCreateWidget(request__, getUsernameAsValid(), $(Controller.Page.Skeleton_center_skeleton));
                             break;
                         }
 
@@ -115,18 +111,10 @@ public class ListenerTribes implements ItsNatServletRequestListener {
 
                                     for (final Tribe tribe : humansTribes) {
                                         if (which.contains(tribe.getTribeId())) {
-                                            new TribeWidget(
-                                                    request__,
-                                                    new TribeWidgetCriteria()
-                                                            .setHumanId(geHumanIdAsValid())
-                                                            .setTribeId(new VLong().setObjAsValid(tribe.getTribeId())),
-                                                    $(Controller.Page.Skeleton_center_skeleton));
                                         }
                                     }
 
                                 } else {
-                                    //We show the tribe create widget
-                                    showTribeCreateWidget(request__, getUsernameAsValid(), $(Controller.Page.Skeleton_center_skeleton));
                                 }
 
                             } catch (final NumberFormatException nfe_) {
@@ -138,24 +126,15 @@ public class ListenerTribes implements ItsNatServletRequestListener {
                         }
 
                         default: {
-                            showTribeCreateWidget(request__, getUsernameAsValid(), $(Controller.Page.Skeleton_center_skeleton));
                             break;
                         }
                     }
                 } else {
                     //WE COULD STILL GIVE A TRIBE CREATION WIDGET WITH USERS EMAIL AND FRIENDS EMAILS. ONCE USER SIGNS UP, THE TRIBE CAN BE CREATED.
 
-                    new TeachTribe(request__, new TeachTribeCriteria(null), $(Controller.Page.Skeleton_center_skeleton));
                 }
             }
         };
     }
 
-    private void showTribeCreateWidget(ItsNatServletRequest request__, final String humanId, final Element appendToElement) {
-        new TribeCreateWidget(
-                request__,
-                new TribeCreateWidgetCriteria(
-                        new HumanId(humanId)),
-                appendToElement);
-    }
 }

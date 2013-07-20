@@ -3,15 +3,11 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.entities.*;
 import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
-import ai.ilikeplaces.logic.Listeners.widgets.carousel.Carousel;
-import ai.ilikeplaces.logic.Listeners.widgets.carousel.CarouselCriteria;
-import ai.ilikeplaces.logic.cdn.CDNAlbumPrivateEvent;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.logic.validators.unit.Email;
 import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
 import ai.ilikeplaces.util.AbstractWidgetListener;
 import ai.ilikeplaces.util.ElementComposer;
@@ -139,39 +135,11 @@ public class AlbumManager extends AbstractWidgetListener {
                     }
                 }
 
-                new Carousel(request, new CarouselCriteria().setAlbumPhotos(albumPhotos), $(Page.Skeleton_right_column));
 
                 final List<Long> albumPhotoIds = new ArrayList<Long>(albumPhotos.size());
 
                 for (final PrivatePhoto privatePhoto__ : albumPhotos) {
                     albumPhotoIds.add(privatePhoto__.getPrivatePhotoId());
-
-                    new Photo$Description(request, $$(AlbumManagerIds.AlbumPhotos), photoSequenceNumber++, wallProspects) {
-                        @Override
-                        protected void init(final Object... initArgs) {
-
-                            final Integer photoSequenceNumber = (Integer) initArgs[0];
-                            List<HumansIdentity> mywallProspects = (List<HumansIdentity>) initArgs[1];
-                            final String imageURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + privatePhoto__.getPrivatePhotoURLPath();
-                            final String imageThumbURL = RBGet.globalConfig.getString(ALBUM__PHOTOS) + CDNAlbumPrivateEvent.THUMBNAIL + privatePhoto__.getPrivatePhotoURLPath();
-                            $$(Controller.Page.pd_photo_permalink).setAttribute(MarkupTag.A.href(), imageURL);
-
-                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.title(), imageURL);
-
-                            $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), imageThumbURL);
-
-                            $$setClass($$(Controller.Page.pd), privatePhoto__.getPrivatePhotoURLPath(), false);
-
-                            /* final String photoThumbURL = imageURL.substring(0, imageURL.lastIndexOf(SLASH) + 1) + CDNAlbumPrivateEvent.THUMBNAIL + imageURL.substring(imageURL.lastIndexOf(SLASH) + 1, photoURL.length());
-                           $$(Controller.Page.pd_photo).setAttribute(MarkupTag.IMG.src(), photoThumbURL);*/
-
-                            $$(Controller.Page.pd_photo_sequence_number).setTextContent(photoSequenceNumber.toString());
-
-                            displayNone($$(Controller.Page.pd_photo_delete));
-
-                            new WallWidgetPrivatePhoto(request, $$(Controller.Page.pd_photo_wall), humanId, privatePhoto__.getPrivatePhotoId(), mywallProspects);
-                        }
-                    };
                 }
 
                 $$getHumanUserFromRequest(request).storeAndUpdateWith(HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS, albumPhotoIds);

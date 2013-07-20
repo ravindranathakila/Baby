@@ -1,7 +1,5 @@
 package ai.ilikeplaces.servlets;
 
-import ai.ilikeplaces.logic.cdn.CDNAlbumPrivateEvent;
-import ai.ilikeplaces.logic.cdn.CDNAlbumTribe;
 import ai.ilikeplaces.logic.cdn.CDNProfilePhoto;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
@@ -86,7 +84,7 @@ final public class GenericFileGrabber extends HttpServlet {
                             sl.complete(Loggers.FAILED);
                             errorNoLogin(out);
                             break stateSignedOn;
-                        } else if (session.getAttribute(ServletLogin.HumanUser) == null) {
+                        } else if (session.getAttribute(Controller.HumanUser) == null) {
                             sl.appendToLogMSG("No Login as in no HumanUser attribute");
                             sl.complete(Loggers.FAILED);
                             errorNoLogin(out);
@@ -98,7 +96,7 @@ final public class GenericFileGrabber extends HttpServlet {
                         /*Check that we have a file upload request*/
                         final boolean isMultipart = ServletFileUpload.isMultipartContent(request__);
                         if (!isMultipart) {
-                            LoggerFactory.getLogger(ServletFileUploads.class.getName()).error(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0001"));
+                            LoggerFactory.getLogger(GenericFileGrabber.class.getName()).error(logMsgs.getString("ai.ilikeplaces.servlets.ServletFileUploads.0001"));
                             sl.appendToLogMSG("Not multipart request");
                             sl.complete(Loggers.FAILED);
                             errorNonMultipart(out);
@@ -106,7 +104,7 @@ final public class GenericFileGrabber extends HttpServlet {
                         }
 
                         @SuppressWarnings("unchecked")
-                        final HumanUserLocal sBLoggedOnUserLocal = ((SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser)).getBoundInstance();
+                        final HumanUserLocal sBLoggedOnUserLocal = ((SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(Controller.HumanUser)).getBoundInstance();
 
                         try {
                             processRequest:
@@ -362,12 +360,6 @@ final public class GenericFileGrabber extends HttpServlet {
         switch (Integer.parseInt(parameterMap.get("type"))) {
             case 1:
                 fulf = CDNProfilePhoto.getProfilePhotoCDNLocal();
-                break;
-            case 2:
-                fulf = CDNAlbumPrivateEvent.getAlbumPhotoCDNLocal();
-                break;
-            case 3:
-                fulf = CDNAlbumTribe.getAlbumTribeCDNLocal();
                 break;
             default:
                 return new ReturnImpl<File>(ExceptionCache.UNSUPPORTED_SWITCH, "Unsupported Case", true);

@@ -99,11 +99,6 @@ public class AdaptableSignup extends AbstractWidgetListener<AdaptableSignupCrite
                         final Email email = criteria.getInviteData().getEmail();
 
                         if (email.valid()) {
-                            if (!DB.getHumanCRUDHumanLocal(false).doDirtyCheckHuman(email.getObj()).returnValue()) {
-                                final Return<Boolean> returnVal = ai.ilikeplaces.logic.Listeners.widgets.Bate.sendInviteToOfflineInvite(
-                                        UserProperty.HUMANS_IDENTITY_CACHE.get(criteria.getHumanId().getHumanId(), "").getHuman().getDisplayName(),
-                                        new ImportedContact().setEmail(email.getObj()).setFullName(""));
-                            }
 
                             final HumanId invitee = new HumanId(email.getObj());
                             if (!DB.getHumanCRUDHumanLocal(false).doDirtyIsHumansNetPeople(criteria.getHumanId(), invitee).returnValue()) {

@@ -5,7 +5,6 @@ import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.servlets.ServletLogin;
 import ai.scribble.License;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
@@ -102,7 +101,7 @@ public abstract class
         this.hTMLDocument_ = itsNatHTMLDocument_.getHTMLDocument();
         this.itsNatServlet_ = itsNatDocument.getItsNatDocumentTemplate().getItsNatServlet();
         this.itsNatHttpSession = (ItsNatHttpSession) request_.getItsNatSession();
-        final Object attribute__ = itsNatHttpSession.getAttribute(ServletLogin.HumanUser);
+        final Object attribute__ = itsNatHttpSession.getAttribute(Controller.HumanUser);
         this.sessionBoundBadRefWrapper =
                 attribute__ == null ?
                         null : (!((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__).isAlive() ?

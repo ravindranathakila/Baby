@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.servlets.ServletLogin;
+import ai.ilikeplaces.servlets.Controller;
 import ai.scribble.License;
 import ai.scribble._fix;
 import ai.scribble._method_preamble;
@@ -78,7 +78,7 @@ final public class SessionBoundBadRefWrapper<T> implements HttpSessionBindingLis
         if (dying instanceof Boolean && (Boolean) dying) {
             this.isAlive = false;
             try {
-                bindingInstance.removeAttribute(ServletLogin.HumanUser);//To be safe since ItsNat session doesn't die;)
+                bindingInstance.removeAttribute(Controller.HumanUser);//To be safe since ItsNat session doesn't die;)
                 bindingInstance.invalidate();
                 smartLogger.complete(Loggers.LEVEL.USER, "Session Invalidated Successfully.");
             } catch (final IllegalStateException e_) {

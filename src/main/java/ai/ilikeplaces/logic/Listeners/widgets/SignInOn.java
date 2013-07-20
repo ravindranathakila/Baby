@@ -3,10 +3,7 @@ package ai.ilikeplaces.logic.Listeners.widgets;
 import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansAuthentication;
 import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.entities.etc.HumanId;
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControls;
-import ai.ilikeplaces.logic.Listeners.widgets.autoplay.AutoplayControlsCriteria;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.role.HumanUser;
@@ -17,7 +14,6 @@ import ai.ilikeplaces.logic.validators.unit.SimpleString;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.servlets.Controller.Page;
-import ai.ilikeplaces.servlets.ServletLogin;
 import ai.ilikeplaces.servlets.filters.ProfileRedirect;
 import ai.ilikeplaces.util.*;
 import ai.reaver.Return;
@@ -45,22 +41,6 @@ import java.text.MessageFormat;
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> {
 // ------------------------------ FIELDS ------------------------------
-
-    private static final String TRUE = "true";
-
-    private static final String ISSIGNUP = "issignup";
-
-    private HumanId username = null;
-
-    private Password password = null;
-
-    private SimpleString dbHash = null;
-
-    private SimpleString dbSalt = null;
-
-    private Obj<Boolean> userOk = null;
-
-    private Obj<Boolean> existButNotActive = null;
 
 // -------------------------- ENUMERATIONS --------------------------
 
@@ -129,10 +109,6 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
 
             UCAutoplay:
             {
-                new AutoplayControls(request, new AutoplayControlsCriteria()
-                        .setHumanId(criteria.username)
-                        .setHumanUserLocal($$getHumanUserFromRequest(request))
-                        , $$(SignInOnIds.signinon_autoplay));
             }
         } else {
             UCShowHIdeWIdgets:
@@ -215,7 +191,7 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
 
                                             userSession_.setAttribute(HumanUserLocal.NAME, (new SessionBoundBadRefWrapper<HumanUserLocal>(humanUserLocal, userSession_)));
 
-                                            userSession_.setAttribute(ServletLogin.Username, criteria.username.getHumanId());
+//                                            userSession_.setAttribute(ServletLogin.Username, criteria.username.getHumanId());
 
                                             notifyUser(RBGet.gui().getString("logging.you.in"));
 
@@ -235,7 +211,6 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
                                         }
                                     } else {/*There is no such user. Ask if he forgot criteria.username or whether to create a new account :)*/
                                         if (criteria.existButNotActive.getObj()) {
-                                            $$sendJS(JSCodeToSend.redirectPageWithURL(Page.Profile.getURL()));
                                             notifyUser(RBGet.gui().getString("activate.your.account"));
                                         } else {
 
@@ -248,11 +223,11 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
                                                             new Email().setObjAsValid(criteria.username.getSelfAsValid().getHumanId()));
 
                                                     final String activationURL = new Parameter("http://www.ilikeplaces.com/" + "activate")
-                                                            .append(ServletLogin.Username, criteria.username, true)
-                                                            .append(ServletLogin.Password,
-                                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(criteria.username)
-                                                                            .returnValue()
-                                                                            .getHumanAuthenticationHash())
+//                                                            .append(ServletLogin.Username, criteria.username, true)
+//                                                            .append(ServletLogin.Password,
+//                                                                    DB.getHumanCRUDHumanLocal(true).doDirtyRHumansAuthentication(criteria.username)
+//                                                                            .returnValue()
+//                                                                            .getHumanAuthenticationHash())
                                                             .get();
                                                     final String mail = MessageFormat.format(RBGet.gui().getString("SIGNUP_BODY"), RBGet.globalConfig.getString("noti_mail"))
                                                             .replace("activationURL", "<a href='" +
@@ -279,7 +254,6 @@ abstract public class SignInOn extends AbstractWidgetListener<SignInOnCriteria> 
                                                 }
                                             }).start();
 
-                                            $$sendJSStmt(JSCodeToSend.redirectPageWithURL(Controller.Page.Activate.getURL()));
                                         }
                                     }
                                 } else {

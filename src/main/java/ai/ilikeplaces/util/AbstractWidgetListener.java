@@ -1,11 +1,9 @@
 package ai.ilikeplaces.util;
 
 import ai.ilikeplaces.logic.Listeners.JSCodeToSend;
-import ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall;
 import ai.ilikeplaces.logic.role.HumanUser;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
 import ai.ilikeplaces.servlets.Controller;
-import ai.ilikeplaces.servlets.ServletLogin;
 import ai.scribble.*;
 import org.itsnat.core.ItsNatDocument;
 import org.itsnat.core.ItsNatServlet;
@@ -209,7 +207,7 @@ public abstract class AbstractWidgetListener<T> {
     }
 
     public static synchronized String $$getHumanIdFromRequest(final ItsNatServletRequest request_) {
-        final Object attribute__ = request_.getItsNatSession().getAttribute(ServletLogin.HumanUser);
+        final Object attribute__ = request_.getItsNatSession().getAttribute(Controller.HumanUser);
         SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper =
                 attribute__ == null ?
                         null : (!((SessionBoundBadRefWrapper<HumanUserLocal>) attribute__).isAlive() ?
@@ -222,7 +220,7 @@ public abstract class AbstractWidgetListener<T> {
     }
 
     public static synchronized HumanUserLocal $$getHumanUserFromRequest(final ItsNatServletRequest request_) {
-        final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper = (SessionBoundBadRefWrapper<HumanUserLocal>) request_.getItsNatSession().getAttribute(ServletLogin.HumanUser);
+        final SessionBoundBadRefWrapper<HumanUserLocal> sessionBoundBadRefWrapper = (SessionBoundBadRefWrapper<HumanUserLocal>) request_.getItsNatSession().getAttribute(Controller.HumanUser);
         final HumanUserLocal humanUserAsValid = HumanUser.getHumanUserAsValid(sessionBoundBadRefWrapper);
         return humanUserAsValid;
 
@@ -530,7 +528,7 @@ public abstract class AbstractWidgetListener<T> {
             WARNING = @WARNING("Overrides existing values withing the style. " +
                     "Needed by fetchToEmail of WallWidgetHumansWall though since it fails on the other."),
             SEE = @_see(
-                    {AbstractWidgetListener.class, WallWidgetHumansWall.class}
+                    {AbstractWidgetListener.class}
             ),
             NOTE = @_note("ai.ilikeplaces.AbstractWidgetListener#$$displayBlock . " +
                     "Also note that this method is needed by " +
@@ -541,21 +539,6 @@ public abstract class AbstractWidgetListener<T> {
         element__.setAttribute(STYLE, DISPLAY_BLOCK);
     }
 
-    @Deprecated
-    @_doc(
-            WARNING = @WARNING("Overrides existing values withing the style. " +
-                    "Needed by fetchToEmail of WallWidgetHumansWall though since it fails on the other."),
-            SEE = @_see(
-                    {AbstractWidgetListener.class, WallWidgetHumansWall.class}
-            ),
-            NOTE = @_note("ai.ilikeplaces.AbstractWidgetListener#$$displayNone . " +
-                    "Also note that this method is needed by " +
-                    "ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args)")
-
-    )
-    protected final void displayNone(final Element element__) {
-        element__.setAttribute(STYLE, DISPLAY_NONE);
-    }
 
     @WARNING("Fails on ai.ilikeplaces.logic.Listeners.widgets.WallWidgetHumansWall#protected void fetchToEmail(Object... args) " +
             "since it is not a normal itsnat operation on the current document, but a raw created one.")

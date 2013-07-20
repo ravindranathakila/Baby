@@ -2,8 +2,6 @@ package ai.ilikeplaces.logic.Listeners;
 
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.etc.HumanId;
-import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlow;
-import ai.ilikeplaces.logic.Listeners.widgets.DownTownFlowCriteria;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOn;
 import ai.ilikeplaces.logic.Listeners.widgets.SignInOnCriteria;
 import ai.ilikeplaces.logic.crud.DB;
@@ -91,7 +89,6 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
             }
             sideBarFriends:
             {
-                setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS);
             }
             signinupActionNotice:
             {
@@ -188,30 +185,5 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
         }
     }
 
-    protected void setSideBarFriends(final ItsNatServletRequest request__, final DownTownFlowCriteria.DownTownFlowDisplayComponent type) {
-        initStatus = true;
 
-        final String currentUser = getUsername();
-
-        try {
-            if (currentUser != null) {
-                //final HumansNetPeople humansNetPeople = DB.getHumanCRUDHumanLocal(true).doDirtyRHumansNetPeople(new HumanId(getUsernameAsValid()).getSelfAsValid());
-
-
-                new DownTownFlow(
-                        request__,
-                        new DownTownFlowCriteria()
-                                .setDownTownFlowDisplayComponent(type)
-                                .setHumanId(new HumanId(currentUser))
-                                .setHumanUserLocal(getHumanUserAsValid()),
-                        $(Controller.Page.Skeleton_sidebar));
-            }
-        } catch (final Throwable t) {
-            EXCEPTION.error("{}", t);
-        }
-    }
-
-    protected void setSideBarFriends(final ItsNatServletRequest request__) {
-        setSideBarFriends(request__, DownTownFlowCriteria.DownTownFlowDisplayComponent.TALKS);
-    }
 }

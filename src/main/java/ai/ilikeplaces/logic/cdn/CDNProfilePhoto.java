@@ -6,7 +6,7 @@ import ai.ilikeplaces.exception.DBOperationException;
 import ai.ilikeplaces.logic.Listeners.widgets.UserProperty;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.logic.role.HumanUserLocal;
-import ai.ilikeplaces.servlets.ServletLogin;
+import ai.ilikeplaces.servlets.Controller;
 import ai.ilikeplaces.util.*;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
@@ -92,7 +92,7 @@ public class CDNProfilePhoto extends CDN implements CDNProfilePhotoLocal {
             }
 
 
-            final SessionBoundBadRefWrapper<HumanUserLocal> s = (SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(ServletLogin.HumanUser);
+            final SessionBoundBadRefWrapper<HumanUserLocal> s = (SessionBoundBadRefWrapper<HumanUserLocal>) session.getAttribute(Controller.HumanUser);
 
             if (!s.isAlive()) {
                 sl.complete(NO_LOGIN);
