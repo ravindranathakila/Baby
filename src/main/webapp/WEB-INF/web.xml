@@ -8,36 +8,12 @@
         <servlet-class>ai.ilikeplaces.servlets.Controller</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FileUploads</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.ServletFileUploads</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>GenericFileGrabber</servlet-name>
         <servlet-class>ai.ilikeplaces.servlets.GenericFileGrabber</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletLogin</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.ServletLogin</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ServletSignup</servlet-name>
         <servlet-class>ai.ilikeplaces.servlets.ServletSignup</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletActivate</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.ServletActivate</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletMobile</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.ServletMobile</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletOAuthFacebook</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.ServletOAuthFacebook</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletOAuthGoogle</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.ServletOAuthGoogle</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AccessViewStatusMessages</servlet-name>
@@ -75,36 +51,12 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>FileUploads</servlet-name>
-        <url-pattern>/fileuploads</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>GenericFileGrabber</servlet-name>
         <url-pattern>/gfg</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletLogin</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ServletSignup</servlet-name>
         <url-pattern>/signup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletActivate</servlet-name>
-        <url-pattern>/activate</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletMobile</servlet-name>
-        <url-pattern>/mobile</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletOAuthFacebook</servlet-name>
-        <url-pattern>/oauth2fb</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletOAuthGoogle</servlet-name>
-        <url-pattern>/oauth2gg</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GreatWallOfExceptionsEtc</servlet-name>
