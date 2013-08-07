@@ -7,7 +7,6 @@ import ai.ilikeplaces.util.MethodTimer;
 import ai.ilikeplaces.util.ParamValidator;
 import ai.ilikeplaces.util.jndi.impl.JNDILookupFactory;
 import ai.scribble.License;
-import api.eventful.com.impl.ClientFactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -47,8 +46,6 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
     @Deprecated
     private final upcoming.yahoo.api.impl.ClientFactory yahooUplcomingFactory;
 
-    private final ClientFactory eventulFactory;
-
     private final api.foursquare.com.impl.ClientFactory foursquareFactory;
 
     public Modules() {
@@ -67,10 +64,6 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
         {
             final Injector yahooUpcomingFactoryInjector = Guice.createInjector(new YahooUpcomingClientModule());
             yahooUplcomingFactory = yahooUpcomingFactoryInjector.getInstance(upcoming.yahoo.api.impl.ClientFactory.class);
-        }
-        {
-            final Injector eventfulFactoryInjector = Guice.createInjector(new EventfulClientModule());
-            eventulFactory = eventfulFactoryInjector.getInstance(api.eventful.com.impl.ClientFactory.class);
         }
         {
             final Injector foursquareFactoryInjector = Guice.createInjector(new FoursquareClientModule());
@@ -100,10 +93,6 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
 
     public com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory() {
         return googlePlacesApiFactory;
-    }
-
-    public api.eventful.com.impl.ClientFactory getEventulFactory() {
-        return eventulFactory;
     }
 
     public api.foursquare.com.impl.ClientFactory getFoursquareFactory() {

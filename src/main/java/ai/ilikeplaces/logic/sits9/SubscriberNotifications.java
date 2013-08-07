@@ -152,61 +152,13 @@ public class SubscriberNotifications extends AbstractSLBCallbacks implements Sub
 
                     final StringBuffer eventList = new StringBuffer("");
 
-                    {//Eventful
-
-                        try {
-
-                            final SimpleDateFormat eventfulDate = new SimpleDateFormat("yyyyMMdd00");
-                            _simpleDateFormat.format(_week.getTime());
-
-                            final JSONObject jsonObject = Modules.getModules().getEventulFactory()
-                                    .getInstance("http://api.eventful.com/json/events/search/")
-                                    .get("",
-                                            new HashMap<String, String>() {
-                                                {//Don't worry, this is a static initializer of this map :)
-                                                    put("location", "" + _read.getLatitude() + "," + _read.getLongitude());
-                                                    put("within", "" + 100);
-                                                    put("date", eventfulDate.format(Calendar.getInstance().getTime()) + "-" + eventfulDate.format(_week.getTime()));
-                                                }
-                                            }
-
-                                    );
-
-                            Loggers.debug("Eventful Reply:" + jsonObject.toString());
-
-                            final JSONArray events = jsonObject.getJSONObject("events").getJSONArray("event");
-
-                            final Document eventTemplateDocument = HTMLDocParser.getDocument(RBGet.getGlobalConfigKey("PAGEFILES") + SUBSCRIBER_EMAIL_EVENT);
-                            final String eventTemplate = HTMLDocParser.convertNodeToHtml(HTMLDocParser.$("content", eventTemplateDocument));
-
-                            for (int i = 0; i < events.length(); i++) {
-                                final JSONObject eventJSONObject = new JSONObject(events.get(i).toString());
-                                Double.parseDouble(eventJSONObject.getString(LATITUDE));
-                                Double.parseDouble(eventJSONObject.getString(LONGITUDE));
-                                final String eventName = eventJSONObject.getString("title");
-                                final String eventUrl = eventJSONObject.getString("url");
-                                final String eventDate = eventJSONObject.getString("start_time");
-                                final String eventVenue = eventJSONObject.getString("venue_name");
-                                Loggers.debug("Event name:" + eventName);
-                                eventList.append(eventTemplate
-                                        .replace("_name_link_", !(("" + eventUrl).isEmpty()) ? eventUrl : ("https://www.google.com/search?q=" + eventName.replaceAll(" ", "+").replaceAll("-", "+")))
-                                        .replace("_place_link_", "https://maps.googleapis.com/maps/api/staticmap?sensor=false&size=600x600&markers=color:blue%7Clabel:S%7C" + _read.getLatitude().toString() + "," + _read.getLongitude().toString())
-                                        .replace("_name_", eventName)
-                                        .replace("_place_", eventVenue)
-                                        .replace("_date_", eventDate));
-                            }
-                        } catch (final Throwable t) {
-                            Loggers.error("Error appending Eventful data to Geohash Subscriber", t);
-                        }
-                    }
-
                     {//Foursquare
 
                         try {
 
                             _simpleDateFormat.format(_week.getTime());
 
-                            final JSONObject jsonObject = Modules.getModules().getEventulFactory()
+                            final JSONObject jsonObject = Modules.getModules().getFoursquareFactory()
                                     .getInstance("https://api.foursquare.com/v2/venues/explore")
                                     .get("",
                                             new HashMap<String, String>() {

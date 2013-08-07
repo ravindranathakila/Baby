@@ -21,7 +21,5 @@ public interface ModulesLocal {
 
     public com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory();
 
-    public api.eventful.com.impl.ClientFactory getEventulFactory();
-
     public api.foursquare.com.impl.ClientFactory getFoursquareFactory();
 }
