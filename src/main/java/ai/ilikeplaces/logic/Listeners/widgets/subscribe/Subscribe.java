@@ -166,7 +166,6 @@ public class Subscribe extends AbstractWidgetListener<SubscribeCriteria> {
                                     }
 
                                     if (humanCreateReturn.valid() && humanCreateReturn.returnValue()) {
-                                        UserIntroduction.createIntroData(new HumanId(myemail.getObj()));
 
                                         final Parameter parameter;
                                         if (woehint != null && placeName != null && placeDetails != null) {
