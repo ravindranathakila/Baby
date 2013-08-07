@@ -1,11 +1,11 @@
 package ai.ilikeplaces.copy.http.json.conf;
 
+import ai.ilikeplaces.copy.http.json.impl.ClientFactory;
 import ai.ilikeplaces.copy.http.json.impl.impl.SampleAPIClient;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.assistedinject.FactoryProvider;
 import com.google.inject.name.Named;
-import upcoming.yahoo.api.impl.ClientFactory;
 
 /**
  * Created by IntelliJ IDEA.

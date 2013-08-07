@@ -37,34 +37,9 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
      */
     final static JNDILookupFactory jndiLookupFactory = jndiLookupFactoryInjector.getInstance(JNDILookupFactory.class);
 
-    private final ai.ilikeplaces.ygp.impl.ClientFactory yahooGeoPlanetFactory;
-
-    private final com.disqus.api.impl.ClientFactory disqusApiFactory;
-
-    private final com.google.places.api.impl.ClientFactory googlePlacesApiFactory;
-
-    @Deprecated
-    private final upcoming.yahoo.api.impl.ClientFactory yahooUplcomingFactory;
-
     private final api.foursquare.com.impl.ClientFactory foursquareFactory;
 
     public Modules() {
-        {
-            final Injector yahooGeoPlanetFactoryInjector = Guice.createInjector(new YahooGeoPlanetClientModule());
-            yahooGeoPlanetFactory = yahooGeoPlanetFactoryInjector.getInstance(ai.ilikeplaces.ygp.impl.ClientFactory.class);
-        }
-        {
-            final Injector disqusApiFactoryInjector = Guice.createInjector(new DisqusAPIClientModule());
-            disqusApiFactory = disqusApiFactoryInjector.getInstance(com.disqus.api.impl.ClientFactory.class);
-        }
-        {
-            final Injector googlePlacesApiFactoryInjector = Guice.createInjector(new GooglePlacesAPIClientModule());
-            googlePlacesApiFactory = googlePlacesApiFactoryInjector.getInstance(com.google.places.api.impl.ClientFactory.class);
-        }
-        {
-            final Injector yahooUpcomingFactoryInjector = Guice.createInjector(new YahooUpcomingClientModule());
-            yahooUplcomingFactory = yahooUpcomingFactoryInjector.getInstance(upcoming.yahoo.api.impl.ClientFactory.class);
-        }
         {
             final Injector foursquareFactoryInjector = Guice.createInjector(new FoursquareClientModule());
             foursquareFactory = foursquareFactoryInjector.getInstance(api.foursquare.com.impl.ClientFactory.class);
@@ -77,22 +52,6 @@ public class Modules extends AbstractSLBCallbacks implements ModulesLocal {
         } catch (final NamingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public ai.ilikeplaces.ygp.impl.ClientFactory getYahooGeoPlanetFactory() {
-        return yahooGeoPlanetFactory;
-    }
-
-    public upcoming.yahoo.api.impl.ClientFactory getYahooUplcomingFactory() {
-        return yahooUplcomingFactory;
-    }
-
-    public com.disqus.api.impl.ClientFactory getDisqusAPIFactory() {
-        return disqusApiFactory;
-    }
-
-    public com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory() {
-        return googlePlacesApiFactory;
     }
 
     public api.foursquare.com.impl.ClientFactory getFoursquareFactory() {

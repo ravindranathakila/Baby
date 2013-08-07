@@ -13,13 +13,5 @@ public interface ModulesLocal {
 
     public static final String NAME = ModulesLocal.class.getSimpleName();
 
-    public ai.ilikeplaces.ygp.impl.ClientFactory getYahooGeoPlanetFactory();
-
-    public upcoming.yahoo.api.impl.ClientFactory getYahooUplcomingFactory();
-
-    public com.disqus.api.impl.ClientFactory getDisqusAPIFactory();
-
-    public com.google.places.api.impl.ClientFactory getGooglePlacesAPIFactory();
-
     public api.foursquare.com.impl.ClientFactory getFoursquareFactory();
 }

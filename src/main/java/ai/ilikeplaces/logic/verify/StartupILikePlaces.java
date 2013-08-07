@@ -9,7 +9,6 @@ import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.MethodParams;
 import ai.ilikeplaces.util.MethodTimer;
-import ai.ilikeplaces.ygp.impl.ClientFactory;
 import ai.reaver.Return;
 import ai.scribble.License;
 import ai.scribble._note;
@@ -30,7 +29,6 @@ public class StartupILikePlaces implements StartupILikePlacesLocal {
 //    @EJB
 //    private HumanCRUDHumanLocal humanCRUDHumanLocal_;
 
-    public ClientFactory ygdClientFactory;
 
     public StartupILikePlaces() {
     }
