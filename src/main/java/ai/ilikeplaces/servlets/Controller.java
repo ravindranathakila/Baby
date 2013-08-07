@@ -179,6 +179,21 @@ final public class
     @_note(note = "Inner Enums are static. Therefore, the lists shall be populated only once.")
     public enum Page implements PageFace {
 
+        Global(
+                Controller.EMPTY,
+                Page.CPageType
+        ) {
+            @Override
+            public String getURL() {
+                throw new IllegalAccessError("SORRY! THIS IS THE ENUM FOR GLOBAL KEYS ONLY");
+            }
+
+            @Override
+            public String toString() {
+                throw new IllegalAccessError("SORRY! THIS IS THE ENUM FOR GLOBAL KEYS ONLY");
+            }
+        },
+
         Aarrr(
                 "ai/ilikeplaces/AARRR.xhtml",
                 Controller.Page.AarrrDownTownHeatMap,
@@ -326,130 +341,7 @@ final public class
 
         private static final String APP_ROOT = RBGet.getGlobalConfigKey("AppRoot");
 
-
-        /*Bate IDs*/
-        final static public String BateSignup = "BateSignup";
-
-        final static public String BateSignupEmail = "BateSignupEmail";
-
-        final static public String BateSignupPassword = "BateSignupPassword";
-
-        final static public String BateSignupNotifications = "BateSignupNotifications";
-
-        final static public String BateSignupButton = "BateSignupButton";
-
-        final static public String BateImportResults = "BateImportResults";
-
-        final static public String BateIntroduction = "BateIntroduction";
-
-        final static public String BateOmg = "BateOmg";
-
-        final static public String BateOmgSuccessMsg = "BateOmgSuccessMsg";
-
-        /*UserPropertySidebar Page*/
-        final static public String DocUserPropertySidebar = "DocUserPropertySidebar";
-
-        /*ProfileWidget IDs*/
-        final static public String ProfileNotice = "ProfileNotice";
-
-        final static public String ProfileURLChange = "ProfileURLChange";
-
-        final static public String ProfileURL = "ProfileURL";
-
-        final static public String ProfileURLUpdate = "ProfileURLUpdate";
-
-        /*Password IDs*/
-        final static public String ProfilePasswordWidget = "ProfilePasswordWidget";
-
-        final static public String ProfilePasswordNotice = "ProfilePasswordNotice";
-
-        final static public String ProfilePasswordCurrent = "ProfilePasswordCurrent";
-
-        final static public String ProfilePasswordNewConfirm = "ProfilePasswordNewConfirm";
-
-        final static public String ProfilePasswordNew = "ProfilePasswordNew";
-
-        final static public String ProfilePasswordSave = "ProfilePasswordSave";
-
-        /*DisplayName IDs*/
-        final static public String DisplayNameDisplay = "DisplayNameDisplay";
-
-        final static public String DisplayNameInput = "DisplayNameInput";
-
-        final static public String DisplayNameSave = "DisplayNameSave";
-
-        final static public String DisplayNameNotice = "DisplayNameNotice";
-
-        /*Private Event Page*/
-        final static public String DocPrivateEventCreate = "PrivateEventCreate";
-
-        /*Private Event Create IDs*/
-        final static public String privateEventCreateName = "privateEventCreateName";
-
-        final static public String privateEventCreateInfo = "privateEventCreateInfo";
-
-        final static public String privateEventCreateSave = "privateEventCreateSave";
-
-        final static public String privateEventCreateNotice = "privateEventCreateNotice";
-
-        /*Private Event Page*/
-        final static public String DocPrivateEventDelete = "PrivateEventDelete";
-
-        /*Private Event View Sidebar Page*/
-        final static public String DocPrivateEventViewSidebar = "DocPrivateEventViewSidebar";
-
-        /*Private Event View Sidebar IDs*/
-        final static public String private_event_view_sidebar_name = "private_event_view_sidebar_name";
-
-        final static public String private_event_view_sidebar_content = "private_event_view_sidebar_content";
-
-        final static public String private_event_view_sidebar_profile_photo = "private_event_view_sidebar_profile_photo";
-
-        /*Tribe Sidebar IDs*/
-        final static public String tribe_sidebar_name = "tribe_sidebar_name";
-
-        final static public String tribe_sidebar_content = "tribe_sidebar_content";
-
-        final static public String tribe_sidebar_profile_photo = "tribe_sidebar_profile_photo";
-
-        /*WOIEDGrabber IDs*/
-        final static public String WOEIDGrabberWOEID = "WOEIDGrabberWOEID";
-
-        /*FindFriend IDs*/
-        final static public String friendFindSearchTextInput = "friendFindSearchTextInput";
-
-        final static public String friendFindSearchButtonInput = "friendFindSearchButtonInput";
-
-        final static public String friendFindSearchResults = "friendFindSearchResults";
-
-        final static public String friendFindSearchNotice = "friendFindSearchNotice";
-
-        final static public String friendFindSearchInvites = "friendFindSearchInvites";
-
-        /*AddFriend IDs*/
-        final static public String friendAddDisplayNameLabel = "friendAddDisplayNameLabel";
-
-        final static public String friendAddAddButton = "friendAddAddButton";
-
-        /*DeleteFriend IDs*/
-        final static public String friendDeleteDisplayNameLabel = "friendDeleteDisplayNameLabel";
-
-        final static public String friendDeleteAddButton = "friendDeleteDeleteButton";
-
-        /*FriendList IDs*/
-        final static public String FriendListList = "FriendListList";
-
-        /*FriendList IDs*/
-        final static public String GenericButtonLink = "GenericButtonLink";
-
-        final static public String GenericButtonText = "GenericButtonText";
-
-        final static public String GenericButtonImage = "GenericButtonImage";
-
         final static public String GenericButtonWidth = "GenericButtonWidth";
-
-        /*Profile IDs*/
-        final static public String ProfilePhotoChange = "ProfilePhotoChange";
 
         /*I Page*/
         final static public String DocI = "DocI";
@@ -484,19 +376,11 @@ final public class
         /*Organize Attributes*/
         final static public String DocOrganizeCategory = "category";
 
-        final static public int DocOrganizeModeOrganize = 0;
-
         final static public String DocOrganizeLocation = LOCATION;
-
-        final static public int DocOrganizeModeLocation = 1;
 
         final static public String DocOrganizeEvent = "event";
 
-        final static public int DocOrganizeModePrivateLocation = 2;
-
         final static public String DocOrganizeAlbum = "album";
-
-        final static public int DocOrganizeModeEvent = 3;
 
         /*FriendFind Page*/
         final static public String DocFriends = "DocFriends";
@@ -531,10 +415,6 @@ final public class
 
         final static public String Skeleton_othersidebar_identity = "Skeleton_othersidebar_identity";
 
-        final static public String Skeleton_othersidebar_profile_link = "Skeleton_othersidebar_profile_link";
-
-        final static public String Skeleton_file_list = "Skeleton_file_list";
-
         final static public String Skeleton_center = "Skeleton_center";
 
         final static public String Skeleton_center_skeleton = "Skeleton_center_skeleton";
@@ -553,76 +433,10 @@ final public class
 
         final static public String Skeleton_notifications = "Skeleton_notifications";
 
-        /*Private Location Page*/
-        final static public String DocPrivateLocationView = "PrivateLocationView";
-
-        /*Private Location Create IDs*/
-        final static public String privateLocationViewNotice = "privateLocationViewNotice";
-
-        final static public String privateLocationViewName = "privateLocationViewName";
-
-        final static public String privateLocationViewInfo = "privateLocationViewInfo";
-
-        final static public String privateLocationViewLocationMap = "privateLocationViewLocationMap";
-
-        final static public String privateLocationViewOwners = "privateLocationViewOwners";
-
-        final static public String privateLocationViewVisitors = "privateLocationViewVisitor";
-
-        final static public String privateLocationViewLink = "privateLocationViewLink";
-
-        final static public String privateLocationViewEventList = "privateLocationViewEventList";
-
-        /*Private Location Page*/
-        final static public String DocPrivateLocationCreate = "PrivateLocationCreate";
-
-        /*Private Location Create IDs*/
-        final static public String privateLocationCreateName = "privateLocationCreateName";
-
-        final static public String privateLocationCreateInfo = "privateLocationCreateInfo";
-
-        final static public String privateLocationCreateWOEID = "privateLocationCreateWOEID";
-
-        final static public String privateLocationCreateWOEIDGrabber = "privateLocationCreateWOEIDGrabber";
-
-        final static public String privateLocationCreateSave = "privateLocationCreateSave";
-
-        final static public String privateLocationDeleteOwners = "privateLocationDeleteOwners";
-
-        final static public String privateLocationDeleteVisitors = "privateLocationDeleteVisitors";
-
-        final static public String privateLocationDeleteEventList = "privateLocationDeleteEventList";
-
-        /*Private Location Page*/
-        final static public String DocPrivateLocationDelete = "PrivateLocationDelete";
-
-        /*Private Location Create IDs*/
-        final static public String privateLocationDeleteName = "privateLocationDeleteName";
-
-        final static public String privateLocationDeleteInfo = "privateLocationDeleteInfo";
-
-        final static public String privateLocationDeleteLocationMap = "privateLocationDeleteLocationMap";
-
-        final static public String privateLocationDeleteNotice = "privateLocationDeleteNotice";
-
-        final static public String privateLocationDelete = "privateLocationDelete";
-
         /*Photo Descrition Specific IDs*/
         final static public String pd = "pd";
 
         final static public String close = "close";
-
-        final static public String pd_photo_permalink = "pd_photo_permalink";
-
-        final static public String pd_photo = "pd_photo";
-
-        final static public String pd_photo_description = "pd_photo_description";
-
-        final static public String pd_photo_delete = "pd_photo_delete";
-
-        final static public String pd_photo_wall = "pd_photo_wall";
-
-        final static public String pd_photo_sequence_number = "pd_photo_sequence_number";
 
 
         /*Aarrr Page*/
@@ -646,124 +460,11 @@ final public class
         /*Main Specific IDs*/
         final static public String body = "body";
 
-        final static public String mainTitle = "mainTitle";
-
-        final static public String mainMetaDesc = "mainMetaDesc";
-
-        final static public String Main_ICBM = "Main_ICBM";
-
-        final static public String Main_geoposition = "Main_geoposition";
-
-        final static public String Main_geoplacename = "Main_geoplacename";
-
-        final static public String Main_georegion = "Main_georegion";
-
-        final static public String Main_othersidebar_identity = "Main_othersidebar_identity";
-
-        final static public String Main_profile_photo = "Main_profile_photo";
-
-        final static public String Main_othersidebar_profile_link = "Main_othersidebar_profile_link";
-
-        final static public String Main_center_main = "Main_center_main";
-
-        final static public String Main_notice = "Main_notice";
-
-        final static public String Main_notice_sh = "Main_notice_sh";
-
-        final static public String Main_center_main_location_title = "Main_center_main_location_title";
-
-        final static public String Main_center_content = "Main_center_content";
-
-        final static public String Main_left_column = "Main_left_column";
-
-        final static public String Main_right_column = "Main_right_column";
-
-        final static public String Main_sidebar = "Main_sidebar";
-
-        final static public String Main_login_widget = "Main_login_widget";
-
-        final static public String Main_location_list = "Main_location_list";
-
-        final static public String Main_super_location_name = "Main_super_location_name";
-
-        final static public String Main_location_name = "Main_location_name";
-
-        /*PhotoCRUD Specific IDs*/
-        final static public String pc_photo_title = "pc_photo_title";
-
-        final static public String pc_close = "pc_close";
-
-        final static public String pc = "pc";
-
-        final static public String pc_photo = "pc_photo";
-
-        final static public String pc_photo_permalink = "pc_photo_permalink";
-
-        final static public String pc_photo_name = "pc_photo_name";
-
-        final static public String pc_update_name = "pc_update_name";
-
-        final static public String pc_photo_description = "pc_photo_description";
-
-        final static public String pc_delete = "pc_delete";
-
-        final static public String pc_update_description = "pc_update_description";
-
         /*SignInOn Page*/
         final static public String DocSignInOn = "SignInOn";
 
-        /*Notification Page*/
-        final static public String DocNotification = "DocNotification";
-
-        /*Notification Specific IDs*/
-        final static public String notification_simple = "notification_simple";
-
-        /*DocDownTownFlow Page*/
-        final static public String DocDownTownFlow = "DocDownTownFlow";
-
-        /*DocDownTownFlow Specific IDs*/
-        final static public String DownTownFlowWidget = "DownTownFlowWidget";
-
-        final static public String DownTownFlowTalks = "DownTownFlowTalks";
-
-        final static public String DownTownFlowMoments = "DownTownFlowMoments";
-
-        final static public String DownTownFlowMomentsMoments = "DownTownFlowMomentsMoments";
-
-        final static public String DownTownFlowTribes = "DownTownFlowTribes";
-
-        final static public String DownTownFlowTribesTribes = "DownTownFlowTribesTribes";
-
-        final static public String DownTownFlowTalksFriends = "DownTownFlowTalksFriends";
-
-        final static public String DownTownFlowInviteNoti = "DownTownFlowInviteNoti";
-
-        final static public String DownTownFlowInviteEmail = "DownTownFlowInviteEmail";
-
-        final static public String DownTownFlowInviteClick = "DownTownFlowInviteClick";
-
-        /*TribeHome Page*/
-        final static public String DocTribeHome = "DocTribeHome";
-
-        /*Juice Page*/
-        final static public String DocJuice = "DocJuice";
-
         /*AdaptableSignup Page*/
         final static public String DocAdaptableSignup = "DocAdaptableSignup";
-
-        /*TribeCreateHome Page*/
-        final static public String DocTribeCreateHome = "DocTribeCreateHome";
-
-        /*TribeCreateHome Specific IDs*/
-        final static public String tribeHomeCreateWidget = "tribeHomeCreateWidget";
-
-        final static public String tribeHomeCreateName = "tribeHomeCreateName";
-
-        final static public String tribeHomeCreateStory = "tribeHomeCreateStory";
-
-        final static public String tribeHomeCreateSave = "tribeHomeCreateSave";
-
-        final static public String tribeHomeCreateNoti = "tribeHomeCreateNoti";
 
 
         /*Common IDs that should be present in any page*/
