@@ -1,20 +1,3 @@
-// PROGRESSIVE-1
-
-try {
-    setTimeout("initialize_gmap_scripts_transparently()", 7000);
-} catch (err) {
-    alert(err);
-    if (confirm("You internet connection seems to be flaky. Reload web page?")) {
-        try {
-            setTimeout("initialize_gmap_scripts_transparently()", 7000);
-        } catch (err) {
-            alert("Sorry, Still could not load required stuff.");
-        }
-    } else {
-        alert("Ok. Not reloading. However things might not work!");
-    }
-}
-
 // IMPROMPTU
 
 
@@ -502,66 +485,11 @@ $(document).ready(function () {
 
     //EO LOSE ATTN
 
-    //MAIN IMPROMPTU
-
-    var impromptuPlaceDetails = $('#impromptuPlaceDetails').html();
-    $('#impromptuPlaceDetails').remove();
-
-    impromptuPlaceDetailsPopup = {
-        state0:{
-            html:impromptuPlaceDetails,
-            buttons:{
-                "ADD PLACE":0,
-                "Cancel":1
-            },
-            focus:0,
-            submit:function (v, m, f) {
-                switch (v) {
-                    case 0:
-                    {
-                        var placename = $("#impromptuPlaceDetailsPlaceName").attr('value');
-                        placename = placename.substring(0, 29);
-                        var placedetails = $("#impromptuPlaceDetailsPlaceDetails").attr('value');
-                        placedetails = placedetails.substring(0, 499);
-                        setNotification("Be patient while you are taken to the place you just created!");
-                        window.location.href = '/page/_org?category=143' + '&woehint=' + lastSelectedLocation.lat + ',' + lastSelectedLocation.lng + '&placename=' + placename + '&placedetails=' + placedetails;
-                        return false;
-                    }
-                    case 1:
-                    {
-                        $.prompt.close();
-                        return false;
-                    }
-                }
-            }
-        }
-    }
-
-
     $.prompt.defaults.opacity = 1.0;
 
     focusLat = 0//36.11464603272065;//L.A.
     focusLng = 0//-115.17281600000001;//L.A.
     zoom = 2;//12;//Setting default zoom in case ip based settings fail
-
-    try {//Attempting to geo locate the user based on ip
-        // Build the URL to query
-        var url = 'http://www.geoplugin.net/json.gp?jsoncallback=?';
-        // Utilize the JSONP API
-        $.getJSON(url, function (data) {
-            focusLng = data.geoplugin_longitude;
-            focusLat = data.geoplugin_latitude;
-            zoom = data.geoplugin_city != null ? 11 : (data.geoplugin_region != null ? 9 : (data.geoplugin_countryName ? 6 : 2 ) );
-            browserLocation = (data.geoplugin_city != null ? data.geoplugin_city + ',' : '')
-                + (data.geoplugin_region != null ? data.geoplugin_region + ',' : '')
-                + (data.geoplugin_countryName != null ? data.geoplugin_countryName : '');
-            document.getElementById('searchboxmap').value = browserLocation;
-        });
-    } catch (err) {
-        alert(err);
-    }
-
-    initialize_gmap_scripts();
 
     $('.ajax_image').appear(
         function () {
