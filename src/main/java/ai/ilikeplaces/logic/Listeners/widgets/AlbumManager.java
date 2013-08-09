@@ -14,6 +14,7 @@ import ai.ilikeplaces.util.ElementComposer;
 import ai.ilikeplaces.util.EventType;
 import ai.ilikeplaces.util.MarkupTag;
 import ai.reaver.Return;
+import ai.reaver.ReturnImpl;
 import ai.scribble.License;
 import ai.scribble.WARNING;
 import ai.scribble._bug;
@@ -116,7 +117,12 @@ public class AlbumManager extends AbstractWidgetListener {
 
         setAlbumPhotos:
         {
-            albumReturn = DB.getHumanCrudPrivateEventLocal(true).rPrivateEventReadAlbum(humanId, privateEvent.getPrivateEventId(), REFRESH_SPEC_INIT);
+            albumReturn = null;
+
+            if(albumReturn == null){
+               throw new UnsupportedOperationException("Album data fetch not implemented. Include it here!");
+            }
+
             if (albumReturn.returnStatus() == 0) {
                 final Album album = this.albumReturn.returnValue();
 
@@ -152,7 +158,12 @@ public class AlbumManager extends AbstractWidgetListener {
 
         setAlbumOwnerMode:
         {
-            final Return<Boolean> ro = DB.getHumanCrudPrivateEventLocal(true).dirtyRPrivateEventIsOwner(humanId, privateEvent.getPrivateEventId());
+            final Return<Boolean> ro = null;
+
+            if(ro == null){
+                throw new UnsupportedOperationException("Album owner mode implemented. Include it here!");
+            }
+
             if (ro.returnStatus() == 0) {
                 if (ro.returnValue()) {//owner
                     $$(AlbumManagerIds.AlbumPivateEventId).setAttribute(MarkupTag.INPUT.value(), privateEvent.getPrivateEventId().toString());

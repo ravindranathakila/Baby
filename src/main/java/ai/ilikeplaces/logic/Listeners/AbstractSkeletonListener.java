@@ -104,7 +104,7 @@ abstract public class AbstractSkeletonListener extends AbstractListener {
     protected void setNotifications() {
         try {
             if (getUsername() != null) {
-                $(Controller.Page.Skeleton_notifications).setTextContent("NOTIFICATIONS - " + DB.getHumanCRUDHumansUnseenLocal(false).readEntries(getUsernameAsValid()).size());
+                //Set your logged in notifications here
             }
         } catch (final Throwable t) {
             EXCEPTION.error("{}", t);

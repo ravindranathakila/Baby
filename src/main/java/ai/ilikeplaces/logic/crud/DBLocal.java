@@ -16,27 +16,13 @@ public interface DBLocal {
 
     final static public String NAME = DBLocal.class.getSimpleName();
 
-    public HumanCRUDPublicPhotoLocal getHumanCRUDPublicPhotoLocal();
-
-    public HumanCRUDPrivatePhotoLocal getHumanCRUDPrivatePhotoLocal();
-
-    public HumanCRUDLocationLocal getHumanCRUDLocationLocal();
-
     public HumanCRUDHumanLocal getHumanCRUDHumanLocal();
-
-    public HumanCRUDMapLocal getHumanCRUDMapLocal();
-
-    public HumanCRUDPrivateEventLocal getHumanCrudPrivateEventLocal();
-
-    public HumanCRUDPrivateLocationLocal getHumanCrudPrivateLocationLocal();
 
     public HumanCRUDWallLocal getHumanCrudWallLocal();
 
     public SingletonHashingRemote getSingletonHashingFaceLocal();
 
     public HumanUserLocal getHumanUserLocal();
-
-    public HumanCRUDHumansUnseenLocal getHumanCRUDHumansUnseenLocal();
 
     public HumanCRUDTribeLocal getHumanCRUDTribeLocal();
 

@@ -20,7 +20,7 @@ import java.util.List;
 
 @License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
 @Remote
-public interface HumanCRUDHumanLocal extends Verify {
+public interface HumanCRUDHumanLocal {
 
     final static public String NAME = HumanCRUDHumanLocal.class.getSimpleName();
 
