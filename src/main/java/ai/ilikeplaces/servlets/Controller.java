@@ -33,9 +33,6 @@ final public class
 
     public static String USER_PROPERTY_EMAIL_XHTML = "ai/ilikeplaces/widgets/UserProperty_email.xhtml";
 
-    public static String PEOPLE_EMAIL_XHTML = "ai/ilikeplaces/widgets/people/people_thumb_email.xhtml";
-
-
     /**
      * This Map is static as Id's in html documents should be universally identical, i.e. as htmldocname_elementId
      */
