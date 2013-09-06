@@ -1,7 +1,7 @@
-//package ai.ilikeplaces.jpa;
+//package ai.ilikeplaces.util.jpa;
 //
-//import ai.ilikeplaces.exception.DBDishonourException;
-//import ai.ilikeplaces.exception.DBHazelcastRuntimeException;
+//import ai.ilikeplaces.util.exception.DBDishonourException;
+//import ai.ilikeplaces.util.exception.DBHazelcastRuntimeException;
 //import ai.ilikeplaces.util.AbstractSLBCallbacks;
 //import ai.ilikeplaces.util.EntityManagerInjector;
 //import ai.ilikeplaces.util.Loggers;
@@ -338,9 +338,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-package ai.ilikeplaces.jpa;
+package ai.ilikeplaces.util.jpa;
 
-import ai.ilikeplaces.exception.DBDishonourException;
+import ai.ilikeplaces.util.exception.DBDishonourException;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.scribble.License;
 import ai.scribble._convention;

@@ -2,8 +2,8 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.entities.HumansUnseen;
 import ai.ilikeplaces.entities.Wall;
-import ai.ilikeplaces.exception.DBException;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.exception.DBException;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.scribble.License;
 

@@ -4,7 +4,7 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPublicPhoto;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.PublicPhoto;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
 import ai.scribble.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

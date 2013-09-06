@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.entities.HumansPrivateEvent;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.scribble.License;
 import ai.scribble._note;

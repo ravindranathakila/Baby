@@ -5,10 +5,10 @@ import ai.ilikeplaces.entities.HumansPrivateEvent;
 import ai.ilikeplaces.entities.PrivateEvent;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.exception.NoPrivilegesException;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.util.exception.DBFetchDataException;
+import ai.ilikeplaces.util.exception.NoPrivilegesException;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.scribble.License;
 

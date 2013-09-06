@@ -4,8 +4,8 @@ import ai.ilikeplaces.entities.Human;
 import ai.ilikeplaces.entities.HumansPrivateLocation;
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
-import ai.ilikeplaces.exception.DBFetchDataException;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.exception.DBFetchDataException;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.scribble.License;
 

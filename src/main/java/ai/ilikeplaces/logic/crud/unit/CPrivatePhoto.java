@@ -3,7 +3,7 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.entities.HumansPrivatePhoto;
 import ai.ilikeplaces.entities.PrivatePhoto;
 import ai.ilikeplaces.entities.Wall;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
 import ai.scribble.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-//package ai.ilikeplaces.security.blowfish.jbcrypt;
+//package ai.ilikeplaces.util.blowfish.jbcrypt;
 //
 //// Copyright (c) 2006 Damien Miller <djm@mindrot.org>
 ////

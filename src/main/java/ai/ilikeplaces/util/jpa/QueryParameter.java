@@ -1,4 +1,4 @@
-package ai.ilikeplaces.jpa;
+package ai.ilikeplaces.util.jpa;
 
 import ai.scribble.License;
 import ai.scribble._fix;

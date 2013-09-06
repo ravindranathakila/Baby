@@ -1,6 +1,6 @@
 package ai.ilikeplaces.logic.crud.unit;
 
-import ai.ilikeplaces.exception.NoPrivilegesException;
+import ai.ilikeplaces.util.exception.NoPrivilegesException;
 import ai.scribble.License;
 
 import javax.ejb.Local;

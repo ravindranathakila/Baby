@@ -1,4 +1,4 @@
-package ai.ilikeplaces.security.blowfish;
+package ai.ilikeplaces.util.blowfish;
 
 import javax.ejb.Local;
 

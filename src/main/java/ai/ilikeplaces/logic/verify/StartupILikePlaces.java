@@ -3,7 +3,7 @@ package ai.ilikeplaces.logic.verify;
 import ai.ilikeplaces.entities.etc.EntityLifeCycleListener;
 import ai.ilikeplaces.entities.etc.FriendUtil;
 import ai.ilikeplaces.entities.etc.HumanId;
-import ai.ilikeplaces.exception.DBException;
+import ai.ilikeplaces.util.exception.DBException;
 import ai.ilikeplaces.logic.crud.DB;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;

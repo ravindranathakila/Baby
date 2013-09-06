@@ -2,9 +2,9 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.entities.HumansIdentity;
 import ai.ilikeplaces.entities.Url;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.jpa.QueryParameter;
+import ai.ilikeplaces.util.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.jpa.QueryParameter;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.scribble.License;
 import ai.scribble._note;

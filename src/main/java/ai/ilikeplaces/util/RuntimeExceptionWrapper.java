@@ -1,6 +1,6 @@
 package ai.ilikeplaces.util;
 
-import ai.ilikeplaces.exception.AbstractEjbApplicationRuntimeException;
+import ai.ilikeplaces.util.exception.AbstractEjbApplicationRuntimeException;
 import ai.reaver.ReturnImpl;
 import ai.scribble.License;
 

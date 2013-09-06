@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.entities.HumansAuthentication;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
-import ai.ilikeplaces.security.blowfish.jbcrypt.BCrypt;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.blowfish.jbcrypt.BCrypt;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.scribble.License;

@@ -6,7 +6,7 @@ import ai.ilikeplaces.entities.Tribe;
 import ai.ilikeplaces.entities.Wall;
 import ai.ilikeplaces.entities.etc.RefreshException;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
 import ai.scribble.License;
 
 import javax.ejb.EJB;

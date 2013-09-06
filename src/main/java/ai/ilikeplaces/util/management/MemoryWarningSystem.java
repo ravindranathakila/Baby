@@ -1,4 +1,4 @@
-package ai.ilikeplaces.management;
+package ai.ilikeplaces.util.management;
 
 import ai.ilikeplaces.util.Loggers;
 import ai.ilikeplaces.util.ThreadSleep;

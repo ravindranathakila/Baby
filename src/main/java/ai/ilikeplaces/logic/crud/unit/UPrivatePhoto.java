@@ -2,8 +2,8 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.entities.Album;
 import ai.ilikeplaces.entities.PrivatePhoto;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
-import ai.ilikeplaces.jpa.CrudServiceLocal;
+import ai.ilikeplaces.util.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.util.jpa.CrudServiceLocal;
 import ai.scribble.License;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

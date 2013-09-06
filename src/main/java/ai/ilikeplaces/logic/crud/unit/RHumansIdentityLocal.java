@@ -1,7 +1,7 @@
 package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.entities.HumansIdentity;
-import ai.ilikeplaces.exception.DBDishonourCheckedException;
+import ai.ilikeplaces.util.exception.DBDishonourCheckedException;
 import ai.scribble.License;
 
 import javax.ejb.Local;

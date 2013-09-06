@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.crud.unit;
 
 import ai.ilikeplaces.entities.PrivateLocation;
 import ai.ilikeplaces.entities.etc.DBRefreshDataException;
-import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.util.exception.DBFetchDataException;
 import ai.scribble.License;
 
 import javax.ejb.Local;

@@ -1,6 +1,6 @@
 package ai.ilikeplaces.security;
 
-import ai.ilikeplaces.security.blowfish.BlowFishLocal;
+import ai.ilikeplaces.util.blowfish.BlowFishLocal;
 import ai.ilikeplaces.security.face.SingletonHashingRemote;
 import ai.ilikeplaces.util.AbstractSNGLTNBCallbacks;
 import ai.scribble.License;

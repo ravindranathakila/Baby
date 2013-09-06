@@ -1,4 +1,4 @@
-package ai.ilikeplaces.exception;
+package ai.ilikeplaces.util.exception;
 
 import ai.scribble.License;
 

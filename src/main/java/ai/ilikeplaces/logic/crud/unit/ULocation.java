@@ -3,7 +3,7 @@ package ai.ilikeplaces.logic.crud.unit;
 import ai.ilikeplaces.entities.Location;
 import ai.ilikeplaces.entities.LongMsg;
 import ai.ilikeplaces.entities.etc.RefreshSpec;
-import ai.ilikeplaces.exception.DBFetchDataException;
+import ai.ilikeplaces.util.exception.DBFetchDataException;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.scribble.License;
 

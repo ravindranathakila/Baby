@@ -2,7 +2,7 @@ package ai.ilikeplaces.logic.verify;
 
 import ai.ilikeplaces.logic.mail.SendMail;
 import ai.ilikeplaces.logic.mail.SendMailLocal;
-import ai.ilikeplaces.management.MemorySafe;
+import ai.ilikeplaces.util.management.MemorySafe;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.AbstractSLBCallbacks;
 import ai.ilikeplaces.util.Loggers;

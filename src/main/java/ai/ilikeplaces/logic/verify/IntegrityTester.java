@@ -1,8 +1,8 @@
 package ai.ilikeplaces.logic.verify;
 
 import ai.ilikeplaces.logic.crud.HumanCRUDHumanLocal;
-import ai.ilikeplaces.management.MemorySafe;
-import ai.ilikeplaces.management.MemoryWarningSystem;
+import ai.ilikeplaces.util.management.MemorySafe;
+import ai.ilikeplaces.util.management.MemoryWarningSystem;
 import ai.ilikeplaces.rbs.RBGet;
 import ai.ilikeplaces.util.Loggers;
 import ai.scribble.License;

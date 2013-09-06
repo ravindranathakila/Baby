@@ -1,6 +1,6 @@
-package ai.ilikeplaces.security.blowfish.jbcrypt;
+package ai.ilikeplaces.util.blowfish.jbcrypt;
 
-import ai.ilikeplaces.security.blowfish.BlowFishLocal;
+import ai.ilikeplaces.util.blowfish.BlowFishLocal;
 
 import java.security.SecureRandom;
 
