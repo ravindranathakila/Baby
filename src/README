@@ -1,0 +1,4629 @@
+Hello, this is the file containing information related to the last descriptive commit.
+We decided commits have their own state information, so this file will contain comments on them.
+Oftentimes we might forget to change this during a commit. Our bad!
+
+
+
+ilikeplaces-main
+Class structure
+Field can be local
+AbstractListener
+Field can be converted to a local variable
+JNDILookupImpl
+Field can be converted to a local variable
+'private' method declared 'final'
+AbstractWidgetListener
+'private' method declared 'final'
+'private' method declared 'final'
+BCrypt
+'private' method declared 'final'
+VOValidator
+'private' method declared 'final'
+'static' method declared 'final'
+AbstractWidgetListener
+'static' method declared 'final'
+Controller
+'static' method declared 'final'
+ElementComposer
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+Loggers
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+'static' method declared 'final'
+RBGet
+'static' method declared 'final'
+'static' method declared 'final'
+UserProperty
+'static' method declared 'final'
+'static' method declared 'final'
+Control flow issues
+Loop statement that does not loop
+ListenerTribes
+'for' statement does not loop
+Redundant 'if' statement
+Pair
+'if' statement can be simplified
+Unnecessary 'return' statement
+Controller
+'return' is unnecessary as the last statement in a 'void' method
+Email
+'return' is unnecessary as the last statement in a 'void' method
+Unnecessary label on 'break' statement
+MemoryWarningSystem
+Unnecessary label on 'break' statement
+CSS
+Invalid CSS element
+src
+Invalid CSS property value
+Invalid CSS property value
+Invalid CSS property value
+Invalid CSS property value
+Missing generic font name
+src
+Font property font-family does not have generic default (at line 56)
+Font property font-family does not have generic default (at line 74)
+Font property font-family does not have generic default (at line 34)
+Font property font-family does not have generic default (at line 43)
+Font property font-family does not have generic default (at line 56)
+Font property font-family does not have generic default (at line 19)
+Font property font-family does not have generic default (at line 24)
+Font property font-family does not have generic default (at line 28)
+Font property font-family does not have generic default (at line 19)
+Font property font-family does not have generic default (at line 24)
+Font property font-family does not have generic default (at line 28)
+Font property font-family does not have generic default (at line 32)
+Font property font-family does not have generic default (at line 255)
+Font property font-family does not have generic default (at line 1693)
+Font property font-family does not have generic default (at line 1777)
+Font property font-family does not have generic default (at line 1782)
+Font property font-family does not have generic default (at line 1786)
+Missing/redundant measure unit
+src
+Unit of measure px is redundant (at line 42)
+Unit of measure px is redundant (at line 42)
+Unit of measure px is redundant (at line 207)
+Unit of measure px is redundant (at line 31)
+Unit of measure px is redundant (at line 181)
+Unit of measure px is redundant (at line 254)
+Unit of measure % is redundant (at line 549)
+Unit of measure % is redundant (at line 663)
+Unit of measure % is redundant (at line 667)
+Unit of measure % is redundant (at line 671)
+Unit of measure em is redundant (at line 1697)
+Unit of measure em is redundant (at line 1698)
+Unit of measure px is redundant (at line 1703)
+Unit of measure px is redundant (at line 1754)
+Overwritten property value
+src
+Property color is overwritten (at line 22)
+Property color overwrites property color (at line 22)
+Property color is overwritten (at line 29)
+Property color overwrites property color (at line 29)
+Properties can be replaced with shorthand
+src
+Optimize background properties
+Optimize background properties
+Optimize background properties
+Optimize background properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize outline properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize border properties
+Optimize margin properties
+Optimize margin properties
+Optimize padding properties
+Optimize padding properties
+Optimize padding properties
+Optimize padding properties
+Unknown CSS property
+src
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property filter
+Unknown CSS property -webkit-text-size-adjust
+Unknown CSS property -ms-text-size-adjust
+Unknown CSS property -moz-border-radius-bottomLeft
+Unused CSS selector
+src
+Selector btn is never used
+Selector btn is never used
+Selector blue is never used
+Selector btn is never used
+Selector green is never used
+Selector btn is never used
+Selector pink is never used
+Selector btn is never used
+Selector orange is never used
+Selector btn is never used
+Selector yellow is never used
+Selector btn is never used
+Selector dark_yellow is never used
+Selector btn is never used
+Selector btn is never used
+Selector btn is never used
+Selector btn is never used
+Selector btn is never used
+Selector blue is never used
+Selector btn is never used
+Selector green is never used
+Selector btn is never used
+Selector pink is never used
+Selector btn is never used
+Selector orange is never used
+Selector btn is never used
+Selector yellow is never used
+Selector btn is never used
+Selector dark_yellow is never used
+Selector btn is never used
+Selector jqifade is never used
+Selector jqi is never used
+Selector jqicontainer is never used
+Selector jqiclose is never used
+Selector jqimessage is never used
+Selector jqibuttons is never used
+Selector jqidefaultbutton is never used
+Selector jqibuttons is never used
+Selector impromptu is never used
+Selector impromptufade is never used
+Selector impromptu is never used
+Selector impromptuclose is never used
+Selector impromptucontainer is never used
+Selector impromptumessage is never used
+Selector impromptubuttons is never used
+Selector colsJqi is never used
+Selector colsJqifade is never used
+Selector colsJqi is never used
+Selector colsJqiclose is never used
+Selector colsJqicontainer is never used
+Selector colsJqimessage is never used
+Selector jqibuttons is never used
+Selector brownJqi is never used
+Selector brownJqifade is never used
+Selector brownJqi is never used
+Selector brownJqiclose is never used
+Selector brownJqicontainer is never used
+Selector brownJqimessage is never used
+Selector helpImg is never used
+Selector brownJqibuttons is never used
+Selector cleanblue is never used
+Selector cleanbluefade is never used
+Selector cleanblue is never used
+Selector cleanbluecontainer is never used
+Selector cleanblueclose is never used
+Selector cleanbluemessage is never used
+Selector cleanbluebuttons is never used
+Selector extblue is never used
+Selector extbluefade is never used
+Selector extblue is never used
+Selector extblueclose is never used
+Selector extbluecontainer is never used
+Selector extbluemessage is never used
+Selector extbluebuttons is never used
+Selector jqismoothfade is never used
+Selector jqismooth is never used
+Selector jqismoothcontainer is never used
+Selector jqismoothclose is never used
+Selector jqismoothmessage is never used
+Selector jqismoothbuttons is never used
+Selector jqismoothdefaultbutton is never used
+Selector jqismoothbuttons is never used
+Selector profile_photo is never used
+Selector ilp_title is never used
+Selector title_blend is never used
+Selector nav_link is never used
+Selector nav_link is never used
+Selector thin_border is never used
+Selector photos_added is never used
+Selector pd is never used
+Selector white_bg is never used
+Selector white_fg is never used
+Selector black_bg is never used
+Selector black_fg is never used
+Selector orange_bg is never used
+Selector orange_fg is never used
+Selector dark_orange_bg is never used
+Selector dark_orange_fg is never used
+Selector less_dark_orange_bg is never used
+Selector less_dark_orange_fg is never used
+Selector lite_orange_bg is never used
+Selector lite_orange_fg is never used
+Selector glass_orange_bg is never used
+Selector glass_orange_fg is never used
+Selector lite_gray_bg is never used
+Selector lite_gray_fg is never used
+Selector dark_yellow_bg is never used
+Selector dark_yellow_fg is never used
+Selector glass_yellow_bg is never used
+Selector glass_yellow_fg is never used
+Selector height_total is never used
+Selector height_1 is never used
+Selector height_2 is never used
+Selector height_3 is never used
+Selector height_4 is never used
+Selector height_5 is never used
+Selector height_15 is never used
+Selector height_25 is never used
+Selector height_20 is never used
+Selector height_30 is never used
+Selector height_40 is never used
+Selector height_50 is never used
+Selector height_55 is never used
+Selector height_60 is never used
+Selector inherit_colors is never used
+Selector inherit_height is never used
+Selector inherit_line_height is never used
+Selector dbg_aqua is never used
+Selector dbg_lime is never used
+Selector dbg_black is never used
+Selector dbg_black_thick is never used
+Selector dbg is never used
+Selector line_height_40 is never used
+Selector line_height_50 is never used
+Selector pagewide is never used
+Selector list_style_type_none is never used
+Selector by2 is never used
+Selector by2p is never used
+Selector by2a is never used
+Selector by3 is never used
+Selector by3p is never used
+Selector by3a is never used
+Selector by4 is never used
+Selector by4p is never used
+Selector by4a is never used
+Selector by5 is never used
+Selector by5p is never used
+Selector by5a is never used
+Selector by5x2 is never used
+Selector by5x2p is never used
+Selector by5x2a is never used
+Selector by8 is never used
+Selector by8p is never used
+Selector by8a is never used
+Selector by10 is never used
+Selector by10p is never used
+Selector by10a is never used
+Selector use0 is never used
+Selector use0p is never used
+Selector use0a is never used
+Selector use01 is never used
+Selector use01p is never used
+Selector use01a is never used
+Selector use02 is never used
+Selector use02 is never used
+Selector use02 is never used
+Selector use03 is never used
+Selector use03p is never used
+Selector use03a is never used
+Selector use04 is never used
+Selector use04p is never used
+Selector use04a is never used
+Selector use4 is never used
+Selector use4p is never used
+Selector use4a is never used
+Selector use5 is never used
+Selector use5p is never used
+Selector use5a is never used
+Selector use8 is never used
+Selector use8p is never used
+Selector use8a is never used
+Selector use083 is never used
+Selector use083p is never used
+Selector use083a is never used
+Selector use10 is never used
+Selector use10p is never used
+Selector use10a is never used
+Selector use14 is never used
+Selector use14p is never used
+Selector use14a is never used
+Selector use15 is never used
+Selector use15p is never used
+Selector use15a is never used
+Selector use16 is never used
+Selector use16p is never used
+Selector use16a is never used
+Selector use17 is never used
+Selector use17p is never used
+Selector use17a is never used
+Selector use19 is never used
+Selector use19p is never used
+Selector use19a is never used
+Selector use191 is never used
+Selector use191p is never used
+Selector use191a is never used
+Selector use20p is never used
+Selector use20a is never used
+Selector use214 is never used
+Selector use214p is never used
+Selector use214a is never used
+Selector use236 is never used
+Selector use236p is never used
+Selector use236a is never used
+Selector use25 is never used
+Selector use25p is never used
+Selector use25a is never used
+Selector use28 is never used
+Selector use28p is never used
+Selector use28a is never used
+Selector use30 is never used
+Selector use30p is never used
+Selector use30a is never used
+Selector use309 is never used
+Selector use309p is never used
+Selector use309a is never used
+Selector use35 is never used
+Selector use35p is never used
+Selector use35a is never used
+Selector use40 is never used
+Selector use40p is never used
+Selector use40a is never used
+Selector use45 is never used
+Selector use45p is never used
+Selector use45a is never used
+Selector use50 is never used
+Selector use50p is never used
+Selector use50a is never used
+Selector use53 is never used
+Selector use53p is never used
+Selector use53a is never used
+Selector use55 is never used
+Selector use55p is never used
+Selector use55a is never used
+Selector use572 is never used
+Selector use572p is never used
+Selector use572a is never used
+Selector use528 is never used
+Selector use528p is never used
+Selector use528a is never used
+Selector use60p is never used
+Selector use60a is never used
+Selector use62 is never used
+Selector use62p is never used
+Selector use62a is never used
+Selector use618 is never used
+Selector use618p is never used
+Selector use618a is never used
+Selector use65 is never used
+Selector use65p is never used
+Selector use65a is never used
+Selector use70 is never used
+Selector use70p is never used
+Selector use70a is never used
+Selector use72 is never used
+Selector use72p is never used
+Selector use72a is never used
+Selector use75 is never used
+Selector use75p is never used
+Selector use75a is never used
+Selector use76 is never used
+Selector use76p is never used
+Selector use76a is never used
+Selector use80 is never used
+Selector use80p is never used
+Selector use80a is never used
+Selector use85 is never used
+Selector use85p is never used
+Selector use85a is never used
+Selector use90 is never used
+Selector use90p is never used
+Selector use90a is never used
+Selector use917 is never used
+Selector use917p is never used
+Selector use917a is never used
+Selector use95 is never used
+Selector use95p is never used
+Selector use95a is never used
+Selector use96 is never used
+Selector use96p is never used
+Selector use96a is never used
+Selector use99 is never used
+Selector use99p is never used
+Selector use99a is never used
+Selector use100p is never used
+Selector use100a is never used
+Selector use125 is never used
+Selector use125p is never used
+Selector use125a is never used
+Selector use333 is never used
+Selector use333p is never used
+Selector use333a is never used
+Selector use382 is never used
+Selector use382p is never used
+Selector use382a is never used
+Selector alphabet is never used
+Selector PLVListItem is never used
+Selector PLDListItem is never used
+Selector align_negative is never used
+Selector align_positive is never used
+Selector start_a_moment_link is never used
+Selector noti is never used
+Selector flipper is never used
+Selector TALKS is never used
+Selector flipper is never used
+Selector TRIBES is never used
+Selector flipper is never used
+Selector MOMENTS is never used
+Selector flipper is never used
+Selector SNAPS is never used
+Selector flipper is never used
+Selector HOME is never used
+Selector juice is never used
+Selector TALKS is never used
+Selector juice is never used
+Selector TRIBES is never used
+Selector juice is never used
+Selector MOMENTS is never used
+Selector juice is never used
+Selector SNAPS is never used
+Selector flipper is never used
+Selector juice is never used
+Selector downtownflow_underline is never used
+Selector TALKS is never used
+Selector downtownflow_underline is never used
+Selector TRIBES is never used
+Selector downtownflow_underline is never used
+Selector MOMENTS is never used
+Selector downtownflow_underline is never used
+Selector SNAPS is never used
+Selector signinon_header is never used
+Selector TALKS is never used
+Selector signinon_header is never used
+Selector TRIBES is never used
+Selector signinon_header is never used
+Selector MOMENTS is never used
+Selector signinon_header is never used
+Selector SNAPS is never used
+Selector signinon_header is never used
+Selector HOME is never used
+Selector sidebar is never used
+Selector TALKS is never used
+Selector sidebar is never used
+Selector TRIBES is never used
+Selector sidebar is never used
+Selector MOMENTS is never used
+Selector sidebar is never used
+Selector SNAPS is never used
+Selector sidebar is never used
+Selector HOME is never used
+Selector talkbox is never used
+Selector TALKS is never used
+Selector talkbox is never used
+Selector TRIBES is never used
+Selector talkbox is never used
+Selector MOMENTS is never used
+Selector talkbox is never used
+Selector SNAPS is never used
+Selector talkbox is never used
+Selector HOME is never used
+Selector tribeSidebar is never used
+Selector TALKS is never used
+Selector tribeSidebar is never used
+Selector TRIBES is never used
+Selector tribeSidebar is never used
+Selector MOMENTS is never used
+Selector tribeSidebar is never used
+Selector SNAPS is never used
+Selector tribeSidebar is never used
+Selector HOME is never used
+Selector userPropertySidebar is never used
+Selector TALKS is never used
+Selector userPropertySidebar is never used
+Selector TRIBES is never used
+Selector userPropertySidebar is never used
+Selector MOMENTS is never used
+Selector userPropertySidebar is never used
+Selector SNAPS is never used
+Selector userPropertySidebar is never used
+Selector HOME is never used
+Selector privateEventSidebar is never used
+Selector TALKS is never used
+Selector privateEventSidebar is never used
+Selector TRIBES is never used
+Selector privateEventSidebar is never used
+Selector MOMENTS is never used
+Selector privateEventSidebar is never used
+Selector SNAPS is never used
+Selector privateEventSidebar is never used
+Selector HOME is never used
+Selector carouselFill is never used
+Selector TALKS is never used
+Selector carouselFill is never used
+Selector TRIBES is never used
+Selector carouselFill is never used
+Selector MOMENTS is never used
+Selector carouselFill is never used
+Selector SNAPS is never used
+Selector carouselFill is never used
+Selector HOME is never used
+Selector people is never used
+Selector TALKS is never used
+Selector people is never used
+Selector TRIBES is never used
+Selector people is never used
+Selector MOMENTS is never used
+Selector people is never used
+Selector SNAPS is never used
+Selector people is never used
+Selector HOME is never used
+Selector user_property_photo is never used
+Selector TALKS is never used
+Selector user_property_photo is never used
+Selector TRIBES is never used
+Selector user_property_photo is never used
+Selector MOMENTS is never used
+Selector user_property_photo is never used
+Selector SNAPS is never used
+Selector user_property_photo is never used
+Selector HOME is never used
+Selector shown is never used
+Selector rise100 is never used
+Selector overflow_hidden is never used
+Selector nav_link_img is never used
+Selector nav_link_img_small is never used
+Selector blank is never used
+Selector user_property_name is never used
+Selector user_property_content is never used
+Selector positive is never used
+Selector negative is never used
+Selector grabber is never used
+Selector grabber_title is never used
+Selector grabber_subtitle is never used
+Selector jqi is never used
+Selector jqiclose is never used
+Selector jqimessage is never used
+Selector jqibuttons is never used
+Selector jqidefaultbutton is never used
+Selector jqibuttons is never used
+Selector cursor_link is never used
+Selector cursor_pointer is never used
+Selector ExternalClass is never used
+Selector ExternalClass is never used
+Selector body_style is never used
+Selector yshortcuts is never used
+Selector yshortcuts is never used
+Selector yshortcuts is never used
+Selector yshortcuts is never used
+Selector blank is never used
+W3C CSS validator
+src
+W3C: Property -moz-border-radius doesn't exist
+W3C: Property -webkit-border-radius doesn't exist
+W3C: Parse Error
+W3C: Property -moz-border-radius doesn't exist
+W3C: Property -webkit-border-radius doesn't exist
+Data flow issues
+Boolean method is always inverted
+GenericFileGrabber
+Boolean method 'isFileUploadPermitted' is always inverted
+ServletSignup
+Boolean method 'isSignUpPermitted' is always inverted
+SmartLogger
+Boolean method 'status' is always inverted
+StringEscapeUtilsFixed
+Boolean method 'checkescapeJavaScript' is always inverted
+Boolean method 'checkescapeHtml' is always inverted
+Boolean method 'checkescapeXml' is always inverted
+Redundant local variable
+AbstractWidgetListener
+Local variable 'humanUserAsValid' is redundant
+BoundingBox
+Local variable 'is' is redundant
+CRUDHumansWall
+Local variable 'lastWallEntryInList' is redundant
+CRUDWall
+Local variable 'lastWallEntryInList' is redundant
+Entities
+Local variable 'intValue' is redundant
+EntityManagerInjector
+Local variable 'proceed' is redundant
+RHumansPrivateLocation
+Local variable 'hpl' is redundant
+Declaration redundancy
+Actual method parameter is the same constant
+AbstractEjbApplicationException
+Actual value of parameter ''message'' is always ''ai.baby.util.exception.DBFetchDataException.MSG''
+AbstractListener
+Actual value of parameter ''tagNameInAllCaps'' is always ''ai.baby.util.MarkupTag.A''
+AbstractWidgetListener
+Actual value of parameter ''element'' is always ''ai.baby.logic.Listeners.widgets.AdaptableSignup.AdaptableSignupIds.AdaptableSignupEmail''
+Actual value of parameter ''clearClasses'' is always ''false''
+Actual value of parameter ''tagNameInAllCaps'' is always ''ai.baby.util.MarkupTag.IMG''
+Actual value of parameter ''elementToUseForUserNotifications'' is always ''ai.baby.logic.Listeners.widgets.AdaptableSignup.AdaptableSignupIds.AdaptableSignupNoti''
+BCrypt
+Actual value of parameter ''maxolen'' is always ''ai.baby.util.blowfish.jbcrypt.BCrypt.BCRYPT_SALT_LEN''
+CDNProfilePhoto
+Actual value of parameter ''newWidth'' is always ''300''
+Client
+Actual value of parameter ''endpointEndValue'' is always ''""''
+ClientFactory
+Actual value of parameter ''jsonEndpoint'' is always ''"https://api.foursquare.com/v2/venues/explore"''
+DB
+Actual value of parameter ''nonInjected'' is always ''true''
+Actual value of parameter ''nonInjected'' is always ''false''
+Entities
+Actual value of parameter ''entities'' is always ''ai.baby.util.apache.Entities.HTML40''
+HBaseCrudService
+Actual value of parameter ''batchAmount'' is always ''1''
+HTMLDocParser
+Actual value of parameter ''key__'' is always ''"content"''
+HTTPRequestPoster
+Actual value of parameter ''requestParameters'' is always ''""''
+HumanUser
+Actual value of parameter ''nonInjected'' is always ''true''
+HumanUserLocal
+Actual value of parameter ''key'' is always ''ai.baby.logic.role.HumanUserLocal.STORE_KEY.USER_LOCATION_PRIVATE_PHOTOS''
+JNDILookupFactory
+Actual value of parameter ''lookupValue'' is always ''ai.baby.logic.modules.ModulesLocal.NAME''
+JSCodeToSend
+Actual value of parameter ''timeout'' is always ''10000''
+Actual value of parameter ''timeout'' is always ''0''
+Loggers
+Actual value of parameter ''level'' is always ''ai.baby.util.Loggers.LEVEL.FAILED_LOGINS''
+LogNull
+Actual value of parameter ''causeOfNpe'' is always ''ai.baby.util.AbstractWidgetListener.NPE_1''
+Pair
+Actual value of parameter ''key'' is always ''"Susan Boyle"''
+Actual value of parameter ''value'' is always ''1''
+Actual value of parameter ''key'' is always ''"Susan Boyle"''
+Actual value of parameter ''value'' is always ''1''
+Actual value of parameter ''key'' is always ''"Susan Boyle"''
+Actual value of parameter ''value'' is always ''1''
+Parameter
+Actual value of parameter ''key'' is always ''ai.baby.servlets.Unsubscribe.TYPE''
+Actual value of parameter ''isFirst'' is always ''true''
+RPrivateEventLocal
+Actual value of parameter ''eager'' is always ''false''
+RPrivateLocationLocal
+Actual value of parameter ''eager'' is always ''true''
+SimpleString
+Actual value of parameter ''name'' is always ''""''
+SmartLogger
+Actual value of parameter ''errorDescription'' is always ''"Error in setting character-set"''
+ThreadSleep
+Actual value of parameter ''durationToSleepMillis'' is always ''2000''
+UserProperty
+Actual value of parameter ''makeAbsolute'' is always ''true''
+Declaration access can be weaker
+AbstractEjbApplicationException
+Can be package local
+Can be package local
+Can be package local
+AbstractEjbApplicationRuntimeException
+Can be package local
+Can be package local
+Can be package local
+AbstractHCMapStore
+Can be package local
+AbstractListener
+Can be private
+Can be private
+Can be private
+Can be private
+Can be package local
+Can be package local
+AbstractSBCallbacks
+Can be private
+Can be package local
+AbstractSFBCallbacks
+Can be private
+AbstractSkeletonListener
+Can be private
+Can be package local
+Can be package local
+Can be package local
+Can be package local
+AbstractWidgetListener
+Can be protected
+Can be protected
+Can be protected
+Can be protected
+Can be private
+Can be private
+Can be private
+Can be protected
+Can be protected
+Can be protected
+Can be protected
+Can be protected
+Can be package local
+Can be package local
+Can be protected
+Can be protected
+Can be protected
+Can be package local
+Can be package local
+AIEventListener
+Can be package local
+AlbumManager
+Can be private
+Can be private
+BoundingBox
+Can be private
+CDN
+Can be package local
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be package local
+Can be private
+Can be private
+Can be package local
+Can be package local
+Can be package local
+Can be package local
+Can be package local
+CDNProfilePhoto
+Can be private
+Can be private
+Can be private
+Can be private
+Cell
+Can be private
+Can be private
+CHuman
+Can be private
+ConstructorInvokationException
+Can be package local
+Controller
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+CPrivatePhoto
+Can be private
+CPublicPhoto
+Can be private
+Can be private
+CRUDAlbum
+Can be private
+CRUDHumansWall
+Can be private
+CrudService
+Can be private
+CRUDWall
+Can be private
+DB
+Can be private
+Can be private
+Can be private
+DBHazelcastRuntimeException
+Can be package local
+DBLocal
+Can be package local
+DBOffline
+Can be private
+DBRemote
+Can be package local
+DHuman
+Can be private
+DPrivatePhoto
+Can be private
+DPublicPhoto
+Can be private
+ElasticArray
+Can be private
+ElementComposer
+Can be private
+Email
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Entities
+Can be private
+Can be private
+Can be private
+Can be private
+Can be package local
+Can be package local
+Can be private
+Can be private
+Can be package local
+Can be package local
+Can be package local
+Can be package local
+Can be package local
+Can be private
+Can be package local
+Can be package local
+Can be package local
+Can be package local
+EntityManagerInjector
+Can be private
+FacebookUserFilter
+Can be package local
+Can be private
+FilterHeader
+Can be private
+Can be private
+Can be private
+FilterRecaptcha
+Can be package local
+ForgotPasswordCode
+Can be package local
+GenericFileGrabber
+Can be private
+Can be package local
+Get
+Can be package local
+HBaseCrudService
+Can be private
+HTMLDocParser
+Can be private
+HTTPRequestPoster
+Can be private
+HumanCRUDHuman
+Can be private
+HumanCRUDWall
+Can be private
+Can be private
+HumanIdEq
+Can be package local
+Can be private
+HumanUser
+Can be private
+Can be private
+Can be private
+ImportedContact
+Can be private
+Can be private
+Info
+Can be package local
+InviteCriteria
+Can be package local
+JSCodeToSend
+Can be private
+Can be private
+Can be private
+Loggers
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+MarkupTag
+Can be private
+MemberChoice
+Can be package local
+Memc
+Can be private
+MemorySafe
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+MemoryWarningSystem
+Can be private
+MethodTimer
+Can be private
+Modules
+Can be private
+Can be private
+n
+Can be package local
+Can be private
+Can be private
+Obj
+Can be protected
+Pair
+Can be private
+Can be private
+Can be package local
+Can be package local
+Can be package local
+ProfileUrl
+Can be package local
+Put
+Can be package local
+Can be private
+QueryParameter
+Can be package local
+RBGet
+Can be private
+RHuman
+Can be private
+RHumansAuthentication
+Can be private
+RHumansIdentity
+Can be private
+Can be private
+RHumansNetPeople
+Can be private
+RHumansPrivateEvent
+Can be private
+RHumansPrivateLocation
+Can be private
+RLocation
+Can be private
+Can be private
+RLocationLocal
+Can be package local
+RPrivatePhoto
+Can be private
+RPublicPhoto
+Can be private
+Can be private
+RuntimeExceptionWrapper
+Can be private
+Can be private
+SendMail
+Can be private
+Can be private
+Can be private
+Can be private
+ServletSignup
+Can be private
+Can be package local
+SimpleName
+Can be package local
+SmartCache2
+Can be package local
+Can be private
+SmartCache3
+Can be package local
+Can be private
+SmartCache4
+Can be package local
+Can be private
+SmartLogger
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be private
+Can be package local
+StringBuilderHelper
+Can be private
+Can be private
+Can be package local
+Can be package local
+Can be package local
+Can be package local
+StringEscapeUtils
+Can be protected
+Can be protected
+Can be protected
+Can be private
+Can be private
+Can be protected
+Can be private
+Can be private
+Can be protected
+SubdomainForward
+Can be package local
+Can be private
+Can be private
+SubscriberNotifications
+Can be private
+Can be private
+UHuman
+Can be private
+UHumansAuthentication
+Can be private
+UHumansNet
+Can be private
+UHumansNetPeople
+Can be private
+UpdateCopy
+Can be package local
+Can be private
+UPrivatePhoto
+Can be private
+UPublicPhoto
+Can be private
+UserProperty
+Can be private
+WallEntry
+Can be package local
+WallSeparatorsCheck
+Can be private
+Can be private
+XSSSafeString
+Can be package local
+Declaration can have final modifier
+Controller
+Declaration can have final modifier
+DBOffline
+Declaration can have final modifier
+Declaration can have final modifier
+Email
+Declaration can have final modifier
+Declaration can have final modifier
+Entities
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+FilterHeader
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+GenericFileGrabber
+Declaration can have final modifier
+HumanUser
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+MemberChoice
+Declaration can have final modifier
+Declaration can have final modifier
+Declaration can have final modifier
+Parameter
+Declaration can have final modifier
+ReturnParams
+Declaration can have final modifier
+ServletSignup
+Declaration can have final modifier
+SmartCache
+Declaration can have final modifier
+SmartCache2
+Declaration can have final modifier
+SmartCache2String
+Declaration can have final modifier
+SmartCache3
+Declaration can have final modifier
+Empty method
+AbstractListener
+All implementations of this method are empty
+Client
+The method is empty
+Loggers
+The method is empty
+Obj
+Method only calls its super
+UserProperty
+Empty method overrides empty method
+VTribeName
+Method only calls its super
+VTribeStory
+Method only calls its super
+Method returns the same value
+AbstractFoursquareAPIClientModule
+All implementations of this method always return '""'
+DPrivatePhotoLocal
+All implementations of this method always return 'true'
+DPublicPhotoLocal
+All implementations of this method always return 'true'
+HBaseCrudService
+Method always returns 'null'
+Method always returns 'null'
+Method always returns 'null'
+Method always returns 'null'
+HumanCRUDHumanLocal
+All implementations of this method always return 'true'
+IntegrityTesterLocal
+All implementations of this method always return 'true'
+LogNull
+Method always returns 'null'
+UHumanLocal
+All implementations of this method always return 'true'
+UHumansAuthenticationLocal
+All implementations of this method always return 'true'
+UHumansNetPeopleLocal
+All implementations of this method always return 'true'
+All implementations of this method always return 'true'
+UPublicPhotoLocal
+All implementations of this method always return 'true'
+All implementations of this method always return 'true'
+All implementations of this method always return 'true'
+Redundant throws clause
+CPrivateLocationLocal
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+CRUDAlbumLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+CRUDHumansWallLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+CRUDWallLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+DPrivateLocationLocal
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+EntityManagerInjector
+The declared exception 'Exception' is never thrown
+GenericFileGrabber
+The declared exception 'ServletException' is never thrown
+Get
+The declared exception 'IOException' is never thrown
+JSCodeToSend
+The declared exception 'IllegalAccessException' is never thrown
+LogoutNRedirect
+The declared exception 'ServletException' is never thrown
+ProfileRedirect
+The declared exception 'ServletException' is never thrown
+RHumansIdentityLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+RHumansPrivateEventLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+RHumansPrivateLocationLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+RPrivateEventLocal
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+RPrivateLocationLocal
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+RPrivatePhotoLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+SubscriberNotifications
+The declared exception 'JSONException' is never thrown
+The declared exception 'SQLException' is never thrown
+UHumansIdentityLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+UHumansNetPeopleLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+UPrivateLocationLocal
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+The declared exception 'DBFetchDataException' is never thrown in method implementations
+UPrivatePhotoLocal
+The declared exception 'DBDishonourCheckedException' is never thrown in method implementations
+Unused declaration
+Entry Points
+AbstractFoursquareAPIClientModule
+appKey
+AbstractJNDILookupModule
+initialContextFactoryNameProvider
+AbstractSampleAPIClientModule
+appKey
+AbstractSBCallbacks
+postConstruct
+preDestroy
+AbstractSFBCallbacks
+prePassivate
+postActivate
+AdaptableSignup
+AdaptableSignupIds
+AdaptableSignupIds
+AlbumManager
+AlbumManagerIds
+AlbumManagerIds
+CDNProfilePhoto
+postConstruct
+CHuman
+crudServiceLocal_
+Client
+main
+Controller
+Controller
+Page
+Page
+Page
+CPrivateEvent
+privateLocationCrudServiceLocal_
+privateEventCrudServiceLocal_
+humansPrivateLocationCrudServiceLocal_
+humanCrudServiceLocal_
+humansPrivateEventCrudServiceLocal_
+rPrivateLocationLocal_
+CPrivateLocation
+privateLocationCrudServiceLocal_
+humansPrivateLocationCrudServiceLocal_
+humanCrudServiceLocal_
+CPrivatePhoto
+privatePhotoCrudServiceLocal_
+humansPrivatePhotoCrudServiceLocal_
+CPublicPhoto
+crudServiceHuman_
+crudServiceLocation_
+CrudServicePublicPhoto_
+CRUDAlbum
+albumCrudServiceLocal_
+cPrivatePhotoLocal_
+rPrivateEventLocal_
+crudTribeLocal_
+rHumanLocal_
+CRUDHumansUnseen
+humansUnseenCrudServiceLocal_
+wallCrudServiceLocal_
+CRUDHumansWall
+humansWallCrudServiceLocal_
+wallCrudServiceLocal_
+crudServiceMsg_
+CRUDTribe
+tribeCrudServiceLocal_
+humansTribeCrudServiceLocal__
+CRUDWall
+crudServiceLocal_
+msgCrudServiceLocal_
+DBOffline
+notify
+Debug
+Debug
+DHuman
+crudServiceLocal_
+DPrivateEvent
+privateEventCrudServiceLocal_
+humansPrivateEventCrudServiceLocal
+DPrivateLocation
+privateLocationCrudServiceLocal_
+humansPrivateLocationCrudServiceLocal
+DPrivatePhoto
+privatePhotoCrudServiceLocal_
+DPublicPhoto
+crudServiceHuman_
+crudServiceLocation_
+CrudServicePublicPhoto_
+Email
+main
+ERRORCODE
+ERRORCODE
+EventType
+EventType
+FilterCharset
+FilterCharset
+FilterHeader
+FilterHeader
+FoursquareAPIClient
+FoursquareAPIClient
+GenericFileGrabber
+GenericFileGrabber
+GreatWallOfExceptions
+GreatWallOfExceptions
+Helios
+subscriberNotificationsRemote
+postConstruct
+HTTPRequestPoster
+main
+HumanCRUDHuman
+rHumanLocal_
+cHumanLocal_
+dHumanLocal_
+uHumanLocal
+uHumansIdentityLocal_
+uHumansNetPeopleLocal_
+rHumansNetPeopleLocal_
+rHumansIdentityLocal_
+singletonHashingRemote
+rHumansAuthenticationLocal_
+uHumansAuthenticationLocal
+rHumansPrivateLocation_
+rHumansPrivateEvent_
+uHumansNetLocal
+HumanCRUDTribe
+crudTribeLocal_
+crudWallLocal_
+crudAlbumLocal_
+HumanCRUDWall
+crudHumansWallLocal_
+crudWallLocal_
+HumanUser
+postConstruct
+prePassivate
+postActivate
+preDestroy
+HumanUserLocal
+CACHE_KEY
+CACHE_KEY
+STORE_KEY
+STORE_KEY
+IntegrityTester
+memcLocal_
+humanCRUDHumanLocal_
+postConstruct
+JNDILookupImpl
+JNDILookupImpl
+Loggers
+LEVEL
+LEVEL
+LogoutNRedirect
+LogoutNRedirect
+MarkupTag
+MarkupTag
+Memc
+sendMailLocal
+MethodParams
+profile
+MethodTimer
+profile
+Modules
+postConstruct
+preDestroy
+NoXSSAttack
+message
+Pair
+main
+ParamValidator
+validate
+ProfileRedirect
+ProfileRedirect
+RHuman
+crudServiceLocal_
+RHumansAuthentication
+humansAuthenticationCrudServiceLocal_
+RHumansIdentity
+humansIdentityCrudServiceLocal_
+urlCrudServiceLocal
+RHumansNetPeople
+crudServiceLocal_
+RHumansPrivateEvent
+humansPrivateEventCrudServiceLocal_
+RHumansPrivateLocation
+humansPrivateLocationCrudServiceLocal_
+RLocation
+crudServiceLocation_
+RPrivateEvent
+privateEventCrudServiceLocal_
+humansPrivateEventCrudServiceLocal_
+humanCrudServiceLocal_
+rPrivateLocationLocal_
+RPrivateLocation
+privateLocationCrudServiceLocal_
+humansPrivateLocationCrudServiceLocal_
+humanCrudServiceLocal_
+RPrivatePhoto
+privatePhotoCrudServiceLocal_
+albumCrudServiceLocal_
+humansPrivatePhotoCrudServiceLocal_
+RPublicPhoto
+crudServiceHuman_
+crudServiceLocation_
+crudServicPublicPhoto_
+humansPublicPhotoCrudServiceLocal_
+RuntimeExceptionWrapper
+wrap
+SampleAPIClient
+SampleAPIClient
+SendMail
+postConstruct
+preDestroy
+ServletSignup
+ServletSignup
+SignInOn
+SignInOnIds
+SignInOnIds
+SignInOnCriteria
+SignInOnDisplayComponent
+SignInOnDisplayComponent
+SingletonHashing
+blowFishLocal
+StartupILikePlaces
+postContruct
+Status404
+Status404
+Status500
+Status500
+StatusEtc
+StatusEtc
+StringBuilderHelper
+main
+Subscribe
+SubscribeIds
+SubscribeIds
+SubscriberNotifications
+sendMailLocal
+UHuman
+crudServiceLocal_
+UHumansAuthentication
+humansAuthenticationCrudServiceLocal_
+singletonHashingRemote_
+UHumansIdentity
+rHumansIdentityLocal_
+urlCrudServiceLocal_
+UHumansNet
+humansNetCrudServiceLocal_
+UHumansNetPeople
+rHumansNetPeopleLocal_
+crudServiceLocal_
+ULocation
+rLocationLocal_
+Unsubscribe
+Unsubscribe
+Type
+Type
+UpperCase
+message
+UPrivateEvent
+privateEventCrudServiceLocal_
+rPrivateEventLocal_
+humansPrivateEventCrudServiceLocal_
+humanCrudServiceLocal_
+uHumansNetPeopleLocal
+UPrivateLocation
+privateLocationCrudServiceLocal_
+humansPrivateLocationCrudServiceLocal_
+humanCrudServiceLocal_
+uHumansNetPeopleLocal
+UPrivatePhoto
+privatePhotoCrudServiceLocal_
+albumCrudServiceLocal_
+UPublicPhoto
+crudServiceHuman_
+crudServiceLocation_
+crudServicePublicPhoto_
+UserProperty
+UserPropertyWidgetIds
+UserPropertyWidgetIds
+VOValidator
+AroundInvoke
+WallSeparators
+message
+AbstractEjbApplicationException
+AbstractEjbApplicationException
+AbstractEjbApplicationRuntimeException
+AbstractEjbApplicationRuntimeException
+AbstractFoursquareAPIClientModule
+AbstractFoursquareAPIClientModule
+AbstractHCMapStore
+AbstractHCMapStore
+AbstractJNDILookupModule
+AbstractJNDILookupModule
+AbstractListener
+Click
+sl
+INITIALIZING_LISTENER
+registerFragmentHead
+registerFragmentBody
+$A
+$i18nize
+$i18nize
+$i18nize
+$i18nize
+geHumanIdAsValid
+getHumanUserAsValid
+AbstractSampleAPIClientModule
+AbstractSampleAPIClientModule
+AbstractSFBCallbacks
+remove
+AbstractSkeletonListener
+GUI
+TALK
+AbstractSLBCallbacks
+MsgRemove
+AbstractWidgetListener
+DISPLAY_BLOCK_WITH_SPACE
+DISPLAY_NONE_WITH_SPACE
+SORRY_I_FIND_THAT_ELEMENT
+CONTAINS_NULL_OR_NO_REFERENCE_IN_REGISTRY
+SORRY_COULD_NOT_FETCH_THE_ELEMENT_NAMED
+FROM_FILE
+THIS_COULD_HAPPEN_IF_THE_WRONG_PAGE_IS_REGISTERED_IN_THE_WIDGET_CONSTRUCTOR_WHEN_CALLING_SUPER
+DISPLAY_NONE
+fetchToEmail
+registerForEvent
+fetchToEmail
+$$
+toggleVisible
+$$displayBlock
+$$setStyle
+$$
+$$remove
+clear
+$$setText
+$$sendJSStmt
+logger
+$$asyn
+$$printDocumentElementIds
+$$
+$$getId
+AdaptableSignup
+READ_MORE
+AdaptableSignup
+AdaptableSignupCallback
+AdaptableSignupCriteria
+AdaptableSignupCriteria
+InviteData
+InviteData
+AlbumManager
+BUTTONTEXT_EMAIL_FORWARDED
+BUTTONTEXT_CLICK_TO_CONFIRM
+SLASH
+NO_PHOTOS_IN_ALBUM
+REFRESH_SPEC_INIT
+REFRESH_SPEC_REGISTER
+wallProspects
+logger
+registerEventListeners
+anonymous (org.w3c.dom.events.EventListener)
+myhumanId
+myprivateEventId
+BlowFish
+BlowFish
+BoundingBox
+BoundingBox
+CDN
+resizeImage
+scaleImage
+saveImage
+CDNProfilePhoto
+POSTERIZING
+SAVING_POSTERIZED_IMAGE
+resizeImage
+processImageForThePage
+Cell
+Cell
+timestamp
+column
+$
+CHuman
+logger
+Client
+getJsonEndpoint
+get
+ConstructorInvokationException
+ConstructorInvokationException
+ConstructorInvokationException
+ConstructorInvokationException
+Controller
+subscribe
+Page
+Global
+GenericButtonWidth
+pd
+close
+body
+PrivateLocationCreateCNotice
+isSignOut
+CPrivateEvent
+CPrivateEvent
+CPrivateLocation
+CPrivateLocation
+CPrivatePhoto
+logger
+CPrivatePhotoLocal
+doCPrivatePhotoLocal
+doCPrivatePhotoLocal
+CPublicPhotoLocal
+doNTxCPublicPhotoLocal
+CRUDAlbum
+logger
+CRUDAlbumLocal
+doUAlbumOfPrivateEventAddEntry
+doRAlbumByPrivateEvent
+doRAlbumByPrivateEvent
+doRAlbumByTribe
+CRUDHumansUnseen
+CRUDHumansUnseen
+CRUDHumansWall
+logger
+CRUDHumansWallLocal
+doDirtyRHumansWall
+doRHumansWall
+doUpdateMetadata
+CrudService
+CrudService
+entityManager
+CRUDTribe
+CRUDTribe
+CRUDWall
+logger
+CRUDWallLocal
+doNTxCWall
+doDirtyRWall
+doNTxDWall
+DB
+getHumanCrudWallLocal
+getHumanUserLocal
+DBDishonourCheckedException
+QUERYING_AFFIRMATIVELY_A_NON_EXISTING_ENTITY
+DBException
+DBException
+DBException
+DBException
+DBFetchDataException
+DBFetchDataException
+DBHazelcastRuntimeException
+DBHazelcastRuntimeException
+DBHazelcastRuntimeException
+DBOperationException
+DBOperationException
+DBRemote
+NAME
+DelegatedObservable
+DelegatedObservableHelper
+DHuman
+logger
+DisplayNameString
+DisplayNameString
+DisplayNameString
+DPrivateEvent
+DPrivateEvent
+DPrivateLocation
+DPrivateLocation
+DPrivatePhoto
+logger
+DPrivatePhotoLocal
+doNTxDPrivatePhoto
+DPublicPhoto
+logger
+DPublicPhotoLocal
+doNTxDPublicPhotoLocal
+ElasticArray
+ElasticArray
+ElementComposer
+wrapIntoThis
+appendChild
+$ElementSetHref
+$ElementSetTitle
+$ElementSetAlt
+$ElementSetClasses
+$ElementSetAttribute
+generateSimpleLinkTo
+Email
+INVALID_HEADER
+NOT_ESMTP
+doLookup
+emails
+Entities
+MapIntMap
+MapIntMap
+HashEntityMap
+HashEntityMap
+TreeEntityMap
+TreeEntityMap
+ArrayEntityMap
+ArrayEntityMap
+ArrayEntityMap
+BinaryEntityMap
+BinaryEntityMap
+BinaryEntityMap
+EntityManagerInjector
+THREAD_SAFE_ENTITY_MANAGER
+anonymous (java.lang.ThreadLocal)
+setEntityManager
+getEntityManager
+removeEntityManager
+injectEntityManager
+EventType
+BLUR
+UNLOAD
+ONMOUSEOVER
+ExceptionCache
+STATIC_USAGE_ONLY_EXCEPTION
+NO_EQUALS_METHOD_EXCEPTION
+FILE_RENAME_FAILED
+ILLEGAL_ACCESS_ERROR
+FacebookUserFilter
+FacebookUserFilter
+FilterHeader
+filterConfig
+FilterRecaptcha
+FilterRecaptcha
+ForgotPasswordCode
+ForgotPasswordCode
+ForgotPasswordCode
+FoursquareClientModule
+FoursquareClientModule
+GeneralCRUDWall
+addEntryToWall
+muteWall
+unmuteWall
+readWall
+GenericFileGrabber
+errorSomethingWentWrong
+errorFileType
+errorMissingParameters
+GeoCoord
+GeoCoord
+getGeoCoordsByBounds
+Get
+readData
+HBaseCrudService
+find
+scan
+findBadly
+update
+Scanner
+Scanner
+Helios
+Helios
+HTMLDocParser
+print
+HTTPRequestPoster
+postData
+HumanCRUDHuman
+AI_ILIKEPLACES_LOGIC_CRUD_HUMAN_CRUDHUMAN_0001
+READ_HUMANS_AUTHENTICATIONS_FAILED
+CHECK_FRIEND_FAILED
+UPDATE_DISPLAY_NAME_FAILED
+PASSWORD_UPDATE_FAILED
+logger
+HumanCRUDHumanLocal
+doDirtyRHuman
+doDirtyRHumansNetPeople
+doDirtyRHumansPrivateLocation
+doDirtyRHumansPrivateEvent
+doNTxRemoveHumansNetPeople
+doNTxIsHumansNetPeople
+doNTxUDisplayName
+doUActivateHuman
+doDHuman
+doUHumanPassword
+doUHumanPassword
+doUHumansPublicURL
+doDirtyRHumansPublicURL
+doDirtyProfileFromURL
+doDirtyRHumansBefriends
+HumanCRUDTribe
+HumanCRUDTribe
+REFRESH_SPEC
+READ_ALBUM_SUCCESSFUL
+READ_ALBUM_FAILED
+HumanCRUDTribeLocal
+createTribe
+addToTribe
+getTribe
+getTribe
+removeFromTribe
+getHumansTribes
+rTribeReadAlbum
+uTribeAddEntryToAlbum
+readWallLastEntries
+HumanCRUDWall
+HumanCRUDWall
+READ_WALL_FAILED
+UPDATE_WALL_FAILED
+HumanIdEq
+HumanIdEq
+HumanUserLocal
+CACHE_KEY
+BE_FRIENDS
+STORE_KEY
+AUTOPLAY_STATE
+USER_LOCATION_TYPE
+USER_LOCATION_DETAILS
+getHumanId
+cache
+cacheAndUpdateWith
+ImportedContact
+ImportedContact
+Info
+Info
+Info
+IntegrityTester
+IntegrityTester
+InterWidgetMetadata
+InviteCriteria
+InviteCriteria
+JBCryptWrapperFace
+JNDILookupModule
+JNDILookupModule
+JSCodeToSend
+FnEventMonitor
+FnLocationId
+FnLocationName
+FnSetTitle
+RefreshPage
+ClosePage
+ClosePageOrRefresh
+UpdateDocument
+STRING
+jqueryHide
+refreshPageWith
+updateHashWith
+resetHashWith
+ListenerAarrr
+LocationId
+Loggers
+CODE_HC
+CODE_CONF
+UNSUPPORTED_OPERATION_EXCEPTION
+error
+exception
+constructed
+configured
+invoked
+warn
+ifNullToString
+userError
+finalized
+LogNull
+log
+logThrow
+ManageObservers
+addObserver
+deleteObserver
+MarkupTag
+BODY
+P
+UL
+LI
+SPAN
+BR
+logger
+MarkupTagFace
+id
+style
+value
+type
+typeValueText
+typeValueSelect
+typeValueHidden
+href
+alt
+title
+src
+tag
+ul
+ol
+classs
+namee
+content
+onclick
+MemberChoice
+MemberChoice
+Memc
+Memc
+timerService
+MemorySafe
+setMemlock_02
+getMemlock_01
+getMemlock_02
+getMemlock_03
+getMemlock_04
+getMemlock_05
+getMemlock_06
+getMemlock_07
+getMemlock_08
+getMemlock_09
+getMemlock_10
+MemoryWarningSystem
+MemoryWarningSystem
+anonymous (javax.management.NotificationListener)
+handleNotification
+anonymous (java.lang.Runnable)
+timeout
+MethodTimer
+logger
+Modules
+Modules
+n
+n
+NoPrivilegesException
+NoPrivilegesException
+NotFriendsException
+NotFriendsException
+NoXSSAttack
+XSS_ATTACK_DETECTED
+PageFace
+getURL
+Pair
+getKey
+getValue
+toTuple
+Parameter
+get
+toURL
+PendingEqualsMethodException
+SINGLETON
+ProfileRedirect
+SLASH
+ProfileUrl
+ProfileUrl
+ProfileUrl
+Put
+writeData
+QueryParameter
+QueryParameter
+RBGet
+l33t
+url_CDN_STATIC
+verify
+gui
+RefString
+RefString
+ReturnParams
+ReturnParams
+RHuman
+logger
+RHumanLocal
+doRHuman
+doNTxRHuman
+RHumansAuthentication
+logger
+RHumansIdentityLocal
+test
+RHumansNetPeople
+logger
+RHumansPrivateEvent
+logger
+RHumansPrivateLocation
+logger
+RLocationLocal
+NAME
+doNTxRLocation
+doRLocation
+doDirtyRLocation
+doDirtyRLocation
+doDirtyRLikeLocationNames
+doDirtyRLikeLocations
+doNTxRLocationsBySuperLocation
+Row
+Row
+key
+Cell
+RowResponse
+RowResponse
+Row
+RPrivateEvent
+RPrivateEvent
+RPrivateLocation
+RPrivateLocation
+RPrivatePhoto
+logger
+RPrivatePhotoLocal
+doDirtyRAllPrivatePhotos
+doRPrivatePhoto
+RPublicPhotoLocal
+doRPublicPhotoLocal
+doRAllPublicPhotos
+SampleJNDILookupModule
+SampleJNDILookupModule
+Save
+SendMailLocal
+sendWithAttachmentAsSimpleText
+sendAsSimpleTextAsynchronously
+sendWithAttachmentAsSimpleTextAsynchronously
+sendWithAttachmentAsSimpleTextAsynchronously
+sendWithAttachmentAsSimpleText
+sendWithAttachmentAsHTML
+ServletSignup
+ConfirmPassword
+Email
+Gender
+DateOfBirth
+ConfirmPasswordError
+EmailError
+GenderError
+DateOfBirthError
+ConfirmPasswordErrorMsg
+EmailErrorMsg
+GenderErrorMsg
+DateOfBirthErrorMsg
+SessionBoundBadRefWrapper
+logger
+SignInOnCriteria
+SignInOnDisplayComponent
+MOMENTS
+SNAPS
+SimpleName
+SimpleName
+SimpleName
+SimpleString
+SimpleString
+SingletonHashing
+SingletonHashing
+SmartCache
+SmartCache
+SmartCache
+RecoverWith
+SmartCache2
+SmartCache2
+SmartCache2
+RecoverWith
+SmartCache2String
+SmartCache2String
+get
+invalidate
+SmartCache3
+ATTEMPT_TO_RECOVER_VALUE_FOR_KEY_FAILED_THE_KEY_IN_CONCERN
+SmartCache3
+SmartCache3
+RecoverWith
+SmartCache4
+ATTEMPT_TO_RECOVER_VALUE_FOR_KEY_FAILED_THE_KEY_IN_CONCERN
+SmartCache4
+SmartCache4
+RecoverWith
+SmartLogger
+LOGGER_HAS_ALREADY_BEEN_COMPLETED_UNDER_TIMEOUT_LOGGING
+l
+complete
+complete
+isTimed
+hasTimedOut
+StartupILikePlaces
+StartupILikePlaces
+StringBuilderHelper
+StringBuilderHelper
+StringBuilderHelper
+StringBuilderHelper
+append
+append
+append
+append
+append
+append
+append
+append
+append
+append
+append
+append
+appendCodePoint
+delete
+deleteCharAt
+replace
+insert
+insert
+insert
+insert
+insert
+insert
+insert
+insert
+insert
+insert
+insert
+insert
+indexOf
+indexOf
+lastIndexOf
+lastIndexOf
+reverse
+appendln
+StringEscapeUtils
+StringEscapeUtils
+escapeJava
+escapeJavaScript
+unescapeJavaScript
+unescapeJavaScript
+unescapeHtml
+escapeXml
+unescapeXml
+unescapeXml
+StringEscapeUtilsFixed
+checkescapeJava
+SubdomainForward
+SubdomainForward
+EMPTY
+Subscribe
+woehint
+placeName
+placeDetails
+SubscribeCriteria
+SubscribeCriteria
+SubscriberNotifications
+SubscriberNotifications
+SUBSCRIBER_EMAIL_EVENT
+NAME
+LATITUDE
+LONGITUDE
+timerService
+dataSource
+UHuman
+logger
+UHumansAuthentication
+logger
+UHumansIdentity
+DB_DISHONOUR_CHECKED_EXCEPTION
+UHumansIdentity
+UHumansNet
+logger
+UHumansNetPeople
+logger
+ULocation
+ULocation
+UpdateCopy
+UpdateCopy
+UPrivateEvent
+UPrivateEvent
+UPrivateLocation
+UPrivateLocation
+UPrivatePhoto
+logger
+UPrivatePhotoLocal
+doNAAddToAlbum
+UPublicPhoto
+logger
+UPublicPhotoLocal
+doNTxUPublicPhotoDescriptionLocal
+doUPublicPhotoDescriptionLocal
+doDirtyUPublicPhotoDescriptionLocal
+UserProperty
+YIKES__SOMETHING__WENT__WRONG
+UserProperty
+UserProperty
+UserProperty
+UserProperty
+getUserPropertyHtmlFor
+getUserPropertyHtmlFor
+ValidatorFace
+impl
+VDouble
+VDouble
+VDouble
+VLong
+VLong
+VLong
+VOValidator
+VOValidator
+VTribeName
+VTribeName
+VTribeStory
+VTribeStory
+WallEntry
+WallEntry
+WallEntry
+XSSSafeString
+XSSSafeString
+Unused label
+AbstractSkeletonListener
+Unused label 'setLoginWidget'
+Unused label 'setTitle'
+Unused label 'setProfileDataLink'
+Unused label 'sideBarFriends'
+Unused label 'signinupActionNotice'
+Unused label 'SetNotifications'
+Unused label 'layoutNeededForAllPages'
+Unused label 'setMainTitle'
+Unused label 'setMetaDescription'
+AlbumManager
+Unused label 'UCHideAlbumForwardIfNoPhotos'
+Unused label 'setAlbumPhotos'
+Unused label 'setAlbumOwnerMode'
+Controller
+Unused label 'setDefaultLocale'
+Unused label 'registerDocumentTemplates'
+Unused label 'registerDocumentFragmentTemplatesAKAWidgets'
+CPrivateEvent
+Unused label 'wireLocation'
+Unused label 'wireOwnership'
+Unused label 'wireViewership'
+Unused label 'wireInvitedship'
+CRUDAlbum
+Unused label 'WiringBothSides'
+Unused label 'WiringBothSides'
+CRUDHumansWall
+Unused label 'RecoveringFromAbsentMetadata'
+Unused label 'RecoveringFromAbsentMetadata'
+Unused label 'LetsWarnAnபInconsistencies'
+CRUDTribe
+Unused label 'WiringBothSidesOfTheRelationship'
+Unused label 'WiringBothSidesOfTheRelationship'
+Unused label 'WiringBothSidesOfTheRelationship'
+CRUDWall
+Unused label 'LetsWarnAnபInconsistencies'
+DPrivateEvent
+Unused label 'checkIfOwner'
+DPrivateLocation
+Unused label 'checkIfOwner'
+GenericFileGrabber
+Unused label 'breakIfNoLogin'
+HumanCRUDHuman
+Unused label 'setHumansIdentityInfo'
+Unused label 'tricky'
+HumanCRUDTribe
+Unused label 'RecoveringFromAbsentMetadata'
+ListenerTribes
+Unused label 'setLoginWidget'
+Unused label 'setTitle'
+Unused label 'setProfileDataLink'
+Unused label 'sideBarFriends'
+Unused label 'signinupActionNotice'
+Unused label 'SetNotifications'
+Unused label 'layoutNeededForAllPages'
+Unused label 'FirstWeGetThisPersonsTribes_ThisIsImportant'
+Memc
+Unused label 'sendEmail'
+Unused label 'warningMail'
+Unused label 'statusMail'
+RBGet
+Unused label 'config'
+Unused label 'logMsgs'
+Unused label 'expMsgs'
+Unused label 'globalConfig'
+RPrivateEvent
+Unused label 'securityChecks'
+Unused label 'securityChecks'
+Unused label 'securityChecks'
+Unused label 'securityChecks'
+RPrivateLocation
+Unused label 'securityChecks'
+Unused label 'securityChecks'
+Unused label 'securityChecks'
+SendMail
+Unused label 'sendMail'
+ServletSignup
+Unused label 'SleepForSpam'
+Unused label 'validate_username'
+Unused label 'validate_password'
+Unused label 'validation'
+SignInOn
+Unused label 'UCSetCSSBasedOnURL'
+Unused label 'UCSetGlobalProfileLink'
+Unused label 'UCShowHideWidgets'
+Unused label 'UCAutoplay'
+Unused label 'UCShowHIdeWIdgets'
+Unused label 'UCShowPleaseLoginMessage'
+SmartCache4
+Unused label 'INITIALIZE_HAZELCAST'
+Unused label 'INITIALIZE_HAZELCAST'
+Subscribe
+Unused label 'ShowHideWidgetAreaBasedOnLoggedInState'
+UPrivateEvent
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+UPrivateLocation
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused label 'checkAuthority'
+Unused label 'wiringBothSides'
+Unused method parameters
+AbstractHCMapStore
+Parameter 'key' is not used  in either this method or any of its derived methods
+Parameter 'type' is not used  in either this method or any of its derived methods
+AbstractListener
+Parameter 'itsNatHTMLDocument__' is not used in any implementation
+Parameter 'hTMLDocument__' is not used in any implementation
+Parameter 'itsNatDocument__' is not used in any implementation
+Parameter 'itsNatHTMLDocument_' is not used in any implementation
+Parameter 'hTMLDocument_' is not used in any implementation
+Parameter 'itsNatDocument__' is not used in any implementation
+AbstractWidgetListener
+Parameter 'hTMLDocument_' is not used in any implementation
+CRUDAlbumLocal
+Parameter 'humanId' is not used  in either this method or any of its derived methods
+Parameter 'humanId' is not used  in either this method or any of its derived methods
+Parameter 'refreshSpec' is not used  in either this method or any of its derived methods
+CRUDTribeLocal
+Parameter 'humanId' is not used  in either this method or any of its derived methods
+DB
+Parameter 'nonInjected' is not used  in either this method or any of its derived methods
+Parameter 'nonInjected' is not used  in either this method or any of its derived methods
+Parameter 'nonInjected' is not used  in either this method or any of its derived methods
+Parameter 'nonInjected' is not used  in either this method or any of its derived methods
+Parameter 'nonInjected' is not used  in either this method or any of its derived methods
+EntityManagerInjector
+Parameter 'entityManager' is not used  in either this method or any of its derived methods
+Factory
+Parameter 'initArgs' is not used  in either this method or any of its derived methods
+Parameter 'initArgs' is not used  in either this method or any of its derived methods
+FileUploadListenerFace
+Parameter 'parameterMap' is not used  in either this method or any of its derived methods
+Get
+Parameter 'subscriber' is not used  in either this method or any of its derived methods
+HBaseCrudService
+Parameter 't' is not used  in either this method or any of its derived methods
+Parameter 'id' is not used  in either this method or any of its derived methods
+Parameter 't' is not used  in either this method or any of its derived methods
+Parameter 'typeOfEntity' is not used  in either this method or any of its derived methods
+Parameter 'idByWhichToLookup' is not used  in either this method or any of its derived methods
+Parameter 't' is not used  in either this method or any of its derived methods
+HumanCRUDHumanLocal
+Parameter 'email' is not used  in either this method or any of its derived methods
+HumanCRUDTribeLocal
+Parameter 'humanId' is not used  in either this method or any of its derived methods
+Parameter 'humanId' is not used  in either this method or any of its derived methods
+Parameter 'doRefresh' is not used  in either this method or any of its derived methods
+Parameter 'humanId' is not used  in either this method or any of its derived methods
+Parameter 'refreshSpec__' is not used  in either this method or any of its derived methods
+HumanCRUDWallLocal
+Parameter 'wallOwnerId__' is not used  in either this method or any of its derived methods
+Parameter 'refreshSpec__' is not used  in either this method or any of its derived methods
+Parameter 'wallOwnerId__' is not used  in either this method or any of its derived methods
+HumanUser
+Parameter 'nonInjected' is not used  in either this method or any of its derived methods
+Loggers
+Parameter 'msg' is not used  in either this method or any of its derived methods
+Memc
+Parameter 'timer' is not used  in either this method or any of its derived methods
+MemoryWarningSystem
+Parameter 'usedMemory' is not used  in either this method or any of its derived methods
+Parameter 'maxMemory' is not used  in either this method or any of its derived methods
+RPrivatePhotoLocal
+Parameter 'humanId' is not used  in either this method or any of its derived methods
+SubscriberNotifications
+Parameter 'timer' is not used  in either this method or any of its derived methods
+UPrivateLocationLocal
+Parameter 'humanId__' is not used  in either this method or any of its derived methods
+UserProperty
+Parameter 'receiver' is not used  in either this method or any of its derived methods
+Parameter 'receiver' is not used  in either this method or any of its derived methods
+Unused method return value
+AbstractWidgetListener
+Return value of the method is never used
+Return value of the method is never used
+AdaptableSignupCriteria
+Return value of the method is never used
+CRUDHumansWallLocal
+Return value of the method is never used
+CrudServiceLocal
+Return value of the method is never used
+ElementComposer
+Return value of the method is never used
+Return value of the method is never used
+Return value of the method is never used
+HBaseCrudService
+Return value of the method is never used
+HumanUserLocal
+Return value of the method is never used
+Return value of the method is never used
+LogNull
+Return value of the method is never used
+MemoryWarningSystem
+Return value of the method is never used
+n
+Return value of the method is never used
+SendMailLocal
+Return value of the method is never used
+Return value of the method is never used
+StringBuilderHelper
+Return value of the method is never used
+SubscribeCriteria
+Return value of the method is never used
+Error handling
+Empty 'finally' block
+FacebookUserFilter
+Empty 'finally' block
+'return' inside 'finally' block
+Email
+'return' inside 'finally' block
+General
+Annotator
+src
+Unresolved variable document (at line 44)
+Binary operation argument type undefined is not assignable to type String (at line 45)
+Unresolved variable document (at line 44)
+Binary operation argument type undefined is not assignable to type String (at line 45)
+Unresolved variable or type google (at line 96)
+Unresolved variable maps (at line 96)
+Unresolved type InfoWindow (at line 96)
+Unresolved function or method getMap() (at line 102)
+Unresolved function or method setContent() (at line 103)
+Unresolved function or method setPosition() (at line 111)
+Unresolved variable or type google (at line 119)
+Unresolved variable maps (at line 119)
+Unresolved type Geocoder (at line 119)
+Unresolved variable or type google (at line 128)
+Unresolved variable maps (at line 128)
+Unresolved variable GeocoderStatus (at line 128)
+Unresolved variable OK (at line 128)
+Unresolved variable address_components (at line 130)
+Unresolved variable address_components (at line 131)
+Unresolved variable long_name (at line 131)
+Unresolved function or method geocode() (at line 123)
+Unresolved function or method setMap() (at line 151)
+Unresolved function or method getZoom() (at line 180)
+Unresolved function or method setZoom() (at line 180)
+Method expression is not of Function type (at line 208)
+Invalid number of parameters, expected 0 (at line 208)
+Method expression is not of Function type (at line 215)
+Unresolved variable or type google (at line 224)
+Unresolved variable maps (at line 224)
+Unresolved type LatLng (at line 224)
+Unresolved function or method setCenter() (at line 224)
+Unresolved function or method setZoom() (at line 225)
+Unresolved variable commonName (at line 236)
+Unresolved function or method getZoom() (at line 240)
+Unresolved variable or type google (at line 247)
+Unresolved variable maps (at line 247)
+Unresolved type LatLng (at line 247)
+Unresolved variable commonName (at line 259)
+Unresolved variable commonName (at line 263)
+Unresolved variable or type google (at line 297)
+Unresolved variable maps (at line 297)
+Unresolved type LatLng (at line 297)
+Unresolved variable or type google (at line 298)
+Unresolved variable maps (at line 298)
+Unresolved variable TravelMode (at line 298)
+Unresolved variable DRIVING (at line 298)
+Unresolved variable or type google (at line 301)
+Unresolved variable maps (at line 301)
+Unresolved variable DirectionsStatus (at line 301)
+Unresolved variable OK (at line 301)
+Unresolved function or method setDirections() (at line 302)
+Unresolved function or method route() (at line 295)
+Unresolved variable or type google (at line 315)
+Unresolved variable maps (at line 315)
+Unresolved type DirectionsService (at line 315)
+Unresolved variable or type google (at line 316)
+Unresolved variable maps (at line 316)
+Unresolved type DirectionsRenderer (at line 316)
+Unresolved function or method setMap() (at line 317)
+Unresolved variable commonName (at line 321)
+Method expression is not of Function type (at line 327)
+Unresolved variable commonName (at line 328)
+Unresolved variable commonName (at line 334)
+Unresolved variable commonName (at line 334)
+Method expression is not of Function type (at line 338)
+Unresolved variable or type google (at line 340)
+Unresolved variable maps (at line 340)
+Unresolved type LatLng (at line 340)
+Unresolved function or method setCenter() (at line 340)
+Unresolved function or method getZoom() (at line 341)
+Unresolved function or method getZoom() (at line 342)
+Unresolved function or method setZoom() (at line 342)
+Unresolved function or method getZoom() (at line 344)
+Unresolved function or method setZoom() (at line 344)
+Invalid number of parameters, expected 0 (at line 338)
+Method expression is not of Function type (at line 349)
+Unresolved variable or type google (at line 352)
+Unresolved variable maps (at line 352)
+Unresolved variable Animation (at line 352)
+Unresolved variable BOUNCE (at line 352)
+Unresolved function or method setAnimation() (at line 352)
+Unresolved function or method setAnimation() (at line 357)
+Unresolved function or method setZoom() (at line 412)
+Unresolved variable or type google (at line 419)
+Unresolved variable maps (at line 419)
+Unresolved type LatLng (at line 419)
+Unresolved variable or type google (at line 426)
+Unresolved variable maps (at line 426)
+Unresolved variable MapTypeControlStyle (at line 426)
+Unresolved variable HORIZONTAL_BAR (at line 426)
+Unresolved variable or type google (at line 427)
+Unresolved variable maps (at line 427)
+Unresolved variable ControlPosition (at line 427)
+Unresolved variable TOP_LEFT (at line 427)
+Unresolved variable or type google (at line 428)
+Unresolved variable maps (at line 428)
+Unresolved variable MapTypeId (at line 428)
+Unresolved variable SATELLITE (at line 428)
+Unresolved variable or type google (at line 433)
+Unresolved variable maps (at line 433)
+Unresolved variable NavigationControlStyle (at line 433)
+Unresolved variable SMALL (at line 433)
+Unresolved variable or type google (at line 434)
+Unresolved variable maps (at line 434)
+Unresolved variable ControlPosition (at line 434)
+Unresolved variable TOP_RIGHT (at line 434)
+Unresolved variable or type google (at line 439)
+Unresolved variable maps (at line 439)
+Assigned expression type google.maps.Map is not assignable to type Function (at line 439)
+Unresolved variable or type google (at line 448)
+Unresolved variable maps (at line 448)
+Unresolved variable panoramio (at line 448)
+Unresolved type PanoramioLayer (at line 448)
+Unresolved function or method setMap() (at line 449)
+Unresolved variable or type google (at line 451)
+Unresolved variable maps (at line 451)
+Unresolved function or method getZoom() (at line 452)
+Unresolved function or method setOptions() (at line 453)
+Unresolved function or method setOptions() (at line 455)
+Unresolved function or method addListener() (at line 451)
+Unresolved variable or type google (at line 470)
+Unresolved variable maps (at line 470)
+Unresolved variable ControlPosition (at line 470)
+Unresolved variable BOTTOM_CENTER (at line 470)
+Unresolved variable or type google (at line 473)
+Unresolved variable maps (at line 473)
+Unresolved variable ControlPosition (at line 473)
+Unresolved variable TOP_CENTER (at line 473)
+Unresolved variable or type google (at line 478)
+Unresolved variable maps (at line 478)
+Unresolved variable ControlPosition (at line 478)
+Unresolved variable TOP_LEFT (at line 478)
+Unresolved variable or type google (at line 480)
+Unresolved variable maps (at line 480)
+Unresolved function or method panBy() (at line 481)
+Unresolved function or method addDomListener() (at line 480)
+Unresolved variable or type google (at line 483)
+Unresolved variable maps (at line 483)
+Unresolved function or method panBy() (at line 484)
+Unresolved function or method addDomListener() (at line 483)
+Unresolved variable or type google (at line 486)
+Unresolved variable maps (at line 486)
+Unresolved function or method panBy() (at line 487)
+Unresolved function or method addDomListener() (at line 486)
+Unresolved variable or type google (at line 489)
+Unresolved variable maps (at line 489)
+Unresolved function or method panBy() (at line 490)
+Unresolved function or method addDomListener() (at line 489)
+Unresolved variable or type google (at line 492)
+Unresolved variable maps (at line 492)
+Unresolved function or method panBy() (at line 493)
+Unresolved function or method addDomListener() (at line 492)
+Unresolved variable or type google (at line 495)
+Unresolved variable maps (at line 495)
+Unresolved function or method panBy() (at line 496)
+Unresolved function or method addDomListener() (at line 495)
+Unresolved variable or type google (at line 498)
+Unresolved variable maps (at line 498)
+Unresolved function or method panBy() (at line 499)
+Unresolved function or method addDomListener() (at line 498)
+Unresolved variable or type google (at line 501)
+Unresolved variable maps (at line 501)
+Unresolved function or method panBy() (at line 502)
+Unresolved function or method addDomListener() (at line 501)
+Unresolved variable or type google (at line 504)
+Unresolved variable maps (at line 504)
+Unresolved function or method getZoom() (at line 505)
+Unresolved function or method setZoom() (at line 505)
+Unresolved function or method addDomListener() (at line 504)
+Unresolved variable or type google (at line 507)
+Unresolved variable maps (at line 507)
+Unresolved function or method getZoom() (at line 508)
+Unresolved function or method setZoom() (at line 508)
+Unresolved function or method addDomListener() (at line 507)
+Unresolved variable or type google (at line 511)
+Unresolved variable maps (at line 511)
+Unresolved function or method getZoom() (at line 512)
+Unresolved function or method setZoom() (at line 512)
+Unresolved function or method addDomListener() (at line 511)
+Unresolved variable or type google (at line 514)
+Unresolved variable maps (at line 514)
+Unresolved function or method getZoom() (at line 515)
+Unresolved function or method setZoom() (at line 515)
+Unresolved function or method addDomListener() (at line 514)
+Unresolved variable vendor (at line 520)
+Unresolved variable or type google (at line 523)
+Unresolved variable maps (at line 523)
+Unresolved variable ControlPosition (at line 523)
+Unresolved variable RIGHT_BOTTOM (at line 523)
+Unresolved variable or type google (at line 527)
+Unresolved variable maps (at line 527)
+Unresolved variable adsense (at line 527)
+Unresolved variable AdFormat (at line 527)
+Unresolved variable SQUARE (at line 527)
+Unresolved variable or type google (at line 528)
+Unresolved variable maps (at line 528)
+Unresolved variable ControlPosition (at line 528)
+Unresolved variable RIGHT_BOTTOM (at line 528)
+Unresolved variable or type google (at line 537)
+Unresolved variable maps (at line 537)
+Unresolved variable ControlPosition (at line 537)
+Unresolved variable RIGHT_BOTTOM (at line 537)
+Unresolved variable or type google (at line 541)
+Unresolved variable maps (at line 541)
+Unresolved variable ControlPosition (at line 541)
+Unresolved variable LEFT_BOTTOM (at line 541)
+Unresolved variable or type google (at line 543)
+Unresolved variable maps (at line 543)
+Unresolved variable ControlPosition (at line 543)
+Unresolved variable LEFT_BOTTOM (at line 543)
+Unresolved variable or type google (at line 545)
+Unresolved variable maps (at line 545)
+Unresolved function or method getZoom() (at line 546)
+Unresolved function or method setZoom() (at line 546)
+Unresolved function or method addDomListener() (at line 545)
+Unresolved variable or type google (at line 548)
+Unresolved variable maps (at line 548)
+Unresolved function or method getZoom() (at line 549)
+Unresolved function or method setZoom() (at line 549)
+Unresolved function or method addDomListener() (at line 548)
+Unresolved variable or type google (at line 553)
+Unresolved variable maps (at line 553)
+Unresolved variable ControlPosition (at line 553)
+Unresolved variable TOP_RIGHT (at line 553)
+Unresolved variable or type google (at line 575)
+Unresolved variable maps (at line 575)
+Unresolved type StyledMapType (at line 575)
+Unresolved variable mapTypes (at line 577)
+Unresolved variable or type google (at line 579)
+Unresolved variable maps (at line 579)
+Unresolved variable or type google (at line 581)
+Unresolved variable maps (at line 581)
+Unresolved function or method removeListener() (at line 581)
+Unresolved function or method addListener() (at line 579)
+Unresolved variable or type google (at line 586)
+Unresolved variable maps (at line 586)
+Unresolved type InfoWindow (at line 586)
+Unresolved function or method getZoom() (at line 594)
+Unresolved function or method getCenter() (at line 598)
+Binary operation argument type undefined is not assignable to type String (at line 600)
+Unresolved function or method getZoom() (at line 609)
+Unresolved function or method getZoom() (at line 612)
+Unresolved function or method setZoom() (at line 612)
+Unresolved function or method getCenter() (at line 620)
+Unresolved function or method getCenter() (at line 621)
+Unresolved function or method getZoom() (at line 623)
+Unresolved function or method getCenter() (at line 629)
+Unresolved variable or type google (at line 639)
+Unresolved variable maps (at line 639)
+Unresolved type LatLng (at line 639)
+Unresolved function or method getCenter() (at line 651)
+Unresolved variable latLng (at line 669)
+Unresolved function or method setCenter() (at line 669)
+Unresolved variable or type google (at line 677)
+Unresolved variable maps (at line 677)
+Unresolved function or method addListener() (at line 677)
+Unresolved variable or type google (at line 683)
+Unresolved variable maps (at line 683)
+Unresolved function or method addListener() (at line 683)
+Unresolved variable or type google (at line 691)
+Unresolved variable maps (at line 691)
+Unresolved function or method addListener() (at line 691)
+Unresolved variable or type google (at line 695)
+Unresolved variable maps (at line 695)
+Unresolved function or method addListener() (at line 695)
+Unresolved function or method getBounds() (at line 703)
+Unresolved function or method getSouthWest() (at line 703)
+Unresolved function or method getBounds() (at line 704)
+Unresolved function or method getSouthWest() (at line 704)
+Unresolved function or method getBounds() (at line 705)
+Unresolved function or method getNorthEast() (at line 705)
+Unresolved function or method getBounds() (at line 706)
+Unresolved function or method getNorthEast() (at line 706)
+Unresolved function or method DownTownHeatMapBBUpdate() (at line 702)
+Unresolved variable or type google (at line 712)
+Unresolved variable maps (at line 712)
+Unresolved function or method getZoom() (at line 713)
+Unresolved function or method addListener() (at line 712)
+Unresolved variable or type google (at line 718)
+Unresolved variable maps (at line 718)
+Unresolved function or method getZoom() (at line 719)
+Unresolved function or method addListener() (at line 718)
+Unresolved variable or type google (at line 724)
+Unresolved variable maps (at line 724)
+Unresolved function or method getZoom() (at line 725)
+Unresolved variable or type google (at line 726)
+Unresolved variable maps (at line 726)
+Unresolved variable MapTypeId (at line 726)
+Unresolved variable SATELLITE (at line 726)
+Unresolved function or method setMapTypeId() (at line 726)
+Unresolved function or method setMapTypeId() (at line 729)
+Unresolved function or method addListener() (at line 724)
+Unresolved variable or type google (at line 784)
+Unresolved variable maps (at line 784)
+Unresolved variable GeocoderStatus (at line 784)
+Unresolved variable OK (at line 784)
+Unresolved variable geometry (at line 787)
+Unresolved function or method setCenter() (at line 787)
+Unresolved variable geometry (at line 788)
+Unresolved variable viewport (at line 788)
+Unresolved function or method fitBounds() (at line 789)
+Unresolved function or method geocode() (at line 781)
+Method expression is not of Function type (at line 827)
+Method expression is not of Function type (at line 1084)
+Unresolved function or method alertWithPlaceMarkBox() (at line 670)
+Unresolved function or method runIfNotDblClick() (at line 680)
+Unresolved variable or type google (at line 128)
+Unresolved variable maps (at line 128)
+Unresolved variable or type GAIA (at line 128)
+Unresolved function or method setMapToLocation() (at line 141)
+Unresolved variable or type google (at line 180)
+Unresolved variable maps (at line 180)
+Unresolved type LatLng (at line 180)
+Unresolved function or method getAddress() (at line 183)
+Unresolved variable geoplugin_longitude (at line 197)
+Unresolved variable geoplugin_latitude (at line 198)
+Unresolved variable geoplugin_city (at line 199)
+Unresolved variable geoplugin_region (at line 199)
+Unresolved variable geoplugin_countryName (at line 199)
+Unresolved variable geoplugin_city (at line 200)
+Unresolved variable geoplugin_city (at line 200)
+Unresolved variable geoplugin_region (at line 201)
+Unresolved variable geoplugin_region (at line 201)
+Unresolved variable geoplugin_countryName (at line 202)
+Unresolved variable geoplugin_countryName (at line 202)
+Unresolved variable geoplugin_latitude (at line 205)
+Unresolved variable geoplugin_longitude (at line 205)
+Unresolved variable geoplugin_latitude (at line 205)
+Unresolved variable geoplugin_longitude (at line 205)
+Unresolved variable geoplugin_latitude (at line 206)
+Unresolved variable geoplugin_longitude (at line 206)
+Unresolved variable geoplugin_latitude (at line 206)
+Unresolved variable geoplugin_longitude (at line 206)
+Unresolved function or method keydown() (at line 216)
+Unresolved function or method DownTownHeatMapBBUpdate() (at line 224)
+Unresolved function or method clearHotSpots() (at line 230)
+Unresolved variable geoplugin_longitude (at line 242)
+Unresolved variable geoplugin_latitude (at line 243)
+Unresolved variable geoplugin_city (at line 244)
+Unresolved variable geoplugin_region (at line 244)
+Unresolved variable geoplugin_countryName (at line 244)
+Unresolved variable geoplugin_city (at line 245)
+Unresolved variable geoplugin_city (at line 245)
+Unresolved variable geoplugin_region (at line 246)
+Unresolved variable geoplugin_region (at line 246)
+Unresolved variable geoplugin_countryName (at line 247)
+Unresolved variable geoplugin_countryName (at line 247)
+Unresolved variable geoplugin_latitude (at line 250)
+Unresolved variable geoplugin_longitude (at line 250)
+Unresolved variable geoplugin_latitude (at line 250)
+Unresolved variable geoplugin_longitude (at line 250)
+Unresolved variable geoplugin_latitude (at line 251)
+Unresolved variable geoplugin_longitude (at line 251)
+Unresolved variable geoplugin_latitude (at line 251)
+Unresolved variable geoplugin_longitude (at line 251)
+Unresolved variable or type shareEnter (at line 14)
+Invalid number of parameters, expected 0 (at line 19)
+Invalid number of parameters, expected 0 (at line 21)
+Invalid number of parameters, expected 0 (at line 22)
+Invalid number of parameters, expected 0 (at line 22)
+Invalid number of parameters, expected 0 (at line 19)
+Invalid number of parameters, expected 0 (at line 21)
+Unresolved variable document (at line 33)
+Binary operation argument type undefined is not assignable to type String (at line 34)
+Argument type String is not assignable to parameter type Event= (at line 77)
+Unresolved variable or type google (at line 20)
+Unresolved variable maps (at line 20)
+Unresolved type LatLng (at line 20)
+Unresolved variable or type google (at line 25)
+Unresolved variable maps (at line 25)
+Unresolved variable MapTypeId (at line 25)
+Unresolved variable ROADMAP (at line 25)
+Unresolved variable or type google (at line 27)
+Unresolved variable maps (at line 27)
+Assigned expression type google.maps.Map is not assignable to type Function (at line 27)
+Unresolved variable or type google (at line 29)
+Unresolved variable maps (at line 29)
+Unresolved type Marker (at line 29)
+Unresolved variable or type google (at line 35)
+Unresolved variable maps (at line 35)
+Unresolved type InfoWindow (at line 35)
+Unresolved variable or type google (at line 40)
+Unresolved variable maps (at line 40)
+Unresolved type Geocoder (at line 40)
+Unresolved function or method getZoom() (at line 43)
+Unresolved function or method setContent() (at line 44)
+Unresolved function or method getCenter() (at line 47)
+Unresolved variable or type google (at line 50)
+Unresolved variable maps (at line 50)
+Unresolved variable GeocoderStatus (at line 50)
+Unresolved variable OK (at line 50)
+Unresolved variable address_components (at line 51)
+Unresolved variable long_name (at line 51)
+Unresolved variable address_components (at line 52)
+Unresolved variable address_components (at line 52)
+Unresolved variable long_name (at line 52)
+Unresolved function or method setContent() (at line 51)
+Unresolved function or method setContent() (at line 54)
+Unresolved function or method geocode() (at line 45)
+Unresolved variable or type google (at line 61)
+Unresolved variable maps (at line 61)
+Unresolved function or method getZoom() (at line 62)
+Unresolved function or method getZoom() (at line 63)
+Unresolved function or method getZoom() (at line 64)
+Unresolved function or method getCenter() (at line 69)
+Unresolved function or method setContent() (at line 70)
+Unresolved function or method getPosition() (at line 71)
+Unresolved function or method setPosition() (at line 71)
+Unresolved function or method getCenter() (at line 72)
+Unresolved function or method lat() (at line 72)
+Unresolved function or method getCenter() (at line 72)
+Unresolved function or method lng() (at line 72)
+Unresolved function or method WOEIDGrabberWOEIDUpdate() (at line 72)
+Unresolved function or method getZoom() (at line 75)
+Unresolved function or method addListener() (at line 61)
+Unresolved variable or type google (at line 79)
+Unresolved variable maps (at line 79)
+Unresolved function or method getCenter() (at line 80)
+Unresolved function or method setPosition() (at line 80)
+Unresolved function or method addListener() (at line 79)
+Unresolved variable or type google (at line 83)
+Unresolved variable maps (at line 83)
+Unresolved function or method getZoom() (at line 84)
+Unresolved function or method setContent() (at line 84)
+Unresolved function or method getPosition() (at line 85)
+Unresolved function or method setPosition() (at line 85)
+Unresolved function or method addListener() (at line 83)
+Unresolved variable or type google (at line 91)
+Unresolved variable maps (at line 91)
+Unresolved function or method setContent() (at line 92)
+Unresolved function or method getPosition() (at line 93)
+Unresolved function or method setPosition() (at line 93)
+Unresolved function or method addListener() (at line 91)
+Unresolved variable or type google (at line 96)
+Unresolved variable maps (at line 96)
+Unresolved function or method addListener() (at line 96)
+Unresolved variable or type carouselShowing (at line 20)
+Duplicate declaration (at line 290)
+Duplicate declaration (at line 295)
+Invalid number of parameters, expected 0 (at line 354)
+Duplicate declaration (at line 117)
+Duplicate declaration (at line 122)
+Unresolved variable or type addthis (at line 24)
+Unresolved variable bar (at line 24)
+Unresolved function or method initialize() (at line 24)
+Unresolved variable msie (at line 20)
+Invalid number of parameters, expected 0 (at line 63)
+Invalid number of parameters, expected 0 (at line 63)
+Method expression is not of Function type (at line 86)
+Method expression is not of Function type (at line 131)
+Unresolved function or method outerWidth() (at line 149)
+Unresolved function or method scroll() (at line 191)
+Invalid number of parameters, expected 0 (at line 193)
+Invalid number of parameters, expected 0 (at line 196)
+Method expression is not of Function type (at line 380)
+Method expression is not of Function type (at line 381)
+Unresolved function or method scroll() (at line 425)
+Invalid number of parameters, expected 0 (at line 522)
+Invalid number of parameters, expected 0 (at line 535)
+Unresolved variable or type google (at line 551)
+Unresolved variable maps (at line 551)
+Unresolved type LatLng (at line 551)
+Unresolved function or method setCenter() (at line 551)
+Unresolved function or method setZoom() (at line 555)
+Unresolved function or method setZoom() (at line 558)
+Unresolved function or method setZoom() (at line 561)
+Unresolved function or method setZoom() (at line 564)
+Unresolved function or method setZoom() (at line 566)
+Unresolved variable or type yOffset (at line 79)
+Unresolved variable or type xOffset (at line 79)
+Unresolved variable or type yOffset (at line 93)
+Unresolved variable or type xOffset (at line 94)
+Unresolved function or method mousemove() (at line 91)
+Unresolved variable or type yOffset (at line 105)
+Unresolved variable or type xOffset (at line 105)
+Unresolved variable or type yOffset (at line 119)
+Unresolved variable or type xOffset (at line 120)
+Unresolved function or method mousemove() (at line 117)
+Unresolved variable msie (at line 146)
+Invalid number of parameters, expected 0 (at line 189)
+Invalid number of parameters, expected 0 (at line 189)
+Method expression is not of Function type (at line 212)
+Method expression is not of Function type (at line 257)
+Unresolved function or method outerWidth() (at line 275)
+Unresolved function or method scroll() (at line 317)
+Invalid number of parameters, expected 0 (at line 319)
+Invalid number of parameters, expected 0 (at line 322)
+Unresolved variable NameInput (at line 452)
+Unresolved variable photoDescriptionAlert (at line 497)
+Method expression is not of Function type (at line 568)
+Method expression is not of Function type (at line 569)
+Unresolved function or method scroll() (at line 613)
+Invalid number of parameters, expected 0 (at line 711)
+Invalid number of parameters, expected 0 (at line 724)
+Unresolved function or method blockUI() (at line 2)
+Unresolved function or method unblockUI() (at line 6)
+Redundant character escape (at line 1626)
+Unresolved variable NameInput (at line 31)
+Unresolved variable or type yOffset (at line 79)
+Unresolved variable or type xOffset (at line 79)
+Unresolved variable or type yOffset (at line 93)
+Unresolved variable or type xOffset (at line 94)
+Unresolved function or method mousemove() (at line 91)
+Unresolved variable or type yOffset (at line 105)
+Unresolved variable or type xOffset (at line 105)
+Unresolved variable or type yOffset (at line 119)
+Unresolved variable or type xOffset (at line 120)
+Unresolved function or method mousemove() (at line 117)
+Redundant character escape (at line 2)
+Deprecated API usage
+AlbumManager
+'AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.baby.servlets.Controller.Page, org.w3c.dom.Element, java.lang.Object...)' is deprecated
+'displayBlock(org.w3c.dom.Element)' is deprecated
+HBaseCrudService
+'StringRequestEntity(java.lang.String)' is deprecated
+'StringRequestEntity(java.lang.String)' is deprecated
+QueryParameter
+'and(java.lang.String, java.lang.Object)' is deprecated
+RHumansIdentity
+'with(java.lang.String, java.lang.Object)' is deprecated
+RLocation
+'with(java.lang.String, java.lang.Object)' is deprecated
+'with(java.lang.String, java.lang.Object)' is deprecated
+'with(java.lang.String, java.lang.Object)' is deprecated
+'with(java.lang.String, java.lang.Object)' is deprecated
+SendMail
+'sendWithAttachmentAsSimpleText(java.lang.String, java.lang.String, java.lang.String, java.util.List<java.lang.String>)' is deprecated
+'sendWithAttachmentAsSimpleText(java.lang.String, java.lang.String, java.lang.String, java.util.List<java.lang.String>)' is deprecated
+SignInOn
+'$(java.lang.String)' is deprecated
+Subscribe
+'$(java.lang.String)' is deprecated
+'$(java.lang.String)' is deprecated
+UserProperty
+'AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.baby.servlets.Controller.Page, org.w3c.dom.Element, java.lang.Object...)' is deprecated
+'AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.baby.servlets.Controller.Page, org.w3c.dom.Element, java.lang.Object...)' is deprecated
+'AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.baby.servlets.Controller.Page, org.w3c.dom.Element, java.lang.Object...)' is deprecated
+'AbstractWidgetListener(org.itsnat.core.ItsNatServletRequest, ai.baby.servlets.Controller.Page, org.w3c.dom.Element, java.lang.Object...)' is deprecated
+Deprecated JavaScript symbol
+src
+Deprecated symbol used, consult docs for better alternative (at line 299)
+Deprecated symbol used, consult docs for better alternative (at line 310)
+Implicitly declared global JavaScript variable
+src
+Variable focusLat implicitly declared (at line 490)
+Variable focusLng implicitly declared (at line 491)
+Variable zoom implicitly declared (at line 492)
+Variable post_fun_arg implicitly declared (at line 17)
+Variable post_fun implicitly declared (at line 21)
+Variable post_fun_arg implicitly declared (at line 57)
+Variable lastSelectedLocation implicitly declared (at line 81)
+Variable lastSelectionInfoWindow implicitly declared (at line 96)
+Variable geocoder implicitly declared (at line 119)
+Variable getAddressReturnVal implicitly declared (at line 139)
+Variable clearNotificationAreaFuncCacheLastText implicitly declared (at line 165)
+Variable firstTimeEmptyCheck implicitly declared (at line 178)
+Variable simpleMomentAlertCount implicitly declared (at line 193)
+Variable directionWorker implicitly declared (at line 315)
+Variable directionsDisplay implicitly declared (at line 316)
+Variable myLatlng implicitly declared (at line 419)
+Variable map implicitly declared (at line 439)
+Variable GAIA implicitly declared (at line 441)
+Variable panoramioLayerOpts implicitly declared (at line 444)
+Variable panoramioLayerOptsInfo implicitly declared (at line 445)
+Variable panoramioLayerOptsNoInfo implicitly declared (at line 446)
+Variable panoramioLayer implicitly declared (at line 448)
+Variable initialGmapLoadListener implicitly declared (at line 579)
+Variable lastSelectionInfoWindow implicitly declared (at line 586)
+Variable geoCodeToNotifications implicitly declared (at line 593)
+Variable alertWithPlaceMarkBox implicitly declared (at line 608)
+Variable runIfNotDblClick implicitly declared (at line 667)
+Variable singleClick implicitly declared (at line 674)
+Variable currentSingleClickEvent implicitly declared (at line 675)
+Variable singleClick implicitly declared (at line 678)
+Variable currentSingleClickEvent implicitly declared (at line 679)
+Variable singleClick implicitly declared (at line 684)
+Variable initialize_gmap_scripts_done implicitly declared (at line 759)
+Variable zoomInHint implicitly declared (at line 785)
+Variable focusLng implicitly declared (at line 197)
+Variable focusLat implicitly declared (at line 198)
+Variable zoom implicitly declared (at line 199)
+Variable browserLocation implicitly declared (at line 200)
+Variable focusLng implicitly declared (at line 242)
+Variable focusLat implicitly declared (at line 243)
+Variable zoom implicitly declared (at line 244)
+Variable browserLocation implicitly declared (at line 245)
+Variable myLatlng implicitly declared (at line 20)
+Variable map implicitly declared (at line 27)
+Variable placeMarker implicitly declared (at line 29)
+Variable infowindow implicitly declared (at line 35)
+Variable geocoder implicitly declared (at line 40)
+Variable geocodetoinfowindow implicitly declared (at line 42)
+Variable idleTime implicitly declared (at line 266)
+jQuery usage efficiency
+src
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Duplicated jQuery selector
+Potentially invalid reference to 'this' from closure
+src
+Potentially invalid usage of this
+Potentially invalid usage of this
+Potentially invalid usage of this
+Potentially invalid usage of this
+Potentially invalid usage of this
+Primitive type object wrapper used
+src
+Array instantiation can be simplified
+Syntax error
+src
+Element h3 is not closed (at line 19)
+) expected (at line 45)
+Unescaped & or nonterminated character/entity reference (at line 45)
+Unescaped & or nonterminated character/entity reference (at line 45)
+Expecting newline or semicolon (at line 45)
+statement expected (at line 54)
+'=' expected (at line 10)
+'=' expected (at line 10)
+'=' expected (at line 10)
+'=' expected (at line 10)
+Element div is not closed (at line 10)
+'=' expected (at line 20)
+'=' expected (at line 24)
+'=' expected (at line 36)
+Unescaped & or nonterminated character/entity reference (at line 69)
+Unescaped & or nonterminated character/entity reference (at line 69)
+Unescaped & or nonterminated character/entity reference (at line 69)
+Unescaped & or nonterminated character/entity reference (at line 69)
+Unescaped & or nonterminated character/entity reference (at line 69)
+Unescaped & or nonterminated character/entity reference (at line 69)
+Unclosed string literal (at line 22)
+Unescaped & or nonterminated character/entity reference (at line 22)
+Unclosed string literal (at line 22)
+Unclosed string literal (at line 44)
+Unescaped & or nonterminated character/entity reference (at line 44)
+Unclosed string literal (at line 44)
+) expected (at line 34)
+Unescaped & or nonterminated character/entity reference (at line 34)
+Unescaped & or nonterminated character/entity reference (at line 34)
+Expecting newline or semicolon (at line 34)
+statement expected (at line 43)
+) expected (at line 45)
+Unescaped & or nonterminated character/entity reference (at line 45)
+Unescaped & or nonterminated character/entity reference (at line 45)
+Expecting newline or semicolon (at line 45)
+statement expected (at line 54)
+a term expected (at line 17)
+':' expected (at line 79)
+a term expected (at line 79)
+Unescaped & or nonterminated character/entity reference (at line 35)
+Unescaped & or nonterminated character/entity reference (at line 35)
+Unescaped & or nonterminated character/entity reference (at line 35)
+Unescaped & or nonterminated character/entity reference (at line 35)
+Unescaped & or nonterminated character/entity reference (at line 35)
+Unescaped & or nonterminated character/entity reference (at line 35)
+Unescaped & or nonterminated character/entity reference (at line 61)
+Unescaped & or nonterminated character/entity reference (at line 61)
+Unescaped & or nonterminated character/entity reference (at line 61)
+Unescaped & or nonterminated character/entity reference (at line 61)
+Unescaped & or nonterminated character/entity reference (at line 61)
+Unescaped & or nonterminated character/entity reference (at line 61)
+Unexpected end of file (at line 19)
+a term expected (at line 1323)
+End of file expected (at line 191)
+Unchecked warning
+AbstractWidgetListener
+Unchecked cast: 'java.lang.Object' to 'ai.baby.util.SessionBoundBadRefWrapper<ai.baby.logic.role.HumanUserLocal>'
+Unchecked cast: 'java.lang.Object' to 'ai.baby.util.SessionBoundBadRefWrapper<ai.baby.logic.role.HumanUserLocal>'
+Unchecked cast: 'java.lang.Object' to 'ai.baby.util.SessionBoundBadRefWrapper<ai.baby.logic.role.HumanUserLocal>'
+CDNProfilePhoto
+Unchecked cast: 'java.lang.Object' to 'ai.baby.util.SessionBoundBadRefWrapper<ai.baby.logic.role.HumanUserLocal>'
+CRUDHumansWall
+Unchecked assignment: 'java.util.List' to 'java.util.List<ai.ilikeplaces.entities.Msg>'
+CRUDWall
+Unchecked assignment: 'java.util.List' to 'java.util.List<ai.ilikeplaces.entities.Msg>'
+Email
+Unchecked call to 'put(K, V)' as a member of raw type 'java.util.Hashtable'
+Unchecked call to 'put(K, V)' as a member of raw type 'java.util.Hashtable'
+Unchecked call to 'add(E)' as a member of raw type 'java.util.ArrayList'
+Entities
+Unchecked call to 'put(K, V)' as a member of raw type 'java.util.Map'
+Unchecked call to 'put(K, V)' as a member of raw type 'java.util.Map'
+Unchecked call to 'put(K, V)' as a member of raw type 'java.util.Map'
+RHumansIdentity
+Unchecked assignment: 'java.util.List' to 'java.util.List<ai.ilikeplaces.entities.HumansIdentity>'
+RHumansNetPeople
+Unchecked assignment: 'java.util.List' to 'java.util.List<ai.ilikeplaces.entities.HumansNetPeople>'
+RLocation
+Unchecked assignment: 'java.util.List' to 'java.util.List<java.lang.String>'
+Unchecked assignment: 'java.util.List' to 'java.util.List<ai.ilikeplaces.entities.Location>'
+Unchecked assignment: 'java.util.List' to 'java.util.Collection<? extends ai.ilikeplaces.entities.Location>'
+RPrivateLocation
+Unchecked assignment: 'java.util.List' to 'java.util.List<ai.ilikeplaces.entities.PrivateLocation>'
+ValidatorFace
+Unchecked cast: 'ai.baby.logic.validators.Validator' to 'ai.baby.util.Factory<ai.baby.logic.validators.Validator>'
+Unchecked assignment: 'ai.baby.util.Factory' to 'ai.baby.util.Factory<ai.baby.logic.validators.Validator>'
+Unfiltered for..in loop
+src
+Possible iteration over unexpected (custom / inherited) members, probably missing hasOwnProperty check
+Possible iteration over unexpected (custom / inherited) members, probably missing hasOwnProperty check
+Unused JavaScript / ActionScript global symbol
+src
+Unused function setCookie
+Unused function getCookie
+Unused definition xOffset
+Unused definition yOffset
+Unused function hasNavHash
+Unused function setDisplayName
+Unused function trimInput
+Unused function ilpAlert
+Unused function getExt
+Unused function EventMonitor
+Unused definition monitor
+Unused function hasNavHash
+Unused function setDisplayName
+Unused definition xOffset
+Unused definition yOffset
+Unused JavaScript / ActionScript local symbol
+src
+Unused local variable ingnoredVal
+Unused parameter m
+Unused parameter v
+Unused parameter evt
+Unused parameter title
+Unused parameter event
+Unused parameter event
+Unused local variable adUnitOptions
+Unused local variable adUnitDiv
+Unused parameter title
+Unused parameter e
+Unused parameter object
+Unused parameter e
+Unused parameter object
+XML highlighting
+src
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 13)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 13)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+Attribute target is not allowed here (at line 35)
+Element input is not allowed here (at line 36)
+Element br is not allowed here (at line 37)
+Element br is not allowed here (at line 37)
+Element input is not allowed here (at line 38)
+Element input is not allowed here (at line 39)
+Element img is not allowed here (at line 40)
+Element iframe is not allowed here (at line 42)
+Element iframe is not allowed here (at line 59)
+Cannot resolve symbol 'iframe' (at line 42)
+Cannot resolve symbol 'iframe' (at line 59)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+Attribute target is not allowed here (at line 35)
+Element input is not allowed here (at line 36)
+Element br is not allowed here (at line 37)
+Element br is not allowed here (at line 37)
+Element input is not allowed here (at line 38)
+Element input is not allowed here (at line 39)
+Element img is not allowed here (at line 40)
+Element iframe is not allowed here (at line 42)
+Element iframe is not allowed here (at line 59)
+Cannot resolve symbol 'iframe' (at line 42)
+Cannot resolve symbol 'iframe' (at line 59)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+Attribute itsnat:nocache is not allowed here (at line 14)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 14)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 14)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+Attribute itsnat:nocache is not allowed here (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 13)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 13)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+Attribute target is not allowed here (at line 42)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+Attribute itemscope is not allowed here (at line 10)
+Attribute itemtype is not allowed here (at line 10)
+Cannot resolve symbol 'http://schema.org/Comment' (at line 10)
+Attribute itemtype is not allowed here (at line 11)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+Attribute itemscope is not allowed here (at line 10)
+Attribute itemtype is not allowed here (at line 10)
+Cannot resolve symbol 'http://schema.org/Event' (at line 10)
+Attribute itemprop is not allowed here (at line 13)
+Attribute itemprop is not allowed here (at line 24)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+Attribute itemscope is not allowed here (at line 10)
+Attribute itemtype is not allowed here (at line 10)
+Cannot resolve symbol 'http://schema.org/Person' (at line 10)
+Attribute itemprop is not allowed here (at line 15)
+Attribute itemprop is not allowed here (at line 21)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+Attribute itemscope is not allowed here (at line 10)
+Attribute itemtype is not allowed here (at line 10)
+Cannot resolve symbol 'http://schema.org/Place' (at line 10)
+Attribute itemprop is not allowed here (at line 10)
+Attribute itemprop is not allowed here (at line 15)
+Attribute itemprop is not allowed here (at line 20)
+Attribute itemtype is not allowed here (at line 20)
+Cannot resolve symbol 'http://schema.org/GeoCoordinates' (at line 20)
+Attribute itemscope is not allowed here (at line 20)
+Element meta is not allowed here (at line 21)
+Attribute itemprop is not allowed here (at line 21)
+Element meta is not allowed here (at line 22)
+Attribute itemprop is not allowed here (at line 22)
+Attribute itemscope is not allowed here (at line 24)
+Attribute itemprop is not allowed here (at line 24)
+Attribute itemtype is not allowed here (at line 24)
+Cannot resolve symbol 'http://schema.org/Place' (at line 24)
+Attribute itemprop is not allowed here (at line 30)
+Attribute itemprop is not allowed here (at line 36)
+Attribute itemscope is not allowed here (at line 36)
+Attribute itemtype is not allowed here (at line 36)
+Cannot resolve symbol 'http://schema.org/GeoCoordinates' (at line 36)
+Element meta is not allowed here (at line 37)
+Attribute itemprop is not allowed here (at line 37)
+Element meta is not allowed here (at line 38)
+Attribute itemprop is not allowed here (at line 38)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+Attribute target is not allowed here (at line 26)
+Element input is not allowed here (at line 27)
+Element br is not allowed here (at line 27)
+Element br is not allowed here (at line 27)
+Element input is not allowed here (at line 28)
+Element img is not allowed here (at line 29)
+Element iframe is not allowed here (at line 31)
+Element iframe is not allowed here (at line 48)
+Cannot resolve symbol 'iframe' (at line 31)
+Cannot resolve symbol 'iframe' (at line 48)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 2)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 2)
+Attribute itsnat:nocache is not allowed here (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Element iframe is not allowed here (at line 9)
+Element iframe is not allowed here (at line 10)
+Cannot resolve symbol 'iframe' (at line 9)
+Cannot resolve symbol 'iframe' (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+Attribute itsnat:nocache is not allowed here (at line 11)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 11)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 11)
+Element TEXTAREA is not allowed here (at line 48)
+Element TEXTAREA is not allowed here (at line 57)
+Cannot resolve symbol 'TEXTAREA' (at line 48)
+Cannot resolve symbol 'TEXTAREA' (at line 57)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 4)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 4)
+Attribute itsnat:nocache is not allowed here (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+Attribute itsnat:nocache is not allowed here (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+Element TEXTAREA is not allowed here (at line 20)
+Element TEXTAREA is not allowed here (at line 20)
+Cannot resolve symbol 'TEXTAREA' (at line 20)
+Cannot resolve symbol 'TEXTAREA' (at line 20)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+Attribute itsnat:nocache is not allowed here (at line 11)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 11)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 11)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+Attribute itsnat:nocache is not allowed here (at line 11)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 11)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 11)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 12)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+Attribute itsnat:nocache is not allowed here (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+Attribute itsnat:nocache is not allowed here (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+Attribute target is not allowed here (at line 21)
+Attribute target is not allowed here (at line 42)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 6)
+Attribute itsnat:nocache is not allowed here (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 10)
+Attribute data-size is not allowed here (at line 58)
+Attribute target is not allowed here (at line 121)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+Attribute itsnat:nocache is not allowed here (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 8)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+Element span is not allowed here (at line 10)
+Element span is not allowed here (at line 10)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+Attribute style is not allowed here (at line 3)
+Attribute itsnat:nocache is not allowed here (at line 4)
+Attribute itsnat:nocache is not allowed here (at line 37)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 37)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 37)
+Attribute itsnat:nocache is not allowed here (at line 38)
+Attribute yahoo is not allowed here (at line 100)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 5)
+Attribute itsnat:nocache is not allowed here (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 9)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+Attribute itsnat:nocache is not allowed here (at line 4)
+Attribute itsnat:nocache is not allowed here (at line 41)
+Attribute target is not allowed here (at line 208)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 3)
+Attribute itsnat:nocache is not allowed here (at line 4)
+Attribute itsnat:nocache is not allowed here (at line 51)
+Attribute target is not allowed here (at line 76)
+Attribute border is not allowed here (at line 78)
+Attribute target is not allowed here (at line 81)
+Attribute border is not allowed here (at line 83)
+Element input is not allowed here (at line 127)
+Element input is not allowed here (at line 128)
+Element input is not allowed here (at line 129)
+Element input is not allowed here (at line 130)
+Element input is not allowed here (at line 131)
+Element a is not allowed here (at line 132)
+Element a is not allowed here (at line 132)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+URI is not registered (Settings | Project Settings | Schemas and DTDs) (at line 7)
+Attribute itsnat:nocache is not allowed here (at line 8)
+Attribute itsnat:nocache is not allowed here (at line 75)
+HTML
+File reference problems
+src
+Cannot resolve file '_unsubscribe_link_'
+Cannot resolve file '_place_link_'
+Cannot resolve file '_name_link_'
+Cannot resolve file '_place_link_'
+Cannot resolve file '_name_link_'
+Cannot resolve file ''
+Cannot resolve file '_unsubscribe_link_'
+Cannot resolve directory 'blueprint'
+Cannot resolve file 'ie.css'
+Form input without an associated label
+src
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Form input without an associated label
+Malformed content of <script> tag
+src
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Unescaped xml character
+Presentational HTML tag
+src
+Presentational HTML tag (at line 12)
+Presentational HTML tag (at line 12)
+Presentational HTML tag (at line 12)
+Presentational HTML tag (at line 12)
+Presentational HTML tag (at line 9)
+Presentational HTML tag (at line 9)
+Presentational HTML tag (at line 9)
+Presentational HTML tag (at line 9)
+Presentational HTML tag (at line 40)
+Presentational HTML tag (at line 40)
+Unknown HTML tag
+src
+Element h1 is not allowed here
+Element h3 is not allowed here
+Element h3 is not allowed here
+Element html is not allowed here
+Java language level migration aids
+'for' loop replaceable with 'for each'
+Email
+'for' loop replaceable with 'for each'
+ListenerTribes
+'for' loop replaceable with 'for each'
+'StringBuffer' may be 'StringBuilder'
+BCrypt
+'StringBuffer rs' may be declared as 'StringBuilder'
+'StringBuffer rs' may be declared as 'StringBuilder'
+'StringBuffer rs' may be declared as 'StringBuilder'
+'StringBuffer rs' may be declared as 'StringBuilder'
+Entities
+'StringBuffer buf' may be declared as 'StringBuilder'
+'StringBuffer buf' may be declared as 'StringBuilder'
+HTTPRequestPoster
+'StringBuffer data' may be declared as 'StringBuilder'
+'StringBuffer sb' may be declared as 'StringBuilder'
+StringEscapeUtils
+'StringBuffer unicode' may be declared as 'StringBuilder'
+SubscriberNotifications
+'StringBuffer eventList' may be declared as 'StringBuilder'
+Unnecessary boxing
+Entities
+Unnecessary boxing 'new Integer(value)'
+Unnecessary boxing 'new Integer(value)'
+Unnecessary boxing 'new Integer(value)'
+Unnecessary boxing 'new Integer(value)'
+Unnecessary unboxing
+Entities
+Unnecessary unboxing '((Integer) value).intValue()'
+Unnecessary unboxing '((Integer) value).intValue()'
+Unnecessary unboxing 'Integer.valueOf(entityName.substring(2), 16).intValue()'
+Javadoc issues
+Declaration has Javadoc problems
+AbstractListener
+'@param request_' tag description is missing
+'@param itsNatHTMLDocument__' tag description is missing
+'@param hTMLDocument__' tag description is missing
+'@param itsNatDocument__' tag description is missing
+'@param initArgs' tag description is missing
+'@param itsNatHTMLDocument_' tag description is missing
+'@param itsNatDocument__' tag description is missing
+'@param hTMLDocument_' tag description is missing
+'@param page_' tag description is missing
+'@param page_' tag description is missing
+'@param iDOfElementRequired__' tag description is missing
+'@param tagNameInAllCaps' tag description is missing
+AbstractSkeletonListener
+'@param request_' tag description is missing
+'@param response_' tag description is missing
+'@param itsNatHTMLDocument__' tag description is missing
+'@param hTMLDocument__' tag description is missing
+'@param itsNatDocument__' tag description is missing
+'@param itsNatHTMLDocument_' tag description is missing
+'@param itsNatDocument__' tag description is missing
+'@param hTMLDocument_' tag description is missing
+AbstractWidgetListener
+'@param request__' tag description is missing
+'@param page__' tag description is missing
+'@param appendToElement__' tag description is missing
+'@param initArgs' tag description is missing
+'@param request__' tag description is missing
+'@param page__' tag description is missing
+'@param t' tag description is missing
+'@param appendToElement__' tag description is missing
+'@param initArgs' tag description is missing
+'@param t' tag description is missing
+'@param itsNatHTMLDocument_' tag description is missing
+'@param hTMLDocument_' tag description is missing
+'@param key__' tag description is missing
+'@param ids__' tag description is missing
+'@param key__' tag description is missing
+'@param key__' tag description is missing
+'@param key__' tag description is missing
+'@param document__' tag description is missing
+'@return' tag description is missing
+'@param key__' tag description is missing
+'@param document__' tag description is missing
+'@return' tag description is missing
+'@param key__' tag description is missing
+'@param document__' tag description is missing
+'@return' tag description is missing
+'@param key__' tag description is missing
+'@return' tag description is missing
+'@param eventTarget_' tag description is missing
+'@param eventType_' tag description is missing
+'@param eventListener_' tag description is missing
+'@param event_' tag description is missing
+'@param eventType_' tag description is missing
+'@param eventListener_' tag description is missing
+'@param whoseChildrenRemoved' tag description is missing
+'@param whoseChildrenRemoved' tag description is missing
+'@param elementToBeSetTextOf' tag description is missing
+'@param textToBeSet' tag description is missing
+'@param elementOfWhichIdIsRequired' tag description is missing
+'@param elementOfWhichIdIsRequired' tag description is missing
+'@param elementToUseForUserNotifications' tag description is missing
+'@param elementToUseForUserNotifications' tag description is missing
+AdaptableSignup
+'@param request__' tag description is missing
+'@param appendToElement__' tag description is missing
+'@param itsNatHTMLDocument_' tag description is missing
+'@param hTMLDocument_' tag description is missing
+BlowFish
+'@param passWord' tag description is missing
+'@param salt' tag description is missing
+'@return' tag description is missing
+BlowFishLocal
+'@param passWord' tag description is missing
+'@param salt' tag description is missing
+'@param salt' tag description is missing
+Duplicate @param tag for parameter 'salt'
+'@param salt' tag description is missing
+Duplicate @param tag for parameter 'salt'
+'@return' tag description is missing
+BoundingBox
+'@param commaSeparatedBoundingBox' tag description is missing
+'@return' tag description is missing
+'@param swlatitude' tag description is missing
+'@param swlongitude' tag description is missing
+'@param nelatitude' tag description is missing
+'@param nelongitude' tag description is missing
+'@return' tag description is missing
+CDN
+'@param ref' tag description is missing
+'@param img' tag description is missing
+'@param newW' tag description is missing
+'@param newH' tag description is missing
+'@return' tag description is missing
+'@param img' tag description is missing
+'@param newWidth' tag description is missing
+'@return' tag description is missing
+'@param img' tag description is missing
+'@param ref' tag description is missing
+CDNProfilePhoto
+'@param img' tag description is missing
+'@param newW' tag description is missing
+'@param newH' tag description is missing
+'@return' tag description is missing
+'@param img' tag description is missing
+'@param newWidth' tag description is missing
+'@return' tag description is missing
+'@param img' tag description is missing
+'@param ref' tag description is missing
+ConstructorInvokationException
+'@param cause' tag description is missing
+'@param message' tag description is missing
+'@param cause' tag description is missing
+'@param message' tag description is missing
+Controller
+'@param serveletConfig__' tag description is missing
+'@param request__' tag description is missing
+'@param response__' tag description is missing
+'@param URL__' tag description is missing
+'@param URL__' tag description is missing
+'@param ids__' tag description is missing
+CRUDAlbum
+'@param privateEventId' tag description is missing
+'@param humanId' tag description is missing
+'@param photoUrl' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param eager' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param refreshSpec' tag description is missing
+'@return' tag description is missing
+'@param tribeId' tag description is missing
+'@param humanId' tag description is missing
+'@param photoUrl' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param refreshSpec' tag description is missing
+'@return' tag description is missing
+CRUDAlbumLocal
+'@param privateEventId' tag description is missing
+'@param humanId' tag description is missing
+'@param photoUrl' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param eager' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param refreshSpec' tag description is missing
+'@return' tag description is missing
+'@param tribeId' tag description is missing
+'@param humanId' tag description is missing
+'@param photoUrl' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param refreshSpec' tag description is missing
+'@return' tag description is missing
+CRUDHumansWall
+'@param humanId' tag description is missing
+'@param msg' tag description is missing
+'@return' tag description is missing
+CRUDHumansWallLocal
+'@param humanId' tag description is missing
+'@return' tag description is missing
+CrudService
+'@param t' tag description is missing
+'@return' tag description is missing
+'@param type' tag description is missing
+'@param id' tag description is missing
+'@return' tag description is missing
+'@param type' tag description is missing
+'@param id' tag description is missing
+'@return' tag description is missing
+'@param typeOfEntity' tag description is missing
+'@param idByWhichToLookup' tag description is missing
+'@return' tag description is missing
+'@param type' tag description is missing
+'@param id' tag description is missing
+'@param t' tag description is missing
+'@return' tag description is missing
+'@param namedQueryName' tag description is missing
+'@return' tag description is missing
+'@param namedQueryName' tag description is missing
+'@param parameters' tag description is missing
+'@return' tag description is missing
+'@param queryName' tag description is missing
+'@param resultLimit' tag description is missing
+'@return' tag description is missing
+'@param sql' tag description is missing
+'@param type' tag description is missing
+'@return' tag description is missing
+'@param namedQueryName' tag description is missing
+'@param parameters' tag description is missing
+'@param resultLimit' tag description is missing
+'@return' tag description is missing
+'@param showChangeLog__' tag description is missing
+CrudServiceLocal
+'@param t' tag description is missing
+'@return' tag description is missing
+'@param type' tag description is missing
+'@param id' tag description is missing
+'@return' tag description is missing
+'@param type' tag description is missing
+'@param id' tag description is missing
+'@return' tag description is missing
+'@param typeOfEntity' tag description is missing
+'@param idByWhichToLookup' tag description is missing
+'@return' tag description is missing
+'@param t' tag description is missing
+'@return' tag description is missing
+'@param type' tag description is missing
+'@param id' tag description is missing
+'@param queryName' tag description is missing
+'@return' tag description is missing
+'@param queryName' tag description is missing
+'@param resultLimit' tag description is missing
+'@return' tag description is missing
+'@param namedQueryName' tag description is missing
+'@param parameters' tag description is missing
+'@return' tag description is missing
+'@param namedQueryName' tag description is missing
+'@param parameters' tag description is missing
+'@param resultLimit' tag description is missing
+'@return' tag description is missing
+'@param sql' tag description is missing
+'@param type' tag description is missing
+CRUDTribe
+'@param humanId' tag description is missing
+'@param tribeId' tag description is missing
+'@param refreshSpecInit' tag description is missing
+'@return' tag description is missing
+CRUDTribeLocal
+'@param humanId' tag description is missing
+'@return' tag description is missing
+'@param tribeId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param tribeId' tag description is missing
+'@param refreshSpecInit' tag description is missing
+'@return' tag description is missing
+CRUDWallLocal
+'@param wall' tag description is missing
+'@param wallId' tag description is missing
+'@param wallId' tag description is missing
+'@param refreshSpec' tag description is missing
+'@param wallId' tag description is missing
+'@param humanId' tag description is missing
+'@param contentToBeAppended' tag description is missing
+'@param wallId' tag description is missing
+'@param mutee' tag description is missing
+'@param wallId' tag description is missing
+'@param mutee' tag description is missing
+'@param wallId' tag description is missing
+DBDishonourCheckedException
+'@param message' tag description is missing
+DBDishonourException
+'@param message' tag description is missing
+DBException
+'@param cause' tag description is missing
+'@param message' tag description is missing
+'@param cause' tag description is missing
+'@param message' tag description is missing
+DBFetchDataException
+'@param message' tag description is missing
+'@param e' tag description is missing
+DBOperationException
+'@param message' tag description is missing
+'@param t' tag description is missing
+DelegatedObservable
+'@param o' tag description is missing
+'@param o' tag description is missing
+DisplayNameString
+'@param displayNameToBeSet' tag description is missing
+DPrivateEventLocal
+'@param humanId' tag description is missing
+'@param privateEventId' tag description is missing
+'@return' tag description is missing
+ElementComposer
+'@param elementToBeComposed' tag description is missing
+'@return' tag description is missing
+'@param elementToBeWrappedInto' tag description is missing
+'@param appendToElement' tag description is missing
+'@param childToBeAppended' tag description is missing
+Factory
+'@param initArgs' tag description is missing
+FilterHeader
+'@param request' tag description is missing
+'@param response' tag description is missing
+'@param chain' tag description is missing
+FilterRecaptcha
+'@param request' tag description is missing
+'@param response' tag description is missing
+'@param chain' tag description is missing
+GeneralCRUDWall
+'@param whosWall' tag description is missing
+'@param wallReference' tag description is missing
+'@param contentToBeAppended' tag description is missing
+'@return' tag description is missing
+GenericFileGrabber
+'@param request__' tag description is missing
+'@param response__' tag description is missing
+'@return' tag description is missing
+GeoCoord
+'@param latitudeCOMMAlongitude' tag description is missing
+'@param latitude' tag description is missing
+'@param longitude' tag description is missing
+'@param latitude' tag description is missing
+'@param longitude' tag description is missing
+HTMLDocParser
+'@param filePath' tag description is missing
+'@return' tag description is missing
+'@param key__' tag description is missing
+'@param document__' tag description is missing
+'@return' tag description is missing
+HumanCRUDHumanLocal
+'@param emails' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param humanId' tag description is missing
+'@return' tag description is missing
+HumanCRUDTribeLocal
+'@param humanId' tag description is missing
+'@param tribeId' tag description is missing
+'@param refreshSpecInit' tag description is missing
+'@return' tag description is missing
+'@param operator__' tag description is missing
+'@param tribeId__' tag description is missing
+'@param cdnFileName' tag description is missing
+'@return' tag description is missing
+'@param wallId' tag description is missing
+'@param numberOfEntriesToFetch' tag description is missing
+'@return' tag description is missing
+HumanUser
+'@param sessionBoundBadRefWrapper' tag description is missing
+'@return' tag description is missing
+'@param humanUserId__' tag description is missing
+'@param event' tag description is missing
+'@param event' tag description is missing
+'@param o' tag description is missing
+'@param o' tag description is missing
+'@return' tag description is missing
+'@param key' tag description is missing
+'@param recoverWith' tag description is missing
+'@param key' tag description is missing
+'@param valueToUpdateWith' tag description is missing
+'@param key' tag description is missing
+'@param valueToUpdateWith' tag description is missing
+HumanUserLocal
+'@return' tag description is missing
+'@return' tag description is missing
+'@param loggedOnUserId' tag description is missing
+'@param key' tag description is missing
+'@param valueToUpdateWith' tag description is missing
+'@param key' tag description is missing
+'@param valueToUpdateWith' tag description is missing
+InviteCriteria
+'@param displayName' tag description is missing
+'@param inviteesProfileUrl' tag description is missing
+'@param inviteesProfilePhoto' tag description is missing
+'@param inviter' tag description is missing
+'@param invitee' tag description is missing
+JSCodeToSend
+'@param urlTobeRedirectedTo' tag description is missing
+'@return' tag description is missing
+'@param timeout' tag description is missing
+'@return' tag description is missing
+'@param stringToBeAppended' tag description is missing
+'@return' tag description is missing
+'@param stringToBeAppended' tag description is missing
+'@return' tag description is missing
+'@param stringToBeAppended' tag description is missing
+'@return' tag description is missing
+ListenerAarrr
+'@param request__' tag description is missing
+'@param response__' tag description is missing
+Loggers
+'@param msg' tag description is missing
+'@param level' tag description is missing
+'@param message' tag description is missing
+'@param level' tag description is missing
+'@param message' tag description is missing
+'@param obj' tag description is missing
+LogNull
+'@param customMsg__' tag description is missing
+Tag ''return'' is not allowed here
+'@param objectToBeCheckedForNull' tag description is missing
+'@param objectToBeCheckedForNull' tag description is missing
+'@param causeOfNpe' tag description is missing
+ManageObservers
+'@param o' tag description is missing
+'@param o' tag description is missing
+Memc
+'@param timer' tag description is missing
+MemoryWarningSystem
+'@return' tag description is missing
+NoPrivilegesException
+'@param message' tag description is missing
+NotFriendsException
+'@param message' tag description is missing
+Pair
+'@param o' tag description is missing
+'@return' tag description is missing
+Parameter
+'@param prependString' tag description is missing
+'@param key' tag description is missing
+'@param isFirst' tag description is missing
+'@return' tag description is missing
+'@param key' tag description is missing
+'@param value' tag description is missing
+'@return' tag description is missing
+QueryParameter
+'@param name__' tag description is missing
+'@param value__' tag description is missing
+'@param name__' tag description is missing
+'@param value__' tag description is missing
+'@param name__' tag description is missing
+'@param value__' tag description is missing
+RBGet
+'@param key__' tag description is missing
+RHuman
+'@param humanId' tag description is missing
+RHumanLocal
+'@param humandId' tag description is missing
+'@return' tag description is missing
+RLocation
+'@param locationName' tag description is missing
+'@param superLocationName' tag description is missing
+'@return' tag description is missing
+'@param locationName' tag description is missing
+'@param superLocationName' tag description is missing
+'@return' tag description is missing
+'@param locationName' tag description is missing
+'@param superLocationName' tag description is missing
+'@return' tag description is missing
+'@param locationName' tag description is missing
+'@param superLocationName' tag description is missing
+'@return' tag description is missing
+RPrivateEventLocal
+'@param privateEventId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateEventId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateEventId' tag description is missing
+'@return' tag description is missing
+'@param privateEventId' tag description is missing
+'@param eager' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateEventId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateEventId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateEventId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateEventId' tag description is missing
+'@return' tag description is missing
+'@param privateLocationId' tag description is missing
+'@return' tag description is missing
+RPrivateLocationLocal
+'@param humanId' tag description is missing
+'@param privateLocationId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateLocationId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateLocationId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateLocationId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateLocationId' tag description is missing
+'@return' tag description is missing
+'@param humanId' tag description is missing
+'@param privateLocationId' tag description is missing
+'@return' tag description is missing
+'@param privateLocationId' tag description is missing
+'@param eager' tag description is missing
+'@return' tag description is missing
+ServletSignup
+'@param request__' tag description is missing
+'@param response__' tag description is missing
+SignInOn
+'@param request__' tag description is missing
+'@param signInOnCriteria__' tag description is missing
+'@param appendToElement__' tag description is missing
+SingletonHashing
+'@param plaintext__' tag description is missing
+'@param salt__' tag description is missing
+'@return' tag description is missing
+SingletonHashingRemote
+'@param plaintext__' tag description is missing
+'@param salt__' tag description is missing
+'@return' tag description is missing
+SmartLogger
+'@param logLevel' tag description is missing
+'@param logMessage' tag description is missing
+'@param timeout' tag description is missing
+'@param startMsg_calcExecTime' tag description is missing
+'@return' tag description is missing
+'@param logLevel' tag description is missing
+'@param logMessage' tag description is missing
+'@param timeout' tag description is missing
+'@return' tag description is missing
+'@param stringToBeAppended' tag description is missing
+'@param objectWithToStringOverridden' tag description is missing
+'@param errorDescription' tag description is missing
+'@param throwableErrorToBeLogged' tag description is missing
+'@param completeLevels' tag description is missing
+'@param completeStatus' tag description is missing
+Subscribe
+'@param request__' tag description is missing
+'@param subscribeCriteria' tag description is missing
+'@param appendToElement__' tag description is missing
+'@param subscribeCriteria' tag description is missing
+'@param itsNatHTMLDocument_' tag description is missing
+'@param hTMLDocument_' tag description is missing
+UPublicPhotoLocal
+'@param publicPhotoId' tag description is missing
+'@param publicPhotoDescription' tag description is missing
+'@return' tag description is missing
+'@param publicPhotoId' tag description is missing
+'@param publicPhotoDescription' tag description is missing
+'@return' tag description is missing
+'@param publicPhotoId' tag description is missing
+'@param publicPhotoDescription' tag description is missing
+'@return' tag description is missing
+UserProperty
+'@param request__' tag description is missing
+'@param appendToElement__' tag description is missing
+'@param humanIdWhosProfileToShow' tag description is missing
+'@param params' tag description is missing
+'@param request__' tag description is missing
+'@param appendToElement__' tag description is missing
+'@param content' tag description is missing
+'@param humanIdWhosProfileToShow' tag description is missing
+'@param params' tag description is missing
+'@param request__' tag description is missing
+'@param appendToElement__' tag description is missing
+'@param content' tag description is missing
+'@param humanIdWhosProfileToShow' tag description is missing
+'@param params' tag description is missing
+'@param request__' tag description is missing
+'@param appendToElement__' tag description is missing
+'@param content' tag description is missing
+'@param inviteCriteria' tag description is missing
+'@param args' tag description is missing
+'@param usersName' tag description is missing
+'@param usersUrl' tag description is missing
+'@param usersPhoto' tag description is missing
+'@param content' tag description is missing
+'@param profileUrl' tag description is missing
+'@return' tag description is missing
+'@param sender' tag description is missing
+'@param receiver' tag description is missing
+'@return' tag description is missing
+'@param sender' tag description is missing
+'@param receiver' tag description is missing
+'@param htmlContent' tag description is missing
+'@return' tag description is missing
+Validator
+'@param initArgs' tag description is missing
+Maven
+Duplicate Dependencies
+pom.xml
+<html><body>Dependency is duplicated in file(s): <a href ='#navigation//Users/ravindranathakila/ilikeplaces/Baby/pom.xml:12777'>ilikeplaces JEE6 Webapp</a> </body></html>
+<html><body>Dependency is duplicated in file(s): <a href ='#navigation//Users/ravindranathakila/ilikeplaces/Baby/pom.xml:11169'>ilikeplaces JEE6 Webapp</a> </body></html>
+Maven Model Inspection
+pom.xml
+Cannot resolve symbol 'buildNumber'
+Naming conventions
+Method name same as class name
+n
+Method name 'n' is the same as its class name
+Method name 'n' is the same as its class name
+Performance issues
+Redundant String constructor call
+BlowFish
+'new String(passWord)' is redundant
+'new String(BCrypt.hashpw(new String(passWord), salt))' is redundant
+'new String(passWord)' is redundant
+'new String(hash)' is redundant
+CDNProfilePhoto
+'new String(dbr.returnValue().getHumanId())' is redundant
+HumanUser
+'new String(key)' is redundant
+'new String(key.name())' is redundant
+SingletonHashing
+'new String(plaintext__)' is redundant
+'new String(salt__)' is redundant
+SmartCache2String
+'new String(key)' is redundant
+'new String(key)' is redundant
+String concatenation as argument to 'StringBuffer.append()' call
+RBGet
+String concatenation as argument to 'StringBuilder.append()' call
+String concatenation as argument to 'StringBuilder.append()' call
+String concatenation as argument to 'StringBuilder.append()' call
+String concatenation as argument to 'StringBuilder.append()' call
+'StringBuffer' can be replaced with 'String'
+HTTPRequestPoster
+'StringBuffer data' can be replaced with 'String'
+Probable bugs
+Constant conditions & exceptions
+AbstractWidgetListener
+Condition 'appendToElement__ != null' is always 'true'
+Condition 'STR_FATAL_ERROR_IN_WIDGET_THIS_SHOULD_NOT_HAPPEN_DETAILS_AS_FOLLOWS +                     STR_PAGE +...' is always 'true'
+AlbumManager
+Condition 'albumReturn == null' is always 'true'
+CRUDHumansUnseen
+Condition 'stringBuilder == null' is always 'true'
+Email
+Method 'isAddressValid' is too complex to analyze by data flow algorithm
+Entities
+Method 'unescape' is too complex to analyze by data flow algorithm
+Method 'unescape' is too complex to analyze by data flow algorithm
+HTTPRequestPoster
+Method 'postData' is too complex to analyze by data flow algorithm
+ParamValidator
+Casting 'object' to 'Object[]' may produce 'java.lang.ClassCastException'
+SmartCache2
+Condition 'returnVal != null' is always 'false' when reached
+Condition 'MAP.containsKey(key) && returnVal != null' is always 'false'
+SmartCache3
+Condition 'returnVal != null' is always 'false' when reached
+Condition 'MAP.containsKey(key) && returnVal != null' is always 'false'
+Condition 'returnVal != null' is always 'false' when reached
+Condition 'MAP.containsKey(key) && returnVal != null' is always 'false'
+SmartCache4
+Condition 'returnVal != null' is always 'false' when reached
+Condition 'MAP.containsKey(key) && returnVal != null' is always 'false'
+Condition 'returnVal != null' is always 'false' when reached
+Condition 'MAP.containsKey(key) && returnVal != null' is always 'false'
+StringEscapeUtils
+Method 'escapeJavaStyleString' is too complex to analyze by data flow algorithm
+SubscriberNotifications
+Method 'timeout' is too complex to analyze by data flow algorithm
+'equals()' between objects of inconvertible types
+CRUDWall
+'equals()' between objects of inconvertible types 'HumanId' and 'Mute'
+Magic Constant
+FilterHeader
+Must be one of: Calendar.JANUARY, Calendar.FEBRUARY, Calendar.MARCH, Calendar.APRIL, Calendar.MAY, Calendar.JUNE, Calendar.JULY, Calendar.AUGUST, Calendar.SEPTEMBER, Calendar.OCTOBER, Calendar.NOVEMBER, Calendar.DECEMBER
+Result of method call ignored
+GenericFileGrabber
+Result of 'File.delete()' is ignored
+Statement with empty body
+AbstractSkeletonListener
+'if' statement has empty body
+ListenerAarrr
+'else' statement has empty body
+ListenerTribes
+'if' statement has empty body
+'else' statement has empty body
+'else' statement has empty body
+SignInOn
+'else' statement has empty body
+SmartCache2
+'if' statement has empty body
+'if' statement has empty body
+Suspicious collections method calls
+CRUDWall
+'List<Mute>' may not contain objects of type 'HumanId'
+RPrivateEvent
+'List<HumansPrivateEvent>' may not contain objects of type 'Human'
+'List<HumansPrivateEvent>' may not contain objects of type 'Human'
+'List<HumansPrivateEvent>' may not contain objects of type 'Human'
+'List<HumansPrivateEvent>' may not contain objects of type 'Human'
+'List<HumansPrivateEvent>' may not contain objects of type 'Human'
+'List<HumansPrivateEvent>' may not contain objects of type 'Human'
+'List<HumansPrivateEvent>' may not contain objects of type 'Human'
+'List<HumansPrivateEvent>' may not contain objects of type 'Human'
+RPrivateLocation
+'List<HumansPrivateLocation>' may not contain objects of type 'Human'
+'List<HumansPrivateLocation>' may not contain objects of type 'Human'
+'List<HumansPrivateLocation>' may not contain objects of type 'Human'
+'List<HumansPrivateLocation>' may not contain objects of type 'Human'
+'List<HumansPrivateLocation>' may not contain objects of type 'Human'
+'List<HumansPrivateLocation>' may not contain objects of type 'Human'
+'List<HumansPrivateLocation>' may not contain objects of type 'Human'
+'List<HumansPrivateLocation>' may not contain objects of type 'Human'
+Unused assignment
+AlbumManager
+Variable 'photoSequenceNumber' is never used
+BCrypt
+Variable 'off' initializer '0' is redundant
+CRUDHumansWall
+Variable 'same' is never used
+CRUDWall
+Variable 'managedMsg' is never used
+Variable 'same' is never used
+Email
+Variable 'mxList' initializer 'null' is redundant
+Variable 'mxList' initializer 'null' is redundant
+Variable 'line' initializer 'null' is redundant
+FacebookUserFilter
+Variable 'redirectOccurred' is never used
+The value facebook.requireFrame(nextPage) assigned to 'redirectOccurred' is never used
+FoursquareAPIClient
+Variable 'statusCode' initializer '0' is redundant
+Variable 'inputStream' initializer 'null' is redundant
+GenericFileGrabber
+Variable 'sBLoggedOnUserLocal' is never used
+Variable 'persisted' initializer 'false' is redundant
+Variable 'returnVal' initializer '""' is redundant
+Variable 'returnVal' is never used
+Get
+Variable 'reflectDatumReader' is never used
+HBaseCrudService
+Variable 'statusCode' initializer '0' is redundant
+Variable 'inputStream' initializer 'null' is redundant
+Variable 'statusCode' initializer '0' is redundant
+Variable 'inputStream' initializer 'null' is redundant
+Variable 'statusCode' initializer '0' is redundant
+Variable 'statusCode' initializer '0' is redundant
+Variable 'inputStream' initializer 'null' is redundant
+Variable 'statusCode' initializer '0' is redundant
+Variable 'inputStream' initializer 'null' is redundant
+HTTPRequestPoster
+Variable 'data' is never used
+Variable 'read' initializer '0' is redundant
+ListenerAarrr
+Variable 'gUI' is never used
+MethodTimer
+Variable 'startTime' is never used
+ParamValidator
+Variable 'param' initializer 'null' is redundant
+Put
+Variable 'statusCode' initializer '0' is redundant
+Variable 'inputStream' initializer 'null' is redundant
+SampleAPIClient
+Variable 'statusCode' initializer '0' is redundant
+Variable 'inputStream' initializer 'null' is redundant
+SendMail
+Variable 'returnVal' initializer 'false' is redundant
+ServletSignup
+Variable 'eemail' is never used
+SignInOn
+Variable 'returnVal' is never used
+SmartCache4
+Variable 'client' is never used
+Variable 'client' is never used
+Subscribe
+Variable '_subscriber' is never used
+The value new Parameter("http://www.ilikeplaces.com/page/_org?category=143") assigned to 'parameter' is never used
+The value new Parameter("http://www.ilikeplaces.com/page/_org?category=143") assigned to 'parameter' is never used
+Variable '_subscriber' is never used
+UHumansAuthentication
+Variable 'returnVal' initializer 'false' is redundant
+UpdateCopy
+Variable 'returnVal' initializer 'false' is redundant
+The value false assigned to 'returnVal' is never used
+The value false assigned to 'returnVal' is never used
+Properties Files
+Trailing Spaces in Property
+src
+Trailing Spaces
+Trailing Spaces
+Trailing Spaces
+Unused Property
+src
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Unused property
+Verbose or redundant code constructs
+Redundant type cast
+BCrypt
+Casting 'P_orig.clone()' to 'int[]' is redundant
+Casting 'S_orig.clone()' to 'int[]' is redundant
+Casting 'bf_crypt_ciphertext.clone()' to 'int[]' is redundant
+ElementComposer
+Casting 'element' to 'Node' is redundant
+XML
+File path resolving in XML
+src
+Cannot resolve file 'page'
+Cannot resolve file 'hazelcast-config-2.0.xsd'
+Unbound XML namespace prefix
+src
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+Namespace is not bound
+XML tag empty body
+src
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body
+Xml Tag Has Empty Body

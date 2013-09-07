@@ -27,6 +27,11 @@ import java.io.*;
 public class HBaseCrudService<T extends SpecificRecord> {
 
 
+    /**
+     * Please take into account that when you deploy an HBase Rest Server, your data is wide open to the web.
+     * I believe Kerbose or similar authentication mechanisms are available with some integration effort.
+     * As an additional layer of security, please ensure your firewall points
+     */
     public static final String HBASE_REST_SERVER = RBGet.getGlobalConfigKey("HBASE_REST_SERVER");
 
     public T create(final RowKey rowKey, final T t) {
