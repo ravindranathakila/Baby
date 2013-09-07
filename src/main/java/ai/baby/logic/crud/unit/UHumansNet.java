@@ -1,0 +1,38 @@
+package ai.baby.logic.crud.unit;
+
+import ai.ilikeplaces.entities.HumansNet;
+import ai.ilikeplaces.entities.etc.HumanId;
+import ai.baby.util.jpa.CrudServiceLocal;
+import ai.baby.util.AbstractSLBCallbacks;
+import ai.scribble.License;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+
+/**
+ * @author Ravindranath Akila
+ */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@Stateless
+public class UHumansNet extends AbstractSLBCallbacks implements UHumansNetLocal {
+
+    @EJB
+    private CrudServiceLocal<HumansNet> humansNetCrudServiceLocal_;
+
+    public UHumansNet() {
+    }
+
+    final static Logger logger = LoggerFactory.getLogger(UHumansNet.class);
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void doNTxUDisplayName(final HumanId humanId, String displayName) {
+        humansNetCrudServiceLocal_.getReference(HumansNet.class, humanId.getObj()).setDisplayName(displayName);
+    }
+
+}

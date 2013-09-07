@@ -1,0 +1,34 @@
+package ai.baby.logic.validators.oval.internal;
+
+import ai.baby.logic.validators.oval.UpperCase;
+import ai.baby.util.apache.fixes.StringEscapeUtilsFixed;
+import ai.scribble.License;
+import ai.scribble._note;
+import net.sf.oval.Validator;
+import net.sf.oval.configuration.annotation.AbstractAnnotationCheck;
+import net.sf.oval.context.OValContext;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: <a href="http://www.ilikeplaces.com"> http://www.ilikeplaces.com </a>
+ * Date: Mar 8, 2010
+ * Time: 3:20:12 PM
+ */
+
+@License(content = "This code is licensed under GNU AFFERO GENERAL PUBLIC LICENSE Version 3")
+@_note(note = "USE OWASP ANTISAMY")
+public class NoXSSAttackCheck extends AbstractAnnotationCheck<UpperCase> {
+
+
+    public boolean isSatisfied(final Object validatedObject,
+                               final Object valueToValidate,
+                               final OValContext context,
+                               final Validator validator) {
+
+        final String str = (String) valueToValidate;//Cast so we prevent invalid usage
+
+        return !StringEscapeUtilsFixed.checkescapeJavaScript(str)
+                && !StringEscapeUtilsFixed.checkescapeXml(str)
+                && !StringEscapeUtilsFixed.checkescapeHtml(str);
+    }
+}

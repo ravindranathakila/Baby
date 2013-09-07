@@ -1,7 +1,7 @@
 package ai.hbase;
 
 import ai.ilikeplaces.entities.Subscriber;
-import ai.ilikeplaces.util.Loggers;
+import ai.baby.util.Loggers;
 import org.apache.avro.io.BinaryEncoder;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.EncoderFactory;

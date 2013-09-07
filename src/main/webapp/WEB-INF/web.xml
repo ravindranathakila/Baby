@@ -5,15 +5,15 @@
     <!-- #################################### SERVLETS ################################################################ -->
     <servlet>
         <servlet-name>Home</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.Controller</servlet-class>
+        <servlet-class>ai.baby.servlets.Controller</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GenericFileGrabber</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.GenericFileGrabber</servlet-class>
+        <servlet-class>ai.baby.servlets.GenericFileGrabber</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletSignup</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.ServletSignup</servlet-class>
+        <servlet-class>ai.baby.servlets.ServletSignup</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AccessViewStatusMessages</servlet-name>
@@ -21,24 +21,24 @@
     </servlet>
     <servlet>
         <servlet-name>GreatWallOfExceptionsEtc</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.StatusEtc</servlet-class>
+        <servlet-class>ai.baby.servlets.StatusEtc</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GreatWallOfExceptions500</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.Status500</servlet-class>
+        <servlet-class>ai.baby.servlets.Status500</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GreatWallOfExceptions404</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.Status404</servlet-class>
+        <servlet-class>ai.baby.servlets.Status404</servlet-class>
     </servlet>
     <servlet>
         <display-name>ProfileRedirect</display-name>
         <servlet-name>ProfileRedirect</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.filters.ProfileRedirect</servlet-class>
+        <servlet-class>ai.baby.servlets.filters.ProfileRedirect</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutNRedirect</servlet-name>
-        <servlet-class>ai.ilikeplaces.servlets.filters.LogoutNRedirect</servlet-class>
+        <servlet-class>ai.baby.servlets.filters.LogoutNRedirect</servlet-class>
     </servlet>
 
     <!-- #################### END OF SERVLETS #############################-->
@@ -116,7 +116,7 @@
     <!--<filter>-->
     <!--<description>Subdomain Filter.</description>-->
     <!--<filter-name>SubdomainForward</filter-name>-->
-    <!--<filter-class>ai.ilikeplaces.servlets.filters.SubdomainForward</filter-class>-->
+    <!--<filter-class>SubdomainForward</filter-class>-->
     <!--<init-param>-->
     <!--<param-name>ON</param-name>-->
     <!--<param-value>true</param-value>-->
@@ -125,7 +125,7 @@
     <filter>
         <description>Set HTTP headers for a mapping.</description>
         <filter-name>HeaderFilter</filter-name>
-        <filter-class>ai.ilikeplaces.servlets.filters.FilterHeader</filter-class>
+        <filter-class>ai.baby.servlets.filters.FilterHeader</filter-class>
         <!--<init-param>-->
         <!--<description>Add an Expires Header</description>-->
         <!--<param-name>header</param-name>-->
@@ -134,7 +134,7 @@
     </filter>
     <filter>
         <filter-name>FilterCharset</filter-name>
-        <filter-class>ai.ilikeplaces.servlets.filters.FilterCharset</filter-class>
+        <filter-class>ai.baby.servlets.filters.FilterCharset</filter-class>
         <init-param>
             <param-name>requestEncoding</param-name>
             <param-value>UTF-8</param-value>
@@ -142,11 +142,11 @@
     </filter>
     <filter>
         <filter-name>Debug</filter-name>
-        <filter-class>ai.ilikeplaces.servlets.filters.Debug</filter-class>
+        <filter-class>ai.baby.servlets.filters.Debug</filter-class>
     </filter>
     <!--<filter>-->
     <!--<filter-name>FacebookUserFilter</filter-name>-->
-    <!--<filter-class>ai.ilikeplaces.servlets.filters.FacebookUserFilter</filter-class>-->
+    <!--<filter-class>FacebookUserFilter</filter-class>-->
     <!--<init-param>-->
     <!--<param-name>facebook_api_key</param-name>-->
     <!--<param-value>139373316127498</param-value>-->

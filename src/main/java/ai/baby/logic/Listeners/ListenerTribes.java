@@ -1,0 +1,138 @@
+package ai.baby.logic.Listeners;
+
+import ai.baby.logic.Listeners.widgets.SignInOnCriteria;
+import ai.baby.logic.crud.DB;
+import ai.ilikeplaces.entities.Tribe;
+import ai.ilikeplaces.entities.etc.HumanId;
+import ai.baby.servlets.Controller;
+import org.itsnat.core.ItsNatDocument;
+import org.itsnat.core.ItsNatServletRequest;
+import org.itsnat.core.ItsNatServletResponse;
+import org.itsnat.core.event.ItsNatServletRequestListener;
+import org.itsnat.core.html.ItsNatHTMLDocument;
+import org.w3c.dom.html.HTMLDocument;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static ai.baby.util.Loggers.USER_EXCEPTION;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: Ravindranath Akila
+ * Date: 10/26/11
+ * Time: 8:40 PM
+ */
+public class ListenerTribes implements ItsNatServletRequestListener {
+    private static final String COMMA = ",";
+    // ------------------------ INTERFACE METHODS ------------------------
+
+
+// --------------------- Interface ItsNatServletRequestListener ---------------------
+
+    @Override
+    public void processRequest(final ItsNatServletRequest request__, final ItsNatServletResponse response__) {
+
+        new AbstractSkeletonListener(request__, response__) {
+            @Override
+            protected void init(ItsNatHTMLDocument itsNatHTMLDocument__, HTMLDocument hTMLDocument__, ItsNatDocument itsNatDocument__, Object... initArgs) {
+
+                layoutNeededForAllPages:
+                {
+                    setLoginWidget:
+                    {
+                        setLoginWidget(request__, SignInOnCriteria.SignInOnDisplayComponent.TRIBES);
+                    }
+
+                    setTitle:
+                    {
+                        //set below
+                    }
+                    setProfileDataLink:
+                    {
+                        setProfileDataLink();
+                    }
+                    sideBarFriends:
+                    {
+                    }
+                    signinupActionNotice:
+                    {
+                        //We do nothing now
+                    }
+                    SetNotifications:
+                    {
+                        setNotifications();
+                    }
+                }
+
+                if (getUsername() != null) {
+
+
+                    /*Be fault tolerant with the user. Just parse category here. Later parse other values when needed*/
+                    int mode = -1;
+                    try {
+                        final String modeString = request__.getServletRequest().getParameter(Controller.Page.DocTribesMode);
+                        mode = modeString != null ? Integer.parseInt(modeString) : Controller.Page.DocTribesModeCreate;
+                    } catch (final NumberFormatException nfe_) {
+                        USER_EXCEPTION.error("", nfe_);
+                    }
+                    switch (mode) {
+                        case Controller.Page.DocTribesModeCreate: {
+                            break;
+                        }
+
+
+                        case Controller.Page.DocTribesModeView: {
+
+                            try {
+                                final String whichString = request__.getServletRequest().getParameter(Controller.Page.DocTribesWhich);
+                                if (whichString != null) {
+                                    final String[] whichStringArr = whichString.split(COMMA);
+                                    final Set<Long> which = new HashSet<Long>(whichStringArr.length);
+
+                                    for (int i = 0, whichStringArrLength = whichStringArr.length; i < whichStringArrLength; i++) {
+                                        try {
+                                            which.add(Long.parseLong(whichStringArr[i].trim()));
+                                        } catch (NumberFormatException e) {
+                                            //Ignore this pathetic situation and add 0 which will never match with a tribe
+                                            which.add(0L);
+                                        }
+                                        break;//Avoiding this feature for autoplay to work
+                                    }
+
+                                    final Set<Tribe> humansTribes;
+
+                                    FirstWeGetThisPersonsTribes_ThisIsImportant:
+                                    {
+                                        humansTribes = DB.getHumanCRUDTribeLocal(false).getHumansTribesAsSet(new HumanId(getUsernameAsValid()));
+                                    }
+
+                                    for (final Tribe tribe : humansTribes) {
+                                        if (which.contains(tribe.getTribeId())) {
+                                        }
+                                    }
+
+                                } else {
+                                }
+
+                            } catch (final NumberFormatException nfe_) {
+                                USER_EXCEPTION.error("", nfe_);
+                            }
+
+
+                            break;
+                        }
+
+                        default: {
+                            break;
+                        }
+                    }
+                } else {
+                    //WE COULD STILL GIVE A TRIBE CREATION WIDGET WITH USERS EMAIL AND FRIENDS EMAILS. ONCE USER SIGNS UP, THE TRIBE CAN BE CREATED.
+
+                }
+            }
+        };
+    }
+
+}

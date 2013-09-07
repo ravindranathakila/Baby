@@ -1,7 +1,7 @@
 package ai.hbase;
 
-import ai.ilikeplaces.rbs.RBGet;
-import ai.ilikeplaces.util.Loggers;
+import ai.baby.rbs.RBGet;
+import ai.baby.util.Loggers;
 import ai.reaver.Return;
 import ai.reaver.ReturnImpl;
 import org.apache.avro.io.BinaryEncoder;

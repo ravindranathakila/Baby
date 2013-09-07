@@ -1,6 +1,6 @@
 package api.foursquare.com.impl.impl;
 
-import ai.ilikeplaces.util.Loggers;
+import ai.baby.util.Loggers;
 import api.foursquare.com.impl.Client;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
